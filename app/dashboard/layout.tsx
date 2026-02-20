@@ -43,7 +43,7 @@ export default function DashboardLayout({
             exact: true
         },
         {
-            label: "I Miei Eventi",
+            label: "Le Mie Prenotazioni",
             href: `/dashboard/events`,
             icon: Calendar,
             exact: false
