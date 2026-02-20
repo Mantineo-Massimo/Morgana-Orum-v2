@@ -77,9 +77,30 @@ export default function DashboardLayout({
     }
 
     return (
-        <div className="min-h-screen bg-zinc-50 flex flex-col md:flex-row">
-            {/* SIDEBAR NAVIGATION */}
-            <aside className="w-full md:w-64 bg-white border-r border-zinc-200 flex-shrink-0 md:h-screen sticky top-0 md:flex flex-col z-40">
+        <div className="min-h-screen bg-zinc-50 flex flex-col md:flex-row pb-20 md:pb-0">
+            {/* MOBILE HEADER */}
+            <div className="md:hidden bg-white border-b border-zinc-200 p-4 sticky top-0 z-40 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className={cn(
+                        "size-10 rounded-full flex items-center justify-center text-white font-serif font-bold text-lg",
+                        isMorgana ? "bg-[#c12830]" : "bg-[#18182e]"
+                    )}>
+                        {userData.name.charAt(0)}
+                    </div>
+                    <div>
+                        <p className="font-bold text-zinc-900 text-sm leading-tight">{userData.name} {userData.surname}</p>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{userData.role === "ADMIN" ? "Amministratore" : "Studente"}</p>
+                    </div>
+                </div>
+                <form action={logoutAction}>
+                    <button type="submit" className="p-2 text-zinc-400 hover:text-red-600 transition-colors">
+                        <LogOut className="size-5" />
+                    </button>
+                </form>
+            </div>
+
+            {/* SIDEBAR NAVIGATION (Desktop) */}
+            <aside className="hidden md:flex w-64 bg-white border-r border-zinc-200 flex-shrink-0 h-screen sticky top-0 flex-col z-40">
                 <div className="p-6 border-b border-zinc-100 flex items-center gap-3">
                     <div className={cn(
                         "size-10 rounded-full flex items-center justify-center text-white font-serif font-bold text-lg",
@@ -132,9 +153,39 @@ export default function DashboardLayout({
                 </div>
             </aside>
 
+            {/* BOTTOM NAVIGATION (Mobile) */}
+            <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 z-50 flex items-center justify-around p-2 pb-6">
+                {navItems.map((item) => {
+                    const isActive = item.exact
+                        ? pathname === item.href
+                        : pathname.startsWith(item.href)
+
+                    return (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className={cn(
+                                "flex flex-col items-center gap-1 p-2 rounded-xl transition-all",
+                                isActive
+                                    ? (isMorgana ? "text-orange-700" : "text-blue-900")
+                                    : "text-zinc-400 hover:text-zinc-600"
+                            )}
+                        >
+                            <item.icon className={cn(
+                                "size-6",
+                                isActive
+                                    ? (isMorgana ? "text-orange-600" : "text-blue-900")
+                                    : ""
+                            )} />
+                            <span className="text-[10px] font-bold uppercase tracking-tighter">{item.label.split(' ')[0]}</span>
+                        </Link>
+                    )
+                })}
+            </nav>
+
             {/* MAIN CONTENT AREA */}
-            <main className="flex-1 overflow-y-auto h-screen">
-                <div className="p-6 md:p-10 pb-32 max-w-5xl mx-auto">
+            <main className="flex-1 overflow-y-auto">
+                <div className="p-6 md:p-10 pb-12 max-w-5xl mx-auto">
                     {children}
                 </div>
             </main>
