@@ -9,7 +9,7 @@ import { Loader2, LogIn, ArrowRight } from "lucide-react"
 export const dynamic = "force-dynamic"
 
 export default function Page() {
-    
+
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
@@ -26,7 +26,7 @@ export default function Page() {
 
         if (result.success) {
             // In a real app, we would set a session cookie here
-            router.push(`/${"morgana"}/dashboard`)
+            router.push(`/dashboard`)
         } else {
             setError(result.error || "Login fallito.")
             setIsLoading(false)

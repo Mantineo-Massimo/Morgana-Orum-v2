@@ -42,8 +42,8 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         "rounded-br-[100px]",
                         // Dynamic width logic
                         isScrolled
-                            ? "w-[75%] sm:w-[65%] md:w-[50%] lg:w-[42%] xl:w-[38%]"
-                            : "w-[80%] sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[45%]"
+                            ? "w-[75%] sm:w-[65%] md:w-[50%] lg:w-[50%] xl:w-[40%]"
+                            : "w-[80%] sm:w-[70%] md:w-[60%] lg:w-[49%] xl:w-[42%]"
                     )}
                 />
             </div>

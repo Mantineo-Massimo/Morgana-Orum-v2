@@ -63,7 +63,7 @@ export function MainNav({
         <>
             {/* Desktop Navigation */}
             <nav
-                className={cn("hidden lg:flex items-center space-x-8 lg:space-x-10", className)}
+                className={cn("hidden lg:flex items-center space-x-4 lg:space-x-5 xl:space-x-8", className)}
                 {...props}
             >
                 {routes.map((route) => (
@@ -86,16 +86,16 @@ export function MainNav({
                         <Link
                             href={`/dashboard`}
                             className={cn(
-                                "flex items-center gap-2 px-4 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
+                                "flex items-center gap-2 px-3 xl:px-4 py-2 rounded-full text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
                                 brandColor
                             )}
                         >
-                            <User className="size-4" /> Area Personale
+                            <User className="size-4 shrink-0" /> <span className="hidden xl:inline">Area Personale</span><span className="xl:hidden">Area Riservata</span>
                         </Link>
 
                         <button
                             onClick={() => logoutAction()}
-                            className="p-2 rounded-full text-zinc-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+                            className="p-1.5 xl:p-2 rounded-full text-zinc-500 hover:text-red-600 hover:bg-red-50 transition-colors"
                             title="Logout"
                         >
                             <LogOut className="size-5" />

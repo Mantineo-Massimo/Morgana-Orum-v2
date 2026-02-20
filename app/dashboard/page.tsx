@@ -113,18 +113,20 @@ export default function DashboardPage() {
                         {/* Member Header (Card-like but integrated) */}
                         <div className={cn(
                             "p-8 text-white relative overflow-hidden",
-                            isMorgana
-                                ? "bg-gradient-to-br from-[#8a1c22] to-[#c12830]"
-                                : "bg-gradient-to-br from-[#0f0f1d] to-[#18182e]"
+                            "bg-gradient-to-br from-zinc-800 to-zinc-950"
                         )}>
                             {/* Decorative Pattern */}
                             <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-10 -mt-10 blur-2xl"></div>
 
                             <div className="relative z-10">
                                 <div className="flex justify-between items-start mb-12">
-                                    <div className="bg-white/90 p-2 rounded-xl shadow-lg flex items-center gap-3">
-                                        <div className="relative size-8 md:size-10">
-                                            <Image src="/assets/morgana.png" alt="Morgana & O.R.U.M." fill className="object-contain" sizes="40px" />
+                                    <div className="bg-white/95 p-2 rounded-xl shadow-lg flex items-center gap-2">
+                                        <div className="relative size-7 md:size-8">
+                                            <Image src="/assets/morgana.png" alt="Morgana" fill className="object-contain" sizes="32px" />
+                                        </div>
+                                        <div className="w-px h-6 bg-zinc-200"></div>
+                                        <div className="relative size-7 md:size-8">
+                                            <Image src="/assets/orum.png" alt="O.R.U.M." fill className="object-contain" sizes="32px" />
                                         </div>
                                     </div>
                                     <div className="text-right">
@@ -156,16 +158,14 @@ export default function DashboardPage() {
                                 <h3 className="text-lg font-bold text-zinc-900 mb-2 flex items-center gap-2">
                                     <span className="text-xl">🎁</span> Vantaggi Esclusivi
                                 </h3>
-                                <p className="text-sm text-zinc-500 leading-relaxed mb-6">
-                                    In quanto membro dell&apos;associazione {isMorgana ? "Morgana" : "O.R.U.M."}, hai accesso a convenzioni speciali con attività locali, librerie e servizi universitari.
+                                <p className="text-sm text-zinc-500 leading-relaxed mb-6 text-justify">
+                                    In quanto membro delle associazioni Morgana e O.R.U.M., hai accesso a convenzioni speciali con attività locali, librerie e servizi universitari in giro per Messina e Melilli.
                                 </p>
                             </div>
 
                             <Link href={`/dashboard/offers`} className={cn(
                                 "w-full py-3.5 rounded-xl text-sm font-bold transition-all border-2 flex items-center justify-center gap-2 group",
-                                isMorgana
-                                    ? "border-orange-100 text-orange-600 hover:bg-orange-50 hover:border-orange-200"
-                                    : "border-blue-100 text-blue-900 hover:bg-blue-50 hover:border-blue-200"
+                                "border-zinc-100 text-zinc-900 hover:bg-zinc-50 hover:border-zinc-200 shadow-sm"
                             )}>
                                 Scopri Tutte le Offerte 🚀
                             </Link>
@@ -182,7 +182,7 @@ export default function DashboardPage() {
                             <div className="relative z-10 text-center lg:text-left">
                                 <span className={cn(
                                     "inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-6",
-                                    isMorgana ? "bg-orange-100 text-orange-700" : "bg-blue-100 text-blue-800"
+                                    "bg-zinc-100 text-zinc-700"
                                 )}>
                                     Prossimo Evento Prenotato
                                 </span>
@@ -201,9 +201,7 @@ export default function DashboardPage() {
                                     href={`/events/${userData.nextEvent.id}`}
                                     className={cn(
                                         "w-full py-3 rounded-xl text-sm font-bold transition-all shadow-lg shadow-zinc-100 hover:shadow-xl active:scale-[0.98] flex items-center justify-center gap-2",
-                                        isMorgana
-                                            ? "bg-gradient-to-r from-orange-500 to-red-600 text-white hover:brightness-110"
-                                            : "bg-gradient-to-r from-blue-600 to-indigo-700 text-white hover:brightness-110"
+                                        "bg-zinc-900 text-white hover:bg-zinc-800"
                                     )}
                                 >
                                     Vedi Dettagli Prova <CheckCircle className="size-4" />
