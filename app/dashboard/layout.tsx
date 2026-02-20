@@ -88,7 +88,7 @@ export default function DashboardLayout({
                         {userData.name.charAt(0)}
                     </div>
                     <div>
-                        <p className="font-bold text-zinc-900 text-sm leading-tight">{userData.name} {userData.surname}</p>
+                        <p className="font-bold text-foreground text-sm leading-tight">{userData.name} {userData.surname}</p>
                         <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{userData.role === "ADMIN" ? "Amministratore" : "Studente"}</p>
                     </div>
                 </div>
@@ -109,7 +109,7 @@ export default function DashboardLayout({
                         {userData.name.charAt(0)}
                     </div>
                     <div>
-                        <p className="font-bold text-zinc-900 text-sm">{userData.name} {userData.surname}</p>
+                        <p className="font-bold text-foreground text-sm">{userData.name} {userData.surname}</p>
                         <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{userData.role === "ADMIN" ? "Amministratore" : "Studente"}</p>
                     </div>
                 </div>
@@ -127,14 +127,14 @@ export default function DashboardLayout({
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group",
                                     isActive
-                                        ? (isMorgana ? "bg-orange-50 text-orange-700" : "bg-blue-50 text-blue-900")
-                                        : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
+                                        ? (isMorgana ? "bg-zinc-900 text-white" : "bg-blue-50 text-blue-900")
+                                        : "text-zinc-500 hover:bg-zinc-50 hover:text-foreground"
                                 )}
                             >
                                 <item.icon className={cn(
                                     "size-5 transition-colors",
                                     isActive
-                                        ? (isMorgana ? "text-orange-600" : "text-blue-900")
+                                        ? (isMorgana ? "text-white" : "text-blue-900")
                                         : "text-zinc-400 group-hover:text-zinc-600"
                                 )} />
                                 {item.label}
@@ -167,14 +167,14 @@ export default function DashboardLayout({
                             className={cn(
                                 "flex flex-col items-center gap-0.5 p-1 px-0.5 flex-1 min-w-0 transition-all",
                                 isActive
-                                    ? (isMorgana ? "text-orange-700" : "text-blue-900")
+                                    ? (isMorgana ? "text-foreground font-black" : "text-blue-900")
                                     : "text-zinc-400 hover:text-zinc-600"
                             )}
                         >
                             <item.icon className={cn(
                                 "size-5",
                                 isActive
-                                    ? (isMorgana ? "text-orange-600" : "text-blue-900")
+                                    ? (isMorgana ? "text-foreground" : "text-blue-900")
                                     : ""
                             )} />
                             <span className="text-[8px] font-bold uppercase tracking-tighter truncate w-full text-center">

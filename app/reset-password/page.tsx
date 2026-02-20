@@ -21,9 +21,9 @@ export default function ResetPasswordPage() {
             <div className="min-h-screen grid items-center justify-center bg-zinc-50 p-6">
                 <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-zinc-100 text-center">
                     <AlertCircle className="size-16 text-red-500 mx-auto mb-4" />
-                    <h1 className="text-2xl font-bold text-zinc-900 mb-2">Token Mancante</h1>
+                    <h1 className="text-2xl font-bold text-foreground mb-2">Token Mancante</h1>
                     <p className="text-sm text-zinc-500 mb-6">Il link di recupero non è valido o è incompleto.</p>
-                    <Link href={`/forgot-password`} className="text-zinc-900 font-bold hover:underline">
+                    <Link href={`/forgot-password`} className="text-foreground font-bold hover:underline">
                         Richiedi un nuovo link
                     </Link>
                 </div>
@@ -69,7 +69,7 @@ export default function ResetPasswordPage() {
         <div className="min-h-screen grid items-center justify-center bg-zinc-50 p-6">
             <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-zinc-100">
                 <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-zinc-900">Nuova Password</h1>
+                    <h1 className="text-2xl font-bold text-foreground">Nuova Password</h1>
                     <p className="text-sm text-zinc-500">Scegli una password sicura per il tuo account.</p>
                 </div>
 
@@ -79,7 +79,7 @@ export default function ResetPasswordPage() {
                             <CheckCircle className="size-8" />
                         </div>
                         <div className="space-y-2">
-                            <h3 className="text-lg font-bold text-zinc-900">Password Aggiornata!</h3>
+                            <h3 className="text-lg font-bold text-foreground">Password Aggiornata!</h3>
                             <p className="text-sm text-zinc-500">
                                 Verrai reindirizzato al login tra pochi istanti...
                             </p>

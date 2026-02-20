@@ -16,7 +16,13 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
     const [activeCategory, setActiveCategory] = useState("Tutte")
     const [searchQuery, setSearchQuery] = useState("")
 
-    const allCategories = ["Tutte", ...categories]
+    const derivedCategories = Array.from(new Set(
+        initialNews.flatMap(item =>
+            item.category ? item.category.split(",").map((c: string) => c.trim()) : []
+        )
+    )).sort()
+
+    const allCategories = ["Tutte", ...derivedCategories]
 
     const filteredNews = initialNews.filter(item => {
         const itemCategories = item.category ? item.category.split(",").map((c: string) => c.trim()) : []
@@ -34,7 +40,7 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
                 <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
                     Blog & Notizie
                 </span>
-                <h1 className="text-4xl md:text-6xl font-serif font-black text-zinc-900 mb-4">
+                <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-4">
                     Ultime Novità
                 </h1>
                 <p className="text-xl text-zinc-600 font-medium italic">
@@ -74,8 +80,8 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
                             className={cn(
                                 "px-5 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap",
                                 activeCategory === cat
-                                    ? "bg-zinc-900 text-white shadow-md shadow-zinc-900/20"
-                                    : "bg-white text-zinc-600 hover:bg-zinc-100 border border-zinc-200"
+                                    ? "bg-primary text-white shadow-md shadow-red-900/20"
+                                    : "bg-white text-muted-foreground hover:bg-zinc-100 border border-zinc-200"
                             )}
                         >
                             {cat}
@@ -112,7 +118,7 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
                         {(searchQuery || activeCategory !== "Tutte") && (
                             <button
                                 onClick={() => { setSearchQuery(""); setActiveCategory("Tutte") }}
-                                className="mt-3 text-sm font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
+                                className="mt-3 text-sm font-bold text-zinc-500 hover:text-foreground transition-colors"
                             >
                                 Resetta filtri
                             </button>
@@ -132,31 +138,14 @@ function NewsCard({ item }: { item: any }) {
         year: "numeric"
     })
 
-    // Determina il badge e il tema dell'associazione
-    let assocBadge = null;
-    let themeColorText = "text-zinc-600";
-    let themeColorBg = "bg-zinc-50 text-zinc-600";
-    let themeGradient = "from-zinc-900";
-
-    const assoc = item.association?.toLowerCase() || "morgana & orum";
+    // Determina il badge e il tema neutrale dell'unificazione
     const mainCategory = item.category ? item.category.split(",")[0].trim() : "Notizia";
 
-    if (assoc === "morgana") {
-        assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#c12830]/90 backdrop-blur-sm text-white shadow-[0_4px_10px_rgb(220,38,38,0.3)] border border-red-500/50">Morgana</span>;
-        themeColorText = "text-[#c12830]";
-        themeColorBg = "bg-red-50 text-red-600";
-        themeGradient = "from-red-500";
-    } else if (assoc === "orum" || assoc === "o.r.u.m.") {
-        assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#18182e]/90 backdrop-blur-sm text-white shadow-[0_4px_10px_rgb(30,58,138,0.3)] border border-blue-900/50">O.R.U.M.</span>;
-        themeColorText = "text-[#18182e]";
-        themeColorBg = "bg-blue-50 text-blue-600";
-        themeGradient = "from-blue-900";
-    } else {
-        assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-900/90 backdrop-blur-sm text-white shadow-sm border border-purple-800/50">{mainCategory}</span>;
-        themeColorText = "text-purple-900";
-        themeColorBg = "bg-purple-50 text-purple-600";
-        themeGradient = "from-purple-900";
-    }
+    // Tema neutro per tutto il portale unificato
+    const assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-sm text-white shadow-sm border border-red-400/50">{mainCategory}</span>;
+    const themeColorText = "text-primary hover:text-red-700";
+    const themeGradient = "from-primary";
+
 
     return (
         <motion.div
@@ -188,29 +177,22 @@ function NewsCard({ item }: { item: any }) {
             {/* Content */}
             <div className="p-6 flex-1 flex flex-col">
                 <div className="flex items-center justify-between mb-4">
-                    <div className="flex flex-wrap gap-1">
-                        {(item.category || "").split(",").map((cat: string) => (
-                            <span key={cat.trim()} className={cn(
-                                "text-xs font-bold uppercase tracking-wider px-2 py-1 rounded",
-                                themeColorBg
-                            )}>
-                                {cat.trim()}
-                            </span>
-                        ))}
-                    </div>
+
                     <div className="flex items-center text-zinc-400 text-xs">
                         <Calendar className="size-3 mr-1" />
                         {formattedDate}
                     </div>
                 </div>
 
-                <h3 className="text-xl font-bold text-zinc-900 mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
                     {item.title}
                 </h3>
 
                 <p className="text-zinc-600 text-sm mb-6 line-clamp-3">
                     {item.description}
                 </p>
+
+
 
                 <div className="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between">
                     <div className="flex gap-2">

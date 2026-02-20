@@ -34,11 +34,11 @@ export default function Page() {
                 <div className="mb-8">
                     <Link
                         href={`/login`}
-                        className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-900 transition-colors mb-6"
+                        className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-foreground transition-colors mb-6"
                     >
                         <ArrowLeft className="size-4" /> Torna al Login
                     </Link>
-                    <h1 className="text-2xl font-bold text-zinc-900">Recupero Password</h1>
+                    <h1 className="text-2xl font-bold text-foreground">Recupero Password</h1>
                     <p className="text-sm text-zinc-500">Ti invieremo un link per impostare una nuova password.</p>
                 </div>
 
@@ -48,7 +48,7 @@ export default function Page() {
                             <CheckCircle className="size-8" />
                         </div>
                         <div className="space-y-2">
-                            <h3 className="text-lg font-bold text-zinc-900">Email Inviata!</h3>
+                            <h3 className="text-lg font-bold text-foreground">Email Inviata!</h3>
                             <p className="text-sm text-zinc-500">
                                 Se l&apos;indirizzo è registrato, riceverai a breve le istruzioni per il recupero.
                             </p>

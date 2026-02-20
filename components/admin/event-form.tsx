@@ -60,10 +60,22 @@ export default function EventForm({ initialData }: EventFormProps) {
 
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [imagePreview, setImagePreview] = useState<string | null>(initialData?.image || null)
-    const [attachmentFiles, setAttachmentFiles] = useState<File[]>([])
-    const [existingAttachments, setExistingAttachments] = useState<string[]>(
-        initialData?.attachments ? initialData.attachments.split(',').map(a => a.trim()).filter(Boolean) : []
-    )
+    type AttachmentItem = { name: string; url: string }
+    const [newAttachments, setNewAttachments] = useState<{ file: File; name: string }[]>([])
+    const [existingAttachments, setExistingAttachments] = useState<AttachmentItem[]>(() => {
+        if (!initialData?.attachments) return []
+        try {
+            const parsed = JSON.parse(initialData.attachments)
+            if (Array.isArray(parsed)) return parsed
+        } catch (e) {
+            // Support legacy comma-separated format
+            return initialData.attachments.split(',').map(url => ({
+                name: url.split('/').pop() || "Documento",
+                url: url.trim()
+            })).filter(a => a.url)
+        }
+        return []
+    })
 
     async function uploadFile(file: File, folder: string) {
         const formData = new FormData()
@@ -92,15 +104,16 @@ export default function EventForm({ initialData }: EventFormProps) {
                 imageUrl = await uploadFile(imageFile, "events")
             }
 
-            // Upload attachments
-            const uploadedAttachmentUrls = []
-            for (const file of attachmentFiles) {
-                const url = await uploadFile(file, "attachments")
-                uploadedAttachmentUrls.push(url)
-            }
+            // Upload new attachments and combine with existing
+            const finalAttachmentList: AttachmentItem[] = [...existingAttachments]
 
-            // Combine attachments
-            const finalAttachments = [...existingAttachments, ...uploadedAttachmentUrls].join(',')
+            for (const item of newAttachments) {
+                const url = await uploadFile(item.file, "attachments")
+                finalAttachmentList.push({
+                    name: item.name || item.file.name,
+                    url
+                })
+            }
 
             const cfuValueRaw = formData.get("cfuValue") as string
             const finalCfuValue = cfuValueRaw.trim() !== "" ? cfuValueRaw : undefined
@@ -124,8 +137,8 @@ export default function EventForm({ initialData }: EventFormProps) {
                 bookingOpen: bookingOpen,
                 bookingStart: (formData.get("bookingStart") as string) || undefined,
                 bookingEnd: (formData.get("bookingEnd") as string) || undefined,
-                attachments: finalAttachments || undefined,
-                association: formData.get("association") as string,
+                attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : undefined,
+                association: "Morgana & O.R.U.M.",
             }
 
             const result = initialData
@@ -153,11 +166,11 @@ export default function EventForm({ initialData }: EventFormProps) {
             <div className="mb-8">
                 <Link
                     href={`/admin/events`}
-                    className="text-zinc-500 hover:text-zinc-900 flex items-center gap-2 text-sm font-medium mb-4"
+                    className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
                 >
                     <ArrowLeft className="size-4" /> Torna alla lista
                 </Link>
-                <h1 className="text-3xl font-bold text-zinc-900">
+                <h1 className="text-3xl font-bold text-foreground">
                     {initialData ? "Modifica Evento" : "Nuovo Evento"}
                 </h1>
             </div>
@@ -253,19 +266,11 @@ export default function EventForm({ initialData }: EventFormProps) {
                     </select>
                 </div>
 
-                {/* Association */}
-                <div>
-                    <label className={labelClass}>Associazione Organizzatrice</label>
-                    <select name="association" defaultValue={initialData?.association || "Morgana & O.R.U.M."} className={cn(inputClass, "bg-white")} required>
-                        <option value="Morgana">Morgana</option>
-                        <option value="O.R.U.M.">O.R.U.M.</option>
-                        <option value="Morgana & O.R.U.M.">Morgana & O.R.U.M.</option>
-                    </select>
-                </div>
+
 
                 {/* CFU Advanced Section */}
                 <div className="border-t border-zinc-100 pt-6">
-                    <h3 className="text-lg font-bold text-zinc-900 mb-4">Crediti Formativi Universitari (CFU)</h3>
+                    <h3 className="text-lg font-bold text-foreground mb-4">Crediti Formativi Universitari (CFU)</h3>
 
                     <div className="space-y-4">
                         <div>
@@ -284,7 +289,7 @@ export default function EventForm({ initialData }: EventFormProps) {
                                         value="SENATO"
                                         checked={cfuType === "SENATO"}
                                         onChange={() => setCfuType("SENATO")}
-                                        className="size-4 text-zinc-900 focus:ring-zinc-900"
+                                        className="size-4 text-foreground focus:ring-zinc-900"
                                     />
                                     <span className="text-sm font-medium text-zinc-700">Senato (Tutto l&apos;ateneo)</span>
                                 </label>
@@ -295,7 +300,7 @@ export default function EventForm({ initialData }: EventFormProps) {
                                         value="DIPARTIMENTO"
                                         checked={cfuType === "DIPARTIMENTO"}
                                         onChange={() => setCfuType("DIPARTIMENTO")}
-                                        className="size-4 text-zinc-900 focus:ring-zinc-900"
+                                        className="size-4 text-foreground focus:ring-zinc-900"
                                     />
                                     <span className="text-sm font-medium text-zinc-700">Specifici Dipartimenti</span>
                                 </label>
@@ -311,7 +316,7 @@ export default function EventForm({ initialData }: EventFormProps) {
                                         <label key={dep} className="flex items-start gap-2 p-2 hover:bg-zinc-100 rounded-lg cursor-pointer">
                                             <input
                                                 type="checkbox"
-                                                className="mt-1 size-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                                                className="mt-1 size-4 rounded border-zinc-300 text-foreground focus:ring-zinc-900"
                                                 checked={selectedDeps.has(dep)}
                                                 onChange={(e) => {
                                                     const next = new Set(selectedDeps)
@@ -331,7 +336,7 @@ export default function EventForm({ initialData }: EventFormProps) {
 
                 {/* Booking Section */}
                 <div className="border-t border-zinc-100 pt-6">
-                    <h3 className="text-lg font-bold text-zinc-900 mb-4">Prenotazione</h3>
+                    <h3 className="text-lg font-bold text-foreground mb-4">Prenotazione</h3>
 
                     {/* Booking Open Toggle */}
                     <div className="flex items-center gap-3 mb-4">
@@ -370,8 +375,8 @@ export default function EventForm({ initialData }: EventFormProps) {
 
                 {/* Attachments */}
                 <div className="border-t border-zinc-100 pt-6">
-                    <h3 className="text-lg font-bold text-zinc-900 mb-2">Allegati</h3>
-                    <p className="text-xs text-zinc-400 mb-4">Carica i documenti (es. Programma completo, locandina PDF).</p>
+                    <h3 className="text-lg font-bold text-foreground mb-2">Allegati</h3>
+                    <p className="text-xs text-zinc-400 mb-4">Carica e dai un nome ai documenti (es. Programma completo, locandina PDF).</p>
 
                     <div className="space-y-4">
                         <input
@@ -380,7 +385,11 @@ export default function EventForm({ initialData }: EventFormProps) {
                             accept=".pdf,.doc,.docx,image/*"
                             onChange={(e) => {
                                 if (e.target.files) {
-                                    setAttachmentFiles(prev => [...prev, ...Array.from(e.target.files!)])
+                                    const files = Array.from(e.target.files)
+                                    setNewAttachments(prev => [
+                                        ...prev,
+                                        ...files.map(f => ({ file: f, name: f.name.split('.').slice(0, -1).join('.') }))
+                                    ])
                                 }
                                 e.target.value = '' // Reset
                             }}
@@ -390,35 +399,69 @@ export default function EventForm({ initialData }: EventFormProps) {
 
                         {/* List Existing */}
                         {existingAttachments.length > 0 && (
-                            <div className="space-y-2">
-                                <p className="text-xs font-bold text-zinc-700">File già presenti:</p>
-                                {existingAttachments.map((url, i) => (
-                                    <div key={i} className="flex items-center justify-between p-2 bg-zinc-50 rounded-lg border border-zinc-200 text-sm">
-                                        <div className="flex items-center gap-2 truncate">
+                            <div className="space-y-3">
+                                <p className="text-xs font-bold text-zinc-700 uppercase tracking-wider">File già presenti:</p>
+                                {existingAttachments.map((att, i) => (
+                                    <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 bg-zinc-50 rounded-xl border border-zinc-200">
+                                        <div className="flex items-center gap-2 flex-1 min-w-0">
                                             <File className="size-4 text-zinc-400 shrink-0" />
-                                            <a href={url} target="_blank" rel="noreferrer" className="truncate text-blue-600 hover:underline">{url.split('/').pop()}</a>
+                                            <input
+                                                type="text"
+                                                value={att.name}
+                                                onChange={(e) => {
+                                                    const next = [...existingAttachments]
+                                                    next[i] = { ...next[i], name: e.target.value }
+                                                    setExistingAttachments(next)
+                                                }}
+                                                className="bg-transparent border-none focus:ring-2 focus:ring-zinc-900/5 rounded px-2 py-1 text-sm font-medium text-foreground w-full"
+                                                placeholder="Nome allegato..."
+                                            />
                                         </div>
-                                        <button type="button" onClick={() => setExistingAttachments(prev => prev.filter((_, idx) => idx !== i))} className="text-zinc-400 hover:text-red-500">
-                                            <X className="size-4" />
-                                        </button>
+                                        <div className="flex items-center gap-3 justify-end shrink-0">
+                                            <a href={att.url} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline font-bold">Visualizza</a>
+                                            <button
+                                                type="button"
+                                                onClick={() => setExistingAttachments(prev => prev.filter((_, idx) => idx !== i))}
+                                                className="p-1.5 hover:bg-red-50 text-zinc-400 hover:text-red-500 rounded-lg transition-colors"
+                                            >
+                                                <X className="size-4" />
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
                         )}
 
                         {/* List New */}
-                        {attachmentFiles.length > 0 && (
-                            <div className="space-y-2">
-                                <p className="text-xs font-bold text-zinc-700">File da caricare:</p>
-                                {attachmentFiles.map((file, i) => (
-                                    <div key={i} className="flex items-center justify-between p-2 bg-blue-50/50 rounded-lg border border-blue-100 text-sm">
-                                        <div className="flex items-center gap-2 truncate">
+                        {newAttachments.length > 0 && (
+                            <div className="space-y-3">
+                                <p className="text-xs font-bold text-zinc-700 uppercase tracking-wider">File da caricare:</p>
+                                {newAttachments.map((item, i) => (
+                                    <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 bg-blue-50/50 rounded-xl border border-blue-100">
+                                        <div className="flex items-center gap-2 flex-1 min-w-0">
                                             <Upload className="size-4 text-blue-400 shrink-0" />
-                                            <span className="truncate text-blue-900">{file.name}</span>
+                                            <input
+                                                type="text"
+                                                value={item.name}
+                                                onChange={(e) => {
+                                                    const next = [...newAttachments]
+                                                    next[i] = { ...next[i], name: e.target.value }
+                                                    setNewAttachments(next)
+                                                }}
+                                                className="bg-transparent border-none focus:ring-2 focus:ring-blue-900/5 rounded px-2 py-1 text-sm font-medium text-blue-900 w-full"
+                                                placeholder="Nome allegato..."
+                                            />
                                         </div>
-                                        <button type="button" onClick={() => setAttachmentFiles(prev => prev.filter((_, idx) => idx !== i))} className="text-zinc-400 hover:text-red-500">
-                                            <X className="size-4" />
-                                        </button>
+                                        <div className="flex items-center gap-2 justify-end shrink-0">
+                                            <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-bold">{item.file.name.split('.').pop()?.toUpperCase()}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => setNewAttachments(prev => prev.filter((_, idx) => idx !== i))}
+                                                className="p-1.5 hover:bg-red-50 text-zinc-400 hover:text-red-500 rounded-lg transition-colors"
+                                            >
+                                                <X className="size-4" />
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
                             </div>

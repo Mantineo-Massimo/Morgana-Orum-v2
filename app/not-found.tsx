@@ -6,7 +6,7 @@ export default function NotFound() {
         <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 text-center py-20">
             <h1 className="text-9xl font-black text-zinc-100">404</h1>
             <div className="space-y-4 -mt-12 relative z-10">
-                <h2 className="text-3xl font-bold text-zinc-900">Pagina non trovata</h2>
+                <h2 className="text-3xl font-bold text-foreground">Pagina non trovata</h2>
                 <p className="text-zinc-500 max-w-md mx-auto">
                     La risorsa che stai cercando non è disponibile all&apos;interno di questa sezione.
                 </p>

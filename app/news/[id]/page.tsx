@@ -14,111 +14,123 @@ export default async function NewsDetailPage({ params }: { params: { id: string 
         notFound()
     }
 
-    const assoc = article.association?.toLowerCase() || "morgana & orum"
-    let themeBg = "bg-purple-50"
-    let themeText = "text-purple-600"
-    let themeLink = "text-purple-900"
+    const themeBg = "bg-zinc-100"
+    const themeText = "text-zinc-600"
+    const themeAccent = "bg-zinc-900"
+    const themeLink = "text-foreground"
 
-    if (assoc === "morgana") {
-        themeBg = "bg-red-50"
-        themeText = "text-red-600"
-        themeLink = "text-[#c12830]"
-    } else if (assoc === "orum" || assoc === "o.r.u.m.") {
-        themeBg = "bg-blue-50"
-        themeText = "text-blue-600"
-        themeLink = "text-[#18182e]"
-    }
+
     const tags = article.tags ? article.tags.split(",").map(t => t.trim()) : []
     const formattedDate = new Date(article.date).toLocaleDateString("it-IT", {
-        weekday: "long",
         day: "numeric",
         month: "long",
         year: "numeric"
     })
 
     return (
-        <div className="min-h-screen bg-zinc-50 py-20 animate-in fade-in duration-500">
+        <div className="min-h-screen bg-zinc-50 pt-24 pb-20 animate-in fade-in duration-700">
             <div className="container mx-auto px-6 max-w-4xl">
-
                 {/* Back Button */}
                 <Link
                     href={`/news`}
-                    className="text-zinc-500 hover:text-zinc-900 flex items-center gap-2 text-sm font-medium mb-8"
+                    className="group inline-flex items-center gap-2 text-zinc-500 hover:text-foreground transition-colors mb-12"
                 >
-                    <ArrowLeft className="size-4" /> Torna alle notizie
+                    <div className="size-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-50 transition-colors">
+                        <ArrowLeft className="size-4" />
+                    </div>
+                    <span className="text-sm font-bold tracking-tight">Torna alle notizie</span>
                 </Link>
 
-                {/* Article Header */}
                 <article>
-                    <div className="mb-8">
-                        <div className="flex items-center gap-4 mb-4">
+                    {/* Header Section */}
+                    <header className="mb-12">
+                        <div className="flex flex-wrap items-center gap-3 mb-8">
                             <span className={cn(
-                                "text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full",
-                                themeBg, themeText
+                                "text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-lg text-white",
+                                themeAccent
                             )}>
                                 {article.category}
                             </span>
-                            <div className="flex items-center text-zinc-400 text-sm">
-                                <Calendar className="size-4 mr-1.5" />
+                            <div className="flex items-center text-zinc-400 text-sm font-medium">
+                                <Calendar className="size-4 mr-2" />
                                 {formattedDate}
                             </div>
                         </div>
 
-                        <h1 className="text-3xl md:text-5xl font-serif font-black text-zinc-900 mb-6 leading-tight">
+                        <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-8 leading-[1.1] tracking-tight">
                             {article.title}
                         </h1>
 
-                        <p className="text-xl text-zinc-600 leading-relaxed">
-                            {article.description}
-                        </p>
-                    </div>
+                        {article.description && (
+                            <p className="text-xl md:text-2xl text-zinc-600 font-medium italic border-l-4 border-zinc-200 pl-6 py-2 leading-relaxed">
+                                {article.description}
+                            </p>
+                        )}
+                    </header>
 
-                    {/* Image */}
+                    {/* Featured Image */}
                     {article.image && (
-                        <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-10 bg-zinc-100">
+                        <div className="relative aspect-video w-full rounded-[2rem] overflow-hidden mb-16 shadow-2xl shadow-zinc-200 ring-1 ring-zinc-200">
                             <Image
                                 src={article.image}
                                 alt={article.title}
                                 fill
                                 className="object-cover"
+                                priority
                             />
                         </div>
                     )}
 
-                    {/* Content */}
-                    {article.content && (
-                        <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-8 md:p-12 mb-10">
-                            <div className="prose prose-zinc max-w-none text-zinc-700 leading-relaxed whitespace-pre-line">
-                                {article.content}
-                            </div>
-                        </div>
-                    )}
+                    {/* Article Body */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                        <div className="lg:col-span-12">
+                            {article.content ? (
+                                <div className="bg-white rounded-[2rem] border border-zinc-100 p-8 md:p-16 shadow-sm">
+                                    <div className="prose prose-zinc prose-lg md:prose-xl max-w-none text-foreground leading-relaxed whitespace-pre-line font-medium">
+                                        {article.content}
+                                    </div>
 
-                    {/* Tags */}
-                    {tags.length > 0 && (
-                        <div className="flex items-center gap-3 mb-10">
-                            <Tag className="size-4 text-zinc-400" />
-                            <div className="flex flex-wrap gap-2">
-                                {tags.map(tag => (
-                                    <span key={tag} className="text-sm text-zinc-500 bg-white border border-zinc-200 px-3 py-1 rounded-full">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
+                                    {/* Tags Footer */}
+                                    {tags.length > 0 && (
+                                        <div className="mt-16 pt-8 border-t border-zinc-100">
+                                            <div className="flex items-center gap-3">
+                                                <Tag className="size-4 text-zinc-400" />
+                                                <div className="flex flex-wrap gap-2">
+                                                    {tags.map(tag => (
+                                                        <span key={tag} className="text-xs font-bold text-zinc-500 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100 uppercase tracking-wider">
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="text-center py-20 bg-zinc-100/50 rounded-[2rem] border-2 border-dashed border-zinc-200">
+                                    <Newspaper className="size-12 text-zinc-300 mx-auto mb-4" />
+                                    <p className="text-zinc-500 font-medium">Nessun contenuto aggiuntivo per questo articolo.</p>
+                                </div>
+                            )}
                         </div>
-                    )}
+                    </div>
 
-                    {/* Back button bottom */}
-                    <div className="pt-8 border-t border-zinc-200">
+                    {/* Footer Navigation */}
+                    <div className="mt-20 pt-10 border-t border-zinc-200 flex flex-col sm:flex-row items-center justify-between gap-6">
                         <Link
-                            href={`/news`}
+                            href="/news"
                             className={cn(
-                                "inline-flex items-center gap-2 font-bold",
+                                "group flex items-center gap-3 font-black text-sm uppercase tracking-widest transition-transform hover:-translate-x-1",
                                 themeLink
                             )}
                         >
-                            <ArrowLeft className="size-4" /> Tutte le notizie
+                            <ArrowLeft className="size-4" />
+                            <span>Tutte le notizie</span>
                         </Link>
+
+                        <div className="text-sm font-medium text-zinc-400">
+                            © {new Date().getFullYear()} Morgana & O.R.U.M.
+                        </div>
                     </div>
                 </article>
             </div>

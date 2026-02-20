@@ -61,7 +61,7 @@ export default function DashboardPage() {
             {/* Welcome Section */}
             <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 mb-1 leading-tight">Panoramica</h1>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-1 leading-tight">Panoramica</h1>
                     <p className="text-sm sm:text-base text-zinc-500">Benvenuto nella tua area riservata.</p>
                 </div>
                 {userData.role === "ADMIN" && (
@@ -75,33 +75,41 @@ export default function DashboardPage() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                        <MessageSquare className="size-4 sm:size-5 text-blue-500" />
-                        <span className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Messaggi</span>
+                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm transition-all hover:shadow-md group">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div className="size-8 sm:size-10 rounded-full bg-red-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <MessageSquare className="size-4 sm:size-5" />
+                        </div>
+                        <span className="text-[10px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider">Messaggi</span>
                     </div>
-                    <p className="text-2xl sm:text-3xl font-black text-zinc-900">0</p>
+                    <p className="text-2xl sm:text-3xl font-black text-foreground px-1">0</p>
                 </div>
-                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                        <Ticket className="size-4 sm:size-5 text-zinc-900" />
-                        <span className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Seguiti</span>
+                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm transition-all hover:shadow-md group">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div className="size-8 sm:size-10 rounded-full bg-red-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Ticket className="size-4 sm:size-5" />
+                        </div>
+                        <span className="text-[10px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider">Seguiti</span>
                     </div>
-                    <p className="text-2xl sm:text-3xl font-black text-zinc-900">{userData.stats.attendedCount}</p>
+                    <p className="text-2xl sm:text-3xl font-black text-foreground px-1">{userData.stats.attendedCount}</p>
                 </div>
-                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                        <Calendar className="size-4 sm:size-5 text-zinc-900" />
-                        <span className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Prenotati</span>
+                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm transition-all hover:shadow-md group">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div className="size-8 sm:size-10 rounded-full bg-red-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Calendar className="size-4 sm:size-5" />
+                        </div>
+                        <span className="text-[10px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider">Prenotati</span>
                     </div>
-                    <p className="text-2xl sm:text-3xl font-black text-zinc-900">{userData.stats.eventCount}</p>
+                    <p className="text-2xl sm:text-3xl font-black text-foreground px-1">{userData.stats.eventCount}</p>
                 </div>
-                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                        <Bell className="size-4 sm:size-5 text-zinc-400" />
-                        <span className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Notifiche</span>
+                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm transition-all hover:shadow-md group">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3">
+                        <div className="size-8 sm:size-10 rounded-full bg-red-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Bell className="size-4 sm:size-5" />
+                        </div>
+                        <span className="text-[10px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider">Notifiche</span>
                     </div>
-                    <p className="text-2xl sm:text-3xl font-black text-zinc-900">1</p>
+                    <p className="text-2xl sm:text-3xl font-black text-foreground px-1">1</p>
                 </div>
             </div>
 
@@ -155,7 +163,7 @@ export default function DashboardPage() {
                         {/* Advantages Section (Integrated) */}
                         <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
                             <div>
-                                <h3 className="text-lg font-bold text-zinc-900 mb-2 flex items-center gap-2">
+                                <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
                                     <span className="text-xl">🎁</span> Vantaggi Esclusivi
                                 </h3>
                                 <p className="text-sm text-zinc-500 leading-relaxed mb-6 text-justify">
@@ -165,7 +173,7 @@ export default function DashboardPage() {
 
                             <Link href={`/dashboard/offers`} className={cn(
                                 "w-full py-3.5 rounded-xl text-sm font-bold transition-all border-2 flex items-center justify-center gap-2 group",
-                                "border-zinc-100 text-zinc-900 hover:bg-zinc-50 hover:border-zinc-200 shadow-sm"
+                                "border-zinc-100 text-foreground hover:bg-zinc-50 hover:border-zinc-200 shadow-sm"
                             )}>
                                 Scopri Tutte le Offerte 🚀
                             </Link>
@@ -187,7 +195,7 @@ export default function DashboardPage() {
                                     Prossimo Evento Prenotato
                                 </span>
 
-                                <h3 className="text-2xl font-bold text-zinc-900 mb-2 leading-tight">{userData.nextEvent.title}</h3>
+                                <h3 className="text-2xl font-bold text-foreground mb-2 leading-tight">{userData.nextEvent.title}</h3>
                                 <p className="text-zinc-500 mb-8 text-sm leading-relaxed">Ti sei prenotato per questo evento. Ricorda di presentarti per la convalida dei CFU.</p>
 
                                 <div className="flex flex-col gap-3 mb-8">
@@ -213,7 +221,7 @@ export default function DashboardPage() {
                             <div className="size-16 bg-zinc-50 rounded-full flex items-center justify-center mb-4">
                                 <Calendar className="size-8 text-zinc-200" />
                             </div>
-                            <h3 className="text-xl font-bold text-zinc-900 mb-2">Nessun evento prenotato</h3>
+                            <h3 className="text-xl font-bold text-foreground mb-2">Nessun evento prenotato</h3>
                             <p className="text-zinc-500 mb-8 text-sm max-w-[280px]">Non hai ancora prenotazioni attive. Scopri i prossimi eventi e assicurati un posto!</p>
 
                             <Link
@@ -221,7 +229,7 @@ export default function DashboardPage() {
                                 className={cn(
                                     "px-8 py-3 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 border-2",
                                     isMorgana
-                                        ? "border-orange-100 text-orange-600 hover:bg-orange-50"
+                                        ? "border-zinc-200 text-foreground hover:bg-zinc-50"
                                         : "border-blue-100 text-blue-900 hover:bg-blue-50"
                                 )}
                             >

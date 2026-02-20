@@ -29,7 +29,7 @@ export default function Error({
                 </div>
             </div>
 
-            <h2 className="text-3xl font-bold text-zinc-900 mb-2">Qualcosa è andato storto!</h2>
+            <h2 className="text-3xl font-bold text-foreground mb-2">Qualcosa è andato storto!</h2>
             <p className="text-zinc-500 max-w-md mx-auto mb-8">
                 Si è verificato un errore durante il caricamento di questa sezione.
             </p>

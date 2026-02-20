@@ -120,11 +120,11 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
             <div className="mb-8">
                 <Link
                     href={`/admin/conventions`}
-                    className="text-zinc-500 hover:text-zinc-900 flex items-center gap-2 text-sm font-medium mb-4"
+                    className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
                 >
                     <ArrowLeft className="size-4" /> Torna alla lista
                 </Link>
-                <h1 className="text-3xl font-bold text-zinc-900">
+                <h1 className="text-3xl font-bold text-foreground">
                     {initialData ? "Modifica Convenzione" : "Nuova Convenzione"}
                 </h1>
             </div>
@@ -210,12 +210,12 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                 {/* Discounts Section */}
                 <div className="border-t border-zinc-100 pt-6">
                     <div className="flex items-center justify-between mb-4">
-                        <h3 className="text-lg font-bold text-zinc-900">Sconti e Agevolazioni</h3>
+                        <h3 className="text-lg font-bold text-foreground">Sconti e Agevolazioni</h3>
                         <button
                             type="button"
                             onClick={addDiscount}
                             disabled={discounts.length >= 7}
-                            className="flex items-center gap-1.5 text-xs font-bold text-zinc-600 hover:text-zinc-900 disabled:opacity-30 disabled:cursor-not-allowed"
+                            className="flex items-center gap-1.5 text-xs font-bold text-zinc-600 hover:text-foreground disabled:opacity-30 disabled:cursor-not-allowed"
                         >
                             <Plus className="size-3" /> Aggiungi Riga
                         </button>

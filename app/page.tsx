@@ -24,7 +24,7 @@ export default async function BrandHomePage() {
     // Content Configuration Unificata
     const content = {
         subtitle: "Passione, competenza e visione: il cuore pulsante della rappresentanza a Messina. Un network dinamico per darti voce, servizi e opportunità in tutto l'Ateneo.",
-        gradient: "from-[#c12830]/80 via-purple-900/60 to-[#18182e]/90", // Gradient Morgana -> Orum
+        gradient: "from-[#c12830]/80 to-[#18182e]/90", // Gradient Morgana -> Orum
     }
 
     return (
@@ -54,7 +54,7 @@ export default async function BrandHomePage() {
             <section className="py-12 bg-white border-b border-border/50">
                 <div className="container">
                     <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-3xl font-serif font-bold text-black uppercase tracking-tight pl-4 border-l-4 border-primary">
+                        <h2 className="text-3xl font-serif font-bold text-foreground uppercase tracking-tight pl-4 border-l-4 border-primary">
                             Prossimi Eventi
                         </h2>
                         <Link href={`/events`} className="text-xs font-bold uppercase tracking-widest text-primary hover:underline" >
@@ -70,7 +70,7 @@ export default async function BrandHomePage() {
                                 )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
                                 {/* Date Badge */}
-                                <div className="absolute top-4 left-4 z-20 bg-white text-black text-center p-2 min-w-[3.5rem] shadow-sm">
+                                <div className="absolute top-4 left-4 z-20 bg-white text-foreground text-center p-2 min-w-[3.5rem] shadow-sm">
                                     <span className="block text-xs font-bold uppercase text-muted-foreground">
                                         {evento.date.toLocaleDateString('it-IT', { month: 'short' })}
                                     </span>
@@ -134,7 +134,7 @@ export default async function BrandHomePage() {
                                         <span>•</span>
                                         <span>{news.date.toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
                                     </div>
-                                    <h3 className="text-xl font-serif font-bold mb-3 group-hover:text-primary transition-colors leading-snug">
+                                    <h3 className="text-xl font-serif font-bold mb-3 group-hover:text-primary transition-colors leading-snug line-clamp-2">
                                         {news.title}
                                     </h3>
                                     <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-1">

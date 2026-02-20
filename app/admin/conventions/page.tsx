@@ -12,7 +12,7 @@ export default async function AdminConventionsPage() {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-3xl font-bold text-zinc-900">Gestione Convenzioni</h1>
+                    <h1 className="text-3xl font-bold text-foreground">Gestione Convenzioni</h1>
                     <p className="text-zinc-500">Aggiungi, modifica o rimuovi le attività convenzionate per gli studenti.</p>
                 </div>
                 <Link

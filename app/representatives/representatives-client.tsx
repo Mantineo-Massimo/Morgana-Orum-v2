@@ -78,7 +78,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <span className="inline-block py-1 px-3 rounded-full bg-zinc-100 text-zinc-600 text-xs font-bold uppercase tracking-widest mb-4">Biennio 2025-2027</span>
-                    <h1 className="text-4xl md:text-5xl font-bold text-zinc-900 mb-6 font-serif">I Nostri Rappresentanti</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-serif">I Nostri Rappresentanti</h1>
                     <p className="text-lg text-zinc-600 leading-relaxed">
                         Conosci gli studenti eletti che lavorano ogni giorno negli organi collegiali per difendere i tuoi diritti e migliorare l&apos;ateneo.
                     </p>
@@ -99,10 +99,10 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                     className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-20 max-w-5xl mx-auto"
                 >
                     {[
-                        { title: "Voti Raggiunti", value: 7202, icon: Landmark, color: "blue", suffix: "" },
-                        { title: "Totale Eletti", value: grandTotal, icon: Users, color: "indigo", suffix: "" },
-                        { title: "Organi Centrali", value: totalCentral, icon: CentralSectionIcon, color: "purple", suffix: "" },
-                        { title: "Dipartimenti Presenti", value: uniqueDeptCount, icon: Building2, color: "amber", suffix: " su 12" }
+                        { title: "Voti Raggiunti", value: 7202, icon: Landmark, color: "red", suffix: "" },
+                        { title: "Totale Eletti", value: grandTotal, icon: Users, color: "red", suffix: "" },
+                        { title: "Organi Centrali", value: totalCentral, icon: CentralSectionIcon, color: "red", suffix: "" },
+                        { title: "Dipartimenti Presenti", value: uniqueDeptCount, icon: Building2, color: "red", suffix: " su 12" }
                     ].map((stat, i) => {
                         const Icon = stat.icon
                         return (
@@ -117,7 +117,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                 <div className={`size-12 rounded-full bg-${stat.color}-50 text-${stat.color}-500 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`}>
                                     <Icon className="size-6 relative z-10" />
                                 </div>
-                                <p className="text-3xl font-black text-zinc-900 mb-1">
+                                <p className="text-3xl font-black text-foreground mb-1">
                                     <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                                 </p>
                                 <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest">{stat.title}</p>
@@ -131,7 +131,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                     <section className="mb-20">
                         <div className="flex items-center gap-4 mb-8">
                             <div className="h-px bg-zinc-200 flex-1"></div>
-                            <h2 className="text-2xl font-bold text-zinc-800 uppercase tracking-widest flex items-center gap-3">
+                            <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
                                 <Landmark className="size-6 text-zinc-400" /> Organi Nazionali
                             </h2>
                             <div className="h-px bg-zinc-200 flex-1"></div>
@@ -143,7 +143,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                         )}>
                             {nationalBodies.map((body, idx) => (
                                 <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-6 flex flex-col h-full">
-                                    <h3 className="text-xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                                    <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                                         {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400" /> })()}
                                         {body.name}
                                     </h3>
@@ -169,7 +169,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
 
                                                     {/* Info */}
                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                        <h4 className="font-bold text-zinc-900 text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1 group-hover:text-blue-600 transition-colors">{member.name}</h4>
+                                                        <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1 group-hover:text-blue-600 transition-colors">{member.name}</h4>
                                                         <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
                                                             {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                         </p>
@@ -202,7 +202,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                 <section className="mb-20">
                     <div className="flex items-center gap-4 mb-8">
                         <div className="h-px bg-zinc-200 flex-1"></div>
-                        <h2 className="text-2xl font-bold text-zinc-800 uppercase tracking-widest flex items-center gap-3">
+                        <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
                             <CentralSectionIcon className="size-6 text-zinc-400" /> Organi Centrali
                         </h2>
                         <div className="h-px bg-zinc-200 flex-1"></div>
@@ -221,7 +221,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                 )}>
                                     {topBodies.map((body, idx) => (
                                         <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-5 flex flex-col h-full w-full max-w-full overflow-hidden">
-                                            <h3 className="text-base md:text-lg font-bold text-zinc-900 mb-3 md:mb-4 flex items-center gap-2">
+                                            <h3 className="text-base md:text-lg font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
                                                 {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
                                                 <span className="truncate">{body.name}</span>
                                             </h3>
@@ -244,7 +244,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                                                 )}
                                                             </div>
                                                             <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                <h4 className="font-bold text-zinc-900 text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1">{member.name}</h4>
+                                                                <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1">{member.name}</h4>
                                                                 <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
                                                                     {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                                 </p>
@@ -277,7 +277,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                     )}>
                                         {bottomBodies.map((body, idx) => (
                                             <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full w-full max-w-full overflow-hidden">
-                                                <h3 className="text-lg md:text-xl font-bold text-zinc-900 mb-4 md:mb-6 flex items-center gap-2">
+                                                <h3 className="text-lg md:text-xl font-bold text-foreground mb-4 md:mb-6 flex items-center gap-2">
                                                     {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400 shrink-0" /> })()}
                                                     <span className="truncate">{body.name}</span>
                                                 </h3>
@@ -300,7 +300,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                                                     )}
                                                                 </div>
                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                    <h4 className="font-bold text-zinc-900 text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1">{member.name}</h4>
+                                                                    <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1">{member.name}</h4>
                                                                     <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
                                                                         {group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
                                                                     </p>
@@ -334,7 +334,7 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                 <section>
                     <div className="flex items-center gap-4 mb-8">
                         <div className="h-px bg-zinc-200 flex-1"></div>
-                        <h2 className="text-2xl font-bold text-zinc-800 uppercase tracking-widest flex items-center gap-3">
+                        <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
                             <DepartmentSectionIcon className="size-6 text-zinc-400" /> Consigli di Dipartimento
                         </h2>
                         <div className="h-px bg-zinc-200 flex-1"></div>

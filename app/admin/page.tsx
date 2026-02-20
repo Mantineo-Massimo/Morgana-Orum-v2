@@ -23,7 +23,7 @@ export default async function AdminPage() {
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
-            <h1 className="text-3xl font-bold text-zinc-900">Panoramica</h1>
+            <h1 className="text-3xl font-bold text-foreground">Panoramica</h1>
 
             <div className="grid md:grid-cols-4 gap-6">
                 <StatCard
@@ -64,7 +64,7 @@ function StatCard({ label, value, icon: Icon, color, bg }: { label: string, valu
         <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm flex items-center justify-between">
             <div>
                 <p className="text-sm font-medium text-zinc-500 uppercase tracking-wider mb-1">{label}</p>
-                <p className="text-3xl font-black text-zinc-900">{value}</p>
+                <p className="text-3xl font-black text-foreground">{value}</p>
             </div>
             <div className={`p-3 rounded-xl ${bg} ${color}`}>
                 <Icon className="size-6" />

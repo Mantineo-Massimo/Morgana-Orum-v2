@@ -117,7 +117,7 @@ export default function EventsClient({
                 <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
                     Agenda Studentesca
                 </span>
-                <h1 className="text-4xl md:text-6xl font-serif font-black text-zinc-900 mb-4">
+                <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-4">
                     Prossimi Eventi
                 </h1>
                 <p className="text-xl text-zinc-600 font-medium italic">
@@ -131,7 +131,7 @@ export default function EventsClient({
 
                     {/* Search */}
                     <div className="space-y-3">
-                        <h3 className="font-bold text-zinc-900">Ricerca</h3>
+                        <h3 className="font-bold text-foreground">Ricerca</h3>
                         <div className="relative">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
                             <input
@@ -147,7 +147,7 @@ export default function EventsClient({
                     {/* Calendar */}
                     <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                            <h3 className="font-bold text-zinc-900">Calendario</h3>
+                            <h3 className="font-bold text-foreground">Calendario</h3>
                             {selectedDate && (
                                 <button onClick={() => setSelectedDate(null)} className="text-xs text-red-500 hover:text-red-600 font-bold flex items-center">
                                     <X className="size-3 mr-1" /> Reset
@@ -157,7 +157,7 @@ export default function EventsClient({
                         <div className="bg-white p-4 rounded-2xl border border-zinc-100 shadow-sm">
                             <div className="flex items-center justify-between mb-4">
                                 <button onClick={prevMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronLeft className="size-4" /></button>
-                                <span className="font-bold text-sm text-zinc-900">{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
+                                <span className="font-bold text-sm text-foreground">{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
                                 <button onClick={nextMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronRight className="size-4" /></button>
                             </div>
                             <div className="grid grid-cols-7 gap-1 text-center mb-2">
@@ -170,7 +170,7 @@ export default function EventsClient({
                                     if (!d) return <div key={`empty-${i}`} />
                                     const dateObj = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d)
                                     const isSelected = selectedDate?.toDateString() === dateObj.toDateString()
-                                    // is there an event on this day?
+                                    const isToday = new Date().toDateString() === dateObj.toDateString()
                                     const hasEvent = events.some(e => new Date(e.date).toDateString() === dateObj.toDateString())
 
                                     return (
@@ -179,12 +179,16 @@ export default function EventsClient({
                                             onClick={() => setSelectedDate(dateObj)}
                                             className={cn(
                                                 "h-8 rounded-lg text-xs font-bold transition-colors flex flex-col items-center justify-center relative",
-                                                isSelected ? "bg-zinc-900 text-white shadow-md" : "hover:bg-zinc-100 text-zinc-700",
-                                                !isSelected && hasEvent && "text-zinc-900 bg-zinc-50"
+                                                isSelected
+                                                    ? "bg-zinc-900 text-white shadow-md"
+                                                    : isToday
+                                                        ? "bg-red-50 text-red-600 border border-red-100"
+                                                        : "hover:bg-zinc-100 text-zinc-700",
+                                                !isSelected && !isToday && hasEvent && "text-foreground bg-zinc-50"
                                             )}
                                         >
                                             {d}
-                                            {!isSelected && hasEvent && <span className="absolute bottom-1 size-1 rounded-full bg-red-400" />}
+                                            {!isSelected && hasEvent && <span className="absolute bottom-1 size-1 rounded-full bg-red-600" />}
                                         </button>
                                     )
                                 })}
@@ -194,7 +198,7 @@ export default function EventsClient({
 
                     {/* Categories */}
                     <div className="space-y-3">
-                        <h3 className="font-bold text-zinc-900">Categorie</h3>
+                        <h3 className="font-bold text-foreground">Categorie</h3>
                         <div className="space-y-1">
                             {allCategories.map((cat) => (
                                 <button
@@ -203,8 +207,8 @@ export default function EventsClient({
                                     className={cn(
                                         "w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center justify-between group",
                                         activeCategory === cat
-                                            ? "bg-white text-zinc-900 shadow-sm border border-zinc-200"
-                                            : "text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 border border-transparent"
+                                            ? "bg-white text-foreground shadow-sm border border-zinc-200"
+                                            : "text-zinc-500 hover:bg-zinc-100 hover:text-foreground border border-transparent"
                                     )}
                                 >
                                     {cat}
@@ -251,15 +255,6 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
             border: "hover:border-zinc-300"
         }
 
-        // Determina il badge dell'associazione
-        let assocBadge = null;
-        if (item.association?.toLowerCase() === "morgana") {
-            assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#c12830]/90 backdrop-blur-sm text-white shadow-[0_4px_10px_rgb(220,38,38,0.3)] border border-red-500/50">Morgana</span>;
-        } else if (item.association?.toLowerCase() === "orum" || item.association?.toLowerCase() === "o.r.u.m.") {
-            assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#18182e]/90 backdrop-blur-sm text-white shadow-[0_4px_10px_rgb(30,58,138,0.3)] border border-blue-900/50">O.R.U.M.</span>;
-        } else if (item.association?.toLowerCase() === "morgana & orum") {
-            assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-900/90 backdrop-blur-sm text-white shadow-sm border border-purple-800/50">Morgana & O.R.U.M.</span>;
-        }
 
         // Date display
         const dateStr = formatDate(item.date)
@@ -298,23 +293,22 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
                                 <span className="block text-[10px] font-bold uppercase text-zinc-500 tracking-wider">
                                     {new Date(item.date).toLocaleDateString('it-IT', { month: 'short' })}
                                 </span>
-                                <span className="block text-2xl font-black leading-none text-zinc-900 mt-0.5">
+                                <span className="block text-2xl font-black leading-none text-foreground mt-0.5">
                                     {new Date(item.date).toLocaleDateString('it-IT', { day: '2-digit' })}
                                 </span>
                             </div>
                         </div>
 
-                        {/* Association Badge (Top Right) */}
-                        {assocBadge}
 
-                        {/* Category badge (moved to bottom right of image) */}
-                        <div className="absolute bottom-3 right-3 z-20">
-                            <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm text-zinc-800 shadow-sm border border-zinc-100/50">
+                        {/* Category badge (Top Right, consistent with News) */}
+                        <div className="absolute top-4 right-4 z-20">
+                            <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-sm text-white shadow-sm border border-red-400/50">
                                 {item.category}
                             </span>
                         </div>
+
                         {item.isRegistered && (
-                            <div className="absolute top-14 right-4 z-20">
+                            <div className="absolute bottom-3 right-3 z-20">
                                 <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-green-500/95 backdrop-blur-sm text-white shadow-sm flex items-center gap-1 border border-green-400">
                                     <CheckCircle className="size-3" /> Registrato
                                 </span>
@@ -323,7 +317,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
                         {/* CFU badge (moved to bottom left) */}
                         {item.cfuValue && (
                             <div className="absolute bottom-3 left-3 z-20">
-                                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-green-500/90 backdrop-blur-sm text-white shadow-sm flex items-center gap-1">
+                                <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-red-600/90 backdrop-blur-sm text-white shadow-sm flex items-center gap-1">
                                     <Award className="size-3" /> {item.cfuValue} CFU
                                 </span>
                             </div>
@@ -332,7 +326,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
 
                     <div className="p-6 flex flex-col flex-1">
                         {/* Title */}
-                        <h3 className={cn("text-lg font-bold text-zinc-900 mb-2 transition-colors leading-tight group-hover:underline decoration-2 underline-offset-4", theme.title)}>
+                        <h3 className={cn("text-lg font-bold text-foreground mb-2 transition-colors leading-tight group-hover:underline decoration-2 underline-offset-4", theme.title)}>
                             {item.title}
                         </h3>
                         <p className="text-zinc-500 text-sm leading-relaxed line-clamp-2 mb-4">

@@ -42,7 +42,7 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                             )}
                         </div>
 
-                        <h2 className="text-xl md:text-2xl font-bold text-center text-zinc-900 leading-tight mb-2 relative z-10">{representative.name}</h2>
+                        <h2 className="text-xl md:text-2xl font-bold text-center text-foreground leading-tight mb-2 relative z-10">{representative.name}</h2>
                         <span className="inline-block px-3 md:px-4 py-1 md:py-1.5 bg-zinc-200 rounded-full text-[10px] md:text-xs font-bold text-zinc-600 mb-4 md:mb-6 relative z-10">
                             {representative.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : representative.listName}
                         </span>
@@ -73,7 +73,7 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                     {/* Right Side - Details */}
                     <div className="w-full md:w-3/5 p-6 md:p-8">
                         <DialogHeader className="mb-4 md:mb-6 text-left">
-                            <h3 className="text-base md:text-lg font-bold text-zinc-900 flex items-center gap-2">
+                            <h3 className="text-base md:text-lg font-bold text-foreground flex items-center gap-2">
                                 {(() => { const Icon = getRoleIcon(representative.role || ""); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
                                 <span className="line-clamp-2 md:line-clamp-none leading-tight">{representative.role || representative.department || "Rappresentante"}</span>
                             </h3>
@@ -94,7 +94,7 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                         <div className="space-y-6">
                             {representative.description && (
                                 <div>
-                                    <h4 className="text-sm font-bold text-zinc-900 uppercase tracking-wider mb-2">Chi Sono</h4>
+                                    <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Chi Sono</h4>
                                     <p className="text-zinc-600 text-sm leading-relaxed whitespace-pre-line">
                                         {representative.description}
                                     </p>
@@ -103,7 +103,7 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
 
                             {representative.roleDescription && (
                                 <div>
-                                    <h4 className="text-sm font-bold text-zinc-900 uppercase tracking-wider mb-2">Il Mio Ruolo</h4>
+                                    <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Il Mio Ruolo</h4>
                                     <p className="text-zinc-600 text-sm leading-relaxed whitespace-pre-line">
                                         {representative.roleDescription}
                                     </p>

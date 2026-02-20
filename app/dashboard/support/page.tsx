@@ -26,14 +26,14 @@ const faqs = [
 ]
 
 export default function SupportPage() {
-    
+
     const isMorgana = true
     const [openFaq, setOpenFaq] = useState<number | null>(null)
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-                <h1 className="text-3xl font-bold text-zinc-900 mb-2">Assistenza</h1>
+                <h1 className="text-3xl font-bold text-foreground mb-2">Assistenza</h1>
                 <p className="text-zinc-500">Hai bisogno di aiuto? Siamo qui per te.</p>
             </div>
 
@@ -41,7 +41,7 @@ export default function SupportPage() {
                 {/* Contact Form */}
                 <div className="lg:col-span-2 space-y-8">
                     <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-8">
-                        <h2 className="text-xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                        <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                             <Mail className="size-5 text-zinc-400" /> Inviaci un messaggio
                         </h2>
                         <form className="space-y-4">
@@ -72,7 +72,7 @@ export default function SupportPage() {
                             <button className={cn(
                                 "w-full py-4 rounded-xl font-bold text-white transition-all shadow-lg hover:shadow-xl active:scale-[0.98] flex items-center justify-center gap-2",
                                 isMorgana
-                                    ? "bg-gradient-to-r from-orange-500 to-red-600 hover:brightness-110 shadow-orange-500/20"
+                                    ? "bg-zinc-900 hover:bg-black shadow-zinc-900/20"
                                     : "bg-gradient-to-r from-blue-600 to-indigo-700 hover:brightness-110 shadow-blue-600/20"
                             )}>
                                 Invia Messaggio <Send className="size-4" />
@@ -82,7 +82,7 @@ export default function SupportPage() {
 
                     {/* FAQ Section */}
                     <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-8">
-                        <h2 className="text-xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
+                        <h2 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                             <MessageCircle className="size-5 text-zinc-400" /> Domande Frequenti
                         </h2>
                         <div className="space-y-2">
@@ -92,7 +92,7 @@ export default function SupportPage() {
                                         onClick={() => setOpenFaq(openFaq === index ? null : index)}
                                         className="w-full flex items-center justify-between p-4 bg-zinc-50 hover:bg-zinc-100 transition-colors text-left"
                                     >
-                                        <span className="font-bold text-zinc-800 text-sm">{faq.question}</span>
+                                        <span className="font-bold text-foreground text-sm">{faq.question}</span>
                                         {openFaq === index ? <ChevronUp className="size-4 text-zinc-400" /> : <ChevronDown className="size-4 text-zinc-400" />}
                                     </button>
                                     {openFaq === index && (

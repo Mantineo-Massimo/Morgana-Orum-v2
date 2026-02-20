@@ -87,7 +87,7 @@ export default function AdminNewsClient({
         <div className="space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-zinc-900">Gestione Notizie</h1>
+                    <h1 className="text-3xl font-bold text-foreground">Gestione Notizie</h1>
                     <p className="text-zinc-500">Crea, modifica ed elimina notizie e articoli.</p>
                 </div>
                 <Link
@@ -100,7 +100,7 @@ export default function AdminNewsClient({
 
             {/* Category Management */}
             <div className="bg-white border border-zinc-100 rounded-xl p-6 shadow-sm">
-                <h2 className="text-sm font-bold text-zinc-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <h2 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
                     <Tag className="size-4 text-zinc-400" /> Categorie
                 </h2>
                 <div className="flex flex-wrap gap-2 mb-4">
@@ -140,7 +140,7 @@ export default function AdminNewsClient({
 
             {/* Filters */}
             <div className="bg-white border border-zinc-100 rounded-xl p-6 shadow-sm">
-                <h2 className="text-sm font-bold text-zinc-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <h2 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
                     <Filter className="size-4 text-zinc-400" /> Filtri
                     {activeFilters > 0 && (
                         <span className="ml-2 bg-zinc-900 text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center">
@@ -206,7 +206,7 @@ export default function AdminNewsClient({
                 {activeFilters > 0 && (
                     <button
                         onClick={() => { setSearchQuery(""); setFilterCategory(""); setFilterStatus(""); setFilterYear("") }}
-                        className="mt-3 text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
+                        className="mt-3 text-xs font-bold text-zinc-500 hover:text-foreground transition-colors"
                     >
                         ✕ Resetta filtri
                     </button>
@@ -221,7 +221,7 @@ export default function AdminNewsClient({
             {/* Year Groups */}
             {sortedYears.map(year => (
                 <div key={year}>
-                    <h2 className="text-lg font-bold text-zinc-900 mb-3 flex items-center gap-2">
+                    <h2 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
                         <Calendar className="size-4 text-zinc-400" />
                         {year}
                         <span className="text-xs font-medium text-zinc-400 bg-zinc-100 px-2 py-0.5 rounded-full">
@@ -244,7 +244,7 @@ export default function AdminNewsClient({
                                     const status = getNewsStatus(item)
                                     return (
                                         <tr key={item.id} className="hover:bg-zinc-50/50 transition-colors group">
-                                            <td className="px-6 py-4 font-medium text-zinc-900 flex items-center gap-3">
+                                            <td className="px-6 py-4 font-medium text-foreground flex items-center gap-3">
                                                 <div className="size-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 overflow-hidden flex-shrink-0 relative">
                                                     {item.image ? (
                                                         <Image src={item.image} alt={item.title} fill className="object-cover" />
@@ -287,7 +287,7 @@ export default function AdminNewsClient({
                                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <Link
                                                         href={`/admin/news/${item.id}/edit`}
-                                                        className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-colors"
+                                                        className="p-2 text-zinc-400 hover:text-foreground hover:bg-zinc-100 rounded-lg transition-colors"
                                                         title="Modifica"
                                                     >
                                                         <Pencil className="size-4" />

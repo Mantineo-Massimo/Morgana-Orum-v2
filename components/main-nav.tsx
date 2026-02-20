@@ -54,10 +54,10 @@ export function MainNav({
         },
     ]
 
-    const textColor = isScrolled ? "text-muted-foreground hover:text-primary" : "text-white/80 hover:text-white"
+    const textColor = isScrolled ? "text-foreground/70 hover:text-primary" : "text-white/80 hover:text-white"
     const activeColor = isScrolled ? "text-primary after:bg-primary" : "text-white after:bg-white"
     const hoverLineColor = isScrolled ? "after:bg-primary" : "after:bg-white"
-    const brandColor = "bg-zinc-900" // Colore neutro scuro per pulsanti
+    const brandColor = "bg-primary" // Morgana Red per pulsanti
 
     return (
         <>
@@ -128,7 +128,7 @@ export function MainNav({
                 <div className="fixed inset-0 z-[100] bg-white flex flex-col lg:hidden animate-in fade-in zoom-in-95 duration-200">
                     <div className="flex items-center justify-end p-6 h-20 md:h-24">
                         <button
-                            className="p-2 text-zinc-900 rounded-full hover:bg-zinc-100 transition-colors"
+                            className="p-2 text-foreground rounded-full hover:bg-zinc-100 transition-colors"
                             onClick={() => setIsOpen(false)}
                             aria-label="Close Menu"
                         >
@@ -145,7 +145,7 @@ export function MainNav({
                                     onClick={() => setIsOpen(false)}
                                     className={cn(
                                         "text-3xl font-black uppercase tracking-widest transition-colors",
-                                        route.active ? "text-zinc-900" : "text-zinc-400 hover:text-zinc-600"
+                                        route.active ? "text-foreground" : "text-zinc-400 hover:text-zinc-600"
                                     )}
                                 >
                                     {route.label}
@@ -194,7 +194,7 @@ export function MainNav({
                                 <Link
                                     href={`#`}
                                     onClick={() => setIsOpen(false)}
-                                    className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-zinc-100 text-zinc-900 font-bold uppercase tracking-widest text-sm transition-colors"
+                                    className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-zinc-100 text-foreground font-bold uppercase tracking-widest text-sm transition-colors"
                                 >
                                     <Mail className="size-5" /> Newsletter
                                 </Link>

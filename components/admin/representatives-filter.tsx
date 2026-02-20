@@ -57,7 +57,7 @@ export function RepresentativesFilter() {
                             setSearchTerm('')
                             handleSearch('')
                         }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-900"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-foreground"
                     >
                         <X className="size-4" />
                     </button>

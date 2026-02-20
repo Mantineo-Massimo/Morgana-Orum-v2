@@ -29,7 +29,7 @@ export default async function AdminRepresentativesPage({
         <div className="space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-zinc-900">Gestione Rappresentanti</h1>
+                    <h1 className="text-3xl font-bold text-foreground">Gestione Rappresentanti</h1>
                     <p className="text-zinc-500">Gestisci l&apos;elenco dei rappresentanti eletti negli organi.</p>
                 </div>
                 <Link
@@ -57,7 +57,7 @@ export default async function AdminRepresentativesPage({
                     <tbody className="divide-y divide-zinc-50">
                         {reps.map((rep) => (
                             <tr key={rep.id} className="hover:bg-zinc-50/50 transition-colors group">
-                                <td className="px-6 py-4 font-medium text-zinc-900 flex items-center gap-3">
+                                <td className="px-6 py-4 font-medium text-foreground flex items-center gap-3">
                                     <div className="size-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 overflow-hidden flex-shrink-0 relative">
                                         {rep.image ? (
                                             <Image src={rep.image} alt={rep.name} fill className="object-cover" />
@@ -94,7 +94,7 @@ export default async function AdminRepresentativesPage({
                                     <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Link
                                             href={`/admin/representatives/${rep.id}/edit`}
-                                            className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-colors"
+                                            className="p-2 text-zinc-400 hover:text-foreground hover:bg-zinc-100 rounded-lg transition-colors"
                                             title="Modifica"
                                         >
                                             <Pencil className="size-4" />

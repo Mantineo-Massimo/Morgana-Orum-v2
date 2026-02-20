@@ -59,7 +59,7 @@ export default function NewsForm({
             image: imageUrl || null,
             date: formData.get("date") as string || undefined,
             published: formData.get("published") === "on",
-            association: formData.get("association") as string,
+            association: "Morgana & O.R.U.M.",
         }
 
         const result = isEditing
@@ -98,11 +98,11 @@ export default function NewsForm({
             <div className="mb-8">
                 <Link
                     href={`/admin/news`}
-                    className="text-zinc-500 hover:text-zinc-900 flex items-center gap-2 text-sm font-medium mb-4"
+                    className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
                 >
                     <ArrowLeft className="size-4" /> Torna alla lista
                 </Link>
-                <h1 className="text-3xl font-bold text-zinc-900">
+                <h1 className="text-3xl font-bold text-foreground">
                     {isEditing ? "Modifica Notizia" : "Nuova Notizia"}
                 </h1>
                 <p className="text-zinc-500">
@@ -199,6 +199,8 @@ export default function NewsForm({
                         />
                     </div>
 
+
+
                     {/* Content */}
                     <div>
                         <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (Opzionale)</label>
@@ -246,20 +248,7 @@ export default function NewsForm({
                         )}
                     </div>
 
-                    {/* Association */}
-                    <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Associazione Pubblicante</label>
-                        <select
-                            name="association"
-                            defaultValue={initialData?.association || "Morgana & O.R.U.M."}
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all bg-white"
-                            required
-                        >
-                            <option value="Morgana">Morgana</option>
-                            <option value="O.R.U.M.">O.R.U.M.</option>
-                            <option value="Morgana & O.R.U.M.">Morgana & O.R.U.M.</option>
-                        </select>
-                    </div>
+
 
                     {/* Date - Italian format */}
                     <div>

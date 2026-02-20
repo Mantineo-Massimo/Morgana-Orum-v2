@@ -40,7 +40,7 @@ export default function Page() {
         <div className="min-h-screen grid items-center justify-center bg-zinc-50 p-6">
             <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-zinc-100 my-10">
                 <div className="text-center mb-8">
-                    <h1 className="text-xl font-bold text-zinc-900">Unisciti alla community di Orum e Morgana!</h1>
+                    <h1 className="text-xl font-bold text-foreground">Unisciti alla community di Orum e Morgana!</h1>
                     <p className="text-sm text-zinc-500 mt-1">Sempre dalla parte dello studente</p>
                 </div>
 
@@ -131,7 +131,7 @@ export default function Page() {
                 </form>
 
                 <p className="text-center text-xs text-zinc-400 mt-6">
-                    Hai già un account? <Link href={`/${"morgana"}/login`} className="underline hover:text-zinc-900">Accedi</Link>
+                    Hai già un account? <Link href={`/${"morgana"}/login`} className="underline hover:text-foreground">Accedi</Link>
                 </p>
             </div>
         </div>

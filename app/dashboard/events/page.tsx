@@ -49,7 +49,7 @@ export default function DashboardEventsPage() {
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-                <h1 className="text-3xl font-bold text-zinc-900 mb-2">Prenotazioni</h1>
+                <h1 className="text-3xl font-bold text-foreground mb-2">Prenotazioni</h1>
                 <p className="text-zinc-500">Lo storico delle tue partecipazioni e i prossimi appuntamenti.</p>
             </div>
 
@@ -57,7 +57,7 @@ export default function DashboardEventsPage() {
                 {userEvents.length === 0 ? (
                     <div className="bg-white rounded-2xl border-2 border-dashed border-zinc-100 p-12 text-center">
                         <Calendar className="size-12 mx-auto mb-4 text-zinc-200" />
-                        <h3 className="text-lg font-bold text-zinc-900 mb-1">Ancora nulla qui</h3>
+                        <h3 className="text-lg font-bold text-foreground mb-1">Ancora nulla qui</h3>
                         <p className="text-zinc-500 mb-6">Non hai ancora effettuato prenotazioni per i prossimi eventi.</p>
                         <Link
                             href={`/events`}
@@ -78,19 +78,19 @@ export default function DashboardEventsPage() {
                                     <div className={cn(
                                         "size-12 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110",
                                         event.status === "CFU Convalidati" ? "bg-green-50 text-green-600" :
-                                            event.status === "Partecipato" ? "bg-blue-5 text-blue-600" : "bg-orange-5 text-orange-600"
+                                            event.status === "Partecipato" ? "bg-blue-5 text-blue-600" : "bg-zinc-100 text-zinc-600"
                                     )}>
                                         {event.status === "CFU Convalidati" ? <Award className="size-6" /> :
                                             event.status === "Partecipato" ? <CheckCircle className="size-6" /> : <Clock className="size-6" />}
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-zinc-900 group-hover:text-primary transition-colors">{event.title}</h4>
+                                        <h4 className="font-bold text-foreground group-hover:text-primary transition-colors">{event.title}</h4>
                                         <div className="flex items-center gap-4 mt-1">
                                             <span className="text-xs text-zinc-400 flex items-center gap-1.5 font-medium">
                                                 <Calendar className="size-3.5" /> {event.date}
                                             </span>
                                             {event.points && (
-                                                <span className="text-xs font-bold text-zinc-900 bg-zinc-100 px-2 py-0.5 rounded-md flex items-center gap-1">
+                                                <span className="text-xs font-bold text-foreground bg-zinc-100 px-2 py-0.5 rounded-md flex items-center gap-1">
                                                     {event.points} CFU
                                                 </span>
                                             )}
@@ -102,7 +102,7 @@ export default function DashboardEventsPage() {
                                     <span className={cn(
                                         "hidden sm:inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider",
                                         event.status === "CFU Convalidati" ? "bg-green-100 text-green-700" :
-                                            event.status === "Partecipato" ? "bg-blue-100 text-blue-700" : "bg-orange-100 text-orange-700"
+                                            event.status === "Partecipato" ? "bg-blue-100 text-blue-700" : "bg-zinc-100 text-zinc-600"
                                     )}>
                                         {event.status}
                                     </span>

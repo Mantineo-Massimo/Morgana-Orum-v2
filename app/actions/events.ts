@@ -288,3 +288,59 @@ export async function deleteEvent(id: number) {
         return { success: false, error: "Errore nell'eliminazione dell'evento." }
     }
 }
+
+export async function getEventRegistrations(eventId: number) {
+    try {
+        const registrations = await prisma.registration.findMany({
+            where: { eventId },
+            include: {
+                user: {
+                    select: {
+                        name: true,
+                        surname: true,
+                        email: true,
+                        matricola: true,
+                        department: true,
+                        degreeCourse: true
+                    }
+                }
+            },
+            orderBy: { createdAt: "asc" }
+        })
+        return registrations.map(r => ({
+            ...r.user,
+            status: r.status,
+            registeredAt: r.createdAt
+        }))
+    } catch (error) {
+        console.error("Get registrations error:", error)
+        return []
+    }
+}
+
+export async function duplicateEvent(eventId: number) {
+    try {
+        const event = await prisma.event.findUnique({
+            where: { id: eventId }
+        })
+
+        if (!event) return { success: false, message: "Evento non trovato" }
+
+        const { id, ...eventData } = event
+
+        await prisma.event.create({
+            data: {
+                ...eventData,
+                title: `${event.title} (Copia)`,
+                bookingOpen: false, // Per sicurezza disabilitiamo la copia
+            }
+        })
+
+        revalidatePath("/admin/events")
+        revalidatePath("/events")
+        return { success: true }
+    } catch (error) {
+        console.error("Duplicate event error:", error)
+        return { success: false }
+    }
+}

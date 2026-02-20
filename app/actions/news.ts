@@ -7,7 +7,7 @@ import prisma from "@/lib/prisma"
 
 const newsSchema = z.object({
     title: z.string().min(1, "Il titolo è obbligatorio"),
-    description: z.string().min(1, "La descrizione è obbligatoria"),
+    description: z.string().optional().nullable().or(z.literal("")),
     content: z.string().optional().nullable().or(z.literal("")),
     category: z.string().min(1, "La categoria è obbligatoria"),
     tags: z.string().optional().nullable().or(z.literal("")),
@@ -24,7 +24,7 @@ export async function createNews(data: z.infer<typeof newsSchema>) {
         await prisma.news.create({
             data: {
                 title: validData.title,
-                description: validData.description,
+                description: validData.description || "",
                 content: validData.content || null,
                 category: validData.category,
                 tags: validData.tags || null,

@@ -86,7 +86,7 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                                     )}
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold text-zinc-900">{c.name}</div>
+                                                    <div className="font-bold text-foreground">{c.name}</div>
                                                     <div className="text-[10px] text-zinc-400 uppercase tracking-wide">{c.category}</div>
                                                 </div>
                                             </div>
@@ -106,7 +106,7 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                         <td className="px-6 py-4 text-right whitespace-nowrap space-x-2">
                                             <Link
                                                 href={`/admin/conventions/${c.id}/edit`}
-                                                className="inline-flex p-2 text-zinc-400 hover:text-zinc-900 hover:bg-white rounded-lg transition-all border border-transparent hover:border-zinc-200"
+                                                className="inline-flex p-2 text-zinc-400 hover:text-foreground hover:bg-white rounded-lg transition-all border border-transparent hover:border-zinc-200"
                                             >
                                                 <Edit className="size-4" />
                                             </Link>

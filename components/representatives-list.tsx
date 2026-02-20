@@ -25,7 +25,7 @@ function DepartmentCard({ dept }: { dept: any }) {
                 className="w-full flex items-center justify-between p-6 hover:bg-zinc-50 transition-colors text-left"
             >
                 <div>
-                    <h3 className="text-lg font-bold text-zinc-900">{dept.name}</h3>
+                    <h3 className="text-lg font-bold text-foreground">{dept.name}</h3>
                     <p className="text-sm text-zinc-500 mt-1">
                         {dept.groups.reduce((acc: any, curr: any) => acc + curr.members.length, 0)} Eletti
                     </p>
@@ -58,13 +58,13 @@ function DepartmentCard({ dept }: { dept: any }) {
                                     </div>
                                     <h4 className={cn(
                                         "font-bold text-lg",
-                                        "text-zinc-900"
+                                        "text-foreground"
                                     )}>{group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}</h4>
                                 </div>
                                 <ul className="space-y-3">
                                     {group.members.map((member: any, memIdx: number) => (
                                         <li key={memIdx} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-2 rounded-lg hover:bg-white hover:shadow-sm border border-transparent hover:border-zinc-100 transition-all">
-                                            <span className="text-sm font-medium text-zinc-800">{member.name}</span>
+                                            <span className="text-sm font-medium text-foreground">{member.name}</span>
 
                                             <div className="flex gap-2">
                                                 {member.email && (

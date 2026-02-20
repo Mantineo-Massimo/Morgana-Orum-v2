@@ -111,11 +111,11 @@ export default function RepresentativeForm({
             <div className="mb-8">
                 <Link
                     href={`/admin/representatives`}
-                    className="text-zinc-500 hover:text-zinc-900 flex items-center gap-2 text-sm font-medium mb-4"
+                    className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
                 >
                     <ArrowLeft className="size-4" /> Torna alla lista
                 </Link>
-                <h1 className="text-3xl font-bold text-zinc-900">
+                <h1 className="text-3xl font-bold text-foreground">
                     {isEditing ? "Modifica Rappresentante" : "Nuovo Rappresentante"}
                 </h1>
                 <p className="text-zinc-500">

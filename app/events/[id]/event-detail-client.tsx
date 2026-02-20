@@ -57,17 +57,7 @@ export default function EventDetailClient({
     isLoggedIn: boolean
     userEmail: string | null
 }) {
-    const assoc = event.association?.toLowerCase() || "morgana & orum"
-    let themeBg = "bg-purple-900"
-    let themeText = "text-purple-900"
-    if (assoc === "morgana") {
-        themeBg = "bg-[#c12830]"
-        themeText = "text-[#c12830]"
-    } else if (assoc === "orum" || assoc === "o.r.u.m.") {
-        themeBg = "bg-[#18182e]"
-        themeText = "text-[#18182e]"
-    }
-    const theme = { bg: themeBg, text: themeText }
+    const theme = { bg: "bg-zinc-900", text: "text-foreground" }
 
     const [isRegistering, setIsRegistering] = useState(false)
     const [registrationStatus, setRegistrationStatus] = useState<"idle" | "success" | "error">(event.isRegistered ? "success" : "idle")
@@ -79,9 +69,21 @@ export default function EventDetailClient({
     const booking = isBookingActive(event)
 
     // Parse attachments
-    const attachmentList = event.attachments
-        ? event.attachments.split(',').map(a => a.trim()).filter(Boolean)
-        : []
+    type AttachmentItem = { name: string; url: string }
+    const attachmentList: AttachmentItem[] = (() => {
+        if (!event.attachments) return []
+        try {
+            const parsed = JSON.parse(event.attachments)
+            if (Array.isArray(parsed)) return parsed
+        } catch (e) {
+            // Legacy format
+            return event.attachments.split(',').map(url => ({
+                name: url.split('/').pop() || "Documento",
+                url: url.trim()
+            })).filter(a => a.url)
+        }
+        return []
+    })()
 
     async function handleRegister() {
         setIsRegistering(true)
@@ -148,7 +150,7 @@ export default function EventDetailClient({
                     <div className="lg:col-span-2 space-y-8">
                         {/* Description */}
                         <div>
-                            <h2 className="text-2xl font-bold text-zinc-900 mb-4">Descrizione</h2>
+                            <h2 className="text-2xl font-bold text-foreground mb-4">Descrizione</h2>
                             <p className="text-lg text-zinc-600 leading-relaxed text-pretty">
                                 {event.description}
                             </p>
@@ -157,7 +159,7 @@ export default function EventDetailClient({
                         {/* Details */}
                         {event.details && (
                             <div>
-                                <h2 className="text-2xl font-bold text-zinc-900 mb-4">Dettagli</h2>
+                                <h2 className="text-2xl font-bold text-foreground mb-4">Dettagli</h2>
                                 <div className="bg-zinc-50 rounded-2xl p-6 border border-zinc-100">
                                     <div className="text-sm text-zinc-700 leading-relaxed whitespace-pre-line">
                                         {event.details}
@@ -170,21 +172,25 @@ export default function EventDetailClient({
                         {/* Attachments */}
                         {attachmentList.length > 0 && (
                             <div>
-                                <h2 className="text-2xl font-bold text-zinc-900 mb-4">Documenti & Programma</h2>
-                                <div className="space-y-2">
-                                    {attachmentList.map((attachment, i) => {
-                                        const fileName = attachment.split('/').pop() || `Documento ${i + 1}`
+                                <h2 className="text-2xl font-bold text-foreground mb-4">Documenti & Programma</h2>
+                                <div className="space-y-3">
+                                    {attachmentList.map((att, i) => {
                                         return (
                                             <a
                                                 key={i}
-                                                href={attachment}
+                                                href={att.url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-3 p-4 bg-zinc-50 rounded-xl border border-zinc-100 hover:border-zinc-300 hover:shadow-sm transition-all group"
+                                                className="flex items-center gap-4 p-5 bg-zinc-50 rounded-2xl border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all group"
                                             >
-                                                <FileText className="size-5 text-zinc-400 group-hover:text-zinc-600" />
-                                                <span className="text-sm font-medium text-zinc-700 group-hover:text-zinc-900 flex-1">{fileName}</span>
-                                                <Download className="size-4 text-zinc-400 group-hover:text-zinc-600" />
+                                                <div className="size-10 rounded-xl bg-white border border-zinc-100 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                                    <FileText className="size-5 text-zinc-400 group-hover:text-zinc-600" />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <span className="block text-sm font-bold text-foreground truncate tracking-tight">{att.name}</span>
+                                                    <span className="block text-[10px] text-zinc-400 font-bold uppercase tracking-widest mt-0.5">{att.url.split('.').pop()?.toUpperCase()} Document</span>
+                                                </div>
+                                                <Download className="size-5 text-zinc-300 group-hover:text-foreground group-hover:translate-y-0.5 transition-all" />
                                             </a>
                                         )
                                     })}
@@ -196,7 +202,7 @@ export default function EventDetailClient({
                     {/* Sidebar Action */}
                     <div className="lg:col-span-1">
                         <div className="sticky top-32 bg-zinc-50 border border-zinc-200 rounded-2xl p-6 text-center space-y-4">
-                            <h3 className="text-lg font-bold text-zinc-900">Partecipa all&apos;evento</h3>
+                            <h3 className="text-lg font-bold text-foreground">Partecipa all&apos;evento</h3>
 
                             {!isLoggedIn ? (
                                 /* Not logged in — prompt to login */
@@ -257,16 +263,16 @@ export default function EventDetailClient({
 
                         {/* Info summary */}
                         <div className="bg-zinc-50 rounded-2xl p-6 border border-zinc-100">
-                            <h3 className="font-bold text-zinc-900 mb-3">Informazioni</h3>
+                            <h3 className="font-bold text-foreground mb-3">Informazioni</h3>
                             <ul className="space-y-2 text-sm text-zinc-600">
-                                <li className="flex items-center gap-2"><Calendar className="size-4 text-zinc-400" /> <strong className="text-zinc-800">Data:</strong> {formattedDate}{hasEndDate && ` – ${formatDate(event.endDate!)}`}</li>
-                                <li className="flex items-center gap-2"><Clock className="size-4 text-zinc-400" /> <strong className="text-zinc-800">Orario:</strong> {formattedTime}</li>
-                                <li className="flex items-center gap-2"><MapPin className="size-4 text-zinc-400" /> <strong className="text-zinc-800">Luogo:</strong> {event.location}</li>
+                                <li className="flex items-center gap-2"><Calendar className="size-4 text-zinc-400" /> <strong className="text-foreground">Data:</strong> {formattedDate}{hasEndDate && ` – ${formatDate(event.endDate!)}`}</li>
+                                <li className="flex items-center gap-2"><Clock className="size-4 text-zinc-400" /> <strong className="text-foreground">Orario:</strong> {formattedTime}</li>
+                                <li className="flex items-center gap-2"><MapPin className="size-4 text-zinc-400" /> <strong className="text-foreground">Luogo:</strong> {event.location}</li>
                                 {event.cfuValue && (
                                     <li className="flex items-start gap-2">
                                         <CheckCircle className="size-4 text-green-500 mt-0.5 shrink-0" />
                                         <div>
-                                            <strong className="text-zinc-800">CFU:</strong> {event.cfuValue}
+                                            <strong className="text-foreground">CFU:</strong> {event.cfuValue}
                                             <div className="text-xs text-zinc-500 mt-0.5">
                                                 ({event.cfuType === 'SENATO'
                                                     ? 'Valido per tutto l\'ateneo'

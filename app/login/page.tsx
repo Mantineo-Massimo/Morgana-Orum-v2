@@ -37,7 +37,7 @@ export default function Page() {
         <div className="min-h-screen grid items-center justify-center bg-zinc-50 p-6">
             <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-zinc-100">
                 <div className="text-center mb-8">
-                    <h1 className="text-2xl font-bold text-zinc-900">Accedi</h1>
+                    <h1 className="text-2xl font-bold text-foreground">Accedi</h1>
                     <p className="text-sm text-zinc-500">Benvenuto nella tua area riservata.</p>
                 </div>
 
@@ -64,7 +64,7 @@ export default function Page() {
                         <div className="flex justify-end mt-1">
                             <Link
                                 href={`/forgot-password`}
-                                className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider hover:text-zinc-900 transition-colors"
+                                className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider hover:text-foreground transition-colors"
                             >
                                 Password dimenticata?
                             </Link>
@@ -88,7 +88,7 @@ export default function Page() {
                     </p>
                     <Link
                         href={`/register`}
-                        className="block w-full py-3 border-2 border-zinc-200 hover:border-zinc-900 text-zinc-600 hover:text-zinc-900 font-bold rounded-xl transition-all"
+                        className="block w-full py-3 border-2 border-zinc-200 hover:border-zinc-900 text-zinc-600 hover:text-foreground font-bold rounded-xl transition-all"
                     >
                         Registrati
                     </Link>

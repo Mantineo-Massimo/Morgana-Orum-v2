@@ -115,13 +115,13 @@ export default function OffersClient({ initialData }: { initialData: Convention[
                                     </div>
                                 </div>
 
-                                <h3 className="text-lg font-bold text-zinc-900 mb-1">{item.name}</h3>
+                                <h3 className="text-lg font-bold text-foreground mb-1">{item.name}</h3>
 
                                 {item.discounts.length > 0 && (
                                     <div className="mt-4 space-y-2">
                                         <button
                                             onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
-                                            className="flex items-center justify-between w-full text-left p-3 rounded-xl bg-orange-50/50 text-orange-700 hover:bg-orange-50 transition-colors group"
+                                            className="flex items-center justify-between w-full text-left p-3 rounded-xl bg-zinc-100 text-foreground hover:bg-zinc-200 transition-colors group"
                                         >
                                             <div className="flex items-center gap-2">
                                                 <Tag className="size-4" />
@@ -131,10 +131,10 @@ export default function OffersClient({ initialData }: { initialData: Convention[
                                         </button>
 
                                         {expandedId === item.id && (
-                                            <div className="animate-in fade-in slide-in-from-top-2 p-3 space-y-2 border-l-2 border-orange-200 ml-2">
+                                            <div className="animate-in fade-in slide-in-from-top-2 p-3 space-y-2 border-l-2 border-zinc-200 ml-2">
                                                 {item.discounts.map((discount, idx) => (
                                                     <div key={idx} className="flex gap-2 items-start text-sm text-zinc-600">
-                                                        <div className="size-1.5 rounded-full bg-orange-400 mt-1.5 shrink-0" />
+                                                        <div className="size-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
                                                         <p className="font-medium">{discount}</p>
                                                     </div>
                                                 ))}
@@ -156,7 +156,7 @@ export default function OffersClient({ initialData }: { initialData: Convention[
                                     </a>
                                 )}
                                 {item.website && (
-                                    <a href={item.website} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-white rounded-lg text-zinc-400 hover:text-zinc-900 transition-all shadow-sm ml-auto">
+                                    <a href={item.website} target="_blank" rel="noopener noreferrer" className="p-2 hover:bg-white rounded-lg text-zinc-400 hover:text-foreground transition-all shadow-sm ml-auto">
                                         <Globe className="size-4" />
                                     </a>
                                 )}

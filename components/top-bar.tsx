@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 
 export function TopBar() {
     // Unificato: Colore neutro scuro per la top bar
-    const bgColor = "bg-zinc-950"
+    const bgColor = "bg-zinc-900"
 
     return (
         <div id="site-topbar" className={cn("w-full text-white py-2 px-4 shadow-sm", bgColor)}>

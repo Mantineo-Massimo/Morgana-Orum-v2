@@ -71,7 +71,7 @@ export default function AboutPage() {
             {/* 1. Common Hero Section */}
             <section className="relative pt-32 pb-20 px-6 bg-zinc-50 overflow-hidden">
                 <div className="container mx-auto text-center max-w-4xl relative z-10">
-                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-zinc-900">
+                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         Chi Siamo
                     </h1>
                     <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
@@ -136,7 +136,7 @@ export default function AboutPage() {
                             {/* Story */}
                             <div className="grid md:grid-cols-2 gap-12 items-center mb-24">
                                 <div className="space-y-6">
-                                    <h3 className="text-2xl font-bold text-zinc-900">La Nostra Storia</h3>
+                                    <h3 className="text-2xl font-bold text-foreground">La Nostra Storia</h3>
                                     <p className="text-lg text-zinc-600 leading-relaxed">
                                         {content[activeTab].story}
                                     </p>
@@ -161,7 +161,7 @@ export default function AboutPage() {
                                         <div className={cn("h-12 w-12 rounded-lg flex items-center justify-center mb-6 text-white", bgBrandColor)}>
                                             <item.icon className="size-6" />
                                         </div>
-                                        <h4 className="text-xl font-bold mb-3 text-zinc-900">{item.title}</h4>
+                                        <h4 className="text-xl font-bold mb-3 text-foreground">{item.title}</h4>
                                         <p className="text-zinc-600 leading-relaxed text-sm">
                                             {item.desc}
                                         </p>
