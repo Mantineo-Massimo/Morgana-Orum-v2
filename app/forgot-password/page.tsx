@@ -18,8 +18,7 @@ export default function Page() {
 
         const formData = new FormData(event.currentTarget)
         const email = formData.get("email") as string
-
-        const result = await requestPasswordReset(email, "morgana") // Temporaneo finché non unifichiamo i template email
+        const result = await requestPasswordReset(email) // Temporaneo finché non unifichiamo i template email
 
         if (result.success) {
             setSuccess(true)

@@ -20,7 +20,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
     }, [])
 
     // Brand Colors Unificati
-    const brandColorClass = "bg-[linear-gradient(45deg,#c12830,#18182e)]"
+    const brandColorClass = "bg-[linear-gradient(45deg,#c12830_0%,#18182e_50%)]"
 
     if (!hasMounted) return null
 
@@ -60,7 +60,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     {/* Logos Container */}
                     <div
                         className={cn(
-                            "relative transition-all duration-500 flex items-center bg-white/10 backdrop-blur-sm p-2 rounded-2xl border border-white/20",
+                            "relative transition-all duration-500 flex items-center bg-white/10 backdrop-blur-sm p-2 rounded-2xl",
                             isScrolled ? "h-14 gap-2" : "h-20 md:h-28 gap-4"
                         )}
                     >
