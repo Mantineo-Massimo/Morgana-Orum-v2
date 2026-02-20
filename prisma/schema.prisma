@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL") // <--- AGGIUNGI QUESTA RIGA
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  email         String         @unique
+  password      String         
+  name          String         // Nome
+  surname       String         // Cognome (New)
+  birthDate     DateTime       // Data di Nascita (New)
+  matricola     String         @unique
+  department    String         // Dipartimento (New)
+  degreeCourse  String         // Corso di Laurea (New)
+  isFuorisede   Boolean        // Residente/Fuorisede (New)
+  
+  role          String         @default("USER") // USER, ADMIN
+  association   String         // Morgana, Orum, Insieme
+  qrToken       String         @unique @default(uuid())
+  
+  // Password Reset Fields
+  resetToken       String?   @unique
+  resetTokenExpiry DateTime?
+
+  createdAt     DateTime       @default(now())
+  
+  registrations Registration[]
+}
+
+model Event {
+  id            Int            @id @default(autoincrement())
+  title         String
+  description   String
+  details       String?        // Dettagli aggiuntivi (testo lungo)
+  date          DateTime
+  endDate       DateTime?      // Per eventi multi-giorno
+  location      String
+  cfuValue      String?        // Es. "1", "0.5"
+  cfuType       String?        // "SENATO" oppure "DIPARTIMENTO"
+  cfuDepartments String?       // Lista di dipartimenti separati da virgola
+  image         String?        // Copertina evento
+  category      String         // Seminari CFU, Sociale, etc.
+  bookingOpen   Boolean        @default(true)  // Prenotazione aperta?
+  bookingStart  DateTime?      // Quando apre la prenotazione
+  bookingEnd    DateTime?      // Quando chiude la prenotazione
+  attachments   String?        // URL/percorsi file separati da virgola
+  association   String         @default("Insieme") // Morgana, Orum, Insieme (per UI badges)
+  
+  registrations Registration[]
+
+  @@index([date])
+  @@index([category])
+}
+
+model Registration {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  eventId   Int
+  status    String   @default("REGISTERED") // REGISTERED, ATTENDED, CFU_VALIDATED
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+  event     Event    @relation(fields: [eventId], references: [id])
+
+  @@unique([userId, eventId])
+}
+
+model Representative {
+  id             String  @id @default(uuid())
+  name           String
+  listName       String  // MORGANA, O.R.U.M.
+  category       String  // CENTRAL, DEPARTMENT
+  department     String? // Nome del dipartimento o null per Organi Centrali
+  role           String? // Specific role if needed (e.g. "Senato Accademico")
+  term           String  @default("2025-2027") // Biennio di riferimento
+  
+  image          String?
+  email          String?
+  phone          String? // Telefono (New)
+  instagram      String?
+  description    String? // Descrizione persona (New)
+  roleDescription String? // Descrizione ruolo (New)
+  
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model News {
+  id          String   @id @default(uuid())
+  title       String
+  description String   // Short summary
+  content     String?  // Full article content (optional)
+  category    String   // Solidarietà, Rappresentanza, Cultura, Vita Universitaria
+  tags        String?  // Comma-separated tags
+  image       String?  // Image URL
+  date        DateTime @default(now())
+  published   Boolean  @default(true)
+  association String   @default("Insieme") // Morgana, Orum, Insieme (per UI badges)
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
+  @@index([category])
+}
+
+model Convention {
+  id            String   @id @default(uuid())
+  name          String
+  category      String
+  social        String?
+  logo          String?
+  website       String?
+  location      String   // Messina, Melilli
+  discounts     String[] // Array di scontistiche
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([location])
+  @@index([category])
+}
+
+model NewsCategory {
+  id   String @id @default(uuid())
+  name String @unique
+}
