@@ -59,10 +59,10 @@ export default function DashboardPage() {
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
             {/* Welcome Section */}
-            <div className="flex items-end justify-between">
+            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-zinc-900 mb-2 leading-tight">Panoramica</h1>
-                    <p className="text-zinc-500">Benvenuto nella tua area riservata.</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold text-zinc-900 mb-1 leading-tight">Panoramica</h1>
+                    <p className="text-sm sm:text-base text-zinc-500">Benvenuto nella tua area riservata.</p>
                 </div>
                 {userData.role === "ADMIN" && (
                     <Link
@@ -74,34 +74,34 @@ export default function DashboardPage() {
                 )}
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
-                    <div className="flex items-center gap-3 mb-2">
-                        <MessageSquare className="size-5 text-blue-500" />
-                        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Messaggi</span>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                        <MessageSquare className="size-4 sm:size-5 text-blue-500" />
+                        <span className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Messaggi</span>
                     </div>
-                    <p className="text-3xl font-black text-zinc-900">0</p>
+                    <p className="text-2xl sm:text-3xl font-black text-zinc-900">0</p>
                 </div>
-                <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
-                    <div className="flex items-center gap-3 mb-2">
-                        <Ticket className="size-5 text-zinc-900" />
-                        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Eventi Seguiti</span>
+                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                        <Ticket className="size-4 sm:size-5 text-zinc-900" />
+                        <span className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Seguiti</span>
                     </div>
-                    <p className="text-3xl font-black text-zinc-900">{userData.stats.attendedCount}</p>
+                    <p className="text-2xl sm:text-3xl font-black text-zinc-900">{userData.stats.attendedCount}</p>
                 </div>
-                <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
-                    <div className="flex items-center gap-3 mb-2">
-                        <Calendar className="size-5 text-zinc-900" />
-                        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Prenotazioni</span>
+                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                        <Calendar className="size-4 sm:size-5 text-zinc-900" />
+                        <span className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Prenotati</span>
                     </div>
-                    <p className="text-3xl font-black text-zinc-900">{userData.stats.eventCount}</p>
+                    <p className="text-2xl sm:text-3xl font-black text-zinc-900">{userData.stats.eventCount}</p>
                 </div>
-                <div className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm">
-                    <div className="flex items-center gap-3 mb-2">
-                        <Bell className="size-5 text-zinc-400" />
-                        <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Notifiche</span>
+                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                        <Bell className="size-4 sm:size-5 text-zinc-400" />
+                        <span className="text-[10px] sm:text-xs font-bold text-zinc-400 uppercase tracking-wider">Notifiche</span>
                     </div>
-                    <p className="text-3xl font-black text-zinc-900">1</p>
+                    <p className="text-2xl sm:text-3xl font-black text-zinc-900">1</p>
                 </div>
             </div>
 
@@ -112,7 +112,7 @@ export default function DashboardPage() {
                     <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden flex flex-col h-full min-h-[400px]">
                         {/* Member Header (Card-like but integrated) */}
                         <div className={cn(
-                            "p-8 text-white relative overflow-hidden",
+                            "p-6 sm:p-8 text-white relative overflow-hidden",
                             "bg-gradient-to-br from-zinc-800 to-zinc-950"
                         )}>
                             {/* Decorative Pattern */}
@@ -142,18 +142,18 @@ export default function DashboardPage() {
                                 </div>
 
                                 <div>
-                                    <h3 className="text-2xl font-bold tracking-tight mb-1">{userData.name} {userData.surname}</h3>
-                                    <div className="flex items-center gap-4 text-white/70 text-sm font-mono tracking-widest">
+                                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-1">{userData.name} {userData.surname}</h3>
+                                    <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-white/70 text-[10px] sm:text-sm font-mono tracking-wider sm:tracking-widest">
                                         <span>#{userData.matricola}</span>
-                                        <span className="text-white/30">•</span>
-                                        <span className="font-sans text-xs uppercase font-bold tracking-normal italic">Membro dal {userData.memberSince}</span>
+                                        <span className="hidden sm:inline text-white/30">•</span>
+                                        <span className="font-sans text-[10px] sm:text-xs uppercase font-bold tracking-normal italic w-full sm:w-auto">Membro dal {userData.memberSince}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Advantages Section (Integrated) */}
-                        <div className="p-8 flex-1 flex flex-col justify-between">
+                        <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
                             <div>
                                 <h3 className="text-lg font-bold text-zinc-900 mb-2 flex items-center gap-2">
                                     <span className="text-xl">🎁</span> Vantaggi Esclusivi

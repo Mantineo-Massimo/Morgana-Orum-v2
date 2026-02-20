@@ -43,7 +43,7 @@ export default function DashboardLayout({
             exact: true
         },
         {
-            label: "Le Mie Prenotazioni",
+            label: "Prenotazioni",
             href: `/dashboard/events`,
             icon: Calendar,
             exact: false
@@ -79,7 +79,7 @@ export default function DashboardLayout({
     return (
         <div className="min-h-screen bg-zinc-50 flex flex-col md:flex-row">
             {/* MOBILE HEADER */}
-            <div className="md:hidden bg-white border-b border-zinc-200 p-4 sticky top-0 z-40 flex items-center justify-between">
+            <div className="md:hidden bg-white border-b border-zinc-200 p-4 sticky top-0 z-30 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <div className={cn(
                         "size-10 rounded-full flex items-center justify-center text-white font-serif font-bold text-lg",
@@ -154,7 +154,7 @@ export default function DashboardLayout({
             </aside>
 
             {/* BOTTOM NAVIGATION (Mobile) */}
-            <nav className="md:hidden sticky bottom-0 left-0 right-0 bg-white border-t border-zinc-200 z-50 flex items-center justify-around p-2 pb-6 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+            <nav className="md:hidden sticky bottom-0 left-0 right-0 bg-white border-t border-zinc-200 z-30 flex items-center justify-around p-1 pb-6 shadow-[0_-4px_10px_rgba(0,0,0,0.05)] w-full overflow-hidden">
                 {navItems.map((item) => {
                     const isActive = item.exact
                         ? pathname === item.href
@@ -165,19 +165,21 @@ export default function DashboardLayout({
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex flex-col items-center gap-1 p-2 rounded-xl transition-all",
+                                "flex flex-col items-center gap-0.5 p-1 px-0.5 flex-1 min-w-0 transition-all",
                                 isActive
                                     ? (isMorgana ? "text-orange-700" : "text-blue-900")
                                     : "text-zinc-400 hover:text-zinc-600"
                             )}
                         >
                             <item.icon className={cn(
-                                "size-6",
+                                "size-5",
                                 isActive
                                     ? (isMorgana ? "text-orange-600" : "text-blue-900")
                                     : ""
                             )} />
-                            <span className="text-[10px] font-bold uppercase tracking-tighter">{item.label.split(' ')[0]}</span>
+                            <span className="text-[8px] font-bold uppercase tracking-tighter truncate w-full text-center">
+                                {item.label.split(' ')[0]}
+                            </span>
                         </Link>
                     )
                 })}
@@ -185,7 +187,7 @@ export default function DashboardLayout({
 
             {/* MAIN CONTENT AREA */}
             <main className="flex-1 overflow-y-auto">
-                <div className="p-6 md:p-10 pb-12 max-w-5xl mx-auto">
+                <div className="p-4 sm:p-6 md:p-10 pb-12 max-w-5xl mx-auto">
                     {children}
                 </div>
             </main>
