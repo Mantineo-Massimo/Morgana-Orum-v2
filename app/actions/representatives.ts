@@ -8,7 +8,7 @@ import prisma from "@/lib/prisma"
 
 const representativeSchema = z.object({
     name: z.string().min(1, "Il nome è obbligatorio"),
-    listName: z.enum(["MORGANA", "O.R.U.M.", "AZIONE"]),
+    listName: z.enum(["MORGANA", "O.R.U.M.", "AZIONE UNIVERITARIA"]),
     category: z.enum(["CENTRAL", "DEPARTMENT", "NATIONAL"]),
     department: z.string().optional(),
     role: z.string().optional(),

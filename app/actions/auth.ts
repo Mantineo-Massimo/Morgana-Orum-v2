@@ -43,7 +43,7 @@ export async function registerUser(formData: FormData) {
     const department = formData.get("department") as string
     const degreeCourse = formData.get("degreeCourse") as string
     const isFuorisede = formData.get("isFuorisede") === "yes"
-    const association = formData.get("association") as string || "Insieme" // Default if missing
+    const association = formData.get("association") as string || "Morgana & O.R.U.M." // Default if missing
 
     // Validazione base
     if (!name || !surname || !email || !password || !birthDateStr || !matricola || !department || !degreeCourse) {

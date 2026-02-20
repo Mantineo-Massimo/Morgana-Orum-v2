@@ -155,28 +155,28 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                                     onClick={() => handleRepClick(member)}
                                                     whileHover={{ scale: 1.02 }}
                                                     whileTap={{ scale: 0.98 }}
-                                                    className="flex items-center gap-4 bg-zinc-50 rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full sm:w-[calc(50%-0.5rem)] text-left"
+                                                    className="flex items-center gap-3 md:gap-4 bg-zinc-50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full lg:w-[calc(50%-0.5rem)] text-left"
                                                 >
                                                     {/* Photo */}
-                                                    <div className="size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                    <div className="size-14 md:size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
                                                         {member.image ? (
                                                             // eslint-disable-next-line @next/next/no-img-element
                                                             <img src={member.image} alt={member.name} className="size-full object-cover" />
                                                         ) : (
-                                                            <User className="size-8 text-zinc-300" />
+                                                            <User className="size-6 md:size-8 text-zinc-300" />
                                                         )}
                                                     </div>
 
                                                     {/* Info */}
                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                        <h4 className="font-bold text-zinc-900 text-lg mb-1 leading-tight break-words group-hover:text-blue-600 transition-colors">{member.name}</h4>
-                                                        <p className="text-sm text-zinc-500 font-medium leading-tight">
-                                                            {group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
+                                                        <h4 className="font-bold text-zinc-900 text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1 group-hover:text-blue-600 transition-colors">{member.name}</h4>
+                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
+                                                            {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                         </p>
                                                     </div>
 
                                                     {/* Logo */}
-                                                    <div className="shrink-0 size-12 relative opacity-90 flex items-center justify-center">
+                                                    <div className="shrink-0 size-8 md:size-12 relative opacity-90 flex items-center justify-center">
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                                         <img
                                                             src={
@@ -220,12 +220,12 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                         topBodies.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"
                                 )}>
                                     {topBodies.map((body, idx) => (
-                                        <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-5 flex flex-col h-full">
-                                            <h3 className="text-lg font-bold text-zinc-900 mb-4 flex items-center gap-2">
-                                                {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400 shrink-0" /> })()}
+                                        <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-5 flex flex-col h-full w-full max-w-full overflow-hidden">
+                                            <h3 className="text-base md:text-lg font-bold text-zinc-900 mb-3 md:mb-4 flex items-center gap-2">
+                                                {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
                                                 <span className="truncate">{body.name}</span>
                                             </h3>
-                                            <div className="flex flex-col gap-4 mt-auto flex-grow">
+                                            <div className="flex flex-col gap-3 md:gap-4 mt-auto flex-grow w-full">
                                                 {body.groups.flatMap((group: any) =>
                                                     group.members.map((member: any, memIdx: number) => (
                                                         <motion.button
@@ -233,23 +233,23 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                                             onClick={() => handleRepClick(member)}
                                                             whileHover={{ scale: 1.02 }}
                                                             whileTap={{ scale: 0.98 }}
-                                                            className="flex items-center gap-4 bg-zinc-50 rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full text-left"
+                                                            className="flex items-center gap-3 md:gap-4 bg-zinc-50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full text-left"
                                                         >
-                                                            <div className="size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                            <div className="size-14 md:size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
                                                                 {member.image ? (
                                                                     // eslint-disable-next-line @next/next/no-img-element
                                                                     <img src={member.image} alt={member.name} className="size-full object-cover" />
                                                                 ) : (
-                                                                    <User className="size-8 text-zinc-300" />
+                                                                    <User className="size-6 md:size-8 text-zinc-300" />
                                                                 )}
                                                             </div>
                                                             <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                <h4 className="font-bold text-zinc-900 text-lg mb-1 leading-tight break-words">{member.name}</h4>
-                                                                <p className="text-sm text-zinc-500 font-medium leading-tight">
-                                                                    {group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
+                                                                <h4 className="font-bold text-zinc-900 text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1">{member.name}</h4>
+                                                                <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
+                                                                    {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                                 </p>
                                                             </div>
-                                                            <div className="shrink-0 size-12 relative opacity-90 flex items-center justify-center">
+                                                            <div className="shrink-0 size-8 md:size-12 relative opacity-90 flex items-center justify-center">
                                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                 <img
                                                                     src={
@@ -276,12 +276,12 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                         bottomBodies.length === 1 ? "max-w-full" : "lg:grid-cols-2"
                                     )}>
                                         {bottomBodies.map((body, idx) => (
-                                            <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-6 flex flex-col h-full">
-                                                <h3 className="text-xl font-bold text-zinc-900 mb-6 flex items-center gap-2">
-                                                    {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400" /> })()}
-                                                    {body.name}
+                                            <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full w-full max-w-full overflow-hidden">
+                                                <h3 className="text-lg md:text-xl font-bold text-zinc-900 mb-4 md:mb-6 flex items-center gap-2">
+                                                    {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400 shrink-0" /> })()}
+                                                    <span className="truncate">{body.name}</span>
                                                 </h3>
-                                                <div className="flex flex-wrap items-center justify-center gap-4 mt-auto flex-grow">
+                                                <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mt-auto flex-grow w-full">
                                                     {body.groups.flatMap((group: any) =>
                                                         group.members.map((member: any, memIdx: number) => (
                                                             <motion.button
@@ -289,23 +289,23 @@ export default function RepresentativesClient({ nationalBodies, centralBodies, d
                                                                 onClick={() => handleRepClick(member)}
                                                                 whileHover={{ scale: 1.02 }}
                                                                 whileTap={{ scale: 0.98 }}
-                                                                className="flex items-center gap-4 bg-zinc-50 rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full sm:w-[calc(50%-0.5rem)] text-left"
+                                                                className="flex items-center gap-3 md:gap-4 bg-zinc-50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full md:w-[calc(50%-0.5rem)] text-left"
                                                             >
-                                                                <div className="size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                                <div className="size-14 md:size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
                                                                     {member.image ? (
                                                                         // eslint-disable-next-line @next/next/no-img-element
                                                                         <img src={member.image} alt={member.name} className="size-full object-cover" />
                                                                     ) : (
-                                                                        <User className="size-8 text-zinc-300" />
+                                                                        <User className="size-6 md:size-8 text-zinc-300" />
                                                                     )}
                                                                 </div>
                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                    <h4 className="font-bold text-zinc-900 text-lg mb-1 leading-tight break-words">{member.name}</h4>
-                                                                    <p className="text-sm text-zinc-500 font-medium leading-tight">
+                                                                    <h4 className="font-bold text-zinc-900 text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1">{member.name}</h4>
+                                                                    <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
                                                                         {group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
                                                                     </p>
                                                                 </div>
-                                                                <div className="shrink-0 size-12 relative opacity-90 flex items-center justify-center">
+                                                                <div className="shrink-0 size-8 md:size-12 relative opacity-90 flex items-center justify-center">
                                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                     <img
                                                                         src={

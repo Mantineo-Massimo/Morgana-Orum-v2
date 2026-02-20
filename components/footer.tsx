@@ -28,14 +28,14 @@ export function Footer() {
                                 <Link href="/" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
                                     <Image src="/assets/orum.png" alt="Orum logo" fill className="object-contain" sizes="56px" />
                                 </Link>
-                                {/* Azione */}
+                                {/* Azione Universitaria */}
                                 <a href="https://azioneuniversitaria.it" target="_blank" rel="noopener noreferrer" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
-                                    <Image src="/assets/azione.png" alt="Azione logo" fill className="object-contain" sizes="56px" />
+                                    <Image src="/assets/azione.png" alt="Azione Universitaria logo" fill className="object-contain" sizes="56px" />
                                 </a>
                             </div>
                         </div>
                         <p className="text-sm text-balance opacity-80 leading-relaxed font-bold mt-2">
-                            Associazione Universitaria Insieme<br />Morgana & O.R.U.M. <br />
+                            Associazioni Universitarie <br />Morgana & O.R.U.M. <br />
                             Impegno, passione e competenza al servizio della comunità accademica.
                         </p>
                         <div className="flex items-center gap-4 mt-2">
@@ -102,8 +102,10 @@ export function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs opacity-60">
-                    <p>© {new Date().getFullYear()} Associazione Insieme (Morgana & O.R.U.M.). Tutti i diritti riservati.</p>
-                    <p>Designed by Massimo Mantineo</p>
+                    <p className="text-center md:text-left">© {new Date().getFullYear()} Associazioni Universitarie Morgana & O.R.U.M. Tutti i diritti riservati.</p>
+                    <div className="w-full md:w-auto border-t border-white/10 md:border-0 pt-4 md:pt-0 text-center md:text-right">
+                        <p>Designed by Massimo Mantineo</p>
+                    </div>
                 </div>
             </div>
         </footer>

@@ -44,7 +44,7 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
 
                         <h2 className="text-xl md:text-2xl font-bold text-center text-zinc-900 leading-tight mb-2 relative z-10">{representative.name}</h2>
                         <span className="inline-block px-3 md:px-4 py-1 md:py-1.5 bg-zinc-200 rounded-full text-[10px] md:text-xs font-bold text-zinc-600 mb-4 md:mb-6 relative z-10">
-                            {representative.listName === "AZIONE" ? "Azione Universitaria" : representative.listName}
+                            {representative.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : representative.listName}
                         </span>
 
                         {/* Contact Info - full text */}

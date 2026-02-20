@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 
 export function HeroCarousel() {
-    // Per il portale unificato cerchiamo immagini in una cartella neutra 'insieme' o usiamo le prime di morgana/orum
     const slides = [1, 2, 3];
 
     const [currentSlide, setCurrentSlide] = useState(0);

@@ -180,7 +180,7 @@ export async function createEvent(data: {
                 bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
-                association: data.association || "Insieme",
+                association: data.association || "Morgana & O.R.U.M.",
             }
         })
         revalidatePath("/events")
@@ -229,7 +229,7 @@ export async function updateEvent(id: number, data: {
                 bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
-                association: data.association || "Insieme",
+                association: data.association || "Morgana & O.R.U.M.",
             }
         })
         revalidatePath("/events")

@@ -59,7 +59,7 @@ function DepartmentCard({ dept }: { dept: any }) {
                                     <h4 className={cn(
                                         "font-bold text-lg",
                                         "text-zinc-900"
-                                    )}>{group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}</h4>
+                                    )}>{group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}</h4>
                                 </div>
                                 <ul className="space-y-3">
                                     {group.members.map((member: any, memIdx: number) => (

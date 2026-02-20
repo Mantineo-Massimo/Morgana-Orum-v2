@@ -14,7 +14,7 @@ const newsSchema = z.object({
     image: z.string().optional().nullable().or(z.literal("")),
     date: z.string().optional(),
     published: z.boolean().default(true),
-    association: z.string().optional().default("Insieme"),
+    association: z.string().optional().default("Morgana & O.R.U.M."),
 })
 
 export async function createNews(data: z.infer<typeof newsSchema>) {
@@ -31,7 +31,7 @@ export async function createNews(data: z.infer<typeof newsSchema>) {
                 image: validData.image || null,
                 date: validData.date ? new Date(validData.date) : new Date(),
                 published: validData.published,
-                association: validData.association || "Insieme",
+                association: validData.association || "Morgana & O.R.U.M.",
             }
         })
 

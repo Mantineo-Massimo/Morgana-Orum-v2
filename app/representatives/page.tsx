@@ -26,12 +26,12 @@ export default async function RepresentativesPage() {
         // Group members by List
         const morganaMembers = members.filter(m => m.listName === "MORGANA")
         const orumMembers = members.filter(m => m.listName === "O.R.U.M.")
-        const azioneMembers = members.filter(m => m.listName === "AZIONE")
+        const azioneMembers = members.filter(m => m.listName === "AZIONE UNIVERITARIA")
 
         const groups = []
         if (morganaMembers.length > 0) groups.push({ listName: "MORGANA", members: morganaMembers })
         if (orumMembers.length > 0) groups.push({ listName: "O.R.U.M.", members: orumMembers })
-        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE", members: azioneMembers })
+        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE UNIVERITARIA", members: azioneMembers })
 
         return { name, groups }
     }).sort((a, b) => a.name.localeCompare(b.name))
@@ -50,12 +50,12 @@ export default async function RepresentativesPage() {
     const nationalBodies = Array.from(nationalBodiesMap.entries()).map(([name, members]) => {
         const morganaMembers = members.filter(m => m.listName === "MORGANA")
         const orumMembers = members.filter(m => m.listName === "O.R.U.M.")
-        const azioneMembers = members.filter(m => m.listName === "AZIONE")
+        const azioneMembers = members.filter(m => m.listName === "AZIONE UNIVERITARIA")
 
         const groups = []
         if (morganaMembers.length > 0) groups.push({ listName: "MORGANA", members: morganaMembers })
         if (orumMembers.length > 0) groups.push({ listName: "O.R.U.M.", members: orumMembers })
-        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE", members: azioneMembers })
+        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE UNIVERITARIA", members: azioneMembers })
 
         return { name, groups }
     }).sort((a, b) => a.name.localeCompare(b.name))
@@ -75,12 +75,12 @@ export default async function RepresentativesPage() {
         // Group members by List
         const morganaMembers = members.filter(m => m.listName === "MORGANA")
         const orumMembers = members.filter(m => m.listName === "O.R.U.M.")
-        const azioneMembers = members.filter(m => m.listName === "AZIONE")
+        const azioneMembers = members.filter(m => m.listName === "AZIONE UNIVERITARIA")
 
         const groups = []
         if (morganaMembers.length > 0) groups.push({ listName: "MORGANA", members: morganaMembers })
         if (orumMembers.length > 0) groups.push({ listName: "O.R.U.M.", members: orumMembers })
-        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE", members: azioneMembers })
+        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE UNIVERITARIA", members: azioneMembers })
 
         return { name, groups }
     }).sort((a, b) => a.name.localeCompare(b.name))

@@ -257,8 +257,8 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
             assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#c12830]/90 backdrop-blur-sm text-white shadow-[0_4px_10px_rgb(220,38,38,0.3)] border border-red-500/50">Morgana</span>;
         } else if (item.association?.toLowerCase() === "orum" || item.association?.toLowerCase() === "o.r.u.m.") {
             assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#18182e]/90 backdrop-blur-sm text-white shadow-[0_4px_10px_rgb(30,58,138,0.3)] border border-blue-900/50">O.R.U.M.</span>;
-        } else if (item.association?.toLowerCase() === "insieme") {
-            assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-900/90 backdrop-blur-sm text-white shadow-sm border border-purple-800/50">Insieme</span>;
+        } else if (item.association?.toLowerCase() === "morgana & orum") {
+            assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-900/90 backdrop-blur-sm text-white shadow-sm border border-purple-800/50">Morgana & O.R.U.M.</span>;
         }
 
         // Date display

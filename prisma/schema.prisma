@@ -24,7 +24,7 @@ model User {
   isFuorisede   Boolean        // Residente/Fuorisede (New)
   
   role          String         @default("USER") // USER, ADMIN
-  association   String         // Morgana, Orum, Insieme
+  association   String         // Morgana, Orum, Azione Universitaria
   qrToken       String         @unique @default(uuid())
   
   // Password Reset Fields
@@ -53,7 +53,7 @@ model Event {
   bookingStart  DateTime?      // Quando apre la prenotazione
   bookingEnd    DateTime?      // Quando chiude la prenotazione
   attachments   String?        // URL/percorsi file separati da virgola
-  association   String         @default("Insieme") // Morgana, Orum, Insieme (per UI badges)
+  association   String         @default("Morgana & O.R.U.M.") // Morgana, Orum, Azione Universitaria (per UI badges)
   
   registrations Registration[]
 
@@ -104,8 +104,7 @@ model News {
   image       String?  // Image URL
   date        DateTime @default(now())
   published   Boolean  @default(true)
-  association String   @default("Insieme") // Morgana, Orum, Insieme (per UI badges)
-  
+  association String   @default("Morgana & O.R.U.M.") // Morgana, Orum, Azione Universitaria
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

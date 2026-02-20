@@ -14,7 +14,7 @@ export default async function NewsDetailPage({ params }: { params: { id: string 
         notFound()
     }
 
-    const assoc = article.association?.toLowerCase() || "insieme"
+    const assoc = article.association?.toLowerCase() || "morgana & orum"
     let themeBg = "bg-purple-50"
     let themeText = "text-purple-600"
     let themeLink = "text-purple-900"

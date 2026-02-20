@@ -11,7 +11,7 @@ import { departmentsData } from "../../lib/departments"
 export const dynamic = "force-dynamic"
 
 export default function Page() {
-    
+
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
@@ -24,7 +24,7 @@ export default function Page() {
 
         const formData = new FormData(event.currentTarget)
         // Hidden field or default for association
-        formData.append("association", "Insieme")
+        formData.append("association", "morgana & orum")
 
         const result = await registerUser(formData)
 

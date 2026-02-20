@@ -57,7 +57,7 @@ export default function EventDetailClient({
     isLoggedIn: boolean
     userEmail: string | null
 }) {
-    const assoc = event.association?.toLowerCase() || "insieme"
+    const assoc = event.association?.toLowerCase() || "morgana & orum"
     let themeBg = "bg-purple-900"
     let themeText = "text-purple-900"
     if (assoc === "morgana") {

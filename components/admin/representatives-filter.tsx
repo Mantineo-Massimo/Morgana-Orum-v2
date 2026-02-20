@@ -74,7 +74,7 @@ export function RepresentativesFilter() {
                     <option value="all">Tutte le Liste</option>
                     <option value="MORGANA">Morgana</option>
                     <option value="O.R.U.M.">O.R.U.M.</option>
-                    <option value="AZIONE">Azione</option>
+                    <option value="AZIONE UNIVERITARIA">Azione Universitaria</option>
                 </select>
 
                 <select

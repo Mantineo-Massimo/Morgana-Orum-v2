@@ -124,7 +124,7 @@ export default function DashboardPage() {
                                 <div className="flex justify-between items-start mb-12">
                                     <div className="bg-white/90 p-2 rounded-xl shadow-lg flex items-center gap-3">
                                         <div className="relative size-8 md:size-10">
-                                            <Image src="/assets/morgana.png" alt="Insieme" fill className="object-contain" sizes="40px" />
+                                            <Image src="/assets/morgana.png" alt="Morgana & O.R.U.M." fill className="object-contain" sizes="40px" />
                                         </div>
                                     </div>
                                     <div className="text-right">

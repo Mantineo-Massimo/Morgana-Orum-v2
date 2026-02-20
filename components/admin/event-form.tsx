@@ -256,10 +256,10 @@ export default function EventForm({ initialData }: EventFormProps) {
                 {/* Association */}
                 <div>
                     <label className={labelClass}>Associazione Organizzatrice</label>
-                    <select name="association" defaultValue={initialData?.association || "Insieme"} className={cn(inputClass, "bg-white")} required>
+                    <select name="association" defaultValue={initialData?.association || "Morgana & O.R.U.M."} className={cn(inputClass, "bg-white")} required>
                         <option value="Morgana">Morgana</option>
                         <option value="O.R.U.M.">O.R.U.M.</option>
-                        <option value="Insieme">Insieme (Congiunta / Nessuna)</option>
+                        <option value="Morgana & O.R.U.M.">Morgana & O.R.U.M.</option>
                     </select>
                 </div>
 

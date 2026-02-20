@@ -138,7 +138,9 @@ function NewsCard({ item }: { item: any }) {
     let themeColorBg = "bg-zinc-50 text-zinc-600";
     let themeGradient = "from-zinc-900";
 
-    const assoc = item.association?.toLowerCase() || "insieme";
+    const assoc = item.association?.toLowerCase() || "morgana & orum";
+    const mainCategory = item.category ? item.category.split(",")[0].trim() : "Notizia";
+
     if (assoc === "morgana") {
         assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#c12830]/90 backdrop-blur-sm text-white shadow-[0_4px_10px_rgb(220,38,38,0.3)] border border-red-500/50">Morgana</span>;
         themeColorText = "text-[#c12830]";
@@ -150,7 +152,7 @@ function NewsCard({ item }: { item: any }) {
         themeColorBg = "bg-blue-50 text-blue-600";
         themeGradient = "from-blue-900";
     } else {
-        assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-900/90 backdrop-blur-sm text-white shadow-sm border border-purple-800/50">Insieme</span>;
+        assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-900/90 backdrop-blur-sm text-white shadow-sm border border-purple-800/50">{mainCategory}</span>;
         themeColorText = "text-purple-900";
         themeColorBg = "bg-purple-50 text-purple-600";
         themeGradient = "from-purple-900";

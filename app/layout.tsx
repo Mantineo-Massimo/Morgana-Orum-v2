@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Inter, Outfit } from "next/font/google"
 import { BrandProvider } from "@/components/brand-provider"
 import { cookies } from "next/headers"
 import { TopBar } from "@/components/top-bar"
@@ -6,8 +7,11 @@ import { StickyHeader } from "@/components/sticky-header"
 import { Footer } from "@/components/footer"
 import "./globals.css"
 
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+const outfit = Outfit({ subsets: ["latin"], variable: "--font-serif" })
+
 export const metadata: Metadata = {
-    title: "Associazione Universitaria Insieme", // Titolo temporaneo unificato
+    title: "Associazioni Universitarie Morgana & O.R.U.M.", // Titolo temporaneo unificato
     icons: {
         icon: [
             { url: `/assets/morgana/favicon.ico` }, // Temporaneo
@@ -23,11 +27,9 @@ export default function RootLayout({
     const sessionEmail = cookies().get("session_email")?.value
     const isLoggedIn = !!sessionEmail
 
-    // La transizione a portale Insieme rimuove la necessità di un uiBrand di default
-
     return (
         <html lang="it">
-            <body>
+            <body className={`${inter.variable} ${outfit.variable}`}>
                 <BrandProvider defaultBrand={null}>
                     <div className="flex min-h-screen flex-col bg-background font-sans">
                         <TopBar />

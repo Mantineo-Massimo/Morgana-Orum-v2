@@ -78,7 +78,7 @@ export default function AboutPage() {
                         Sempre dalla parte dello studente.
                     </p>
                     <p className="text-lg md:text-xl text-zinc-600 leading-relaxed text-balance">
-                        Due storie, un unico portale: <strong>Insieme</strong>. Morgana e Orum uniscono le forze per trasformare l&apos;università in un luogo di opportunità, diritti e crescita. Scopri chi siamo e cosa facciamo ogni giorno per te.
+                        Due storie, una missione: Morgana e Orum uniscono le forze per trasformare l&apos;università in un luogo di opportunità, diritti e crescita. Scopri chi siamo e cosa facciamo ogni giorno per te.
                     </p>
                 </div>
             </section>
@@ -182,7 +182,7 @@ export default function AboutPage() {
 
 function Counters() {
     return (
-        <section className="py-20 bg-zinc-900 text-white">
+        <section className="py-20 bg-zinc-800 text-white">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
                 <CounterItem number="110+" label="Rappresentanti Eletti" icon={Users} delay={0} />
                 <CounterItem number="12.000+" label="Studenti Supportati" icon={HeartHandshake} delay={0.2} />

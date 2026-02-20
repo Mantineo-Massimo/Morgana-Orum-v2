@@ -77,7 +77,7 @@ export default function RepresentativeForm({
 
         const rawData = {
             name: formData.get("name") as string,
-            listName: formData.get("listName") as "MORGANA" | "O.R.U.M." | "AZIONE",
+            listName: formData.get("listName") as "MORGANA" | "O.R.U.M." | "AZIONE UNIVERITARIA",
             category: formData.get("category") as "CENTRAL" | "DEPARTMENT" | "NATIONAL",
             department: formData.get("department") as string || undefined,
             role: formData.get("role") as string || undefined,
@@ -212,7 +212,7 @@ export default function RepresentativeForm({
                             >
                                 <option value="MORGANA">MORGANA</option>
                                 <option value="O.R.U.M.">O.R.U.M.</option>
-                                <option value="AZIONE">AZIONE</option>
+                                <option value="AZIONE UNIVERITARIA">AZIONE UNIVERITARIA</option>
                             </select>
                         </div>
 

@@ -251,13 +251,13 @@ export default function NewsForm({
                         <label className="block text-sm font-bold text-zinc-700 mb-1">Associazione Pubblicante</label>
                         <select
                             name="association"
-                            defaultValue={initialData?.association || "Insieme"}
+                            defaultValue={initialData?.association || "Morgana & O.R.U.M."}
                             className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all bg-white"
                             required
                         >
                             <option value="Morgana">Morgana</option>
                             <option value="O.R.U.M.">O.R.U.M.</option>
-                            <option value="Insieme">Insieme (Congiunta)</option>
+                            <option value="Morgana & O.R.U.M.">Morgana & O.R.U.M.</option>
                         </select>
                     </div>
 
