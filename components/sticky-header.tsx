@@ -60,7 +60,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     {/* Logos Container */}
                     <div
                         className={cn(
-                            "relative transition-all duration-500 flex items-center bg-white/10 backdrop-blur-sm p-2 rounded-2xl",
+                            "relative transition-all duration-500 flex items-center  backdrop-blur-sm p-2 rounded-2xl",
                             isScrolled ? "h-14 gap-2" : "h-20 md:h-28 gap-4"
                         )}
                     >
