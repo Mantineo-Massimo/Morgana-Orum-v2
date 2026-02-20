@@ -142,6 +142,41 @@ export async function registerForEvent(userEmail: string, eventId: number) {
     }
 }
 
+export async function cancelRegistration(eventId: number) {
+    try {
+        const { cookies } = await import("next/headers")
+        const userEmail = cookies().get("session_email")?.value
+
+        if (!userEmail) {
+            return { success: false, message: "Non autorizzato." }
+        }
+
+        const user = await prisma.user.findUnique({
+            where: { email: userEmail }
+        })
+
+        if (!user) {
+            return { success: false, message: "Utente non trovato." }
+        }
+
+        await prisma.registration.delete({
+            where: {
+                userId_eventId: {
+                    userId: user.id,
+                    eventId: eventId
+                }
+            }
+        })
+
+        revalidatePath("/dashboard")
+        revalidatePath(`/events/${eventId}`)
+        return { success: true, message: "Prenotazione annullata con successo." }
+    } catch (error) {
+        console.error("Cancel registration error:", error)
+        return { success: false, message: "Errore durante l'annullamento della prenotazione." }
+    }
+}
+
 // --- ADMIN CRUD ---
 
 export async function createEvent(data: {
