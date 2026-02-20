@@ -1,15 +1,16 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Calendar, CheckCircle, Loader2, Clock, Award, ChevronRight } from "lucide-react"
+import { Calendar, CheckCircle, Loader2, Clock, Award, ChevronRight, Trash2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { getUserDashboardData } from "@/app/actions/users"
+import { cancelRegistration } from "@/app/actions/events"
 import Link from "next/link"
 
 export const dynamic = "force-dynamic"
 
 export default function DashboardEventsPage() {
-    
+
     const [loading, setLoading] = useState(true)
     const [userEvents, setUserEvents] = useState<any[]>([])
 
@@ -25,12 +26,30 @@ export default function DashboardEventsPage() {
         loadData()
     }, [])
 
+    const handleCancel = async (e: React.MouseEvent, eventId: number) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        if (!confirm("Sei sicuro di voler annullare questa prenotazione?")) return
+
+        try {
+            const res = await cancelRegistration(eventId)
+            if (res.success) {
+                setUserEvents(userEvents.filter(ev => ev.id !== eventId))
+            } else {
+                alert(res.message)
+            }
+        } catch (error) {
+            alert("Errore durante l'annullamento.")
+        }
+    }
+
     if (loading) return null
 
     return (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-                <h1 className="text-3xl font-bold text-zinc-900 mb-2">I Miei Eventi</h1>
+                <h1 className="text-3xl font-bold text-zinc-900 mb-2">Prenotazioni</h1>
                 <p className="text-zinc-500">Lo storico delle tue partecipazioni e i prossimi appuntamenti.</p>
             </div>
 
@@ -87,6 +106,15 @@ export default function DashboardEventsPage() {
                                     )}>
                                         {event.status}
                                     </span>
+                                    {event.status === "In attesa" && (
+                                        <button
+                                            onClick={(e) => handleCancel(e, event.id)}
+                                            className="p-2 text-zinc-300 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors group/btn"
+                                            title="Annulla prenotazione"
+                                        >
+                                            <Trash2 className="size-5" />
+                                        </button>
+                                    )}
                                     <ChevronRight className="size-5 text-zinc-300 group-hover:text-zinc-500 transition-colors" />
                                 </div>
                             </div>
