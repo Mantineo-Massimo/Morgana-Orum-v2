@@ -42,8 +42,8 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         "rounded-br-[100px]",
                         // Dynamic width logic
                         isScrolled
-                            ? "w-[85%] sm:w-[65%] md:w-[50%] lg:w-[42%] xl:w-[38%]"
-                            : "w-[90%] sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[45%]"
+                            ? "w-[75%] sm:w-[65%] md:w-[50%] lg:w-[42%] xl:w-[38%]"
+                            : "w-[80%] sm:w-[70%] md:w-[60%] lg:w-[50%] xl:w-[45%]"
                     )}
                 />
             </div>
@@ -60,8 +60,10 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     {/* Logos Container */}
                     <div
                         className={cn(
-                            "relative transition-all duration-500 flex items-center  backdrop-blur-sm p-2 rounded-2xl",
-                            isScrolled ? "h-14 gap-2" : "h-20 md:h-28 gap-4"
+                            "relative transition-all duration-500 flex items-center backdrop-blur-sm rounded-2xl",
+                            isScrolled
+                                ? "h-10 md:h-14 gap-1.5 md:gap-2 p-1.5 md:p-2"
+                                : "h-12 sm:h-16 md:h-28 gap-1.5 md:gap-4 p-1 md:p-2"
                         )}
                     >
                         <div className="relative h-full aspect-square">
@@ -74,8 +76,8 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                                 sizes="(max-width: 768px) 96px, 128px"
                             />
                         </div>
-                        <div className="h-full w-px bg-white/20 hidden md:block" />
-                        <div className="relative h-full aspect-square hidden md:block">
+                        <div className="h-full w-px bg-white/20" />
+                        <div className="relative h-full aspect-square">
                             <Image
                                 src={`/assets/orum.png`}
                                 alt="Orum logo"
@@ -90,12 +92,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     {/* Text Brand */}
                     <div className="flex flex-col text-white justify-center">
                         <span className={cn(
-                            "font-serif font-black uppercase tracking-tight leading-none transition-all duration-500",
-                            isScrolled ? "text-lg md:text-xl" : "text-xl md:text-2xl"
+                            "font-serif font-black uppercase tracking-tight leading-none transition-all duration-500 line-clamp-1",
+                            isScrolled ? "text-sm md:text-xl" : "text-[15px] sm:text-xl md:text-2xl"
                         )}>
                             Morgana & O.R.U.M.
                         </span>
-                        <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] font-bold mt-1.5 opacity-90 leading-tight hidden md:block">
+                        <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-normal md:tracking-[0.2em] font-bold mt-0.5 md:mt-1.5 opacity-90 leading-tight">
                             Associazioni Universitarie
                         </span>
                     </div>

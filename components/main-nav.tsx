@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import { logoutAction } from "@/app/actions/auth"
-import { LogOut, User, Menu, X } from "lucide-react"
+import { LogOut, User, Menu, X, Mail } from "lucide-react"
 
 export function MainNav({
     className,
@@ -116,7 +116,7 @@ export function MainNav({
 
             {/* Mobile Toggle Button */}
             <button
-                className="lg:hidden p-2 text-white bg-zinc-900/50 backdrop-blur-md rounded-xl hover:bg-zinc-900/70 transition-all relative z-50"
+                className="lg:hidden p-2 text-white bg-zinc-900/50 backdrop-blur-md rounded-xl hover:bg-zinc-900/70 transition-all relative z-50 -mr-2 sm:-mr-4"
                 onClick={() => setIsOpen(true)}
                 aria-label="Open Menu"
             >
@@ -188,6 +188,17 @@ export function MainNav({
                                     Accedi
                                 </Link>
                             )}
+
+                            {/* Mobile only Newsletter CTA */}
+                            <div className="pt-6 mt-2 border-t border-zinc-100">
+                                <Link
+                                    href={`#`}
+                                    onClick={() => setIsOpen(false)}
+                                    className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-zinc-100 text-zinc-900 font-bold uppercase tracking-widest text-sm transition-colors"
+                                >
+                                    <Mail className="size-5" /> Newsletter
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

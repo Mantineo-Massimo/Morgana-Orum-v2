@@ -15,10 +15,10 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="max-w-4xl bg-white p-0 border-0 max-h-[90vh] overflow-y-auto">
+            <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-4xl bg-white p-0 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-2xl">
                 <div className="flex flex-col md:flex-row">
                     {/* Left Side - Image & Basic Info */}
-                    <div className="w-full md:w-2/5 bg-zinc-50 p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-zinc-100 relative">
+                    <div className="w-full md:w-2/5 bg-zinc-50 p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-zinc-100 relative">
                         {/* Logo in background opacity */}
                         <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -33,17 +33,17 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                             />
                         </div>
 
-                        <div className="size-48 rounded-full bg-white border-4 border-white shadow-lg overflow-hidden mb-6 relative z-10">
+                        <div className="size-32 md:size-48 rounded-full bg-white border-4 border-white shadow-lg overflow-hidden mb-4 md:mb-6 relative z-10">
                             {representative.image ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img src={representative.image} alt={representative.name} className="size-full object-cover" />
                             ) : (
-                                <User className="size-20 text-zinc-300 m-auto mt-12" />
+                                <User className="size-16 md:size-20 text-zinc-300 m-auto mt-8 md:mt-12" />
                             )}
                         </div>
 
-                        <h2 className="text-2xl font-bold text-center text-zinc-900 leading-tight mb-2 relative z-10">{representative.name}</h2>
-                        <span className="inline-block px-4 py-1.5 bg-zinc-200 rounded-full text-xs font-bold text-zinc-600 mb-6 relative z-10">
+                        <h2 className="text-xl md:text-2xl font-bold text-center text-zinc-900 leading-tight mb-2 relative z-10">{representative.name}</h2>
+                        <span className="inline-block px-3 md:px-4 py-1 md:py-1.5 bg-zinc-200 rounded-full text-[10px] md:text-xs font-bold text-zinc-600 mb-4 md:mb-6 relative z-10">
                             {representative.listName === "AZIONE" ? "Azione Universitaria" : representative.listName}
                         </span>
 
@@ -71,11 +71,11 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                     </div>
 
                     {/* Right Side - Details */}
-                    <div className="w-full md:w-3/5 p-8">
-                        <DialogHeader className="mb-6 text-left">
-                            <h3 className="text-lg font-bold text-zinc-900 flex items-center gap-2">
-                                {(() => { const Icon = getRoleIcon(representative.role || ""); return <Icon className="size-5 text-zinc-400" /> })()}
-                                {representative.role || representative.department || "Rappresentante"}
+                    <div className="w-full md:w-3/5 p-6 md:p-8">
+                        <DialogHeader className="mb-4 md:mb-6 text-left">
+                            <h3 className="text-base md:text-lg font-bold text-zinc-900 flex items-center gap-2">
+                                {(() => { const Icon = getRoleIcon(representative.role || ""); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
+                                <span className="line-clamp-2 md:line-clamp-none leading-tight">{representative.role || representative.department || "Rappresentante"}</span>
                             </h3>
                             <p className="text-sm text-zinc-500">
                                 {(() => {
