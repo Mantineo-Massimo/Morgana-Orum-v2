@@ -77,7 +77,7 @@ export default function DashboardLayout({
     }
 
     return (
-        <div className="min-h-screen bg-zinc-50 flex flex-col md:flex-row pb-20 md:pb-0">
+        <div className="min-h-screen bg-zinc-50 flex flex-col md:flex-row">
             {/* MOBILE HEADER */}
             <div className="md:hidden bg-white border-b border-zinc-200 p-4 sticky top-0 z-40 flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -154,7 +154,7 @@ export default function DashboardLayout({
             </aside>
 
             {/* BOTTOM NAVIGATION (Mobile) */}
-            <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-zinc-200 z-50 flex items-center justify-around p-2 pb-6">
+            <nav className="md:hidden sticky bottom-0 left-0 right-0 bg-white border-t border-zinc-200 z-50 flex items-center justify-around p-2 pb-6 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
                 {navItems.map((item) => {
                     const isActive = item.exact
                         ? pathname === item.href
