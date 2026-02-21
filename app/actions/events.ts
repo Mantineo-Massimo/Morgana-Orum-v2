@@ -7,9 +7,14 @@ import { getEventBookingTemplate } from "@/lib/email-templates"
 
 // --- READ ---
 
-export async function getAllEvents(userEmail?: string | null) {
+export async function getAllEvents(userEmail?: string | null, association?: string) {
     const query: any = {
+        where: {},
         orderBy: { date: 'asc' },
+    }
+
+    if (association) {
+        query.where.association = association
     }
 
     if (userEmail) {

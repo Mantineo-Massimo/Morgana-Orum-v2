@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import { logoutAction } from "@/app/actions/auth"
 import { LogOut, User, Menu, X, Mail } from "lucide-react"
+import { useBrand } from "@/components/brand-provider"
 
 export function MainNav({
     className,
@@ -14,6 +15,7 @@ export function MainNav({
     ...props
 }: React.HTMLAttributes<HTMLElement> & { isScrolled?: boolean, isLoggedIn?: boolean }) {
     const pathname = usePathname()
+    const { brand } = useBrand()
     const [isOpen, setIsOpen] = useState(false)
 
     // Prevent body scroll when menu is open
@@ -28,31 +30,47 @@ export function MainNav({
 
     const routes = [
         {
-            href: ``,
+            href: brand ? `/network/${brand}` : `/`,
             label: "Home",
-            active: pathname === "/" || pathname === ``,
+            active: brand ? pathname === `/network/${brand}` : (pathname === "/" || pathname === ``),
         },
         {
-            href: `/about`,
+            href: brand ? `/network/${brand}/about` : `/about`,
             label: "Chi Siamo",
-            active: pathname === "/about" || pathname === `/about`,
+            active: pathname === (brand ? `/network/${brand}/about` : "/about"),
         },
-        {
-            href: `/news`,
+        ...(brand !== 'matricole' ? [{
+            href: brand ? `/network/${brand}/news` : `/news`,
             label: "Notizie",
-            active: pathname === "/news" || pathname === `/news`,
-        },
-        {
-            href: `/events`,
+            active: pathname === (brand ? `/network/${brand}/news` : "/news") || pathname.startsWith(brand ? `/network/${brand}/news/` : "/news/"),
+        }] : []),
+        ...(brand !== 'matricole' ? [{
+            href: brand ? `/network/${brand}/events` : `/events`,
             label: "Eventi",
-            active: pathname === "/events" || pathname === `/events`,
-        },
-        {
-            href: `/representatives`,
+            active: pathname === (brand ? `/network/${brand}/events` : "/events") || pathname.startsWith(brand ? `/network/${brand}/events/` : "/events/"),
+        }] : []),
+        ...(brand !== 'matricole' ? [{
+            href: brand ? `/network/${brand}/representatives` : `/representatives`,
             label: "Rappresentanti",
-            active: pathname === "/representatives" || pathname === `/representatives`,
-        },
+            active: pathname === (brand ? `/network/${brand}/representatives` : "/representatives"),
+        }] : []),
     ]
+
+    // Aggiungi link extra per Unime Matricole
+    if (brand === 'matricole') {
+        routes.push(
+            {
+                href: `/network/matricole/guides`,
+                label: "Guide",
+                active: pathname === `/network/matricole/guides`,
+            },
+            {
+                href: `/network/matricole/whatsapp`,
+                label: "Gruppi WhatsApp",
+                active: pathname === `/network/matricole/whatsapp`,
+            }
+        )
+    }
 
     const textColor = isScrolled ? "text-foreground/70 hover:text-primary" : "text-white/80 hover:text-white"
     const activeColor = isScrolled ? "text-primary after:bg-primary" : "text-white after:bg-white"

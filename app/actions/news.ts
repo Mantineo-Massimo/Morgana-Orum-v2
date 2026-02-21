@@ -84,7 +84,7 @@ export async function deleteNews(id: string) {
 }
 
 // Public: only published AND date <= now (scheduled publishing support)
-export async function getNews(category?: string, query?: string) {
+export async function getNews(category?: string, query?: string, association?: string) {
     try {
         const now = new Date()
         const where: any = {
@@ -94,6 +94,10 @@ export async function getNews(category?: string, query?: string) {
 
         if (category && category !== "Tutte") {
             where.category = category
+        }
+
+        if (association) {
+            where.association = association
         }
 
         if (query) {
@@ -114,7 +118,7 @@ export async function getNews(category?: string, query?: string) {
 }
 
 // Admin: all news, with optional filters
-export async function getAllNews(filters?: { query?: string, category?: string, status?: string, year?: number }) {
+export async function getAllNews(filters?: { query?: string, category?: string, status?: string, year?: number, association?: string }) {
     try {
         const where: any = {}
 
@@ -127,6 +131,10 @@ export async function getAllNews(filters?: { query?: string, category?: string, 
 
         if (filters?.category) {
             where.category = filters.category
+        }
+
+        if (filters?.association) {
+            where.association = filters.association
         }
 
         if (filters?.status === "published") {

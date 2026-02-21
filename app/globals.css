@@ -46,12 +46,14 @@ body:has([data-admin-area]) #site-footer {
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 240 31% 14%; /* Orum Navy (#18182e) */
+    --foreground: 240 31% 14%;
+    /* Orum Navy (#18182e) */
     --card: 0 0% 100%;
     --card-foreground: 240 31% 14%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 31% 14%;
-    --primary: 357 65% 46%; /* Morgana Red (#c12830) */
+    --primary: 357 65% 46%;
+    /* Morgana Red (#c12830) */
     --primary-foreground: 0 0% 98%;
     --secondary: 240 10% 96%;
     --secondary-foreground: 240 31% 14%;
@@ -108,5 +110,41 @@ body:has([data-admin-area]) #site-footer {
     /* #18182e - Dark Navy */
     --primary-foreground: 0 0% 98%;
     --ring: 240 31% 14%;
+  }
+
+  /* Network Brands */
+  [data-brand="unimehealth"] {
+    --primary: 357 65% 46%;
+    /* #c12830 */
+    --primary-foreground: 0 0% 98%;
+    --ring: 357 65% 46%;
+  }
+
+  [data-brand="economia"] {
+    --primary: 209 100% 32%;
+    /* #0055a4 */
+    --primary-foreground: 0 0% 98%;
+    --ring: 209 100% 32%;
+  }
+
+  [data-brand="matricole"] {
+    --primary: 0 0% 68.6%;
+    /* #afafaf */
+    --primary-foreground: 240 31% 14%;
+    --ring: 0 0% 68.6%;
+  }
+
+  [data-brand="scipog"] {
+    --primary: 48 100% 50%;
+    /* #ffcc00 */
+    --primary-foreground: 240 31% 14%;
+    --ring: 48 100% 50%;
+  }
+
+  [data-brand="dicam"] {
+    --primary: 338 78% 48%;
+    /* #d81b60 */
+    --primary-foreground: 0 0% 98%;
+    --ring: 338 78% 48%;
   }
 }

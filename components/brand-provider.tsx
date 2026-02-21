@@ -1,8 +1,9 @@
 "use client"
 
 import * as React from "react"
+import { usePathname } from "next/navigation"
 
-type Brand = "morgana" | "orum" | null
+export type Brand = "morgana" | "orum" | "unimehealth" | "economia" | "scipog" | "dicam" | "matricole" | null
 
 interface BrandContextType {
   brand: Brand
@@ -19,6 +20,17 @@ export function BrandProvider({
   defaultBrand?: Brand
 }) {
   const [brand, setBrand] = React.useState<Brand>(defaultBrand)
+  const pathname = usePathname()
+
+  // Auto-detect brand from URL
+  React.useEffect(() => {
+    if (pathname.startsWith("/network/")) {
+      const detectedBrand = pathname.split("/")[2] as Brand
+      if (detectedBrand) setBrand(detectedBrand)
+    } else if (pathname === "/") {
+      setBrand(null) // Reset to default on home
+    }
+  }, [pathname])
 
   // Update body attribute when brand changes
   React.useEffect(() => {

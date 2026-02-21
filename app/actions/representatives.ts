@@ -86,11 +86,16 @@ export async function deleteRepresentative(id: string) {
 export async function getRepresentatives(
     query?: string,
     list?: string,
-    category?: string
+    category?: string,
+    department?: string
 ) {
     try {
-        console.log("getRepresentatives called with:", { query, list, category })
+        console.log("getRepresentatives called with:", { query, list, category, department })
         const where: any = {}
+
+        if (department) {
+            where.department = { contains: department, mode: 'insensitive' }
+        }
 
         if (query) {
             where.OR = [

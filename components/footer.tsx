@@ -4,11 +4,24 @@ import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useBrand } from "@/components/brand-provider"
 
 export function Footer() {
+    const { brand } = useBrand()
     const bgColor = "bg-zinc-900"
     const textColor = "text-white"
     const mutedColor = "text-white/70 hover:text-white"
+
+    // Mapping per i loghi e nomi del network
+    const networkInfo: Record<string, { name: string, logo: string }> = {
+        unimehealth: { name: "Unime Health", logo: "/assets/unimehealth.png" },
+        economia: { name: "Studenti Economia", logo: "/assets/studentieconomia.png" },
+        matricole: { name: "Unime Matricole", logo: "/assets/unimematricole.png" },
+        scipog: { name: "Studenti Scipog", logo: "/assets/studentiscipog.png" },
+        dicam: { name: "Inside Dicam", logo: "/assets/insidedicam.png" },
+    }
+
+    const currentNetwork = brand && networkInfo[brand] ? networkInfo[brand] : null
 
     return (
         <footer id="site-footer" className={cn("w-full pt-16 pb-8", bgColor, textColor)}>
@@ -34,10 +47,15 @@ export function Footer() {
                                 </a>
                             </div>
                         </div>
-                        <p className="text-sm text-balance opacity-80 leading-relaxed font-bold mt-2">
-                            Associazioni Universitarie <br />Morgana & O.R.U.M. <br />
-                            Impegno, passione e competenza al servizio della comunità accademica.
-                        </p>
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-bold uppercase tracking-widest opacity-90">
+                                Associazioni Universitarie <br />
+                                Morgana & O.R.U.M.
+                            </p>
+                            <p className="text-[11px] leading-relaxed opacity-60 italic font-medium">
+                                Impegno, passione e competenza al servizio della comunità accademica.
+                            </p>
+                        </div>
                         <div className="flex items-center gap-4 mt-2">
                             <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition-colors"><Facebook className="size-5" /></a>
                             <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors"><Instagram className="size-5" /></a>
@@ -53,7 +71,7 @@ export function Footer() {
                             Navigazione
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
-                            <li><Link href={``} className={cn("transition-colors", mutedColor)}>Home</Link></li>
+                            <li><Link href="/" className={cn("transition-colors", mutedColor)}>Home Portale</Link></li>
                             <li><Link href={`/about`} className={cn("transition-colors", mutedColor)}>Chi Siamo</Link></li>
                             <li><Link href={`/news`} className={cn("transition-colors", mutedColor)}>Notizie</Link></li>
                             <li><Link href={`/events`} className={cn("transition-colors", mutedColor)}>Eventi</Link></li>
@@ -102,7 +120,7 @@ export function Footer() {
 
                 {/* Bottom Bar */}
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs opacity-60">
-                    <p className="text-center md:text-left">© {new Date().getFullYear()} Associazioni Universitarie Morgana & O.R.U.M. Tutti i diritti riservati.</p>
+                    <p className="text-center md:text-left">© {new Date().getFullYear()} Associazioni Universitarie Morgana & O.R.U.M.. Tutti i diritti riservati.</p>
                     <div className="w-full md:w-auto border-t border-white/10 md:border-0 pt-4 md:pt-0 text-center md:text-right">
                         <p>Designed by Massimo Mantineo</p>
                     </div>

@@ -102,51 +102,127 @@ export default async function BrandHomePage() {
             </section>
 
             {/* LATEST NEWS GRID - DINAMICA DAL DB */}
-            <section className="py-16 bg-muted/20">
+            <section className="py-16 bg-muted/20 border-b border-border/50">
                 <div className="container">
-                    <div className="flex items-center justify-between mb-10 pb-4">
-                        <div>
-                            <h2 className="text-3xl font-serif font-bold text-primary uppercase tracking-tight">
-                                Ultime Notizie
-                            </h2>
-                            <p className="text-muted-foreground mt-2 max-w-2xl">
-                                Non perderti le ultime iniziative:
-                            </p>
-                        </div>
-                        <Link href={`/news`} className="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors shrink-0 ml-4 border p-2 rounded-lg">
-                            Vedi tutte
+                    <div className="flex items-center justify-between mb-8">
+                        <h2 className="text-3xl font-serif font-bold text-foreground uppercase tracking-tight pl-4 border-l-4 border-primary">
+                            Ultime Notizie
+                        </h2>
+                        <Link href={`/news`} className="text-xs font-bold uppercase tracking-widest text-primary hover:underline" >
+                            Tutte le Notizie
                         </Link>
                     </div>
 
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-3 gap-6">
                         {ultimeNotizie.map((news) => (
-                            <Link href={`/news/${news.id}`} key={news.id} className="group flex flex-col bg-background border border-border shadow-sm hover:shadow-md transition-shadow">
-                                {/* Image Placeholder */}
-                                <div className="aspect-video bg-muted relative overflow-hidden">
-                                    {news.image && (
-                                        <img src={news.image} alt={news.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                                    )}
-                                    <div className="absolute inset-0 bg-primary/10 group-hover:bg-primary/0 transition-colors"></div>
+                            <Link href={`/news/${news.id}`} key={news.id} className="relative group overflow-hidden bg-muted aspect-[4/3] flex items-end p-6 border-b-4 border-primary shadow-sm hover:shadow-lg transition-all block">
+                                {news.image && (
+                                    <img src={news.image} alt={news.title} className="absolute inset-0 w-full h-full object-cover z-0" />
+                                )}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+
+                                {/* Date Badge */}
+                                <div className="absolute top-4 left-4 z-20 bg-white text-foreground text-center p-2 min-w-[3.5rem] shadow-sm">
+                                    <span className="block text-xs font-bold uppercase text-muted-foreground">
+                                        {news.date.toLocaleDateString('it-IT', { month: 'short' })}
+                                    </span>
+                                    <span className="block text-2xl font-black leading-none">
+                                        {news.date.toLocaleDateString('it-IT', { day: '2-digit' })}
+                                    </span>
                                 </div>
-                                <div className="p-6 flex flex-col flex-1">
-                                    <div className="flex items-center gap-3 text-xs text-muted-foreground mb-3 font-bold uppercase tracking-wider">
-                                        <span className="text-primary">{news.category}</span>
-                                        <span>•</span>
-                                        <span>{news.date.toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}</span>
-                                    </div>
-                                    <h3 className="text-xl font-serif font-bold mb-3 group-hover:text-primary transition-colors leading-snug line-clamp-2">
+
+                                <div className="relative z-20 text-white mt-auto">
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary-foreground/80 bg-primary px-2 py-0.5 mb-2 inline-block">
+                                        {news.category}
+                                    </span>
+                                    <h3 className="text-xl font-bold leading-tight group-hover:underline decoration-primary underline-offset-4">
                                         {news.title}
                                     </h3>
-                                    <p className="text-sm text-muted-foreground line-clamp-3 mb-4 flex-1">
+                                    <p className="mt-2 text-xs opacity-80 line-clamp-2">
                                         {news.description}
                                     </p>
-                                    <div className="inline-flex items-center text-xs font-bold uppercase tracking-widest text-primary">
-                                        Leggi <ArrowRight className="size-3 ml-1" />
-                                    </div>
                                 </div>
                             </Link>
                         ))}
+                        {ultimeNotizie.length === 0 && (
+                            <div className="md:col-span-3 text-center py-12 text-zinc-500 bg-zinc-50 rounded-2xl border border-zinc-100">
+                                Nessuna notizia trovata.
+                            </div>
+                        )}
                     </div>
+                </div>
+            </section>
+
+            {/* OUR NETWORK SECTION */}
+            <section className="bg-zinc-900 border-b border-white/5 relative z-0">
+                {/* Network Header */}
+                <div className="relative h-[180px] md:h-[280px] flex items-center justify-center overflow-hidden">
+                    <img
+                        src="/assets/unime.png"
+                        className="absolute inset-0 w-full h-full object-cover opacity-20"
+                        alt=""
+                    />
+                    <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+                    <div className="container relative z-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-14 px-6 text-center">
+                        <img src="/assets/morgana.png" className="h-12 sm:h-20 md:h-28 object-contain drop-shadow-2xl" alt="Morgana" />
+                        <h2 className="text-2xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none">
+                            Scopri il nostro network!
+                        </h2>
+                        <img src="/assets/orum.png" className="h-12 sm:h-20 md:h-28 object-contain drop-shadow-2xl" alt="O.R.U.M." />
+                    </div>
+                </div>
+
+                {/* Diagonal Network Grid */}
+                <div className="flex flex-col md:flex-row h-auto md:h-[450px] overflow-hidden">
+                    {/* Unime Health */}
+                    <Link href="/network/unimehealth" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c12830] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
+                        <img src="/assets/policlinico.png" className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <div className="absolute inset-0 flex items-center justify-center p-8 md:pr-20">
+                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                <img src="/assets/unimehealth.png" className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unime Health" />
+                            </div>
+                        </div>
+                    </Link>
+
+                    {/* Studenti Economia */}
+                    <Link href="/network/economia" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#0055a4] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
+                        <img src="/assets/economia.png" className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
+                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                <img src="/assets/studentieconomia.png" className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Economia" />
+                            </div>
+                        </div>
+                    </Link>
+
+                    {/* Unime Matricole */}
+                    <Link href="/network/matricole" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-gradient-to-br from-[#ffffff] to-[#afafaf] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-20 transition-all hover:flex-[1.3] duration-500">
+                        <img src="/assets/matricole.png" className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
+                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                <img src="/assets/unimematricole.png" className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unime Matricole" />
+                            </div>
+                        </div>
+                    </Link>
+
+                    {/* Studenti Scipog */}
+                    <Link href="/network/scipog" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#ffcc00] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-10 transition-all hover:flex-[1.3] duration-500">
+                        <img src="/assets/scipog.png" className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
+                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                <img src="/assets/studentiscipog.png" className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Scipog" />
+                            </div>
+                        </div>
+                    </Link>
+
+                    {/* Inside Dicam */}
+                    <Link href="/network/dicam" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#d81b60] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500">
+                        <img src="/assets/dicam.png" className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <div className="absolute inset-0 flex items-center justify-center p-8 md:pl-20">
+                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                <img src="/assets/insidedicam.png" className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Inside Dicam" />
+                            </div>
+                        </div>
+                    </Link>
                 </div>
             </section>
         </div >
