@@ -76,10 +76,11 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
             const logoMorgana = await loadLogo("/assets/morgana.png")
             const logoOrum = await loadLogo("/assets/orum.png")
 
-            const drawHeader = (docInstance: any, titleOverride?: string) => {
+            const drawPageContent = (docInstance: any, titleOverride?: string) => {
                 const margin = 15
                 const logoSize = 25
 
+                // Header (Loghi + Nome Associazioni)
                 if (logoMorgana) docInstance.addImage(logoMorgana, "PNG", margin, 10, logoSize, logoSize)
                 if (logoOrum) docInstance.addImage(logoOrum, "PNG", pageWidth - margin - logoSize, 10, logoSize, logoSize)
 
@@ -94,19 +95,24 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 docInstance.setDrawColor(200)
                 docInstance.line(margin, 40, pageWidth - margin, 40)
 
+                // Titolo Sezione
                 docInstance.setFontSize(18)
                 docInstance.text(titleOverride || event.title, pageWidth / 2, 55, { align: "center" })
 
+                // Sottotitolo (Data/Luogo)
                 docInstance.setFontSize(10)
                 docInstance.setFont("helvetica", "normal")
                 docInstance.setTextColor(100)
                 const dateStr = new Date(event.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })
                 docInstance.text(`Data: ${dateStr} - Luogo: ${event.location}`, pageWidth / 2, 62, { align: "center" })
+
+                // Footer (Paginazione)
+                const str = "Pagina " + docInstance.getNumberOfPages()
+                docInstance.setFontSize(8)
+                docInstance.text(str, pageWidth / 2, docInstance.internal.pageSize.height - 10, { align: "center" })
             }
 
-            // --- PAGINA 1: ISCRITTI ---
-            drawHeader(doc, `ELENCO PRENOTATI: ${event.title}`)
-
+            // --- SEZIONE 1: ISCRITTI ---
             const tableRows = (attendees || []).map((a, index) => [
                 index + 1,
                 a.name,
@@ -127,19 +133,15 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 },
                 styles: { fontSize: 9, cellPadding: 4 },
                 didDrawPage: (data: any) => {
-                    // Footer
-                    const str = "Pagina " + doc.getNumberOfPages()
-                    doc.setFontSize(8)
-                    doc.text(str, pageWidth / 2, doc.internal.pageSize.height - 10, { align: "center" })
+                    drawPageContent(doc, `ELENCO PRENOTATI: ${event.title}`)
                 }
             })
 
-            // --- PAGINE EXTRA: NON PRENOTATI ---
+            // --- SEZIONE 2: NON PRENOTATI (PAGINE EXTRA) ---
             for (let i = 0; i < 3; i++) {
                 doc.addPage()
-                drawHeader(doc, `ELENCO NON PRENOTATI: ${event.title}`)
-
-                const emptyRows = Array.from({ length: 20 }).map((_, idx) => [attendees.length + (i * 20) + idx + 1, "", "", "", ""])
+                const startRow = attendees.length + (i * 15) + 1
+                const emptyRows = Array.from({ length: 15 }).map((_, idx) => [startRow + idx, "", "", "", ""])
 
                 autoTable(doc, {
                     startY: 75,
@@ -154,7 +156,10 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                         3: { cellWidth: 30 },
                         4: { cellWidth: 60 }
                     },
-                    styles: { fontSize: 9, minCellHeight: 10 }
+                    styles: { fontSize: 9, minCellHeight: 12 }, // Righe più alte per firma
+                    didDrawPage: (data: any) => {
+                        drawPageContent(doc, `ELENCO NON PRENOTATI: ${event.title}`)
+                    }
                 })
             }
 
