@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, X, Search, Filter, Clock, Calendar } from "lucide-react"
+import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, X, Search, Filter, Clock, Calendar, ArrowUpDown, ArrowUp } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -34,6 +34,15 @@ export default function AdminNewsClient({
     const [filterStatus, setFilterStatus] = useState("")
     const [filterYear, setFilterYear] = useState("")
     const [newCategory, setNewCategory] = useState("")
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
+
+    const requestSort = (key: string) => {
+        let direction: 'asc' | null = 'asc'
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = null
+        }
+        setSortConfig(direction ? { key, direction } : null)
+    }
 
     // Client-side filtering
     const filteredNews = news.filter(item => {
@@ -48,13 +57,29 @@ export default function AdminNewsClient({
         return matchesSearch && matchesCategory && matchesStatus && matchesYear
     })
 
-    // Group by year
+    // Group by year and sort within groups
     const groupedByYear: Record<number, any[]> = {}
     filteredNews.forEach(item => {
         const year = new Date(item.date).getFullYear()
         if (!groupedByYear[year]) groupedByYear[year] = []
         groupedByYear[year].push(item)
     })
+
+    // Sort items within each year group based on sortConfig
+    Object.keys(groupedByYear).forEach(yearKey => {
+        const year = Number(yearKey)
+        groupedByYear[year].sort((a, b) => {
+            if (!sortConfig) return 0
+            const { key, direction } = sortConfig
+            if (direction === 'asc') {
+                const valA = (a[key as keyof any] || "").toString().toLowerCase()
+                const valB = (b[key as keyof any] || "").toString().toLowerCase()
+                return valA.localeCompare(valB)
+            }
+            return 0
+        })
+    })
+
     const sortedYears = Object.keys(groupedByYear).map(Number).sort((a, b) => b - a)
 
     const activeFilters = [searchQuery, filterCategory, filterStatus, filterYear].filter(Boolean).length
@@ -232,9 +257,23 @@ export default function AdminNewsClient({
                         <table className="w-full text-left text-sm">
                             <thead className="bg-zinc-50 border-b border-zinc-100 text-zinc-500 font-medium uppercase tracking-wider text-xs">
                                 <tr>
-                                    <th className="px-6 py-3">Titolo</th>
+                                    <th
+                                        className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                        onClick={() => requestSort('title')}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            Titolo {sortConfig?.key === 'title' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                        </div>
+                                    </th>
                                     <th className="px-6 py-3">Categoria</th>
-                                    <th className="px-6 py-3">Data</th>
+                                    <th
+                                        className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                        onClick={() => requestSort('date')}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            Data {sortConfig?.key === 'date' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                        </div>
+                                    </th>
                                     <th className="px-6 py-3">Stato</th>
                                     <th className="px-6 py-3 text-right">Azioni</th>
                                 </tr>

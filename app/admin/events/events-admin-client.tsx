@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useTransition } from "react"
-import { Calendar, MapPin, Pencil, Trash2, Copy, Download, Loader2, Search, Filter } from "lucide-react"
+import { Calendar, MapPin, Pencil, Trash2, Copy, Download, Loader2, Search, Filter, ArrowUpDown, ArrowUp } from "lucide-react"
 import Link from "next/link"
 import { deleteEvent, duplicateEvent, getEventRegistrations, getAllAdminEvents } from "@/app/actions/events"
 import { cn } from "@/lib/utils"
@@ -18,6 +18,15 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
     const [search, setSearch] = useState("")
     const [statusFilter, setStatusFilter] = useState("all")
     const [isPending, startTransition] = useTransition()
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
+
+    const requestSort = (key: string) => {
+        let direction: 'asc' | null = 'asc'
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = null
+        }
+        setSortConfig(direction ? { key, direction } : null)
+    }
 
     useEffect(() => {
         startTransition(async () => {
@@ -99,9 +108,15 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 docInstance.setFontSize(18)
                 docInstance.text(titleOverride || event.title, pageWidth / 2, 55, { align: "center" })
 
+                // Sottotitolo (Contatti)
+                docInstance.setFontSize(8)
+                docInstance.setFont("helvetica", "normal")
+                docInstance.setTextColor(120)
+                docInstance.text("Via Sant'Elia, 11 - 98122 Messina (ME)", pageWidth / 2, 32, { align: "center" })
+                docInstance.text("associazionemorgana@gmail.com  -  orum_unime@gmail.com", pageWidth / 2, 36, { align: "center" })
+
                 // Sottotitolo (Data/Luogo)
                 docInstance.setFontSize(10)
-                docInstance.setFont("helvetica", "normal")
                 docInstance.setTextColor(100)
                 const dateStr = new Date(event.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })
                 docInstance.text(`Data: ${dateStr} - Luogo: ${event.location}`, pageWidth / 2, 62, { align: "center" })
@@ -190,6 +205,17 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
         }
     }
 
+    const sortedEvents = [...events].sort((a, b) => {
+        if (!sortConfig) return 0
+        const { key, direction } = sortConfig
+        if (direction === 'asc') {
+            const valA = (a[key as keyof any] || "").toString().toLowerCase()
+            const valB = (b[key as keyof any] || "").toString().toLowerCase()
+            return valA.localeCompare(valB)
+        }
+        return 0
+    })
+
     return (
         <div className="space-y-6">
             {/* Filtri */}
@@ -227,15 +253,36 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 <table className="w-full text-left border-collapse">
                     <thead>
                         <tr className="border-b border-zinc-100 bg-zinc-50/50 text-xs font-bold text-zinc-500 uppercase tracking-wider">
-                            <th className="px-6 py-4">Evento</th>
-                            <th className="px-6 py-4">Data</th>
-                            <th className="px-6 py-4 hidden md:table-cell">Luogo</th>
+                            <th
+                                className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('title')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Evento {sortConfig?.key === 'title' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                </div>
+                            </th>
+                            <th
+                                className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('date')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Data {sortConfig?.key === 'date' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                </div>
+                            </th>
+                            <th
+                                className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('location')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Luogo {sortConfig?.key === 'location' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                </div>
+                            </th>
                             <th className="px-6 py-4 hidden md:table-cell">Categoria</th>
                             <th className="px-6 py-4 text-right">Azioni</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-50">
-                        {events.map((event) => (
+                        {sortedEvents.map((event) => (
                             <tr key={event.id} className="hover:bg-zinc-50/50 transition-colors group">
                                 <td className="px-6 py-5">
                                     <div>

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram } from "lucide-react"
+import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { deleteConvention } from "@/app/actions/conventions"
@@ -21,11 +21,29 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
     const router = useRouter()
     const [search, setSearch] = useState("")
     const [isDeleting, setIsDeleting] = useState<string | null>(null)
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
+
+    const requestSort = (key: string) => {
+        let direction: 'asc' | null = 'asc'
+        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+            direction = null
+        }
+        setSortConfig(direction ? { key, direction } : null)
+    }
 
     const filtered = initialData.filter(c =>
         c.name.toLowerCase().includes(search.toLowerCase()) ||
         c.category.toLowerCase().includes(search.toLowerCase())
-    )
+    ).sort((a, b) => {
+        if (!sortConfig) return 0
+        const { key, direction } = sortConfig
+        if (direction === 'asc') {
+            const valA = (a[key as keyof Convention] || "").toString().toLowerCase()
+            const valB = (b[key as keyof Convention] || "").toString().toLowerCase()
+            return valA.localeCompare(valB)
+        }
+        return 0
+    })
 
     async function handleDelete(id: string) {
         if (!confirm("Sei sicuro di voler eliminare questa convenzione?")) return
@@ -58,8 +76,22 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                     <table className="w-full text-left text-sm border-collapse">
                         <thead>
                             <tr className="bg-zinc-50 border-bottom border-zinc-100 uppercase tracking-wider text-[10px] font-bold text-zinc-500">
-                                <th className="px-6 py-4">Attività</th>
-                                <th className="px-6 py-4 text-center">Località</th>
+                                <th
+                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                    onClick={() => requestSort('name')}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        Attività {sortConfig?.key === 'name' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                    </div>
+                                </th>
+                                <th
+                                    className="px-6 py-4 text-center cursor-pointer hover:text-foreground transition-colors group"
+                                    onClick={() => requestSort('location')}
+                                >
+                                    <div className="flex items-center justify-center gap-2">
+                                        Località {sortConfig?.key === 'location' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                    </div>
+                                </th>
                                 <th className="px-6 py-4 text-center">Contatti</th>
                                 <th className="px-6 py-4 text-right">Azioni</th>
                             </tr>
