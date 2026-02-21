@@ -32,7 +32,7 @@ export default function Loading() {
                 {/* Loading Text & Bar */}
                 <div className="flex flex-col items-center gap-4">
                     <span className="text-zinc-500 text-[10px] uppercase tracking-[0.3em] font-black animate-pulse">
-                        Caricamento Esperienza UniMe
+                        Caricamento ...
                     </span>
                     <div className="w-48 h-[2px] bg-zinc-900 rounded-full overflow-hidden relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-[#c12830] via-[#ffffff] to-[#18182e] animate-loading-bar origin-left w-full"></div>
