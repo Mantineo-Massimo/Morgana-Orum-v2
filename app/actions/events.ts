@@ -6,6 +6,31 @@ import { sendEmail } from "@/lib/mail"
 import { getEventBookingTemplate, getNewsletterTemplate } from "@/lib/email-templates"
 import { sendPublicationNotification } from "./notifications"
 
+async function checkContentPermission(itemAssociation?: string) {
+    const { cookies } = await import("next/headers")
+    const userEmail = cookies().get("session_email")?.value
+    if (!userEmail) return { allowed: false }
+
+    const user = await prisma.user.findUnique({
+        where: { email: userEmail }
+    })
+
+    if (!user) return { allowed: false }
+
+    // SUPER_ADMIN and ADMIN_MORGANA can edit everything
+    if (user.role === "SUPER_ADMIN" || user.role === "ADMIN_MORGANA") {
+        return { allowed: true, user }
+    }
+
+    // ADMIN_NETWORK can only edit their own association
+    if (user.role === "ADMIN_NETWORK") {
+        const isMatch = itemAssociation?.toLowerCase().includes(user.association.toLowerCase())
+        return { allowed: isMatch, user }
+    }
+
+    return { allowed: false }
+}
+
 export async function getAllEvents(userEmail?: string | null, association?: string) {
     const query: any = {
         where: { published: true },
@@ -270,6 +295,9 @@ export async function createEvent(data: {
     published: boolean
 }) {
     try {
+        const permission = await checkContentPermission(data.association)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
+
         const newEvent = await prisma.event.create({
             data: {
                 title: data.title,
@@ -325,10 +353,11 @@ export async function updateEvent(id: number, data: {
     published: boolean
 }) {
     try {
-        const oldEvent = await prisma.event.findUnique({
-            where: { id },
-            select: { published: true }
-        })
+        const existing = await prisma.event.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Evento non trovato" }
+
+        const permission = await checkContentPermission(existing.association)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo evento." }
 
         const updatedEvent = await prisma.event.update({
             where: { id },
@@ -354,7 +383,7 @@ export async function updateEvent(id: number, data: {
         })
 
         // -- INVIA NEWSLETTER SE PASSA DA BOZZA A PUBBLICATO --
-        if (!oldEvent?.published && updatedEvent.published) {
+        if (!existing?.published && updatedEvent.published) {
             sendPublicationNotification(updatedEvent, "Evento")
         }
         revalidatePath("/events")
@@ -368,6 +397,12 @@ export async function updateEvent(id: number, data: {
 
 export async function deleteEvent(id: number) {
     try {
+        const existing = await prisma.event.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Evento non trovato" }
+
+        const permission = await checkContentPermission(existing.association)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo evento." }
+
         await prisma.registration.deleteMany({ where: { eventId: id } })
         await prisma.event.delete({ where: { id } })
         revalidatePath("/events")
@@ -415,6 +450,9 @@ export async function duplicateEvent(eventId: number) {
         })
 
         if (!event) return { success: false, message: "Evento non trovato" }
+
+        const permission = await checkContentPermission(event.association)
+        if (!permission.allowed) return { success: false, message: "Non hai i permessi per questo evento." }
 
         const { id, ...eventData } = event
 

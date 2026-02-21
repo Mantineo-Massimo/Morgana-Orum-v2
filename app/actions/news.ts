@@ -18,9 +18,37 @@ const newsSchema = z.object({
     association: z.string().optional().default("Morgana & O.R.U.M."),
 })
 
+async function checkContentPermission(itemAssociation?: string) {
+    const { cookies } = await import("next/headers")
+    const userEmail = cookies().get("session_email")?.value
+    if (!userEmail) return { allowed: false }
+
+    const user = await prisma.user.findUnique({
+        where: { email: userEmail }
+    })
+
+    if (!user) return { allowed: false }
+
+    // SUPER_ADMIN and ADMIN_MORGANA can edit everything
+    if (user.role === "SUPER_ADMIN" || user.role === "ADMIN_MORGANA") {
+        return { allowed: true, user }
+    }
+
+    // ADMIN_NETWORK can only edit their own association
+    if (user.role === "ADMIN_NETWORK") {
+        // Simple match for now. In a real scenario, we might want more complex mapping.
+        const isMatch = itemAssociation?.toLowerCase().includes(user.association.toLowerCase())
+        return { allowed: isMatch, user }
+    }
+
+    return { allowed: false }
+}
+
 export async function createNews(data: z.infer<typeof newsSchema>) {
     try {
         const validData = newsSchema.parse(data)
+        const permission = await checkContentPermission(validData.association)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
 
         const newNews = await prisma.news.create({
             data: {
@@ -52,13 +80,13 @@ export async function createNews(data: z.infer<typeof newsSchema>) {
 
 export async function updateNews(id: string, data: Partial<z.infer<typeof newsSchema>>) {
     try {
+        const existing = await prisma.news.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Notizia non trovata" }
+
+        const permission = await checkContentPermission(existing.association)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
+
         const updateData: any = { ...data }
-        if (data.date) {
-            updateData.date = new Date(data.date)
-        }
-        if (data.content === "") updateData.content = null
-        if (data.tags === "") updateData.tags = null
-        if (data.image === "") updateData.image = null
 
         const oldNews = await prisma.news.findUnique({
             where: { id },
@@ -86,6 +114,12 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
 
 export async function deleteNews(id: string) {
     try {
+        const existing = await prisma.news.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Notizia non trovata" }
+
+        const permission = await checkContentPermission(existing.association)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
+
         await prisma.news.delete({
             where: { id }
         })

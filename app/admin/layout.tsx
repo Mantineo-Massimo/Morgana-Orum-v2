@@ -16,9 +16,10 @@ export default async function AdminLayout({
 }) {
 
     const data = await getUserDashboardData()
+    const userRole = data?.user.role
 
-    // 1. Auth & Role Check
-    if (!data || data.user.role !== "ADMIN") {
+    // 1. Auth & Role Check - Any admin role is allowed in admin area
+    if (!data || userRole === "USER") {
         redirect(`/login`)
     }
 
@@ -53,13 +54,17 @@ export default async function AdminLayout({
             icon: Tag,
             exact: false
         },
-        // {
-        //     label: "Utenti",
-        //     href: `/admin/users`,
-        //     icon: User,
-        //     exact: false
-        // }
     ]
+
+    // Only SUPER_ADMIN sees User Management
+    if (userRole === "SUPER_ADMIN") {
+        navItems.push({
+            label: "Utenti",
+            href: `/admin/users`,
+            icon: User,
+            exact: false
+        })
+    }
 
     const isMorgana = true; // TODO: Portale Unificato - Tema neutro o in base all'utente
 

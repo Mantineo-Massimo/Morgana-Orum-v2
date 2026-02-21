@@ -19,7 +19,7 @@ model User {
   department       String
   degreeCourse     String
   isFuorisede      Boolean
-  role             String         @default("USER")
+  role             Role           @default(USER)
   association      String
   qrToken          String         @unique @default(uuid())
   newsletter       Boolean        @default(false)
@@ -137,4 +137,11 @@ model Notification {
   createdAt DateTime @default(now())
 
   @@index([createdAt])
+}
+
+enum Role {
+  USER
+  ADMIN_NETWORK
+  ADMIN_MORGANA
+  SUPER_ADMIN
 }
