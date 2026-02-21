@@ -6,7 +6,7 @@ import { redirect } from "next/navigation"
 import { sendEmail } from "@/lib/mail"
 import { getWelcomeEmailTemplate, getPasswordResetTemplate } from "@/lib/email-templates"
 import { randomUUID } from "crypto"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 
 export async function loginAction(email: string, password?: string) {
     // SIMPLIFIED AUTH for demo purposes
