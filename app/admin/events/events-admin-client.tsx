@@ -6,13 +6,7 @@ import Link from "next/link"
 import { deleteEvent, duplicateEvent, getEventRegistrations, getAllAdminEvents } from "@/app/actions/events"
 import { cn } from "@/lib/utils"
 import { jsPDF } from "jspdf"
-import "jspdf-autotable"
-
-declare module "jspdf" {
-    interface jsPDF {
-        autoTable: (options: any) => jsPDF
-    }
-}
+import autoTable from "jspdf-autotable"
 
 interface EventsAdminClientProps {
     initialEvents: any[]
@@ -121,7 +115,7 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 "" // Firma
             ])
 
-            doc.autoTable({
+            autoTable(doc, {
                 startY: 75,
                 head: [["N°", "Nome", "Cognome", "Matricola", "Firma"]],
                 body: tableRows,
@@ -147,7 +141,7 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
 
                 const emptyRows = Array.from({ length: 20 }).map((_, idx) => [attendees.length + (i * 20) + idx + 1, "", "", "", ""])
 
-                doc.autoTable({
+                autoTable(doc, {
                     startY: 75,
                     head: [["N°", "Nome", "Cognome", "Matricola", "Firma"]],
                     body: emptyRows,
