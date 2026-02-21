@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Users, Calendar, Award, BookOpen, Mic2, HeartHandshake, Briefcase, GraduationCap, Gavel } from "lucide-react"
+import { Users, Calendar, Award, BookOpen, Mic2, HeartHandshake, Briefcase, GraduationCap, Gavel, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
@@ -176,6 +176,36 @@ export default function AboutPage() {
 
             {/* 4. Counters Section (Animated) */}
             <Counters />
+
+            {/* 5. Join the Team Section */}
+            <section className="py-24 bg-zinc-900 text-white relative overflow-hidden">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-30 pointer-events-none">
+                    <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" />
+                </div>
+                <div className={cn("absolute inset-0 mix-blend-multiply opacity-20", isMorgana ? "bg-[#c12830]" : "bg-[#18182e]")}></div>
+
+                <div className="container mx-auto px-6 text-center relative z-10">
+                    <div className="max-w-3xl mx-auto">
+                        <h2 className="text-4xl md:text-6xl font-serif font-black mb-6 uppercase tracking-tight">
+                            Entra a far parte della squadra!
+                        </h2>
+                        <p className="text-xl text-white/80 mb-12 leading-relaxed">
+                            {activeTab === "morgana"
+                                ? "Se hai passione, idee e voglia di metterti in gioco nel sociale e nel territorio, Morgana è il posto giusto per te."
+                                : "Se vuoi incidere sulle decisioni istituzionali e supportare concretamente il diritto allo studio, unisciti ad Orum."}
+                        </p>
+                        <a
+                            href={activeTab === "morgana" ? "https://www.instagram.com/associazione.morgana" : "https://www.instagram.com/orum_unime"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-3 bg-white text-zinc-900 px-10 py-5 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all duration-300 group shadow-2xl text-sm md:text-base"
+                        >
+                            Contattaci su Instagram <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
+                        </a>
+                    </div>
+                </div>
+            </section>
         </div>
     )
 }

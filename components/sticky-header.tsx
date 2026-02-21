@@ -32,7 +32,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
 
     // Mapping per i loghi e nomi del network
     const networkInfo: Record<string, { name: string, logo: string, motto: string }> = {
-        unimehealth: { name: "Unime Health", logo: "/assets/unimehealth.png", motto: "Rappresentanza medico-sanitaria" },
+        unimehealth: { name: "Unimhealth", logo: "/assets/unimehealth.png", motto: "Rappresentanza medico-sanitaria" },
         economia: { name: "Studenti Economia", logo: "/assets/studentieconomia.png", motto: "Protagonisti del cambiamento" },
         matricole: { name: "Unime Matricole", logo: "/assets/unimematricole.png", motto: "Il tuo primo passo in Ateneo" },
         scipog: { name: "Studenti Scipog", logo: "/assets/studentiscipog.png", motto: "La voce tra Scienze Politiche e Giuridiche" },

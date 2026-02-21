@@ -31,7 +31,7 @@ export function HeroCarousel() {
                     <div className="absolute inset-0 bg-slate-950" />
 
                     <Image
-                        src={`/assets/slides/morgana/${slides[currentSlide]}.jpg`} // Temporaneo, useremo morgana come fallback per ora
+                        src={`/assets/slides/${slides[currentSlide]}.jpg`} // Temporaneo, useremo morgana come fallback per ora
 
                         alt={`Slide ${currentSlide + 1}`}
                         fill

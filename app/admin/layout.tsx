@@ -5,6 +5,8 @@ import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Cale
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminLayout({
     children,
     params

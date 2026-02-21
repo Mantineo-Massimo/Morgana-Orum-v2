@@ -58,7 +58,7 @@ export default async function Page({ params }: { params: { brandId: string } }) 
         departmentsMap.get(dept)?.push(rep)
     })
 
-    // Special case for Unime Health: Add SIR
+    // Special case for Unimhealth: Add SIR
     if (params.brandId === "unimehealth") {
         // Query more specifically for "SIR (" to avoid matching names like "Siria" or "Desirà"
         const potentialSirReps = await getRepresentatives("SIR (", undefined, undefined, undefined)

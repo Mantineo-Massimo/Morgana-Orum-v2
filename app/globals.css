@@ -113,7 +113,7 @@ body:has([data-admin-area]) #site-footer {
   }
 
   /* Network Brands */
-  [data-brand="unimehealth"] {
+  [data-brand="unimhealth"] {
     --primary: 357 65% 46%;
     /* #c12830 */
     --primary-foreground: 0 0% 98%;

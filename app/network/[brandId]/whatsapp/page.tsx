@@ -103,7 +103,26 @@ const DEPARTMENTS: Record<string, CourseGroup[]> = {
     ]
 }
 
-export default function WhatsAppPage() {
+const BRAND_NAMES: Record<string, string> = {
+    matricole: "Unime Matricole",
+    unimehealth: "Unimhealth",
+    economia: "Studenti Economia",
+    scipog: "Studenti Scipog",
+    dicam: "Inside Dicam"
+}
+
+const SOCIAL_MAPPING: Record<string, string> = {
+    matricole: "unime.matricole",
+    unimehealth: "unimhealth",
+    economia: "studentieconomia",
+    scipog: "studentiscipog",
+    dicam: "insidedicam"
+}
+
+export default function WhatsAppPage({ params }: { params: { brandId: string } }) {
+    const brandName = BRAND_NAMES[params.brandId] || "Unime Matricole"
+    const igHandle = SOCIAL_MAPPING[params.brandId] || "unime.matricole"
+
     return (
         <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
             <div className="container mx-auto px-6">
@@ -111,7 +130,7 @@ export default function WhatsAppPage() {
                     <div className="size-20 bg-[#25D366]/10 text-[#25D366] rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
                         <Phone className="size-10" />
                     </div>
-                    <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest mb-4 italic">Unime Matricole</span>
+                    <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest mb-4 italic">{brandName}</span>
                     <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-6 uppercase tracking-tight">Gruppi WhatsApp</h1>
                     <p className="text-lg text-zinc-600 leading-relaxed mb-8">
                         Unisciti alla più grande community di studenti dell&apos;Ateneo. Seleziona il tuo corso di laurea per entrare nel gruppo ufficiale gestito dai nostri rappresentanti.
@@ -128,25 +147,37 @@ export default function WhatsAppPage() {
                 </div>
 
                 <div className="max-w-6xl mx-auto space-y-16">
-                    {Object.entries(DEPARTMENTS).map(([deptName, courses]) => (
-                        <div key={deptName} className="scroll-mt-32">
-                            <div className="flex items-center gap-4 mb-8">
-                                <div className="h-px bg-zinc-200 flex-1"></div>
-                                <h2 className="text-xl md:text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
-                                    <Building2 className="size-5 md:size-6 text-zinc-400" /> {deptName}
+                    {Object.entries(DEPARTMENTS).map(([dept, groups]) => (
+                        <div key={dept} className="space-y-6">
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="h-px flex-1 bg-zinc-200"></div>
+                                <h2 className="text-lg font-serif font-black uppercase tracking-widest text-zinc-400 px-4">
+                                    {dept}
                                 </h2>
-                                <div className="h-px bg-zinc-200 flex-1"></div>
+                                <div className="h-px flex-1 bg-zinc-200"></div>
                             </div>
 
-                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                                {courses.map((group, i) => (
-                                    <div key={i} className="bg-white rounded-2xl p-4 md:p-6 border border-zinc-100 shadow-sm hover:shadow-xl hover:border-[#25D366]/30 transition-all group flex flex-col items-start justify-between min-h-[140px]">
-                                        <div className="w-full">
-                                            <h3 className="text-sm md:text-base font-bold text-foreground mb-2 leading-tight group-hover:text-[#25D366] transition-colors line-clamp-3">{group.name}</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {groups.map((group, idx) => (
+                                    <div key={idx} className="group relative bg-white border border-zinc-100 rounded-2xl p-5 hover:border-[#25D366]/30 hover:shadow-xl hover:shadow-green-500/5 transition-all duration-300">
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div className="space-y-1">
+                                                <h3 className="font-bold text-zinc-900 group-hover:text-[#25D366] transition-colors leading-tight">
+                                                    {group.name}
+                                                </h3>
+                                                <p className="text-xs text-zinc-400 font-medium uppercase tracking-tighter">
+                                                    Gruppo Ufficiale
+                                                </p>
+                                            </div>
+                                            <a
+                                                href={group.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="shrink-0 size-10 bg-zinc-900 text-white rounded-xl flex items-center justify-center group-hover:bg-[#25D366] transition-all duration-300 shadow-lg shadow-zinc-200 group-hover:shadow-green-500/20"
+                                            >
+                                                <ArrowRight className="size-5 group-hover:translate-x-0.5 transition-transform" />
+                                            </a>
                                         </div>
-                                        <a href={group.link} target="_blank" rel="noopener noreferrer" className="mt-4 w-full flex items-center justify-center gap-2 bg-[#25D366]/10 text-[#25D366] hover:bg-[#25D366] hover:text-white py-2.5 md:py-3 rounded-xl font-black uppercase tracking-widest text-[10px] md:text-xs transition-all duration-300">
-                                            Entra nel gruppo <ArrowRight className="size-4" />
-                                        </a>
                                     </div>
                                 ))}
                             </div>
@@ -159,7 +190,7 @@ export default function WhatsAppPage() {
                     <p className="opacity-80 mb-6 text-sm md:text-base">
                         Stiamo aggiornando costantemente l&apos;elenco dei gruppi. Se il tuo corso non è presente, contattaci sui nostri canali social e ti forniremo il link dedicato.
                     </p>
-                    <a href="https://instagram.com/morganamessina" target="_blank" rel="noopener noreferrer" className="inline-block font-bold uppercase tracking-widest text-xs border-2 border-blue-900/20 px-6 py-3 rounded-full hover:bg-blue-900 hover:text-white transition-colors">
+                    <a href={`https://instagram.com/${igHandle}`} target="_blank" rel="noopener noreferrer" className="inline-block font-bold uppercase tracking-widest text-xs border-2 border-blue-900/20 px-6 py-3 rounded-full hover:bg-blue-900 hover:text-white transition-colors">
                         Scrivici su Instagram
                     </a>
                 </div>

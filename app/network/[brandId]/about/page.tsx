@@ -7,11 +7,11 @@ export const dynamic = "force-dynamic"
 
 const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, subtitle: string, desc: string, mission: string, values: string[] }> = {
     unimehealth: {
-        name: "Unime Health",
+        name: "Unimhealth",
         logo: "/assets/unimehealth.png",
         bg: "/assets/policlinico.png",
         subtitle: "L&apos;eccellenza della rappresentanza nell&apos;area medico-sanitaria.",
-        desc: "Unime Health è l'associazione di riferimento per gli studenti dell'area medica e delle professioni sanitarie dell'Università di Messina. Nata dalla fusione di passione per la sanità e impegno civile, ci occupiamo di tutelare i diritti degli studenti nei policlinici e nelle aule.",
+        desc: "Unimhealth è l'associazione di riferimento per gli studenti dell'area medica e delle professioni sanitarie dell'Università di Messina. Nata dalla fusione di passione per la sanità e impegno civile, ci occupiamo di tutelare i diritti degli studenti nei policlinici e nelle aule.",
         mission: "Garantire una formazione di qualità e un ambiente di tirocinio sicuro e dignitoso per tutti i futuri professionisti della salute.",
         values: ["Passione", "Professionalità", "Tutela", "Solidarietà"]
     },
@@ -27,7 +27,7 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
     matricole: {
         name: "Unime Matricole",
         logo: "/assets/unimematricole.png",
-        bg: "/assets/universita.png",
+        bg: "/assets/matricole.png",
         subtitle: "La tua bussola nel mondo universitario messinese.",
         desc: "Unime Matricole nasce con l'obiettivo di non lasciare nessuno indietro. Sappiamo quanto sia difficile il primo impatto con l'università: burocrazia, aule, esami. Noi siamo qui per guidarti passo dopo passo.",
         mission: "Semplificare l'accesso all'università e supportare i nuovi studenti nella loro integrazione.",
@@ -55,6 +55,7 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
 
 export default function Page({ params }: { params: { brandId: string } }) {
     const config = BRAND_CONFIG[params.brandId]
+    const igHandle = SOCIAL_MAPPING[params.brandId] || "unime.matricole"
 
     if (!config) {
         notFound()
@@ -143,17 +144,34 @@ export default function Page({ params }: { params: { brandId: string } }) {
             </section>
 
             {/* JOIN CTA */}
-            <section className="py-24 bg-primary text-white text-center">
-                <div className="container mx-auto px-6">
-                    <h2 className="text-4xl md:text-5xl font-serif font-black mb-6 uppercase tracking-tight">Vuoi unirti a noi?</h2>
+            <section className="py-24 bg-zinc-900 text-white text-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-30 pointer-events-none">
+                    <Image src={config.bg} fill className="object-cover grayscale" alt="" />
+                </div>
+                <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+                <div className="container mx-auto px-6 relative z-10">
+                    <h2 className="text-4xl md:text-5xl font-serif font-black mb-6 uppercase tracking-tight">Entra a far parte della squadra!</h2>
                     <p className="text-xl opacity-90 mb-10 max-w-2xl mx-auto">
-                        Se credi nel valore della rappresentanza e vuoi fare la differenza nel tuo dipartimento, scrivici subito.
+                        Se credi nel valore della rappresentanza e vuoi fare la differenza nel tuo dipartimento, unisciti a {config.name}.
                     </p>
-                    <Link href={`/network/${params.brandId}`} className="inline-flex items-center gap-3 bg-white text-primary px-8 py-4 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
-                        Contattaci ora <ArrowRight className="size-5" />
-                    </Link>
+                    <a
+                        href={`https://www.instagram.com/${igHandle}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-3 bg-white text-zinc-900 px-8 py-4 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-transform shadow-xl"
+                    >
+                        Contattaci su Instagram <ArrowRight className="size-5" />
+                    </a>
                 </div>
             </section>
         </div>
     )
+}
+
+const SOCIAL_MAPPING: Record<string, string> = {
+    matricole: "unime.matricole",
+    unimehealth: "unimhealth",
+    economia: "studentieconomia",
+    scipog: "studentiscipog",
+    dicam: "insidedicam"
 }
