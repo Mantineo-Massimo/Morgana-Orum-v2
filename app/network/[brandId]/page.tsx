@@ -74,7 +74,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
         <div className="flex flex-col min-h-screen">
             {/* SUB-SITE HERO */}
             <section className="relative h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden">
-                <Image src={config.bg} fill className="object-cover opacity-40 shadow-inner" alt="" />
+                <Image src={config.bg} fill className="object-cover opacity-40 shadow-inner" alt="" sizes="100vw" priority />
 
                 {/* Overlay Personalizzato per il Brand */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-background/90 mix-blend-multiply opacity-95"></div>
@@ -250,7 +250,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
             <section className="py-24 bg-zinc-900 text-white relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-30 pointer-events-none">
-                    <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" />
+                    <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
                 </div>
                 <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
 

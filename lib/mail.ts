@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer"
-import * as aws from "@aws-sdk/client-ses"
+import * as aws from "@aws-sdk/client-sesv2"
 
 interface SendEmailOptions {
     to: string
@@ -18,9 +18,8 @@ export async function sendEmail({ to, subject, html, brand = "morgana" }: SendEm
     let transporter: any
 
     if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
-        // Use AWS SES
-        const ses = new aws.SES({
-            apiVersion: "2010-12-01",
+        // Use AWS SESv2Client
+        const ses = new aws.SESv2Client({
             region: process.env.AWS_REGION || "eu-west-1",
             credentials: {
                 accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -28,7 +27,7 @@ export async function sendEmail({ to, subject, html, brand = "morgana" }: SendEm
             },
         })
         transporter = nodemailer.createTransport({
-            SES: { ses, aws },
+            SES: { sesClient: ses, SendEmailCommand: aws.SendEmailCommand },
         } as any)
     } else {
         // Fallback to SMTP (Brevo or other)

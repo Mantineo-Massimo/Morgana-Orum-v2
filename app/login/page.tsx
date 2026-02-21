@@ -21,8 +21,9 @@ export default function Page() {
 
         const formData = new FormData(event.currentTarget)
         const email = formData.get("email") as string
+        const password = formData.get("password") as string
 
-        const result = await loginAction(email)
+        const result = await loginAction(email, password)
 
         if (result.success) {
             // In a real app, we would set a session cookie here

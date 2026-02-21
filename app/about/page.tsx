@@ -181,7 +181,7 @@ export default function AboutPage() {
             <section className="py-24 bg-zinc-900 text-white relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-30 pointer-events-none">
-                    <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" />
+                    <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
                 </div>
                 <div className={cn("absolute inset-0 mix-blend-multiply opacity-20", isMorgana ? "bg-[#c12830]" : "bg-[#18182e]")}></div>
 

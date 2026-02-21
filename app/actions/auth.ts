@@ -6,24 +6,29 @@ import { redirect } from "next/navigation"
 import { sendEmail } from "@/lib/mail"
 import { getWelcomeEmailTemplate, getPasswordResetTemplate } from "@/lib/email-templates"
 import { randomUUID } from "crypto"
+import bcrypt from "bcrypt"
 
-
-export async function loginAction(email: string) {
+export async function loginAction(email: string, password?: string) {
     // SIMPLIFIED AUTH for demo purposes
     // In production: Verify password, set HTTP-only cookie session
     const user = await prisma.user.findUnique({
         where: { email }
     })
 
-    if (user) {
-        // Set session cookie
-        cookies().set("session_email", email, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            maxAge: 60 * 60 * 24 * 7, // 1 week
-            path: "/",
-        })
-        return { success: true, user }
+    if (user && password) {
+        const isValid = await bcrypt.compare(password, user.password)
+        if (isValid) {
+            // Set session cookie
+            cookies().set("session_email", email, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                maxAge: 60 * 60 * 24 * 7, // 1 week
+                path: "/",
+            })
+            return { success: true, user }
+        } else {
+            return { success: false, error: "Credenziali non valide" }
+        }
     }
     return { success: false, error: "Utente non trovato" }
 }
@@ -51,13 +56,15 @@ export async function registerUser(formData: FormData) {
     }
 
     try {
+        const hashedPassword = await bcrypt.hash(password, 10)
+
         const user = await prisma.user.create({
             data: {
                 name,
                 surname,
                 birthDate: new Date(birthDateStr),
                 email,
-                password, // In real app: hash this!
+                password: hashedPassword,
                 matricola,
                 department,
                 degreeCourse,
@@ -139,10 +146,12 @@ export async function resetPassword(token: string, newPassword: string) {
             return { success: false, error: "Token non valido o scaduto." }
         }
 
+        const hashedPassword = await bcrypt.hash(newPassword, 10)
+
         await prisma.user.update({
             where: { id: user.id },
             data: {
-                password: newPassword, // In real app: HASH THIS!
+                password: hashedPassword,
                 resetToken: null,
                 resetTokenExpiry: null
             }

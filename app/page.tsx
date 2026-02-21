@@ -163,6 +163,7 @@ export default async function BrandHomePage() {
                         fill
                         className="object-cover opacity-20"
                         alt=""
+                        sizes="100vw"
                     />
                     <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
                     <div className="container relative z-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-14 px-6 text-center">
@@ -178,7 +179,7 @@ export default async function BrandHomePage() {
                 <div className="flex flex-col md:flex-row h-auto md:h-[450px] overflow-hidden">
                     {/* Unimhealth */}
                     <Link href="/network/unimhealth" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c12830] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/policlinico.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <Image src="/assets/policlinico.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pr-20">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/unimhealth.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unimhealth" />
@@ -188,7 +189,7 @@ export default async function BrandHomePage() {
 
                     {/* Studenti Economia */}
                     <Link href="/network/economia" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#0055a4] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/economia.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <Image src="/assets/economia.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/studentieconomia.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Economia" />
@@ -198,7 +199,7 @@ export default async function BrandHomePage() {
 
                     {/* Unime Matricole */}
                     <Link href="/network/matricole" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-gradient-to-br from-[#ffffff] to-[#afafaf] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-20 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/matricole.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <Image src="/assets/matricole.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/unimematricole.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unime Matricole" />
@@ -208,7 +209,7 @@ export default async function BrandHomePage() {
 
                     {/* Studenti Scipog */}
                     <Link href="/network/scipog" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#ffcc00] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-10 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/scipog.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <Image src="/assets/scipog.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/studentiscipog.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Scipog" />
@@ -218,7 +219,7 @@ export default async function BrandHomePage() {
 
                     {/* Inside Dicam */}
                     <Link href="/network/dicam" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#d81b60] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/dicam.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
+                        <Image src="/assets/dicam.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pl-20">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/insidedicam.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Inside Dicam" />

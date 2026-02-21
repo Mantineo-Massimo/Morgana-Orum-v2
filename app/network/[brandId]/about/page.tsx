@@ -66,7 +66,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
             {/* HERO ABOUT */}
             <section className="relative pt-32 pb-20 px-6 overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <Image src={config.bg} fill className="object-cover opacity-5 grayscale" alt="" />
+                    <Image src={config.bg} fill className="object-cover opacity-5 grayscale" alt="" sizes="100vw" priority />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-50"></div>
                 </div>
 
@@ -109,7 +109,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
                         </div>
 
                         <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-2xl group">
-                            <Image src={config.bg} fill className="object-cover transition-transform duration-700 group-hover:scale-110" alt="" />
+                            <Image src={config.bg} fill className="object-cover transition-transform duration-700 group-hover:scale-110" alt="" sizes="(max-width: 768px) 100vw, 50vw" />
                             <div className="absolute inset-0 bg-primary/20 mix-blend-multiply opacity-60"></div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                             <div className="absolute bottom-8 left-8 right-8">
@@ -146,7 +146,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
             {/* JOIN CTA */}
             <section className="py-24 bg-zinc-900 text-white text-center relative overflow-hidden">
                 <div className="absolute inset-0 opacity-30 pointer-events-none">
-                    <Image src={config.bg} fill className="object-cover grayscale" alt="" />
+                    <Image src={config.bg} fill className="object-cover grayscale" alt="" sizes="100vw" />
                 </div>
                 <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
                 <div className="container mx-auto px-6 relative z-10">
