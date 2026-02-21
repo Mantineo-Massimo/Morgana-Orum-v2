@@ -6,8 +6,9 @@ import { notFound } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 
-const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, subtitle: string, desc: string }> = {
+const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg: string, subtitle: string, desc: string }> = {
     unimhealth: {
+        id: "unimhealth",
         name: "Unimhealth",
         logo: "/assets/unimhealth.png",
         bg: "/assets/policlinico.png",
@@ -15,6 +16,7 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
         desc: "Unimhealth è l'anima del network dedicata agli studenti dell'area biomedica e sanitaria. Ci impegniamo ogni giorno per garantire una formazione di qualità e servizi all'altezza delle sfide del futuro medico."
     },
     economia: {
+        id: "studentieconomia",
         name: "Studenti Economia",
         logo: "/assets/studentieconomia.png",
         bg: "/assets/economia.png",
@@ -22,6 +24,7 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
         desc: "Studenti Economia rappresenta il punto di riferimento per chi vive il Dipartimento di Economia. Passione, competenza e un forte spirito di gruppo al servizio della crescita accademica e professionale."
     },
     matricole: {
+        id: "unimematricole",
         name: "Unime Matricole",
         logo: "/assets/unimematricole.png",
         bg: "/assets/matricole.png",
@@ -29,6 +32,7 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
         desc: "Siamo qui per guidare i nuovi studenti nel loro ingresso in Ateneo. Dall'orientamento burocratico al supporto didattico, Unime Matricole è il tuo miglior alleato fin dal primo giorno."
     },
     scipog: {
+        id: "studentiscipog",
         name: "Studenti Scipog",
         logo: "/assets/studentiscipog.png",
         bg: "/assets/scipog.png",
@@ -36,6 +40,7 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
         desc: "Passione civile e impegno costante definiscono Studenti Scipog. Lavoriamo per un dipartimento inclusivo, dinamico e capace di valorizzare il percorso di ogni singolo studente."
     },
     dicam: {
+        id: "insidedicam",
         name: "Inside Dicam",
         logo: "/assets/insidedicam.png",
         bg: "/assets/dicam.png",
@@ -55,7 +60,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
     const notizie = await prisma.news.findMany({
         where: {
             published: true,
-            association: { equals: associationName, mode: 'insensitive' }
+            association: { contains: config.id }
         },
         orderBy: { date: 'desc' },
         take: 3
@@ -64,7 +69,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
     const eventi = await prisma.event.findMany({
         where: {
             date: { gte: new Date() },
-            association: { equals: associationName, mode: 'insensitive' }
+            association: { contains: config.id }
         },
         orderBy: { date: 'asc' },
         take: 3

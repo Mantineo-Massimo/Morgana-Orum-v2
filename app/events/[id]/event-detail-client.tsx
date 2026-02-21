@@ -120,9 +120,13 @@ export default function EventDetailClient({
                         <Link href={`/events`} className="inline-flex items-center text-sm font-bold text-white/70 hover:text-white mb-6 uppercase tracking-widest transition-colors">
                             <ChevronLeft className="size-4 mr-1" /> Torna agli Eventi
                         </Link>
-                        <span className="block text-sm font-bold uppercase tracking-widest text-white/60 mb-2">
-                            {event.category}
-                        </span>
+                        <div className="flex flex-wrap gap-2 mb-2">
+                            {event.category.split(",").map((cat: string) => (
+                                <span key={cat.trim()} className="text-sm font-bold uppercase tracking-widest text-white/60">
+                                    {cat.trim()}
+                                </span>
+                            ))}
+                        </div>
                         <h1 className="text-4xl md:text-6xl font-serif font-black mb-6 max-w-4xl">
                             {event.title}
                         </h1>

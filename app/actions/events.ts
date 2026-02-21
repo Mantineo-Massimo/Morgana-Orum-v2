@@ -4,8 +4,7 @@ import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { sendEmail } from "@/lib/mail"
 import { getEventBookingTemplate, getNewsletterTemplate } from "@/lib/email-templates"
-
-// --- READ ---
+import { sendPublicationNotification } from "./notifications"
 
 export async function getAllEvents(userEmail?: string | null, association?: string) {
     const query: any = {
@@ -14,7 +13,7 @@ export async function getAllEvents(userEmail?: string | null, association?: stri
     }
 
     if (association) {
-        query.where.association = association
+        query.where.association = { contains: association }
     }
 
     if (userEmail) {
@@ -63,10 +62,46 @@ export async function getEventById(id: number, userEmail?: string | null) {
 }
 
 export async function getEventCategories() {
-    const events = await prisma.event.findMany({ select: { category: true } })
-    const categorySet = new Set<string>()
-    events.forEach((e: { category: string }) => categorySet.add(e.category))
-    return Array.from(categorySet).sort()
+    try {
+        const cats = await prisma.eventCategory.findMany({ orderBy: { name: "asc" } })
+        return cats.map((c: any) => c.name)
+    } catch (error) {
+        console.error("Error fetching categories:", error)
+        return []
+    }
+}
+
+export async function createEventCategory(name: string) {
+    try {
+        await prisma.eventCategory.create({ data: { name } })
+        revalidatePath("/admin/events")
+        revalidatePath("/events")
+        return { success: true }
+    } catch (error) {
+        console.error("Create category error:", error)
+        return { success: false, error: "Categoria già esistente o errore" }
+    }
+}
+
+export async function deleteEventCategory(id: string) {
+    try {
+        await prisma.eventCategory.delete({ where: { id } })
+        revalidatePath("/admin/events")
+        revalidatePath("/events")
+        return { success: true }
+    } catch (error) {
+        console.error("Delete category error:", error)
+        return { success: false, error: "Errore durante l'eliminazione" }
+    }
+}
+
+export async function getEventCategoriesWithIds() {
+    try {
+        return await prisma.eventCategory.findMany({ orderBy: { name: "asc" } })
+    } catch (error) {
+        console.error("Error fetching categories:", error)
+        return []
+    }
 }
 
 // --- REGISTRATION ---
@@ -184,7 +219,7 @@ export async function cancelRegistration(eventId: number) {
 
 // --- ADMIN CRUD ---
 
-export async function getAllAdminEvents(filters?: { query?: string, status?: string }) {
+export async function getAllAdminEvents(filters?: { query?: string, status?: string, association?: string }) {
     try {
         const where: any = {}
 
@@ -199,6 +234,10 @@ export async function getAllAdminEvents(filters?: { query?: string, status?: str
             where.published = true
         } else if (filters?.status === "draft") {
             where.published = false
+        }
+
+        if (filters?.association) {
+            where.association = { contains: filters.association }
         }
 
         return await prisma.event.findMany({
@@ -228,6 +267,7 @@ export async function createEvent(data: {
     bookingEnd?: string
     attachments?: string
     association?: string
+    published: boolean
 }) {
     try {
         const newEvent = await prisma.event.create({
@@ -248,8 +288,14 @@ export async function createEvent(data: {
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
                 association: data.association || "Morgana & O.R.U.M.",
+                published: data.published,
             }
         })
+
+        // -- INVIA NEWSLETTER A SOTTOSCRITTORI (SOLO SE PUBBLICATO) --
+        if (newEvent.published) {
+            sendPublicationNotification(newEvent, "Evento")
+        }
         revalidatePath("/events")
         revalidatePath("/admin/events")
         return { success: true }
@@ -276,9 +322,15 @@ export async function updateEvent(id: number, data: {
     bookingEnd?: string
     attachments?: string
     association?: string
+    published: boolean
 }) {
     try {
-        await prisma.event.update({
+        const oldEvent = await prisma.event.findUnique({
+            where: { id },
+            select: { published: true }
+        })
+
+        const updatedEvent = await prisma.event.update({
             where: { id },
             data: {
                 title: data.title,
@@ -297,8 +349,14 @@ export async function updateEvent(id: number, data: {
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
                 association: data.association || "Morgana & O.R.U.M.",
+                published: data.published,
             }
         })
+
+        // -- INVIA NEWSLETTER SE PASSA DA BOZZA A PUBBLICATO --
+        if (!oldEvent?.published && updatedEvent.published) {
+            sendPublicationNotification(updatedEvent, "Evento")
+        }
         revalidatePath("/events")
         revalidatePath("/admin/events")
         return { success: true }

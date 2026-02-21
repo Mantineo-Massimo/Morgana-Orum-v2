@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { LayoutDashboard, Calendar, FileText, Settings, LogOut, Loader2, HelpCircle } from "lucide-react"
+import { LayoutDashboard, Calendar, FileText, Settings, LogOut, Loader2, HelpCircle, Bell } from "lucide-react"
 import { logoutAction } from "@/app/actions/auth"
 import { useEffect, useState } from "react"
 import { getUserDashboardData } from "@/app/actions/users"
@@ -58,6 +58,12 @@ export default function DashboardLayout({
             label: "Assistenza",
             href: `/dashboard/support`,
             icon: HelpCircle,
+            exact: false
+        },
+        {
+            label: "Messaggi",
+            href: `/dashboard/messages`,
+            icon: Bell,
             exact: false
         },
         {

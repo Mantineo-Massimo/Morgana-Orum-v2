@@ -7,6 +7,7 @@ import { ArrowLeft, Save, Loader2, Upload, X, ImageIcon } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { ASSOCIATIONS } from "@/lib/associations"
 
 
 export default function NewsForm({
@@ -25,6 +26,9 @@ export default function NewsForm({
     const isEditing = !!initialData
     const [selectedCategories, setSelectedCategories] = useState<string[]>(
         initialData?.category ? initialData.category.split(",").map((c: string) => c.trim()) : []
+    )
+    const [selectedAssociations, setSelectedAssociations] = useState<string[]>(
+        initialData?.association ? initialData.association.split(",").map((a: string) => a.trim()) : ["morgana-orum"]
     )
 
     async function handleImageUpload(file: File) {
@@ -59,7 +63,7 @@ export default function NewsForm({
             image: imageUrl || null,
             date: formData.get("date") as string || undefined,
             published: formData.get("published") === "on",
-            association: "Morgana & O.R.U.M.",
+            association: selectedAssociations.join(", "),
         }
 
         const result = isEditing
@@ -322,6 +326,38 @@ export default function NewsForm({
                             className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
                             placeholder="#Solidarietà, #UniMe, #Natale2025"
                         />
+                    </div>
+
+                    {/* Associazioni (multi) */}
+                    <div>
+                        <label className="block text-sm font-bold text-zinc-700 mb-2">Associazioni (Zone)</label>
+                        <div className="flex flex-wrap gap-2">
+                            {ASSOCIATIONS.map(assoc => {
+                                const isSelected = selectedAssociations.includes(assoc.id)
+                                return (
+                                    <button
+                                        key={assoc.id}
+                                        type="button"
+                                        onClick={() => {
+                                            setSelectedAssociations(prev =>
+                                                isSelected
+                                                    ? prev.filter(a => a !== assoc.id)
+                                                    : [...prev, assoc.id]
+                                            )
+                                        }}
+                                        className={cn(
+                                            "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",
+                                            isSelected
+                                                ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
+                                                : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400"
+                                        )}
+                                    >
+                                        {isSelected && "✓ "}{assoc.name}
+                                    </button>
+                                )
+                            })}
+                        </div>
+                        <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">Seleziona in quali zone/siti web deve comparire la notizia.</p>
                     </div>
 
                     {/* Published */}

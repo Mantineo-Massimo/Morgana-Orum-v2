@@ -1,4 +1,4 @@
-import { getAllEvents } from "@/app/actions/events"
+import { getAllEvents, getEventCategories, getEventCategoriesWithIds } from "@/app/actions/events"
 import Link from "next/link"
 import { Plus, Calendar } from "lucide-react"
 import EventsAdminClient from "./events-admin-client"
@@ -6,7 +6,11 @@ import EventsAdminClient from "./events-admin-client"
 export const dynamic = "force-dynamic"
 
 export default async function AdminEventsPage() {
-    const events = await getAllEvents()
+    const [events, categories, categoriesWithIds] = await Promise.all([
+        getAllEvents(),
+        getEventCategories(),
+        getEventCategoriesWithIds()
+    ])
 
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -32,7 +36,7 @@ export default async function AdminEventsPage() {
                     <p className="text-zinc-500 mt-2 max-w-xs mx-auto">Crea il primo evento per iniziare a raccogliere adesioni.</p>
                 </div>
             ) : (
-                <EventsAdminClient initialEvents={events} />
+                <EventsAdminClient initialEvents={events} categories={categories} categoriesWithIds={categoriesWithIds} />
             )}
         </div>
     )

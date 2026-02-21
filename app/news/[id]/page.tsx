@@ -45,12 +45,14 @@ export default async function NewsDetailPage({ params }: { params: { id: string 
                     {/* Header Section */}
                     <header className="mb-12">
                         <div className="flex flex-wrap items-center gap-3 mb-8">
-                            <span className={cn(
-                                "text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-lg text-white",
-                                themeAccent
-                            )}>
-                                {article.category}
-                            </span>
+                            {article.category.split(",").map((cat: string) => (
+                                <span key={cat.trim()} className={cn(
+                                    "text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-lg text-white",
+                                    themeAccent
+                                )}>
+                                    {cat.trim()}
+                                </span>
+                            ))}
                             <div className="flex items-center text-zinc-400 text-sm font-medium">
                                 <Calendar className="size-4 mr-2" />
                                 {formattedDate}

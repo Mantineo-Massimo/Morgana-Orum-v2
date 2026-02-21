@@ -71,7 +71,8 @@ export default function EventsClient({
 
     const filteredEvents = events.filter(item => {
         // Filter by category
-        if (activeCategory !== "Tutti" && item.category !== activeCategory) return false
+        const itemCats = item.category ? item.category.split(",").map(c => c.trim()) : []
+        if (activeCategory !== "Tutti" && !itemCats.includes(activeCategory)) return false
 
         // Filter by search text
         if (searchQuery) {
@@ -301,10 +302,12 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
 
 
                         {/* Category badge (Top Right, consistent with News) */}
-                        <div className="absolute top-4 right-4 z-20">
-                            <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-sm text-white shadow-sm border border-red-400/50">
-                                {item.category}
-                            </span>
+                        <div className="absolute top-4 right-4 z-20 flex flex-col gap-1 items-end">
+                            {item.category.split(",").map((cat: string) => (
+                                <span key={cat.trim()} className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-sm text-white shadow-sm border border-red-400/50">
+                                    {cat.trim()}
+                                </span>
+                            ))}
                         </div>
 
                         {item.isRegistered && (

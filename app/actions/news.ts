@@ -3,8 +3,8 @@
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import prisma from "@/lib/prisma"
-import { sendEmail } from "@/lib/mail"
-import { getNewsletterTemplate } from "@/lib/email-templates"
+import { sendPublicationNotification } from "./notifications"
+import { AssociationId } from "@/lib/associations"
 
 const newsSchema = z.object({
     title: z.string().min(1, "Il titolo è obbligatorio"),
@@ -37,27 +37,8 @@ export async function createNews(data: z.infer<typeof newsSchema>) {
         })
 
         // -- INVIA NEWSLETTER A SOTTOSCRITTORI (SOLO SE PUBBLICATA) --
-        if (validData.published) {
-            const subscribers = await prisma.user.findMany({
-                where: { newsletter: true },
-                select: { email: true, name: true, association: true }
-            });
-
-            if (subscribers.length > 0) {
-                const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://morganaorum.vercel.app";
-                const brandFolder = (validData.association?.toLowerCase() === "orum" || validData.association?.toLowerCase() === "o.r.u.m.") ? "orum" : "morgana";
-                // Modifico URL, le news sono in /network/[brand]/news
-                const newsUrl = `${baseUrl}/network/${brandFolder}/news/${newNews.id}`;
-
-                Promise.allSettled(subscribers.map(sub => {
-                    return sendEmail({
-                        to: sub.email,
-                        subject: `Nuova Notizia: ${newNews.title}`,
-                        html: getNewsletterTemplate(sub.name, newNews.title, newNews.description || "", newsUrl, "Notizia", brandFolder),
-                        brand: brandFolder as "morgana" | "orum"
-                    });
-                })).catch(err => console.error("Async newsletter error (news):", err));
-            }
+        if (newNews.published) {
+            sendPublicationNotification(newNews, "Notizia")
         }
 
         revalidatePath("/[brand]/news")
@@ -79,10 +60,20 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
         if (data.tags === "") updateData.tags = null
         if (data.image === "") updateData.image = null
 
-        await prisma.news.update({
+        const oldNews = await prisma.news.findUnique({
+            where: { id },
+            select: { published: true }
+        })
+
+        const updatedNews = await prisma.news.update({
             where: { id },
             data: updateData,
         })
+
+        // -- INVIA NEWSLETTER SE PASSA DA BOZZA A PUBBLICATA --
+        if (!oldNews?.published && updatedNews.published) {
+            sendPublicationNotification(updatedNews, "Notizia")
+        }
 
         revalidatePath("/[brand]/news")
         revalidatePath("/[brand]/admin/news")
@@ -122,7 +113,7 @@ export async function getNews(category?: string, query?: string, association?: s
         }
 
         if (association) {
-            where.association = association
+            where.association = { contains: association }
         }
 
         if (query) {
@@ -159,7 +150,7 @@ export async function getAllNews(filters?: { query?: string, category?: string, 
         }
 
         if (filters?.association) {
-            where.association = filters.association
+            where.association = { contains: filters.association }
         }
 
         if (filters?.status === "published") {

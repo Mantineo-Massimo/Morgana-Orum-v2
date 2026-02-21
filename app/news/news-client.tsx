@@ -138,11 +138,20 @@ function NewsCard({ item }: { item: any }) {
         year: "numeric"
     })
 
-    // Determina il badge e il tema neutrale dell'unificazione
-    const mainCategory = item.category ? item.category.split(",")[0].trim() : "Notizia";
-
     // Tema neutro per tutto il portale unificato
-    const assocBadge = <span className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-sm text-white shadow-sm border border-red-400/50">{mainCategory}</span>;
+    const assocBadge = (
+        <div className="absolute top-4 right-4 z-20 flex flex-col gap-1 items-end">
+            {item.category ? item.category.split(",").map((cat: string) => (
+                <span key={cat.trim()} className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-sm text-white shadow-sm border border-red-400/50">
+                    {cat.trim()}
+                </span>
+            )) : (
+                <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-sm text-white shadow-sm border border-red-400/50">
+                    Notizia
+                </span>
+            )}
+        </div>
+    );
     const themeColorText = "text-primary hover:text-red-700";
     const themeGradient = "from-primary";
 

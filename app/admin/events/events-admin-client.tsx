@@ -1,24 +1,32 @@
 "use client"
 
 import { useState, useEffect, useTransition } from "react"
-import { Calendar, MapPin, Pencil, Trash2, Copy, Download, Loader2, Search, Filter, ArrowUpDown, ArrowUp } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { ASSOCIATIONS } from "@/lib/associations"
+import { Calendar, MapPin, Pencil, Trash2, Copy, Download, Loader2, Search, Filter, ArrowUpDown, ArrowUp, Tag, X, Plus } from "lucide-react"
 import Link from "next/link"
-import { deleteEvent, duplicateEvent, getEventRegistrations, getAllAdminEvents } from "@/app/actions/events"
+import { deleteEvent, duplicateEvent, getEventRegistrations, getAllAdminEvents, createEventCategory, deleteEventCategory } from "@/app/actions/events"
 import { cn } from "@/lib/utils"
 import { jsPDF } from "jspdf"
 import autoTable from "jspdf-autotable"
 
 interface EventsAdminClientProps {
     initialEvents: any[]
+    categories: string[]
+    categoriesWithIds: any[]
 }
 
-export default function EventsAdminClient({ initialEvents }: EventsAdminClientProps) {
+export default function EventsAdminClient({ initialEvents, categories, categoriesWithIds }: EventsAdminClientProps) {
+    const router = useRouter()
     const [events, setEvents] = useState(initialEvents)
     const [isActionLoading, setIsActionLoading] = useState<number | null>(null)
     const [search, setSearch] = useState("")
     const [statusFilter, setStatusFilter] = useState("all")
+    const [associationFilter, setAssociationFilter] = useState("")
     const [isPending, startTransition] = useTransition()
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
+    const [newCategory, setNewCategory] = useState("")
+    const [filterCategory, setFilterCategory] = useState("")
 
     const requestSort = (key: string) => {
         let direction: 'asc' | null = 'asc'
@@ -32,11 +40,30 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
         startTransition(async () => {
             const res = await getAllAdminEvents({
                 query: search,
-                status: statusFilter === "all" ? undefined : statusFilter
+                status: statusFilter === "all" ? undefined : statusFilter,
+                association: associationFilter || undefined
             })
             setEvents(res)
         })
-    }, [search, statusFilter])
+    }, [search, statusFilter, associationFilter])
+
+    const handleCreateCategory = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!newCategory.trim()) return
+        startTransition(async () => {
+            await createEventCategory(newCategory.trim())
+            setNewCategory("")
+            router.refresh()
+        })
+    }
+
+    const handleDeleteCategory = async (id: string) => {
+        if (!confirm("Sei sicuro di voler eliminare questa categoria?")) return
+        startTransition(async () => {
+            await deleteEventCategory(id)
+            router.refresh()
+        })
+    }
 
     const handleDuplicate = async (eventId: number) => {
         if (!confirm("Sei sicuro di voler duplicare questo evento?")) return
@@ -45,7 +72,6 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
         try {
             const res = await duplicateEvent(eventId)
             if (res.success) {
-                // Ricarichiamo la pagina per vedere il duplicato
                 window.location.reload()
             } else {
                 alert("Errore durante la duplicazione")
@@ -65,7 +91,6 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
             const doc = new jsPDF()
             const pageWidth = doc.internal.pageSize.width
 
-            // --- HELPER PER LOGHI ---
             const loadLogo = (src: string): Promise<string> => {
                 return new Promise((resolve) => {
                     const img = new Image()
@@ -89,7 +114,6 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 const margin = 15
                 const logoSize = 25
 
-                // Header (Loghi + Nome Associazioni)
                 if (logoMorgana) docInstance.addImage(logoMorgana, "PNG", margin, 10, logoSize, logoSize)
                 if (logoOrum) docInstance.addImage(logoOrum, "PNG", pageWidth - margin - logoSize, 10, logoSize, logoSize)
 
@@ -104,36 +128,31 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 docInstance.setDrawColor(200)
                 docInstance.line(margin, 40, pageWidth - margin, 40)
 
-                // Titolo Sezione
                 docInstance.setFontSize(18)
                 docInstance.text(titleOverride || event.title, pageWidth / 2, 55, { align: "center" })
 
-                // Sottotitolo (Contatti)
                 docInstance.setFontSize(8)
                 docInstance.setFont("helvetica", "normal")
                 docInstance.setTextColor(120)
                 docInstance.text("Via Sant'Elia, 11 - 98122 Messina (ME)", pageWidth / 2, 32, { align: "center" })
                 docInstance.text("associazionemorgana@gmail.com  -  orum_unime@gmail.com", pageWidth / 2, 36, { align: "center" })
 
-                // Sottotitolo (Data/Luogo)
                 docInstance.setFontSize(10)
                 docInstance.setTextColor(100)
                 const dateStr = new Date(event.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })
                 docInstance.text(`Data: ${dateStr} - Luogo: ${event.location}`, pageWidth / 2, 62, { align: "center" })
 
-                // Footer (Paginazione)
                 const str = "Pagina " + docInstance.getNumberOfPages()
                 docInstance.setFontSize(8)
                 docInstance.text(str, pageWidth / 2, docInstance.internal.pageSize.height - 10, { align: "center" })
             }
 
-            // --- SEZIONE 1: ISCRITTI ---
             const tableRows = (attendees || []).map((a, index) => [
                 index + 1,
                 a.name,
                 a.surname,
                 a.matricola,
-                "" // Firma
+                ""
             ])
 
             autoTable(doc, {
@@ -144,7 +163,7 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 headStyles: { fillColor: [40, 40, 40], textColor: 255, fontStyle: "bold" },
                 columnStyles: {
                     0: { cellWidth: 10 },
-                    4: { cellWidth: 60 } // Spazio largo per firma
+                    4: { cellWidth: 60 }
                 },
                 styles: { fontSize: 9, cellPadding: 4 },
                 didDrawPage: (data: any) => {
@@ -152,7 +171,6 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                 }
             })
 
-            // --- SEZIONE 2: NON PRENOTATI (PAGINE EXTRA) ---
             for (let i = 0; i < 3; i++) {
                 doc.addPage()
                 const startRow = attendees.length + (i * 15) + 1
@@ -171,7 +189,7 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                         3: { cellWidth: 30 },
                         4: { cellWidth: 60 }
                     },
-                    styles: { fontSize: 9, minCellHeight: 12 }, // Righe più alte per firma
+                    styles: { fontSize: 9, minCellHeight: 12 },
                     didDrawPage: (data: any) => {
                         drawPageContent(doc, `ELENCO NON PRENOTATI: ${event.title}`)
                     }
@@ -205,7 +223,11 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
         }
     }
 
-    const sortedEvents = [...events].sort((a, b) => {
+    const sortedEvents = [...events].filter(item => {
+        const matchesCategory = !filterCategory || item.category === filterCategory
+        const matchesAssociation = !associationFilter || (item.association && item.association.includes(associationFilter))
+        return matchesCategory && matchesAssociation
+    }).sort((a, b) => {
         if (!sortConfig) return 0
         const { key, direction } = sortConfig
         if (direction === 'asc') {
@@ -218,6 +240,46 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
 
     return (
         <div className="space-y-6">
+            {/* Gestione Categorie */}
+            <div className="bg-white border border-zinc-100 rounded-2xl p-6 shadow-sm">
+                <h2 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <Tag className="size-4 text-zinc-400" /> Categorie Eventi
+                </h2>
+                <div className="flex flex-wrap gap-2 mb-4">
+                    {categoriesWithIds.map((cat: any) => (
+                        <div key={cat.id} className="flex items-center gap-1 bg-zinc-100 rounded-full pl-4 pr-1 py-1.5">
+                            <span className="text-sm font-medium text-zinc-700">{cat.name}</span>
+                            <button
+                                onClick={() => handleDeleteCategory(cat.id)}
+                                disabled={isPending}
+                                className="p-1 rounded-full text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+                                title="Elimina categoria"
+                            >
+                                <X className="size-3" />
+                            </button>
+                        </div>
+                    ))}
+                    {categoriesWithIds.length === 0 && (
+                        <p className="text-sm text-zinc-400 italic">Nessuna categoria. Creane una!</p>
+                    )}
+                </div>
+                <form onSubmit={handleCreateCategory} className="flex gap-2">
+                    <input
+                        value={newCategory}
+                        onChange={(e) => setNewCategory(e.target.value)}
+                        placeholder="Nuova categoria evento..."
+                        className="flex-1 px-4 py-2 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                    />
+                    <button
+                        type="submit"
+                        disabled={isPending || !newCategory.trim()}
+                        className="bg-zinc-900 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-zinc-800 transition-colors flex items-center gap-1 disabled:opacity-50"
+                    >
+                        <Plus className="size-4" /> Aggiungi
+                    </button>
+                </form>
+            </div>
+
             {/* Filtri */}
             <div className="flex flex-col sm:flex-row items-center gap-4 bg-white p-4 rounded-2xl border border-zinc-100 shadow-sm">
                 <div className="relative flex-1 w-full">
@@ -240,6 +302,34 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                         <option value="all">Tutti gli stati</option>
                         <option value="published">Pubblicati</option>
                         <option value="draft">Bozze</option>
+                    </select>
+                </div>
+
+                <div className="relative shrink-0 w-full sm:w-auto">
+                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <select
+                        value={filterCategory}
+                        onChange={(e) => setFilterCategory(e.target.value)}
+                        className="w-full sm:w-auto pl-10 pr-8 py-2 bg-zinc-50 border-none rounded-xl text-sm font-medium text-zinc-700 focus:ring-2 focus:ring-zinc-900/10 appearance-none cursor-pointer"
+                    >
+                        <option value="">Tutte le categorie</option>
+                        {categories.map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="relative shrink-0 w-full sm:w-auto">
+                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <select
+                        value={associationFilter}
+                        onChange={(e) => setAssociationFilter(e.target.value)}
+                        className="w-full sm:w-auto pl-10 pr-8 py-2 bg-zinc-50 border-none rounded-xl text-sm font-medium text-zinc-700 focus:ring-2 focus:ring-zinc-900/10 appearance-none cursor-pointer"
+                    >
+                        <option value="">Tutte le zone</option>
+                        {ASSOCIATIONS.map(assoc => (
+                            <option key={assoc.id} value={assoc.id}>{assoc.name}</option>
+                        ))}
                     </select>
                 </div>
             </div>
@@ -323,7 +413,6 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                                 </td>
                                 <td className="px-6 py-5">
                                     <div className="flex items-center gap-1 justify-end">
-                                        {/* Esporta Iscritti */}
                                         <button
                                             onClick={() => handleExport(event)}
                                             disabled={isActionLoading === event.id}
@@ -333,7 +422,6 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                                             <Download className="size-4" />
                                         </button>
 
-                                        {/* Duplica Evento */}
                                         <button
                                             onClick={() => handleDuplicate(event.id)}
                                             disabled={isActionLoading === event.id}
@@ -343,7 +431,6 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                                             <Copy className="size-4" />
                                         </button>
 
-                                        {/* Modifica */}
                                         <Link
                                             href={`/admin/events/${event.id}/edit`}
                                             className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
@@ -352,7 +439,6 @@ export default function EventsAdminClient({ initialEvents }: EventsAdminClientPr
                                             <Pencil className="size-4" />
                                         </Link>
 
-                                        {/* Elimina */}
                                         <button
                                             onClick={() => handleDelete(event.id)}
                                             disabled={isActionLoading === event.id}

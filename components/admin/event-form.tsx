@@ -7,6 +7,7 @@ import { ArrowLeft, Save, Loader2, X, File, Upload } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createEvent, updateEvent } from "@/app/actions/events"
 import { departmentsData } from "@/lib/departments"
+import { ASSOCIATIONS, getAssociationName } from "@/lib/associations"
 
 type EventFormProps = {
     initialData?: {
@@ -29,9 +30,11 @@ type EventFormProps = {
         published?: boolean
         association?: string
     }
+    categories: string[]
 }
 
-const EVENT_CATEGORIES = ["Seminari CFU", "Sociale", "Cultura", "Sportivo", "Istituzionale"]
+// DEPRECATED: USING DYNAMIC CATEGORIES
+// const EVENT_CATEGORIES = ["Seminari CFU", "Sociale", "Cultura", "Sportivo", "Istituzionale"]
 
 // Extract list of department names for checklists
 const DEPARTMENTS_LIST = Object.keys(departmentsData)
@@ -47,12 +50,18 @@ function dateToInputValue(d: Date | null | undefined): string {
     return `${y}-${m}-${day}T${h}:${min}`
 }
 
-export default function EventForm({ initialData }: EventFormProps) {
+export default function EventForm({ initialData, categories }: EventFormProps) {
     const router = useRouter()
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState("")
     const [bookingOpen, setBookingOpen] = useState(initialData?.bookingOpen ?? false)
     const [published, setPublished] = useState(initialData?.published ?? true)
+    const [selectedAssociations, setSelectedAssociations] = useState<string[]>(
+        initialData?.association ? initialData.association.split(",").map(a => a.trim()) : ["morgana-orum"]
+    )
+    const [selectedCategories, setSelectedCategories] = useState<string[]>(
+        initialData?.category ? initialData.category.split(",").map(c => c.trim()) : []
+    )
 
     // CFU State
     const [cfuType, setCfuType] = useState<string>(initialData?.cfuType || "")
@@ -135,13 +144,13 @@ export default function EventForm({ initialData }: EventFormProps) {
                 cfuType: finalCfuType,
                 cfuDepartments: finalCfuDeps,
                 image: imageUrl || undefined,
-                category: formData.get("category") as string,
+                category: selectedCategories.join(", "),
                 bookingOpen: bookingOpen,
                 bookingStart: (formData.get("bookingStart") as string) || undefined,
                 bookingEnd: (formData.get("bookingEnd") as string) || undefined,
                 attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : undefined,
                 published,
-                association: "Morgana & O.R.U.M.",
+                association: selectedAssociations.join(", "),
             }
 
             const result = initialData
@@ -261,12 +270,67 @@ export default function EventForm({ initialData }: EventFormProps) {
                 </div>
 
                 {/* Category */}
+                {/* Categories (Multi-select) */}
                 <div>
-                    <label className={labelClass}>Categoria *</label>
-                    <select name="category" defaultValue={initialData?.category || ""} className={cn(inputClass, "bg-white")} required>
-                        <option value="" disabled>Seleziona...</option>
-                        {EVENT_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
-                    </select>
+                    <label className={labelClass}>Categorie *</label>
+                    <div className="flex flex-wrap gap-2">
+                        {categories.map(cat => {
+                            const isSelected = selectedCategories.includes(cat)
+                            return (
+                                <button
+                                    key={cat}
+                                    type="button"
+                                    onClick={() => {
+                                        setSelectedCategories(prev =>
+                                            isSelected
+                                                ? prev.filter(c => c !== cat)
+                                                : [...prev, cat]
+                                        )
+                                    }}
+                                    className={cn(
+                                        "px-4 py-2 rounded-full text-[10px] font-bold border transition-all uppercase tracking-wider",
+                                        isSelected
+                                            ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
+                                            : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400"
+                                    )}
+                                >
+                                    {isSelected && "✓ "}{cat}
+                                </button>
+                            )
+                        })}
+                    </div>
+                </div>
+
+                {/* Associations (Multi-select) */}
+                <div>
+                    <label className={labelClass}>Associazioni (Zone) *</label>
+                    <div className="flex flex-wrap gap-2">
+                        {ASSOCIATIONS.map(assoc => {
+                            const isSelected = selectedAssociations.includes(assoc.id)
+                            return (
+                                <button
+                                    key={assoc.id}
+                                    type="button"
+                                    onClick={() => {
+                                        setSelectedAssociations(prev =>
+                                            isSelected
+                                                ? prev.filter(a => a !== assoc.id)
+                                                : [...prev, assoc.id]
+                                        )
+                                    }}
+                                    className={cn(
+                                        "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",
+                                        isSelected
+                                            ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
+                                            : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400"
+                                    )}
+                                >
+                                    {isSelected && "✓ "}{assoc.name}
+                                </button>
+                            )
+                        })}
+                    </div>
+                    <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">Seleziona in quali zone/siti web deve comparire l&apos;evento.</p>
                 </div>
 
 

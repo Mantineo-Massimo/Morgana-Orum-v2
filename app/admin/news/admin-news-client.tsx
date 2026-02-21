@@ -7,6 +7,7 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { deleteNews, createNewsCategory, deleteNewsCategory } from "@/app/actions/news"
 import { useRouter } from "next/navigation"
+import { ASSOCIATIONS } from "@/lib/associations"
 
 function getNewsStatus(item: any): "published" | "draft" | "scheduled" {
     if (!item.published) return "draft"
@@ -33,6 +34,7 @@ export default function AdminNewsClient({
     const [filterCategory, setFilterCategory] = useState("")
     const [filterStatus, setFilterStatus] = useState("")
     const [filterYear, setFilterYear] = useState("")
+    const [filterAssociation, setFilterAssociation] = useState("")
     const [newCategory, setNewCategory] = useState("")
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
 
@@ -44,6 +46,8 @@ export default function AdminNewsClient({
         setSortConfig(direction ? { key, direction } : null)
     }
 
+    const activeFilters = [searchQuery, filterCategory, filterStatus, filterYear, filterAssociation].filter(Boolean).length
+
     // Client-side filtering
     const filteredNews = news.filter(item => {
         const matchesSearch = !searchQuery ||
@@ -54,7 +58,8 @@ export default function AdminNewsClient({
         const status = getNewsStatus(item)
         const matchesStatus = !filterStatus || status === filterStatus
         const matchesYear = !filterYear || new Date(item.date).getFullYear().toString() === filterYear
-        return matchesSearch && matchesCategory && matchesStatus && matchesYear
+        const matchesAssociation = !filterAssociation || (item.association && item.association.includes(filterAssociation))
+        return matchesSearch && matchesCategory && matchesStatus && matchesYear && matchesAssociation
     })
 
     // Group by year and sort within groups
@@ -82,7 +87,6 @@ export default function AdminNewsClient({
 
     const sortedYears = Object.keys(groupedByYear).map(Number).sort((a, b) => b - a)
 
-    const activeFilters = [searchQuery, filterCategory, filterStatus, filterYear].filter(Boolean).length
 
     async function handleDeleteNews(id: string) {
         startTransition(async () => {
@@ -173,7 +177,7 @@ export default function AdminNewsClient({
                         </span>
                     )}
                 </h2>
-                <div className="grid md:grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-5 gap-4">
                     {/* Search */}
                     <div className="relative">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
@@ -226,11 +230,23 @@ export default function AdminNewsClient({
                             <option key={y} value={y.toString()}>{y}</option>
                         ))}
                     </select>
+
+                    {/* Association */}
+                    <select
+                        value={filterAssociation}
+                        onChange={(e) => setFilterAssociation(e.target.value)}
+                        className="px-4 py-2 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                    >
+                        <option value="">Tutte le zone</option>
+                        {ASSOCIATIONS.map(assoc => (
+                            <option key={assoc.id} value={assoc.id}>{assoc.name}</option>
+                        ))}
+                    </select>
                 </div>
 
                 {activeFilters > 0 && (
                     <button
-                        onClick={() => { setSearchQuery(""); setFilterCategory(""); setFilterStatus(""); setFilterYear("") }}
+                        onClick={() => { setSearchQuery(""); setFilterCategory(""); setFilterStatus(""); setFilterYear(""); setFilterAssociation("") }}
                         className="mt-3 text-xs font-bold text-zinc-500 hover:text-foreground transition-colors"
                     >
                         ✕ Resetta filtri
