@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, Calendar, ChevronLeft } from "lucide-react"
 import prisma from "@/lib/prisma"
 import { notFound } from "next/navigation"
@@ -73,7 +74,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
         <div className="flex flex-col min-h-screen">
             {/* SUB-SITE HERO */}
             <section className="relative h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden">
-                <img src={config.bg} className="absolute inset-0 w-full h-full object-cover opacity-40 shadow-inner" alt="" />
+                <Image src={config.bg} fill className="object-cover opacity-40 shadow-inner" alt="" />
 
                 {/* Overlay Personalizzato per il Brand */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-background/90 mix-blend-multiply opacity-95"></div>
@@ -81,13 +82,13 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
                 <div className="container relative z-10 flex flex-col items-center">
                     <div className="size-32 md:size-48 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden border-4 border-white/20 p-4 mb-8 transform hover:rotate-3 transition-transform duration-500">
-                        <img src={config.logo} className="w-full h-full object-contain" alt={config.name} />
+                        <Image src={config.logo} width={180} height={180} className="w-full h-full object-contain" alt={config.name} />
                     </div>
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-black text-white text-center leading-tight mb-4 drop-shadow-2xl uppercase tracking-tighter">
                         {config.name}
                     </h1>
                     <p className="text-lg md:text-2xl text-white/90 font-serif max-w-2xl text-center leading-relaxed drop-shadow-md italic">
-                        "{config.subtitle}"
+                        &ldquo;{config.subtitle}&rdquo;
                     </p>
 
                     <Link href="/" className="mt-10 flex items-center gap-2 text-white/90 hover:text-white transition-all bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 group text-sm md:text-base font-bold uppercase tracking-widest shadow-xl">
@@ -147,7 +148,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                 {eventi.map((evento) => (
                                     <Link href={`/network/${brandId}/events/${evento.id}`} key={evento.id} className="relative group overflow-hidden bg-muted aspect-[4/5] flex items-end p-8 border-b-8 border-primary shadow-2xl hover:-translate-y-2 transition-all duration-500 block rounded-2xl">
                                         {evento.image && (
-                                            <img src={evento.image} alt={evento.title} className="absolute inset-0 w-full h-full object-cover z-0 group-hover:scale-110 transition-transform duration-700" />
+                                            <Image src={evento.image} alt={evento.title} fill className="object-cover z-0 group-hover:scale-110 transition-transform duration-700" />
                                         )}
                                         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10"></div>
 
@@ -206,10 +207,10 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                     <Link href={`/network/${brandId}/news/${news.id}`} key={news.id} className="group block">
                                         <div className="relative aspect-video overflow-hidden rounded-2xl mb-6 shadow-lg border border-border/50">
                                             {news.image ? (
-                                                <img src={news.image} alt={news.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                                <Image src={news.image} alt={news.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                                             ) : (
                                                 <div className="w-full h-full bg-muted flex items-center justify-center">
-                                                    <img src={config.logo} className="size-16 opacity-20" alt="" />
+                                                    <Image src={config.logo} width={64} height={64} className="opacity-20" alt="" />
                                                 </div>
                                             )}
                                             <div className="absolute top-4 left-4 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
@@ -249,7 +250,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
             <section className="py-24 bg-zinc-900 text-white relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-30 pointer-events-none">
-                    <img src="/assets/slides/1.jpg" className="w-full h-full object-cover grayscale" alt="" />
+                    <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" />
                 </div>
                 <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
 

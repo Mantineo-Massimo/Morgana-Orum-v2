@@ -10,7 +10,7 @@ const GUIDES = [
     },
     {
         title: "Poli Didattici",
-        desc: "Una mappa dettagliata per non perderti tra i vari plessi dell'Ateneo.",
+        desc: "Una mappa dettagliata per non perderti tra i vari plessi dell&apos;Ateneo.",
         icon: Map,
         color: "green",
         map: true,
@@ -75,7 +75,7 @@ export default function GuidesPage() {
                     <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest mb-4 italic">Unime Matricole</span>
                     <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-6 uppercase tracking-tight">Le Guide Accademiche</h1>
                     <p className="text-lg text-zinc-600 leading-relaxed">
-                        Abbiamo raccolto qui tutte le informazioni essenziali per aiutarti a muovere i primi passi nell'Ateneo di Messina senza stress.
+                        Abbiamo raccolto qui tutte le informazioni essenziali per aiutarti a muovere i primi passi nell&apos;Ateneo di Messina senza stress.
                     </p>
                 </div>
 

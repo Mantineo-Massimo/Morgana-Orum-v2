@@ -40,7 +40,7 @@ export default function MapPage({ params }: { params: { brandId: string } }) {
                                 </div>
                             </div>
                             <p className="text-lg text-zinc-600 max-w-2xl leading-relaxed">
-                                L'Ateneo di Messina è suddiviso in quattro grandi poli distribuiti per la città. Esplora la mappa interattiva o seleziona un polo per vederne i dettagli.
+                                L&apos;Ateneo di Messina è suddiviso in quattro grandi poli distribuiti per la città. Esplora la mappa interattiva o seleziona un polo per vederne i dettagli.
                             </p>
 
                             <div className="mt-6 bg-amber-50/50 rounded-2xl p-6 border border-amber-100/50 max-w-3xl shadow-sm">
@@ -48,7 +48,7 @@ export default function MapPage({ params }: { params: { brandId: string } }) {
                                     <span className="text-xl">🍽️</span> Mense ERSU
                                 </h3>
                                 <p className="text-amber-800/90 text-sm leading-relaxed">
-                                    L'ERSU (Ente Regionale per il diritto allo Studio Universitario) dispone di quattro mense dislocate nelle immediate vicinanze dei poli universitari, in modo da consentire agli studenti di consumare i pasti senza allontanarsi dalla sede didattica frequentata. Usa la mappa qui sotto per vedere gli orari specifici di ciascun polo.
+                                    L&apos;ERSU (Ente Regionale per il diritto allo Studio Universitario) dispone di quattro mense dislocate nelle immediate vicinanze dei poli universitari, in modo da consentire agli studenti di consumare i pasti senza allontanarsi dalla sede didattica frequentata. Usa la mappa qui sotto per vedere gli orari specifici di ciascun polo.
                                 </p>
                             </div>
                         </div>

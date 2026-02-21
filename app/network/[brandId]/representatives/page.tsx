@@ -72,7 +72,7 @@ export default async function Page({ params }: { params: { brandId: string } }) 
         )
 
         if (sirReps.length > 0) {
-            departmentsMap.set("SIR (Struttura Interdipartimentale di Raccordo di \"Facoltà di Medicina e Chirurgia\")", sirReps)
+            departmentsMap.set("SIR (Struttura Interdipartimentale di Raccordo di &quot;Facoltà di Medicina e Chirurgia&quot;)", sirReps)
         }
     }
 

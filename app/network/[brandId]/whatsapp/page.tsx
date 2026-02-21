@@ -114,7 +114,7 @@ export default function WhatsAppPage() {
                     <span className="inline-block py-1 px-3 rounded-full bg-blue-100 text-blue-600 text-xs font-bold uppercase tracking-widest mb-4 italic">Unime Matricole</span>
                     <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-6 uppercase tracking-tight">Gruppi WhatsApp</h1>
                     <p className="text-lg text-zinc-600 leading-relaxed mb-8">
-                        Unisciti alla più grande community di studenti dell'Ateneo. Seleziona il tuo corso di laurea per entrare nel gruppo ufficiale gestito dai nostri rappresentanti.
+                        Unisciti alla più grande community di studenti dell&apos;Ateneo. Seleziona il tuo corso di laurea per entrare nel gruppo ufficiale gestito dai nostri rappresentanti.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium text-zinc-500">
@@ -157,7 +157,7 @@ export default function WhatsAppPage() {
                 <div className="mt-20 max-w-2xl mx-auto bg-blue-50/50 border border-blue-100 rounded-3xl p-8 text-center text-blue-900">
                     <h3 className="text-xl font-bold mb-3 font-serif">Non trovi il tuo corso?</h3>
                     <p className="opacity-80 mb-6 text-sm md:text-base">
-                        Stiamo aggiornando costantemente l'elenco dei gruppi. Se il tuo corso non è presente, contattaci sui nostri canali social e ti forniremo il link dedicato.
+                        Stiamo aggiornando costantemente l&apos;elenco dei gruppi. Se il tuo corso non è presente, contattaci sui nostri canali social e ti forniremo il link dedicato.
                     </p>
                     <a href="https://instagram.com/morganamessina" target="_blank" rel="noopener noreferrer" className="inline-block font-bold uppercase tracking-widest text-xs border-2 border-blue-900/20 px-6 py-3 rounded-full hover:bg-blue-900 hover:text-white transition-colors">
                         Scrivici su Instagram

@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowRight, Calendar, Users, HeartHandshake, Award } from "lucide-react"
 import { notFound } from "next/navigation"
 
@@ -9,7 +10,7 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
         name: "Unime Health",
         logo: "/assets/unimehealth.png",
         bg: "/assets/policlinico.png",
-        subtitle: "L'eccellenza della rappresentanza nell'area medico-sanitaria.",
+        subtitle: "L&apos;eccellenza della rappresentanza nell&apos;area medico-sanitaria.",
         desc: "Unime Health è l'associazione di riferimento per gli studenti dell'area medica e delle professioni sanitarie dell'Università di Messina. Nata dalla fusione di passione per la sanità e impegno civile, ci occupiamo di tutelare i diritti degli studenti nei policlinici e nelle aule.",
         mission: "Garantire una formazione di qualità e un ambiente di tirocinio sicuro e dignitoso per tutti i futuri professionisti della salute.",
         values: ["Passione", "Professionalità", "Tutela", "Solidarietà"]
@@ -64,13 +65,13 @@ export default function Page({ params }: { params: { brandId: string } }) {
             {/* HERO ABOUT */}
             <section className="relative pt-32 pb-20 px-6 overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <img src={config.bg} className="w-full h-full object-cover opacity-5 grayscale" alt="" />
+                    <Image src={config.bg} fill className="object-cover opacity-5 grayscale" alt="" />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-50"></div>
                 </div>
 
                 <div className="container mx-auto text-center max-w-4xl relative z-10">
                     <div className="size-24 md:size-32 mx-auto mb-8 bg-white rounded-2xl shadow-xl flex items-center justify-center p-4 border border-zinc-100">
-                        <img src={config.logo} className="w-full h-full object-contain" alt={config.name} />
+                        <Image src={config.logo} width={96} height={96} className="w-full h-full object-contain" alt={config.name} />
                     </div>
                     <h1 className="text-4xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground uppercase">
                         Chi Siamo
@@ -92,7 +93,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
                             <div>
                                 <h3 className="text-sm font-bold uppercase tracking-widest text-primary mb-4">La nostra Missione</h3>
                                 <p className="text-2xl md:text-3xl font-serif font-bold text-foreground leading-tight">
-                                    "{config.mission}"
+                                    &ldquo;{config.mission}&rdquo;
                                 </p>
                             </div>
 
@@ -107,12 +108,12 @@ export default function Page({ params }: { params: { brandId: string } }) {
                         </div>
 
                         <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-2xl group">
-                            <img src={config.bg} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="" />
+                            <Image src={config.bg} fill className="object-cover transition-transform duration-700 group-hover:scale-110" alt="" />
                             <div className="absolute inset-0 bg-primary/20 mix-blend-multiply opacity-60"></div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
                             <div className="absolute bottom-8 left-8 right-8">
                                 <p className="text-white/90 italic font-serif text-lg">
-                                    "{config.subtitle}"
+                                    &ldquo;{config.subtitle}&rdquo;
                                 </p>
                             </div>
                         </div>
