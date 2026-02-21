@@ -221,7 +221,7 @@ const SERVICES = [
 
 const SOCIAL_MAPPING: Record<string, string> = {
     matricole: "unime.matricole",
-    unimehealth: "unimhealth",
+    unimhealth: "unimhealth",
     economia: "studentieconomia",
     scipog: "studentiscipog",
     dicam: "insidedicam"

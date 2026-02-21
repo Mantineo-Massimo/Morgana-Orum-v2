@@ -6,7 +6,7 @@ import { notFound } from "next/navigation"
 export const dynamic = "force-dynamic"
 
 const BRAND_TO_ASSOCIATION: Record<string, string> = {
-    unimehealth: "Unimhealth",
+    unimhealth: "Unimhealth",
     economia: "Studenti Economia",
     matricole: "Unime Matricole",
     scipog: "Studenti Scipog",

@@ -105,7 +105,7 @@ const DEPARTMENTS: Record<string, CourseGroup[]> = {
 
 const BRAND_NAMES: Record<string, string> = {
     matricole: "Unime Matricole",
-    unimehealth: "Unimhealth",
+    unimhealth: "Unimhealth",
     economia: "Studenti Economia",
     scipog: "Studenti Scipog",
     dicam: "Inside Dicam"
@@ -113,7 +113,7 @@ const BRAND_NAMES: Record<string, string> = {
 
 const SOCIAL_MAPPING: Record<string, string> = {
     matricole: "unime.matricole",
-    unimehealth: "unimhealth",
+    unimhealth: "unimhealth",
     economia: "studentieconomia",
     scipog: "studentiscipog",
     dicam: "insidedicam"

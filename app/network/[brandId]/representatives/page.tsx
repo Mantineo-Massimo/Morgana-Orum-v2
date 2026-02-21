@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 export const dynamic = "force-dynamic"
 
 const BRAND_TO_DEPT: Record<string, string[]> = {
-    unimehealth: ["Patologia", "DIMED", "BIOMORF"],
+    unimhealth: ["Patologia", "DIMED", "BIOMORF"],
     economia: ["Economia"],
     matricole: ["Matricole"],
     scipog: ["SCIPOG"],
@@ -13,7 +13,7 @@ const BRAND_TO_DEPT: Record<string, string[]> = {
 }
 
 const BRAND_TO_COLOR: Record<string, string> = {
-    unimehealth: "#c12830",
+    unimhealth: "#c12830",
     economia: "#0055a4",
     matricole: "#afafaf",
     scipog: "#ffcc00",
@@ -21,7 +21,7 @@ const BRAND_TO_COLOR: Record<string, string> = {
 }
 
 const BRAND_TO_VOTES: Record<string, number> = {
-    unimehealth: 361 + 370 + 255, // Patologia + DIMED + BIOMORF
+    unimhealth: 361 + 370 + 255, // Patologia + DIMED + BIOMORF
     economia: 258 + 27,
     scipog: 201 + 33,
     dicam: 95,
@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: { brandId: string } }) 
     }
 
     // Fetch representatives
-    // For unimehealth we need multiple departments + SIR
+    // For unimhealth we need multiple departments + SIR
     let allReps: any[] = []
 
     // Fetch by departments
@@ -59,7 +59,7 @@ export default async function Page({ params }: { params: { brandId: string } }) 
     })
 
     // Special case for Unimhealth: Add SIR
-    if (params.brandId === "unimehealth") {
+    if (params.brandId === "unimhealth") {
         // Query more specifically for "SIR (" to avoid matching names like "Siria" or "Desirà"
         const potentialSirReps = await getRepresentatives("SIR (", undefined, undefined, undefined)
 

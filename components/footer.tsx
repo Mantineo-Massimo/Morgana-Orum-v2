@@ -14,7 +14,7 @@ export function Footer() {
 
     // Mapping per i loghi e nomi del network
     const networkInfo: Record<string, { name: string, logo: string }> = {
-        unimehealth: { name: "Unimhealth", logo: "/assets/unimehealth.png" },
+        unimhealth: { name: "Unimhealth", logo: "/assets/unimhealth.png" },
         economia: { name: "Studenti Economia", logo: "/assets/studentieconomia.png" },
         matricole: { name: "Unime Matricole", logo: "/assets/unimematricole.png" },
         scipog: { name: "Studenti Scipog", logo: "/assets/studentiscipog.png" },

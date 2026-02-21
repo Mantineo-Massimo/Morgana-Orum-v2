@@ -23,7 +23,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
     // Brand Colors Unificati
     const { brand } = useBrand()
 
-    const brandColorClass = brand === "unimehealth" ? "bg-[#c12830]" :
+    const brandColorClass = brand === "unimhealth" ? "bg-[#c12830]" :
         brand === "economia" ? "bg-[#0055a4]" :
             brand === "matricole" ? "bg-gradient-to-r from-[#ffffff] to-[#afafaf]" :
                 brand === "scipog" ? "bg-[#ffcc00]" :
@@ -32,7 +32,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
 
     // Mapping per i loghi e nomi del network
     const networkInfo: Record<string, { name: string, logo: string, motto: string }> = {
-        unimehealth: { name: "Unimhealth", logo: "/assets/unimehealth.png", motto: "Rappresentanza medico-sanitaria" },
+        unimhealth: { name: "Unimhealth", logo: "/assets/unimhealth.png", motto: "Rappresentanza medico-sanitaria" },
         economia: { name: "Studenti Economia", logo: "/assets/studentieconomia.png", motto: "Protagonisti del cambiamento" },
         matricole: { name: "Unime Matricole", logo: "/assets/unimematricole.png", motto: "Il tuo primo passo in Ateneo" },
         scipog: { name: "Studenti Scipog", logo: "/assets/studentiscipog.png", motto: "La voce tra Scienze Politiche e Giuridiche" },

@@ -7,9 +7,9 @@ import { notFound } from "next/navigation"
 export const dynamic = "force-dynamic"
 
 const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, subtitle: string, desc: string }> = {
-    unimehealth: {
+    unimhealth: {
         name: "Unimhealth",
-        logo: "/assets/unimehealth.png",
+        logo: "/assets/unimhealth.png",
         bg: "/assets/policlinico.png",
         subtitle: "L'eccellenza della rappresentanza nell'area medico-sanitaria.",
         desc: "Unimhealth è l'anima del network dedicata agli studenti dell'area biomedica e sanitaria. Ci impegniamo ogni giorno per garantire una formazione di qualità e servizi all'altezza delle sfide del futuro medico."

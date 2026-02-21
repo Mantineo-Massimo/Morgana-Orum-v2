@@ -177,11 +177,11 @@ export default async function BrandHomePage() {
                 {/* Diagonal Network Grid */}
                 <div className="flex flex-col md:flex-row h-auto md:h-[450px] overflow-hidden">
                     {/* Unimhealth */}
-                    <Link href="/network/unimehealth" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c12830] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/unimhealth" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c12830] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/policlinico.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pr-20">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
-                                <Image src="/assets/unimehealth.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unimhealth" />
+                                <Image src="/assets/unimhealth.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unimhealth" />
                             </div>
                         </div>
                     </Link>

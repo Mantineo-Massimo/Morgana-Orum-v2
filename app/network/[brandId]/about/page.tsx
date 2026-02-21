@@ -6,9 +6,9 @@ import { notFound } from "next/navigation"
 export const dynamic = "force-dynamic"
 
 const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, subtitle: string, desc: string, mission: string, values: string[] }> = {
-    unimehealth: {
+    unimhealth: {
         name: "Unimhealth",
-        logo: "/assets/unimehealth.png",
+        logo: "/assets/unimhealth.png",
         bg: "/assets/policlinico.png",
         subtitle: "L&apos;eccellenza della rappresentanza nell&apos;area medico-sanitaria.",
         desc: "Unimhealth è l'associazione di riferimento per gli studenti dell'area medica e delle professioni sanitarie dell'Università di Messina. Nata dalla fusione di passione per la sanità e impegno civile, ci occupiamo di tutelare i diritti degli studenti nei policlinici e nelle aule.",
@@ -170,7 +170,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
 
 const SOCIAL_MAPPING: Record<string, string> = {
     matricole: "unime.matricole",
-    unimehealth: "unimhealth",
+    unimhealth: "unimhealth",
     economia: "studentieconomia",
     scipog: "studentiscipog",
     dicam: "insidedicam"

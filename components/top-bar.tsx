@@ -12,7 +12,7 @@ export function TopBar() {
 
     const SOCIAL_MAPPING: Record<string, string> = {
         matricole: "unime.matricol",
-        unimehealth: "unimhealth",
+        unimhealth: "unimhealth",
         economia: "studentieconomia",
         scipog: "studentiscipog",
         dicam: "insidedicam"
@@ -20,7 +20,7 @@ export function TopBar() {
 
     const BRAND_NAMES: Record<string, string> = {
         matricole: "Unime Matricole",
-        unimehealth: "Unimhealth",
+        unimhealth: "Unimhealth",
         economia: "Studenti Economia",
         scipog: "Studenti Scipog",
         dicam: "Inside Dicam"

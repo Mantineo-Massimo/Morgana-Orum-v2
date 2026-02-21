@@ -3,7 +3,7 @@
 import * as React from "react"
 import { usePathname } from "next/navigation"
 
-export type Brand = "morgana" | "orum" | "unimehealth" | "economia" | "scipog" | "dicam" | "matricole" | null
+export type Brand = "morgana" | "orum" | "unimhealth" | "economia" | "scipog" | "dicam" | "matricole" | null
 
 interface BrandContextType {
   brand: Brand
