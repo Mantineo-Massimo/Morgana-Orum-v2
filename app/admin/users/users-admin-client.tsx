@@ -136,7 +136,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                     </table>
                     {filteredUsers.length === 0 && (
                         <div className="p-12 text-center">
-                            <p className="text-zinc-400">Nessun utente trovato per la ricerca "{search}".</p>
+                            <p className="text-zinc-400">
+                                {`Nessun utente trovato per la ricerca "${search}".`}
+                            </p>
                         </div>
                     )}
                 </div>
