@@ -3,13 +3,13 @@
 import prisma from "@/lib/prisma"
 import { revalidatePath } from "next/cache"
 import { sendEmail } from "@/lib/mail"
-import { getEventBookingTemplate } from "@/lib/email-templates"
+import { getEventBookingTemplate, getNewsletterTemplate } from "@/lib/email-templates"
 
 // --- READ ---
 
 export async function getAllEvents(userEmail?: string | null, association?: string) {
     const query: any = {
-        where: {},
+        where: { published: true },
         orderBy: { date: 'asc' },
     }
 
@@ -38,7 +38,7 @@ export async function getAllEvents(userEmail?: string | null, association?: stri
 
 export async function getEventById(id: number, userEmail?: string | null) {
     const query: any = {
-        where: { id },
+        where: { id, published: true },
     }
 
     if (userEmail) {
@@ -184,6 +184,33 @@ export async function cancelRegistration(eventId: number) {
 
 // --- ADMIN CRUD ---
 
+export async function getAllAdminEvents(filters?: { query?: string, status?: string }) {
+    try {
+        const where: any = {}
+
+        if (filters?.query) {
+            where.OR = [
+                { title: { contains: filters.query, mode: 'insensitive' } },
+                { description: { contains: filters.query, mode: 'insensitive' } },
+            ]
+        }
+
+        if (filters?.status === "published") {
+            where.published = true
+        } else if (filters?.status === "draft") {
+            where.published = false
+        }
+
+        return await prisma.event.findMany({
+            where,
+            orderBy: { date: "desc" },
+        })
+    } catch (error) {
+        console.error("Error fetching all admin events:", error)
+        return []
+    }
+}
+
 export async function createEvent(data: {
     title: string
     description: string
@@ -203,7 +230,7 @@ export async function createEvent(data: {
     association?: string
 }) {
     try {
-        await prisma.event.create({
+        const newEvent = await prisma.event.create({
             data: {
                 title: data.title,
                 description: data.description,
@@ -337,7 +364,8 @@ export async function duplicateEvent(eventId: number) {
             data: {
                 ...eventData,
                 title: `${event.title} (Copia)`,
-                bookingOpen: false, // Per sicurezza disabilitiamo la copia
+                bookingOpen: false, // Per sicurezza disabilitiamo la prenotazione
+                published: false,   // La copia nasce sempre come bozza
             }
         })
 

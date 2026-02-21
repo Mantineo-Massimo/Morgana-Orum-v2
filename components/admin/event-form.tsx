@@ -26,6 +26,7 @@ type EventFormProps = {
         bookingStart: Date | null
         bookingEnd: Date | null
         attachments: string | null
+        published?: boolean
         association?: string
     }
 }
@@ -51,6 +52,7 @@ export default function EventForm({ initialData }: EventFormProps) {
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState("")
     const [bookingOpen, setBookingOpen] = useState(initialData?.bookingOpen ?? false)
+    const [published, setPublished] = useState(initialData?.published ?? true)
 
     // CFU State
     const [cfuType, setCfuType] = useState<string>(initialData?.cfuType || "")
@@ -138,6 +140,7 @@ export default function EventForm({ initialData }: EventFormProps) {
                 bookingStart: (formData.get("bookingStart") as string) || undefined,
                 bookingEnd: (formData.get("bookingEnd") as string) || undefined,
                 attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : undefined,
+                published,
                 association: "Morgana & O.R.U.M.",
             }
 
@@ -371,6 +374,33 @@ export default function EventForm({ initialData }: EventFormProps) {
                             </div>
                         </div>
                     )}
+                </div>
+
+                {/* Published Status Toggle */}
+                <div className="border-t border-zinc-100 pt-6">
+                    <div className="flex items-center justify-between bg-zinc-50 p-4 rounded-xl border border-zinc-200">
+                        <div>
+                            <h3 className="text-sm font-bold text-foreground">Stato Pubblicazione</h3>
+                            <p className="text-xs text-zinc-500 mt-1">
+                                {published
+                                    ? "L'evento sarà visibile a tutti e le email automatiche verranno inviate."
+                                    : "L'evento sarà salvato come bozza, visibile solo agli admin."}
+                            </p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setPublished(!published)}
+                            className={cn(
+                                "relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors",
+                                published ? "bg-zinc-900" : "bg-zinc-300"
+                            )}
+                        >
+                            <span className={cn(
+                                "inline-block size-4 transform rounded-full bg-white transition-transform shadow-sm",
+                                published ? "translate-x-6" : "translate-x-1"
+                            )} />
+                        </button>
+                    </div>
                 </div>
 
                 {/* Attachments */}

@@ -48,6 +48,7 @@ export async function registerUser(formData: FormData) {
     const department = formData.get("department") as string
     const degreeCourse = formData.get("degreeCourse") as string
     const isFuorisede = formData.get("isFuorisede") === "yes"
+    const newsletter = formData.get("newsletter") === "yes"
     const association = formData.get("association") as string || "Morgana & O.R.U.M." // Default if missing
 
     // Validazione base
@@ -69,6 +70,7 @@ export async function registerUser(formData: FormData) {
                 department,
                 degreeCourse,
                 isFuorisede,
+                newsletter,
                 association,
                 role: "USER"
             }

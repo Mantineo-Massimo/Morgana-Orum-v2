@@ -7,45 +7,69 @@ type BrandConfig = {
 const BRANDS: Record<string, BrandConfig> = {
     morgana: {
         name: "Associazione Morgana",
-        color: "#ef4444", // red-500
-        logo: "https://associazionemorgana.vercel.app/assets/morgana.png"
+        color: "#18182b", // Base dark header
+        logo: "https://morganaorum.vercel.app/assets/morgana.png"
     },
     orum: {
         name: "Associazione O.R.U.M.",
-        color: "#3b82f6", // blue-500
-        logo: "https://associazionemorgana.vercel.app/assets/orum.png"
+        color: "#18182b",
+        logo: "https://morganaorum.vercel.app/assets/orum.png"
     }
 }
+
+const getEmailHeader = (title: string, bgColor: string) => `
+        <div style="background-color: ${bgColor}; padding: 30px; text-align: center;">
+            <div style="display: inline-block;">
+                <img src="https://morganaorum.vercel.app/assets/morgana.png" alt="Morgana" style="height: 55px; width: auto; vertical-align: middle; margin-right: 15px;" />
+                <span style="font-size: 30px; color: rgba(255,255,255,0.2); vertical-align: middle;">|</span>
+                <img src="https://morganaorum.vercel.app/assets/orum.png" alt="O.R.U.M." style="height: 55px; width: auto; vertical-align: middle; margin-left: 15px;" />
+            </div>
+            <h1 style="color: white; margin-top: 25px; font-size: 24px; font-weight: 600;">${title}</h1>
+        </div>
+`
+
+const getEmailFooter = (disclaimer: string) => `
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
+            
+            <div style="text-align: center; margin-bottom: 25px;">
+                <p style="font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px; font-weight: bold;">Scopri il Nostro Network</p>
+                <div style="display: inline-block;">
+                    <img src="https://morganaorum.vercel.app/assets/unimhealth.png" alt="Unimhealth" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/studentieconomia.png" alt="Economia" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/unimematricole.png" alt="Matricole" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/studentiscipog.png" alt="Scipog" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/insidedicam.png" alt="Dicam" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                </div>
+            </div>
+
+            <p style="font-size: 11px; color: #888; text-align: center; line-height: 1.6;">
+                ${disclaimer}<br />
+                © ${new Date().getFullYear()} Morgana & O.R.U.M. Associazioni Universitarie
+            </p>
+`
 
 export function getWelcomeEmailTemplate(userName: string, brand: string = "morgana") {
     const config = BRANDS[brand] || BRANDS.morgana
 
     return `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        <div style="background-color: ${config.color}; padding: 30px; text-align: center;">
-            <img src="${config.logo}" alt="${config.name}" style="height: 80px; width: auto;" />
-            <h1 style="color: white; margin-top: 20px;">Benvenuto in ${config.name}!</h1>
-        </div>
+        ${getEmailHeader("Benvenuto nel nostro portale!", config.color)}
         <div style="padding: 30px; line-height: 1.6; color: #333;">
             <p>Ciao <strong>${userName}</strong>,</p>
             <p>Siamo felici di averti tra noi. La tua registrazione alla piattaforma è avvenuta con successo.</p>
             <p>Ora puoi accedere alla tua area personale per:</p>
-            <ul>
+            <ul style="color: #555;">
                 <li>Gestire i tuoi crediti formativi (CFU)</li>
-                <li>Scoprire le convenzioni esclusive</li>
-                <li>Prenotarti ai prossimi eventi</li>
+                <li>Scoprire le convenzioni esclusive e gli sconti</li>
+                <li>Prenotarti ai prossimi eventi in ateneo</li>
             </ul>
-            <div style="text-align: center; margin: 30px 0;">
-                <a href="https://associazionemorgana.vercel.app/${brand}/login" 
-                   style="background-color: #18181b; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+            <div style="text-align: center; margin: 35px 0;">
+                <a href="https://morganaorum.vercel.app/${brand}/login" 
+                   style="background-color: #18181b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
                    Accedi alla Dashboard
                 </a>
             </div>
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
-            <p style="font-size: 12px; color: #888; text-align: center;">
-                Sempre dalla parte dello studente.<br />
-                © ${new Date().getFullYear()} ${config.name}
-            </p>
+            ${getEmailFooter("Sempre dalla parte dello studente.")}
         </div>
     </div>
     `
@@ -56,34 +80,27 @@ export function getEventBookingTemplate(userName: string, eventTitle: string, ev
 
     return `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        <div style="background-color: #18181b; padding: 30px; text-align: center;">
-            <img src="${config.logo}" alt="${config.name}" style="height: 60px; width: auto;" />
-            <h1 style="color: white; margin-top: 20px;">Prenotazione Confermata!</h1>
-        </div>
+        ${getEmailHeader("Prenotazione Confermata!", config.color)}
         <div style="padding: 30px; line-height: 1.6; color: #333;">
             <p>Ciao <strong>${userName}</strong>,</p>
             <p>La tua prenotazione per l'evento è stata registrata correttamente.</p>
             
-            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #e5e7eb;">
-                <h3 style="margin-top: 0; color: #111;">${eventTitle}</h3>
-                <p style="margin-bottom: 5px;">📅 <strong>Data:</strong> ${eventDate}</p>
-                <p style="margin: 0;">📍 <strong>Luogo:</strong> ${eventLocation}</p>
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e5e7eb;">
+                <h3 style="margin-top: 0; margin-bottom: 15px; color: #111;">${eventTitle}</h3>
+                <p style="margin-bottom: 8px; color: #444;">📅 <strong>Data:</strong> ${eventDate}</p>
+                <p style="margin: 0; color: #444;">📍 <strong>Luogo:</strong> ${eventLocation}</p>
             </div>
 
-            <p>Ti ricordiamo che potrai consultare i dettagli della tua prenotazione e scaricare eventuali allegati direttamente dalla tua dashboard.</p>
+            <p style="color: #555;">Ti ricordiamo che potrai consultare i dettagli della tua prenotazione e scaricare eventuali allegati direttamente dalla tua dashboard.</p>
             
-            <div style="text-align: center; margin: 30px 0;">
-                <a href="https://associazionemorgana.vercel.app/${brand}/dashboard/events" 
-                   style="background-color: ${config.color}; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+            <div style="text-align: center; margin: 35px 0;">
+                <a href="https://morganaorum.vercel.app/${brand}/dashboard/events" 
+                   style="background-color: #18181b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
                    I Miei Eventi
                 </a>
             </div>
 
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
-            <p style="font-size: 12px; color: #888; text-align: center;">
-                Non mancare! Se dovessi avere problemi a partecipare, per favore cancella la prenotazione dalla dashboard per liberare il posto.<br />
-                © ${new Date().getFullYear()} ${config.name}
-            </p>
+            ${getEmailFooter("Non mancare! Se dovessi avere problemi a partecipare, per favore cancella la prenotazione dalla dashboard per liberare il posto.")}
         </div>
     </div>
     `
@@ -94,30 +111,51 @@ export function getPasswordResetTemplate(userName: string, resetLink: string, br
 
     return `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        <div style="background-color: ${config.color}; padding: 30px; text-align: center;">
-            <img src="${config.logo}" alt="${config.name}" style="height: 60px; width: auto;" />
-            <h1 style="color: white; margin-top: 20px;">Recupero Password</h1>
-        </div>
+        ${getEmailHeader("Recupero Password", config.color)}
         <div style="padding: 30px; line-height: 1.6; color: #333;">
             <p>Ciao <strong>${userName}</strong>,</p>
-            <p>Abbiamo ricevuto una richiesta di ripristino della password per il tuo account.</p>
-            <p>Puoi procedere al reset cliccando sul pulsante qui sotto:</p>
+            <p>Abbiamo ricevuto una richiesta di ripristino della password per il tuo account nel portale delle associazioni.</p>
+            <p>Puoi procedere alla creazione di una nuova password cliccando sul pulsante qui sotto:</p>
             
-            <div style="text-align: center; margin: 30px 0;">
+            <div style="text-align: center; margin: 35px 0;">
                 <a href="${resetLink}" 
                    style="background-color: #18182b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
                    Ripristina Password
                 </a>
             </div>
 
-            <p style="font-size: 13px; color: #666;">Questo link scadrà tra 1 ora per motivi di sicurezza.</p>
-            <p style="font-size: 13px; color: #666;">Se non hai richiesto tu il ripristino, puoi ignorare questa email in tutta sicurezza.</p>
+            <p style="font-size: 13px; color: #666; margin-bottom: 5px;">Questo link scadrà tra 1 ora per motivi di sicurezza.</p>
+            <p style="font-size: 13px; color: #666; margin-top: 0;">Se non hai richiesto tu il ripristino, puoi ignorare questa email in tutta sicurezza.</p>
 
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
-            <p style="font-size: 12px; color: #888; text-align: center;">
-                Associazione Morgana & O.R.U.M.<br />
-                © ${new Date().getFullYear()} ${config.name}
-            </p>
+            ${getEmailFooter("Se hai problemi ad accedere, contatta i tuoi rappresentanti per assistenza.")}
+        </div>
+    </div>
+    `
+}
+
+export function getNewsletterTemplate(userName: string, title: string, description: string, linkUrl: string, type: "Evento" | "Notizia", brand: string = "morgana") {
+    const config = BRANDS[brand] || BRANDS.morgana
+
+    return `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+        ${getEmailHeader(`Nuov${type === "Evento" ? "o" : "a"} ${type}!`, config.color)}
+        <div style="padding: 30px; line-height: 1.6; color: #333;">
+            <p>Ciao <strong>${userName}</strong>,</p>
+            <p>Abbiamo appena pubblicato un${type === "Evento" ? "o nuovo" : "a nuova"} <strong>${type.toLowerCase()}</strong> che potrebbe interessarti.</p>
+            
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e5e7eb;">
+                <h3 style="margin-top: 0; margin-bottom: 10px; color: #111;">${title}</h3>
+                <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.5;">${description}</p>
+            </div>
+            
+            <div style="text-align: center; margin: 35px 0;">
+                <a href="${linkUrl}" 
+                   style="background-color: #18181b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
+                   Scopri di più
+                </a>
+            </div>
+
+            ${getEmailFooter("Ricevi questa email perché hai scelto di iscriverti alla nostra Newsletter automatica in fase di registrazione.")}
         </div>
     </div>
     `

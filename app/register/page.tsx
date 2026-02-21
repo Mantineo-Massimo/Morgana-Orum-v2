@@ -119,6 +119,21 @@ export default function Page() {
 
                     {/* Removed Association Field as requested */}
 
+                    <div className="space-y-3 pt-2">
+                        <label className="flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:bg-zinc-100 transition-colors">
+                            <input type="checkbox" required className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
+                            <span className="text-[11px] text-zinc-600 leading-snug">
+                                Dichiaro di aver letto e compreso l&apos;informativa sulla privacy e accetto il trattamento dei miei dati personali.*
+                            </span>
+                        </label>
+                        <label className="flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:bg-zinc-100 transition-colors">
+                            <input name="newsletter" value="yes" type="checkbox" className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
+                            <span className="text-[11px] text-zinc-600 leading-snug">
+                                Avvisami sulle nuove convenzioni, feste o scadenze tramite email (Opzionale).
+                            </span>
+                        </label>
+                    </div>
+
                     {error && <p className="text-sm text-red-500 font-bold text-center">{error}</p>}
 
                     <button

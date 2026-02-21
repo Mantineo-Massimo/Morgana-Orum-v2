@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import prisma from "@/lib/prisma"
-
+import { sendEmail } from "@/lib/mail"
+import { getNewsletterTemplate } from "@/lib/email-templates"
 
 const newsSchema = z.object({
     title: z.string().min(1, "Il titolo è obbligatorio"),
@@ -21,7 +22,7 @@ export async function createNews(data: z.infer<typeof newsSchema>) {
     try {
         const validData = newsSchema.parse(data)
 
-        await prisma.news.create({
+        const newNews = await prisma.news.create({
             data: {
                 title: validData.title,
                 description: validData.description || "",
@@ -34,6 +35,30 @@ export async function createNews(data: z.infer<typeof newsSchema>) {
                 association: validData.association || "Morgana & O.R.U.M.",
             }
         })
+
+        // -- INVIA NEWSLETTER A SOTTOSCRITTORI (SOLO SE PUBBLICATA) --
+        if (validData.published) {
+            const subscribers = await prisma.user.findMany({
+                where: { newsletter: true },
+                select: { email: true, name: true, association: true }
+            });
+
+            if (subscribers.length > 0) {
+                const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://morganaorum.vercel.app";
+                const brandFolder = (validData.association?.toLowerCase() === "orum" || validData.association?.toLowerCase() === "o.r.u.m.") ? "orum" : "morgana";
+                // Modifico URL, le news sono in /network/[brand]/news
+                const newsUrl = `${baseUrl}/network/${brandFolder}/news/${newNews.id}`;
+
+                Promise.allSettled(subscribers.map(sub => {
+                    return sendEmail({
+                        to: sub.email,
+                        subject: `Nuova Notizia: ${newNews.title}`,
+                        html: getNewsletterTemplate(sub.name, newNews.title, newNews.description || "", newsUrl, "Notizia", brandFolder),
+                        brand: brandFolder as "morgana" | "orum"
+                    });
+                })).catch(err => console.error("Async newsletter error (news):", err));
+            }
+        }
 
         revalidatePath("/[brand]/news")
         revalidatePath("/[brand]/admin/news")

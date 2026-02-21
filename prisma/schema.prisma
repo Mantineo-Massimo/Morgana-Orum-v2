@@ -22,6 +22,7 @@ model User {
   role             String         @default("USER")
   association      String
   qrToken          String         @unique @default(uuid())
+  newsletter       Boolean        @default(false)
   createdAt        DateTime       @default(now())
   resetToken       String?        @unique
   resetTokenExpiry DateTime?
@@ -42,6 +43,7 @@ model Event {
   bookingStart   DateTime?
   details        String?
   endDate        DateTime?
+  published      Boolean        @default(true)
   cfuDepartments String?
   cfuType        String?
   cfuValue       String?
