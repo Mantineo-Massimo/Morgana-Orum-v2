@@ -168,7 +168,7 @@ export async function getNews(category?: string, query?: string, association?: s
 }
 
 // Admin: all news, with optional filters
-export async function getAllNews(filters?: { query?: string, category?: string, status?: string, year?: number, association?: string }) {
+export async function getAllNews(filters?: { query?: string, category?: string, status?: string, year?: number, association?: Association }) {
     try {
         const where: any = {}
 

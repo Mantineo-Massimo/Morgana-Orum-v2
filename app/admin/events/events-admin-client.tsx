@@ -41,7 +41,7 @@ export default function EventsAdminClient({ initialEvents, categories, categorie
             const res = await getAllAdminEvents({
                 query: search,
                 status: statusFilter === "all" ? undefined : statusFilter,
-                association: associationFilter || undefined
+                association: (associationFilter as any) || undefined
             })
             setEvents(res)
         })

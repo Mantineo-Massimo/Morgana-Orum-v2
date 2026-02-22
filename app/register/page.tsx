@@ -109,9 +109,38 @@ export default function Page() {
                             className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-900 text-sm disabled:opacity-50"
                         >
                             <option value="">Seleziona Corso...</option>
-                            {selectedDept && departmentsData[selectedDept]?.map(course => (
-                                <option key={course} value={course}>{course}</option>
-                            ))}
+                            {(() => {
+                                const courses = selectedDept ? departmentsData[selectedDept] : []
+                                const triennali = courses.filter(c => c.includes("(L-") || c.includes("(L/"))
+                                const magistrali = courses.filter(c => c.includes("(LM-"))
+                                const altri = courses.filter(c => !c.includes("(L-") && !c.includes("(L/") && !c.includes("(LM-"))
+
+                                return (
+                                    <>
+                                        {triennali.length > 0 && (
+                                            <optgroup label="--- TRIENNALI ---">
+                                                {triennali.map(course => (
+                                                    <option key={course} value={course}>{course}</option>
+                                                ))}
+                                            </optgroup>
+                                        )}
+                                        {magistrali.length > 0 && (
+                                            <optgroup label="--- MAGISTRALI ---">
+                                                {magistrali.map(course => (
+                                                    <option key={course} value={course}>{course}</option>
+                                                ))}
+                                            </optgroup>
+                                        )}
+                                        {altri.length > 0 && (
+                                            <optgroup label="--- ALTRI (Ciclo Unico / Master) ---">
+                                                {altri.map(course => (
+                                                    <option key={course} value={course}>{course}</option>
+                                                ))}
+                                            </optgroup>
+                                        )}
+                                    </>
+                                )
+                            })()}
                         </select>
                     </div>
 
