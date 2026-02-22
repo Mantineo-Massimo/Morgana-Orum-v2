@@ -32,10 +32,18 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
     const handleRoleChange = async (userId: number, newRole: UserItem["role"]) => {
         if (!confirm(`Sei sicuro di voler cambiare il ruolo in ${newRole}?`)) return
 
+        const user = users.find(u => u.id === userId)
+        if (!user) return
+
         setLoadingId(userId)
         const res = await updateUserRole(userId, newRole)
         if (res.success) {
-            setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u))
+            // If user was Morgana and becomes Admin Network, server defaults to UNIMHEALTH
+            const finalAssoc = (newRole === "ADMIN_NETWORK" && user.association === "MORGANA_ORUM")
+                ? "UNIMHEALTH"
+                : user.association
+
+            setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole, association: finalAssoc } : u))
         } else {
             alert("Errore durante l'aggiornamento: " + res.error)
         }
@@ -119,9 +127,11 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                                 onChange={(e) => handleAssociationChange(user.id, e.target.value)}
                                                 disabled={loadingId === user.id}
                                             >
-                                                {ASSOCIATIONS.map(a => (
-                                                    <option key={a.id} value={a.id}>{a.name}</option>
-                                                ))}
+                                                {ASSOCIATIONS
+                                                    .filter(a => user.role !== "ADMIN_NETWORK" || a.id !== "MORGANA_ORUM")
+                                                    .map(a => (
+                                                        <option key={a.id} value={a.id}>{a.name}</option>
+                                                    ))}
                                                 {/* In case association is not in the list (legacy/manual) */}
                                                 {!ASSOCIATIONS.find(a => a.id === user.association) && (
                                                     <option value={user.association}>{user.association}</option>
@@ -138,16 +148,23 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                         <div className="flex items-center gap-2">
                                             <select
                                                 className={cn(
-                                                    "text-xs font-bold px-3 py-1.5 rounded-full border-0 focus:ring-2 focus:ring-primary/20 cursor-pointer appearance-none",
+                                                    "text-xs font-bold px-3 py-1.5 rounded-full border-0 focus:ring-2 focus:ring-primary/20 cursor-pointer appearance-none text-center min-w-[140px]",
                                                     roles.find(r => r.id === user.role)?.color
                                                 )}
                                                 value={user.role}
                                                 onChange={(e) => handleRoleChange(user.id, e.target.value as UserItem["role"])}
                                                 disabled={loadingId === user.id}
                                             >
-                                                {roles.map(r => (
-                                                    <option key={r.id} value={r.id}>{r.label}</option>
-                                                ))}
+                                                {roles.map(r => {
+                                                    let label = r.label
+                                                    if (r.id === "ADMIN_NETWORK") {
+                                                        const assocName = ASSOCIATIONS.find(a => a.id === user.association)?.name || user.association
+                                                        label = `Admin ${assocName}`
+                                                    }
+                                                    return (
+                                                        <option key={r.id} value={r.id}>{label}</option>
+                                                    )
+                                                })}
                                             </select>
                                             {loadingId === user.id && <Loader2 className="size-3 animate-spin text-zinc-400" />}
                                         </div>

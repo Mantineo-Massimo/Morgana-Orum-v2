@@ -69,7 +69,7 @@ export const departmentsData: Record<string, string[]> = {
         "Fisica (L-30)",
         "Matematica (L-35)",
         "Scienze Geologiche (L-34)",
-        "Informatica (LM-18)",
+        "Data Science (LM-18)",
         "Fisica (LM-17)",
         "Matematica (LM-40)"
     ],

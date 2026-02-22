@@ -4,6 +4,7 @@ import { getUserDashboardData } from "@/app/actions/users"
 import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar, Tag } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
+import { getAssociationName } from "@/lib/associations"
 
 export const dynamic = 'force-dynamic'
 
@@ -113,7 +114,7 @@ export default async function AdminLayout({
                         <div className="overflow-hidden">
                             <p className="text-sm font-bold truncate">{data.user.name}</p>
                             <p className="text-[10px] text-zinc-500 uppercase">
-                                {userRole === "ADMIN_NETWORK" ? `Admin ${data.user.association}` :
+                                {userRole === "ADMIN_NETWORK" ? `Admin ${getAssociationName(data.user.association)}` :
                                     userRole === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"}
                             </p>
                         </div>
