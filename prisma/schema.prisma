@@ -67,36 +67,36 @@ model Registration {
 }
 
 model Representative {
-  id              String   @id @default(uuid())
+  id              String      @id @default(uuid())
   name            String
   listName        String
   category        String
   department      String?
   role            String?
-  term            String   @default("2025-2027")
+  term            String      @default("2025-2027")
   image           String?
   email           String?
   phone           String?
   instagram       String?
   description     String?
   roleDescription String?
-  association     Association @default(MORGANA_ORUM)
   createdAt       DateTime    @default(now())
-  updatedAt       DateTime @updatedAt
+  updatedAt       DateTime    @updatedAt
+  association     Association @default(MORGANA_ORUM)
 }
 
 model News {
-  id          String      @id @default(uuid())
-  title       String
-  description String
-  content     String?
-  category    String
-  tags        String?
-  image       String?
-  date        DateTime    @default(now())
-  published   Boolean     @default(true)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id           String        @id @default(uuid())
+  title        String
+  description  String
+  content      String?
+  category     String
+  tags         String?
+  image        String?
+  date         DateTime      @default(now())
+  published    Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   associations Association[] @default([MORGANA_ORUM])
 
   @@index([date])

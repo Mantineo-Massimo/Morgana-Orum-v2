@@ -124,6 +124,14 @@ export async function deleteRepresentative(id: string) {
     }
 }
 
+const ASSOCIATION_DEPARTMENT_KEYWORDS: Record<string, string[]> = {
+    DICAM: ["DICAM"],
+    INSIDE_DICAM: ["DICAM"],
+    SCIPOG: ["scipog"],
+    UNIMHEALTH: ["Biomorf", "patologia", "dimed"],
+    ECONOMIA: ["economia"],
+}
+
 export async function getRepresentatives(filters?: {
     query?: string,
     list?: string,
@@ -147,10 +155,25 @@ export async function getRepresentatives(filters?: {
 
         const where: any = {}
 
-        // Enforce role-based association filtering
+        // Enforce role-based visibility
         if (user?.role === "ADMIN_NETWORK") {
-            where.association = { in: [user.association, Association.MORGANA_ORUM] }
-        } else if (filters?.userAssociation) { // Used for public filtering if needed, but normally handled by role
+            // Must be their association OR Morgana (central)
+            // But MUST match their department department keywords
+            const keywords = ASSOCIATION_DEPARTMENT_KEYWORDS[user.association as string]
+
+            if (keywords && keywords.length > 0) {
+                where.AND = [
+                    { association: { in: [user.association, Association.MORGANA_ORUM] } },
+                    {
+                        OR: keywords.map(kw => ({
+                            department: { contains: kw, mode: 'insensitive' }
+                        }))
+                    }
+                ]
+            } else {
+                where.association = { in: [user.association, Association.MORGANA_ORUM] }
+            }
+        } else if (filters?.userAssociation) {
             where.association = filters.userAssociation
         }
 
