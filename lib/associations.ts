@@ -2,9 +2,9 @@ export const ASSOCIATIONS = [
     { id: "MORGANA_ORUM", name: "Morgana & O.R.U.M." },
     { id: "UNIMHEALTH", name: "Unimhealth" },
     { id: "ECONOMIA", name: "Studenti Economia" },
-    { id: "SCIPOG", name: "Studenti Scipog" },
+    { id: "SCIPOG", name: "Studenti SCIPOG" },
     { id: "DICAM", name: "Dicam" },
-    { id: "INSIDE_DICAM", name: "Inside Dicam" },
+    { id: "INSIDE_DICAM", name: "Inside DICAM" },
     { id: "MATRICOLE", name: "Unime Matricole" },
 ] as const;
 

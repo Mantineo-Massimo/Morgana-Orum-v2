@@ -158,16 +158,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                                 onChange={(e) => handleRoleChange(user.id, e.target.value as UserItem["role"])}
                                                 disabled={loadingId === user.id}
                                             >
-                                                {roles.map(r => {
-                                                    let label = r.label
-                                                    if (r.id === "ADMIN_NETWORK") {
-                                                        const assocName = ASSOCIATIONS.find(a => a.id === user.association)?.name || user.association
-                                                        label = `Admin ${assocName}`
-                                                    }
-                                                    return (
-                                                        <option key={r.id} value={r.id}>{label}</option>
-                                                    )
-                                                })}
+                                                {roles.map(r => (
+                                                    <option key={r.id} value={r.id}>{r.label}</option>
+                                                ))}
                                             </select>
                                             {loadingId === user.id && <Loader2 className="size-3 animate-spin text-zinc-400" />}
                                         </div>

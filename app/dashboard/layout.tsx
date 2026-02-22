@@ -7,6 +7,7 @@ import { LayoutDashboard, Calendar, FileText, Settings, LogOut, Loader2, HelpCir
 import { logoutAction } from "@/app/actions/auth"
 import { useEffect, useState } from "react"
 import { getUserDashboardData } from "@/app/actions/users"
+import { getAssociationName } from "@/lib/associations"
 
 export default function DashboardLayout({
     children,
@@ -97,7 +98,7 @@ export default function DashboardLayout({
                         <p className="font-bold text-foreground text-sm leading-tight">{userData.name} {userData.surname}</p>
                         <p className="text-[10px] text-zinc-500 uppercase tracking-widest">
                             {userData.role === "USER" ? "Studente" :
-                                userData.role === "ADMIN_NETWORK" ? `Admin ${userData.association}` :
+                                userData.role === "ADMIN_NETWORK" ? `Admin ${getAssociationName(userData.association)}` :
                                     userData.role === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"}
                         </p>
                     </div>
@@ -122,7 +123,7 @@ export default function DashboardLayout({
                         <p className="font-bold text-foreground text-sm">{userData.name} {userData.surname}</p>
                         <p className="text-[10px] text-zinc-500 uppercase tracking-widest">
                             {userData.role === "USER" ? "Studente" :
-                                userData.role === "ADMIN_NETWORK" ? `Admin ${userData.association}` :
+                                userData.role === "ADMIN_NETWORK" ? `Admin ${getAssociationName(userData.association)}` :
                                     userData.role === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"}
                         </p>
                     </div>
