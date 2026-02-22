@@ -4,7 +4,6 @@ import prisma from "@/lib/prisma"
 import { Association } from "@prisma/client"
 import { sendEmail } from "@/lib/mail"
 import { getNewsletterTemplate } from "@/lib/email-templates"
-import { getBrandForAssociation } from "@/lib/associations"
 
 type NotificationType = "Notizia" | "Evento"
 
@@ -21,19 +20,11 @@ export async function sendPublicationNotification(
         if (subscribers.length === 0) return
 
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://morganaorum.vercel.app"
+        const primaryAssoc = item.associations[0] || Association.MORGANA_ORUM
+        const brand = (primaryAssoc === Association.MORGANA_ORUM) ? "morgana" : "orum"
 
-        // Find best association for the link
-        const primaryAssoc = item.associations.includes(Association.MORGANA_ORUM)
-            ? Association.MORGANA_ORUM
-            : item.associations[0] || Association.MORGANA_ORUM;
-
-        const brand = getBrandForAssociation(primaryAssoc)
         const path = type === "Notizia" ? "news" : "events"
-
-        // Link to main site if it's Morgana, otherwise to sub-site
-        const url = (primaryAssoc === Association.MORGANA_ORUM)
-            ? `${baseUrl}/${path}/${item.id}`
-            : `${baseUrl}/network/${brand}/${path}/${item.id}`
+        const url = `${baseUrl}/network/${brand}/${path}/${item.id}`
 
         // Save to DB (Dashboard Messages)
         await prisma.notification.create({

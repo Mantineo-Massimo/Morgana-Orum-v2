@@ -16,7 +16,7 @@ const newsSchema = z.object({
     image: z.string().optional().nullable().or(z.literal("")),
     date: z.string().optional(),
     published: z.boolean().default(true),
-    associations: z.array(z.nativeEnum(Association)).min(1, "Seleziona almeno un'associazione"),
+    associations: z.array(z.nativeEnum(Association)).default([Association.MORGANA_ORUM]),
 })
 
 async function checkContentPermission(itemAssociations?: Association[]) {
@@ -36,9 +36,9 @@ async function checkContentPermission(itemAssociations?: Association[]) {
     }
 
     // ADMIN_NETWORK can only edit if their association is in the list
-    if (user.role === "ADMIN_NETWORK" && itemAssociations) {
-        const isMatch = itemAssociations.includes(user.association)
-        return { allowed: isMatch, user }
+    if (user.role === "ADMIN_NETWORK") {
+        const isMatch = itemAssociations?.includes(user.association)
+        return { allowed: !!isMatch, user }
     }
 
     return { allowed: false }
@@ -46,9 +46,9 @@ async function checkContentPermission(itemAssociations?: Association[]) {
 
 export async function createNews(data: any) {
     try {
-        const validData = newsSchema.parse(data)
+        const validData = newsSchema.parse(data) as any
         const permission = await checkContentPermission(validData.associations)
-        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa configurazione di associazioni." }
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
 
         const newNews = await prisma.news.create({
             data: {
@@ -60,7 +60,7 @@ export async function createNews(data: any) {
                 image: validData.image || null,
                 date: validData.date ? new Date(validData.date) : new Date(),
                 published: validData.published,
-                associations: validData.associations,
+                associations: validData.associations || [Association.MORGANA_ORUM],
             }
         })
 

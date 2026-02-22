@@ -23,10 +23,10 @@ async function checkContentPermission(itemAssociations?: Association[]) {
         return { allowed: true, user }
     }
 
-    // ADMIN_NETWORK can only edit their own association
-    if (user.role === "ADMIN_NETWORK" && itemAssociations) {
-        const isMatch = itemAssociations.includes(user.association)
-        return { allowed: isMatch, user }
+    // ADMIN_NETWORK can only edit if their association is in the list
+    if (user.role === "ADMIN_NETWORK") {
+        const isMatch = itemAssociations?.includes(user.association)
+        return { allowed: !!isMatch, user }
     }
 
     return { allowed: false }
@@ -305,12 +305,12 @@ export async function createEvent(data: {
     bookingStart?: string
     bookingEnd?: string
     attachments?: string
-    associations: Association[]
+    associations?: Association[]
     published: boolean
 }) {
     try {
         const permission = await checkContentPermission(data.associations)
-        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa configurazione di associazioni." }
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
 
         const newEvent = await prisma.event.create({
             data: {
@@ -329,7 +329,7 @@ export async function createEvent(data: {
                 bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
-                associations: (data.associations && data.associations.length > 0) ? data.associations : [Association.MORGANA_ORUM],
+                associations: data.associations || [Association.MORGANA_ORUM],
                 published: data.published,
             }
         })
@@ -363,14 +363,14 @@ export async function updateEvent(id: number, data: {
     bookingStart?: string
     bookingEnd?: string
     attachments?: string
-    associations: Association[]
+    associations?: Association[]
     published: boolean
 }) {
     try {
         const existing = await prisma.event.findUnique({ where: { id } })
         if (!existing) return { success: false, error: "Evento non trovato" }
 
-        const permission = await checkContentPermission(existing.association)
+        const permission = await checkContentPermission(existing.associations)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo evento." }
 
         const updatedEvent = await prisma.event.update({
@@ -391,7 +391,7 @@ export async function updateEvent(id: number, data: {
                 bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
-                associations: (data.associations && data.associations.length > 0) ? data.associations : [Association.MORGANA_ORUM],
+                associations: data.associations || [Association.MORGANA_ORUM],
                 published: data.published,
             }
         })
@@ -414,7 +414,7 @@ export async function deleteEvent(id: number) {
         const existing = await prisma.event.findUnique({ where: { id } })
         if (!existing) return { success: false, error: "Evento non trovato" }
 
-        const permission = await checkContentPermission(existing.association)
+        const permission = await checkContentPermission(existing.associations)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo evento." }
 
         await prisma.registration.deleteMany({ where: { eventId: id } })

@@ -13,7 +13,7 @@ type UserItem = {
     name: string
     surname: string
     role: "USER" | "ADMIN_NETWORK" | "ADMIN_MORGANA" | "SUPER_ADMIN"
-    association: Association
+    association: "MORGANA_ORUM" | "UNIMHEALTH" | "ECONOMIA" | "SCIPOG" | "DICAM" | "MATRICOLE" | "INSIDE_DICAM"
     matricola: string
     createdAt: Date
 }
@@ -41,9 +41,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
             // Follow server-side logic:
             let finalAssoc = user.association
             if (newRole === "SUPER_ADMIN" || newRole === "ADMIN_MORGANA") {
-                finalAssoc = Association.MORGANA_ORUM
-            } else if (newRole === "ADMIN_NETWORK" && user.association === Association.MORGANA_ORUM) {
-                finalAssoc = Association.UNIMHEALTH
+                finalAssoc = "MORGANA_ORUM"
+            } else if (newRole === "ADMIN_NETWORK" && user.association === "MORGANA_ORUM") {
+                finalAssoc = "UNIMHEALTH"
             }
 
             setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole, association: finalAssoc as UserItem["association"] } : u))

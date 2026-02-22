@@ -29,7 +29,7 @@ type EventFormProps = {
         bookingEnd: Date | null
         attachments: string | null
         published?: boolean
-        associations?: Association[]
+        associations: Association[]
     }
     categories: string[]
     userRole?: string
@@ -62,9 +62,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
     const [selectedAssociations, setSelectedAssociations] = useState<Association[]>(
         initialData?.associations && initialData.associations.length > 0
             ? initialData.associations
-            : userRole === "ADMIN_NETWORK" && userAssociation
-                ? [userAssociation]
-                : [Association.MORGANA_ORUM]
+            : (userAssociation ? [userAssociation] : [Association.MORGANA_ORUM])
     )
     const [selectedCategories, setSelectedCategories] = useState<string[]>(
         initialData?.category ? initialData.category.split(",").map(c => c.trim()) : []
@@ -308,32 +306,41 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                     </div>
                 </div>
 
-                {/* Association (Multi-select) */}
                 <div>
                     <label className={labelClass}>Associazioni (Zone) *</label>
                     <div className="flex flex-wrap gap-2">
                         {ASSOCIATIONS.map(assoc => {
                             const isSelected = selectedAssociations.includes(assoc.id as Association)
-                            const isLocked = userRole === "ADMIN_NETWORK"
+                            const isMorganaAdmin = userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA"
+                            const isNetworkAdmin = userRole === "ADMIN_NETWORK"
+
+                            // Restriction: Network Admin can only select their own association
+                            const isDisabled = isNetworkAdmin && assoc.id !== userAssociation
+
                             return (
                                 <button
                                     key={assoc.id}
                                     type="button"
-                                    disabled={isLocked && assoc.id !== userAssociation}
+                                    disabled={isDisabled}
                                     onClick={() => {
-                                        if (isLocked) return
-                                        setSelectedAssociations(prev =>
-                                            isSelected
-                                                ? prev.filter(a => a !== assoc.id)
-                                                : [...prev, assoc.id as Association]
-                                        )
+                                        if (isMorganaAdmin) {
+                                            // Multi-select for Morgana Admin
+                                            setSelectedAssociations(prev =>
+                                                isSelected
+                                                    ? prev.filter(a => a !== assoc.id)
+                                                    : [...prev, assoc.id as Association]
+                                            )
+                                        } else {
+                                            // Single-select for others (though disabled for Network Admin if not match)
+                                            setSelectedAssociations([assoc.id as Association])
+                                        }
                                     }}
                                     className={cn(
                                         "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",
                                         isSelected
                                             ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
                                             : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400",
-                                        isLocked && assoc.id !== userAssociation && "opacity-20 grayscale cursor-not-allowed"
+                                        isDisabled && "opacity-50 cursor-not-allowed grayscale"
                                     )}
                                 >
                                     {isSelected && "✓ "}{assoc.name}
@@ -342,8 +349,8 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                         })}
                     </div>
                     <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">
-                        {userRole === "ADMIN_NETWORK"
-                            ? "Sei limitato alla tua associazione di appartenenza."
+                        {userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA"
+                            ? "Puoi selezionare più associazioni per condividere l'evento in più network."
                             : "Seleziona in quali zone/siti web deve comparire l'evento."}
                     </p>
                 </div>

@@ -24,7 +24,7 @@ type EventData = {
     bookingStart: Date | null
     bookingEnd: Date | null
     attachments: string | null
-    association: Association
+    associations: Association[]
     isRegistered?: boolean
 }
 

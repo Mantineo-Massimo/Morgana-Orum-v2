@@ -59,7 +59,7 @@ export default function AdminNewsClient({
         const status = getNewsStatus(item)
         const matchesStatus = !filterStatus || status === filterStatus
         const matchesYear = !filterYear || new Date(item.date).getFullYear().toString() === filterYear
-        const matchesAssociation = !filterAssociation || item.association === filterAssociation
+        const matchesAssociation = !filterAssociation || (item.associations && item.associations.includes(filterAssociation as Association))
         return matchesSearch && matchesCategory && matchesStatus && matchesYear && matchesAssociation
     })
 

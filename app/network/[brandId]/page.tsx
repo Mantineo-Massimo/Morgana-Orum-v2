@@ -66,7 +66,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
     const notizie = await prisma.news.findMany({
         where: {
             published: true,
-            association: config.association
+            associations: { has: config.association }
         },
         orderBy: { date: 'desc' },
         take: 3
@@ -75,7 +75,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
     const eventi = await prisma.event.findMany({
         where: {
             date: { gte: new Date() },
-            association: config.association
+            associations: { has: config.association }
         },
         orderBy: { date: 'asc' },
         take: 3

@@ -226,7 +226,7 @@ export default function EventsAdminClient({ initialEvents, categories, categorie
 
     const sortedEvents = [...events].filter(item => {
         const matchesCategory = !filterCategory || item.category === filterCategory
-        const matchesAssociation = !associationFilter || (item.association && item.association.includes(associationFilter))
+        const matchesAssociation = !associationFilter || (item.associations && item.associations.includes(associationFilter))
         return matchesCategory && matchesAssociation
     }).sort((a, b) => {
         if (!sortConfig) return 0
