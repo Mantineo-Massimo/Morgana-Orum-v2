@@ -1,10 +1,8 @@
-"use client"
-
-import { useState } from "react"
-import { updateUserRole, deleteUser } from "@/app/actions/users"
-import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search } from "lucide-react"
+import { useState, useTransition } from "react"
+import { updateUserRole, deleteUser, adminCreateUser, adminUpdateUser } from "@/app/actions/users"
+import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search, Plus, X, Edit2 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Association } from "@prisma/client"
+import { Association, Role } from "@prisma/client"
 import { ASSOCIATIONS } from "@/lib/associations"
 
 type UserItem = {
@@ -12,16 +10,39 @@ type UserItem = {
     email: string
     name: string
     surname: string
-    role: "USER" | "ADMIN_NETWORK" | "ADMIN_MORGANA" | "SUPER_ADMIN"
-    association: "MORGANA_ORUM" | "UNIMHEALTH" | "ECONOMIA" | "SCIPOG" | "DICAM" | "MATRICOLE" | "INSIDE_DICAM"
+    role: Role
+    association: Association
     matricola: string
     createdAt: Date
+    birthDate?: string | Date
+    department?: string
+    degreeCourse?: string
+    isFuorisede?: boolean
+    newsletter?: boolean
 }
 
 export default function UsersAdminClient({ initialUsers }: { initialUsers: UserItem[] }) {
     const [users, setUsers] = useState(initialUsers)
     const [loadingId, setLoadingId] = useState<number | null>(null)
     const [search, setSearch] = useState("")
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [editingUser, setEditingUser] = useState<UserItem | null>(null)
+    const [isPending, startTransition] = useTransition()
+
+    const [formData, setFormData] = useState({
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        birthDate: "",
+        matricola: "",
+        department: "",
+        degreeCourse: "",
+        isFuorisede: false,
+        newsletter: false,
+        role: "USER" as Role,
+        association: "MORGANA_ORUM" as Association
+    })
 
     const filteredUsers = users.filter(u =>
         u.email.toLowerCase().includes(search.toLowerCase()) ||
@@ -29,7 +50,64 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         u.matricola.includes(search)
     )
 
-    const handleRoleChange = async (userId: number, newRole: UserItem["role"]) => {
+    const openModal = (user?: UserItem) => {
+        if (user) {
+            setEditingUser(user)
+            setFormData({
+                name: user.name,
+                surname: user.surname,
+                email: user.email,
+                password: "",
+                birthDate: user.birthDate ? new Date(user.birthDate).toISOString().split('T')[0] : "",
+                matricola: user.matricola,
+                department: user.department || "",
+                degreeCourse: user.degreeCourse || "",
+                isFuorisede: user.isFuorisede || false,
+                newsletter: user.newsletter || false,
+                role: user.role,
+                association: user.association
+            })
+        } else {
+            setEditingUser(null)
+            setFormData({
+                name: "",
+                surname: "",
+                email: "",
+                password: "",
+                birthDate: "",
+                matricola: "",
+                department: "",
+                degreeCourse: "",
+                isFuorisede: false,
+                newsletter: false,
+                role: "USER",
+                association: "MORGANA_ORUM"
+            })
+        }
+        setIsModalOpen(true)
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        startTransition(async () => {
+            const res = editingUser
+                ? await adminUpdateUser(editingUser.id, formData)
+                : await adminCreateUser(formData)
+
+            if (res.success && res.user) {
+                if (editingUser) {
+                    setUsers(prev => prev.map(u => u.id === editingUser.id ? { ...u, ...res.user } as UserItem : u))
+                } else {
+                    setUsers(prev => [res.user as UserItem, ...prev])
+                }
+                setIsModalOpen(false)
+            } else {
+                alert(res.error)
+            }
+        })
+    }
+
+    const handleRoleChange = async (userId: number, newRole: Role) => {
         if (!confirm(`Sei sicuro di voler cambiare il ruolo in ${newRole}?`)) return
 
         const user = users.find(u => u.id === userId)
@@ -38,7 +116,6 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         setLoadingId(userId)
         const res = await updateUserRole(userId, newRole)
         if (res.success) {
-            // Follow server-side logic:
             let finalAssoc = user.association
             if (newRole === "SUPER_ADMIN" || newRole === "ADMIN_MORGANA") {
                 finalAssoc = "MORGANA_ORUM"
@@ -46,7 +123,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                 finalAssoc = "UNIMHEALTH"
             }
 
-            setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole, association: finalAssoc as UserItem["association"] } : u))
+            setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole, association: finalAssoc as Association } : u))
         } else {
             alert("Errore durante l'aggiornamento: " + res.error)
         }
@@ -60,7 +137,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         setLoadingId(userId)
         const res = await updateUserRole(userId, user.role, newAssociation as Association)
         if (res.success) {
-            setUsers(prev => prev.map(u => u.id === userId ? { ...u, association: newAssociation as UserItem["association"] } : u))
+            setUsers(prev => prev.map(u => u.id === userId ? { ...u, association: newAssociation as Association } : u))
         } else {
             alert("Errore durante l'aggiornamento: " + res.error)
         }
@@ -80,7 +157,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         setLoadingId(null)
     }
 
-    const roles = [
+    const rolesList = [
         { id: "USER", label: "Utente", icon: User, color: "bg-zinc-100 text-zinc-600" },
         { id: "ADMIN_NETWORK", label: "Admin Network", icon: Globe, color: "bg-blue-100 text-blue-600" },
         { id: "ADMIN_MORGANA", label: "Admin Morgana/Orum", icon: Crown, color: "bg-red-100 text-red-600" },
@@ -89,16 +166,25 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
 
     return (
         <div className="space-y-4">
-            {/* Search Bar */}
-            <div className="relative max-w-md">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
-                <input
-                    type="text"
-                    placeholder="Cerca per email, nome o matricola..."
-                    className="w-full pl-11 pr-4 py-3 bg-white border border-zinc-200 rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+            {/* Header with Search and Add button */}
+            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div className="relative w-full max-w-md">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <input
+                        type="text"
+                        placeholder="Cerca per email, nome o matricola..."
+                        className="w-full pl-11 pr-4 py-3 bg-white border border-zinc-200 rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </div>
+                <button
+                    onClick={() => openModal()}
+                    className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-zinc-900 text-white rounded-2xl hover:bg-zinc-800 transition-all font-bold group shadow-lg shadow-zinc-200"
+                >
+                    <Plus className="size-4 group-hover:rotate-90 transition-transform" />
+                    Nuovo Utente
+                </button>
             </div>
 
             <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden">
@@ -132,13 +218,13 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             <select
                                                 className={cn(
                                                     "text-xs font-bold px-3 py-1.5 rounded-full border-0 focus:ring-2 focus:ring-primary/20 cursor-pointer appearance-none text-center min-w-[140px]",
-                                                    roles.find(r => r.id === user.role)?.color
+                                                    rolesList.find(r => r.id === user.role)?.color
                                                 )}
                                                 value={user.role}
-                                                onChange={(e) => handleRoleChange(user.id, e.target.value as UserItem["role"])}
+                                                onChange={(e) => handleRoleChange(user.id, e.target.value as Role)}
                                                 disabled={loadingId === user.id}
                                             >
-                                                {roles.map(r => (
+                                                {rolesList.map(r => (
                                                     <option key={r.id} value={r.id}>{r.label}</option>
                                                 ))}
                                             </select>
@@ -158,7 +244,6 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                                     .map(a => (
                                                         <option key={a.id} value={a.id}>{a.name}</option>
                                                     ))}
-                                                {/* In case association is not in the list (legacy/manual) */}
                                                 {!ASSOCIATIONS.find(a => a.id === user.association) && (
                                                     <option value={user.association}>{user.association}</option>
                                                 )}
@@ -166,27 +251,199 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button
-                                            onClick={() => handleDelete(user.id)}
-                                            className="p-2 text-zinc-300 hover:text-red-500 transition-colors"
-                                            disabled={loadingId === user.id}
-                                        >
-                                            <Trash2 className="size-4" />
-                                        </button>
+                                        <div className="flex items-center justify-end gap-1">
+                                            <button
+                                                onClick={() => openModal(user)}
+                                                className="p-2 text-zinc-300 hover:text-zinc-600 transition-colors"
+                                            >
+                                                <Edit2 className="size-4" />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(user.id)}
+                                                className="p-2 text-zinc-300 hover:text-red-500 transition-colors"
+                                                disabled={loadingId === user.id}
+                                            >
+                                                <Trash2 className="size-4" />
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    {filteredUsers.length === 0 && (
-                        <div className="p-12 text-center">
-                            <p className="text-zinc-400">
-                                {`Nessun utente trovato per la ricerca "${search}".`}
-                            </p>
-                        </div>
-                    )}
                 </div>
             </div>
+
+            {/* User Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in fade-in zoom-in duration-200">
+                        <button
+                            onClick={() => setIsModalOpen(false)}
+                            className="absolute right-6 top-6 p-2 hover:bg-zinc-100 rounded-full transition-colors z-10"
+                        >
+                            <X className="size-5 text-zinc-400" />
+                        </button>
+
+                        <div className="p-8">
+                            <h2 className="text-2xl font-black text-zinc-900 mb-6">
+                                {editingUser ? "Modifica Utente" : "Crea Nuovo Utente"}
+                            </h2>
+
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Nome</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.name}
+                                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Cognome</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.surname}
+                                            onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Email</label>
+                                        <input
+                                            type="email"
+                                            required
+                                            value={formData.email}
+                                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">
+                                            Password {editingUser && "(lascia vuoto per non cambiare)"}
+                                        </label>
+                                        <input
+                                            type="password"
+                                            required={!editingUser}
+                                            placeholder={editingUser ? "••••••••" : ""}
+                                            value={formData.password}
+                                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Matricola</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.matricola}
+                                            onChange={(e) => setFormData({ ...formData, matricola: e.target.value })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Data di Nascita</label>
+                                        <input
+                                            type="date"
+                                            required
+                                            value={formData.birthDate}
+                                            onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Dipartimento</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.department}
+                                            onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Corso di Laurea</label>
+                                        <input
+                                            type="text"
+                                            required
+                                            value={formData.degreeCourse}
+                                            onChange={(e) => setFormData({ ...formData, degreeCourse: e.target.value })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Ruolo</label>
+                                        <select
+                                            value={formData.role}
+                                            onChange={(e) => setFormData({ ...formData, role: e.target.value as Role })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        >
+                                            {rolesList.map(r => (
+                                                <option key={r.id} value={r.id}>{r.label}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Associazione</label>
+                                        <select
+                                            value={formData.association}
+                                            onChange={(e) => setFormData({ ...formData, association: e.target.value as Association })}
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                        >
+                                            {ASSOCIATIONS.map(a => (
+                                                <option key={a.id} value={a.id}>{a.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-wrap gap-4 pt-4 border-t border-zinc-50">
+                                    <label className="flex items-center gap-2 cursor-pointer group">
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.isFuorisede}
+                                            onChange={(e) => setFormData({ ...formData, isFuorisede: e.target.checked })}
+                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                        />
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Studente Fuorisede</span>
+                                    </label>
+                                    <label className="flex items-center gap-2 cursor-pointer group">
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.newsletter}
+                                            onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
+                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                        />
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Iscritto alla Newsletter</span>
+                                    </label>
+                                </div>
+
+                                <div className="flex justify-end gap-3 pt-6">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsModalOpen(false)}
+                                        className="px-6 py-3 font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
+                                    >
+                                        Annulla
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        disabled={isPending}
+                                        className="px-8 py-3 bg-zinc-900 text-white font-bold rounded-2xl hover:bg-zinc-800 transition-all disabled:opacity-50 flex items-center gap-2"
+                                    >
+                                        {isPending && <Loader2 className="size-4 animate-spin" />}
+                                        {editingUser ? "Salva Modifiche" : "Crea Utente"}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -1,7 +1,8 @@
 "use server"
 
 import prisma from "@/lib/prisma"
-import { Association } from "@prisma/client"
+import { Association, Role } from "@prisma/client"
+import bcrypt from "bcryptjs"
 
 
 export async function getUserDashboardData(email?: string) {
@@ -162,5 +163,95 @@ export async function deleteUser(userId: number) {
     } catch (error) {
         console.error("Error deleting user:", error)
         return { success: false, error: "Failed to delete user" }
+    }
+}
+
+export async function adminCreateUser(data: any) {
+    try {
+        const { cookies } = await import("next/headers")
+        const userEmail = cookies().get("session_email")?.value
+        if (!userEmail) return { success: false, error: "Unauthorized" }
+
+        const currentUser = await prisma.user.findUnique({
+            where: { email: userEmail }
+        })
+
+        if (!currentUser || currentUser.role !== "SUPER_ADMIN") {
+            return { success: false, error: "Unauthorized" }
+        }
+
+        const hashedPassword = await bcrypt.hash(data.password || "Password123!", 10)
+
+        const newUser = await prisma.user.create({
+            data: {
+                name: data.name,
+                surname: data.surname,
+                email: data.email,
+                password: hashedPassword,
+                birthDate: new Date(data.birthDate),
+                matricola: data.matricola,
+                department: data.department,
+                degreeCourse: data.degreeCourse,
+                isFuorisede: data.isFuorisede || false,
+                newsletter: data.newsletter || false,
+                role: data.role as Role,
+                association: data.association as Association,
+            }
+        })
+
+        return { success: true, user: newUser }
+    } catch (error: any) {
+        console.error("Error creating user:", error)
+        if (error.code === 'P2002') {
+            return { success: false, error: "Email o Matricola già in uso." }
+        }
+        return { success: false, error: "Creazione fallita" }
+    }
+}
+
+export async function adminUpdateUser(userId: number, data: any) {
+    try {
+        const { cookies } = await import("next/headers")
+        const userEmail = cookies().get("session_email")?.value
+        if (!userEmail) return { success: false, error: "Unauthorized" }
+
+        const currentUser = await prisma.user.findUnique({
+            where: { email: userEmail }
+        })
+
+        if (!currentUser || currentUser.role !== "SUPER_ADMIN") {
+            return { success: false, error: "Unauthorized" }
+        }
+
+        const updateData: any = {
+            name: data.name,
+            surname: data.surname,
+            email: data.email,
+            birthDate: new Date(data.birthDate),
+            matricola: data.matricola,
+            department: data.department,
+            degreeCourse: data.degreeCourse,
+            isFuorisede: data.isFuorisede,
+            newsletter: data.newsletter,
+            role: data.role as Role,
+            association: data.association as Association,
+        }
+
+        if (data.password) {
+            updateData.password = await bcrypt.hash(data.password, 10)
+        }
+
+        const updated = await prisma.user.update({
+            where: { id: userId },
+            data: updateData
+        })
+
+        return { success: true, user: updated }
+    } catch (error: any) {
+        console.error("Error updating user:", error)
+        if (error.code === 'P2002') {
+            return { success: false, error: "Email o Matricola già in uso." }
+        }
+        return { success: false, error: "Aggiornamento fallito" }
     }
 }
