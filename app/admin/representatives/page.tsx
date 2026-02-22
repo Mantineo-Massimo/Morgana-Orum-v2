@@ -1,37 +1,19 @@
 import { getRepresentatives } from "@/app/actions/representatives"
 import { Plus } from "lucide-react"
 import Link from "next/link"
-import { RepresentativesFilter } from "@/components/admin/representatives-filter"
 import { RepresentativesAdminClient } from "./representatives-admin-client"
 import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
 
 export const dynamic = 'force-dynamic'
 
-export default async function AdminRepresentativesPage({
-    params,
-    searchParams
-}: {
-    params: { brand: string },
-    searchParams?: {
-        query?: string
-        list?: string
-        category?: string
-    }
-}) {
-    const query = searchParams?.query || ""
-    const list = searchParams?.list || ""
-    const category = searchParams?.category || ""
-
+export default async function AdminRepresentativesPage() {
     const userEmail = cookies().get("session_email")?.value
     const user = await prisma.user.findUnique({
         where: { email: userEmail }
     })
 
     const reps = await getRepresentatives({
-        query,
-        list,
-        category,
         userRole: user?.role,
         userAssociation: user?.association
     })
@@ -50,8 +32,6 @@ export default async function AdminRepresentativesPage({
                     <Plus className="size-4" /> Aggiungi Nuovo
                 </Link>
             </div>
-
-            <RepresentativesFilter />
 
             <RepresentativesAdminClient
                 initialReps={reps as any}
