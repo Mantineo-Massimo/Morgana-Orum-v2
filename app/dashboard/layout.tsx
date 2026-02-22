@@ -95,7 +95,7 @@ export default function DashboardLayout({
                     </div>
                     <div>
                         <p className="font-bold text-foreground text-sm leading-tight">{userData.name} {userData.surname}</p>
-                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{userData.role === "ADMIN" ? "Amministratore" : "Studente"}</p>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{userData.role !== "USER" ? "Amministratore" : "Studente"}</p>
                     </div>
                 </div>
                 <form action={logoutAction}>

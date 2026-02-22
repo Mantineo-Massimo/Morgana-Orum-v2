@@ -59,9 +59,9 @@ export function getWelcomeEmailTemplate(userName: string, brand: string = "morga
             <p>Siamo felici di averti tra noi. La tua registrazione alla piattaforma è avvenuta con successo.</p>
             <p>Ora puoi accedere alla tua area personale per:</p>
             <ul style="color: #555;">
-                <li>Gestire i tuoi crediti formativi (CFU)</li>
+                <li>Gestire le tue prenotazioni</li>
                 <li>Scoprire le convenzioni esclusive e gli sconti</li>
-                <li>Prenotarti ai prossimi eventi in ateneo</li>
+                <li>Chiedere informazioni tramite la sezione assistenza</li>
             </ul>
             <div style="text-align: center; margin: 35px 0;">
                 <a href="https://morganaorum.vercel.app/${brand}/login" 
@@ -69,7 +69,7 @@ export function getWelcomeEmailTemplate(userName: string, brand: string = "morga
                    Accedi alla Dashboard
                 </a>
             </div>
-            ${getEmailFooter("Sempre dalla parte dello studente.")}
+            ${getEmailFooter("Sempre dalla parte dello studente!")}
         </div>
     </div>
     `
@@ -94,7 +94,7 @@ export function getEventBookingTemplate(userName: string, eventTitle: string, ev
             <p style="color: #555;">Ti ricordiamo che potrai consultare i dettagli della tua prenotazione e scaricare eventuali allegati direttamente dalla tua dashboard.</p>
             
             <div style="text-align: center; margin: 35px 0;">
-                <a href="https://morganaorum.vercel.app/${brand}/dashboard/events" 
+                <a href="https://morganaorum.vercel.app/dashboard/events" 
                    style="background-color: #18181b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
                    I Miei Eventi
                 </a>

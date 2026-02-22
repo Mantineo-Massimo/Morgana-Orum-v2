@@ -64,7 +64,7 @@ export default function DashboardPage() {
                     <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-1 leading-tight">Panoramica</h1>
                     <p className="text-sm sm:text-base text-zinc-500">Benvenuto nella tua area riservata.</p>
                 </div>
-                {userData.role === "ADMIN" && (
+                {userData.role !== "USER" && (
                     <Link
                         href={`/admin`}
                         className="px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors border border-zinc-200 bg-zinc-900 text-white hover:bg-zinc-800 flex items-center gap-2"
