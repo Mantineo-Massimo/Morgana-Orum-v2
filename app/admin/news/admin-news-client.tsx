@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, X, Search, Filter, Clock, Calendar, ArrowUpDown, ArrowUp } from "lucide-react"
+import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, X, Search, Filter, Clock, Calendar, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -41,12 +41,13 @@ export default function AdminNewsClient({
     const [filterYear, setFilterYear] = useState("")
     const [filterAssociation, setFilterAssociation] = useState<Association | "">("")
     const [newCategory, setNewCategory] = useState("")
-    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' | null } | null>(null)
 
     const requestSort = (key: string) => {
-        let direction: 'asc' | null = 'asc'
-        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = null
+        let direction: 'asc' | 'desc' | null = 'asc'
+        if (sortConfig && sortConfig.key === key) {
+            if (sortConfig.direction === 'asc') direction = 'desc'
+            else if (sortConfig.direction === 'desc') direction = null
         }
         setSortConfig(direction ? { key, direction } : null)
     }
@@ -81,11 +82,13 @@ export default function AdminNewsClient({
         groupedByYear[year].sort((a, b) => {
             if (!sortConfig) return 0
             const { key, direction } = sortConfig
-            if (direction === 'asc') {
-                const valA = (a[key as keyof any] || "").toString().toLowerCase()
-                const valB = (b[key as keyof any] || "").toString().toLowerCase()
-                return valA.localeCompare(valB)
-            }
+            if (!direction) return 0
+
+            const valA = (a[key as keyof any] || "").toString().toLowerCase()
+            const valB = (b[key as keyof any] || "").toString().toLowerCase()
+
+            if (valA < valB) return direction === 'asc' ? -1 : 1
+            if (valA > valB) return direction === 'asc' ? 1 : -1
             return 0
         })
     })
@@ -283,7 +286,11 @@ export default function AdminNewsClient({
                                         onClick={() => requestSort('title')}
                                     >
                                         <div className="flex items-center gap-2">
-                                            Titolo {sortConfig?.key === 'title' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                            Titolo {sortConfig?.key === 'title' ? (
+                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                            ) : (
+                                                <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                            )}
                                         </div>
                                     </th>
                                     <th className="px-6 py-3">Categoria</th>
@@ -292,7 +299,11 @@ export default function AdminNewsClient({
                                         onClick={() => requestSort('date')}
                                     >
                                         <div className="flex items-center gap-2">
-                                            Data {sortConfig?.key === 'date' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                            Data {sortConfig?.key === 'date' ? (
+                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                            ) : (
+                                                <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                            )}
                                         </div>
                                     </th>
                                     <th className="px-6 py-3">Stato</th>
@@ -350,7 +361,7 @@ export default function AdminNewsClient({
                                                         <>
                                                             <Link
                                                                 href={`/admin/news/${item.id}/edit`}
-                                                                className="p-2 text-zinc-400 hover:text-foreground hover:bg-zinc-100 rounded-lg transition-colors"
+                                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
                                                                 title="Modifica"
                                                             >
                                                                 <Pencil className="size-4" />
@@ -364,7 +375,7 @@ export default function AdminNewsClient({
                                                                     handleDeleteNews(item.id)
                                                                 }}
                                                                 disabled={isPending || (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM"))}
-                                                                className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                                                 title={userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM") ? "Contenuto centrale protetto" : "Elimina"}
                                                             >
                                                                 <Trash2 className="size-4" />

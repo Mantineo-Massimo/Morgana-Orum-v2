@@ -1,6 +1,6 @@
 import { useState, useTransition } from "react"
 import { updateUserRole, deleteUser, adminCreateUser, adminUpdateUser } from "@/app/actions/users"
-import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search, Plus, X, Edit2 } from "lucide-react"
+import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search, Plus, X, Edit2, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Association, Role } from "@prisma/client"
 import { ASSOCIATIONS } from "@/lib/associations"
@@ -29,6 +29,17 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
     const [editingUser, setEditingUser] = useState<UserItem | null>(null)
     const [isPending, startTransition] = useTransition()
 
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' | null } | null>(null)
+
+    const handleSort = (key: string) => {
+        let direction: 'asc' | 'desc' | null = 'asc'
+        if (sortConfig && sortConfig.key === key) {
+            if (sortConfig.direction === 'asc') direction = 'desc'
+            else if (sortConfig.direction === 'desc') direction = null
+        }
+        setSortConfig(direction ? { key, direction } : null)
+    }
+
     const [formData, setFormData] = useState({
         name: "",
         surname: "",
@@ -44,11 +55,24 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         association: "MORGANA_ORUM" as Association
     })
 
-    const filteredUsers = users.filter(u =>
-        u.email.toLowerCase().includes(search.toLowerCase()) ||
-        `${u.name} ${u.surname}`.toLowerCase().includes(search.toLowerCase()) ||
-        u.matricola.includes(search)
-    )
+    const filteredUsers = users
+        .filter(u =>
+            u.email.toLowerCase().includes(search.toLowerCase()) ||
+            `${u.name} ${u.surname}`.toLowerCase().includes(search.toLowerCase()) ||
+            u.matricola.includes(search)
+        )
+        .sort((a, b) => {
+            if (!sortConfig) return 0
+            const { key, direction } = sortConfig
+            if (!direction) return 0
+
+            const valA = (a[key as keyof UserItem] || "").toString().toLowerCase()
+            const valB = (b[key as keyof UserItem] || "").toString().toLowerCase()
+
+            if (valA < valB) return direction === 'asc' ? -1 : 1
+            if (valA > valB) return direction === 'asc' ? 1 : -1
+            return 0
+        })
 
     const openModal = (user?: UserItem) => {
         if (user) {
@@ -192,10 +216,58 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                     <table className="w-full border-collapse">
                         <thead>
                             <tr className="bg-zinc-50/50 border-b border-zinc-100">
-                                <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Utente</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Matricola</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Ruolo</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Associazione</th>
+                                <th
+                                    className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest cursor-pointer hover:text-zinc-600 transition-colors group"
+                                    onClick={() => handleSort('name')}
+                                >
+                                    <div className="flex items-center gap-1">
+                                        Utente
+                                        {sortConfig?.key === 'name' ? (
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        ) : (
+                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                        )}
+                                    </div>
+                                </th>
+                                <th
+                                    className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest cursor-pointer hover:text-zinc-600 transition-colors group"
+                                    onClick={() => handleSort('matricola')}
+                                >
+                                    <div className="flex items-center gap-1">
+                                        Matricola
+                                        {sortConfig?.key === 'matricola' ? (
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        ) : (
+                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                        )}
+                                    </div>
+                                </th>
+                                <th
+                                    className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest cursor-pointer hover:text-zinc-600 transition-colors group"
+                                    onClick={() => handleSort('role')}
+                                >
+                                    <div className="flex items-center gap-1">
+                                        Ruolo
+                                        {sortConfig?.key === 'role' ? (
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        ) : (
+                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                        )}
+                                    </div>
+                                </th>
+                                <th
+                                    className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest cursor-pointer hover:text-zinc-600 transition-colors group"
+                                    onClick={() => handleSort('association')}
+                                >
+                                    <div className="flex items-center gap-1">
+                                        Associazione
+                                        {sortConfig?.key === 'association' ? (
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        ) : (
+                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                        )}
+                                    </div>
+                                </th>
                                 <th className="px-6 py-4 text-right text-xs font-bold text-zinc-400 uppercase tracking-widest">Azioni</th>
                             </tr>
                         </thead>
@@ -254,14 +326,16 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                         <div className="flex items-center justify-end gap-1">
                                             <button
                                                 onClick={() => openModal(user)}
-                                                className="p-2 text-zinc-300 hover:text-zinc-600 transition-colors"
+                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
+                                                title="Modifica"
                                             >
                                                 <Edit2 className="size-4" />
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(user.id)}
-                                                className="p-2 text-zinc-300 hover:text-red-500 transition-colors"
+                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                                 disabled={loadingId === user.id}
+                                                title="Elimina"
                                             >
                                                 <Trash2 className="size-4" />
                                             </button>

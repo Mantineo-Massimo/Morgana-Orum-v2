@@ -4,7 +4,7 @@ import { useState, useEffect, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import { Association } from "@prisma/client"
 import { ASSOCIATIONS } from "@/lib/associations"
-import { Calendar, MapPin, Pencil, Trash2, Copy, Download, Loader2, Search, Filter, ArrowUpDown, ArrowUp, Tag, X, Plus } from "lucide-react"
+import { Calendar, MapPin, Pencil, Trash2, Copy, Download, Loader2, Search, Filter, ArrowUpDown, ArrowUp, ArrowDown, Tag, X, Plus } from "lucide-react"
 import Link from "next/link"
 import { deleteEvent, duplicateEvent, getEventRegistrations, getAllAdminEvents, createEventCategory, deleteEventCategory } from "@/app/actions/events"
 import { cn } from "@/lib/utils"
@@ -33,14 +33,15 @@ export default function EventsAdminClient({
     const [statusFilter, setStatusFilter] = useState("all")
     const [associationFilter, setAssociationFilter] = useState<Association | "">("")
     const [isPending, startTransition] = useTransition()
-    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' | null } | null>(null)
     const [newCategory, setNewCategory] = useState("")
     const [filterCategory, setFilterCategory] = useState("")
 
     const requestSort = (key: string) => {
-        let direction: 'asc' | null = 'asc'
-        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = null
+        let direction: 'asc' | 'desc' | null = 'asc'
+        if (sortConfig && sortConfig.key === key) {
+            if (sortConfig.direction === 'asc') direction = 'desc'
+            else if (sortConfig.direction === 'desc') direction = null
         }
         setSortConfig(direction ? { key, direction } : null)
     }
@@ -239,11 +240,13 @@ export default function EventsAdminClient({
     }).sort((a, b) => {
         if (!sortConfig) return 0
         const { key, direction } = sortConfig
-        if (direction === 'asc') {
-            const valA = (a[key as keyof any] || "").toString().toLowerCase()
-            const valB = (b[key as keyof any] || "").toString().toLowerCase()
-            return valA.localeCompare(valB)
-        }
+        if (!direction) return 0
+
+        const valA = (a[key as keyof any] || "").toString().toLowerCase()
+        const valB = (b[key as keyof any] || "").toString().toLowerCase()
+
+        if (valA < valB) return direction === 'asc' ? -1 : 1
+        if (valA > valB) return direction === 'asc' ? 1 : -1
         return 0
     })
 
@@ -357,7 +360,11 @@ export default function EventsAdminClient({
                                 onClick={() => requestSort('title')}
                             >
                                 <div className="flex items-center gap-2">
-                                    Evento {sortConfig?.key === 'title' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                    Evento {sortConfig?.key === 'title' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
                                 </div>
                             </th>
                             <th
@@ -365,7 +372,11 @@ export default function EventsAdminClient({
                                 onClick={() => requestSort('date')}
                             >
                                 <div className="flex items-center gap-2">
-                                    Data {sortConfig?.key === 'date' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                    Data {sortConfig?.key === 'date' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
                                 </div>
                             </th>
                             <th
@@ -373,7 +384,11 @@ export default function EventsAdminClient({
                                 onClick={() => requestSort('location')}
                             >
                                 <div className="flex items-center gap-2">
-                                    Luogo {sortConfig?.key === 'location' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                    Luogo {sortConfig?.key === 'location' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
                                 </div>
                             </th>
                             <th className="px-6 py-4 hidden md:table-cell">Categoria</th>

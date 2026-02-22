@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp } from "lucide-react"
+import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { deleteConvention } from "@/app/actions/conventions"
@@ -21,12 +21,13 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
     const router = useRouter()
     const [search, setSearch] = useState("")
     const [isDeleting, setIsDeleting] = useState<string | null>(null)
-    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
+    const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' | null } | null>(null)
 
     const requestSort = (key: string) => {
-        let direction: 'asc' | null = 'asc'
-        if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-            direction = null
+        let direction: 'asc' | 'desc' | null = 'asc'
+        if (sortConfig && sortConfig.key === key) {
+            if (sortConfig.direction === 'asc') direction = 'desc'
+            else if (sortConfig.direction === 'desc') direction = null
         }
         setSortConfig(direction ? { key, direction } : null)
     }
@@ -37,11 +38,13 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
     ).sort((a, b) => {
         if (!sortConfig) return 0
         const { key, direction } = sortConfig
-        if (direction === 'asc') {
-            const valA = (a[key as keyof Convention] || "").toString().toLowerCase()
-            const valB = (b[key as keyof Convention] || "").toString().toLowerCase()
-            return valA.localeCompare(valB)
-        }
+        if (!direction) return 0
+
+        const valA = (a[key as keyof Convention] || "").toString().toLowerCase()
+        const valB = (b[key as keyof Convention] || "").toString().toLowerCase()
+
+        if (valA < valB) return direction === 'asc' ? -1 : 1
+        if (valA > valB) return direction === 'asc' ? 1 : -1
         return 0
     })
 
@@ -81,7 +84,11 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                     onClick={() => requestSort('name')}
                                 >
                                     <div className="flex items-center gap-2">
-                                        Attività {sortConfig?.key === 'name' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                        Attività {sortConfig?.key === 'name' ? (
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        ) : (
+                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                        )}
                                     </div>
                                 </th>
                                 <th
@@ -89,7 +96,11 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                     onClick={() => requestSort('location')}
                                 >
                                     <div className="flex items-center justify-center gap-2">
-                                        Località {sortConfig?.key === 'location' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />}
+                                        Località {sortConfig?.key === 'location' ? (
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        ) : (
+                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                        )}
                                     </div>
                                 </th>
                                 <th className="px-6 py-4 text-center">Contatti</th>
@@ -135,20 +146,24 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                                 {!c.social && !c.website && <span className="text-zinc-300">-</span>}
                                             </div>
                                         </td>
-                                        <td className="px-6 py-4 text-right whitespace-nowrap space-x-2">
-                                            <Link
-                                                href={`/admin/conventions/${c.id}/edit`}
-                                                className="inline-flex p-2 text-zinc-400 hover:text-foreground hover:bg-white rounded-lg transition-all border border-transparent hover:border-zinc-200"
-                                            >
-                                                <Edit className="size-4" />
-                                            </Link>
-                                            <button
-                                                onClick={() => handleDelete(c.id)}
-                                                disabled={isDeleting === c.id}
-                                                className="inline-flex p-2 text-zinc-400 hover:text-red-500 hover:bg-white rounded-lg transition-all border border-transparent hover:border-zinc-200 disabled:opacity-50"
-                                            >
-                                                <Trash2 className="size-4" />
-                                            </button>
+                                        <td className="px-6 py-4 text-right whitespace-nowrap">
+                                            <div className="flex items-center justify-end gap-1">
+                                                <Link
+                                                    href={`/admin/conventions/${c.id}/edit`}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
+                                                    title="Modifica"
+                                                >
+                                                    <Edit className="size-4" />
+                                                </Link>
+                                                <button
+                                                    onClick={() => handleDelete(c.id)}
+                                                    disabled={isDeleting === c.id}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                                                    title="Elimina"
+                                                >
+                                                    <Trash2 className="size-4" />
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))
