@@ -144,8 +144,8 @@ export async function getRepresentatives(
 
         const where: any = {}
 
-        if (isNetworkAdmin) {
-            where.association = currentUserAssoc
+        if (isNetworkAdmin && currentUserAssoc) {
+            where.association = { in: [currentUserAssoc, Association.MORGANA_ORUM] }
         }
 
         if (department) {

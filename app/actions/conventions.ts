@@ -2,6 +2,18 @@
 
 import prisma from "@/lib/prisma"
 
+async function checkSuperAdminPermission() {
+    const { cookies } = await import("next/headers")
+    const userEmail = cookies().get("session_email")?.value
+    if (!userEmail) return false
+
+    const user = await prisma.user.findUnique({
+        where: { email: userEmail }
+    })
+
+    return user?.role === "SUPER_ADMIN"
+}
+
 export async function getConventions(location?: string) {
     try {
         const conventions = await prisma.convention.findMany({
@@ -36,6 +48,10 @@ export async function createConvention(data: {
     location: string
     discounts: string[]
 }) {
+    if (!(await checkSuperAdminPermission())) {
+        return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
     try {
         const convention = await prisma.convention.create({
             data
@@ -56,6 +72,10 @@ export async function updateConvention(id: string, data: {
     location: string
     discounts: string[]
 }) {
+    if (!(await checkSuperAdminPermission())) {
+        return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
     try {
         const convention = await prisma.convention.update({
             where: { id },
@@ -69,6 +89,10 @@ export async function updateConvention(id: string, data: {
 }
 
 export async function deleteConvention(id: string) {
+    if (!(await checkSuperAdminPermission())) {
+        return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
     try {
         await prisma.convention.delete({
             where: { id }

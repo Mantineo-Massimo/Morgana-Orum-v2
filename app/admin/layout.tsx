@@ -49,16 +49,16 @@ export default async function AdminLayout({
             icon: Calendar,
             exact: false
         },
-        {
+    ]
+
+    // Only SUPER_ADMIN sees Conventions and User Management
+    if (userRole === "SUPER_ADMIN") {
+        navItems.push({
             label: "Convenzioni",
             href: `/admin/conventions`,
             icon: Tag,
             exact: false
-        },
-    ]
-
-    // Only SUPER_ADMIN sees User Management
-    if (userRole === "SUPER_ADMIN") {
+        })
         navItems.push({
             label: "Utenti",
             href: `/admin/users`,

@@ -69,8 +69,8 @@ export async function createNews(data: any) {
             sendPublicationNotification(newNews, "Notizia")
         }
 
-        revalidatePath("/[brand]/news")
-        revalidatePath("/[brand]/admin/news")
+        revalidatePath("/news")
+        revalidatePath("/admin/news")
         return { success: true }
     } catch (error) {
         console.error("Create news error:", error)
@@ -103,8 +103,8 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
             sendPublicationNotification(updatedNews, "Notizia")
         }
 
-        revalidatePath("/[brand]/news")
-        revalidatePath("/[brand]/admin/news")
+        revalidatePath("/news")
+        revalidatePath("/admin/news")
         return { success: true }
     } catch (error) {
         console.error("Update news error:", error)
@@ -124,8 +124,8 @@ export async function deleteNews(id: string) {
             where: { id }
         })
 
-        revalidatePath("/[brand]/news")
-        revalidatePath("/[brand]/admin/news")
+        revalidatePath("/news")
+        revalidatePath("/admin/news")
         return { success: true }
     } catch (error) {
         console.error("Delete news error:", error)
