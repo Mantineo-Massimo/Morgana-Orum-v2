@@ -19,13 +19,13 @@ model User {
   department       String
   degreeCourse     String
   isFuorisede      Boolean
-  role             Role           @default(USER)
-  association      Association    @default(MORGANA_ORUM)
   qrToken          String         @unique @default(uuid())
-  newsletter       Boolean        @default(false)
   createdAt        DateTime       @default(now())
   resetToken       String?        @unique
   resetTokenExpiry DateTime?
+  newsletter       Boolean        @default(false)
+  role             Role           @default(USER)
+  association      Association    @default(MORGANA_ORUM)
   registrations    Registration[]
 }
 
@@ -43,10 +43,10 @@ model Event {
   bookingStart   DateTime?
   details        String?
   endDate        DateTime?
-  published      Boolean        @default(true)
   cfuDepartments String?
   cfuType        String?
   cfuValue       String?
+  published      Boolean        @default(true)
   association    Association    @default(MORGANA_ORUM)
   registrations  Registration[]
 
@@ -85,18 +85,18 @@ model Representative {
 }
 
 model News {
-  id          String   @id @default(uuid())
+  id          String      @id @default(uuid())
   title       String
   description String
   content     String?
   category    String
   tags        String?
   image       String?
-  date        DateTime @default(now())
-  published   Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  association Association   @default(MORGANA_ORUM)
+  date        DateTime    @default(now())
+  published   Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  association Association @default(MORGANA_ORUM)
 
   @@index([date])
   @@index([category])
@@ -132,7 +132,7 @@ model Notification {
   id        String   @id @default(uuid())
   title     String
   message   String
-  type      String   // "Notizia" | "Evento" | "Sistema"
+  type      String
   link      String?
   createdAt DateTime @default(now())
 

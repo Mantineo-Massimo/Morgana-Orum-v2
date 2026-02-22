@@ -95,9 +95,15 @@ export async function registerUser(formData: FormData) {
         }).catch(err => console.error("Async welcome email error:", err))
 
         return { success: true, user }
-    } catch (error) {
+    } catch (error: any) {
         console.error("Registration error:", error)
-        return { success: false, error: "Errore durante la registrazione. Matricola o Email già in uso?" }
+        if (error.code === 'P2002') {
+            const target = error.meta?.target || []
+            if (target.includes('email')) return { success: false, error: "Questa email è già registrata." }
+            if (target.includes('matricola')) return { success: false, error: "Questa matricola è già registrata." }
+            return { success: false, error: "Email o Matricola già in uso." }
+        }
+        return { success: false, error: "Errore durante la registrazione: " + (error.message || "riprova più tardi.") }
     }
 }
 

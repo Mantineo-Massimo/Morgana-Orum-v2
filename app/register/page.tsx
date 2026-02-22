@@ -24,7 +24,7 @@ export default function Page() {
 
         const formData = new FormData(event.currentTarget)
         // Hidden field or default for association
-        formData.append("association", "morgana & orum")
+        formData.append("association", "MORGANA_ORUM")
 
         const result = await registerUser(formData)
 
