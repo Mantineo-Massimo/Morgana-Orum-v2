@@ -38,12 +38,15 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         setLoadingId(userId)
         const res = await updateUserRole(userId, newRole)
         if (res.success) {
-            // If user was Morgana and becomes Admin Network, server defaults to UNIMHEALTH
-            const finalAssoc = (newRole === "ADMIN_NETWORK" && user.association === "MORGANA_ORUM")
-                ? "UNIMHEALTH"
-                : user.association
+            // Follow server-side logic:
+            let finalAssoc = user.association
+            if (newRole === "SUPER_ADMIN" || newRole === "ADMIN_MORGANA") {
+                finalAssoc = "MORGANA_ORUM"
+            } else if (newRole === "ADMIN_NETWORK" && user.association === "MORGANA_ORUM") {
+                finalAssoc = "UNIMHEALTH"
+            }
 
-            setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole, association: finalAssoc } : u))
+            setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole, association: finalAssoc as UserItem["association"] } : u))
         } else {
             alert("Errore durante l'aggiornamento: " + res.error)
         }
@@ -122,10 +125,10 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-2">
                                             <select
-                                                className="text-sm bg-zinc-50 border border-zinc-100 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-primary/20"
+                                                className="text-sm bg-zinc-50 border border-zinc-100 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
                                                 value={user.association}
                                                 onChange={(e) => handleAssociationChange(user.id, e.target.value)}
-                                                disabled={loadingId === user.id}
+                                                disabled={loadingId === user.id || user.role !== "ADMIN_NETWORK"}
                                             >
                                                 {ASSOCIATIONS
                                                     .filter(a => user.role !== "ADMIN_NETWORK" || a.id !== "MORGANA_ORUM")

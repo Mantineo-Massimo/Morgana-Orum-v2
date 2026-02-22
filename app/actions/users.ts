@@ -109,14 +109,19 @@ export async function updateUserRole(
             return { success: false, error: "Unauthorized" }
         }
 
-        // Enforce constraint: ADMIN_NETWORK cannot be MORGANA_ORUM
+        // Enforce strict constraints:
         let finalAssociation = association
-        if (newRole === "ADMIN_NETWORK") {
+
+        if (newRole === "SUPER_ADMIN" || newRole === "ADMIN_MORGANA") {
+            // These roles MUST be Morgana/Orum
+            finalAssociation = "MORGANA_ORUM"
+        } else if (newRole === "ADMIN_NETWORK") {
+            // Admin Network CANNOT be Morgana/Orum
             const userToUpdate = await prisma.user.findUnique({ where: { id: userId } })
             const currentAssoc = association || userToUpdate?.association
 
             if (currentAssoc === "MORGANA_ORUM") {
-                finalAssociation = "UNIMHEALTH" // Default to first network
+                finalAssociation = "UNIMHEALTH" // Default to first valid network
             }
         }
 
