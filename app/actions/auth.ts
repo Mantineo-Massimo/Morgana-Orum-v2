@@ -50,7 +50,13 @@ export async function registerUser(formData: FormData) {
     const degreeCourse = formData.get("degreeCourse") as string
     const isFuorisede = formData.get("isFuorisede") === "yes"
     const newsletter = formData.get("newsletter") === "yes"
-    const association = (formData.get("association") as Association) || Association.MORGANA_ORUM
+    let rawAssociation = (formData.get("association") as string) || "MORGANA_ORUM"
+
+    if (rawAssociation.toLowerCase().includes("morgana")) {
+        rawAssociation = "MORGANA_ORUM"
+    }
+
+    const association = rawAssociation as Association
 
     // Validazione base
     if (!name || !surname || !email || !password || !birthDateStr || !matricola || !department || !degreeCourse) {
