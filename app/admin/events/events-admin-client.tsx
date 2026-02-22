@@ -451,10 +451,16 @@ export default function EventsAdminClient({
                                                 </Link>
 
                                                 <button
-                                                    onClick={() => handleDelete(event.id)}
-                                                    disabled={isActionLoading === event.id}
-                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all"
-                                                    title="Elimina"
+                                                    onClick={() => {
+                                                        if (userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM")) {
+                                                            alert("Non puoi eliminare contenuti creati dall'amministrazione centrale.")
+                                                            return
+                                                        }
+                                                        handleDelete(event.id)
+                                                    }}
+                                                    disabled={isActionLoading === event.id || (userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM"))}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                                                    title={userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM") ? "Contenuto centrale protetto" : "Elimina"}
                                                 >
                                                     {isActionLoading === event.id ? (
                                                         <Loader2 className="size-4 animate-spin text-zinc-300" />

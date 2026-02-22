@@ -336,56 +336,72 @@ export default function NewsForm({
                     </div>
 
                     {/* Associazione (Multiselezione per Admin Morgana/Super) */}
-                    <div className={cn(userRole === "ADMIN_NETWORK" && "pointer-events-none opacity-80")}>
-                        <label className="block text-sm font-bold text-zinc-700 mb-2">
-                            Associazioni (Zone) {userRole === "ADMIN_NETWORK" && <span className="text-[10px] text-zinc-400 font-normal ml-2">(Modifica non consentita)</span>}
-                        </label>
-                        <div className="flex flex-wrap gap-2">
-                            {ASSOCIATIONS.map(assoc => {
-                                const isSelected = selectedAssociations.includes(assoc.id as Association)
-                                const isMorganaAdmin = userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA"
-                                const isNetworkAdmin = userRole === "ADMIN_NETWORK"
+                    {(() => {
+                        const hasCentralAssoc = selectedAssociations.includes(Association.MORGANA_ORUM)
+                        const isMainLock = userRole === "ADMIN_NETWORK" && hasCentralAssoc
 
-                                // Restriction: Network Admin can only select their own association
-                                const isDisabled = isNetworkAdmin && assoc.id !== userAssociation
+                        return (
+                            <div className={cn(isMainLock && "pointer-events-none opacity-80")}>
+                                <label className="block text-sm font-bold text-zinc-700 mb-2">
+                                    Associazioni (Zone)
+                                    {isMainLock ? (
+                                        <span className="text-[10px] text-zinc-400 font-normal ml-2">(Contenuto centrale: modifica non consentita)</span>
+                                    ) : (
+                                        userRole === "ADMIN_NETWORK" && <span className="text-[10px] text-zinc-400 font-normal ml-2">(Solo zona di competenza)</span>
+                                    )}
+                                </label>
+                                <div className="flex flex-wrap gap-2">
+                                    {ASSOCIATIONS.map(assoc => {
+                                        const isSelected = selectedAssociations.includes(assoc.id as Association)
+                                        const isMorganaAdmin = userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA"
+                                        const isNetworkAdmin = userRole === "ADMIN_NETWORK"
 
-                                return (
-                                    <button
-                                        key={assoc.id}
-                                        type="button"
-                                        disabled={isDisabled}
-                                        onClick={() => {
-                                            if (isMorganaAdmin) {
-                                                // Multi-select for Morgana Admin
-                                                setSelectedAssociations(prev =>
+                                        // Restriction: Network Admin can only select their own association
+                                        const isDisabled = isNetworkAdmin && assoc.id !== userAssociation
+
+                                        return (
+                                            <button
+                                                key={assoc.id}
+                                                type="button"
+                                                disabled={isDisabled}
+                                                onClick={() => {
+                                                    if (isMorganaAdmin) {
+                                                        // Multi-select for Morgana Admin
+                                                        setSelectedAssociations(prev =>
+                                                            isSelected
+                                                                ? prev.filter(a => a !== assoc.id)
+                                                                : [...prev, assoc.id as Association]
+                                                        )
+                                                    } else {
+                                                        // Toggle select for others
+                                                        setSelectedAssociations(prev =>
+                                                            isSelected
+                                                                ? prev.filter(a => a !== assoc.id)
+                                                                : [assoc.id as Association]
+                                                        )
+                                                    }
+                                                }}
+                                                className={cn(
+                                                    "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",
                                                     isSelected
-                                                        ? prev.filter(a => a !== assoc.id)
-                                                        : [...prev, assoc.id as Association]
-                                                )
-                                            } else {
-                                                // Single-select for others (though disabled for Network Admin if not match)
-                                                setSelectedAssociations([assoc.id as Association])
-                                            }
-                                        }}
-                                        className={cn(
-                                            "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",
-                                            isSelected
-                                                ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
-                                                : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400",
-                                            isDisabled && "opacity-50 cursor-not-allowed grayscale"
-                                        )}
-                                    >
-                                        {isSelected && "✓ "}{assoc.name}
-                                    </button>
-                                )
-                            })}
-                        </div>
-                        <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">
-                            {userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA"
-                                ? "Puoi selezionare più associazioni per condividere la notizia in più network."
-                                : "Seleziona in quali zone/siti web deve comparire la notizia."}
-                        </p>
-                    </div>
+                                                        ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
+                                                        : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400",
+                                                    isDisabled && "opacity-50 cursor-not-allowed grayscale"
+                                                )}
+                                            >
+                                                {isSelected && "✓ "}{assoc.name}
+                                            </button>
+                                        )
+                                    })}
+                                </div>
+                                <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">
+                                    {userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA"
+                                        ? "Puoi selezionare più associazioni per condividere la notizia in più network."
+                                        : "Seleziona in quali zone/siti web deve comparire la notizia."}
+                                </p>
+                            </div>
+                        )
+                    })()}
 
                     {/* Published */}
                     <div className="flex items-center gap-3">

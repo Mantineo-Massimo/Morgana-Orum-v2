@@ -389,6 +389,16 @@ export async function updateEvent(id: number, data: {
         const permission = await checkContentPermission(existing.associations)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo evento." }
 
+        // Extra protection: Network admins cannot modify associations of central content
+        if (permission.user?.role === "ADMIN_NETWORK" && existing.associations.includes(Association.MORGANA_ORUM)) {
+            // Check if associations are being changed
+            const currentAssocs = [...existing.associations].sort()
+            const newAssocs = [...(data.associations || [Association.MORGANA_ORUM])].sort()
+            if (JSON.stringify(currentAssocs) !== JSON.stringify(newAssocs)) {
+                return { success: false, error: "Non puoi modificare le associazioni di un contenuto centrale." }
+            }
+        }
+
         const updatedEvent = await prisma.event.update({
             where: { id },
             data: {
@@ -433,6 +443,11 @@ export async function deleteEvent(id: number) {
 
         const permission = await checkContentPermission(existing.associations)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo evento." }
+
+        // Extra protection: Network admins cannot delete Morgana items
+        if (permission.user?.role === "ADMIN_NETWORK" && existing.associations.includes(Association.MORGANA_ORUM)) {
+            return { success: false, error: "Non puoi eliminare contenuti creati dall'amministrazione centrale." }
+        }
 
         await prisma.registration.deleteMany({ where: { eventId: id } })
         await prisma.event.delete({ where: { id } })

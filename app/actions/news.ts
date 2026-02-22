@@ -88,6 +88,18 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
 
         const validData = newsSchema.partial().parse(data)
+
+        // Extra protection: Network admins cannot modify associations of central content
+        if (permission.user?.role === "ADMIN_NETWORK" && existing.associations.includes(Association.MORGANA_ORUM)) {
+            if (validData.associations) {
+                const currentAssocs = [...existing.associations].sort()
+                const newAssocs = [...validData.associations].sort()
+                if (JSON.stringify(currentAssocs) !== JSON.stringify(newAssocs)) {
+                    return { success: false, error: "Non puoi modificare le associazioni di un contenuto centrale." }
+                }
+            }
+        }
+
         const updateData: any = { ...validData }
 
         if (updateData.date) {
@@ -126,6 +138,11 @@ export async function deleteNews(id: string) {
 
         const permission = await checkContentPermission(existing.associations)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
+
+        // Extra protection: Network admins cannot delete Morgana items
+        if (permission.user?.role === "ADMIN_NETWORK" && existing.associations.includes(Association.MORGANA_ORUM)) {
+            return { success: false, error: "Non puoi eliminare contenuti creati dall'amministrazione centrale." }
+        }
 
         await prisma.news.delete({
             where: { id }

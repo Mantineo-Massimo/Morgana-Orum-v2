@@ -356,10 +356,16 @@ export default function AdminNewsClient({
                                                                 <Pencil className="size-4" />
                                                             </Link>
                                                             <button
-                                                                onClick={() => handleDeleteNews(item.id)}
-                                                                disabled={isPending}
-                                                                className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
-                                                                title="Elimina"
+                                                                onClick={() => {
+                                                                    if (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM")) {
+                                                                        alert("Non puoi eliminare contenuti creati dall'amministrazione centrale.")
+                                                                        return
+                                                                    }
+                                                                    handleDeleteNews(item.id)
+                                                                }}
+                                                                disabled={isPending || (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM"))}
+                                                                className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                title={userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM") ? "Contenuto centrale protetto" : "Elimina"}
                                                             >
                                                                 <Trash2 className="size-4" />
                                                             </button>
