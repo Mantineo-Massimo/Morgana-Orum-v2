@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { Association } from "@prisma/client"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import { sendEmail } from "@/lib/mail"
@@ -49,7 +50,7 @@ export async function registerUser(formData: FormData) {
     const degreeCourse = formData.get("degreeCourse") as string
     const isFuorisede = formData.get("isFuorisede") === "yes"
     const newsletter = formData.get("newsletter") === "yes"
-    const association = formData.get("association") as string || "Morgana & O.R.U.M." // Default if missing
+    const association = (formData.get("association") as Association) || Association.MORGANA_ORUM
 
     // Validazione base
     if (!name || !surname || !email || !password || !birthDateStr || !matricola || !department || !degreeCourse) {
@@ -85,7 +86,7 @@ export async function registerUser(formData: FormData) {
         })
 
         // Send Welcome Email (Non-blocking)
-        const brand = (association?.toLowerCase() === "orum" || association?.toLowerCase() === "o.r.u.m.") ? "orum" : "morgana"
+        const brand = (association === Association.MORGANA_ORUM) ? "morgana" : "orum" // Simple fallback
         sendEmail({
             to: email,
             subject: `Benvenuto in ${brand === "orum" ? "O.R.U.M." : "Morgana"}!`,
@@ -123,7 +124,7 @@ export async function requestPasswordReset(email: string) {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
         const resetLink = `${baseUrl}/reset-password?token=${token}`
 
-        const brandToUse = (user.association?.toLowerCase() === "orum" || user.association?.toLowerCase() === "o.r.u.m.") ? "orum" : "morgana"
+        const brandToUse = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
         await sendEmail({
             to: email,
             subject: "Recupero Password",

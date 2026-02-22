@@ -1,13 +1,14 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { Association } from "@prisma/client"
 import { sendEmail } from "@/lib/mail"
 import { getNewsletterTemplate } from "@/lib/email-templates"
 
 type NotificationType = "Notizia" | "Evento"
 
 export async function sendPublicationNotification(
-    item: { id: string | number, title: string, description: string | null, association: string },
+    item: { id: string | number, title: string, description: string | null, association: Association },
     type: NotificationType
 ) {
     try {
@@ -19,8 +20,7 @@ export async function sendPublicationNotification(
         if (subscribers.length === 0) return
 
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://morganaorum.vercel.app"
-        const lowerAssoc = item.association?.toLowerCase() || ""
-        const brand = (lowerAssoc.includes("orum") || lowerAssoc.includes("o.r.u.m")) ? "orum" : "morgana"
+        const brand = (item.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
 
         const path = type === "Notizia" ? "news" : "events"
         const url = `${baseUrl}/network/${brand}/${path}/${item.id}`

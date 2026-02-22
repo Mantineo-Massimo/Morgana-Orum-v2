@@ -20,7 +20,7 @@ model User {
   degreeCourse     String
   isFuorisede      Boolean
   role             Role           @default(USER)
-  association      String
+  association      Association    @default(MORGANA_ORUM)
   qrToken          String         @unique @default(uuid())
   newsletter       Boolean        @default(false)
   createdAt        DateTime       @default(now())
@@ -47,7 +47,7 @@ model Event {
   cfuDepartments String?
   cfuType        String?
   cfuValue       String?
-  association    String         @default("Insieme")
+  association    Association    @default(MORGANA_ORUM)
   registrations  Registration[]
 
   @@index([date])
@@ -96,7 +96,7 @@ model News {
   published   Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  association String   @default("Insieme")
+  association Association   @default(MORGANA_ORUM)
 
   @@index([date])
   @@index([category])
@@ -144,4 +144,14 @@ enum Role {
   ADMIN_NETWORK
   ADMIN_MORGANA
   SUPER_ADMIN
+}
+
+enum Association {
+  MORGANA_ORUM
+  UNIMHEALTH
+  ECONOMIA
+  SCIPOG
+  DICAM
+  MATRICOLE
+  INSIDE_DICAM
 }

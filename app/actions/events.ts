@@ -1,12 +1,13 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { Association } from "@prisma/client"
 import { revalidatePath } from "next/cache"
 import { sendEmail } from "@/lib/mail"
 import { getEventBookingTemplate, getNewsletterTemplate } from "@/lib/email-templates"
 import { sendPublicationNotification } from "./notifications"
 
-async function checkContentPermission(itemAssociation?: string) {
+async function checkContentPermission(itemAssociation?: Association) {
     const { cookies } = await import("next/headers")
     const userEmail = cookies().get("session_email")?.value
     if (!userEmail) return { allowed: false }
@@ -24,21 +25,21 @@ async function checkContentPermission(itemAssociation?: string) {
 
     // ADMIN_NETWORK can only edit their own association
     if (user.role === "ADMIN_NETWORK") {
-        const isMatch = itemAssociation?.toLowerCase().includes(user.association.toLowerCase())
+        const isMatch = itemAssociation === user.association
         return { allowed: isMatch, user }
     }
 
     return { allowed: false }
 }
 
-export async function getAllEvents(userEmail?: string | null, association?: string) {
+export async function getAllEvents(userEmail?: string | null, association?: Association) {
     const query: any = {
         where: { published: true },
         orderBy: { date: 'asc' },
     }
 
     if (association) {
-        query.where.association = { contains: association }
+        query.where.association = association
     }
 
     if (userEmail) {
@@ -183,7 +184,7 @@ export async function registerForEvent(userEmail: string, eventId: number) {
         // Send Confirmation Email (Non-blocking)
         // Detect brand from associations logic or use a default/context
         // For simplicity, we use the user's association or the context of the event
-        const brand = (user.association?.toLowerCase() === "orum" || user.association?.toLowerCase() === "o.r.u.m.") ? "orum" : "morgana"
+        const brand = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
 
         sendEmail({
             to: userEmail,
@@ -244,7 +245,7 @@ export async function cancelRegistration(eventId: number) {
 
 // --- ADMIN CRUD ---
 
-export async function getAllAdminEvents(filters?: { query?: string, status?: string, association?: string }) {
+export async function getAllAdminEvents(filters?: { query?: string, status?: string, association?: Association }) {
     try {
         const where: any = {}
 
@@ -262,7 +263,7 @@ export async function getAllAdminEvents(filters?: { query?: string, status?: str
         }
 
         if (filters?.association) {
-            where.association = { contains: filters.association }
+            where.association = filters.association
         }
 
         return await prisma.event.findMany({
@@ -291,7 +292,7 @@ export async function createEvent(data: {
     bookingStart?: string
     bookingEnd?: string
     attachments?: string
-    association?: string
+    association?: Association
     published: boolean
 }) {
     try {
@@ -315,7 +316,7 @@ export async function createEvent(data: {
                 bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
-                association: data.association || "Morgana & O.R.U.M.",
+                association: data.association || Association.MORGANA_ORUM,
                 published: data.published,
             }
         })
@@ -349,7 +350,7 @@ export async function updateEvent(id: number, data: {
     bookingStart?: string
     bookingEnd?: string
     attachments?: string
-    association?: string
+    association?: Association
     published: boolean
 }) {
     try {
@@ -377,7 +378,7 @@ export async function updateEvent(id: number, data: {
                 bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
-                association: data.association || "Morgana & O.R.U.M.",
+                association: data.association || Association.MORGANA_ORUM,
                 published: data.published,
             }
         })

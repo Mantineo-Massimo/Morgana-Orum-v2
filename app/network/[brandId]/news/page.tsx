@@ -5,11 +5,11 @@ import { notFound } from "next/navigation"
 export const dynamic = "force-dynamic"
 
 const BRAND_TO_ASSOCIATION: Record<string, string> = {
-    unimhealth: "unimhealth",
-    economia: "studentieconomia",
-    matricole: "unimematricole", // Check if this matches lib/associations.ts
-    scipog: "studentiscipog",
-    dicam: "insidedicam",
+    unimhealth: "UNIMHEALTH",
+    economia: "ECONOMIA",
+    matricole: "MATRICOLE",
+    scipog: "SCIPOG",
+    dicam: "INSIDE_DICAM",
 }
 
 export default async function Page({ params }: { params: { brandId: string } }) {

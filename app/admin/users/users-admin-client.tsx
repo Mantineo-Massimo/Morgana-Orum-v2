@@ -12,7 +12,7 @@ type UserItem = {
     name: string
     surname: string
     role: "USER" | "ADMIN_NETWORK" | "ADMIN_MORGANA" | "SUPER_ADMIN"
-    association: string
+    association: "MORGANA_ORUM" | "UNIMHEALTH" | "ECONOMIA" | "SCIPOG" | "DICAM" | "MATRICOLE" | "INSIDE_DICAM"
     matricola: string
     createdAt: Date
 }
@@ -46,9 +46,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         if (!user) return
 
         setLoadingId(userId)
-        const res = await updateUserRole(userId, user.role, newAssociation)
+        const res = await updateUserRole(userId, user.role, newAssociation as any)
         if (res.success) {
-            setUsers(prev => prev.map(u => u.id === userId ? { ...u, association: newAssociation } : u))
+            setUsers(prev => prev.map(u => u.id === userId ? { ...u, association: newAssociation as UserItem["association"] } : u))
         } else {
             alert("Errore durante l'aggiornamento: " + res.error)
         }

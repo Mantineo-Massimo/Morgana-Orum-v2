@@ -6,11 +6,11 @@ import { notFound } from "next/navigation"
 export const dynamic = "force-dynamic"
 
 const BRAND_TO_ASSOCIATION: Record<string, string> = {
-    unimhealth: "unimhealth",
-    economia: "studentieconomia",
-    matricole: "unimematricole",
-    scipog: "studentiscipog",
-    dicam: "insidedicam",
+    unimhealth: "UNIMHEALTH",
+    economia: "ECONOMIA",
+    matricole: "MATRICOLE",
+    scipog: "SCIPOG",
+    dicam: "INSIDE_DICAM",
 }
 
 export default async function Page({ params }: { params: { brandId: string } }) {

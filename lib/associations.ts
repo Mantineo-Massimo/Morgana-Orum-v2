@@ -1,10 +1,11 @@
 export const ASSOCIATIONS = [
-    { id: "morgana-orum", name: "Morgana & O.R.U.M." },
-    { id: "unimhealth", name: "Unimhealth" },
-    { id: "studentieconomia", name: "Studenti Economia" },
-    { id: "studentiscipog", name: "Studenti Scipog" },
-    { id: "insidedicam", name: "Inside Dicam" },
-    { id: "unimematricole", name: "Unime Matricole" },
+    { id: "MORGANA_ORUM", name: "Morgana & O.R.U.M." },
+    { id: "UNIMHEALTH", name: "Unimhealth" },
+    { id: "ECONOMIA", name: "Studenti Economia" },
+    { id: "SCIPOG", name: "Studenti Scipog" },
+    { id: "DICAM", name: "Dicam" },
+    { id: "INSIDE_DICAM", name: "Inside Dicam" },
+    { id: "MATRICOLE", name: "Unime Matricole" },
 ] as const;
 
 export type AssociationId = typeof ASSOCIATIONS[number]["id"];

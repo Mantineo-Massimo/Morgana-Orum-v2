@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import prisma from "@/lib/prisma"
+import { Association } from "@prisma/client"
 import { sendPublicationNotification } from "./notifications"
 import { AssociationId } from "@/lib/associations"
 
@@ -15,10 +16,10 @@ const newsSchema = z.object({
     image: z.string().optional().nullable().or(z.literal("")),
     date: z.string().optional(),
     published: z.boolean().default(true),
-    association: z.string().optional().default("Morgana & O.R.U.M."),
+    association: z.nativeEnum(Association).default(Association.MORGANA_ORUM),
 })
 
-async function checkContentPermission(itemAssociation?: string) {
+async function checkContentPermission(itemAssociation?: Association) {
     const { cookies } = await import("next/headers")
     const userEmail = cookies().get("session_email")?.value
     if (!userEmail) return { allowed: false }
@@ -36,17 +37,16 @@ async function checkContentPermission(itemAssociation?: string) {
 
     // ADMIN_NETWORK can only edit their own association
     if (user.role === "ADMIN_NETWORK") {
-        // Simple match for now. In a real scenario, we might want more complex mapping.
-        const isMatch = itemAssociation?.toLowerCase().includes(user.association.toLowerCase())
+        const isMatch = itemAssociation === user.association
         return { allowed: isMatch, user }
     }
 
     return { allowed: false }
 }
 
-export async function createNews(data: z.infer<typeof newsSchema>) {
+export async function createNews(data: any) {
     try {
-        const validData = newsSchema.parse(data)
+        const validData = newsSchema.parse(data) as any
         const permission = await checkContentPermission(validData.association)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
 
@@ -60,7 +60,7 @@ export async function createNews(data: z.infer<typeof newsSchema>) {
                 image: validData.image || null,
                 date: validData.date ? new Date(validData.date) : new Date(),
                 published: validData.published,
-                association: validData.association || "Morgana & O.R.U.M.",
+                association: validData.association || Association.MORGANA_ORUM,
             }
         })
 
@@ -147,7 +147,7 @@ export async function getNews(category?: string, query?: string, association?: s
         }
 
         if (association) {
-            where.association = { contains: association }
+            where.association = association as Association
         }
 
         if (query) {
@@ -184,7 +184,7 @@ export async function getAllNews(filters?: { query?: string, category?: string, 
         }
 
         if (filters?.association) {
-            where.association = { contains: filters.association }
+            where.association = filters.association
         }
 
         if (filters?.status === "published") {

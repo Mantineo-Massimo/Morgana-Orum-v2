@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { Association } from "@prisma/client"
 
 
 export async function getUserDashboardData(email?: string) {
@@ -93,7 +94,7 @@ export async function getAllUsers() {
 export async function updateUserRole(
     userId: number,
     newRole: "USER" | "ADMIN_NETWORK" | "ADMIN_MORGANA" | "SUPER_ADMIN",
-    association?: string
+    association?: Association
 ) {
     try {
         const { cookies } = await import("next/headers")
