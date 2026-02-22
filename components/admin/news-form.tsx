@@ -336,8 +336,10 @@ export default function NewsForm({
                     </div>
 
                     {/* Associazione (Multiselezione per Admin Morgana/Super) */}
-                    <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-2">Associazioni (Zone)</label>
+                    <div className={cn(userRole === "ADMIN_NETWORK" && "pointer-events-none opacity-80")}>
+                        <label className="block text-sm font-bold text-zinc-700 mb-2">
+                            Associazioni (Zone) {userRole === "ADMIN_NETWORK" && <span className="text-[10px] text-zinc-400 font-normal ml-2">(Modifica non consentita)</span>}
+                        </label>
                         <div className="flex flex-wrap gap-2">
                             {ASSOCIATIONS.map(assoc => {
                                 const isSelected = selectedAssociations.includes(assoc.id as Association)

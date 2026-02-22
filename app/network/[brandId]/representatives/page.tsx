@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: { brandId: string } }) 
 
     // Fetch by departments
     for (const filter of deptFilters) {
-        const reps = await getRepresentatives(undefined, undefined, "DEPARTMENT", filter)
+        const reps = await getRepresentatives({ category: "DEPARTMENT", department: filter })
         allReps = [...allReps, ...reps]
     }
 
@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: { brandId: string } }) 
     // Special case for Unimhealth: Add SIR
     if (params.brandId === "unimhealth") {
         // Query more specifically for "SIR (" to avoid matching names like "Siria" or "Desirà"
-        const potentialSirReps = await getRepresentatives("SIR (", undefined, undefined, undefined)
+        const potentialSirReps = await getRepresentatives({ query: "SIR (" })
 
         // Exact filter for role containing the full official acronym or structure name
         const sirReps = potentialSirReps.filter(m =>

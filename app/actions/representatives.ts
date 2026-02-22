@@ -124,52 +124,54 @@ export async function deleteRepresentative(id: string) {
     }
 }
 
-export async function getRepresentatives(
+export async function getRepresentatives(filters?: {
     query?: string,
     list?: string,
     category?: string,
     department?: string,
-    adminAssociation?: Association
-) {
+    userRole?: string,
+    userAssociation?: Association
+}) {
     try {
-        const { cookies } = await import("next/headers")
-        const userEmail = cookies().get("session_email")?.value
+        let user: any = null
 
-        let currentUserAssoc: Association | null = adminAssociation || null
-        let isNetworkAdmin = !!adminAssociation
-
-        if (!adminAssociation && userEmail) {
-            const user = await prisma.user.findUnique({ where: { email: userEmail } })
-            if (user && user.role === "ADMIN_NETWORK") {
-                isNetworkAdmin = true
-                currentUserAssoc = user.association
+        if (filters?.userRole && filters?.userAssociation) {
+            user = { role: filters.userRole, association: filters.userAssociation }
+        } else {
+            const { cookies } = await import("next/headers")
+            const userEmail = cookies().get("session_email")?.value
+            if (userEmail) {
+                user = await prisma.user.findUnique({ where: { email: userEmail } })
             }
         }
 
         const where: any = {}
 
-        if (isNetworkAdmin && currentUserAssoc) {
-            where.association = { in: [currentUserAssoc, Association.MORGANA_ORUM] }
+        // Enforce role-based association filtering
+        if (user?.role === "ADMIN_NETWORK") {
+            where.association = { in: [user.association, Association.MORGANA_ORUM] }
+        } else if (filters?.userAssociation) { // Used for public filtering if needed, but normally handled by role
+            where.association = filters.userAssociation
         }
 
-        if (department) {
-            where.department = { contains: department, mode: 'insensitive' }
+        if (filters?.department) {
+            where.department = { contains: filters.department, mode: 'insensitive' }
         }
 
-        if (query) {
+        if (filters?.query) {
             where.OR = [
-                { name: { contains: query, mode: 'insensitive' } },
-                { role: { contains: query, mode: 'insensitive' } },
-                { department: { contains: query, mode: 'insensitive' } }
+                { name: { contains: filters.query, mode: 'insensitive' } },
+                { role: { contains: filters.query, mode: 'insensitive' } },
+                { department: { contains: filters.query, mode: 'insensitive' } }
             ]
         }
 
-        if (list && list !== 'all') {
-            where.listName = list
+        if (filters?.list && filters.list !== 'all') {
+            where.listName = filters.list
         }
 
-        if (category && category !== 'all') {
-            where.category = category
+        if (filters?.category && filters.category !== 'all') {
+            where.category = filters.category
         }
 
         const reps = await prisma.representative.findMany({

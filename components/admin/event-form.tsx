@@ -306,8 +306,10 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                     </div>
                 </div>
 
-                <div>
-                    <label className={labelClass}>Associazioni (Zone) *</label>
+                <div className={cn(userRole === "ADMIN_NETWORK" && "pointer-events-none opacity-80")}>
+                    <label className={labelClass}>
+                        Associazioni (Zone) * {userRole === "ADMIN_NETWORK" && <span className="text-[10px] text-zinc-400 font-normal ml-2">(Modifica non consentita)</span>}
+                    </label>
                     <div className="flex flex-wrap gap-2">
                         {ASSOCIATIONS.map(assoc => {
                             const isSelected = selectedAssociations.includes(assoc.id as Association)
