@@ -29,7 +29,7 @@ export default function Page() {
         const result = await registerUser(formData)
 
         if (result.success) {
-            router.push(`/${"morgana"}/dashboard`)
+            router.push(`/dashboard`)
         } else {
             setError(result.error || "Qualcosa è andato storto.")
             setIsLoading(false)
@@ -175,7 +175,7 @@ export default function Page() {
                 </form>
 
                 <p className="text-center text-xs text-zinc-400 mt-6">
-                    Hai già un account? <Link href={`/${"morgana"}/login`} className="underline hover:text-foreground">Accedi</Link>
+                    Hai già un account? <Link href={`/login`} className="underline hover:text-foreground">Accedi</Link>
                 </p>
             </div>
         </div>
