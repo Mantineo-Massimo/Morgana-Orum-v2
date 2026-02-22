@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { deleteRepresentative } from "@/app/actions/representatives"
 
 import { Association } from "@prisma/client"
+import { ASSOCIATION_DEPARTMENT_KEYWORDS } from "@/app/actions/representatives"
 
 interface Representative {
     id: string
@@ -135,33 +136,41 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                             </td>
                             <td className="px-6 py-4 text-right">
                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    {/* Permission check: ADMIN_NETWORK can only edit their own association */}
-                                    {(userRole !== "ADMIN_NETWORK" || rep.association === userAssociation) ? (
-                                        <>
-                                            <Link
-                                                href={`/admin/representatives/${rep.id}/edit`}
-                                                className="p-2 text-zinc-400 hover:text-foreground hover:bg-zinc-100 rounded-lg transition-colors"
-                                                title="Modifica"
-                                            >
-                                                <Pencil className="size-4" />
-                                            </Link>
+                                    {/* Permission check: ADMIN_NETWORK can edit own assoc OR own department if Morgana */}
+                                    {(() => {
+                                        const keywords = ASSOCIATION_DEPARTMENT_KEYWORDS[userAssociation as string] || []
+                                        const isDeptMatch = rep.department && keywords.some(kw =>
+                                            rep.department?.toLowerCase().includes(kw.toLowerCase())
+                                        )
 
-                                            <button
-                                                onClick={async () => {
-                                                    if (confirm("Sei sicuro di voler eliminare questo rappresentante?")) {
-                                                        await deleteRepresentative(rep.id)
-                                                        setReps(reps.filter(r => r.id !== rep.id))
-                                                    }
-                                                }}
-                                                className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                                title="Elimina"
-                                            >
-                                                <Trash2 className="size-4" />
-                                            </button>
-                                        </>
-                                    ) : (
-                                        <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-2 py-1 rounded-md">Solo lettura</span>
-                                    )}
+                                        if (userRole !== "ADMIN_NETWORK" || rep.association === userAssociation || isDeptMatch) {
+                                            return (
+                                                <>
+                                                    <Link
+                                                        href={`/admin/representatives/${rep.id}/edit`}
+                                                        className="p-2 text-zinc-400 hover:text-foreground hover:bg-zinc-100 rounded-lg transition-colors"
+                                                        title="Modifica"
+                                                    >
+                                                        <Pencil className="size-4" />
+                                                    </Link>
+
+                                                    <button
+                                                        onClick={async () => {
+                                                            if (confirm("Sei sicuro di voler eliminare questo rappresentante?")) {
+                                                                await deleteRepresentative(rep.id)
+                                                                setReps(reps.filter(r => r.id !== rep.id))
+                                                            }
+                                                        }}
+                                                        className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                                        title="Elimina"
+                                                    >
+                                                        <Trash2 className="size-4" />
+                                                    </button>
+                                                </>
+                                            )
+                                        }
+                                        return <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-2 py-1 rounded-md">Solo lettura</span>
+                                    })()}
                                 </div>
                             </td>
                         </tr>

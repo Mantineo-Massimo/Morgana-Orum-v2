@@ -6,7 +6,7 @@ import { z } from "zod"
 import prisma from "@/lib/prisma"
 import { Association } from "@prisma/client"
 
-async function checkContentPermission(itemAssociation?: Association) {
+async function checkContentPermission(itemAssociation?: Association, itemDepartment?: string | null) {
     const { cookies } = await import("next/headers")
     const userEmail = cookies().get("session_email")?.value
     if (!userEmail) return { allowed: false }
@@ -22,10 +22,21 @@ async function checkContentPermission(itemAssociation?: Association) {
         return { allowed: true, user }
     }
 
-    // ADMIN_NETWORK can only edit their own association
+    // ADMIN_NETWORK can edit their own association OR anything in their department
     if (user.role === "ADMIN_NETWORK") {
-        const isMatch = itemAssociation === user.association
-        return { allowed: isMatch, user }
+        const isAssocMatch = itemAssociation === user.association
+
+        let isDeptMatch = false
+        if (itemDepartment) {
+            const keywords = ASSOCIATION_DEPARTMENT_KEYWORDS[user.association as string]
+            if (keywords && keywords.length > 0) {
+                isDeptMatch = keywords.some(kw =>
+                    itemDepartment.toLowerCase().includes(kw.toLowerCase())
+                )
+            }
+        }
+
+        return { allowed: isAssocMatch || isDeptMatch, user }
     }
 
     return { allowed: false }
@@ -82,7 +93,7 @@ export async function updateRepresentative(id: string, data: Partial<z.infer<typ
         const existing = await prisma.representative.findUnique({ where: { id } })
         if (!existing) return { success: false, error: "Rappresentante non trovato" }
 
-        const permission = await checkContentPermission(existing.association)
+        const permission = await checkContentPermission(existing.association, existing.department)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo rappresentante." }
 
         await prisma.representative.update({
@@ -107,7 +118,7 @@ export async function deleteRepresentative(id: string) {
         const existing = await prisma.representative.findUnique({ where: { id } })
         if (!existing) return { success: false, error: "Rappresentante non trovato" }
 
-        const permission = await checkContentPermission(existing.association)
+        const permission = await checkContentPermission(existing.association, existing.department)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo rappresentante." }
 
         await prisma.representative.delete({
@@ -124,7 +135,7 @@ export async function deleteRepresentative(id: string) {
     }
 }
 
-const ASSOCIATION_DEPARTMENT_KEYWORDS: Record<string, string[]> = {
+export const ASSOCIATION_DEPARTMENT_KEYWORDS: Record<string, string[]> = {
     DICAM: ["DICAM"],
     INSIDE_DICAM: ["DICAM"],
     SCIPOG: ["scipog"],
