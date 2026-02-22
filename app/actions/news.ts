@@ -134,7 +134,7 @@ export async function deleteNews(id: string) {
 }
 
 // Public: only published AND date <= now (scheduled publishing support)
-export async function getNews(category?: string, query?: string, association?: string) {
+export async function getNews(category?: string, query?: string, association?: Association) {
     try {
         const now = new Date()
         const where: any = {

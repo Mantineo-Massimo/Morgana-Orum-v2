@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Calendar, Clock, MapPin, CheckCircle, ChevronLeft, Lock, Ticket, Download, FileText, LogIn, UserPlus } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Association } from "@prisma/client"
 
 type EventData = {
     id: number
@@ -23,7 +24,7 @@ type EventData = {
     bookingStart: Date | null
     bookingEnd: Date | null
     attachments: string | null
-    association: string
+    association: Association
     isRegistered?: boolean
 }
 

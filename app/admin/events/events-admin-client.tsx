@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useTransition } from "react"
 import { useRouter } from "next/navigation"
+import { Association } from "@prisma/client"
 import { ASSOCIATIONS } from "@/lib/associations"
 import { Calendar, MapPin, Pencil, Trash2, Copy, Download, Loader2, Search, Filter, ArrowUpDown, ArrowUp, Tag, X, Plus } from "lucide-react"
 import Link from "next/link"
@@ -22,7 +23,7 @@ export default function EventsAdminClient({ initialEvents, categories, categorie
     const [isActionLoading, setIsActionLoading] = useState<number | null>(null)
     const [search, setSearch] = useState("")
     const [statusFilter, setStatusFilter] = useState("all")
-    const [associationFilter, setAssociationFilter] = useState("")
+    const [associationFilter, setAssociationFilter] = useState<Association | "">("")
     const [isPending, startTransition] = useTransition()
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
     const [newCategory, setNewCategory] = useState("")
@@ -41,7 +42,7 @@ export default function EventsAdminClient({ initialEvents, categories, categorie
             const res = await getAllAdminEvents({
                 query: search,
                 status: statusFilter === "all" ? undefined : statusFilter,
-                association: (associationFilter as any) || undefined
+                association: (associationFilter as Association) || undefined
             })
             setEvents(res)
         })

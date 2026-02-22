@@ -3,17 +3,19 @@ import Image from "next/image"
 import { ArrowRight, Calendar, ChevronLeft } from "lucide-react"
 import prisma from "@/lib/prisma"
 import { notFound } from "next/navigation"
+import { Association } from "@prisma/client"
 
 export const dynamic = "force-dynamic"
 
-const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg: string, subtitle: string, desc: string }> = {
+const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg: string, subtitle: string, desc: string, association: Association }> = {
     unimhealth: {
         id: "unimhealth",
         name: "Unimhealth",
         logo: "/assets/unimhealth.png",
         bg: "/assets/policlinico.png",
         subtitle: "L'eccellenza della rappresentanza nell'area medico-sanitaria.",
-        desc: "Unimhealth è l'anima del network dedicata agli studenti dell'area biomedica e sanitaria. Ci impegniamo ogni giorno per garantire una formazione di qualità e servizi all'altezza delle sfide del futuro medico."
+        desc: "Unimhealth è l'anima del network dedicata agli studenti dell'area biomedica e sanitaria. Ci impegniamo ogni giorno per garantire una formazione di qualità e servizi all'altezza delle sfide del futuro medico.",
+        association: Association.UNIMHEALTH
     },
     economia: {
         id: "studentieconomia",
@@ -21,7 +23,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         logo: "/assets/studentieconomia.png",
         bg: "/assets/economia.png",
         subtitle: "Protagonisti del cambiamento nell'area economica e giuridica.",
-        desc: "Studenti Economia rappresenta il punto di riferimento per chi vive il Dipartimento di Economia. Passione, competenza e un forte spirito di gruppo al servizio della crescita accademica e professionale."
+        desc: "Studenti Economia rappresenta il punto di riferimento per chi vive il Dipartimento di Economia. Passione, competenza e un forte spirito di gruppo al servizio della crescita accademica e professionale.",
+        association: Association.ECONOMIA
     },
     matricole: {
         id: "unimematricole",
@@ -29,7 +32,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         logo: "/assets/unimematricole.png",
         bg: "/assets/matricole.png",
         subtitle: "Il tuo primo passo sicuro nel mondo universitario.",
-        desc: "Siamo qui per guidare i nuovi studenti nel loro ingresso in Ateneo. Dall'orientamento burocratico al supporto didattico, Unime Matricole è il tuo miglior alleato fin dal primo giorno."
+        desc: "Siamo qui per guidare i nuovi studenti nel loro ingresso in Ateneo. Dall'orientamento burocratico al supporto didattico, Unime Matricole è il tuo miglior alleato fin dal primo giorno.",
+        association: Association.MATRICOLE
     },
     scipog: {
         id: "studentiscipog",
@@ -37,7 +41,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         logo: "/assets/studentiscipog.png",
         bg: "/assets/scipog.png",
         subtitle: "La voce degli studenti tra Scienze Politiche e Giuridiche.",
-        desc: "Passione civile e impegno costante definiscono Studenti Scipog. Lavoriamo per un dipartimento inclusivo, dinamico e capace di valorizzare il percorso di ogni singolo studente."
+        desc: "Passione civile e impegno costante definiscono Studenti Scipog. Lavoriamo per un dipartimento inclusivo, dinamico e capace di valorizzare il percorso di ogni singolo studente.",
+        association: Association.SCIPOG
     },
     dicam: {
         id: "insidedicam",
@@ -45,7 +50,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         logo: "/assets/insidedicam.png",
         bg: "/assets/dicam.png",
         subtitle: "Creatività e cultura: l'anima del Dipartimento DICAM.",
-        desc: "Inside Dicam è la realtà di riferimento per gli studenti dell'area umanistica. Promuoviamo la cultura, l'arte e il dialogo, garantendo una rappresentanza attenta alle esigenze di ogni corso di laurea."
+        desc: "Inside Dicam è la realtà di riferimento per gli studenti dell'area umanistica. Promuoviamo la cultura, l'arte e il dialogo, garantendo una rappresentanza attenta alle esigenze di ogni corso di laurea.",
+        association: Association.INSIDE_DICAM
     },
 }
 
@@ -60,7 +66,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
     const notizie = await prisma.news.findMany({
         where: {
             published: true,
-            association: { contains: config.id }
+            association: config.association
         },
         orderBy: { date: 'desc' },
         take: 3
@@ -69,7 +75,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
     const eventi = await prisma.event.findMany({
         where: {
             date: { gte: new Date() },
-            association: { contains: config.id }
+            association: config.association
         },
         orderBy: { date: 'asc' },
         take: 3

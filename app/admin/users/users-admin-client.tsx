@@ -4,6 +4,7 @@ import { useState } from "react"
 import { updateUserRole, deleteUser } from "@/app/actions/users"
 import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Association } from "@prisma/client"
 import { ASSOCIATIONS } from "@/lib/associations"
 
 type UserItem = {
@@ -46,7 +47,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         if (!user) return
 
         setLoadingId(userId)
-        const res = await updateUserRole(userId, user.role, newAssociation as any)
+        const res = await updateUserRole(userId, user.role, newAssociation as Association)
         if (res.success) {
             setUsers(prev => prev.map(u => u.id === userId ? { ...u, association: newAssociation as UserItem["association"] } : u))
         } else {

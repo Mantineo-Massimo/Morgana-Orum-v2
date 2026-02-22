@@ -6,6 +6,7 @@ import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Calendar as CalendarIcon, MapPin, Clock, Search, CheckCircle, Lock, Ticket, Award, ChevronLeft, ChevronRight, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Association } from "@prisma/client"
 
 // Types
 type EventItem = {
@@ -25,7 +26,7 @@ type EventItem = {
     bookingStart: Date | null
     bookingEnd: Date | null
     attachments: string | null
-    association: string
+    association: Association
     isRegistered?: boolean
 }
 

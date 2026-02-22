@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { deleteNews, createNewsCategory, deleteNewsCategory } from "@/app/actions/news"
 import { useRouter } from "next/navigation"
 import { ASSOCIATIONS } from "@/lib/associations"
+import { Association } from "@prisma/client"
 
 function getNewsStatus(item: any): "published" | "draft" | "scheduled" {
     if (!item.published) return "draft"
@@ -34,7 +35,7 @@ export default function AdminNewsClient({
     const [filterCategory, setFilterCategory] = useState("")
     const [filterStatus, setFilterStatus] = useState("")
     const [filterYear, setFilterYear] = useState("")
-    const [filterAssociation, setFilterAssociation] = useState("")
+    const [filterAssociation, setFilterAssociation] = useState<Association | "">("")
     const [newCategory, setNewCategory] = useState("")
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | null } | null>(null)
 
