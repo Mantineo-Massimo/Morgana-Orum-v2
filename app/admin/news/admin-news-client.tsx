@@ -235,7 +235,7 @@ export default function AdminNewsClient({
                     {/* Association */}
                     <select
                         value={filterAssociation}
-                        onChange={(e) => setFilterAssociation(e.target.value)}
+                        onChange={(e) => setFilterAssociation(e.target.value as any)}
                         className="px-4 py-2 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
                     >
                         <option value="">Tutte le zone</option>

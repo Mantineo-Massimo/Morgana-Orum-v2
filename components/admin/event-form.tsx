@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { createEvent, updateEvent } from "@/app/actions/events"
 import { departmentsData } from "@/lib/departments"
 import { ASSOCIATIONS, getAssociationName } from "@/lib/associations"
+import { Association } from "@prisma/client"
 
 type EventFormProps = {
     initialData?: {
@@ -28,7 +29,7 @@ type EventFormProps = {
         bookingEnd: Date | null
         attachments: string | null
         published?: boolean
-        association?: string
+        association?: Association
     }
     categories: string[]
 }
@@ -56,8 +57,8 @@ export default function EventForm({ initialData, categories }: EventFormProps) {
     const [error, setError] = useState("")
     const [bookingOpen, setBookingOpen] = useState(initialData?.bookingOpen ?? false)
     const [published, setPublished] = useState(initialData?.published ?? true)
-    const [selectedAssociations, setSelectedAssociations] = useState<string[]>(
-        initialData?.association ? initialData.association.split(",").map(a => a.trim()) : ["morgana-orum"]
+    const [selectedAssociations, setSelectedAssociations] = useState<Association[]>(
+        initialData?.association ? [initialData.association] : [Association.MORGANA_ORUM]
     )
     const [selectedCategories, setSelectedCategories] = useState<string[]>(
         initialData?.category ? initialData.category.split(",").map(c => c.trim()) : []
@@ -150,7 +151,7 @@ export default function EventForm({ initialData, categories }: EventFormProps) {
                 bookingEnd: (formData.get("bookingEnd") as string) || undefined,
                 attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : undefined,
                 published,
-                association: selectedAssociations.join(", "),
+                association: selectedAssociations[0] || Association.MORGANA_ORUM,
             }
 
             const result = initialData
@@ -301,7 +302,7 @@ export default function EventForm({ initialData, categories }: EventFormProps) {
                     </div>
                 </div>
 
-                {/* Associations (Multi-select) */}
+                {/* Association (Single-select) */}
                 <div>
                     <label className={labelClass}>Associazioni (Zone) *</label>
                     <div className="flex flex-wrap gap-2">
@@ -312,11 +313,7 @@ export default function EventForm({ initialData, categories }: EventFormProps) {
                                     key={assoc.id}
                                     type="button"
                                     onClick={() => {
-                                        setSelectedAssociations(prev =>
-                                            isSelected
-                                                ? prev.filter(a => a !== assoc.id)
-                                                : [...prev, assoc.id]
-                                        )
+                                        setSelectedAssociations([assoc.id as Association])
                                     }}
                                     className={cn(
                                         "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",

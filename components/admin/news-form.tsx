@@ -1,6 +1,7 @@
 "use client"
 
 import { createNews, updateNews } from "@/app/actions/news"
+import { Association } from "@prisma/client"
 import { useState, useRef, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, Save, Loader2, Upload, X, ImageIcon } from "lucide-react"
@@ -27,8 +28,8 @@ export default function NewsForm({
     const [selectedCategories, setSelectedCategories] = useState<string[]>(
         initialData?.category ? initialData.category.split(",").map((c: string) => c.trim()) : []
     )
-    const [selectedAssociations, setSelectedAssociations] = useState<string[]>(
-        initialData?.association ? initialData.association.split(",").map((a: string) => a.trim()) : ["morgana-orum"]
+    const [selectedAssociations, setSelectedAssociations] = useState<Association[]>(
+        initialData?.association ? [initialData.association] : [Association.MORGANA_ORUM]
     )
 
     async function handleImageUpload(file: File) {
@@ -63,7 +64,7 @@ export default function NewsForm({
             image: imageUrl || null,
             date: formData.get("date") as string || undefined,
             published: formData.get("published") === "on",
-            association: selectedAssociations.join(", "),
+            association: selectedAssociations[0] || Association.MORGANA_ORUM,
         }
 
         const result = isEditing
@@ -328,23 +329,17 @@ export default function NewsForm({
                         />
                     </div>
 
-                    {/* Associazioni (multi) */}
+                    {/* Associazione (Singola) */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-2">Associazioni (Zone)</label>
+                        <label className="block text-sm font-bold text-zinc-700 mb-2">Associazione (Zona)</label>
                         <div className="flex flex-wrap gap-2">
                             {ASSOCIATIONS.map(assoc => {
-                                const isSelected = selectedAssociations.includes(assoc.id)
+                                const isSelected = selectedAssociations.includes(assoc.id as Association)
                                 return (
                                     <button
                                         key={assoc.id}
                                         type="button"
-                                        onClick={() => {
-                                            setSelectedAssociations(prev =>
-                                                isSelected
-                                                    ? prev.filter(a => a !== assoc.id)
-                                                    : [...prev, assoc.id]
-                                            )
-                                        }}
+                                        onClick={() => setSelectedAssociations([assoc.id as Association])}
                                         className={cn(
                                             "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",
                                             isSelected

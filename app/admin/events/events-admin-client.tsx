@@ -324,7 +324,7 @@ export default function EventsAdminClient({ initialEvents, categories, categorie
                     <Filter className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
                     <select
                         value={associationFilter}
-                        onChange={(e) => setAssociationFilter(e.target.value)}
+                        onChange={(e) => setAssociationFilter(e.target.value as any)}
                         className="w-full sm:w-auto pl-10 pr-8 py-2 bg-zinc-50 border-none rounded-xl text-sm font-medium text-zinc-700 focus:ring-2 focus:ring-zinc-900/10 appearance-none cursor-pointer"
                     >
                         <option value="">Tutte le zone</option>
