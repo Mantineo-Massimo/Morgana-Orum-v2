@@ -107,9 +107,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                         <thead>
                             <tr className="bg-zinc-50/50 border-b border-zinc-100">
                                 <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Utente</th>
-                                <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Associazione</th>
                                 <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Matricola</th>
                                 <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Ruolo</th>
+                                <th className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest">Associazione</th>
                                 <th className="px-6 py-4 text-right text-xs font-bold text-zinc-400 uppercase tracking-widest">Azioni</th>
                             </tr>
                         </thead>
