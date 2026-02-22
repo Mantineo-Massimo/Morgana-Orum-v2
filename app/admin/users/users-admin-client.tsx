@@ -123,26 +123,6 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <div className="flex items-center gap-2">
-                                            <select
-                                                className="text-sm bg-zinc-50 border border-zinc-100 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
-                                                value={user.association}
-                                                onChange={(e) => handleAssociationChange(user.id, e.target.value)}
-                                                disabled={loadingId === user.id || user.role !== "ADMIN_NETWORK"}
-                                            >
-                                                {ASSOCIATIONS
-                                                    .filter(a => user.role !== "ADMIN_NETWORK" || a.id !== "MORGANA_ORUM")
-                                                    .map(a => (
-                                                        <option key={a.id} value={a.id}>{a.name}</option>
-                                                    ))}
-                                                {/* In case association is not in the list (legacy/manual) */}
-                                                {!ASSOCIATIONS.find(a => a.id === user.association) && (
-                                                    <option value={user.association}>{user.association}</option>
-                                                )}
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-4">
                                         <code className="text-xs font-mono px-2 py-1 bg-zinc-100 rounded text-zinc-600">
                                             {user.matricola}
                                         </code>
@@ -163,6 +143,26 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                                 ))}
                                             </select>
                                             {loadingId === user.id && <Loader2 className="size-3 animate-spin text-zinc-400" />}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-2">
+                                            <select
+                                                className="text-sm bg-zinc-50 border border-zinc-100 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
+                                                value={user.association}
+                                                onChange={(e) => handleAssociationChange(user.id, e.target.value)}
+                                                disabled={loadingId === user.id || user.role !== "ADMIN_NETWORK"}
+                                            >
+                                                {ASSOCIATIONS
+                                                    .filter(a => user.role !== "ADMIN_NETWORK" || a.id !== "MORGANA_ORUM")
+                                                    .map(a => (
+                                                        <option key={a.id} value={a.id}>{a.name}</option>
+                                                    ))}
+                                                {/* In case association is not in the list (legacy/manual) */}
+                                                {!ASSOCIATIONS.find(a => a.id === user.association) && (
+                                                    <option value={user.association}>{user.association}</option>
+                                                )}
+                                            </select>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-right">
