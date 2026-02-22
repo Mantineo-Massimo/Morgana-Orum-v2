@@ -16,13 +16,7 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
     const [activeCategory, setActiveCategory] = useState("Tutte")
     const [searchQuery, setSearchQuery] = useState("")
 
-    const derivedCategories = Array.from(new Set(
-        initialNews.flatMap(item =>
-            item.category ? item.category.split(",").map((c: string) => c.trim()) : []
-        )
-    )).sort()
-
-    const allCategories = ["Tutte", ...derivedCategories]
+    const allCategories = ["Tutte", ...categories]
 
     const filteredNews = initialNews.filter(item => {
         const itemCategories = item.category ? item.category.split(",").map((c: string) => c.trim()) : []

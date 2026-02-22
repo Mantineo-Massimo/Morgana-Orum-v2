@@ -39,7 +39,7 @@ export async function getAllEvents(userEmail?: string | null, association?: Asso
     }
 
     if (association) {
-        query.where.associations = { has: association }
+        query.where.associations = { hasSome: [association, Association.MORGANA_ORUM] }
     }
 
     if (userEmail) {

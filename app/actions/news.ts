@@ -160,8 +160,10 @@ export async function deleteNews(id: string) {
 
 // Public: only published AND date <= now (scheduled publishing support)
 export async function getNews(category?: string, query?: string, association?: Association) {
+    console.log('getNews called with:', { category, query, association })
     try {
         const now = new Date()
+        console.log('Now:', now.toISOString())
         const where: any = {
             published: true,
             date: { lte: now }
@@ -172,7 +174,7 @@ export async function getNews(category?: string, query?: string, association?: A
         }
 
         if (association) {
-            where.associations = { has: association }
+            where.associations = { hasSome: [association, Association.MORGANA_ORUM] }
         }
 
         if (query) {
