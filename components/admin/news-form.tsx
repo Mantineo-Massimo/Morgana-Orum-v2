@@ -13,10 +13,14 @@ import { ASSOCIATIONS } from "@/lib/associations"
 
 export default function NewsForm({
     initialData,
-    categories = []
+    categories = [],
+    userRole,
+    userAssociation
 }: {
     initialData?: any,
-    categories?: string[]
+    categories?: string[],
+    userRole?: string,
+    userAssociation?: Association
 }) {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
@@ -29,7 +33,11 @@ export default function NewsForm({
         initialData?.category ? initialData.category.split(",").map((c: string) => c.trim()) : []
     )
     const [selectedAssociations, setSelectedAssociations] = useState<Association[]>(
-        initialData?.association ? [initialData.association] : [Association.MORGANA_ORUM]
+        initialData?.associations && initialData.associations.length > 0
+            ? initialData.associations
+            : userRole === "ADMIN_NETWORK" && userAssociation
+                ? [userAssociation]
+                : [Association.MORGANA_ORUM]
     )
 
     async function handleImageUpload(file: File) {
@@ -64,7 +72,7 @@ export default function NewsForm({
             image: imageUrl || null,
             date: formData.get("date") as string || undefined,
             published: formData.get("published") === "on",
-            association: selectedAssociations[0] || Association.MORGANA_ORUM,
+            associations: selectedAssociations,
         }
 
         const result = isEditing
@@ -329,22 +337,32 @@ export default function NewsForm({
                         />
                     </div>
 
-                    {/* Associazione (Singola) */}
+                    {/* Associazione (Multi-select) */}
                     <div>
                         <label className="block text-sm font-bold text-zinc-700 mb-2">Associazione (Zona)</label>
                         <div className="flex flex-wrap gap-2">
                             {ASSOCIATIONS.map(assoc => {
                                 const isSelected = selectedAssociations.includes(assoc.id as Association)
+                                const isLocked = userRole === "ADMIN_NETWORK"
                                 return (
                                     <button
                                         key={assoc.id}
                                         type="button"
-                                        onClick={() => setSelectedAssociations([assoc.id as Association])}
+                                        disabled={isLocked && assoc.id !== userAssociation}
+                                        onClick={() => {
+                                            if (isLocked) return
+                                            setSelectedAssociations(prev =>
+                                                isSelected
+                                                    ? prev.filter(a => a !== assoc.id)
+                                                    : [...prev, assoc.id as Association]
+                                            )
+                                        }}
                                         className={cn(
                                             "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",
                                             isSelected
                                                 ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
-                                                : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400"
+                                                : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400",
+                                            isLocked && assoc.id !== userAssociation && "opacity-20 grayscale cursor-not-allowed"
                                         )}
                                     >
                                         {isSelected && "✓ "}{assoc.name}
@@ -352,7 +370,11 @@ export default function NewsForm({
                                 )
                             })}
                         </div>
-                        <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">Seleziona in quali zone/siti web deve comparire la notizia.</p>
+                        <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">
+                            {userRole === "ADMIN_NETWORK"
+                                ? "Sei limitato alla tua associazione di appartenenza."
+                                : "Seleziona in quali zone/siti web deve comparire la notizia."}
+                        </p>
                     </div>
 
                     {/* Published */}

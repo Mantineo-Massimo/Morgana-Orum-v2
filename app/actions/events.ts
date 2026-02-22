@@ -7,7 +7,7 @@ import { sendEmail } from "@/lib/mail"
 import { getEventBookingTemplate, getNewsletterTemplate } from "@/lib/email-templates"
 import { sendPublicationNotification } from "./notifications"
 
-async function checkContentPermission(itemAssociation?: Association) {
+async function checkContentPermission(itemAssociations?: Association[]) {
     const { cookies } = await import("next/headers")
     const userEmail = cookies().get("session_email")?.value
     if (!userEmail) return { allowed: false }
@@ -24,8 +24,8 @@ async function checkContentPermission(itemAssociation?: Association) {
     }
 
     // ADMIN_NETWORK can only edit their own association
-    if (user.role === "ADMIN_NETWORK") {
-        const isMatch = itemAssociation === user.association
+    if (user.role === "ADMIN_NETWORK" && itemAssociations) {
+        const isMatch = itemAssociations.includes(user.association)
         return { allowed: isMatch, user }
     }
 
@@ -39,7 +39,7 @@ export async function getAllEvents(userEmail?: string | null, association?: Asso
     }
 
     if (association) {
-        query.where.association = association
+        query.where.associations = { has: association }
     }
 
     if (userEmail) {
@@ -261,9 +261,9 @@ export async function getAllAdminEvents(filters?: { query?: string, status?: str
 
         // Enforce role-based association filtering
         if (user.role === "ADMIN_NETWORK") {
-            where.association = user.association
+            where.associations = { has: user.association }
         } else if (filters?.association) {
-            where.association = filters.association
+            where.associations = { has: filters.association }
         }
 
         if (filters?.query) {
@@ -305,12 +305,12 @@ export async function createEvent(data: {
     bookingStart?: string
     bookingEnd?: string
     attachments?: string
-    association?: Association
+    associations: Association[]
     published: boolean
 }) {
     try {
-        const permission = await checkContentPermission(data.association)
-        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
+        const permission = await checkContentPermission(data.associations)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa configurazione di associazioni." }
 
         const newEvent = await prisma.event.create({
             data: {
@@ -329,7 +329,7 @@ export async function createEvent(data: {
                 bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
-                association: data.association || Association.MORGANA_ORUM,
+                associations: (data.associations && data.associations.length > 0) ? data.associations : [Association.MORGANA_ORUM],
                 published: data.published,
             }
         })
@@ -363,7 +363,7 @@ export async function updateEvent(id: number, data: {
     bookingStart?: string
     bookingEnd?: string
     attachments?: string
-    association?: Association
+    associations: Association[]
     published: boolean
 }) {
     try {
@@ -391,7 +391,7 @@ export async function updateEvent(id: number, data: {
                 bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
                 bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
                 attachments: data.attachments || null,
-                association: data.association || Association.MORGANA_ORUM,
+                associations: (data.associations && data.associations.length > 0) ? data.associations : [Association.MORGANA_ORUM],
                 published: data.published,
             }
         })
@@ -465,7 +465,7 @@ export async function duplicateEvent(eventId: number) {
 
         if (!event) return { success: false, message: "Evento non trovato" }
 
-        const permission = await checkContentPermission(event.association)
+        const permission = await checkContentPermission(event.associations)
         if (!permission.allowed) return { success: false, message: "Non hai i permessi per questo evento." }
 
         const { id, ...eventData } = event

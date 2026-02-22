@@ -39,6 +39,15 @@ export async function logoutAction() {
     redirect(`/`)
 }
 
+export async function getSession() {
+    const email = cookies().get("session_email")?.value
+    if (!email) return null
+    const user = await prisma.user.findUnique({
+        where: { email }
+    })
+    return user
+}
+
 export async function registerUser(formData: FormData) {
     const name = formData.get("name") as string
     const surname = formData.get("surname") as string

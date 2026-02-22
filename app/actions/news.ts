@@ -16,10 +16,10 @@ const newsSchema = z.object({
     image: z.string().optional().nullable().or(z.literal("")),
     date: z.string().optional(),
     published: z.boolean().default(true),
-    association: z.nativeEnum(Association).default(Association.MORGANA_ORUM),
+    associations: z.array(z.nativeEnum(Association)).min(1, "Seleziona almeno un'associazione"),
 })
 
-async function checkContentPermission(itemAssociation?: Association) {
+async function checkContentPermission(itemAssociations?: Association[]) {
     const { cookies } = await import("next/headers")
     const userEmail = cookies().get("session_email")?.value
     if (!userEmail) return { allowed: false }
@@ -35,9 +35,9 @@ async function checkContentPermission(itemAssociation?: Association) {
         return { allowed: true, user }
     }
 
-    // ADMIN_NETWORK can only edit their own association
-    if (user.role === "ADMIN_NETWORK") {
-        const isMatch = itemAssociation === user.association
+    // ADMIN_NETWORK can only edit if their association is in the list
+    if (user.role === "ADMIN_NETWORK" && itemAssociations) {
+        const isMatch = itemAssociations.includes(user.association)
         return { allowed: isMatch, user }
     }
 
@@ -46,9 +46,9 @@ async function checkContentPermission(itemAssociation?: Association) {
 
 export async function createNews(data: any) {
     try {
-        const validData = newsSchema.parse(data) as any
-        const permission = await checkContentPermission(validData.association)
-        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
+        const validData = newsSchema.parse(data)
+        const permission = await checkContentPermission(validData.associations)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa configurazione di associazioni." }
 
         const newNews = await prisma.news.create({
             data: {
@@ -60,7 +60,7 @@ export async function createNews(data: any) {
                 image: validData.image || null,
                 date: validData.date ? new Date(validData.date) : new Date(),
                 published: validData.published,
-                association: validData.association || Association.MORGANA_ORUM,
+                associations: validData.associations,
             }
         })
 
@@ -83,7 +83,7 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
         const existing = await prisma.news.findUnique({ where: { id } })
         if (!existing) return { success: false, error: "Notizia non trovata" }
 
-        const permission = await checkContentPermission(existing.association)
+        const permission = await checkContentPermission(existing.associations)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
 
         const updateData: any = { ...data }
@@ -117,7 +117,7 @@ export async function deleteNews(id: string) {
         const existing = await prisma.news.findUnique({ where: { id } })
         if (!existing) return { success: false, error: "Notizia non trovata" }
 
-        const permission = await checkContentPermission(existing.association)
+        const permission = await checkContentPermission(existing.associations)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
 
         await prisma.news.delete({
@@ -147,7 +147,7 @@ export async function getNews(category?: string, query?: string, association?: A
         }
 
         if (association) {
-            where.association = association as Association
+            where.associations = { has: association }
         }
 
         if (query) {
@@ -184,9 +184,9 @@ export async function getAllNews(filters?: { query?: string, category?: string, 
 
         // Enforce role-based association filtering
         if (user.role === "ADMIN_NETWORK") {
-            where.association = user.association
+            where.associations = { has: user.association }
         } else if (filters?.association) {
-            where.association = filters.association
+            where.associations = { has: filters.association }
         }
 
         if (filters?.query) {

@@ -29,9 +29,11 @@ type EventFormProps = {
         bookingEnd: Date | null
         attachments: string | null
         published?: boolean
-        association?: Association
+        associations?: Association[]
     }
     categories: string[]
+    userRole?: string
+    userAssociation?: Association
 }
 
 // DEPRECATED: USING DYNAMIC CATEGORIES
@@ -51,14 +53,18 @@ function dateToInputValue(d: Date | null | undefined): string {
     return `${y}-${m}-${day}T${h}:${min}`
 }
 
-export default function EventForm({ initialData, categories }: EventFormProps) {
+export default function EventForm({ initialData, categories, userRole, userAssociation }: EventFormProps) {
     const router = useRouter()
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState("")
     const [bookingOpen, setBookingOpen] = useState(initialData?.bookingOpen ?? false)
     const [published, setPublished] = useState(initialData?.published ?? true)
     const [selectedAssociations, setSelectedAssociations] = useState<Association[]>(
-        initialData?.association ? [initialData.association] : [Association.MORGANA_ORUM]
+        initialData?.associations && initialData.associations.length > 0
+            ? initialData.associations
+            : userRole === "ADMIN_NETWORK" && userAssociation
+                ? [userAssociation]
+                : [Association.MORGANA_ORUM]
     )
     const [selectedCategories, setSelectedCategories] = useState<string[]>(
         initialData?.category ? initialData.category.split(",").map(c => c.trim()) : []
@@ -151,7 +157,7 @@ export default function EventForm({ initialData, categories }: EventFormProps) {
                 bookingEnd: (formData.get("bookingEnd") as string) || undefined,
                 attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : undefined,
                 published,
-                association: selectedAssociations[0] || Association.MORGANA_ORUM,
+                associations: selectedAssociations,
             }
 
             const result = initialData
@@ -302,24 +308,32 @@ export default function EventForm({ initialData, categories }: EventFormProps) {
                     </div>
                 </div>
 
-                {/* Association (Single-select) */}
+                {/* Association (Multi-select) */}
                 <div>
                     <label className={labelClass}>Associazioni (Zone) *</label>
                     <div className="flex flex-wrap gap-2">
                         {ASSOCIATIONS.map(assoc => {
-                            const isSelected = selectedAssociations.includes(assoc.id)
+                            const isSelected = selectedAssociations.includes(assoc.id as Association)
+                            const isLocked = userRole === "ADMIN_NETWORK"
                             return (
                                 <button
                                     key={assoc.id}
                                     type="button"
+                                    disabled={isLocked && assoc.id !== userAssociation}
                                     onClick={() => {
-                                        setSelectedAssociations([assoc.id as Association])
+                                        if (isLocked) return
+                                        setSelectedAssociations(prev =>
+                                            isSelected
+                                                ? prev.filter(a => a !== assoc.id)
+                                                : [...prev, assoc.id as Association]
+                                        )
                                     }}
                                     className={cn(
                                         "px-4 py-2 rounded-full text-xs font-bold border transition-all uppercase tracking-wider",
                                         isSelected
                                             ? "bg-zinc-900 text-white border-zinc-900 shadow-md"
-                                            : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400"
+                                            : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-400",
+                                        isLocked && assoc.id !== userAssociation && "opacity-20 grayscale cursor-not-allowed"
                                     )}
                                 >
                                     {isSelected && "✓ "}{assoc.name}
@@ -327,7 +341,11 @@ export default function EventForm({ initialData, categories }: EventFormProps) {
                             )
                         })}
                     </div>
-                    <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">Seleziona in quali zone/siti web deve comparire l&apos;evento.</p>
+                    <p className="text-[10px] text-zinc-400 mt-2 font-medium italic">
+                        {userRole === "ADMIN_NETWORK"
+                            ? "Sei limitato alla tua associazione di appartenenza."
+                            : "Seleziona in quali zone/siti web deve comparire l'evento."}
+                    </p>
                 </div>
 
 
