@@ -33,7 +33,7 @@ export default function NewsForm({
         initialData?.category ? initialData.category.split(",").map((c: string) => c.trim()) : []
     )
     const [selectedAssociations, setSelectedAssociations] = useState<Association[]>(
-        initialData?.associations && initialData.associations.length > 0
+        initialData?.associations && Array.isArray(initialData.associations) && initialData.associations.length > 0
             ? initialData.associations
             : (userAssociation ? [userAssociation] : [Association.MORGANA_ORUM])
     )
@@ -238,8 +238,8 @@ export default function NewsForm({
                                         onClick={() => {
                                             setSelectedCategories(prev =>
                                                 isSelected
-                                                    ? prev.filter(c => c !== cat)
-                                                    : [...prev, cat]
+                                                    ? (Array.isArray(prev) ? prev.filter(c => c !== cat) : [])
+                                                    : [...(Array.isArray(prev) ? prev : []), cat]
                                             )
                                         }}
                                         className={cn(

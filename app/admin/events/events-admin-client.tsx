@@ -232,9 +232,9 @@ export default function EventsAdminClient({
         }
     }
 
-    const sortedEvents = [...events].filter(item => {
+    const sortedEvents = (Array.isArray(events) ? [...events] : []).filter(item => {
         const matchesCategory = !filterCategory || item.category === filterCategory
-        const matchesAssociation = !associationFilter || (item.associations && item.associations.includes(associationFilter))
+        const matchesAssociation = !associationFilter || (Array.isArray(item.associations) && item.associations.includes(associationFilter))
         return matchesCategory && matchesAssociation
     }).sort((a, b) => {
         if (!sortConfig) return 0

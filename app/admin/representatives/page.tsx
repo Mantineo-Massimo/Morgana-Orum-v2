@@ -28,7 +28,13 @@ export default async function AdminRepresentativesPage({
         where: { email: userEmail }
     })
 
-    const reps = await getRepresentatives(query, list, category)
+    const reps = await getRepresentatives(
+        query,
+        list,
+        category,
+        undefined,
+        user?.role === "ADMIN_NETWORK" ? user.association : undefined
+    )
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">

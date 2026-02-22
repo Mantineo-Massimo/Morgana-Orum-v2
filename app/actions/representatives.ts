@@ -67,8 +67,9 @@ export async function createRepresentative(data: z.infer<typeof representativeSc
             }
         })
 
-        revalidatePath("/representatives")
-        revalidatePath("/admin/representatives")
+        revalidatePath("/representatives", "page")
+        revalidatePath("/admin/representatives", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Create representative error:", error)
@@ -91,8 +92,9 @@ export async function updateRepresentative(id: string, data: Partial<z.infer<typ
             }
         })
 
-        revalidatePath("/representatives")
-        revalidatePath("/admin/representatives")
+        revalidatePath("/representatives", "page")
+        revalidatePath("/admin/representatives", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Update representative error:", error)
@@ -112,8 +114,9 @@ export async function deleteRepresentative(id: string) {
             where: { id }
         })
 
-        revalidatePath("/representatives")
-        revalidatePath("/admin/representatives")
+        revalidatePath("/representatives", "page")
+        revalidatePath("/admin/representatives", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Delete representative error:", error)
@@ -125,16 +128,17 @@ export async function getRepresentatives(
     query?: string,
     list?: string,
     category?: string,
-    department?: string
+    department?: string,
+    adminAssociation?: Association
 ) {
     try {
         const { cookies } = await import("next/headers")
         const userEmail = cookies().get("session_email")?.value
 
-        let currentUserAssoc: Association | null = null
-        let isNetworkAdmin = false
+        let currentUserAssoc: Association | null = adminAssociation || null
+        let isNetworkAdmin = !!adminAssociation
 
-        if (userEmail) {
+        if (!adminAssociation && userEmail) {
             const user = await prisma.user.findUnique({ where: { email: userEmail } })
             if (user && user.role === "ADMIN_NETWORK") {
                 isNetworkAdmin = true

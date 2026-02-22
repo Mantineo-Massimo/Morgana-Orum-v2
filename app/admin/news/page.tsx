@@ -13,7 +13,10 @@ export default async function AdminNewsPage() {
     })
 
     const [news, categoriesWithIds, categories, years] = await Promise.all([
-        getAllNews(),
+        getAllNews({
+            userRole: user?.role,
+            userAssociation: user?.association
+        }),
         getNewsCategoriesWithIds(),
         getNewsCategories(),
         getNewsYears()

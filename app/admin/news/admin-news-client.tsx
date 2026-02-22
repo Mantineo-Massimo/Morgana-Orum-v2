@@ -54,7 +54,7 @@ export default function AdminNewsClient({
     const activeFilters = [searchQuery, filterCategory, filterStatus, filterYear, filterAssociation].filter(Boolean).length
 
     // Client-side filtering
-    const filteredNews = news.filter(item => {
+    const filteredNews = (news || []).filter(item => {
         const matchesSearch = !searchQuery ||
             item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             item.description.toLowerCase().includes(searchQuery.toLowerCase())
@@ -63,7 +63,7 @@ export default function AdminNewsClient({
         const status = getNewsStatus(item)
         const matchesStatus = !filterStatus || status === filterStatus
         const matchesYear = !filterYear || new Date(item.date).getFullYear().toString() === filterYear
-        const matchesAssociation = !filterAssociation || (item.associations && item.associations.includes(filterAssociation as Association))
+        const matchesAssociation = !filterAssociation || (Array.isArray(item.associations) && item.associations.includes(filterAssociation as Association))
         return matchesSearch && matchesCategory && matchesStatus && matchesYear && matchesAssociation
     })
 

@@ -69,8 +69,9 @@ export async function createNews(data: any) {
             sendPublicationNotification(newNews, "Notizia")
         }
 
-        revalidatePath("/news")
-        revalidatePath("/admin/news")
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Create news error:", error)
@@ -86,7 +87,12 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
         const permission = await checkContentPermission(existing.associations)
         if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
 
-        const updateData: any = { ...data }
+        const validData = newsSchema.partial().parse(data)
+        const updateData: any = { ...validData }
+
+        if (updateData.date) {
+            updateData.date = new Date(updateData.date)
+        }
 
         const oldNews = await prisma.news.findUnique({
             where: { id },
@@ -103,8 +109,9 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
             sendPublicationNotification(updatedNews, "Notizia")
         }
 
-        revalidatePath("/news")
-        revalidatePath("/admin/news")
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Update news error:", error)
@@ -124,8 +131,9 @@ export async function deleteNews(id: string) {
             where: { id }
         })
 
-        revalidatePath("/news")
-        revalidatePath("/admin/news")
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Delete news error:", error)
@@ -168,15 +176,29 @@ export async function getNews(category?: string, query?: string, association?: A
 }
 
 // Admin: all news, with optional filters
-export async function getAllNews(filters?: { query?: string, category?: string, status?: string, year?: number, association?: Association }) {
+export async function getAllNews(filters?: {
+    query?: string,
+    category?: string,
+    status?: string,
+    year?: number,
+    association?: Association,
+    userRole?: string,
+    userAssociation?: Association
+}) {
     try {
-        const { cookies } = await import("next/headers")
-        const userEmail = cookies().get("session_email")?.value
-        if (!userEmail) return []
+        let user: any = null
 
-        const user = await prisma.user.findUnique({
-            where: { email: userEmail }
-        })
+        if (filters?.userRole && filters?.userAssociation) {
+            user = { role: filters.userRole, association: filters.userAssociation }
+        } else {
+            const { cookies } = await import("next/headers")
+            const userEmail = cookies().get("session_email")?.value
+            if (userEmail) {
+                user = await prisma.user.findUnique({
+                    where: { email: userEmail }
+                })
+            }
+        }
 
         if (!user) return []
 
@@ -247,8 +269,9 @@ export async function getNewsCategories(): Promise<string[]> {
 export async function createNewsCategory(name: string) {
     try {
         await prisma.newsCategory.create({ data: { name } })
-        revalidatePath("/[brand]/admin/news")
-        revalidatePath("/[brand]/news")
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Create category error:", error)
@@ -259,8 +282,9 @@ export async function createNewsCategory(name: string) {
 export async function deleteNewsCategory(id: string) {
     try {
         await prisma.newsCategory.delete({ where: { id } })
-        revalidatePath("/[brand]/admin/news")
-        revalidatePath("/[brand]/news")
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Delete category error:", error)

@@ -100,8 +100,9 @@ export async function getEventCategories() {
 export async function createEventCategory(name: string) {
     try {
         await prisma.eventCategory.create({ data: { name } })
-        revalidatePath("/admin/events")
-        revalidatePath("/events")
+        revalidatePath("/admin/events", "page")
+        revalidatePath("/events", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Create category error:", error)
@@ -112,8 +113,9 @@ export async function createEventCategory(name: string) {
 export async function deleteEventCategory(id: string) {
     try {
         await prisma.eventCategory.delete({ where: { id } })
-        revalidatePath("/admin/events")
-        revalidatePath("/events")
+        revalidatePath("/admin/events", "page")
+        revalidatePath("/events", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Delete category error:", error)
@@ -234,8 +236,9 @@ export async function cancelRegistration(eventId: number) {
             }
         })
 
-        revalidatePath("/dashboard")
-        revalidatePath(`/events/${eventId}`)
+        revalidatePath("/dashboard", "page")
+        revalidatePath(`/events/${eventId}`, "page")
+        revalidatePath("/", "layout")
         return { success: true, message: "Prenotazione annullata con successo." }
     } catch (error) {
         console.error("Cancel registration error:", error)
@@ -245,15 +248,27 @@ export async function cancelRegistration(eventId: number) {
 
 // --- ADMIN CRUD ---
 
-export async function getAllAdminEvents(filters?: { query?: string, status?: string, association?: Association }) {
+export async function getAllAdminEvents(filters?: {
+    query?: string,
+    status?: string,
+    association?: Association,
+    userRole?: string,
+    userAssociation?: Association
+}) {
     try {
-        const { cookies } = await import("next/headers")
-        const userEmail = cookies().get("session_email")?.value
-        if (!userEmail) return []
+        let user: any = null
 
-        const user = await prisma.user.findUnique({
-            where: { email: userEmail }
-        })
+        if (filters?.userRole && filters?.userAssociation) {
+            user = { role: filters.userRole, association: filters.userAssociation }
+        } else {
+            const { cookies } = await import("next/headers")
+            const userEmail = cookies().get("session_email")?.value
+            if (userEmail) {
+                user = await prisma.user.findUnique({
+                    where: { email: userEmail }
+                })
+            }
+        }
 
         if (!user) return []
 
@@ -338,8 +353,9 @@ export async function createEvent(data: {
         if (newEvent.published) {
             sendPublicationNotification(newEvent, "Evento")
         }
-        revalidatePath("/events")
-        revalidatePath("/admin/events")
+        revalidatePath("/events", "page")
+        revalidatePath("/admin/events", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Create event error:", error)
@@ -400,8 +416,9 @@ export async function updateEvent(id: number, data: {
         if (!existing?.published && updatedEvent.published) {
             sendPublicationNotification(updatedEvent, "Evento")
         }
-        revalidatePath("/events")
-        revalidatePath("/admin/events")
+        revalidatePath("/events", "page")
+        revalidatePath("/admin/events", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Update event error:", error)
@@ -419,8 +436,9 @@ export async function deleteEvent(id: number) {
 
         await prisma.registration.deleteMany({ where: { eventId: id } })
         await prisma.event.delete({ where: { id } })
-        revalidatePath("/events")
-        revalidatePath("/admin/events")
+        revalidatePath("/events", "page")
+        revalidatePath("/admin/events", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Delete event error:", error)
@@ -479,8 +497,9 @@ export async function duplicateEvent(eventId: number) {
             }
         })
 
-        revalidatePath("/admin/events")
-        revalidatePath("/events")
+        revalidatePath("/admin/events", "page")
+        revalidatePath("/events", "page")
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Duplicate event error:", error)

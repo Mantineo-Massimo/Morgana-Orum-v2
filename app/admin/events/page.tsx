@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
-import { getAllEvents, getEventCategories, getEventCategoriesWithIds } from "@/app/actions/events"
+import { getAllAdminEvents, getEventCategories, getEventCategoriesWithIds } from "@/app/actions/events"
 import Link from "next/link"
 import { Plus, Calendar } from "lucide-react"
 import EventsAdminClient from "./events-admin-client"
@@ -15,7 +15,10 @@ export default async function AdminEventsPage() {
     })
 
     const [events, categories, categoriesWithIds] = await Promise.all([
-        getAllEvents(),
+        getAllAdminEvents({
+            userRole: user?.role,
+            userAssociation: user?.association
+        }),
         getEventCategories(),
         getEventCategoriesWithIds()
     ])
