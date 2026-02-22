@@ -21,13 +21,17 @@ export default function AdminNewsClient({
     news,
     categoriesWithIds,
     categories,
-    years
+    years,
+    userRole,
+    userAssociation
 }: {
     brand?: string
     news: any[]
     categoriesWithIds: any[]
     categories: string[]
     years: number[]
+    userRole?: string
+    userAssociation?: Association
 }) {
     const router = useRouter()
     const [isPending, startTransition] = useTransition()
@@ -341,21 +345,28 @@ export default function AdminNewsClient({
                                             </td>
                                             <td className="px-6 py-4 text-right">
                                                 <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <Link
-                                                        href={`/admin/news/${item.id}/edit`}
-                                                        className="p-2 text-zinc-400 hover:text-foreground hover:bg-zinc-100 rounded-lg transition-colors"
-                                                        title="Modifica"
-                                                    >
-                                                        <Pencil className="size-4" />
-                                                    </Link>
-                                                    <button
-                                                        onClick={() => handleDeleteNews(item.id)}
-                                                        disabled={isPending}
-                                                        className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
-                                                        title="Elimina"
-                                                    >
-                                                        <Trash2 className="size-4" />
-                                                    </button>
+                                                    {/* Condition: ADMIN_NETWORK can only edit if their association is present */}
+                                                    {(userRole !== "ADMIN_NETWORK" || (item.associations && userAssociation && item.associations.includes(userAssociation))) ? (
+                                                        <>
+                                                            <Link
+                                                                href={`/admin/news/${item.id}/edit`}
+                                                                className="p-2 text-zinc-400 hover:text-foreground hover:bg-zinc-100 rounded-lg transition-colors"
+                                                                title="Modifica"
+                                                            >
+                                                                <Pencil className="size-4" />
+                                                            </Link>
+                                                            <button
+                                                                onClick={() => handleDeleteNews(item.id)}
+                                                                disabled={isPending}
+                                                                className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                                                                title="Elimina"
+                                                            >
+                                                                <Trash2 className="size-4" />
+                                                            </button>
+                                                        </>
+                                                    ) : (
+                                                        <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-2 py-1 rounded-md">Solo lettura</span>
+                                                    )}
                                                 </div>
                                             </td>
                                         </tr>

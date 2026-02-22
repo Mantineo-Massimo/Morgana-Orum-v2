@@ -15,9 +15,17 @@ interface EventsAdminClientProps {
     initialEvents: any[]
     categories: string[]
     categoriesWithIds: any[]
+    userRole?: string
+    userAssociation?: Association
 }
 
-export default function EventsAdminClient({ initialEvents, categories, categoriesWithIds }: EventsAdminClientProps) {
+export default function EventsAdminClient({
+    initialEvents,
+    categories,
+    categoriesWithIds,
+    userRole,
+    userAssociation
+}: EventsAdminClientProps) {
     const router = useRouter()
     const [events, setEvents] = useState(initialEvents)
     const [isActionLoading, setIsActionLoading] = useState<number | null>(null)
@@ -414,44 +422,50 @@ export default function EventsAdminClient({ initialEvents, categories, categorie
                                 </td>
                                 <td className="px-6 py-5">
                                     <div className="flex items-center gap-1 justify-end">
-                                        <button
-                                            onClick={() => handleExport(event)}
-                                            disabled={isActionLoading === event.id}
-                                            className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all"
-                                            title="Esporta Iscritti (CSV)"
-                                        >
-                                            <Download className="size-4" />
-                                        </button>
+                                        {(userRole !== "ADMIN_NETWORK" || (event.associations && userAssociation && event.associations.includes(userAssociation))) ? (
+                                            <>
+                                                <button
+                                                    onClick={() => handleExport(event)}
+                                                    disabled={isActionLoading === event.id}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all"
+                                                    title="Esporta Iscritti (CSV)"
+                                                >
+                                                    <Download className="size-4" />
+                                                </button>
 
-                                        <button
-                                            onClick={() => handleDuplicate(event.id)}
-                                            disabled={isActionLoading === event.id}
-                                            className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-orange-600 hover:border-orange-100 hover:bg-orange-50 transition-all"
-                                            title="Duplica Evento"
-                                        >
-                                            <Copy className="size-4" />
-                                        </button>
+                                                <button
+                                                    onClick={() => handleDuplicate(event.id)}
+                                                    disabled={isActionLoading === event.id}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-orange-600 hover:border-orange-100 hover:bg-orange-50 transition-all"
+                                                    title="Duplica Evento"
+                                                >
+                                                    <Copy className="size-4" />
+                                                </button>
 
-                                        <Link
-                                            href={`/admin/events/${event.id}/edit`}
-                                            className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
-                                            title="Modifica"
-                                        >
-                                            <Pencil className="size-4" />
-                                        </Link>
+                                                <Link
+                                                    href={`/admin/events/${event.id}/edit`}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
+                                                    title="Modifica"
+                                                >
+                                                    <Pencil className="size-4" />
+                                                </Link>
 
-                                        <button
-                                            onClick={() => handleDelete(event.id)}
-                                            disabled={isActionLoading === event.id}
-                                            className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all"
-                                            title="Elimina"
-                                        >
-                                            {isActionLoading === event.id ? (
-                                                <Loader2 className="size-4 animate-spin text-zinc-300" />
-                                            ) : (
-                                                <Trash2 className="size-4" />
-                                            )}
-                                        </button>
+                                                <button
+                                                    onClick={() => handleDelete(event.id)}
+                                                    disabled={isActionLoading === event.id}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all"
+                                                    title="Elimina"
+                                                >
+                                                    {isActionLoading === event.id ? (
+                                                        <Loader2 className="size-4 animate-spin text-zinc-300" />
+                                                    ) : (
+                                                        <Trash2 className="size-4" />
+                                                    )}
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-3 py-1.5 rounded-xl">Solo lettura</span>
+                                        )}
                                     </div>
                                 </td>
                             </tr>

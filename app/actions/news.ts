@@ -184,7 +184,7 @@ export async function getAllNews(filters?: { query?: string, category?: string, 
 
         // Enforce role-based association filtering
         if (user.role === "ADMIN_NETWORK") {
-            where.associations = { has: user.association }
+            where.associations = { hasSome: [user.association, Association.MORGANA_ORUM] }
         } else if (filters?.association) {
             where.associations = { has: filters.association }
         }
