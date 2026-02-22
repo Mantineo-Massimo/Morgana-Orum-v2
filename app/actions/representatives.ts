@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import prisma from "@/lib/prisma"
 import { Association } from "@prisma/client"
+import { ASSOCIATION_DEPARTMENT_KEYWORDS } from "@/lib/associations"
 
 async function checkContentPermission(itemAssociation?: Association, itemDepartment?: string | null) {
     const { cookies } = await import("next/headers")
@@ -135,13 +136,6 @@ export async function deleteRepresentative(id: string) {
     }
 }
 
-export const ASSOCIATION_DEPARTMENT_KEYWORDS: Record<string, string[]> = {
-    DICAM: ["DICAM"],
-    INSIDE_DICAM: ["DICAM"],
-    SCIPOG: ["scipog"],
-    UNIMHEALTH: ["Biomorf", "patologia", "dimed"],
-    ECONOMIA: ["economia"],
-}
 
 export async function getRepresentatives(filters?: {
     query?: string,

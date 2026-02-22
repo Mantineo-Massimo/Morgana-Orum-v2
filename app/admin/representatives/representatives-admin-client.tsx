@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 import { deleteRepresentative } from "@/app/actions/representatives"
 
 import { Association } from "@prisma/client"
-import { ASSOCIATION_DEPARTMENT_KEYWORDS } from "@/app/actions/representatives"
+import { ASSOCIATION_DEPARTMENT_KEYWORDS } from "@/lib/associations"
 
 interface Representative {
     id: string

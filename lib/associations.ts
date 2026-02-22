@@ -8,6 +8,14 @@ export const ASSOCIATIONS = [
     { id: "MATRICOLE", name: "Unime Matricole" },
 ] as const;
 
+export const ASSOCIATION_DEPARTMENT_KEYWORDS: Record<string, string[]> = {
+    DICAM: ["DICAM"],
+    INSIDE_DICAM: ["DICAM"],
+    SCIPOG: ["scipog"],
+    UNIMHEALTH: ["Biomorf", "patologia", "dimed"],
+    ECONOMIA: ["economia"],
+}
+
 export type AssociationId = typeof ASSOCIATIONS[number]["id"];
 
 export function getAssociationName(id: string) {
