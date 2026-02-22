@@ -4,6 +4,7 @@ import { useState } from "react"
 import { updateUserRole, deleteUser } from "@/app/actions/users"
 import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { ASSOCIATIONS } from "@/lib/associations"
 
 type UserItem = {
     id: number
@@ -34,6 +35,20 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         const res = await updateUserRole(userId, newRole)
         if (res.success) {
             setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole } : u))
+        } else {
+            alert("Errore durante l'aggiornamento: " + res.error)
+        }
+        setLoadingId(null)
+    }
+
+    const handleAssociationChange = async (userId: number, newAssociation: string) => {
+        const user = users.find(u => u.id === userId)
+        if (!user) return
+
+        setLoadingId(userId)
+        const res = await updateUserRole(userId, user.role, newAssociation)
+        if (res.success) {
+            setUsers(prev => prev.map(u => u.id === userId ? { ...u, association: newAssociation } : u))
         } else {
             alert("Errore durante l'aggiornamento: " + res.error)
         }
@@ -96,7 +111,22 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className="text-sm text-zinc-600">{user.association}</span>
+                                        <div className="flex items-center gap-2">
+                                            <select
+                                                className="text-sm bg-zinc-50 border border-zinc-100 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-primary/20"
+                                                value={user.association}
+                                                onChange={(e) => handleAssociationChange(user.id, e.target.value)}
+                                                disabled={loadingId === user.id}
+                                            >
+                                                {ASSOCIATIONS.map(a => (
+                                                    <option key={a.id} value={a.id}>{a.name}</option>
+                                                ))}
+                                                {/* In case association is not in the list (legacy/manual) */}
+                                                {!ASSOCIATIONS.find(a => a.id === user.association) && (
+                                                    <option value={user.association}>{user.association}</option>
+                                                )}
+                                            </select>
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4">
                                         <code className="text-xs font-mono px-2 py-1 bg-zinc-100 rounded text-zinc-600">

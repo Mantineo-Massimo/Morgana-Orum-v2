@@ -90,7 +90,11 @@ export async function getAllUsers() {
     }
 }
 
-export async function updateUserRole(userId: number, newRole: "USER" | "ADMIN_NETWORK" | "ADMIN_MORGANA" | "SUPER_ADMIN") {
+export async function updateUserRole(
+    userId: number,
+    newRole: "USER" | "ADMIN_NETWORK" | "ADMIN_MORGANA" | "SUPER_ADMIN",
+    association?: string
+) {
     try {
         const { cookies } = await import("next/headers")
         const userEmail = cookies().get("session_email")?.value
@@ -106,7 +110,10 @@ export async function updateUserRole(userId: number, newRole: "USER" | "ADMIN_NE
 
         await prisma.user.update({
             where: { id: userId },
-            data: { role: newRole }
+            data: {
+                role: newRole,
+                ...(association && { association })
+            }
         })
 
         return { success: true }

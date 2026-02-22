@@ -112,7 +112,10 @@ export default async function AdminLayout({
                         </div>
                         <div className="overflow-hidden">
                             <p className="text-sm font-bold truncate">{data.user.name}</p>
-                            <p className="text-[10px] text-zinc-500 uppercase">Amministratore</p>
+                            <p className="text-[10px] text-zinc-500 uppercase">
+                                {userRole === "ADMIN_NETWORK" ? `Admin ${data.user.association}` :
+                                    userRole === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"}
+                            </p>
                         </div>
                     </div>
                     <form action={async () => {

@@ -95,7 +95,11 @@ export default function DashboardLayout({
                     </div>
                     <div>
                         <p className="font-bold text-foreground text-sm leading-tight">{userData.name} {userData.surname}</p>
-                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{userData.role !== "USER" ? "Amministratore" : "Studente"}</p>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">
+                            {userData.role === "USER" ? "Studente" :
+                                userData.role === "ADMIN_NETWORK" ? `Admin ${userData.association}` :
+                                    userData.role === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"}
+                        </p>
                     </div>
                 </div>
                 <form action={logoutAction}>
@@ -116,7 +120,11 @@ export default function DashboardLayout({
                     </div>
                     <div>
                         <p className="font-bold text-foreground text-sm">{userData.name} {userData.surname}</p>
-                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">{userData.role === "ADMIN" ? "Amministratore" : "Studente"}</p>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">
+                            {userData.role === "USER" ? "Studente" :
+                                userData.role === "ADMIN_NETWORK" ? `Admin ${userData.association}` :
+                                    userData.role === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"}
+                        </p>
                     </div>
                 </div>
 
