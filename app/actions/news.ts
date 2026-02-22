@@ -170,7 +170,24 @@ export async function getNews(category?: string, query?: string, association?: A
 // Admin: all news, with optional filters
 export async function getAllNews(filters?: { query?: string, category?: string, status?: string, year?: number, association?: Association }) {
     try {
+        const { cookies } = await import("next/headers")
+        const userEmail = cookies().get("session_email")?.value
+        if (!userEmail) return []
+
+        const user = await prisma.user.findUnique({
+            where: { email: userEmail }
+        })
+
+        if (!user) return []
+
         const where: any = {}
+
+        // Enforce role-based association filtering
+        if (user.role === "ADMIN_NETWORK") {
+            where.association = user.association
+        } else if (filters?.association) {
+            where.association = filters.association
+        }
 
         if (filters?.query) {
             where.OR = [
@@ -181,10 +198,6 @@ export async function getAllNews(filters?: { query?: string, category?: string, 
 
         if (filters?.category) {
             where.category = filters.category
-        }
-
-        if (filters?.association) {
-            where.association = filters.association
         }
 
         if (filters?.status === "published") {

@@ -7,6 +7,8 @@ import { ArrowLeft, Save, Loader2, Upload, X, ImageIcon } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+import { ASSOCIATIONS } from "@/lib/associations"
+import { Association } from "@prisma/client"
 
 // Mapping for Department dropdown
 const departmentsList = [
@@ -40,9 +42,13 @@ const nationalRolesList = [
 ]
 
 export default function RepresentativeForm({
-    initialData
+    initialData,
+    userRole,
+    userAssociation
 }: {
     initialData?: any
+    userRole?: string
+    userAssociation?: Association
 }) {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
@@ -51,6 +57,12 @@ export default function RepresentativeForm({
     const [isUploading, setIsUploading] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const isEditing = !!initialData
+
+    // Logic for association selection
+    const isNetworkAdmin = userRole === "ADMIN_NETWORK"
+    const availableAssociations = isNetworkAdmin
+        ? ASSOCIATIONS.filter(a => a.id === userAssociation)
+        : ASSOCIATIONS
 
     async function handleImageUpload(file: File) {
         setIsUploading(true)
@@ -88,6 +100,7 @@ export default function RepresentativeForm({
             instagram: formData.get("instagram") as string || null,
             description: formData.get("description") as string || null,
             roleDescription: formData.get("roleDescription") as string || null,
+            association: formData.get("association") as Association,
         }
 
         const result = isEditing
@@ -199,6 +212,28 @@ export default function RepresentativeForm({
                             className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
                             placeholder="Es. Mario Rossi"
                         />
+                    </div>
+
+                    {/* Association Selection */}
+                    <div>
+                        <label className="block text-sm font-bold text-zinc-700 mb-1">Associazione di Appartenenza</label>
+                        <select
+                            name="association"
+                            defaultValue={initialData?.association || userAssociation || "MORGANA_ORUM"}
+                            disabled={isNetworkAdmin}
+                            required
+                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white disabled:bg-zinc-50 disabled:text-zinc-500"
+                        >
+                            {availableAssociations.map(assoc => (
+                                <option key={assoc.id} value={assoc.id}>{assoc.name}</option>
+                            ))}
+                        </select>
+                        {isNetworkAdmin && (
+                            <p className="text-[10px] text-zinc-400 mt-1">
+                                Come Admin di Rete, puoi gestire solo i rappresentanti del tuo network.
+                            </p>
+                        )}
+                        <input type="hidden" name="association" value={initialData?.association || userAssociation || "MORGANA_ORUM"} />
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-4">

@@ -80,7 +80,8 @@ model Representative {
   instagram       String?
   description     String?
   roleDescription String?
-  createdAt       DateTime @default(now())
+  association     Association @default(MORGANA_ORUM)
+  createdAt       DateTime    @default(now())
   updatedAt       DateTime @updatedAt
 }
 

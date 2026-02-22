@@ -247,7 +247,24 @@ export async function cancelRegistration(eventId: number) {
 
 export async function getAllAdminEvents(filters?: { query?: string, status?: string, association?: Association }) {
     try {
+        const { cookies } = await import("next/headers")
+        const userEmail = cookies().get("session_email")?.value
+        if (!userEmail) return []
+
+        const user = await prisma.user.findUnique({
+            where: { email: userEmail }
+        })
+
+        if (!user) return []
+
         const where: any = {}
+
+        // Enforce role-based association filtering
+        if (user.role === "ADMIN_NETWORK") {
+            where.association = user.association
+        } else if (filters?.association) {
+            where.association = filters.association
+        }
 
         if (filters?.query) {
             where.OR = [
@@ -260,10 +277,6 @@ export async function getAllAdminEvents(filters?: { query?: string, status?: str
             where.published = true
         } else if (filters?.status === "draft") {
             where.published = false
-        }
-
-        if (filters?.association) {
-            where.association = filters.association
         }
 
         return await prisma.event.findMany({
