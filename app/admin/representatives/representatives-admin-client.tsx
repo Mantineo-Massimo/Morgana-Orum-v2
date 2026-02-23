@@ -58,7 +58,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
         return matchesSearch && matchesList && matchesCategory
     })
 
-    const sortedReps = [...filteredReps].sort((a, b) => {
+    const sortedReps = (Array.isArray(filteredReps) ? [...filteredReps] : []).sort((a, b) => {
         if (!sortConfig) return 0
 
         const { key, direction } = sortConfig

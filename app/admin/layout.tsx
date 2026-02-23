@@ -34,13 +34,13 @@ export default async function AdminLayout({
                 {
                     label: "Dashboard",
                     href: `/admin`,
-                    icon: LayoutDashboard,
+                    iconName: "LayoutDashboard",
                     exact: true
                 },
                 {
                     label: "Analytics Sito",
                     href: `/admin/analytics`,
-                    icon: BarChart3,
+                    iconName: "BarChart3",
                     exact: false
                 },
             ]
@@ -51,19 +51,19 @@ export default async function AdminLayout({
                 {
                     label: "Rappresentanti",
                     href: `/admin/representatives`,
-                    icon: Users,
+                    iconName: "Users",
                     exact: false
                 },
                 {
                     label: "Notizie",
                     href: `/admin/news`,
-                    icon: Newspaper,
+                    iconName: "Newspaper",
                     exact: false
                 },
                 {
                     label: "Eventi",
                     href: `/admin/events`,
-                    icon: Calendar,
+                    iconName: "Calendar",
                     exact: false
                 },
             ]
@@ -78,13 +78,13 @@ export default async function AdminLayout({
                 {
                     label: "Convenzioni",
                     href: `/admin/conventions`,
-                    icon: Tag,
+                    iconName: "Tag",
                     exact: false
                 },
                 {
                     label: "Utenti",
                     href: `/admin/users`,
-                    icon: User,
+                    iconName: "User",
                     exact: false
                 },
             ]
@@ -124,19 +124,31 @@ export default async function AdminLayout({
                                 {section.section}
                             </h2>
                             <div className="space-y-1">
-                                {section.items.map((item) => (
-                                    <Link
-                                        key={item.href}
-                                        href={item.href}
-                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all group"
-                                    >
-                                        <item.icon className={cn(
-                                            "size-5 group-hover:text-white transition-colors",
-                                            "text-zinc-500"
-                                        )} />
-                                        <span className="font-medium text-sm">{item.label}</span>
-                                    </Link>
-                                ))}
+                                {section.items.map((item) => {
+                                    const IconComponent = ({
+                                        LayoutDashboard: LayoutDashboard,
+                                        BarChart3: BarChart3,
+                                        Users: Users,
+                                        Newspaper: Newspaper,
+                                        Calendar: Calendar,
+                                        Tag: Tag,
+                                        User: User
+                                    } as Record<string, any>)[item.iconName] || LayoutDashboard
+
+                                    return (
+                                        <Link
+                                            key={item.href}
+                                            href={item.href}
+                                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all group"
+                                        >
+                                            <IconComponent className={cn(
+                                                "size-5 group-hover:text-white transition-colors",
+                                                "text-zinc-500"
+                                            )} />
+                                            <span className="font-medium text-sm">{item.label}</span>
+                                        </Link>
+                                    )
+                                })}
                             </div>
                         </div>
                     ))}
@@ -154,10 +166,10 @@ export default async function AdminLayout({
                 <div className="p-4 border-t border-zinc-800">
                     <div className="flex items-center gap-3 px-4 py-3 mb-2">
                         <div className="size-8 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold">
-                            {data.user.name.charAt(0)}{data.user.surname.charAt(0)}
+                            {(data?.user?.name || "A").charAt(0)}{(data?.user?.surname || "").charAt(0)}
                         </div>
                         <div className="overflow-hidden">
-                            <p className="text-sm font-bold truncate">{data.user.name}</p>
+                            <p className="text-sm font-bold truncate">{data?.user?.name || "Admin"}</p>
                             <p className="text-[10px] text-zinc-500 uppercase">
                                 {userRole === "ADMIN_NETWORK" ? "Admin Network" :
                                     userRole === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"}

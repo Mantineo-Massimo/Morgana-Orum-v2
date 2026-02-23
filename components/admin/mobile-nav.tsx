@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Shield, LogOut, ChevronRight } from "lucide-react"
+import { Menu, X, Shield, LogOut, ChevronRight, LayoutDashboard, BarChart3, Users, Newspaper, Calendar, Tag, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SidebarClock } from "./sidebar-clock"
 
 interface NavItem {
     label: string
     href: string
-    icon: any
+    iconName: string
     exact?: boolean
 }
 
@@ -26,12 +26,22 @@ interface MobileNavProps {
         surname: string
         role: string
     }
-    logoutAction: () => Promise<void>
+    logoutAction: (formData?: FormData) => Promise<void>
 }
 
 export function MobileNav({ navigation, user, logoutAction }: MobileNavProps) {
     const [isOpen, setIsOpen] = useState(false)
     const pathname = usePathname()
+
+    const iconMap: Record<string, any> = {
+        LayoutDashboard,
+        BarChart3,
+        Users,
+        Newspaper,
+        Calendar,
+        Tag,
+        User
+    }
 
     // Close menu on navigation
     useEffect(() => {
@@ -110,6 +120,8 @@ export function MobileNav({ navigation, user, logoutAction }: MobileNavProps) {
                                         ? pathname === item.href
                                         : pathname.startsWith(item.href)
 
+                                    const IconComponent = iconMap[item.iconName] || LayoutDashboard
+
                                     return (
                                         <Link
                                             key={item.href}
@@ -122,7 +134,7 @@ export function MobileNav({ navigation, user, logoutAction }: MobileNavProps) {
                                             )}
                                         >
                                             <div className="flex items-center gap-3">
-                                                <item.icon className={cn(
+                                                <IconComponent className={cn(
                                                     "size-5 transition-colors",
                                                     isActive ? "text-red-500" : "text-zinc-500 group-hover:text-zinc-300"
                                                 )} />
