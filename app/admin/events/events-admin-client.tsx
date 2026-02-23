@@ -6,6 +6,7 @@ import { Association } from "@prisma/client"
 import { ASSOCIATIONS } from "@/lib/associations"
 import { Calendar, MapPin, Pencil, Trash2, Copy, Download, Loader2, Search, Filter, ArrowUpDown, ArrowUp, ArrowDown, Tag, X, Plus } from "lucide-react"
 import Link from "next/link"
+import EventForm from "@/components/admin/event-form"
 import { deleteEvent, duplicateEvent, getEventRegistrations, getAllAdminEvents, createEventCategory, deleteEventCategory } from "@/app/actions/events"
 import { cn } from "@/lib/utils"
 import { jsPDF } from "jspdf"
@@ -36,6 +37,8 @@ export default function EventsAdminClient({
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' | null } | null>(null)
     const [newCategory, setNewCategory] = useState("")
     const [filterCategory, setFilterCategory] = useState("")
+    const [isFormModalOpen, setIsFormModalOpen] = useState(false)
+    const [editingEvent, setEditingEvent] = useState<any | null>(null)
 
     const requestSort = (key: string) => {
         let direction: 'asc' | 'desc' | null = 'asc'
@@ -252,6 +255,22 @@ export default function EventsAdminClient({
 
     return (
         <div className="space-y-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+                <div>
+                    <h1 className="text-3xl font-black text-foreground tracking-tight">Eventi</h1>
+                    <p className="text-zinc-500 text-sm mt-1 font-medium italic">Gestione completa delle prenotazioni e partecipazione.</p>
+                </div>
+                <button
+                    onClick={() => {
+                        setEditingEvent(null)
+                        setIsFormModalOpen(true)
+                    }}
+                    className="flex items-center gap-2 bg-zinc-900 text-white px-6 py-3 rounded-2xl text-sm font-bold hover:bg-zinc-800 transition-all hover:shadow-lg hover:shadow-zinc-900/10 active:scale-95 whitespace-nowrap"
+                >
+                    <Plus className="size-4" /> Nuovo Evento
+                </button>
+            </div>
+
             {/* Gestione Categorie */}
             <div className="bg-white border border-zinc-100 rounded-2xl p-6 shadow-sm">
                 <h2 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
@@ -457,13 +476,16 @@ export default function EventsAdminClient({
                                                     <Copy className="size-4" />
                                                 </button>
 
-                                                <Link
-                                                    href={`/admin/events/${event.id}/edit`}
+                                                <button
+                                                    onClick={() => {
+                                                        setEditingEvent(event)
+                                                        setIsFormModalOpen(true)
+                                                    }}
                                                     className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
                                                     title="Modifica"
                                                 >
                                                     <Pencil className="size-4" />
-                                                </Link>
+                                                </button>
 
                                                 <button
                                                     onClick={() => {
@@ -494,11 +516,65 @@ export default function EventsAdminClient({
                     </tbody>
                 </table>
                 {events.length === 0 && !isPending && (
-                    <div className="p-8 text-center text-zinc-500 text-sm font-medium">
-                        Nessun evento trovato in base ai filtri correnti.
+                    <div className="p-16 text-center">
+                        <div className="size-20 bg-zinc-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <Calendar className="size-10 text-zinc-300" />
+                        </div>
+                        <p className="text-xl font-bold text-foreground">Nessun evento presente.</p>
+                        <p className="text-zinc-500 mt-2 max-w-xs mx-auto">Crea il primo evento per iniziare a raccogliere adesioni.</p>
                     </div>
                 )}
             </div>
+
+            {/* Form Modal */}
+            {isFormModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <div
+                        className="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm animate-in fade-in duration-300"
+                        onClick={() => setIsFormModalOpen(false)}
+                    />
+                    <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 custom-scrollbar">
+                        <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-zinc-100">
+                            <div>
+                                <h2 className="text-xl font-bold text-foreground">
+                                    {editingEvent ? "Modifica Evento" : "Nuovo Evento"}
+                                </h2>
+                                <p className="text-sm text-zinc-500">
+                                    {editingEvent ? "Aggiorna i dettagli dell'evento" : "Crea un nuovo evento e apri le prenotazioni"}
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setIsFormModalOpen(false)}
+                                className="p-2 rounded-xl hover:bg-zinc-100 text-zinc-400 hover:text-foreground transition-all"
+                            >
+                                <X className="size-5" />
+                            </button>
+                        </div>
+                        <div className="p-6">
+                            <EventForm
+                                initialData={editingEvent}
+                                categories={categories}
+                                userRole={userRole}
+                                userAssociation={userAssociation}
+                                isModal={true}
+                                onSuccess={() => {
+                                    setIsFormModalOpen(false)
+                                    // Reload events
+                                    startTransition(async () => {
+                                        const res = await getAllAdminEvents({
+                                            query: search,
+                                            status: statusFilter === "all" ? undefined : statusFilter,
+                                            association: (associationFilter as Association) || undefined
+                                        })
+                                        setEvents(res)
+                                    })
+                                    router.refresh()
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

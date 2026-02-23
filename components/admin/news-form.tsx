@@ -15,12 +15,16 @@ export default function NewsForm({
     initialData,
     categories = [],
     userRole,
-    userAssociation
+    userAssociation,
+    isModal = false,
+    onSuccess
 }: {
     initialData?: any,
     categories?: string[],
     userRole?: string,
-    userAssociation?: Association
+    userAssociation?: Association,
+    isModal?: boolean,
+    onSuccess?: () => void
 }) {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
@@ -78,8 +82,12 @@ export default function NewsForm({
             : await createNews(rawData)
 
         if (result.success) {
-            router.push(`/admin/news`)
-            router.refresh()
+            if (isModal && onSuccess) {
+                onSuccess()
+            } else {
+                router.push(`/admin/news`)
+                router.refresh()
+            }
         } else {
             setError(result.error || "Errore sconosciuto")
             setIsLoading(false)
@@ -107,21 +115,27 @@ export default function NewsForm({
     return (
         <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="mb-8">
-                <Link
-                    href={`/admin/news`}
-                    className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
-                >
-                    <ArrowLeft className="size-4" /> Torna alla lista
-                </Link>
-                <h1 className="text-3xl font-bold text-foreground">
-                    {isEditing ? "Modifica Notizia" : "Nuova Notizia"}
-                </h1>
-                <p className="text-zinc-500">
-                    {isEditing ? "Aggiorna i dettagli" : "Pubblica una nuova notizia"}
-                </p>
+                {!isModal && (
+                    <Link
+                        href={`/admin/news`}
+                        className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
+                    >
+                        <ArrowLeft className="size-4" /> Torna alla lista
+                    </Link>
+                )}
+                {!isModal && (
+                    <>
+                        <h1 className="text-3xl font-bold text-foreground">
+                            {isEditing ? "Modifica Notizia" : "Nuova Notizia"}
+                        </h1>
+                        <p className="text-zinc-500">
+                            {isEditing ? "Aggiorna i dettagli" : "Pubblica una nuova notizia"}
+                        </p>
+                    </>
+                )}
             </div>
 
-            <form action={handleSubmit} className="bg-white border border-zinc-100 rounded-xl p-8 shadow-sm space-y-6">
+            <form action={handleSubmit} className={cn("bg-white border border-zinc-100 rounded-xl p-8 shadow-sm space-y-6", isModal && "border-none shadow-none p-0")}>
                 {error && (
                     <div className="bg-red-50 text-red-600 p-4 rounded-lg text-sm font-medium border border-red-100">
                         {error}

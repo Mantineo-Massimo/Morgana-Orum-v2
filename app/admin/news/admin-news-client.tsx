@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, X, Search, Filter, Clock, Calendar, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
+import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, X, Search, Filter, Clock, Calendar, ArrowUpDown, ArrowUp, ArrowDown, User } from "lucide-react"
 import Link from "next/link"
+import NewsForm from "@/components/admin/news-form"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { deleteNews, createNewsCategory, deleteNewsCategory } from "@/app/actions/news"
@@ -42,6 +43,8 @@ export default function AdminNewsClient({
     const [filterAssociation, setFilterAssociation] = useState<Association | "">("")
     const [newCategory, setNewCategory] = useState("")
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' | null } | null>(null)
+    const [isFormModalOpen, setIsFormModalOpen] = useState(false)
+    const [editingNews, setEditingNews] = useState<any | null>(null)
 
     const requestSort = (key: string) => {
         let direction: 'asc' | 'desc' | null = 'asc'
@@ -127,12 +130,15 @@ export default function AdminNewsClient({
                     <h1 className="text-3xl font-bold text-foreground">Gestione Notizie</h1>
                     <p className="text-zinc-500">Crea, modifica ed elimina notizie e articoli.</p>
                 </div>
-                <Link
-                    href={`/admin/news/new`}
+                <button
+                    onClick={() => {
+                        setEditingNews(null)
+                        setIsFormModalOpen(true)
+                    }}
                     className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 self-start md:self-auto"
                 >
                     <Plus className="size-4" /> Nuova Notizia
-                </Link>
+                </button>
             </div>
 
             {/* Category Management */}
@@ -359,13 +365,16 @@ export default function AdminNewsClient({
                                                     {/* Condition: ADMIN_NETWORK can only edit if their association is present */}
                                                     {(userRole !== "ADMIN_NETWORK" || (item.associations && userAssociation && item.associations.includes(userAssociation))) ? (
                                                         <>
-                                                            <Link
-                                                                href={`/admin/news/${item.id}/edit`}
+                                                            <button
+                                                                onClick={() => {
+                                                                    setEditingNews(item)
+                                                                    setIsFormModalOpen(true)
+                                                                }}
                                                                 className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
                                                                 title="Modifica"
                                                             >
                                                                 <Pencil className="size-4" />
-                                                            </Link>
+                                                            </button>
                                                             <button
                                                                 onClick={() => {
                                                                     if (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM")) {
@@ -399,6 +408,47 @@ export default function AdminNewsClient({
                 <div className="bg-white border border-zinc-100 rounded-xl p-12 text-center shadow-sm">
                     <Newspaper className="size-12 text-zinc-200 mx-auto mb-4" />
                     <p className="text-zinc-400 text-lg">Nessuna notizia trovata con i filtri selezionati.</p>
+                </div>
+            )}
+
+            {/* Form Modal */}
+            {isFormModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <div
+                        className="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm animate-in fade-in duration-300"
+                        onClick={() => setIsFormModalOpen(false)}
+                    />
+                    <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 custom-scrollbar">
+                        <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-zinc-100">
+                            <div>
+                                <h2 className="text-xl font-bold text-foreground">
+                                    {editingNews ? "Modifica Notizia" : "Nuova Notizia"}
+                                </h2>
+                                <p className="text-sm text-zinc-500">
+                                    {editingNews ? "Aggiorna i dettagli della notizia" : "Crea una nuova notizia nel portale"}
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setIsFormModalOpen(false)}
+                                className="p-2 rounded-xl hover:bg-zinc-100 text-zinc-400 hover:text-foreground transition-all"
+                            >
+                                <X className="size-5" />
+                            </button>
+                        </div>
+                        <div className="p-6">
+                            <NewsForm
+                                initialData={editingNews}
+                                categories={categories}
+                                userRole={userRole}
+                                userAssociation={userAssociation}
+                                isModal={true}
+                                onSuccess={() => {
+                                    setIsFormModalOpen(false)
+                                    router.refresh()
+                                }}
+                            />
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

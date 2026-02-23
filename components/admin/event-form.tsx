@@ -53,7 +53,10 @@ function dateToInputValue(d: Date | null | undefined): string {
     return `${y}-${m}-${day}T${h}:${min}`
 }
 
-export default function EventForm({ initialData, categories, userRole, userAssociation }: EventFormProps) {
+export default function EventForm({ initialData, categories, userRole, userAssociation,
+    isModal = false,
+    onSuccess
+}: EventFormProps & { isModal?: boolean; onSuccess?: () => void }) {
     const router = useRouter()
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState("")
@@ -163,8 +166,12 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 : await createEvent(rawData)
 
             if (result.success) {
-                router.push(`/admin/events`)
-                router.refresh()
+                if (isModal && onSuccess) {
+                    onSuccess()
+                } else {
+                    router.push(`/admin/events`)
+                    router.refresh()
+                }
             } else {
                 setError(result.error || "Errore sconosciuto")
             }
@@ -180,17 +187,19 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
 
     return (
         <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="mb-8">
-                <Link
-                    href={`/admin/events`}
-                    className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
-                >
-                    <ArrowLeft className="size-4" /> Torna alla lista
-                </Link>
-                <h1 className="text-3xl font-bold text-foreground">
-                    {initialData ? "Modifica Evento" : "Nuovo Evento"}
-                </h1>
-            </div>
+            {!isModal && (
+                <div className="mb-8">
+                    <Link
+                        href={`/admin/events`}
+                        className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
+                    >
+                        <ArrowLeft className="size-4" /> Torna alla lista
+                    </Link>
+                    <h1 className="text-3xl font-bold text-foreground">
+                        {initialData ? "Modifica Evento" : "Nuovo Evento"}
+                    </h1>
+                </div>
+            )}
 
             {error && (
                 <div className="bg-red-50 text-red-600 p-4 rounded-xl mb-6 text-sm font-medium border border-red-100">
@@ -198,7 +207,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6 bg-white p-8 rounded-2xl border border-zinc-100 shadow-sm">
+            <form onSubmit={handleSubmit} className={cn("space-y-6 bg-white p-8 rounded-2xl border border-zinc-100 shadow-sm", isModal && "border-none shadow-none p-0")}>
                 {/* Copertina */}
                 <div>
                     <label className={labelClass}>Copertina</label>

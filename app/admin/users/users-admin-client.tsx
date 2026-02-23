@@ -6,6 +6,7 @@ import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search, Pl
 import { cn } from "@/lib/utils"
 import { Association, Role } from "@prisma/client"
 import { ASSOCIATIONS } from "@/lib/associations"
+import { departmentsData } from "@/lib/departments"
 
 type UserItem = {
     id: number
@@ -433,23 +434,32 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Dipartimento</label>
-                                        <input
-                                            type="text"
+                                        <select
                                             required
                                             value={formData.department}
-                                            onChange={(e) => setFormData({ ...formData, department: e.target.value })}
+                                            onChange={(e) => setFormData({ ...formData, department: e.target.value, degreeCourse: "" })}
                                             className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                        />
+                                        >
+                                            <option value="" disabled>Seleziona Dipartimento...</option>
+                                            {Object.keys(departmentsData).map(dept => (
+                                                <option key={dept} value={dept}>{dept}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Corso di Laurea</label>
-                                        <input
-                                            type="text"
+                                        <select
                                             required
                                             value={formData.degreeCourse}
                                             onChange={(e) => setFormData({ ...formData, degreeCourse: e.target.value })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                                        />
+                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-50"
+                                            disabled={!formData.department}
+                                        >
+                                            <option value="" disabled>Seleziona Corso...</option>
+                                            {formData.department && departmentsData[formData.department]?.map(course => (
+                                                <option key={course} value={course}>{course}</option>
+                                            ))}
+                                        </select>
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Ruolo</label>
