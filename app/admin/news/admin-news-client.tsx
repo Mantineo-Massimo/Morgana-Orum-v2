@@ -294,154 +294,156 @@ export default function AdminNewsClient({
                         </span>
                     </h2>
                     <div className="bg-white border border-zinc-100 rounded-xl overflow-hidden shadow-sm mb-6">
-                        <table className="w-full text-left text-sm">
-                            <thead className="bg-zinc-50 border-b border-zinc-100 text-zinc-500 font-medium uppercase tracking-wider text-xs">
-                                <tr>
-                                    <th
-                                        className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
-                                        onClick={() => requestSort('title')}
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            Titolo {sortConfig?.key === 'title' ? (
-                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
-                                            ) : (
-                                                <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-                                            )}
-                                        </div>
-                                    </th>
-                                    <th
-                                        className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
-                                        onClick={() => requestSort('category')}
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            Categoria {sortConfig?.key === 'category' ? (
-                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
-                                            ) : (
-                                                <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-                                            )}
-                                        </div>
-                                    </th>
-                                    <th
-                                        className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
-                                        onClick={() => requestSort('date')}
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            Data {sortConfig?.key === 'date' ? (
-                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
-                                            ) : (
-                                                <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-                                            )}
-                                        </div>
-                                    </th>
-                                    <th
-                                        className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
-                                        onClick={() => requestSort('status')}
-                                    >
-                                        <div className="flex items-center gap-2">
-                                            Stato {sortConfig?.key === 'status' ? (
-                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
-                                            ) : (
-                                                <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-                                            )}
-                                        </div>
-                                    </th>
-                                    <th className="px-6 py-3 text-right">Azioni</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-zinc-50">
-                                {groupedByYear[year].map((item: any) => {
-                                    const status = getNewsStatus(item)
-                                    return (
-                                        <tr key={item.id} className="hover:bg-zinc-50/50 transition-colors group">
-                                            <td className="px-6 py-4 font-medium text-foreground flex items-center gap-3">
-                                                <div className="size-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 overflow-hidden flex-shrink-0 relative">
-                                                    {item.image ? (
-                                                        <Image src={item.image} alt={item.title} fill className="object-cover" />
-                                                    ) : (
-                                                        <Newspaper className="size-4" />
-                                                    )}
-                                                </div>
-                                                <span className="line-clamp-1">{item.title}</span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex flex-wrap gap-1">
-                                                    {item.category.split(",").map((cat: string) => (
-                                                        <span key={cat.trim()} className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border bg-zinc-50 text-zinc-600 border-zinc-200">
-                                                            {cat.trim()}
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left text-sm min-w-[800px]">
+                                <thead className="bg-zinc-50 border-b border-zinc-100 text-zinc-500 font-medium uppercase tracking-wider text-xs">
+                                    <tr>
+                                        <th
+                                            className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                            onClick={() => requestSort('title')}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                Titolo {sortConfig?.key === 'title' ? (
+                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                                ) : (
+                                                    <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                                )}
+                                            </div>
+                                        </th>
+                                        <th
+                                            className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                            onClick={() => requestSort('category')}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                Categoria {sortConfig?.key === 'category' ? (
+                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                                ) : (
+                                                    <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                                )}
+                                            </div>
+                                        </th>
+                                        <th
+                                            className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                            onClick={() => requestSort('date')}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                Data {sortConfig?.key === 'date' ? (
+                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                                ) : (
+                                                    <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                                )}
+                                            </div>
+                                        </th>
+                                        <th
+                                            className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                            onClick={() => requestSort('status')}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                Stato {sortConfig?.key === 'status' ? (
+                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                                ) : (
+                                                    <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                                )}
+                                            </div>
+                                        </th>
+                                        <th className="px-6 py-3 text-right">Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-zinc-50">
+                                    {groupedByYear[year].map((item: any) => {
+                                        const status = getNewsStatus(item)
+                                        return (
+                                            <tr key={item.id} className="hover:bg-zinc-50/50 transition-colors group">
+                                                <td className="px-6 py-4 font-medium text-foreground flex items-center gap-3">
+                                                    <div className="size-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-400 overflow-hidden flex-shrink-0 relative">
+                                                        {item.image ? (
+                                                            <Image src={item.image} alt={item.title} fill className="object-cover" />
+                                                        ) : (
+                                                            <Newspaper className="size-4" />
+                                                        )}
+                                                    </div>
+                                                    <span className="line-clamp-1">{item.title}</span>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {item.category.split(",").map((cat: string) => (
+                                                            <span key={cat.trim()} className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border bg-zinc-50 text-zinc-600 border-zinc-200">
+                                                                {cat.trim()}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4 text-zinc-500 font-mono text-xs">
+                                                    {new Date(item.date).toLocaleDateString("it-IT", { day: "2-digit", month: "short", year: "numeric" })}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {status === "published" && (
+                                                        <span className="flex items-center gap-1 text-green-600 text-xs font-bold">
+                                                            <Eye className="size-3" /> Pubblicata
                                                         </span>
-                                                    ))}
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4 text-zinc-500 font-mono text-xs">
-                                                {new Date(item.date).toLocaleDateString("it-IT", { day: "2-digit", month: "short", year: "numeric" })}
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {status === "published" && (
-                                                    <span className="flex items-center gap-1 text-green-600 text-xs font-bold">
-                                                        <Eye className="size-3" /> Pubblicata
-                                                    </span>
-                                                )}
-                                                {status === "draft" && (
-                                                    <span className="flex items-center gap-1 text-zinc-400 text-xs font-bold">
-                                                        <EyeOff className="size-3" /> Bozza
-                                                    </span>
-                                                )}
-                                                {status === "scheduled" && (
-                                                    <span className="flex items-center gap-1 text-amber-600 text-xs font-bold">
-                                                        <Clock className="size-3" /> Programmata
-                                                    </span>
-                                                )}
-                                            </td>
-                                            <td className="px-6 py-4 text-right">
-                                                <div className="flex justify-end gap-2">
-                                                    {/* Condition: ADMIN_NETWORK can only edit if their association is present */}
-                                                    {(userRole !== "ADMIN_NETWORK" || (item.associations && userAssociation && item.associations.includes(userAssociation))) ? (
-                                                        <>
-                                                            <button
-                                                                onClick={() => {
-                                                                    setEditingNews(item)
-                                                                    setIsFormModalOpen(true)
-                                                                }}
-                                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
-                                                                title="Modifica"
-                                                            >
-                                                                <Pencil className="size-4" />
-                                                            </button>
-                                                            <button
-                                                                onClick={() => handleDuplicateNews(item.id)}
-                                                                disabled={isPending}
-                                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all disabled:opacity-30"
-                                                                title="Copia"
-                                                            >
-                                                                <Copy className="size-4" />
-                                                            </button>
-                                                            <button
-                                                                onClick={() => {
-                                                                    if (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM")) {
-                                                                        alert("Non puoi eliminare contenuti creati dall'amministrazione centrale.")
-                                                                        return
-                                                                    }
-                                                                    if (confirm("Sei sicuro di voler eliminare questa notizia?")) {
-                                                                        handleDeleteNews(item.id)
-                                                                    }
-                                                                }}
-                                                                disabled={isPending || (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM"))}
-                                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-                                                                title={userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM") ? "Contenuto centrale protetto" : "Elimina"}
-                                                            >
-                                                                <Trash2 className="size-4" />
-                                                            </button>
-                                                        </>
-                                                    ) : (
-                                                        <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-2 py-1 rounded-md">Solo lettura</span>
                                                     )}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
+                                                    {status === "draft" && (
+                                                        <span className="flex items-center gap-1 text-zinc-400 text-xs font-bold">
+                                                            <EyeOff className="size-3" /> Bozza
+                                                        </span>
+                                                    )}
+                                                    {status === "scheduled" && (
+                                                        <span className="flex items-center gap-1 text-amber-600 text-xs font-bold">
+                                                            <Clock className="size-3" /> Programmata
+                                                        </span>
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-4 text-right">
+                                                    <div className="flex justify-end gap-2 text-right">
+                                                        {/* Condition: ADMIN_NETWORK can only edit if their association is present */}
+                                                        {(userRole !== "ADMIN_NETWORK" || (item.associations && userAssociation && item.associations.includes(userAssociation))) ? (
+                                                            <>
+                                                                <button
+                                                                    onClick={() => {
+                                                                        setEditingNews(item)
+                                                                        setIsFormModalOpen(true)
+                                                                    }}
+                                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
+                                                                    title="Modifica"
+                                                                >
+                                                                    <Pencil className="size-4" />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => handleDuplicateNews(item.id)}
+                                                                    disabled={isPending}
+                                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all disabled:opacity-30"
+                                                                    title="Copia"
+                                                                >
+                                                                    <Copy className="size-4" />
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => {
+                                                                        if (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM")) {
+                                                                            alert("Non puoi eliminare contenuti creati dall'amministrazione centrale.")
+                                                                            return
+                                                                        }
+                                                                        if (confirm("Sei sicuro di voler eliminare questa notizia?")) {
+                                                                            handleDeleteNews(item.id)
+                                                                        }
+                                                                    }}
+                                                                    disabled={isPending || (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM"))}
+                                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                                                                    title={userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM") ? "Contenuto centrale protetto" : "Elimina"}
+                                                                >
+                                                                    <Trash2 className="size-4" />
+                                                                </button>
+                                                            </>
+                                                        ) : (
+                                                            <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-2 py-1 rounded-md">Solo lettura</span>
+                                                        )}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             ))}

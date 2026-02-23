@@ -76,7 +76,7 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
 
             <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm border-collapse">
+                    <table className="w-full text-left text-sm border-collapse min-w-[700px]">
                         <thead>
                             <tr className="bg-zinc-50 border-bottom border-zinc-100 uppercase tracking-wider text-[10px] font-bold text-zinc-500">
                                 <th

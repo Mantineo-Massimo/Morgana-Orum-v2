@@ -383,7 +383,7 @@ export default function EventsAdminClient({
                     </div>
                 )}
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse min-w-[800px] sm:min-w-0">
+                    <table className="w-full text-left border-collapse min-w-[1000px]">
                         <thead>
                             <tr className="border-b border-zinc-100 bg-zinc-50/50 text-xs font-bold text-zinc-500 uppercase tracking-wider">
                                 <th

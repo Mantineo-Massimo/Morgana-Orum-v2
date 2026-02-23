@@ -133,9 +133,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
 
             if (res.success && res.user) {
                 if (editingUser) {
-                    setUsers(prev => prev.map(u => u.id === editingUser.id ? { ...u, ...res.user } as UserItem : u))
+                    setUsers(prev => (Array.isArray(prev) ? prev : []).map(u => u.id === editingUser.id ? { ...u, ...res.user } as UserItem : u))
                 } else {
-                    setUsers(prev => [res.user as UserItem, ...prev])
+                    setUsers(prev => [res.user as UserItem, ...(Array.isArray(prev) ? prev : [])])
                 }
                 setIsModalOpen(false)
             } else {
@@ -281,7 +281,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
 
             <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
+                    <table className="w-full border-collapse min-w-[1000px]">
                         <thead>
                             <tr className="bg-zinc-50/50 border-b border-zinc-100">
                                 <th
