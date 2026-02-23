@@ -7,6 +7,7 @@ import { TopBar } from "@/components/top-bar"
 import { StickyHeader } from "@/components/sticky-header"
 import { Footer } from "@/components/footer"
 import { ClientLogger } from "@/components/analytics/client-logger"
+import { CookieConsent } from "@/components/cookie-consent"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
@@ -33,6 +34,7 @@ export default function RootLayout({
 }) {
     const sessionEmail = cookies().get("session_email")?.value
     const isLoggedIn = !!sessionEmail
+    const cookieConsent = cookies().get("cookie-consent")?.value
 
     return (
         <html lang="it">
@@ -42,6 +44,7 @@ export default function RootLayout({
                         <TopBar />
                         <StickyHeader isLoggedIn={isLoggedIn} />
                         <ClientLogger />
+                        <CookieConsent />
 
                         <main className="flex-1">
                             {children}
@@ -50,7 +53,7 @@ export default function RootLayout({
                         <Footer />
                     </div>
                 </BrandProvider>
-                {process.env.NEXT_PUBLIC_GA_ID && (
+                {process.env.NEXT_PUBLIC_GA_ID && cookieConsent === "accepted" && (
                     <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
                 )}
             </body>
