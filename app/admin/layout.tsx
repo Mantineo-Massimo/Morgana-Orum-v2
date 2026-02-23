@@ -24,52 +24,67 @@ export default async function AdminLayout({
         redirect(`/login`)
     }
 
-    const navItems = [
+    const navigation = [
         {
-            label: "Dashboard",
-            href: `/admin`,
-            icon: LayoutDashboard,
-            exact: true
+            section: "Panoramica",
+            items: [
+                {
+                    label: "Dashboard",
+                    href: `/admin`,
+                    icon: LayoutDashboard,
+                    exact: true
+                },
+                {
+                    label: "Analytics Sito",
+                    href: `/admin/analytics`,
+                    icon: BarChart3,
+                    exact: false
+                },
+            ]
         },
         {
-            label: "Rappresentanti",
-            href: `/admin/representatives`,
-            icon: Users,
-            exact: false
-        },
-        {
-            label: "Notizie",
-            href: `/admin/news`,
-            icon: Newspaper,
-            exact: false
-        },
-        {
-            label: "Eventi",
-            href: `/admin/events`,
-            icon: Calendar,
-            exact: false
-        },
-        {
-            label: "Analytics",
-            href: `/admin/analytics`,
-            icon: BarChart3,
-            exact: false
-        },
+            section: "Gestione Contenuti",
+            items: [
+                {
+                    label: "Rappresentanti",
+                    href: `/admin/representatives`,
+                    icon: Users,
+                    exact: false
+                },
+                {
+                    label: "Notizie",
+                    href: `/admin/news`,
+                    icon: Newspaper,
+                    exact: false
+                },
+                {
+                    label: "Eventi",
+                    href: `/admin/events`,
+                    icon: Calendar,
+                    exact: false
+                },
+            ]
+        }
     ]
 
     // Only SUPER_ADMIN sees Conventions and User Management
     if (userRole === "SUPER_ADMIN") {
-        navItems.push({
-            label: "Convenzioni",
-            href: `/admin/conventions`,
-            icon: Tag,
-            exact: false
-        })
-        navItems.push({
-            label: "Utenti",
-            href: `/admin/users`,
-            icon: User,
-            exact: false
+        navigation.push({
+            section: "Amministrazione",
+            items: [
+                {
+                    label: "Convenzioni",
+                    href: `/admin/conventions`,
+                    icon: Tag,
+                    exact: false
+                },
+                {
+                    label: "Utenti",
+                    href: `/admin/users`,
+                    icon: User,
+                    exact: false
+                },
+            ]
         })
     }
 
@@ -87,19 +102,28 @@ export default async function AdminLayout({
                     </div>
                 </div>
 
-                <div className="flex-1 py-6 px-4 space-y-1">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.href}
-                            href={item.href}
-                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all group"
-                        >
-                            <item.icon className={cn(
-                                "size-5 group-hover:text-white transition-colors",
-                                "text-zinc-500"
-                            )} />
-                            <span className="font-medium text-sm">{item.label}</span>
-                        </Link>
+                <div className="flex-1 py-6 px-4 space-y-8">
+                    {navigation.map((section) => (
+                        <div key={section.section} className="space-y-2">
+                            <h2 className="px-4 text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em]">
+                                {section.section}
+                            </h2>
+                            <div className="space-y-1">
+                                {section.items.map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all group"
+                                    >
+                                        <item.icon className={cn(
+                                            "size-5 group-hover:text-white transition-colors",
+                                            "text-zinc-500"
+                                        )} />
+                                        <span className="font-medium text-sm">{item.label}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
                     ))}
                 </div>
 
