@@ -433,7 +433,6 @@ export default function EventsAdminClient({
                                     )}
                                 </div>
                             </th>
-                            <th className="px-6 py-4 text-right">Azioni</th>
                             <th
                                 className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group text-right"
                                 onClick={() => requestSort('status')}
@@ -446,6 +445,7 @@ export default function EventsAdminClient({
                                     )}
                                 </div>
                             </th>
+                            <th className="px-6 py-4 text-right">Azioni</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-zinc-50">
