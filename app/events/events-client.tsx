@@ -59,9 +59,11 @@ function getBookingLabel(event: EventItem): { label: string; color: string; icon
 export default function EventsClient({
     events,
     categories,
+    mode = 'upcoming'
 }: {
     events: EventItem[]
     categories: string[]
+    mode?: 'upcoming' | 'past'
 }) {
     const [activeCategory, setActiveCategory] = useState("Tutti")
     const [searchQuery, setSearchQuery] = useState("")
@@ -116,15 +118,44 @@ export default function EventsClient({
         <div className="min-h-screen bg-zinc-50 py-20">
             {/* Header */}
             <div className="container mx-auto px-6 mb-12">
-                <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
-                    Agenda Studentesca
-                </span>
-                <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-4">
-                    Prossimi Eventi
-                </h1>
-                <p className="text-xl text-zinc-600 font-medium italic">
-                    Uniti per costruire il futuro.
-                </p>
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
+                            Agenda Studentesca
+                        </span>
+                        <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-4">
+                            {mode === 'upcoming' ? 'Prossimi Eventi' : 'Eventi Passati'}
+                        </h1>
+                        <p className="text-xl text-zinc-600 font-medium italic">
+                            Uniti per costruire il futuro.
+                        </p>
+                    </div>
+
+                    <div className="flex gap-2">
+                        <Link
+                            href="/events"
+                            className={cn(
+                                "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
+                                mode === 'upcoming'
+                                    ? "bg-zinc-900 text-white border-zinc-900 shadow-lg shadow-zinc-200"
+                                    : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
+                            )}
+                        >
+                            In Arrivo
+                        </Link>
+                        <Link
+                            href="/events/past"
+                            className={cn(
+                                "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
+                                mode === 'past'
+                                    ? "bg-zinc-900 text-white border-zinc-900 shadow-lg shadow-zinc-200"
+                                    : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
+                            )}
+                        >
+                            Archivio
+                        </Link>
+                    </div>
+                </div>
             </div>
 
             <div className="container mx-auto px-6 grid lg:grid-cols-4 gap-12">

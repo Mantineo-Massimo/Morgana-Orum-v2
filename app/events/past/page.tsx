@@ -1,14 +1,14 @@
 import { getAllEvents, getEventCategories } from "@/app/actions/events"
 import { cookies } from "next/headers"
-import EventsClient from "./events-client"
+import EventsClient from "../events-client"
 
 export const dynamic = "force-dynamic"
 
-export default async function Page() {
+export default async function PastEventsPage() {
     const sessionEmail = cookies().get("session_email")?.value || null
 
     const [events, categories] = await Promise.all([
-        getAllEvents(sessionEmail, undefined, 'upcoming'),
+        getAllEvents(sessionEmail, undefined, 'past'),
         getEventCategories()
     ])
 
@@ -16,7 +16,7 @@ export default async function Page() {
         <EventsClient
             events={events}
             categories={categories}
-            mode="upcoming"
+            mode="past"
         />
     )
 }

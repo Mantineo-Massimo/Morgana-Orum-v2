@@ -32,10 +32,14 @@ async function checkContentPermission(itemAssociations?: Association[]) {
     return { allowed: false }
 }
 
-export async function getAllEvents(userEmail?: string | null, association?: Association) {
+export async function getAllEvents(userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming') {
+    const now = new Date()
     const query: any = {
-        where: { published: true },
-        orderBy: { date: 'asc' },
+        where: {
+            published: true,
+            date: mode === 'upcoming' ? { gte: now } : { lt: now }
+        },
+        orderBy: { date: mode === 'upcoming' ? 'asc' : 'desc' },
     }
 
     if (association) {
