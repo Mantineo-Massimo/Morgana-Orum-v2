@@ -83,7 +83,12 @@ export async function getAllUsers() {
                 role: true,
                 association: true,
                 matricola: true,
-                createdAt: true
+                createdAt: true,
+                birthDate: true,
+                department: true,
+                degreeCourse: true,
+                isFuorisede: true,
+                newsletter: true
             }
         })
     } catch (error) {
