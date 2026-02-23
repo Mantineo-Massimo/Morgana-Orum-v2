@@ -52,9 +52,9 @@ export default async function AnalyticsPage() {
                     <h1 className="text-3xl font-black text-foreground tracking-tight">Analytics Sito</h1>
                     <p className="text-zinc-500 text-sm mt-1 font-medium italic">Panoramica completa delle performance e dei contenuti della piattaforma.</p>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-zinc-400 bg-white px-4 py-2 rounded-xl border border-zinc-100 shadow-sm">
-                    <span className="size-2 rounded-full bg-green-500 animate-pulse" />
-                    Dati Aggiornati in Tempo Reale
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-4 py-2 rounded-xl border border-blue-100 shadow-sm">
+                    <span className="size-2 rounded-full bg-blue-500 animate-pulse" />
+                    Google Analytics 4 Attivo
                 </div>
             </div>
 
@@ -127,9 +127,9 @@ export default async function AnalyticsPage() {
                         <div className="p-3 bg-white/10 rounded-2xl w-fit mb-6">
                             <BarChart3 className="size-8" />
                         </div>
-                        <h3 className="text-2xl font-black tracking-tight mb-2">In Arrivo: Report Mensili</h3>
+                        <h3 className="text-2xl font-black tracking-tight mb-2">Integrazione GA4 Completata</h3>
                         <p className="text-blue-100 text-sm max-w-xs md:max-w-md">
-                            Stiamo lavorando per integrare grafici di visualizzazione dati avanzati e report PDF mensili scaricabili per ogni associazione.
+                            Il tracciamento dei visitatori e del comportamento utente è ora attivo tramite Google Analytics 4. I report mensili PDF sono in fase di sviluppo.
                         </p>
                     </div>
                     <div className="mt-8 relative z-10">

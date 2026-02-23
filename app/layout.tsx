@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Outfit } from "next/font/google"
 import { BrandProvider } from "@/components/brand-provider"
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { cookies } from "next/headers"
 import { TopBar } from "@/components/top-bar"
 import { StickyHeader } from "@/components/sticky-header"
@@ -47,6 +48,9 @@ export default function RootLayout({
                         <Footer />
                     </div>
                 </BrandProvider>
+                {process.env.NEXT_PUBLIC_GA_ID && (
+                    <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+                )}
             </body>
         </html>
     )
