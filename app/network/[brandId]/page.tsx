@@ -4,6 +4,7 @@ import { ArrowRight, Calendar, ChevronLeft } from "lucide-react"
 import prisma from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import { Association } from "@prisma/client"
+import { cn } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
 
@@ -84,11 +85,31 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
     return (
         <div className="flex flex-col min-h-screen">
             {/* SUB-SITE HERO */}
-            <section className="relative h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden">
-                <Image src={config.bg} fill className="object-cover opacity-40 shadow-inner" alt="" sizes="100vw" priority />
+            <section
+                className="relative h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden"
+                style={{
+                    backgroundColor: config.id === 'studentiscipog' ? '#ffcc00' : '#0f172a'
+                }}
+            >
+                <Image
+                    src={config.bg}
+                    fill
+                    className="object-cover opacity-40 shadow-inner"
+                    alt=""
+                    sizes="100vw"
+                    priority
+                    quality={60}
+                />
 
                 {/* Overlay Personalizzato per il Brand */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-background/90 mix-blend-multiply opacity-95"></div>
+                <div
+                    className={cn(
+                        "absolute inset-0 mix-blend-multiply opacity-95 bg-gradient-to-r",
+                        config.id === 'studentiscipog'
+                            ? "from-[#ffcc00]/80 to-[#ffcc00]/95"
+                            : "from-primary/80 to-background/90"
+                    )}
+                />
                 <div className="absolute inset-0 bg-black/40"></div>
 
                 <div className="container relative z-10 flex flex-col items-center">
@@ -230,7 +251,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                         </div>
                                         <div className="space-y-3">
                                             <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest block">
-                                                {news.date.toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })}
+                                                {news.date.toLocaleDateString('it-IT', { month: 'long', year: 'numeric' })}
                                             </span>
                                             <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
                                                 {news.title}
