@@ -265,15 +265,16 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
 
 
                 {/* Date & End Date */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className={labelClass}>Data e Ora Inizio *</label>
                         <input type="datetime-local" name="date" defaultValue={dateToInputValue(initialData?.date)} required className={inputClass} />
+                        <p className="text-[10px] text-zinc-400 mt-1 italic">Formato: gg/mm/aaaa, 24h</p>
                     </div>
                     <div>
                         <label className={labelClass}>Data e Ora Fine</label>
                         <input type="datetime-local" name="endDate" defaultValue={dateToInputValue(initialData?.endDate)} className={inputClass} />
-                        <p className="text-xs text-zinc-400 mt-1">Solo per eventi multi-giorno</p>
+                        <p className="text-[10px] text-zinc-400 mt-1 italic">Solo per eventi multi-giorno (gg/mm/aaaa, 24h)</p>
                     </div>
                 </div>
 
