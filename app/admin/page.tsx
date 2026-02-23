@@ -159,7 +159,7 @@ export default async function AdminPage() {
                     <div className="space-y-2 text-center md:text-left">
                         <h3 className="text-xl font-black">Dashbord Analytics Avanzata</h3>
                         <p className="text-zinc-400 text-sm max-w-md">
-                            Monitora in tempo reale le visite, i click e l'engagement dei tuoi utenti con il nuovo sistema di tracciamento integrato.
+                            Monitora in tempo reale le visite, i click e l&apos;engagement dei tuoi utenti con il nuovo sistema di tracciamento integrato.
                         </p>
                     </div>
                     <Link

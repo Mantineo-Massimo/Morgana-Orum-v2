@@ -49,6 +49,8 @@ model Event {
   published      Boolean        @default(true)
   associations   Association[]  @default([MORGANA_ORUM])
   registrations  Registration[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @default(now()) @updatedAt
 
   @@index([date])
   @@index([category])
