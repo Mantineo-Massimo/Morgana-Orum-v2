@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useTransition } from "react"
 import { updateUserRole, deleteUser, adminCreateUser, adminUpdateUser } from "@/app/actions/users"
 import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search, Plus, X, Edit2, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react"
