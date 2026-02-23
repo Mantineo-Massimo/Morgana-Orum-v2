@@ -7,6 +7,8 @@ import { logoutAction } from "@/app/actions/auth"
 import { getAssociationName } from "@/lib/associations"
 import { SidebarClock } from "@/components/admin/sidebar-clock"
 
+import { MobileNav } from "@/components/admin/mobile-nav"
+
 export const dynamic = 'force-dynamic'
 
 export default async function AdminLayout({
@@ -92,9 +94,20 @@ export default async function AdminLayout({
     const isMorgana = true; // TODO: Portale Unificato - Tema neutro o in base all'utente
 
     return (
-        <div className="min-h-screen bg-zinc-50 flex" data-admin-area>
-            {/* Sidebar */}
-            <aside className="w-64 shrink-0 bg-zinc-900 text-white flex flex-col sticky top-0 max-h-screen overflow-y-auto z-40">
+        <div className="min-h-screen bg-zinc-50 flex flex-col lg:flex-row" data-admin-area>
+            {/* Mobile Navigation Header & Drawer */}
+            <MobileNav
+                navigation={navigation}
+                user={{
+                    name: data?.user?.name || "Admin",
+                    surname: data?.user?.surname || "",
+                    role: userRole || "ADMIN"
+                }}
+                logoutAction={logoutAction}
+            />
+
+            {/* Desktop Sidebar */}
+            <aside className="w-64 shrink-0 bg-zinc-900 text-white hidden lg:flex flex-col sticky top-0 max-h-screen overflow-y-auto z-40">
                 <div className="p-6 border-b border-zinc-800 flex items-center gap-3">
                     <Shield className={cn("size-6", isMorgana ? "text-red-500" : "text-blue-500")} />
                     <div>
@@ -163,7 +176,7 @@ export default async function AdminLayout({
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 p-8">
+            <main className="flex-1 p-4 md:p-8 mt-16 lg:mt-0">
                 {children}
             </main>
         </div>

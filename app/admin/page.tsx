@@ -78,7 +78,7 @@ export default async function AdminPage() {
             </div>
 
             {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                 {stats.map((stat, i) => (
                     <div key={i} className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm hover:shadow-md transition-all group">
                         <div className="flex items-center justify-between mb-4">
@@ -93,7 +93,7 @@ export default async function AdminPage() {
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                 {/* Recent Events Feed */}
                 <div className="bg-white p-8 rounded-3xl border border-zinc-100 shadow-sm space-y-6">
                     <div className="flex items-center justify-between">

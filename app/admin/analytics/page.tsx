@@ -63,7 +63,7 @@ export default async function AnalyticsPage() {
             {/* Content Stats */}
             <section className="space-y-4">
                 <h2 className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] px-1">Statistiche Contenuti</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                     {mainStats.map((stat, i) => (
                         <div key={i} className="bg-white p-6 rounded-2xl border border-zinc-100 shadow-sm hover:shadow-md transition-all group">
                             <div className={`p-3 rounded-xl ${stat.bg} ${stat.color} w-fit mb-4 group-hover:scale-110 transition-transform`}>
@@ -79,7 +79,7 @@ export default async function AnalyticsPage() {
             {/* Real Internal Traffic Stats */}
             <section className="space-y-4">
                 <h2 className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] px-1">Engagement & Traffico (Dati Interni)</h2>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {trafficStats.map((stat, i) => (
                         <div key={i} className="bg-zinc-900 p-6 rounded-2xl text-white shadow-xl relative overflow-hidden group">
                             <div className="relative z-10 flex items-center justify-between">
