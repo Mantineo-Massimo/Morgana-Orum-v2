@@ -103,3 +103,28 @@ export async function deleteConvention(id: string) {
         return { success: false, error: "Errore durante l'eliminazione della convenzione" }
     }
 }
+
+export async function duplicateConvention(id: string) {
+    if (!(await checkSuperAdminPermission())) {
+        return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
+    try {
+        const existing = await prisma.convention.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Convenzione non trovata" }
+
+        const { id: _, ...convData } = existing
+
+        const duplicated = await prisma.convention.create({
+            data: {
+                ...convData,
+                name: `${existing.name} (Copia)`,
+            }
+        })
+
+        return { success: true, convention: duplicated }
+    } catch (error) {
+        console.error("Duplicate convention error:", error)
+        return { success: false, error: "Errore durante la duplicazione" }
+    }
+}

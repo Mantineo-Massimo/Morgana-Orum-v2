@@ -158,6 +158,35 @@ export async function deleteNews(id: string) {
     }
 }
 
+export async function duplicateNews(id: string) {
+    try {
+        const existing = await prisma.news.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Notizia non trovata" }
+
+        const permission = await checkContentPermission(existing.associations)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
+
+        const { id: _, createdAt: __, updatedAt: ___, ...newsData } = existing
+
+        await prisma.news.create({
+            data: {
+                ...newsData,
+                title: `${existing.title} (Copia)`,
+                published: false, // La copia nasce sempre come bozza
+                date: new Date(),
+            }
+        })
+
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
+        return { success: true }
+    } catch (error) {
+        console.error("Duplicate news error:", error)
+        return { success: false, error: "Errore durante la duplicazione" }
+    }
+}
+
 // Public: only published AND date <= now (scheduled publishing support)
 export async function getNews(category?: string, query?: string, association?: Association) {
     console.log('getNews called with:', { category, query, association })

@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useTransition } from "react"
-import { Plus, Pencil, Trash2, Newspaper, Eye, EyeOff, Tag, X, Search, Filter, Clock, Calendar, ArrowUpDown, ArrowUp, ArrowDown, User } from "lucide-react"
+import { Pencil, Trash2, Plus, Calendar, Filter, Search, Eye, EyeOff, Clock, ArrowUpDown, ArrowUp, ArrowDown, Copy, Newspaper, Tag, X, User } from "lucide-react"
 import Link from "next/link"
 import NewsForm from "@/components/admin/news-form"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { deleteNews, createNewsCategory, deleteNewsCategory } from "@/app/actions/news"
+import { deleteNews, createNewsCategory, deleteNewsCategory, duplicateNews } from "@/app/actions/news"
 import { useRouter } from "next/navigation"
 import { ASSOCIATIONS } from "@/lib/associations"
 import { Association } from "@prisma/client"
@@ -102,6 +102,16 @@ export default function AdminNewsClient({
     async function handleDeleteNews(id: string) {
         startTransition(async () => {
             await deleteNews(id)
+            router.refresh()
+        })
+    }
+
+    async function handleDuplicateNews(id: string) {
+        startTransition(async () => {
+            const res = await duplicateNews(id)
+            if (!res.success) {
+                alert(res.error || "Errore durante la duplicazione")
+            }
             router.refresh()
         })
     }
@@ -361,7 +371,7 @@ export default function AdminNewsClient({
                                                 )}
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <div className="flex justify-end gap-2">
                                                     {/* Condition: ADMIN_NETWORK can only edit if their association is present */}
                                                     {(userRole !== "ADMIN_NETWORK" || (item.associations && userAssociation && item.associations.includes(userAssociation))) ? (
                                                         <>
@@ -376,12 +386,22 @@ export default function AdminNewsClient({
                                                                 <Pencil className="size-4" />
                                                             </button>
                                                             <button
+                                                                onClick={() => handleDuplicateNews(item.id)}
+                                                                disabled={isPending}
+                                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all disabled:opacity-30"
+                                                                title="Copia"
+                                                            >
+                                                                <Copy className="size-4" />
+                                                            </button>
+                                                            <button
                                                                 onClick={() => {
                                                                     if (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM")) {
                                                                         alert("Non puoi eliminare contenuti creati dall'amministrazione centrale.")
                                                                         return
                                                                     }
-                                                                    handleDeleteNews(item.id)
+                                                                    if (confirm("Sei sicuro di voler eliminare questa notizia?")) {
+                                                                        handleDeleteNews(item.id)
+                                                                    }
                                                                 }}
                                                                 disabled={isPending || (userRole === "ADMIN_NETWORK" && item.associations?.includes("MORGANA_ORUM"))}
                                                                 className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"

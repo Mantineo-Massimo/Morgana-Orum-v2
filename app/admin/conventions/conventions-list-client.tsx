@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react"
+import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp, ArrowDown, Copy } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
-import { deleteConvention } from "@/app/actions/conventions"
+import { deleteConvention, duplicateConvention } from "@/app/actions/conventions"
 import { useRouter } from "next/navigation"
 
 interface Convention {
@@ -155,6 +155,20 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                                 >
                                                     <Edit className="size-4" />
                                                 </Link>
+                                                <button
+                                                    onClick={async () => {
+                                                        const res = await duplicateConvention(c.id)
+                                                        if (res.success) {
+                                                            router.refresh()
+                                                        } else {
+                                                            alert(res.error || "Errore durante la duplicazione")
+                                                        }
+                                                    }}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all"
+                                                    title="Copia"
+                                                >
+                                                    <Copy className="size-4" />
+                                                </button>
                                                 <button
                                                     onClick={() => handleDelete(c.id)}
                                                     disabled={isDeleting === c.id}

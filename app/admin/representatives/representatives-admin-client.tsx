@@ -1,11 +1,12 @@
 "use client"
 
 import { useState } from "react"
-import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X } from "lucide-react"
+import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { deleteRepresentative } from "@/app/actions/representatives"
+import { deleteRepresentative, duplicateRepresentative } from "@/app/actions/representatives"
+import { useRouter } from "next/navigation"
 
 import { Association } from "@prisma/client"
 import { ASSOCIATION_DEPARTMENT_KEYWORDS } from "@/lib/associations"
@@ -29,6 +30,7 @@ interface RepresentativesAdminClientProps {
 }
 
 export function RepresentativesAdminClient({ initialReps, userRole, userAssociation }: RepresentativesAdminClientProps) {
+    const router = useRouter()
     const [reps, setReps] = useState(initialReps)
     const [searchTerm, setSearchTerm] = useState("")
     const [listFilter, setListFilter] = useState("all")
@@ -201,7 +203,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                     {rep.role || rep.department || "-"}
                                 </td>
                                 <td className="px-6 py-4 text-right">
-                                    <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div className="flex justify-end gap-2">
                                         {/* Permission check: ADMIN_NETWORK can edit own assoc OR own department if Morgana */}
                                         {(() => {
                                             const keywords = ASSOCIATION_DEPARTMENT_KEYWORDS[userAssociation as string] || []
@@ -211,7 +213,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
                                             if (userRole !== "ADMIN_NETWORK" || rep.association === userAssociation || isDeptMatch) {
                                                 return (
-                                                    <>
+                                                    <div className="flex items-center justify-end gap-2">
                                                         <Link
                                                             href={`/admin/representatives/${rep.id}/edit`}
                                                             className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
@@ -219,6 +221,20 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                                         >
                                                             <Pencil className="size-4" />
                                                         </Link>
+                                                        <button
+                                                            onClick={async () => {
+                                                                const res = await duplicateRepresentative(rep.id)
+                                                                if (res.success) {
+                                                                    router.refresh()
+                                                                } else {
+                                                                    alert(res.error || "Errore durante la duplicazione")
+                                                                }
+                                                            }}
+                                                            className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all"
+                                                            title="Copia"
+                                                        >
+                                                            <Copy className="size-4" />
+                                                        </button>
                                                         <button
                                                             onClick={async () => {
                                                                 if (confirm("Sei sicuro di voler eliminare questo rappresentante?")) {
@@ -231,7 +247,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                                         >
                                                             <Trash2 className="size-4" />
                                                         </button>
-                                                    </>
+                                                    </div>
                                                 )
                                             }
                                             return <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-2 py-1 rounded-md">Solo lettura</span>

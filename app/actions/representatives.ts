@@ -136,6 +136,33 @@ export async function deleteRepresentative(id: string) {
     }
 }
 
+export async function duplicateRepresentative(id: string) {
+    try {
+        const existing = await prisma.representative.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Rappresentante non trovato" }
+
+        const permission = await checkContentPermission(existing.association, existing.department)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo rappresentante." }
+
+        const { id: _, ...repData } = existing
+
+        await prisma.representative.create({
+            data: {
+                ...repData,
+                name: `${existing.name} (Copia)`,
+            }
+        })
+
+        revalidatePath("/representatives", "page")
+        revalidatePath("/admin/representatives", "page")
+        revalidatePath("/", "layout")
+        return { success: true }
+    } catch (error) {
+        console.error("Duplicate representative error:", error)
+        return { success: false, error: "Errore durante la duplicazione" }
+    }
+}
+
 
 export async function getRepresentatives(filters?: {
     query?: string,
