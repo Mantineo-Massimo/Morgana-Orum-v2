@@ -74,7 +74,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
     const SortIcon = ({ columnKey }: { columnKey: keyof Representative }) => {
         if (sortConfig?.key !== columnKey) return <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-        return sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+        return sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
     }
 
     return (
@@ -162,7 +162,14 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                     Categoria <SortIcon columnKey="category" />
                                 </div>
                             </th>
-                            <th className="px-6 py-4">Ruolo / Dipartimento</th>
+                            <th
+                                className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('department')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Ruolo / Dipartimento <SortIcon columnKey="department" />
+                                </div>
+                            </th>
                             <th className="px-6 py-4 text-right">Azioni</th>
                         </tr>
                     </thead>

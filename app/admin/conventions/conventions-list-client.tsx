@@ -85,7 +85,7 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                 >
                                     <div className="flex items-center gap-2">
                                         Attività {sortConfig?.key === 'name' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}
@@ -97,7 +97,7 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                 >
                                     <div className="flex items-center justify-center gap-2">
                                         Località {sortConfig?.key === 'location' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}

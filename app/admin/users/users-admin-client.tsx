@@ -291,7 +291,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     <div className="flex items-center gap-1">
                                         Utente
                                         {sortConfig?.key === 'name' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}
@@ -304,7 +304,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     <div className="flex items-center gap-1">
                                         Matricola
                                         {sortConfig?.key === 'matricola' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}
@@ -317,7 +317,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     <div className="flex items-center gap-1">
                                         Ruolo
                                         {sortConfig?.key === 'role' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}
@@ -330,7 +330,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     <div className="flex items-center gap-1">
                                         Associazione
                                         {sortConfig?.key === 'association' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}

@@ -87,8 +87,8 @@ export default function AdminNewsClient({
             const { key, direction } = sortConfig
             if (!direction) return 0
 
-            const valA = (a[key as keyof any] || "").toString().toLowerCase()
-            const valB = (b[key as keyof any] || "").toString().toLowerCase()
+            const valA = key === 'status' ? getNewsStatus(a) : (a[key as keyof any] || "").toString().toLowerCase()
+            const valB = key === 'status' ? getNewsStatus(b) : (b[key as keyof any] || "").toString().toLowerCase()
 
             if (valA < valB) return direction === 'asc' ? -1 : 1
             if (valA > valB) return direction === 'asc' ? 1 : -1
@@ -303,26 +303,48 @@ export default function AdminNewsClient({
                                     >
                                         <div className="flex items-center gap-2">
                                             Titolo {sortConfig?.key === 'title' ? (
-                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                             ) : (
                                                 <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                             )}
                                         </div>
                                     </th>
-                                    <th className="px-6 py-3">Categoria</th>
+                                    <th
+                                        className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                        onClick={() => requestSort('category')}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            Categoria {sortConfig?.key === 'category' ? (
+                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                            ) : (
+                                                <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                            )}
+                                        </div>
+                                    </th>
                                     <th
                                         className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
                                         onClick={() => requestSort('date')}
                                     >
                                         <div className="flex items-center gap-2">
                                             Data {sortConfig?.key === 'date' ? (
-                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                             ) : (
                                                 <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                             )}
                                         </div>
                                     </th>
-                                    <th className="px-6 py-3">Stato</th>
+                                    <th
+                                        className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                        onClick={() => requestSort('status')}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            Stato {sortConfig?.key === 'status' ? (
+                                                sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                            ) : (
+                                                <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                            )}
+                                        </div>
+                                    </th>
                                     <th className="px-6 py-3 text-right">Azioni</th>
                                 </tr>
                             </thead>

@@ -20,6 +20,12 @@ interface EventsAdminClientProps {
     userAssociation?: Association
 }
 
+function getEventStatus(item: any): "published" | "draft" | "scheduled" {
+    if (!item.published) return "draft"
+    if (new Date(item.date) > new Date()) return "scheduled"
+    return "published"
+}
+
 export default function EventsAdminClient({
     initialEvents,
     categories,
@@ -245,8 +251,8 @@ export default function EventsAdminClient({
         const { key, direction } = sortConfig
         if (!direction) return 0
 
-        const valA = (a[key as keyof any] || "").toString().toLowerCase()
-        const valB = (b[key as keyof any] || "").toString().toLowerCase()
+        const valA = key === 'status' ? getEventStatus(a) : (a[key as keyof any] || "").toString().toLowerCase()
+        const valB = key === 'status' ? getEventStatus(b) : (b[key as keyof any] || "").toString().toLowerCase()
 
         if (valA < valB) return direction === 'asc' ? -1 : 1
         if (valA > valB) return direction === 'asc' ? 1 : -1
@@ -380,7 +386,7 @@ export default function EventsAdminClient({
                             >
                                 <div className="flex items-center gap-2">
                                     Evento {sortConfig?.key === 'title' ? (
-                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                     ) : (
                                         <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                     )}
@@ -392,7 +398,7 @@ export default function EventsAdminClient({
                             >
                                 <div className="flex items-center gap-2">
                                     Data {sortConfig?.key === 'date' ? (
-                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                     ) : (
                                         <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                     )}
@@ -404,13 +410,36 @@ export default function EventsAdminClient({
                             >
                                 <div className="flex items-center gap-2">
                                     Luogo {sortConfig?.key === 'location' ? (
-                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-red-600" />
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
                                     ) : (
                                         <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                     )}
                                 </div>
                             </th>
-                            <th className="px-6 py-4 hidden md:table-cell">Categoria</th>
+                            <th
+                                className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('category')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Categoria {sortConfig?.key === 'category' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
+                                </div>
+                            </th>
+                            <th
+                                className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('status')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Stato {sortConfig?.key === 'status' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
+                                </div>
+                            </th>
                             <th className="px-6 py-4 text-right">Azioni</th>
                         </tr>
                     </thead>
@@ -421,11 +450,6 @@ export default function EventsAdminClient({
                                     <div>
                                         <p className="font-bold text-foreground text-sm leading-tight flex items-center gap-2">
                                             {event.title}
-                                            {!event.published && (
-                                                <span className="bg-zinc-100 text-zinc-600 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-200">
-                                                    Bozza
-                                                </span>
-                                            )}
                                         </p>
                                         {event.cfuValue && (
                                             <div className="flex items-center gap-1.5 mt-1">
@@ -453,6 +477,26 @@ export default function EventsAdminClient({
                                     <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg bg-zinc-100 text-zinc-700 border border-zinc-200 group-hover:bg-white transition-colors">
                                         {event.category}
                                     </span>
+                                </td>
+                                <td className="px-6 py-5 hidden md:table-cell">
+                                    {(() => {
+                                        const status = getEventStatus(event)
+                                        if (status === "draft") return (
+                                            <span className="bg-zinc-100 text-zinc-600 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-200">
+                                                Bozza
+                                            </span>
+                                        )
+                                        if (status === "scheduled") return (
+                                            <span className="bg-amber-50 text-amber-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-amber-100">
+                                                Programmato
+                                            </span>
+                                        )
+                                        return (
+                                            <span className="bg-green-50 text-green-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-green-100">
+                                                Pubblicato
+                                            </span>
+                                        )
+                                    })()}
                                 </td>
                                 <td className="px-6 py-5">
                                     <div className="flex items-center gap-1 justify-end">
@@ -511,6 +555,18 @@ export default function EventsAdminClient({
                                         )}
                                     </div>
                                 </td>
+                                <th
+                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                    onClick={() => requestSort('status')}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        Stato {sortConfig?.key === 'status' ? (
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                        ) : (
+                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                        )}
+                                    </div>
+                                </th>
                             </tr>
                         ))}
                     </tbody>
