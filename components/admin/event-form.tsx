@@ -609,7 +609,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                     disabled={isPending}
                     className="w-full bg-zinc-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-zinc-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                    {isPending ? <><Loader2 className="size-4 animate-spin" /> Salvataggio...</> : <><Save className="size-4" /> {initialData ? "Aggiorna Evento" : "Crea Evento"}</>}
+                    {isPending ? <><Loader2 className="size-4 animate-spin" /> Salvataggio in corso...</> : <><Save className="size-4" /> {initialData ? "Aggiorna Evento" : "Crea Evento"}</>}
                 </button>
             </form>
         </div>

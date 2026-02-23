@@ -380,8 +380,17 @@ export default function RepresentativeForm({
                         disabled={isLoading}
                         className="bg-zinc-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-zinc-800 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        {isLoading ? <Loader2 className="size-5 animate-spin" /> : <Save className="size-5" />}
-                        {isEditing ? "Salva Modifiche" : "Crea Rappresentante"}
+                        {isLoading ? (
+                            <>
+                                <Loader2 className="size-5 animate-spin" />
+                                <span>Salvataggio in corso...</span>
+                            </>
+                        ) : (
+                            <>
+                                <Save className="size-5" />
+                                <span>{isEditing ? "Salva Modifiche" : "Crea Rappresentante"}</span>
+                            </>
+                        )}
                     </button>
                 </div>
             </form>

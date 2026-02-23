@@ -509,8 +509,14 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                         disabled={isPending}
                                         className="px-8 py-3 bg-zinc-900 text-white font-bold rounded-2xl hover:bg-zinc-800 transition-all disabled:opacity-50 flex items-center gap-2"
                                     >
-                                        {isPending && <Loader2 className="size-4 animate-spin" />}
-                                        {editingUser ? "Salva Modifiche" : "Crea Utente"}
+                                        {isPending ? (
+                                            <>
+                                                <Loader2 className="size-4 animate-spin" />
+                                                <span>Salvataggio...</span>
+                                            </>
+                                        ) : (
+                                            <span>{editingUser ? "Salva Modifiche" : "Crea Utente"}</span>
+                                        )}
                                     </button>
                                 </div>
                             </form>
