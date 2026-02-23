@@ -483,6 +483,31 @@ export default function EventsAdminClient({
                                         {event.category}
                                     </span>
                                 </td>
+                                <td className="px-6 py-5 hidden md:table-cell text-right">
+                                    {(() => {
+                                        const status = getEventStatus(event)
+                                        if (status === "draft") return (
+                                            <span className="bg-zinc-100 text-zinc-600 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-200">
+                                                Bozza
+                                            </span>
+                                        )
+                                        if (status === "ongoing") return (
+                                            <span className="bg-blue-50 text-blue-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-blue-100">
+                                                In corso
+                                            </span>
+                                        )
+                                        if (status === "scheduled") return (
+                                            <span className="bg-amber-50 text-amber-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-amber-100">
+                                                Programmato
+                                            </span>
+                                        )
+                                        return (
+                                            <span className="bg-zinc-50 text-zinc-500 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-100">
+                                                Archiviato
+                                            </span>
+                                        )
+                                    })()}
+                                </td>
                                 <td className="px-6 py-5">
                                     <div className="flex items-center gap-1 justify-end">
                                         {(userRole !== "ADMIN_NETWORK" || (event.associations && userAssociation && event.associations.includes(userAssociation))) ? (
@@ -539,31 +564,6 @@ export default function EventsAdminClient({
                                             <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-3 py-1.5 rounded-xl">Solo lettura</span>
                                         )}
                                     </div>
-                                </td>
-                                <td className="px-6 py-5 hidden md:table-cell text-right">
-                                    {(() => {
-                                        const status = getEventStatus(event)
-                                        if (status === "draft") return (
-                                            <span className="bg-zinc-100 text-zinc-600 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-200">
-                                                Bozza
-                                            </span>
-                                        )
-                                        if (status === "ongoing") return (
-                                            <span className="bg-blue-50 text-blue-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-blue-100">
-                                                In corso
-                                            </span>
-                                        )
-                                        if (status === "scheduled") return (
-                                            <span className="bg-amber-50 text-amber-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-amber-100">
-                                                Programmato
-                                            </span>
-                                        )
-                                        return (
-                                            <span className="bg-zinc-50 text-zinc-500 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-100">
-                                                Archiviato
-                                            </span>
-                                        )
-                                    })()}
                                 </td>
                             </tr>
                         ))}
