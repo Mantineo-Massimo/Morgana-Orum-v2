@@ -456,9 +456,38 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             disabled={!formData.department}
                                         >
                                             <option value="" disabled>Seleziona Corso...</option>
-                                            {formData.department && departmentsData[formData.department]?.map(course => (
-                                                <option key={course} value={course}>{course}</option>
-                                            ))}
+                                            {(() => {
+                                                const courses = formData.department ? departmentsData[formData.department] : []
+                                                const triennali = courses.filter(c => c.includes("(L-") || c.includes("(L/"))
+                                                const magistrali = courses.filter(c => c.includes("(LM-"))
+                                                const altri = courses.filter(c => !c.includes("(L-") && !c.includes("(L/") && !c.includes("(LM-"))
+
+                                                return (
+                                                    <>
+                                                        {triennali.length > 0 && (
+                                                            <optgroup label="--- TRIENNALI ---">
+                                                                {triennali.map(course => (
+                                                                    <option key={course} value={course}>{course}</option>
+                                                                ))}
+                                                            </optgroup>
+                                                        )}
+                                                        {magistrali.length > 0 && (
+                                                            <optgroup label="--- MAGISTRALI ---">
+                                                                {magistrali.map(course => (
+                                                                    <option key={course} value={course}>{course}</option>
+                                                                ))}
+                                                            </optgroup>
+                                                        )}
+                                                        {altri.length > 0 && (
+                                                            <optgroup label="--- ALTRI (Ciclo Unico / Master) ---">
+                                                                {altri.map(course => (
+                                                                    <option key={course} value={course}>{course}</option>
+                                                                ))}
+                                                            </optgroup>
+                                                        )}
+                                                    </>
+                                                )
+                                            })()}
                                         </select>
                                     </div>
                                     <div className="space-y-2">
