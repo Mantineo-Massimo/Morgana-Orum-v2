@@ -122,16 +122,6 @@ export default async function BrandHomePage() {
                                 )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
 
-                                {/* Date Badge */}
-                                <div className="absolute top-4 left-4 z-20 bg-white text-foreground text-center p-2 min-w-[3.5rem] shadow-sm">
-                                    <span className="block text-xs font-bold uppercase text-muted-foreground">
-                                        {news.date.toLocaleDateString('it-IT', { month: 'short' })}
-                                    </span>
-                                    <span className="block text-2xl font-black leading-none">
-                                        {news.date.toLocaleDateString('it-IT', { day: '2-digit' })}
-                                    </span>
-                                </div>
-
                                 <div className="relative z-20 text-white mt-auto">
                                     <span className="text-[10px] font-bold uppercase tracking-widest text-primary-foreground/80 bg-primary px-2 py-0.5 mb-2 inline-block">
                                         {news.category}
