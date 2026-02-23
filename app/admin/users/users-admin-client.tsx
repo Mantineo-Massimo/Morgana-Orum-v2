@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { updateUserRole, deleteUser, adminCreateUser, adminUpdateUser } from "@/app/actions/users"
-import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search, Plus, X, Edit2, ArrowUp, ArrowDown, ArrowUpDown } from "lucide-react"
+import { MoreHorizontal, Trash2, Shield, User, Globe, Crown, Loader2, Search, Plus, X, Edit2, ArrowUp, ArrowDown, ArrowUpDown, Filter } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Association, Role } from "@prisma/client"
 import { ASSOCIATIONS } from "@/lib/associations"
@@ -28,6 +28,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
     const [users, setUsers] = useState(initialUsers)
     const [loadingId, setLoadingId] = useState<number | null>(null)
     const [search, setSearch] = useState("")
+    const [roleFilter, setRoleFilter] = useState<string>("all")
+    const [assocFilter, setAssocFilter] = useState<string>("all")
+    const [deptFilter, setDeptFilter] = useState<string>("all")
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [editingUser, setEditingUser] = useState<UserItem | null>(null)
     const [isPending, startTransition] = useTransition()
@@ -59,11 +62,18 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
     })
 
     const filteredUsers = users
-        .filter(u =>
-            u.email.toLowerCase().includes(search.toLowerCase()) ||
-            `${u.name} ${u.surname}`.toLowerCase().includes(search.toLowerCase()) ||
-            u.matricola.includes(search)
-        )
+        .filter(u => {
+            const matchesSearch =
+                u.email.toLowerCase().includes(search.toLowerCase()) ||
+                `${u.name} ${u.surname}`.toLowerCase().includes(search.toLowerCase()) ||
+                u.matricola.includes(search)
+
+            const matchesRole = roleFilter === "all" || u.role === roleFilter
+            const matchesAssoc = assocFilter === "all" || u.association === assocFilter
+            const matchesDept = deptFilter === "all" || u.department === deptFilter
+
+            return matchesSearch && matchesRole && matchesAssoc && matchesDept
+        })
         .sort((a, b) => {
             if (!sortConfig) return 0
             const { key, direction } = sortConfig
@@ -212,6 +222,61 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                     <Plus className="size-4 group-hover:rotate-90 transition-transform" />
                     Nuovo Utente
                 </button>
+            </div>
+
+            {/* Filters Row */}
+            <div className="flex flex-wrap gap-3 items-center p-4 bg-zinc-50/50 rounded-2xl border border-zinc-100">
+                <div className="flex items-center gap-2 text-zinc-500 mr-2">
+                    <Filter className="size-4" />
+                    <span className="text-sm font-bold">Filtri:</span>
+                </div>
+
+                <select
+                    className="px-4 py-2 bg-white border border-zinc-200 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer min-w-[140px]"
+                    value={roleFilter}
+                    onChange={(e) => setRoleFilter(e.target.value)}
+                >
+                    <option value="all">Tutti i Ruoli</option>
+                    {rolesList.map(r => (
+                        <option key={r.id} value={r.id}>{r.label}</option>
+                    ))}
+                </select>
+
+                <select
+                    className="px-4 py-2 bg-white border border-zinc-200 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer min-w-[160px]"
+                    value={assocFilter}
+                    onChange={(e) => setAssocFilter(e.target.value)}
+                >
+                    <option value="all">Tutte le Associazioni</option>
+                    {ASSOCIATIONS.map(assoc => (
+                        <option key={assoc.id} value={assoc.id}>{assoc.name}</option>
+                    ))}
+                </select>
+
+                <select
+                    className="px-4 py-2 bg-white border border-zinc-200 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer max-w-[200px]"
+                    value={deptFilter}
+                    onChange={(e) => setDeptFilter(e.target.value)}
+                >
+                    <option value="all">Tutti i Dipartimenti</option>
+                    {Object.keys(departmentsData).map(dept => (
+                        <option key={dept} value={dept}>{dept}</option>
+                    ))}
+                </select>
+
+                {(roleFilter !== "all" || assocFilter !== "all" || deptFilter !== "all" || search !== "") && (
+                    <button
+                        onClick={() => {
+                            setSearch("")
+                            setRoleFilter("all")
+                            setAssocFilter("all")
+                            setDeptFilter("all")
+                        }}
+                        className="text-xs font-bold text-red-600 hover:text-red-700 transition-colors ml-auto"
+                    >
+                        Resetta filtri
+                    </button>
+                )}
             </div>
 
             <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden">
