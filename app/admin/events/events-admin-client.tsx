@@ -382,195 +382,193 @@ export default function EventsAdminClient({
                         <Loader2 className="size-6 animate-spin text-zinc-900" />
                     </div>
                 )}
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse min-w-[700px] md:min-w-0">
-                        <thead>
-                            <tr className="border-b border-zinc-100 bg-zinc-50/50 text-xs font-bold text-zinc-500 uppercase tracking-wider">
-                                <th
-                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
-                                    onClick={() => requestSort('title')}
-                                >
+                <table className="w-full text-left border-collapse">
+                    <thead>
+                        <tr className="border-b border-zinc-100 bg-zinc-50/50 text-xs font-bold text-zinc-500 uppercase tracking-wider">
+                            <th
+                                className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('title')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Evento {sortConfig?.key === 'title' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
+                                </div>
+                            </th>
+                            <th
+                                className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('date')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Data {sortConfig?.key === 'date' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
+                                </div>
+                            </th>
+                            <th
+                                className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('location')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Luogo {sortConfig?.key === 'location' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
+                                </div>
+                            </th>
+                            <th
+                                className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group"
+                                onClick={() => requestSort('category')}
+                            >
+                                <div className="flex items-center gap-2">
+                                    Categoria {sortConfig?.key === 'category' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
+                                </div>
+                            </th>
+                            <th
+                                className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group text-right"
+                                onClick={() => requestSort('status')}
+                            >
+                                <div className="flex items-center gap-2 justify-end">
+                                    Stato {sortConfig?.key === 'status' ? (
+                                        sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                    ) : (
+                                        <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                    )}
+                                </div>
+                            </th>
+                            <th className="px-6 py-4 text-right">Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-50">
+                        {sortedEvents.map((event) => (
+                            <tr key={event.id} className="hover:bg-zinc-50/50 transition-colors group">
+                                <td className="px-6 py-5">
+                                    <div>
+                                        <p className="font-bold text-foreground text-sm leading-tight flex items-center gap-2">
+                                            {event.title}
+                                        </p>
+                                        {event.cfuValue && (
+                                            <div className="flex items-center gap-1.5 mt-1">
+                                                <span className="inline-block size-1.5 rounded-full bg-green-500" />
+                                                <p className="text-[11px] text-green-700 font-bold uppercase tracking-tight">
+                                                    {event.cfuValue} CFU • {event.cfuType === 'SENATO' ? 'Ateneo' : 'Dipartimento'}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                </td>
+                                <td className="px-6 py-5 text-sm text-zinc-600 whitespace-nowrap font-medium">
                                     <div className="flex items-center gap-2">
-                                        Evento {sortConfig?.key === 'title' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                        <Calendar className="size-4 text-zinc-400 group-hover:text-zinc-600 transition-colors" />
+                                        {new Date(event.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                    </div>
+                                </td>
+                                <td className="px-6 py-5 text-sm text-zinc-600 hidden md:table-cell">
+                                    <div className="flex items-center gap-2 max-w-48 truncate group-hover:text-foreground transition-colors">
+                                        <MapPin className="size-4 text-zinc-400 shrink-0" />
+                                        {event.location}
+                                    </div>
+                                </td>
+                                <td className="px-6 py-5 hidden md:table-cell">
+                                    <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg bg-zinc-100 text-zinc-700 border border-zinc-200 group-hover:bg-white transition-colors">
+                                        {event.category}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-5 hidden md:table-cell text-right">
+                                    {(() => {
+                                        const status = getEventStatus(event)
+                                        if (status === "draft") return (
+                                            <span className="bg-zinc-100 text-zinc-600 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-200">
+                                                Bozza
+                                            </span>
+                                        )
+                                        if (status === "ongoing") return (
+                                            <span className="bg-blue-50 text-blue-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-blue-100">
+                                                In corso
+                                            </span>
+                                        )
+                                        if (status === "scheduled") return (
+                                            <span className="bg-amber-50 text-amber-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-amber-100">
+                                                Programmato
+                                            </span>
+                                        )
+                                        return (
+                                            <span className="bg-zinc-50 text-zinc-500 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-100">
+                                                Archiviato
+                                            </span>
+                                        )
+                                    })()}
+                                </td>
+                                <td className="px-6 py-5">
+                                    <div className="flex items-center gap-1 justify-end">
+                                        {(userRole !== "ADMIN_NETWORK" || (event.associations && userAssociation && event.associations.includes(userAssociation))) ? (
+                                            <>
+                                                <button
+                                                    onClick={() => handleExport(event)}
+                                                    disabled={isActionLoading === event.id}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all"
+                                                    title="Esporta Iscritti (CSV)"
+                                                >
+                                                    <Download className="size-4" />
+                                                </button>
+
+                                                <button
+                                                    onClick={() => handleDuplicate(event.id)}
+                                                    disabled={isActionLoading === event.id}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-orange-600 hover:border-orange-100 hover:bg-orange-50 transition-all"
+                                                    title="Duplica Evento"
+                                                >
+                                                    <Copy className="size-4" />
+                                                </button>
+
+                                                <button
+                                                    onClick={() => {
+                                                        setEditingEvent(event)
+                                                        setIsFormModalOpen(true)
+                                                    }}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
+                                                    title="Modifica"
+                                                >
+                                                    <Pencil className="size-4" />
+                                                </button>
+
+                                                <button
+                                                    onClick={() => {
+                                                        if (userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM")) {
+                                                            alert("Non puoi eliminare contenuti creati dall'amministrazione centrale.")
+                                                            return
+                                                        }
+                                                        handleDelete(event.id)
+                                                    }}
+                                                    disabled={isActionLoading === event.id || (userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM"))}
+                                                    className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                                                    title={userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM") ? "Contenuto centrale protetto" : "Elimina"}
+                                                >
+                                                    {isActionLoading === event.id ? (
+                                                        <Loader2 className="size-4 animate-spin text-zinc-300" />
+                                                    ) : (
+                                                        <Trash2 className="size-4" />
+                                                    )}
+                                                </button>
+                                            </>
                                         ) : (
-                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
+                                            <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-3 py-1.5 rounded-xl">Solo lettura</span>
                                         )}
                                     </div>
-                                </th>
-                                <th
-                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
-                                    onClick={() => requestSort('date')}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        Data {sortConfig?.key === 'date' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
-                                        ) : (
-                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-                                        )}
-                                    </div>
-                                </th>
-                                <th
-                                    className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group"
-                                    onClick={() => requestSort('location')}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        Luogo {sortConfig?.key === 'location' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
-                                        ) : (
-                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-                                        )}
-                                    </div>
-                                </th>
-                                <th
-                                    className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group"
-                                    onClick={() => requestSort('category')}
-                                >
-                                    <div className="flex items-center gap-2">
-                                        Categoria {sortConfig?.key === 'category' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
-                                        ) : (
-                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-                                        )}
-                                    </div>
-                                </th>
-                                <th
-                                    className="px-6 py-4 hidden md:table-cell cursor-pointer hover:text-foreground transition-colors group text-right"
-                                    onClick={() => requestSort('status')}
-                                >
-                                    <div className="flex items-center gap-2 justify-end">
-                                        Stato {sortConfig?.key === 'status' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
-                                        ) : (
-                                            <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
-                                        )}
-                                    </div>
-                                </th>
-                                <th className="px-6 py-4 text-right">Azioni</th>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody className="divide-y divide-zinc-50">
-                            {sortedEvents.map((event) => (
-                                <tr key={event.id} className="hover:bg-zinc-50/50 transition-colors group">
-                                    <td className="px-6 py-5">
-                                        <div>
-                                            <p className="font-bold text-foreground text-sm leading-tight flex items-center gap-2">
-                                                {event.title}
-                                            </p>
-                                            {event.cfuValue && (
-                                                <div className="flex items-center gap-1.5 mt-1">
-                                                    <span className="inline-block size-1.5 rounded-full bg-green-500" />
-                                                    <p className="text-[11px] text-green-700 font-bold uppercase tracking-tight">
-                                                        {event.cfuValue} CFU • {event.cfuType === 'SENATO' ? 'Ateneo' : 'Dipartimento'}
-                                                    </p>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-5 text-sm text-zinc-600 whitespace-nowrap font-medium">
-                                        <div className="flex items-center gap-2">
-                                            <Calendar className="size-4 text-zinc-400 group-hover:text-zinc-600 transition-colors" />
-                                            {new Date(event.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' })}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-5 text-sm text-zinc-600 hidden md:table-cell">
-                                        <div className="flex items-center gap-2 max-w-48 truncate group-hover:text-foreground transition-colors">
-                                            <MapPin className="size-4 text-zinc-400 shrink-0" />
-                                            {event.location}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-5 hidden md:table-cell">
-                                        <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-lg bg-zinc-100 text-zinc-700 border border-zinc-200 group-hover:bg-white transition-colors">
-                                            {event.category}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-5 hidden md:table-cell text-right">
-                                        {(() => {
-                                            const status = getEventStatus(event)
-                                            if (status === "draft") return (
-                                                <span className="bg-zinc-100 text-zinc-600 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-200">
-                                                    Bozza
-                                                </span>
-                                            )
-                                            if (status === "ongoing") return (
-                                                <span className="bg-blue-50 text-blue-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-blue-100">
-                                                    In corso
-                                                </span>
-                                            )
-                                            if (status === "scheduled") return (
-                                                <span className="bg-amber-50 text-amber-700 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-amber-100">
-                                                    Programmato
-                                                </span>
-                                            )
-                                            return (
-                                                <span className="bg-zinc-50 text-zinc-500 text-[10px] uppercase font-black px-2 py-0.5 rounded border border-zinc-100">
-                                                    Archiviato
-                                                </span>
-                                            )
-                                        })()}
-                                    </td>
-                                    <td className="px-6 py-5">
-                                        <div className="flex items-center gap-1 justify-end">
-                                            {(userRole !== "ADMIN_NETWORK" || (event.associations && userAssociation && event.associations.includes(userAssociation))) ? (
-                                                <>
-                                                    <button
-                                                        onClick={() => handleExport(event)}
-                                                        disabled={isActionLoading === event.id}
-                                                        className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-blue-600 hover:border-blue-100 hover:bg-blue-50 transition-all"
-                                                        title="Esporta Iscritti (CSV)"
-                                                    >
-                                                        <Download className="size-4" />
-                                                    </button>
-
-                                                    <button
-                                                        onClick={() => handleDuplicate(event.id)}
-                                                        disabled={isActionLoading === event.id}
-                                                        className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-orange-600 hover:border-orange-100 hover:bg-orange-50 transition-all"
-                                                        title="Duplica Evento"
-                                                    >
-                                                        <Copy className="size-4" />
-                                                    </button>
-
-                                                    <button
-                                                        onClick={() => {
-                                                            setEditingEvent(event)
-                                                            setIsFormModalOpen(true)
-                                                        }}
-                                                        className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
-                                                        title="Modifica"
-                                                    >
-                                                        <Pencil className="size-4" />
-                                                    </button>
-
-                                                    <button
-                                                        onClick={() => {
-                                                            if (userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM")) {
-                                                                alert("Non puoi eliminare contenuti creati dall'amministrazione centrale.")
-                                                                return
-                                                            }
-                                                            handleDelete(event.id)
-                                                        }}
-                                                        disabled={isActionLoading === event.id || (userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM"))}
-                                                        className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
-                                                        title={userRole === "ADMIN_NETWORK" && event.associations?.includes("MORGANA_ORUM") ? "Contenuto centrale protetto" : "Elimina"}
-                                                    >
-                                                        {isActionLoading === event.id ? (
-                                                            <Loader2 className="size-4 animate-spin text-zinc-300" />
-                                                        ) : (
-                                                            <Trash2 className="size-4" />
-                                                        )}
-                                                    </button>
-                                                </>
-                                            ) : (
-                                                <span className="text-xs font-bold text-zinc-400 italic bg-zinc-100 px-3 py-1.5 rounded-xl">Solo lettura</span>
-                                            )}
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                        ))}
+                    </tbody>
+                </table>
                 {events.length === 0 && !isPending && (
                     <div className="p-16 text-center">
                         <div className="size-20 bg-zinc-50 rounded-full flex items-center justify-center mx-auto mb-6">

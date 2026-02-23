@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
 import { getAssociationName } from "@/lib/associations"
 import { SidebarClock } from "@/components/admin/sidebar-clock"
-import { AdminSidebar } from "@/components/admin/admin-sidebar"
 
 export const dynamic = 'force-dynamic'
 
@@ -93,23 +92,78 @@ export default async function AdminLayout({
     const isMorgana = true; // TODO: Portale Unificato - Tema neutro o in base all'utente
 
     return (
-        <div className="min-h-screen bg-zinc-50 flex flex-col lg:flex-row relative" data-admin-area>
-            <AdminSidebar
-                navigation={navigation}
-                user={{
-                    name: data.user.name,
-                    surname: data.user.surname,
-                    role: userRole === "ADMIN_NETWORK" ? "Admin Network" :
-                        userRole === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"
-                }}
-                logoutAction={async () => {
-                    "use server"
-                    await logoutAction()
-                }}
-            />
+        <div className="min-h-screen bg-zinc-50 flex" data-admin-area>
+            {/* Sidebar */}
+            <aside className="w-64 shrink-0 bg-zinc-900 text-white flex flex-col sticky top-0 max-h-screen overflow-y-auto z-40">
+                <div className="p-6 border-b border-zinc-800 flex items-center gap-3">
+                    <Shield className={cn("size-6", isMorgana ? "text-red-500" : "text-blue-500")} />
+                    <div>
+                        <h1 className="font-bold text-lg tracking-wide uppercase">Admin</h1>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Pannello di Controllo</p>
+                        <SidebarClock />
+                    </div>
+                </div>
+
+                <div className="flex-1 py-6 px-4 space-y-8">
+                    {navigation.map((section) => (
+                        <div key={section.section} className="space-y-2">
+                            <h2 className="px-4 text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em]">
+                                {section.section}
+                            </h2>
+                            <div className="space-y-1">
+                                {section.items.map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all group"
+                                    >
+                                        <item.icon className={cn(
+                                            "size-5 group-hover:text-white transition-colors",
+                                            "text-zinc-500"
+                                        )} />
+                                        <span className="font-medium text-sm">{item.label}</span>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="p-4 border-t border-zinc-800">
+                    <Link
+                        href={`/dashboard`}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all group text-xs font-medium"
+                    >
+                        ← Area Personale
+                    </Link>
+                </div>
+
+                <div className="p-4 border-t border-zinc-800">
+                    <div className="flex items-center gap-3 px-4 py-3 mb-2">
+                        <div className="size-8 rounded-full bg-zinc-700 flex items-center justify-center text-xs font-bold">
+                            {data.user.name.charAt(0)}{data.user.surname.charAt(0)}
+                        </div>
+                        <div className="overflow-hidden">
+                            <p className="text-sm font-bold truncate">{data.user.name}</p>
+                            <p className="text-[10px] text-zinc-500 uppercase">
+                                {userRole === "ADMIN_NETWORK" ? "Admin Network" :
+                                    userRole === "ADMIN_MORGANA" ? "Admin Morgana/Orum" : "Super Admin"}
+                            </p>
+                        </div>
+                    </div>
+                    <form action={async () => {
+                        "use server"
+                        await logoutAction()
+                    }}>
+                        <button className="w-full flex items-center gap-2 px-4 py-2 rounded-lg text-red-500 hover:bg-red-500/10 transition-colors text-xs font-bold uppercase tracking-widest">
+                            <LogOut className="size-4" /> Esci
+                        </button>
+                    </form>
+                </div>
+            </aside>
 
             {/* Main Content */}
-            <main className="flex-1 w-full max-w-7xl mx-auto p-4 md:p-8 lg:p-10 transition-all duration-300">
+            <main className="flex-1 p-8">
                 {children}
             </main>
         </div>
