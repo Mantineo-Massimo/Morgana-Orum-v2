@@ -5,6 +5,7 @@ import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Cale
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
 import { getAssociationName } from "@/lib/associations"
+import { SidebarClock } from "@/components/admin/sidebar-clock"
 
 export const dynamic = 'force-dynamic'
 
@@ -97,8 +98,9 @@ export default async function AdminLayout({
                 <div className="p-6 border-b border-zinc-800 flex items-center gap-3">
                     <Shield className={cn("size-6", isMorgana ? "text-red-500" : "text-blue-500")} />
                     <div>
-                        <h1 className="font-bold text-lg tracking-wide">ADMIN</h1>
-                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest">Pannello di Controllo</p>
+                        <h1 className="font-bold text-lg tracking-wide uppercase">Admin</h1>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Pannello di Controllo</p>
+                        <SidebarClock />
                     </div>
                 </div>
 
