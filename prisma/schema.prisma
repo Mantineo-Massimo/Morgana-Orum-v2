@@ -140,6 +140,18 @@ model Notification {
   @@index([createdAt])
 }
 
+model AnalyticEvent {
+  id        Int      @id @default(autoincrement())
+  type      String   // "VISIT", "CLICK", "EVENT_VIEW", etc.
+  page      String?  // The URL or page name
+  targetId  String?  // ID of the target (e.g., eventId)
+  metadata  Json?    // Extra info (browser, platform, etc.)
+  createdAt DateTime @default(now())
+
+  @@index([type])
+  @@index([createdAt])
+}
+
 enum Role {
   USER
   ADMIN_NETWORK

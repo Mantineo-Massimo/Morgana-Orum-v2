@@ -40,9 +40,9 @@ export default async function AnalyticsPage() {
     ]
 
     const trafficStats = [
-        { label: "Visite Sito", value: "12.4k", change: "+14%", icon: Eye },
-        { label: "Click Medi/Giorno", value: "856", change: "+8%", icon: MousePointer2 },
-        { label: "Tempo Medio", value: "3m 42s", change: "-2%", icon: BarChart3 },
+        { label: "Visite Sito", value: (stats.visitsCount || 0).toLocaleString('it-IT'), change: "Reali", icon: Eye },
+        { label: "Click Totali", value: (stats.clicksCount || 0).toLocaleString('it-IT'), change: "Reali", icon: MousePointer2 },
+        { label: "Engagement Rate", value: `${stats.engagementRate}%`, change: "Reali", icon: BarChart3 },
     ]
 
     return (
@@ -52,9 +52,11 @@ export default async function AnalyticsPage() {
                     <h1 className="text-3xl font-black text-foreground tracking-tight">Analytics Sito</h1>
                     <p className="text-zinc-500 text-sm mt-1 font-medium italic">Panoramica completa delle performance e dei contenuti della piattaforma.</p>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-4 py-2 rounded-xl border border-blue-100 shadow-sm">
-                    <span className="size-2 rounded-full bg-blue-500 animate-pulse" />
-                    Google Analytics 4 Attivo
+                <div className="flex flex-col items-end gap-2">
+                    <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-4 py-2 rounded-xl border border-blue-100 shadow-sm">
+                        <span className="size-2 rounded-full bg-blue-500 animate-pulse" />
+                        Google Analytics 4 & Sistema Interno Attivi
+                    </div>
                 </div>
             </div>
 
@@ -74,9 +76,9 @@ export default async function AnalyticsPage() {
                 </div>
             </section>
 
-            {/* Traffic Placeholder Stats */}
+            {/* Real Internal Traffic Stats */}
             <section className="space-y-4">
-                <h2 className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] px-1">Engagement & Traffico</h2>
+                <h2 className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] px-1">Engagement & Traffico (Dati Interni)</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {trafficStats.map((stat, i) => (
                         <div key={i} className="bg-zinc-900 p-6 rounded-2xl text-white shadow-xl relative overflow-hidden group">
@@ -85,7 +87,7 @@ export default async function AnalyticsPage() {
                                     <p className="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-1">{stat.label}</p>
                                     <p className="text-2xl font-black">{stat.value}</p>
                                 </div>
-                                <div className={`flex items-center gap-1 text-[10px] font-bold px-2 py-1 rounded-lg ${stat.change.startsWith('+') ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                                <div className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2 py-1 rounded-lg bg-white/10 text-zinc-300">
                                     {stat.change}
                                 </div>
                             </div>
@@ -103,7 +105,7 @@ export default async function AnalyticsPage() {
                             <TrendingUp className="size-5 text-green-600" />
                             Eventi più Popolari
                         </h3>
-                        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Top 5</span>
+                        <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">In base agli iscritti</span>
                     </div>
                     <div className="space-y-4">
                         {stats.topEvents.map((event, i) => (
@@ -121,20 +123,20 @@ export default async function AnalyticsPage() {
                     </div>
                 </section>
 
-                {/* Future Roadmap */}
+                {/* Dashboard Status */}
                 <section className="bg-blue-600 p-8 rounded-3xl text-white flex flex-col justify-between relative overflow-hidden">
                     <div className="relative z-10">
                         <div className="p-3 bg-white/10 rounded-2xl w-fit mb-6">
                             <BarChart3 className="size-8" />
                         </div>
-                        <h3 className="text-2xl font-black tracking-tight mb-2">Integrazione GA4 Completata</h3>
+                        <h3 className="text-2xl font-black tracking-tight mb-2">Monitoraggio Interno Attivo</h3>
                         <p className="text-blue-100 text-sm max-w-xs md:max-w-md">
-                            Il tracciamento dei visitatori e del comportamento utente è ora attivo tramite Google Analytics 4. I report mensili PDF sono in fase di sviluppo.
+                            Il sistema sta ora registrando in tempo reale ogni visita al sito e ogni click effettuato dagli utenti per fornirti dati certi senza dipendere da Google.
                         </p>
                     </div>
-                    <div className="mt-8 relative z-10">
+                    <div className="mt-8 relative z-10 flex items-center gap-4">
                         <div className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest bg-white/20 px-4 py-2 rounded-full border border-white/10">
-                            Roadmap 2026 Q2
+                            Stato: Operativo
                         </div>
                     </div>
                     {/* Abstract Shapes */}

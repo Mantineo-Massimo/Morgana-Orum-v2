@@ -6,6 +6,7 @@ import { cookies } from "next/headers"
 import { TopBar } from "@/components/top-bar"
 import { StickyHeader } from "@/components/sticky-header"
 import { Footer } from "@/components/footer"
+import { ClientLogger } from "@/components/analytics/client-logger"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
@@ -40,6 +41,7 @@ export default function RootLayout({
                     <div className="flex min-h-screen flex-col bg-background font-sans">
                         <TopBar />
                         <StickyHeader isLoggedIn={isLoggedIn} />
+                        <ClientLogger />
 
                         <main className="flex-1">
                             {children}

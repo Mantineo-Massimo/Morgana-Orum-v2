@@ -10,7 +10,9 @@ export async function getPlatformStats() {
             totalRegistrations,
             totalNews,
             totalReps,
-            topEvents
+            topEvents,
+            visitsCount,
+            clicksCount
         ] = await Promise.all([
             prisma.user.count(),
             prisma.event.count({ where: { published: true } }),
@@ -30,7 +32,9 @@ export async function getPlatformStats() {
                     }
                 },
                 take: 5
-            })
+            }),
+            prisma.analyticEvent.count({ where: { type: "VISIT" } }),
+            prisma.analyticEvent.count({ where: { type: "CLICK" } })
         ])
 
         const engagementRate = totalUsers > 0
@@ -44,6 +48,8 @@ export async function getPlatformStats() {
             totalNews,
             totalReps,
             engagementRate,
+            visitsCount,
+            clicksCount,
             topEvents: topEvents.map(e => ({
                 id: e.id,
                 title: e.title,
