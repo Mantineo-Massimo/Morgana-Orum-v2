@@ -8,7 +8,9 @@ import { StickyHeader } from "@/components/sticky-header"
 import { Footer } from "@/components/footer"
 import { ClientLogger } from "@/components/analytics/client-logger"
 import { CookieConsent } from "@/components/cookie-consent"
-import "./globals.css"
+import { NextIntlClientProvider } from "next-intl"
+import { getMessages } from "next-intl/server"
+import "../globals.css"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-serif" })
@@ -61,41 +63,36 @@ export const metadata: Metadata = {
     }
 }
 
-import {NextIntlClientProvider} from "next-intl"
-import {getMessages} from "next-intl/server"
-
 export default async function RootLayout({
-    children, params: {locale}
+    children,
+    params: { locale }
 }: {
     children: React.ReactNode
+    params: { locale: string }
 }) {
     const sessionEmail = cookies().get("session_email")?.value
     const isLoggedIn = !!sessionEmail
     const cookieConsent = cookies().get("cookie-consent")?.value
+    const messages = await getMessages()
 
     return (
         <html lang={locale}>
             <body className={`${inter.variable} ${outfit.variable}`}>
-                const messages = await getMessages()
+                <NextIntlClientProvider messages={messages} locale={locale}>
+                    <BrandProvider defaultBrand={null}>
+                        <div className="flex min-h-screen flex-col bg-background font-sans">
+                            <TopBar />
+                            <StickyHeader isLoggedIn={isLoggedIn} />
+                            <ClientLogger />
+                            <CookieConsent />
 
-    return (
-        <html lang={locale}>
-            <body className={`${inter.variable} ${outfit.variable}`}>
-                <NextIntlClientProvider messages={messages}>
-                <BrandProvider defaultBrand={null}>
-                    <div className="flex min-h-screen flex-col bg-background font-sans">
-                        <TopBar />
-                        <StickyHeader isLoggedIn={isLoggedIn} />
-                        <ClientLogger />
-                        <CookieConsent />
+                            <main className="flex-1">
+                                {children}
+                            </main>
 
-                        <main className="flex-1">
-                            {children}
-                        </main>
-
-                        <Footer />
-                    </div>
-                </BrandProvider>
+                            <Footer />
+                        </div>
+                    </BrandProvider>
                 </NextIntlClientProvider>
                 {process.env.NEXT_PUBLIC_GA_ID && cookieConsent === "accepted" && (
                     <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
