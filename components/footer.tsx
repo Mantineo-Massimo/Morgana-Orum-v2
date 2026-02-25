@@ -23,6 +23,25 @@ export function Footer() {
 
     const currentNetwork = brand && networkInfo[brand] ? networkInfo[brand] : null
 
+    const BRAND_COLORS: Record<string, string> = {
+        unimhealth: "text-[#c9041a]",
+        economia: "text-[#202549]",
+        matricole: "text-[#f6f6f6]",
+        scipog: "text-[#fbc363]",
+        dicam: "text-[#f34ab4]"
+    }
+
+    const SOCIAL_MAPPING: Record<string, string> = {
+        matricole: "unime.matricole",
+        unimhealth: "unimhealth",
+        economia: "studentieconomia",
+        scipog: "studentiscipog",
+        dicam: "insidedicam"
+    }
+
+    const networkIG = brand && SOCIAL_MAPPING[brand] ? SOCIAL_MAPPING[brand] : null
+    const networkColor = brand && BRAND_COLORS[brand] ? BRAND_COLORS[brand] : null
+
     return (
         <footer id="site-footer" className={cn("w-full pt-16 pb-8", bgColor, textColor)}>
             <div className="container">
@@ -45,6 +64,14 @@ export function Footer() {
                                 <a href="https://azioneuniversitaria.it" target="_blank" rel="noopener noreferrer" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
                                     <Image src="/assets/azione.png" alt="Azione Universitaria logo" fill className="object-contain" sizes="56px" />
                                 </a>
+                                {currentNetwork && (
+                                    <>
+                                        <div className="w-px h-8 bg-white/20 mx-1"></div>
+                                        <div className="relative h-14 w-14 hover:scale-110 transition-transform">
+                                            <Image src={currentNetwork.logo} alt={`${currentNetwork.name} logo`} fill className="object-contain" sizes="56px" />
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-col gap-2">
@@ -63,6 +90,14 @@ export function Footer() {
                             <div className="w-px h-5 bg-white/20 mx-1"></div>
                             <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors"><Facebook className="size-5" /></a>
                             <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors"><Instagram className="size-5" /></a>
+                            {networkIG && (
+                                <>
+                                    <div className="w-px h-5 bg-white/20 mx-1"></div>
+                                    <a href={`https://www.instagram.com/${networkIG}`} target="_blank" rel="noopener noreferrer" className={cn("transition-colors", networkColor ? `hover:${networkColor}` : "hover:text-primary", networkColor)}>
+                                        <Instagram className="size-5" />
+                                    </a>
+                                </>
+                            )}
                         </div>
                     </div>
 

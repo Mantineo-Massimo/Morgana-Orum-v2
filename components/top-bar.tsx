@@ -27,16 +27,16 @@ export function TopBar() {
     }
 
     const BRAND_COLORS: Record<string, string> = {
-        unimhealth: "text-[#c12830]",
-        economia: "text-[#0055a4]",
-        matricole: "text-zinc-400",
-        scipog: "text-[#ffcc00]",
-        dicam: "text-[#d81b60]"
+        unimhealth: "text-zinc-500",
+        economia: "text-zinc-500",
+        matricole: "text-zinc-500",
+        scipog: "text-zinc-500",
+        dicam: "text-zinc-500"
     }
 
     const networkIG = brand && SOCIAL_MAPPING[brand] ? SOCIAL_MAPPING[brand] : null
     const networkName = brand && BRAND_NAMES[brand] ? BRAND_NAMES[brand] : null
-    const networkColor = brand && BRAND_COLORS[brand] ? BRAND_COLORS[brand] : "text-orange-400"
+    const networkColor = brand && BRAND_COLORS[brand] ? BRAND_COLORS[brand] : "text-zinc-500"
 
     return (
         <div id="site-topbar" className={cn("w-full text-white py-2 px-4 shadow-sm", bgColor)}>
@@ -55,8 +55,8 @@ export function TopBar() {
                     {networkIG && (
                         <>
                             <div className="flex items-center gap-1.5 md:gap-2">
-                                <span className={cn("text-[10px] md:text-xs uppercase font-bold mr-0.5 md:mr-1", networkColor)}>{networkName}:</span>
-                                <a href={`https://www.instagram.com/${networkIG}`} target="_blank" rel="noopener noreferrer" className={cn("transition-colors", `hover:${networkColor}`, networkColor)}><Instagram className="size-3 md:size-3.5" /></a>
+                                <span className="text-[10px] md:text-xs uppercase font-bold text-zinc-500 mr-0.5 md:mr-1">{networkName}:</span>
+                                <a href={`https://www.instagram.com/${networkIG}`} target="_blank" rel="noopener noreferrer" className={cn("transition-colors", `hover:${networkColor}`)}><Instagram className="size-3 md:size-3.5" /></a>
                             </div>
                             <div className="w-px h-3 md:h-4 bg-zinc-800"></div>
                         </>

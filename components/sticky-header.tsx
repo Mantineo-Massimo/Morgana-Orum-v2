@@ -23,12 +23,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
     // Brand Colors Unificati
     const { brand } = useBrand()
 
-    const brandColorClass = brand === "unimhealth" ? "bg-[#c12830]" :
-        brand === "economia" ? "bg-[#0055a4]" :
-            brand === "matricole" ? "bg-gradient-to-r from-[#ffffff] to-[#afafaf]" :
-                brand === "scipog" ? "bg-[#ffcc00]" :
-                    brand === "dicam" ? "bg-[#d81b60]" :
-                        "bg-[linear-gradient(45deg,#c12830_0%,#18182e_50%)]"
+    const brandColorClass = brand === "unimhealth" ? "bg-[#c9041a]" :
+        brand === "economia" ? "bg-[#202549]" :
+            brand === "matricole" ? "bg-gradient-to-r from-[#ffffff] to-[#f6f6f6]" :
+                brand === "scipog" ? "bg-[#fbc363]" :
+                    brand === "dicam" ? "bg-[#f34ab4]" :
+                        "bg-[linear-gradient(45deg,#c9041a_0%,#18182e_50%)]"
 
     // Mapping per i loghi e nomi del network
     const networkInfo: Record<string, { name: string, logo: string, motto: string }> = {
@@ -91,14 +91,16 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                             )}
                         >
                             {currentNetwork ? (
-                                <div className="relative h-full aspect-square">
-                                    <Image
-                                        src={currentNetwork.logo}
-                                        alt={currentNetwork.name}
-                                        fill
-                                        className="object-contain"
-                                        priority
-                                    />
+                                <div className="relative h-full aspect-square bg-white rounded-full p-1 shadow-sm flex items-center justify-center">
+                                    <div className="relative w-4/5 h-4/5">
+                                        <Image
+                                            src={currentNetwork.logo}
+                                            alt={currentNetwork.name}
+                                            fill
+                                            className="object-contain"
+                                            priority
+                                        />
+                                    </div>
                                 </div>
                             ) : (
                                 <>
@@ -112,7 +114,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                                             sizes="(max-width: 768px) 96px, 128px"
                                         />
                                     </div>
-                                    <div className="h-full w-px bg-white/20" />
+                                    <div className="h-full w-px bg-white/20 mx-1" />
                                     <div className="relative h-full aspect-square">
                                         <Image
                                             src={`/assets/orum.png`}
