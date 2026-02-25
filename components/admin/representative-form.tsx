@@ -44,11 +44,15 @@ const nationalRolesList = [
 export default function RepresentativeForm({
     initialData,
     userRole,
-    userAssociation
+    userAssociation,
+    onSuccess,
+    onCancel
 }: {
     initialData?: any
     userRole?: string
     userAssociation?: Association
+    onSuccess?: () => void
+    onCancel?: () => void
 }) {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
@@ -108,8 +112,12 @@ export default function RepresentativeForm({
             : await createRepresentative(rawData)
 
         if (result.success) {
-            router.push(`/admin/representatives`)
-            router.refresh()
+            if (onSuccess) {
+                onSuccess()
+            } else {
+                router.push(`/admin/representatives`)
+                router.refresh()
+            }
         } else {
             setError(result.error || "Errore sconosciuto")
             setIsLoading(false)
@@ -120,23 +128,30 @@ export default function RepresentativeForm({
     const [category, setCategory] = useState<"CENTRAL" | "DEPARTMENT" | "NATIONAL">(initialData?.category || "DEPARTMENT")
 
     return (
-        <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <div className="mb-8">
-                <Link
-                    href={`/admin/representatives`}
-                    className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
-                >
-                    <ArrowLeft className="size-4" /> Torna alla lista
-                </Link>
-                <h1 className="text-3xl font-bold text-foreground">
-                    {isEditing ? "Modifica Rappresentante" : "Nuovo Rappresentante"}
-                </h1>
-                <p className="text-zinc-500">
-                    {isEditing ? "Aggiorna i dettagli" : "Inserisci i dati del nuovo eletto"}
-                </p>
-            </div>
+        <div className={cn(
+            !onSuccess && "max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500"
+        )}>
+            {!onSuccess && (
+                <div className="mb-8">
+                    <Link
+                        href={`/admin/representatives`}
+                        className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-4"
+                    >
+                        <ArrowLeft className="size-4" /> Torna alla lista
+                    </Link>
+                    <h1 className="text-3xl font-bold text-foreground">
+                        {isEditing ? "Modifica Rappresentante" : "Nuovo Rappresentante"}
+                    </h1>
+                    <p className="text-zinc-500">
+                        {isEditing ? "Aggiorna i dettagli" : "Inserisci i dati del nuovo eletto"}
+                    </p>
+                </div>
+            )}
 
-            <form action={handleSubmit} className="bg-white border border-zinc-100 rounded-xl p-8 shadow-sm space-y-6">
+            <form action={handleSubmit} className={cn(
+                "space-y-6",
+                !onSuccess && "bg-white border border-zinc-100 rounded-xl p-8 shadow-sm"
+            )}>
                 {error && (
                     <div className="bg-red-50 text-red-600 p-4 rounded-lg text-sm font-medium border border-red-100">
                         {error}
@@ -374,7 +389,16 @@ export default function RepresentativeForm({
 
                 </div>
 
-                <div className="pt-4 flex justify-end">
+                <div className="pt-4 flex justify-end gap-3">
+                    {onCancel && (
+                        <button
+                            type="button"
+                            onClick={onCancel}
+                            className="px-6 py-3 font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
+                        >
+                            Annulla
+                        </button>
+                    )}
                     <button
                         type="submit"
                         disabled={isLoading}

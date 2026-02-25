@@ -1,12 +1,13 @@
 "use client"
 
 import { useState } from "react"
-import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy } from "lucide-react"
+import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy, Plus } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { deleteRepresentative, duplicateRepresentative } from "@/app/actions/representatives"
 import { useRouter } from "next/navigation"
+import RepresentativeForm from "@/components/admin/representative-form"
 
 import { Association } from "@prisma/client"
 import { ASSOCIATION_DEPARTMENT_KEYWORDS } from "@/lib/associations"
@@ -36,6 +37,18 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
     const [listFilter, setListFilter] = useState("all")
     const [categoryFilter, setCategoryFilter] = useState("all")
     const [sortConfig, setSortConfig] = useState<{ key: keyof Representative, direction: 'asc' | 'desc' | null } | null>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [editingRep, setEditingRep] = useState<Representative | null>(null)
+
+    const openModal = (rep?: Representative) => {
+        setEditingRep(rep || null)
+        setIsModalOpen(true)
+    }
+
+    const closeModal = () => {
+        setIsModalOpen(false)
+        setEditingRep(null)
+    }
 
     const requestSort = (key: keyof Representative) => {
         let direction: 'asc' | 'desc' | null = 'asc'
@@ -79,7 +92,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
     return (
         <div className="space-y-6">
-            <div className="flex flex-col md:flex-row gap-4 p-4 bg-zinc-50 rounded-xl border border-zinc-100">
+            <div className="flex flex-col md:flex-row gap-4 p-4 bg-zinc-50 rounded-xl border border-zinc-100 items-center">
                 {/* Search Bar */}
                 <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
@@ -124,6 +137,13 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                         <option value="NATIONAL">Organi Nazionali</option>
                     </select>
                 </div>
+
+                <button
+                    onClick={() => openModal()}
+                    className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 whitespace-nowrap"
+                >
+                    <Plus className="size-4" /> Aggiungi Nuovo
+                </button>
             </div>
 
             <div className="bg-white border border-zinc-100 rounded-xl overflow-hidden shadow-sm">
@@ -222,13 +242,13 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                                 if (userRole !== "ADMIN_NETWORK" || rep.association === userAssociation || isDeptMatch) {
                                                     return (
                                                         <div className="flex items-center justify-end gap-2">
-                                                            <Link
-                                                                href={`/admin/representatives/${rep.id}/edit`}
+                                                            <button
+                                                                onClick={() => openModal(rep)}
                                                                 className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
                                                                 title="Modifica"
                                                             >
                                                                 <Pencil className="size-4" />
-                                                            </Link>
+                                                            </button>
                                                             <button
                                                                 onClick={async () => {
                                                                     const res = await duplicateRepresentative(rep.id)
@@ -275,6 +295,37 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                     </table>
                 </div>
             </div>
+
+            {/* Representative Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in fade-in zoom-in duration-200">
+                        <button
+                            onClick={closeModal}
+                            className="absolute right-6 top-6 p-2 hover:bg-zinc-100 rounded-full transition-colors z-10"
+                        >
+                            <X className="size-5 text-zinc-400" />
+                        </button>
+
+                        <div className="p-8">
+                            <h2 className="text-2xl font-black text-zinc-900 mb-6">
+                                {editingRep ? "Modifica Rappresentante" : "Nuovo Rappresentante"}
+                            </h2>
+
+                            <RepresentativeForm
+                                initialData={editingRep}
+                                userRole={userRole}
+                                userAssociation={userAssociation}
+                                onSuccess={() => {
+                                    closeModal()
+                                    router.refresh()
+                                }}
+                                onCancel={closeModal}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

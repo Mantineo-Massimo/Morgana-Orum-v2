@@ -25,12 +25,6 @@ export default async function AdminRepresentativesPage() {
                     <h1 className="text-3xl font-bold text-foreground">Gestione Rappresentanti</h1>
                     <p className="text-zinc-500">Gestisci l&apos;elenco dei rappresentanti eletti negli organi.</p>
                 </div>
-                <Link
-                    href={`/admin/representatives/new`}
-                    className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 self-start md:self-auto"
-                >
-                    <Plus className="size-4" /> Aggiungi Nuovo
-                </Link>
             </div>
 
             <RepresentativesAdminClient
