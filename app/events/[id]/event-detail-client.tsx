@@ -67,7 +67,7 @@ export default function EventDetailClient({
 
     const formattedDate = formatDate(event.date)
     const formattedTime = formatTime(event.date)
-    const hasEndDate = event.endDate && new Date(event.endDate).getTime() !== new Date(event.date).getTime()
+    const hasEndDate = event.endDate && new Date(event.endDate).toDateString() !== new Date(event.date).toDateString()
     const booking = isBookingActive(event)
 
     // Parse attachments
@@ -132,9 +132,9 @@ export default function EventDetailClient({
                         <Link href={`/events`} className="inline-flex items-center text-sm font-bold text-white/70 hover:text-white mb-6 uppercase tracking-widest transition-colors">
                             <ChevronLeft className="size-4 mr-1" /> Torna agli Eventi
                         </Link>
-                        <div className="flex flex-wrap gap-2 mb-2">
+                        <div className="flex flex-wrap gap-3 mb-6">
                             {event.category.split(",").map((cat: string) => (
-                                <span key={cat.trim()} className="text-sm font-bold uppercase tracking-widest text-white/60">
+                                <span key={cat.trim()} className="text-[11px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-lg bg-[#0055a4] text-white shadow-lg border border-blue-400/30">
                                     {cat.trim()}
                                 </span>
                             ))}

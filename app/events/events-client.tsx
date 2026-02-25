@@ -291,7 +291,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
 
         // Date display
         const dateStr = formatDate(item.date)
-        const hasEndDate = item.endDate && new Date(item.endDate).getTime() !== new Date(item.date).getTime()
+        const hasEndDate = item.endDate && new Date(item.endDate).toDateString() !== new Date(item.date).toDateString()
         const dateDisplay = hasEndDate
             ? `${formatShortDate(item.date)} – ${formatShortDate(item.endDate!)}`
             : dateStr
@@ -336,7 +336,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
                         {/* Category badge (Top Right, consistent with News) */}
                         <div className="absolute top-4 right-4 z-20 flex flex-col gap-1 items-end">
                             {item.category.split(",").map((cat: string) => (
-                                <span key={cat.trim()} className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/90 backdrop-blur-sm text-white shadow-sm border border-red-400/50">
+                                <span key={cat.trim()} className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#0055a4]/90 backdrop-blur-sm text-white shadow-sm border border-blue-400/30">
                                     {cat.trim()}
                                 </span>
                             ))}
