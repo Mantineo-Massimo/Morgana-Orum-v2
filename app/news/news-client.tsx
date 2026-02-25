@@ -160,7 +160,7 @@ function NewsCard({ item }: { item: any }) {
             className="group bg-white rounded-2xl overflow-hidden shadow-lg shadow-zinc-200/50 hover:shadow-2xl transition-all hover:-translate-y-1 border border-zinc-100 flex flex-col h-full"
         >
             {/* Image - clickable */}
-            <Link href={`/news/${item.id}`} className="relative h-48 bg-zinc-100 overflow-hidden block cursor-pointer">
+            <Link href={`/news/${item.id}`} className="relative aspect-[16/9] bg-zinc-100 overflow-hidden block cursor-pointer">
                 {item.image ? (
                     <Image
                         src={item.image}

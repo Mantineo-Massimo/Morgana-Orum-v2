@@ -126,8 +126,8 @@ export default function EventDetailClient({
                         className="object-cover opacity-20"
                     />
                 )}
-                <div className="relative z-10 text-white pt-32 pb-20">
-                    <div className="container mx-auto px-6">
+                <div className="relative z-10 text-white pt-32 pb-24 md:pt-48 md:pb-32">
+                    <div className="container mx-auto px-6 relative">
                         <Link href={`/events`} className="inline-flex items-center text-sm font-bold text-white/70 hover:text-white mb-6 uppercase tracking-widest transition-colors">
                             <ChevronLeft className="size-4 mr-1" /> Torna agli Eventi
                         </Link>

@@ -312,7 +312,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
                     )}
                 >
                     {/* Cover Image */}
-                    <div className="relative h-44 bg-gradient-to-br from-zinc-100 to-zinc-200 overflow-hidden">
+                    <div className="relative aspect-[16/9] bg-gradient-to-br from-zinc-100 to-zinc-200 overflow-hidden">
                         {item.image ? (
                             <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                         ) : (
