@@ -64,7 +64,7 @@ export default async function AdminPage() {
                 <div className="flex items-center gap-3">
                     <Link
                         href="/admin/events/new"
-                        className="flex items-center gap-2 px-4 py-2.5 bg-zinc-900 text-white rounded-xl text-sm font-bold hover:bg-zinc-800 transition-all shadow-sm"
+                        className="flex items-center gap-2 px-4 py-2.5 bg-[#18182e]/50 text-white rounded-xl text-sm font-bold hover:bg-[#18182e]/70 transition-all shadow-sm"
                     >
                         <Plus className="size-4" /> Nuovo Evento
                     </Link>
@@ -154,7 +154,7 @@ export default async function AdminPage() {
             </div>
 
             {/* Quick Tips / Analytics Promo */}
-            <div className="bg-zinc-900 p-8 rounded-3xl text-white relative overflow-hidden group">
+            <div className="bg-[#18182e]/50 p-8 rounded-3xl text-white relative overflow-hidden group">
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div className="space-y-2 text-center md:text-left">
                         <h3 className="text-xl font-black">Dashbord Analytics Avanzata</h3>

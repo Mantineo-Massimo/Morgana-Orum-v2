@@ -145,7 +145,7 @@ export default async function BrandHomePage() {
             </section>
 
             {/* OUR NETWORK SECTION */}
-            <section className="bg-zinc-900 border-b border-white/5 relative z-0">
+            <section className="bg-[#18182e]/50 border-b border-white/5 relative z-0">
                 {/* Network Header */}
                 <div className="relative h-[180px] md:h-[280px] flex items-center justify-center overflow-hidden">
                     <Image
@@ -178,7 +178,7 @@ export default async function BrandHomePage() {
                     </Link>
 
                     {/* Studenti Economia */}
-                    <Link href="/network/economia" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#0055a4] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/economia" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#18182e] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/economia.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">

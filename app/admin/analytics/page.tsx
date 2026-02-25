@@ -81,7 +81,7 @@ export default async function AnalyticsPage() {
                 <h2 className="text-xs font-black text-zinc-400 uppercase tracking-[0.2em] px-1">Engagement & Traffico (Dati Interni)</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
                     {trafficStats.map((stat, i) => (
-                        <div key={i} className="bg-zinc-900 p-6 rounded-2xl text-white shadow-xl relative overflow-hidden group">
+                        <div key={i} className="bg-[#18182e]/50 p-6 rounded-2xl text-white shadow-xl relative overflow-hidden group">
                             <div className="relative z-10 flex items-center justify-between">
                                 <div>
                                     <p className="text-xs font-medium text-zinc-400 uppercase tracking-wider mb-1">{stat.label}</p>

@@ -59,7 +59,7 @@ export default function EventDetailClient({
     isLoggedIn: boolean
     userEmail: string | null
 }) {
-    const theme = { bg: "bg-zinc-900", text: "text-foreground" }
+    const theme = { bg: "bg-[#18182e]/50", text: "text-foreground" }
 
     const [isRegistering, setIsRegistering] = useState(false)
     const [registrationStatus, setRegistrationStatus] = useState<"idle" | "success" | "error">(event.isRegistered ? "success" : "idle")
@@ -134,7 +134,7 @@ export default function EventDetailClient({
                         </Link>
                         <div className="flex flex-wrap gap-3 mb-6">
                             {event.category.split(",").map((cat: string) => (
-                                <span key={cat.trim()} className="text-[11px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-lg bg-[#0055a4] text-white shadow-lg border border-blue-400/30">
+                                <span key={cat.trim()} className="text-[11px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-lg bg-[#18182e] text-white shadow-lg border border-white/10">
                                     {cat.trim()}
                                 </span>
                             ))}

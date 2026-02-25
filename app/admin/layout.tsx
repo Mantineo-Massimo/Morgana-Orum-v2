@@ -107,7 +107,7 @@ export default async function AdminLayout({
             />
 
             {/* Desktop Sidebar */}
-            <aside className="w-64 shrink-0 bg-zinc-900 text-white hidden lg:flex flex-col sticky top-0 max-h-screen overflow-y-auto z-40">
+            <aside className="w-64 shrink-0 bg-[#18182e]/50 backdrop-blur-md text-white hidden lg:flex flex-col sticky top-0 max-h-screen overflow-y-auto z-40">
                 <div className="p-6 border-b border-zinc-800 flex items-center gap-3">
                     <Shield className={cn("size-6", isMorgana ? "text-red-500" : "text-blue-500")} />
                     <div>

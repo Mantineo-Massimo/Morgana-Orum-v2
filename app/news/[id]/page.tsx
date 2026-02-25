@@ -16,7 +16,7 @@ export default async function NewsDetailPage({ params }: { params: { id: string 
 
     const themeBg = "bg-zinc-100"
     const themeText = "text-zinc-600"
-    const themeAccent = "bg-zinc-900"
+    const themeAccent = "bg-[#18182e]/50"
     const themeLink = "text-foreground"
 
 

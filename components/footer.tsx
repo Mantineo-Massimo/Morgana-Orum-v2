@@ -8,7 +8,7 @@ import { useBrand } from "@/components/brand-provider"
 
 export function Footer() {
     const { brand } = useBrand()
-    const bgColor = "bg-zinc-900"
+    const bgColor = "bg-[#18182e]/50"
     const textColor = "text-white"
     const mutedColor = "text-white/70 hover:text-white"
 

@@ -8,7 +8,7 @@ import { useBrand } from "@/components/brand-provider"
 export function TopBar() {
     const { brand } = useBrand()
     // Unificato: Colore neutro scuro per la top bar
-    const bgColor = "bg-zinc-900"
+    const bgColor = "bg-[#18182e]/50"
 
     const SOCIAL_MAPPING: Record<string, string> = {
         matricole: "unime.matricole",

@@ -68,6 +68,8 @@ body:has([data-admin-area]) #site-footer {
   :root {
     --background: 0 0% 100%;
     --foreground: 240 31% 14%;
+    --orum-navy: 240 31% 14%;
+    --orum-soft: 240 31% 14% / 0.5;
     /* Orum Navy (#18182e) */
     --card: 0 0% 100%;
     --card-foreground: 240 31% 14%;

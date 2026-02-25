@@ -142,7 +142,7 @@ export default function DashboardLayout({
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group",
                                     isActive
-                                        ? (isMorgana ? "bg-zinc-900 text-white" : "bg-blue-50 text-blue-900")
+                                        ? (isMorgana ? "bg-[#18182e]/50 text-white" : "bg-blue-50 text-blue-900")
                                         : "text-zinc-500 hover:bg-zinc-50 hover:text-foreground"
                                 )}
                             >

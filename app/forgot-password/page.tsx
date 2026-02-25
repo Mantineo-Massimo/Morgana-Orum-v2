@@ -55,7 +55,7 @@ export default function Page() {
                         </div>
                         <Link
                             href={`/login`}
-                            className="block w-full py-3 bg-zinc-900 text-white font-bold rounded-xl hover:bg-black transition-all"
+                            className="block w-full py-3 bg-[#18182e]/50 text-white font-bold rounded-xl hover:bg-[#18182e]/70 transition-all text-center"
                         >
                             Torna al Login
                         </Link>
@@ -78,7 +78,7 @@ export default function Page() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full py-4 bg-zinc-900 text-white font-bold rounded-xl shadow-lg hover:bg-black transition-transform active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+                            className="w-full py-4 bg-[#18182e]/50 text-white font-bold rounded-xl shadow-lg hover:bg-[#18182e]/70 transition-transform active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
                         >
                             {isLoading ? <Loader2 className="animate-spin size-5" /> : <>Invia Link <Mail className="size-5" /></>}
                         </button>

@@ -137,7 +137,7 @@ export default function EventsClient({
                             className={cn(
                                 "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
                                 mode === 'upcoming'
-                                    ? "bg-zinc-900 text-white border-zinc-900 shadow-lg shadow-zinc-200"
+                                    ? "bg-[#18182e]/50 text-white border-[#18182e]/50 shadow-lg shadow-blue-200"
                                     : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
                             )}
                         >
@@ -148,7 +148,7 @@ export default function EventsClient({
                             className={cn(
                                 "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
                                 mode === 'past'
-                                    ? "bg-zinc-900 text-white border-zinc-900 shadow-lg shadow-zinc-200"
+                                    ? "bg-[#18182e]/50 text-white border-[#18182e]/50 shadow-lg shadow-zinc-200"
                                     : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
                             )}
                         >
@@ -213,7 +213,7 @@ export default function EventsClient({
                                             className={cn(
                                                 "h-8 rounded-lg text-xs font-bold transition-colors flex flex-col items-center justify-center relative",
                                                 isSelected
-                                                    ? "bg-zinc-900 text-white shadow-md"
+                                                    ? "bg-[#18182e]/50 text-white shadow-md"
                                                     : isToday
                                                         ? "bg-red-50 text-red-600 border border-red-100"
                                                         : "hover:bg-zinc-100 text-zinc-700",
@@ -284,7 +284,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
 
         const theme = {
             title: "group-hover:text-zinc-600",
-            button: "bg-zinc-900 text-white hover:bg-zinc-800 shadow-lg",
+            button: "bg-[#18182e]/50 text-white hover:bg-[#18182e]/70 shadow-lg",
             border: "hover:border-zinc-300"
         }
 
@@ -336,7 +336,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
                         {/* Category badge (Top Right, consistent with News) */}
                         <div className="absolute top-4 right-4 z-20 flex flex-col gap-1 items-end">
                             {item.category.split(",").map((cat: string) => (
-                                <span key={cat.trim()} className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#0055a4]/90 backdrop-blur-sm text-white shadow-sm border border-blue-400/30">
+                                <span key={cat.trim()} className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#18182e]/90 backdrop-blur-sm text-white shadow-sm border border-white/10">
                                     {cat.trim()}
                                 </span>
                             ))}

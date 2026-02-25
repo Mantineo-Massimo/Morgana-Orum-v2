@@ -178,7 +178,7 @@ export default function AboutPage() {
             <Counters />
 
             {/* 5. Join the Team Section */}
-            <section className="py-24 bg-zinc-900 text-white relative overflow-hidden">
+            <section className="py-24 bg-[#18182e]/50 text-white relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-30 pointer-events-none">
                     <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />

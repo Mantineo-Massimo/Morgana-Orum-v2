@@ -92,7 +92,7 @@ export default function TransportGuidePage({ params }: { params: { brandId: stri
                 </div>
 
                 {/* Info Card */}
-                <div className="max-w-5xl mx-auto mb-12 bg-zinc-900 rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
+                <div className="max-w-5xl mx-auto mb-12 bg-[#18182e]/50 backdrop-blur-md rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
                     <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
                         <div className="flex-1">
                             <div className="flex items-center gap-2 text-amber-400 mb-4">
@@ -126,7 +126,7 @@ export default function TransportGuidePage({ params }: { params: { brandId: stri
                         <div key={i} className="bg-white rounded-3xl border border-zinc-100 shadow-sm overflow-hidden flex flex-col h-full hover:shadow-xl transition-all group">
                             <div className={`p-6 border-b border-zinc-50 flex items-center justify-between`}>
                                 <div className="flex items-center gap-3">
-                                    <div className={`size-10 rounded-xl bg-zinc-900 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}>
+                                    <div className={`size-10 rounded-xl bg-[#18182e]/50 flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform`}>
                                         <MapPin className="size-5" />
                                     </div>
                                     <h3 className="font-black text-foreground uppercase tracking-tight">{item.pole}</h3>
@@ -141,7 +141,7 @@ export default function TransportGuidePage({ params }: { params: { brandId: stri
                                         rel="noopener noreferrer"
                                         className="flex items-center gap-4 p-3 bg-white rounded-2xl border border-zinc-100 shadow-sm group/line hover:border-primary/30 transition-all hover:shadow-md active:scale-[0.98]"
                                     >
-                                        <span className="shrink-0 size-10 flex items-center justify-center bg-zinc-900 text-white rounded-lg text-xs font-black px-2 shadow-md">
+                                        <span className="shrink-0 size-10 flex items-center justify-center bg-[#18182e]/50 text-white rounded-lg text-xs font-black px-2 shadow-md">
                                             {line.id}
                                         </span>
                                         <div className="flex-1">
