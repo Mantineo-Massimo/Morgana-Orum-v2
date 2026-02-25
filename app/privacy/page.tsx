@@ -65,7 +65,7 @@ export default function PrivacyPage() {
                         <ul>
                             <li>Accedere ai tuoi dati e richiederne una copia.</li>
                             <li>Rettificare dati inesatti o incompleti.</li>
-                            <li>Richiedere la cancellazione dei tuoi dati ("diritto all&apos;oblio").</li>
+                            <li>Richiedere la cancellazione dei tuoi dati (&quot;diritto all&apos;oblio&quot;).</li>
                             <li>Revocare il consenso in qualsiasi momento.</li>
                         </ul>
                         <p className="mt-6">
