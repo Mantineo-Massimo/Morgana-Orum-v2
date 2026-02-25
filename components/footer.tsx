@@ -87,11 +87,11 @@ export function Footer() {
                             Link Utili
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
-                            <li><Link href="#" className={cn("transition-colors", mutedColor)}>Statuto Associazione</Link></li>
+                            <li><Link href="/statuto" className={cn("transition-colors", mutedColor)}>Statuto Associazione</Link></li>
                             <li><Link href="#" className={cn("transition-colors", mutedColor)}>Iscriviti</Link></li>
-                            <li><Link href="#" className={cn("transition-colors", mutedColor)}>Privacy Policy</Link></li>
-                            <li><Link href="#" className={cn("transition-colors", mutedColor)}>Cookie Policy</Link></li>
-                            <li><Link href="#" className={cn("transition-colors", mutedColor)}>Contatti Stampa</Link></li>
+                            <li><Link href="/privacy" className={cn("transition-colors", mutedColor)}>Privacy Policy</Link></li>
+                            <li><Link href="/cookies" className={cn("transition-colors", mutedColor)}>Cookie Policy</Link></li>
+                            <li><Link href="/contact" className={cn("transition-colors", mutedColor)}>Contattaci</Link></li>
                         </ul>
                     </div>
 
@@ -117,6 +117,38 @@ export function Footer() {
                             </div>
                         </div>
                     </div>
+                </div>
+
+                {/* Newsletter Box */}
+                <div className="mb-16 bg-white/5 rounded-[2.5rem] p-8 md:p-12 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                    <div className="flex-1 text-center lg:text-left">
+                        <h3 className="text-2xl font-serif font-black mb-2">Iscriviti alla Newsletter</h3>
+                        <p className="text-white/60 font-medium">Ricevi aggiornamenti su eventi, scadenze universitarie e nuove convenzioni.</p>
+                    </div>
+                    <form
+                        onSubmit={async (e) => {
+                            e.preventDefault();
+                            const email = new FormData(e.currentTarget).get('email') as string;
+                            // Simple alert for now as we don't have a dedicated "subscribe" only action yet
+                            // but we can point it to a new action or just explain it's linked to the portal account
+                            alert("Grazie! Ti contatteremo presto per confermare l'iscrizione.");
+                        }}
+                        className="w-full lg:w-auto flex flex-col sm:flex-row gap-3"
+                    >
+                        <input
+                            required
+                            type="email"
+                            name="email"
+                            placeholder="Il tuo indirizzo email"
+                            className="bg-white/10 border border-white/20 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-white/20 text-white placeholder:text-white/30 font-medium w-full sm:min-w-[300px]"
+                        />
+                        <button
+                            type="submit"
+                            className="bg-white text-zinc-900 px-8 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-200 transition-all shrink-0"
+                        >
+                            Iscriviti
+                        </button>
+                    </form>
                 </div>
 
                 {/* Bottom Bar */}

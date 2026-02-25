@@ -1,11 +1,35 @@
 import { getNewsById } from "@/app/actions/news"
 import { notFound } from "next/navigation"
+import { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, Calendar, Tag, Newspaper } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export const dynamic = "force-dynamic"
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+    const article = await getNewsById(params.id)
+    if (!article) return {}
+
+    return {
+        title: article.title,
+        description: article.description || article.content?.substring(0, 160),
+        openGraph: {
+            title: article.title,
+            description: article.description || article.content?.substring(0, 160),
+            images: article.image ? [article.image] : [],
+            type: "article",
+            publishedTime: article.date.toISOString(),
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: article.title,
+            description: article.description || article.content?.substring(0, 160),
+            images: article.image ? [article.image] : [],
+        }
+    }
+}
 
 export default async function NewsDetailPage({ params }: { params: { id: string } }) {
     const article = await getNewsById(params.id)

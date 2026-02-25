@@ -4,8 +4,24 @@ import { ArrowRight, Calendar, ChevronLeft } from "lucide-react"
 import prisma from "@/lib/prisma"
 import { notFound } from "next/navigation"
 import { Association } from "@prisma/client"
+import { Metadata } from "next"
 
 export const dynamic = "force-dynamic"
+
+export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
+    const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
+    if (!config) return {}
+
+    return {
+        title: config.name,
+        description: config.subtitle,
+        openGraph: {
+            title: config.name,
+            description: config.subtitle,
+            images: [config.logo, config.bg],
+        }
+    }
+}
 
 const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg: string, subtitle: string, desc: string, association: Association }> = {
     unimhealth: {

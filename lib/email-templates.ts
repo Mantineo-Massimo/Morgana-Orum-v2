@@ -160,3 +160,27 @@ export function getNewsletterTemplate(userName: string, title: string, descripti
     </div>
     `
 }
+
+export function getContactEmailTemplate(name: string, email: string, subject: string, message: string) {
+    return `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+        ${getEmailHeader("Nuovo Messaggio dal Portale", "#18182b")}
+        <div style="padding: 30px; line-height: 1.6; color: #333;">
+            <p>Hai ricevuto un nuovo messaggio tramite il modulo di contatto del sito.</p>
+            
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e5e7eb;">
+                <p style="margin-bottom: 8px; color: #444;"><strong>Da:</strong> ${name} (<a href="mailto:${email}">${email}</a>)</p>
+                <p style="margin-bottom: 8px; color: #444;"><strong>Oggetto:</strong> ${subject}</p>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;" />
+                <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.5; white-space: pre-line;">${message}</p>
+            </div>
+            
+            <p style="font-size: 12px; color: #888; text-align: center;">
+                Rispondi direttamente a questa email per ricontattare l'utente.
+            </p>
+
+            ${getEmailFooter("Servizio di messaggistica automatica Morgana & O.R.U.M.")}
+        </div>
+    </div>
+    `
+}
