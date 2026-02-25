@@ -30,6 +30,7 @@ type EventFormProps = {
         attachments: string | null
         published?: boolean
         associations: Association[]
+        youtubeUrl: string | null
     }
     categories: string[]
     userRole?: string
@@ -159,6 +160,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : undefined,
                 published,
                 associations: selectedAssociations,
+                youtubeUrl: (formData.get("youtubeUrl") as string) || undefined,
             }
 
             const result = initialData
@@ -282,6 +284,13 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 <div>
                     <label className={labelClass}>Luogo *</label>
                     <input name="location" defaultValue={initialData?.location} required className={inputClass} placeholder="Es: Aula Magna – Rettorato UniMe" />
+                </div>
+
+                {/* YouTube URL */}
+                <div>
+                    <label className={labelClass}>Trailer YouTube (URL)</label>
+                    <input name="youtubeUrl" defaultValue={initialData?.youtubeUrl || ""} className={inputClass} placeholder="Es: https://www.youtube.com/watch?v=..." />
+                    <p className="text-[10px] text-zinc-400 mt-1 italic">Verrà mostrato un player video nella pagina dell&apos;evento (consigliato per Cineforum)</p>
                 </div>
 
                 {/* Category */}

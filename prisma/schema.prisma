@@ -47,6 +47,7 @@ model Event {
   cfuType        String?
   cfuValue       String?
   published      Boolean        @default(true)
+  youtubeUrl     String?
   associations   Association[]  @default([MORGANA_ORUM])
   registrations  Registration[]
   createdAt      DateTime       @default(now())

@@ -326,6 +326,7 @@ export async function createEvent(data: {
     attachments?: string
     associations?: Association[]
     published: boolean
+    youtubeUrl?: string
 }) {
     try {
         const permission = await checkContentPermission(data.associations)
@@ -350,6 +351,7 @@ export async function createEvent(data: {
                 attachments: data.attachments || null,
                 associations: data.associations || [Association.MORGANA_ORUM],
                 published: data.published,
+                youtubeUrl: data.youtubeUrl || null,
             }
         })
 
@@ -385,6 +387,7 @@ export async function updateEvent(id: number, data: {
     attachments?: string
     associations?: Association[]
     published: boolean
+    youtubeUrl?: string
 }) {
     try {
         const existing = await prisma.event.findUnique({ where: { id } })
@@ -423,6 +426,7 @@ export async function updateEvent(id: number, data: {
                 attachments: data.attachments || null,
                 associations: data.associations || [Association.MORGANA_ORUM],
                 published: data.published,
+                youtubeUrl: data.youtubeUrl || null,
             }
         })
 

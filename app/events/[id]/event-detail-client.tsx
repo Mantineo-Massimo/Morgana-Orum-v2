@@ -25,6 +25,7 @@ type EventData = {
     bookingEnd: Date | null
     attachments: string | null
     associations: Association[]
+    youtubeUrl?: string | null
     isRegistered?: boolean
 }
 
@@ -85,6 +86,15 @@ export default function EventDetailClient({
         }
         return []
     })()
+
+    // YouTube Video ID helper
+    const getYoutubeId = (url: string | null | undefined) => {
+        if (!url) return null
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+        const match = url.match(regExp)
+        return (match && match[2].length === 11) ? match[2] : null
+    }
+    const youtubeId = getYoutubeId(event.youtubeUrl)
 
     async function handleRegister() {
         setIsRegistering(true)
@@ -160,6 +170,25 @@ export default function EventDetailClient({
                                 {event.description}
                             </p>
                         </div>
+
+                        {/* YouTube Player */}
+                        {youtubeId && (
+                            <div>
+                                <h2 className="text-2xl font-bold text-foreground mb-4">Trailer</h2>
+                                <div className="aspect-video w-full overflow-hidden rounded-3xl border border-zinc-100 shadow-sm bg-black">
+                                    <iframe
+                                        width="100%"
+                                        height="100%"
+                                        src={`https://www.youtube.com/embed/${youtubeId}`}
+                                        title="YouTube video player"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="w-full h-full"
+                                    ></iframe>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Details */}
                         {event.details && (
