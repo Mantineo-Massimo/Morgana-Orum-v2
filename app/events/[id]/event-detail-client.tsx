@@ -59,7 +59,7 @@ export default function EventDetailClient({
     isLoggedIn: boolean
     userEmail: string | null
 }) {
-    const theme = { bg: "bg-[#18182e]/50", text: "text-foreground" }
+    const theme = { bg: "bg-[#18182e]", text: "text-foreground" }
 
     const [isRegistering, setIsRegistering] = useState(false)
     const [registrationStatus, setRegistrationStatus] = useState<"idle" | "success" | "error">(event.isRegistered ? "success" : "idle")

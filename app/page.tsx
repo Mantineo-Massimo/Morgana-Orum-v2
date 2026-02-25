@@ -145,7 +145,7 @@ export default async function BrandHomePage() {
             </section>
 
             {/* OUR NETWORK SECTION */}
-            <section className="bg-[#18182e]/50 border-b border-white/5 relative z-0">
+            <section className="bg-[#18182e] border-b border-white/5 relative z-0">
                 {/* Network Header */}
                 <div className="relative h-[180px] md:h-[280px] flex items-center justify-center overflow-hidden">
                     <Image

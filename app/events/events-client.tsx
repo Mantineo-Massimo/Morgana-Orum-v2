@@ -137,7 +137,7 @@ export default function EventsClient({
                             className={cn(
                                 "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
                                 mode === 'upcoming'
-                                    ? "bg-[#18182e]/50 text-white border-[#18182e]/50 shadow-lg shadow-blue-200"
+                                    ? "bg-[#18182e] text-white border-[#18182e] shadow-lg shadow-blue-200"
                                     : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
                             )}
                         >
@@ -148,7 +148,7 @@ export default function EventsClient({
                             className={cn(
                                 "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
                                 mode === 'past'
-                                    ? "bg-[#18182e]/50 text-white border-[#18182e]/50 shadow-lg shadow-zinc-200"
+                                    ? "bg-[#18182e] text-white border-[#18182e] shadow-lg shadow-zinc-200"
                                     : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
                             )}
                         >
@@ -213,7 +213,7 @@ export default function EventsClient({
                                             className={cn(
                                                 "h-8 rounded-lg text-xs font-bold transition-colors flex flex-col items-center justify-center relative",
                                                 isSelected
-                                                    ? "bg-[#18182e]/50 text-white shadow-md"
+                                                    ? "bg-[#18182e] text-white shadow-md"
                                                     : isToday
                                                         ? "bg-red-50 text-red-600 border border-red-100"
                                                         : "hover:bg-zinc-100 text-zinc-700",
@@ -284,7 +284,7 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
 
         const theme = {
             title: "group-hover:text-zinc-600",
-            button: "bg-[#18182e]/50 text-white hover:bg-[#18182e]/70 shadow-lg",
+            button: "bg-[#18182e] text-white hover:bg-zinc-800 shadow-lg",
             border: "hover:border-zinc-300"
         }
 

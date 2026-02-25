@@ -28,7 +28,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             brand === "matricole" ? "bg-gradient-to-r from-[#ffffff] to-[#afafaf]" :
                 brand === "scipog" ? "bg-[#ffcc00]" :
                     brand === "dicam" ? "bg-[#d81b60]" :
-                        "bg-[linear-gradient(45deg,#c12830_0%,#18182e\_50%)]"
+                        "bg-[linear-gradient(45deg,#c12830_0%,#18182e_50%)]"
 
     // Mapping per i loghi e nomi del network
     const networkInfo: Record<string, { name: string, logo: string, motto: string }> = {

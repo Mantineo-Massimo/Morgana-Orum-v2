@@ -63,7 +63,7 @@ export function MobileNav({ navigation, user, logoutAction }: MobileNavProps) {
     return (
         <div className="lg:hidden">
             {/* Header Bar */}
-            <header className="fixed top-0 left-0 right-0 h-16 bg-[#18182e]/50 backdrop-blur-md border-b border-zinc-800 flex items-center justify-between px-4 z-50">
+            <header className="fixed top-0 left-0 right-0 h-16 bg-[#18182e] border-b border-zinc-800 flex items-center justify-between px-4 z-50">
                 <div className="flex items-center gap-3">
                     <Shield className="size-6 text-red-500" />
                     <div>

@@ -113,7 +113,7 @@ export default function ResetPasswordPage() {
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full py-4 bg-[#18182e]/50 text-white font-bold rounded-xl shadow-lg hover:bg-[#18182e]/70 transition-transform active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
+                            className="w-full py-4 bg-[#18182e] text-white font-bold rounded-xl shadow-lg hover:bg-black transition-transform active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
                         >
                             {isLoading ? <Loader2 className="animate-spin size-5" /> : <>Salva Password <Lock className="size-5" /></>}
                         </button>
