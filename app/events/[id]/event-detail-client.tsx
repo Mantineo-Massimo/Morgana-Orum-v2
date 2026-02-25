@@ -117,15 +117,6 @@ export default function EventDetailClient({
         <div className="min-h-screen bg-zinc-50 pb-20">
             {/* Hero */}
             <div className={cn("relative overflow-hidden", theme.bg)}>
-                {/* Cover image */}
-                {event.image && (
-                    <Image
-                        src={event.image}
-                        alt={event.title}
-                        fill
-                        className="object-cover opacity-20"
-                    />
-                )}
                 <div className="relative z-10 text-white pt-32 pb-24 md:pt-48 md:pb-32">
                     <div className="container mx-auto px-6 relative">
                         <Link href={`/events`} className="inline-flex items-center text-sm font-bold text-white/70 hover:text-white mb-6 uppercase tracking-widest transition-colors">
@@ -138,7 +129,7 @@ export default function EventDetailClient({
                                 </span>
                             ))}
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-serif font-black mb-6 max-w-4xl">
+                        <h1 className="text-4xl md:text-7xl font-serif font-black mb-8 leading-[1.1] tracking-tight max-w-4xl">
                             {event.title}
                         </h1>
                         <div className="flex flex-wrap gap-6 text-sm font-bold">
@@ -159,8 +150,21 @@ export default function EventDetailClient({
                 <div className="absolute top-[-20%] right-[-10%] size-96 rounded-full bg-white/5 blur-3xl" />
             </div>
 
-            {/* Content */}
-            <div className="container mx-auto px-6 -mt-10 relative z-20">
+            {/* Content Container */}
+            <div className="container mx-auto px-6 -mt-10 relative z-20 max-w-5xl">
+                {/* Featured Image - Full size matching News pattern */}
+                {event.image && (
+                    <div className="relative aspect-video w-full rounded-[2rem] overflow-hidden mb-10 shadow-2xl shadow-zinc-200 ring-1 ring-zinc-200">
+                        <Image
+                            src={event.image}
+                            alt={event.title}
+                            fill
+                            className="object-cover"
+                            priority
+                        />
+                    </div>
+                )}
+
                 <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-zinc-100 grid lg:grid-cols-3 gap-12">
                     <div className="lg:col-span-2 space-y-8">
                         {/* Description */}
