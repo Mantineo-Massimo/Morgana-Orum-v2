@@ -81,7 +81,7 @@ export function MainNav({
         <>
             {/* Desktop Navigation */}
             <nav
-                className={cn("hidden lg:flex items-center space-x-4 lg:space-x-5 xl:space-x-8", className)}
+                className={cn("hidden lg:flex items-center space-x-4 lg:space-x-3 xl:space-x-8", className)}
                 {...props}
             >
                 {routes.map((route) => (
