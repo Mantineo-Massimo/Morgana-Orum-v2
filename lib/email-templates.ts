@@ -7,13 +7,38 @@ type BrandConfig = {
 const BRANDS: Record<string, BrandConfig> = {
     morgana: {
         name: "Associazione Morgana",
-        color: "#18182b", // Base dark header
+        color: "#18182b",
         logo: "https://morganaorum.vercel.app/assets/morgana.png"
     },
     orum: {
         name: "Associazione O.R.U.M.",
         color: "#18182b",
         logo: "https://morganaorum.vercel.app/assets/orum.png"
+    },
+    unimhealth: {
+        name: "Unimhealth",
+        color: "#c9041a",
+        logo: "https://morganaorum.vercel.app/assets/unimhealth.png"
+    },
+    economia: {
+        name: "Studenti Economia",
+        color: "#202549",
+        logo: "https://morganaorum.vercel.app/assets/studentieconomia.png"
+    },
+    matricole: {
+        name: "Unime Matricole",
+        color: "#f6f6f6",
+        logo: "https://morganaorum.vercel.app/assets/unimematricole.png"
+    },
+    scipog: {
+        name: "Studenti Scipog",
+        color: "#fbc363",
+        logo: "https://morganaorum.vercel.app/assets/studentiscipog.png"
+    },
+    dicam: {
+        name: "Inside Dicam",
+        color: "#f34ab4",
+        logo: "https://morganaorum.vercel.app/assets/insidedicam.png"
     }
 }
 

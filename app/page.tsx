@@ -168,7 +168,7 @@ export default async function BrandHomePage() {
                 {/* Diagonal Network Grid */}
                 <div className="flex flex-col md:flex-row h-auto md:h-[450px] overflow-hidden">
                     {/* Unimhealth */}
-                    <Link href="/network/unimhealth" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c12830] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/unimhealth" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c9041a] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/policlinico.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pr-20">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
@@ -178,7 +178,7 @@ export default async function BrandHomePage() {
                     </Link>
 
                     {/* Studenti Economia */}
-                    <Link href="/network/economia" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#18182e] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/economia" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#202549] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/economia.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
@@ -188,7 +188,7 @@ export default async function BrandHomePage() {
                     </Link>
 
                     {/* Unime Matricole */}
-                    <Link href="/network/matricole" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-gradient-to-br from-[#ffffff] to-[#afafaf] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-20 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/matricole" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#f6f6f6] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-20 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/matricole.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
@@ -198,7 +198,7 @@ export default async function BrandHomePage() {
                     </Link>
 
                     {/* Studenti Scipog */}
-                    <Link href="/network/scipog" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#ffcc00] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-10 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/scipog" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#fbc363] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-10 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/scipog.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
@@ -208,7 +208,7 @@ export default async function BrandHomePage() {
                     </Link>
 
                     {/* Inside Dicam */}
-                    <Link href="/network/dicam" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#d81b60] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/dicam" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#f34ab4] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/dicam.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pl-20">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">

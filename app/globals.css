@@ -137,37 +137,37 @@ body:has([data-admin-area]) #site-footer {
 
   /* Network Brands */
   [data-brand="unimhealth"] {
-    --primary: 357 65% 46%;
-    /* #c12830 */
+    --primary: 353 96% 40%;
+    /* #c9041a */
     --primary-foreground: 0 0% 98%;
-    --ring: 357 65% 46%;
+    --ring: 353 96% 40%;
   }
 
   [data-brand="economia"] {
-    --primary: 209 100% 32%;
-    /* #0055a4 */
+    --primary: 233 39% 21%;
+    /* #202549 */
     --primary-foreground: 0 0% 98%;
-    --ring: 209 100% 32%;
+    --ring: 233 39% 21%;
   }
 
   [data-brand="matricole"] {
-    --primary: 0 0% 68.6%;
-    /* #afafaf */
+    --primary: 0 0% 96%;
+    /* #f6f6f6 */
     --primary-foreground: 240 31% 14%;
-    --ring: 0 0% 68.6%;
+    --ring: 0 0% 96%;
   }
 
   [data-brand="scipog"] {
-    --primary: 48 100% 50%;
-    /* #ffcc00 */
+    --primary: 38 95% 69%;
+    /* #fbc363 */
     --primary-foreground: 240 31% 14%;
-    --ring: 48 100% 50%;
+    --ring: 38 95% 69%;
   }
 
   [data-brand="dicam"] {
-    --primary: 338 78% 48%;
-    /* #d81b60 */
+    --primary: 322 88% 62%;
+    /* #f34ab4 */
     --primary-foreground: 0 0% 98%;
-    --ring: 338 78% 48%;
+    --ring: 322 88% 62%;
   }
 }
