@@ -14,33 +14,22 @@ export async function sendEmail({ to, subject, html, brand = "morgana" }: SendEm
     // Prioritize SMTP_SENDER from .env, then SMTP_USER, then fallback
     const senderEmail = process.env.SMTP_SENDER || process.env.SMTP_USER || (isMorgana ? "associazionemorgana@gmail.com" : "orum_unime@gmail.com")
 
-    // Create transporter based on available configuration
-    let transporter: any
-
-    if (process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY) {
-        // Use AWS SESv2Client
-        const ses = new aws.SESv2Client({
-            region: process.env.AWS_REGION || "eu-west-1",
-            credentials: {
-                accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            },
-        })
-        transporter = nodemailer.createTransport({
-            SES: { sesClient: ses, SendEmailCommand: aws.SendEmailCommand },
-        } as any)
-    } else {
-        // Fallback to SMTP (Brevo or other)
-        transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST || "smtp-relay.brevo.com",
-            port: parseInt(process.env.SMTP_PORT || "587"),
-            secure: false,
-            auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
-            },
-        })
+    // Create transporter based on AWS configuration
+    if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
+        throw new Error("AWS SES Credentials missing. Please set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.")
     }
+
+    const ses = new aws.SESv2Client({
+        region: process.env.AWS_REGION || "eu-west-1",
+        credentials: {
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        },
+    })
+
+    const transporter = nodemailer.createTransport({
+        SES: { sesClient: ses, SendEmailCommand: aws.SendEmailCommand },
+    } as any)
 
     try {
         const info = await transporter.sendMail({

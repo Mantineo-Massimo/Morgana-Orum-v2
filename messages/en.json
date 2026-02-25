@@ -1,0 +1,41 @@
+{
+    "Footer": {
+        "about_title": "About Us",
+        "nav_title": "Navigation",
+        "network_title": "The Network",
+        "useful_links_title": "Useful Links",
+        "contacts_title": "Contacts",
+        "newsletter_title": "Subscribe to Newsletter",
+        "newsletter_desc": "Receive updates on events, university deadlines, and new conventions.",
+        "newsletter_placeholder": "Your email address",
+        "newsletter_button": "Subscribe",
+        "newsletter_loading": "Loading...",
+        "newsletter_success": "Thank you for subscribing!",
+        "newsletter_error": "Error during subscription.",
+        "footer_tagline": "University Associations Morgana & O.R.U.M.",
+        "footer_subline": "Commitment, passion, and competence at the service of the academic community.",
+        "rights": "© {year} University Associations Morgana & O.R.U.M.. All rights reserved."
+    },
+    "Navigation": {
+        "home": "Portal Home",
+        "about": "About Us",
+        "news": "News",
+        "events": "Events",
+        "representatives": "Representatives",
+        "reserved_area": "Reserved Area",
+        "guides": "Guides",
+        "whatsapp": "WhatsApp Groups"
+    },
+    "HomePage": {
+        "hero_title": "Always on the student's side!",
+        "hero_subtitle": "Passion, competence, and vision: the heart of representation in Messina. A dynamic network to give you voice, services, and opportunities throughout the University.",
+        "events_title": "Upcoming Events",
+        "events_all": "Full Calendar",
+        "events_empty": "No events scheduled at the moment.",
+        "news_title": "Latest News",
+        "news_all": "All News",
+        "news_empty": "No news found.",
+        "network_title": "Discover our network!",
+        "network_back": "Back to Morgana & O.R.U.M. site"
+    }
+}

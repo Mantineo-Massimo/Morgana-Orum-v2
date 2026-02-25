@@ -1,7 +1,7 @@
 import { getAllEvents, getEventCategories } from "@/app/actions/events"
 import { cookies } from "next/headers"
 import EventsClient from "@/app/events/events-client"
-import { notFound } from "next/navigation"
+import { notFound } from "@/i18n/routing"
 import { Association } from "@prisma/client"
 
 export const dynamic = "force-dynamic"

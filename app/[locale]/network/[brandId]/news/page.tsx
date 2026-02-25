@@ -1,6 +1,6 @@
 import { getNews, getNewsCategories } from "@/app/actions/news"
 import NewsClient from "@/app/news/news-client"
-import { notFound } from "next/navigation"
+import { notFound } from "@/i18n/routing"
 import { Association } from "@prisma/client"
 
 export const dynamic = "force-dynamic"

@@ -1,8 +1,8 @@
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { ArrowRight, Calendar, ChevronLeft } from "lucide-react"
 import prisma from "@/lib/prisma"
-import { notFound } from "next/navigation"
+import { notFound } from "@/i18n/routing"
 import { Association } from "@prisma/client"
 import { Metadata } from "next"
 

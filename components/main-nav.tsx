@@ -1,13 +1,13 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { Link, usePathname, useRouter } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import { logoutAction } from "@/app/actions/auth"
 import { LogOut, User, Menu, X, Mail, Search } from "lucide-react"
 import { useBrand } from "@/components/brand-provider"
 import { SearchModal } from "./search-modal"
+import { useTranslations } from "next-intl"
 
 export function MainNav({
     className,
@@ -15,6 +15,8 @@ export function MainNav({
     isLoggedIn = false,
     ...props
 }: React.HTMLAttributes<HTMLElement> & { isScrolled?: boolean, isLoggedIn?: boolean }) {
+    const t = useTranslations("Footer")
+    const nt = useTranslations("Navigation")
     const pathname = usePathname()
     const { brand } = useBrand()
     const [isOpen, setIsOpen] = useState(false)
@@ -33,27 +35,27 @@ export function MainNav({
     const routes = [
         {
             href: brand ? `/network/${brand}` : `/`,
-            label: "Home",
+            label: nt("home"),
             active: brand ? pathname === `/network/${brand}` : (pathname === "/" || pathname === ``),
         },
         {
             href: brand ? `/network/${brand}/about` : `/about`,
-            label: "Chi Siamo",
+            label: nt("about"),
             active: pathname === (brand ? `/network/${brand}/about` : "/about"),
         },
         ...(brand !== 'matricole' ? [{
             href: brand ? `/network/${brand}/news` : `/news`,
-            label: "Notizie",
+            label: nt("news"),
             active: pathname === (brand ? `/network/${brand}/news` : "/news") || pathname.startsWith(brand ? `/network/${brand}/news/` : "/news/"),
         }] : []),
         ...(brand !== 'matricole' ? [{
             href: brand ? `/network/${brand}/events` : `/events`,
-            label: "Eventi",
+            label: nt("events"),
             active: pathname === (brand ? `/network/${brand}/events` : "/events") || pathname.startsWith(brand ? `/network/${brand}/events/` : "/events/"),
         }] : []),
         ...(brand !== 'matricole' ? [{
             href: brand ? `/network/${brand}/representatives` : `/representatives`,
-            label: "Rappresentanti",
+            label: nt("representatives"),
             active: pathname === (brand ? `/network/${brand}/representatives` : "/representatives"),
         }] : []),
     ]
@@ -122,7 +124,7 @@ export function MainNav({
                                 brandColor
                             )}
                         >
-                            <User className="size-4 shrink-0" /> <span className="hidden xl:inline">Area Personale</span><span className="xl:hidden">Area Riservata</span>
+                            <User className="size-4 shrink-0" /> <span className="hidden xl:inline">{nt("reserved_area")}</span><span className="xl:hidden">{nt("reserved_area")}</span>
                         </Link>
 
                         <button
@@ -141,7 +143,7 @@ export function MainNav({
                             brandColor
                         )}
                     >
-                        Accedi
+                        {nt("reserved_area")}
                     </Link>
                 )}
             </nav>
@@ -196,7 +198,7 @@ export function MainNav({
                                             brandColor
                                         )}
                                     >
-                                        <User className="size-5" /> Area Personale
+                                        <User className="size-5" /> {nt("reserved_area")}
                                     </Link>
                                     <button
                                         onClick={() => {
@@ -217,7 +219,7 @@ export function MainNav({
                                         brandColor
                                     )}
                                 >
-                                    Accedi
+                                    {nt("reserved_area")}
                                 </Link>
                             )}
 
@@ -228,7 +230,7 @@ export function MainNav({
                                     onClick={() => setIsOpen(false)}
                                     className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-zinc-100 text-foreground font-bold uppercase tracking-widest text-sm transition-colors"
                                 >
-                                    <Mail className="size-5" /> Newsletter
+                                    <Mail className="size-5" /> {t("newsletter_title")}
                                 </Link>
                             </div>
                         </div>

@@ -1,11 +1,13 @@
 "use client"
 
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { Facebook, Instagram, Twitter, Youtube, User, Mail } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useBrand } from "@/components/brand-provider"
+import { useTranslations } from "next-intl"
 
 export function TopBar() {
+    const t = useTranslations("Footer")
     const { brand } = useBrand()
     // Unificato: Colore neutro scuro per la top bar
     const bgColor = "bg-zinc-900"
@@ -42,11 +44,11 @@ export function TopBar() {
         <div id="site-topbar" className={cn("w-full text-white py-2 px-4 shadow-sm", bgColor)}>
             <div className="container mx-auto flex justify-center md:justify-between items-center text-xs md:text-sm font-medium">
 
-                {/* Left Side: "Gazette" or similar CTA */}
-                <div className="hidden md:flex items-center gap-2">
+                {/* Left Side: Newsletter CTA */}
+                <div className="hidden md:flex items-center gap-2 text-white">
                     <Mail className="size-4" />
                     <span className="uppercase tracking-widest opacity-90 hover:opacity-100 cursor-pointer">
-                        Iscriviti alla Newsletter
+                        {t("newsletter_title")}
                     </span>
                 </div>
 

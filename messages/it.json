@@ -1,0 +1,41 @@
+{
+    "Footer": {
+        "about_title": "Chi Siamo",
+        "nav_title": "Navigazione",
+        "network_title": "Il Network",
+        "useful_links_title": "Link Utili",
+        "contacts_title": "Contatti",
+        "newsletter_title": "Iscriviti alla Newsletter",
+        "newsletter_desc": "Ricevi aggiornamenti su eventi, scadenze universitarie e nuove convenzioni.",
+        "newsletter_placeholder": "Il tuo indirizzo email",
+        "newsletter_button": "Iscriviti",
+        "newsletter_loading": "Caricamento...",
+        "newsletter_success": "Grazie per esserti iscritto!",
+        "newsletter_error": "Errore durante l'iscrizione.",
+        "footer_tagline": "Associazioni Universitarie Morgana & O.R.U.M.",
+        "footer_subline": "Impegno, passione e competenza al servizio della comunità accademica.",
+        "rights": "© {year} Associazioni Universitarie Morgana & O.R.U.M.. Tutti i diritti riservati."
+    },
+    "Navigation": {
+        "home": "Home Portale",
+        "about": "Chi Siamo",
+        "news": "Notizie",
+        "events": "Eventi",
+        "representatives": "Rappresentanti",
+        "reserved_area": "Area Riservata",
+        "guides": "Guide",
+        "whatsapp": "Gruppi WhatsApp"
+    },
+    "HomePage": {
+        "hero_title": "Sempre dalla parte dello studente!",
+        "hero_subtitle": "Passione, competenza e visione: il cuore pulsante della rappresentanza a Messina. Un network dinamico per darti voce, servizi e opportunità in tutto l'Ateneo.",
+        "events_title": "Prossimi Eventi",
+        "events_all": "Calendario Completo",
+        "events_empty": "Nessun evento programmato al momento.",
+        "news_title": "Ultime Notizie",
+        "news_all": "Tutte le Notizie",
+        "news_empty": "Nessuna notizia trovata.",
+        "network_title": "Scopri il nostro network!",
+        "network_back": "Torna al sito Morgana & O.R.U.M."
+    }
+}

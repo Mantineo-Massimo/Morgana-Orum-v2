@@ -4,7 +4,7 @@ type BrandConfig = {
     logo: string
 }
 
-const BRANDS: Record<string, BrandConfig> = {
+export const BRANDS: Record<string, BrandConfig> = {
     morgana: {
         name: "Associazione Morgana",
         color: "#18182b",

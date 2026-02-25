@@ -1,5 +1,5 @@
 import { ArrowLeft, MapPin } from "lucide-react"
-import Link from "next/link"
+import Link from "@/i18n/routing"
 import dynamic from "next/dynamic"
 
 // Dynamically import the map component with SSR disabled because Leaflet needs the window object
