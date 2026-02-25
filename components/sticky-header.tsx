@@ -25,7 +25,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
 
     const brandColorClass = brand === "unimhealth" ? "bg-[#c9041a]" :
         brand === "economia" ? "bg-[#202549]" :
-            brand === "matricole" ? "bg-gradient-to-r from-[#ffffff] to-[#f6f6f6]" :
+            brand === "matricole" ? "bg-[#f4b716]" :
                 brand === "scipog" ? "bg-[#fbc363]" :
                     brand === "dicam" ? "bg-[#f34ab4]" :
                         "bg-[linear-gradient(45deg,#c9041a_0%,#18182e_50%)]"

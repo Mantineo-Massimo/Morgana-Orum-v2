@@ -27,7 +27,7 @@ const BRANDS: Record<string, BrandConfig> = {
     },
     matricole: {
         name: "Unime Matricole",
-        color: "#f6f6f6",
+        color: "#0d6cab",
         logo: "https://morganaorum.vercel.app/assets/unimematricole.png"
     },
     scipog: {

@@ -151,10 +151,12 @@ body:has([data-admin-area]) #site-footer {
   }
 
   [data-brand="matricole"] {
-    --primary: 0 0% 96%;
-    /* #f6f6f6 */
-    --primary-foreground: 240 31% 14%;
-    --ring: 0 0% 96%;
+    --primary: 204 86% 36%;
+    /* #0d6cab (Buttons) */
+    --primary-foreground: 0 0% 98%;
+    --foreground: 215 61% 25%;
+    /* #193a68 (Text) */
+    --ring: 204 86% 36%;
   }
 
   [data-brand="scipog"] {

@@ -27,11 +27,11 @@ export function TopBar() {
     }
 
     const BRAND_COLORS: Record<string, string> = {
-        unimhealth: "text-zinc-500",
-        economia: "text-zinc-500",
-        matricole: "text-zinc-500",
-        scipog: "text-zinc-500",
-        dicam: "text-zinc-500"
+        unimhealth: "text-[#c9041a]",
+        economia: "text-[#202549]",
+        matricole: "text-[#0d6cab]",
+        scipog: "text-[#fbc363]",
+        dicam: "text-[#f34ab4]"
     }
 
     const networkIG = brand && SOCIAL_MAPPING[brand] ? SOCIAL_MAPPING[brand] : null
@@ -55,7 +55,12 @@ export function TopBar() {
                     {networkIG && (
                         <>
                             <div className="flex items-center gap-1.5 md:gap-2">
-                                <span className="text-[10px] md:text-xs uppercase font-bold text-zinc-500 mr-0.5 md:mr-1">{networkName}:</span>
+                                <span className={cn(
+                                    "text-[10px] md:text-xs uppercase font-bold mr-0.5 md:mr-1",
+                                    brand === "matricole" ? "text-[#193a68]" : "text-zinc-500"
+                                )}>
+                                    {networkName}:
+                                </span>
                                 <a href={`https://www.instagram.com/${networkIG}`} target="_blank" rel="noopener noreferrer" className={cn("transition-colors", `hover:${networkColor}`)}><Instagram className="size-3 md:size-3.5" /></a>
                             </div>
                             <div className="w-px h-3 md:h-4 bg-zinc-800"></div>
