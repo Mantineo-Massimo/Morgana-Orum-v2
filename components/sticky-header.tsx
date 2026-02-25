@@ -61,8 +61,8 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         "rounded-br-[100px]",
                         // Dynamic width logic
                         isScrolled
-                            ? brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[26%] xl:w-[40%]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[26%] xl:w-[40%]"
-                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[29%] xl:w-[42%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[29%] xl:w-[42%]"
+                            ? brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[35%] xl:w-[32%] 2xl:w-[40%] xl:max-w-[450px] 2xl:max-w-[800px]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[35%] xl:w-[32%] 2xl:w-[40%] xl:max-w-[450px] 2xl:max-w-[800px]"
+                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[38%] xl:w-[35%] 2xl:w-[42%] xl:max-w-[500px] 2xl:max-w-[850px]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[38%] xl:w-[35%] 2xl:w-[42%] xl:max-w-[500px] 2xl:max-w-[850px]"
                     )}
                 />
             </div>
@@ -75,7 +75,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 )}
             >
                 {/* Logo Section - Left Aligned */}
-                <div className="flex items-center gap-1.5 md:gap-2 lg:gap-3 xl:gap-4">
+                <div className="flex items-center gap-1.5 md:gap-2 xl:gap-4">
                     {/* Logo - Leads to Sub-site Home */}
                     <Link
                         href={currentNetwork ? `/network/${brand}` : "/"}
@@ -86,8 +86,8 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                             className={cn(
                                 "relative transition-all duration-500 flex items-center",
                                 isScrolled
-                                    ? "h-14 md:h-20 gap-1.5 md:gap-2 p-1 md:p-1.5"
-                                    : "h-12 sm:h-16 md:h-28 gap-1.5 md:gap-4 p-1 md:p-2"
+                                    ? "h-14 md:h-16 lg:h-18 xl:h-20 gap-1.5 md:gap-2 p-1 md:p-1.5"
+                                    : "h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28 gap-1.5 md:gap-4 p-1 md:p-2"
                             )}
                         >
                             {currentNetwork ? (
@@ -136,7 +136,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         >
                             <span className={cn(
                                 "font-serif font-black uppercase tracking-tight leading-none transition-all duration-500",
-                                isScrolled ? "text-sm md:text-xl" : "text-[15px] sm:text-xl md:text-2xl"
+                                isScrolled ? "text-sm lg:text-lg xl:text-xl" : "text-[15px] sm:text-lg lg:text-xl xl:text-2xl"
                             )}>
                                 {currentNetwork ? currentNetwork.name : "Morgana & O.R.U.M."}
                             </span>
