@@ -65,6 +65,12 @@ export default function NewsForm({
         setIsLoading(true)
         setError(null)
 
+        const toISO = (val: string | null | undefined) => {
+            if (!val) return undefined
+            const d = new Date(val)
+            return isNaN(d.getTime()) ? undefined : d.toISOString()
+        }
+
         const rawData = {
             title: formData.get("title") as string,
             description: formData.get("description") as string,
@@ -72,7 +78,7 @@ export default function NewsForm({
             category: selectedCategories.join(", "),
             tags: formData.get("tags") as string || null,
             image: imageUrl || null,
-            date: formData.get("date") as string || undefined,
+            date: toISO(combinedDate),
             published: formData.get("published") === "on",
             associations: selectedAssociations,
         }

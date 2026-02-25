@@ -142,12 +142,18 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 ? Array.from(selectedDeps).join(', ')
                 : undefined
 
+            const toISO = (val: string | null | undefined) => {
+                if (!val) return undefined
+                const d = new Date(val)
+                return isNaN(d.getTime()) ? undefined : d.toISOString()
+            }
+
             const rawData = {
                 title: formData.get("title") as string,
                 description: formData.get("description") as string,
                 details: (formData.get("details") as string) || undefined,
-                date: formData.get("date") as string,
-                endDate: (formData.get("endDate") as string) || undefined,
+                date: toISO(formData.get("date") as string)!,
+                endDate: toISO(formData.get("endDate") as string),
                 location: formData.get("location") as string,
                 cfuValue: finalCfuValue,
                 cfuType: finalCfuType,
@@ -155,8 +161,8 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 image: imageUrl || undefined,
                 category: selectedCategories.join(", "),
                 bookingOpen: bookingOpen,
-                bookingStart: (formData.get("bookingStart") as string) || undefined,
-                bookingEnd: (formData.get("bookingEnd") as string) || undefined,
+                bookingStart: toISO(formData.get("bookingStart") as string),
+                bookingEnd: toISO(formData.get("bookingEnd") as string),
                 attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : undefined,
                 published,
                 associations: selectedAssociations,
