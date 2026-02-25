@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import { logoutAction } from "@/app/actions/auth"
-import { LogOut, User, Menu, X, Mail } from "lucide-react"
+import { LogOut, User, Menu, X, Mail, Search } from "lucide-react"
 import { useBrand } from "@/components/brand-provider"
+import { SearchModal } from "./search-modal"
 
 export function MainNav({
     className,
@@ -17,6 +18,7 @@ export function MainNav({
     const pathname = usePathname()
     const { brand } = useBrand()
     const [isOpen, setIsOpen] = useState(false)
+    const [isSearchOpen, setIsSearchOpen] = useState(false)
 
     // Prevent body scroll when menu is open
     useEffect(() => {
@@ -98,6 +100,18 @@ export function MainNav({
                         {route.label}
                     </Link>
                 ))}
+
+                {/* Search Icon Trigger - Desktop */}
+                <button
+                    onClick={() => setIsSearchOpen(true)}
+                    className={cn(
+                        "p-1.5 rounded-full transition-all ml-2",
+                        isScrolled ? "text-zinc-500 hover:text-primary hover:bg-zinc-100" : "text-white/80 hover:text-white hover:bg-white/10"
+                    )}
+                    title="Cerca (Ctrl+K)"
+                >
+                    <Search className="size-5" />
+                </button>
 
                 {isLoggedIn ? (
                     <div className="flex items-center gap-3 ml-4">
@@ -221,6 +235,12 @@ export function MainNav({
                     </div>
                 </div>
             )}
+
+            {/* Search Modal */}
+            <SearchModal
+                isOpen={isSearchOpen}
+                onClose={() => setIsSearchOpen(false)}
+            />
         </>
     )
 }

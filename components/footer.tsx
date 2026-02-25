@@ -26,7 +26,7 @@ export function Footer() {
     return (
         <footer id="site-footer" className={cn("w-full pt-16 pb-8", bgColor, textColor)}>
             <div className="container">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
 
                     {/* Column 1: Brand Info */}
                     <div className="flex flex-col gap-4">
@@ -78,6 +78,20 @@ export function Footer() {
                             <li><Link href={`/events`} className={cn("transition-colors", mutedColor)}>Eventi</Link></li>
                             <li><Link href={`/representatives`} className={cn("transition-colors", mutedColor)}>Rappresentanti</Link></li>
                             <li><Link href={`/login`} className={cn("transition-colors font-bold", mutedColor)}>Area Riservata</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Column 3: Il Nostro Network */}
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
+                            Il Network
+                        </h3>
+                        <ul className="flex flex-col gap-2 text-sm">
+                            <li><Link href="/network/unimhealth" className={cn("transition-colors", mutedColor)}>Unimhealth</Link></li>
+                            <li><Link href="/network/economia" className={cn("transition-colors", mutedColor)}>Studenti Economia</Link></li>
+                            <li><Link href="/network/matricole" className={cn("transition-colors", mutedColor)}>Unime Matricole</Link></li>
+                            <li><Link href="/network/scipog" className={cn("transition-colors", mutedColor)}>Studenti Scipog</Link></li>
+                            <li><Link href="/network/dicam" className={cn("transition-colors", mutedColor)}>Inside Dicam</Link></li>
                         </ul>
                     </div>
 

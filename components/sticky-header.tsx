@@ -6,13 +6,10 @@ import Image from "next/image"
 import { MainNav } from "@/components/main-nav"
 import { cn } from "@/lib/utils"
 import { useBrand } from "@/components/brand-provider"
-import { Search } from "lucide-react"
-import { SearchModal } from "./search-modal"
 
 export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
     const [isScrolled, setIsScrolled] = useState(false)
     const [hasMounted, setHasMounted] = useState(false)
-    const [isSearchOpen, setIsSearchOpen] = useState(false)
 
     useEffect(() => {
         setHasMounted(true)
@@ -161,30 +158,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 </div>
 
                 {/* Navigation Section - Right Aligned (including Mobile Menu) */}
-                <div className="flex items-center gap-2 md:gap-4">
-                    {/* Search Trigger */}
-                    <button
-                        onClick={() => setIsSearchOpen(true)}
-                        className="p-2.5 rounded-2xl bg-zinc-50 hover:bg-zinc-100 text-zinc-500 transition-all border border-zinc-100 group flex items-center gap-2"
-                        title="Cerca (Ctrl+K)"
-                    >
-                        <Search className="size-4 md:size-5 group-hover:scale-110 transition-transform" />
-                        <span className="text-[10px] font-bold text-zinc-400 border border-zinc-200 px-1.5 py-0.5 rounded uppercase tracking-tighter hidden xl:block">
-                            CTRL+K
-                        </span>
-                    </button>
-
+                <div className="flex items-center">
                     <MainNav
                         isScrolled={true} // Always white background style
                         isLoggedIn={isLoggedIn}
                     />
                 </div>
-
-                {/* Search Modal */}
-                <SearchModal
-                    isOpen={isSearchOpen}
-                    onClose={() => setIsSearchOpen(false)}
-                />
             </div>
         </header>
 
