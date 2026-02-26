@@ -6,6 +6,7 @@ import { Search, X, Newspaper, Calendar, User, ArrowRight, Loader2 } from "lucid
 import { cn } from "@/lib/utils"
 import { globalSearch } from "@/app/actions/search"
 import { useClickAway } from "react-use"
+import { useTranslations, useLocale } from "next-intl"
 
 interface SearchModalProps {
     isOpen: boolean
@@ -13,6 +14,8 @@ interface SearchModalProps {
 }
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
+    const t = useTranslations("Search")
+    const locale = useLocale()
     const [query, setQuery] = React.useState("")
     const [results, setResults] = React.useState<any>(null)
     const [loading, setLoading] = React.useState(false)
@@ -83,7 +86,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     <Search className="size-5 text-zinc-400 ml-2" />
                     <input
                         autoFocus
-                        placeholder="Cerca notizie, eventi, rappresentanti..."
+                        placeholder={t("placeholder")}
                         className="flex-1 bg-transparent px-4 py-2 text-lg outline-none placeholder:text-zinc-400 font-medium"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
@@ -105,25 +108,25 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     {loading && (
                         <div className="flex flex-col items-center justify-center py-12 text-zinc-400">
                             <Loader2 className="size-8 animate-spin mb-4 text-primary" />
-                            <p className="text-sm font-medium">Ricerca in corso...</p>
+                            <p className="text-sm font-medium">{t("loading")}</p>
                         </div>
                     )}
 
                     {!loading && !query && (
                         <div className="py-12 text-center">
                             <Search className="size-12 text-zinc-100 mx-auto mb-4" />
-                            <p className="text-zinc-400 font-medium">Inizia a scrivere per cercare nel portale.</p>
+                            <p className="text-zinc-400 font-medium">{t("empty_start")}</p>
                         </div>
                     )}
 
                     {!loading && query && query.length < 2 && (
-                        <p className="py-12 text-center text-zinc-400 text-sm font-medium">Inserisci almeno due caratteri.</p>
+                        <p className="py-12 text-center text-zinc-400 text-sm font-medium">{t("too_short")}</p>
                     )}
 
                     {!loading && query && query.length >= 2 && !hasResults && (
                         <div className="py-12 text-center">
-                            <p className="text-zinc-500 font-bold mb-1">Nessun risultato trovato</p>
-                            <p className="text-zinc-400 text-sm">Prova con termini diversi.</p>
+                            <p className="text-zinc-500 font-bold mb-1">{t("no_results_title")}</p>
+                            <p className="text-zinc-400 text-sm">{t("no_results_desc")}</p>
                         </div>
                     )}
 
@@ -133,7 +136,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                             {results.news?.length > 0 && (
                                 <section>
                                     <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 mb-3 px-2 flex items-center gap-2">
-                                        <Newspaper className="size-3" /> Notizie
+                                        <Newspaper className="size-3" /> {t("news_label")}
                                     </h3>
                                     <div className="space-y-1">
                                         {results.news.map((item: any) => (
@@ -144,7 +147,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                             >
                                                 <div className="flex-1 min-w-0">
                                                     <p className="font-bold text-foreground line-clamp-1">{item.title}</p>
-                                                    <p className="text-xs text-zinc-400 line-clamp-1">{item.description || "Leggi la notizia..."}</p>
+                                                    <p className="text-xs text-zinc-400 line-clamp-1">{item.description || t("read_more")}</p>
                                                 </div>
                                                 <ArrowRight className="size-4 text-zinc-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all ml-4 shrink-0" />
                                             </button>
@@ -157,7 +160,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                             {results.events?.length > 0 && (
                                 <section>
                                     <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 mb-3 px-2 flex items-center gap-2">
-                                        <Calendar className="size-3" /> Eventi
+                                        <Calendar className="size-3" /> {t("events_label")}
                                     </h3>
                                     <div className="space-y-1">
                                         {results.events.map((item: any) => (
@@ -168,7 +171,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                             >
                                                 <div className="flex-1 min-w-0">
                                                     <p className="font-bold text-foreground line-clamp-1">{item.title}</p>
-                                                    <p className="text-xs text-zinc-400 line-clamp-1">{item.location} • {new Date(item.date).toLocaleDateString('it')}</p>
+                                                    <p className="text-xs text-zinc-400 line-clamp-1">{item.location} • {new Date(item.date).toLocaleDateString(locale)}</p>
                                                 </div>
                                                 <ArrowRight className="size-4 text-zinc-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all ml-4 shrink-0" />
                                             </button>
@@ -181,7 +184,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                             {results.representatives?.length > 0 && (
                                 <section>
                                     <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 mb-3 px-2 flex items-center gap-2">
-                                        <User className="size-3" /> Rappresentanti
+                                        <User className="size-3" /> {t("reps_label")}
                                     </h3>
                                     <div className="space-y-1">
                                         {results.representatives.map((item: any) => (
@@ -207,10 +210,10 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 <div className="p-4 bg-zinc-50 border-t border-zinc-100 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                         <div className="flex items-center gap-1.5 text-[10px] text-zinc-400">
-                            <span className="font-bold">↑↓</span> per navigare
+                            <span className="font-bold">↑↓</span> {t("nav_hint")}
                         </div>
                         <div className="flex items-center gap-1.5 text-[10px] text-zinc-400">
-                            <span className="font-bold">Enter</span> per selezionare
+                            <span className="font-bold">Enter</span> {t("select_hint")}
                         </div>
                     </div>
                     <div className="text-[10px] font-bold text-zinc-300 uppercase tracking-widest">

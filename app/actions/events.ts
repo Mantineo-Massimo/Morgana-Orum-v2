@@ -32,7 +32,7 @@ async function checkContentPermission(itemAssociations?: Association[]) {
     return { allowed: false }
 }
 
-export async function getAllEvents(userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming') {
+export async function getAllEvents(userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') {
     const now = new Date()
     const query: any = {
         where: {
@@ -57,15 +57,19 @@ export async function getAllEvents(userEmail?: string | null, association?: Asso
     }
 
     const events = await prisma.event.findMany(query)
+    const typedEvents = events as any[]
 
-    return events.map((event: any) => ({
+    return typedEvents.map((event: any) => ({
         ...event,
+        title: (locale === 'en' && event.titleEn) ? event.titleEn : event.title,
+        description: (locale === 'en' && event.descriptionEn) ? event.descriptionEn : event.description,
+        details: (locale === 'en' && event.detailsEn) ? event.detailsEn : event.details,
         isRegistered: event.registrations ? (event.registrations as any[]).length > 0 : false,
         registrations: undefined
     }))
 }
 
-export async function getEventById(id: number, userEmail?: string | null) {
+export async function getEventById(id: number, userEmail?: string | null, locale: string = 'it') {
     const query: any = {
         where: { id, published: true },
     }
@@ -86,6 +90,9 @@ export async function getEventById(id: number, userEmail?: string | null) {
 
     return {
         ...event,
+        title: (locale === 'en' && (event as any).titleEn) ? (event as any).titleEn : event.title,
+        description: (locale === 'en' && (event as any).descriptionEn) ? (event as any).descriptionEn : event.description,
+        details: (locale === 'en' && (event as any).detailsEn) ? (event as any).detailsEn : event.details,
         isRegistered: event.registrations ? (event.registrations as any[]).length > 0 : false,
         registrations: undefined
     }
@@ -310,8 +317,11 @@ export async function getAllAdminEvents(filters?: {
 
 export async function createEvent(data: {
     title: string
+    titleEn?: string
     description: string
+    descriptionEn?: string
     details?: string
+    detailsEn?: string
     date: string
     endDate?: string
     location: string
@@ -335,8 +345,11 @@ export async function createEvent(data: {
         const newEvent = await prisma.event.create({
             data: {
                 title: data.title,
+                titleEn: (data as any).titleEn || null,
                 description: data.description,
+                descriptionEn: (data as any).descriptionEn || null,
                 details: data.details || null,
+                detailsEn: (data as any).detailsEn || null,
                 date: new Date(data.date),
                 endDate: data.endDate ? new Date(data.endDate) : null,
                 location: data.location,
@@ -352,7 +365,7 @@ export async function createEvent(data: {
                 associations: data.associations || [Association.MORGANA_ORUM],
                 published: data.published,
                 youtubeUrl: data.youtubeUrl || null,
-            }
+            } as any
         })
 
         // -- INVIA NEWSLETTER A SOTTOSCRITTORI (SOLO SE PUBBLICATO) --
@@ -371,8 +384,11 @@ export async function createEvent(data: {
 
 export async function updateEvent(id: number, data: {
     title: string
+    titleEn?: string
     description: string
+    descriptionEn?: string
     details?: string
+    detailsEn?: string
     date: string
     endDate?: string
     location: string
@@ -406,28 +422,33 @@ export async function updateEvent(id: number, data: {
             }
         }
 
+        const updateData: any = {
+            title: data.title,
+            titleEn: (data as any).titleEn || null,
+            description: data.description,
+            descriptionEn: (data as any).descriptionEn || null,
+            details: data.details || null,
+            detailsEn: (data as any).detailsEn || null,
+            date: new Date(data.date),
+            endDate: data.endDate ? new Date(data.endDate) : null,
+            location: data.location,
+            cfuValue: data.cfuValue || null,
+            cfuType: data.cfuType || null,
+            cfuDepartments: data.cfuDepartments || null,
+            image: data.image || null,
+            category: data.category,
+            bookingOpen: data.bookingOpen,
+            bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
+            bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
+            attachments: data.attachments || null,
+            associations: { set: data.associations || [Association.MORGANA_ORUM] },
+            published: data.published,
+            youtubeUrl: data.youtubeUrl || null,
+        }
+
         const updatedEvent = await prisma.event.update({
             where: { id },
-            data: {
-                title: data.title,
-                description: data.description,
-                details: data.details || null,
-                date: new Date(data.date),
-                endDate: data.endDate ? new Date(data.endDate) : null,
-                location: data.location,
-                cfuValue: data.cfuValue || null,
-                cfuType: data.cfuType || null,
-                cfuDepartments: data.cfuDepartments || null,
-                image: data.image || null,
-                category: data.category,
-                bookingOpen: data.bookingOpen,
-                bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
-                bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
-                attachments: data.attachments || null,
-                associations: data.associations || [Association.MORGANA_ORUM],
-                published: data.published,
-                youtubeUrl: data.youtubeUrl || null,
-            }
+            data: updateData
         })
 
         // -- INVIA NEWSLETTER SE PASSA DA BOZZA A PUBBLICATO --
@@ -440,7 +461,8 @@ export async function updateEvent(id: number, data: {
         return { success: true }
     } catch (error) {
         console.error("Update event error:", error)
-        return { success: false, error: "Errore nell'aggiornamento dell'evento." }
+        const errorMessage = error instanceof Error ? error.message : "Errore nell'aggiornamento dell'evento."
+        return { success: false, error: errorMessage }
     }
 }
 

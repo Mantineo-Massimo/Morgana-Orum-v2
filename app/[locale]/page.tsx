@@ -7,7 +7,11 @@ import { getTranslations } from "next-intl/server"
 
 export const dynamic = "force-dynamic"
 
-export default async function BrandHomePage() {
+export default async function BrandHomePage({
+    params: { locale }
+}: {
+    params: { locale: string }
+}) {
     const t = await getTranslations("HomePage")
 
     // CHIAMATA AL DATABASE: Peschiamo le vere notizie
@@ -68,10 +72,10 @@ export default async function BrandHomePage() {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
                                 <div className="absolute top-4 left-4 z-20 bg-white text-foreground text-center p-2 min-w-[3.5rem] shadow-sm">
                                     <span className="block text-xs font-bold uppercase text-muted-foreground">
-                                        {evento.date.toLocaleDateString('it-IT', { month: 'short' })}
+                                        {evento.date.toLocaleDateString(locale, { month: 'short' })}
                                     </span>
                                     <span className="block text-2xl font-black leading-none">
-                                        {evento.date.toLocaleDateString('it-IT', { day: '2-digit' })}
+                                        {evento.date.toLocaleDateString(locale, { day: '2-digit' })}
                                     </span>
                                 </div>
 
@@ -131,7 +135,7 @@ export default async function BrandHomePage() {
                                 </div>
                                 <div className="px-2">
                                     <div className="text-xs font-bold text-muted-foreground mb-2 flex items-center gap-2">
-                                        <Calendar className="size-3" /> {news.date.toLocaleDateString("it-IT", { day: "numeric", month: "long", year: "numeric" })}
+                                        <Calendar className="size-3" /> {news.date.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })}
                                     </div>
                                     <h3 className="text-xl font-serif font-black leading-tight group-hover:text-primary transition-colors line-clamp-2">
                                         {news.title}

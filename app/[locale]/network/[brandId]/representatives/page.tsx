@@ -1,6 +1,6 @@
 import { getRepresentatives } from "@/app/actions/representatives"
-import RepresentativesClient from "@/app/representatives/representatives-client"
-import { notFound } from "@/i18n/routing"
+import RepresentativesClient from "@/app/[locale]/representatives/representatives-client"
+import { notFound } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 

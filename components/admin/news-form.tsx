@@ -4,7 +4,8 @@ import { createNews, updateNews } from "@/app/actions/news"
 import { Association } from "@prisma/client"
 import { useState, useRef, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Save, Loader2, Upload, X, ImageIcon } from "lucide-react"
+import { ArrowLeft, Save, Loader2, Upload, X, ImageIcon, Sparkles } from "lucide-react"
+import { translateText } from "@/app/actions/translate"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -42,6 +43,51 @@ export default function NewsForm({
             : (userAssociation ? [userAssociation] : [Association.MORGANA_ORUM])
     )
 
+    // Translation states
+    const [isTranslating, setIsTranslating] = useState(false)
+    const [titleEn, setTitleEn] = useState(initialData?.titleEn || "")
+    const [descriptionEn, setDescriptionEn] = useState(initialData?.descriptionEn || "")
+    const [contentEn, setContentEn] = useState(initialData?.contentEn || "")
+
+    // Refs for Italian fields to read their current values
+    const titleRef = useRef<HTMLInputElement>(null)
+    const descriptionRef = useRef<HTMLTextAreaElement>(null)
+    const contentRef = useRef<HTMLTextAreaElement>(null)
+
+    async function handleTranslate() {
+        const italianTitle = titleRef.current?.value || ""
+        const italianDescription = descriptionRef.current?.value || ""
+        const italianContent = contentRef.current?.value || ""
+
+        if (!italianTitle && !italianDescription && !italianContent) {
+            setError("Inserisci almeno un testo in italiano da tradurre.")
+            return
+        }
+
+        setIsTranslating(true)
+        setError(null)
+
+        try {
+            const results = await Promise.all([
+                italianTitle ? translateText(italianTitle) : Promise.resolve({ success: true, translation: "" }),
+                italianDescription ? translateText(italianDescription) : Promise.resolve({ success: true, translation: "" }),
+                italianContent ? translateText(italianContent) : Promise.resolve({ success: true, translation: "" })
+            ])
+
+            if (results[0].success) setTitleEn(results[0].translation || "")
+            if (results[1].success) setDescriptionEn(results[1].translation || "")
+            if (results[2].success) setContentEn(results[2].translation || "")
+
+            if (results.some(r => !r.success)) {
+                setError("La traduzione automatica ha avuto qualche problema, ma abbiamo tradotto il possibile.")
+            }
+        } catch (err) {
+            setError("Errore durante la traduzione automatica.")
+        } finally {
+            setIsTranslating(false)
+        }
+    }
+
     async function handleImageUpload(file: File) {
         setIsUploading(true)
         try {
@@ -73,8 +119,11 @@ export default function NewsForm({
 
         const rawData = {
             title: formData.get("title") as string,
+            titleEn: formData.get("titleEn") as string || null,
             description: formData.get("description") as string,
+            descriptionEn: formData.get("descriptionEn") as string || null,
             content: formData.get("content") as string || null,
+            contentEn: formData.get("contentEn") as string || null,
             category: selectedCategories.join(", "),
             tags: formData.get("tags") as string || null,
             image: imageUrl || null,
@@ -156,7 +205,7 @@ export default function NewsForm({
                             <div className="relative w-24 h-16 rounded-lg bg-zinc-100 border-2 border-dashed border-zinc-300 flex items-center justify-center overflow-hidden flex-shrink-0">
                                 {imageUrl ? (
                                     <>
-                                        <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                                        <Image src={imageUrl} alt="Preview" fill sizes="(max-width: 768px) 100vw, 96px" className="object-cover" />
                                         <button
                                             type="button"
                                             onClick={() => setImageUrl(null)}
@@ -209,6 +258,7 @@ export default function NewsForm({
                     <div>
                         <label className="block text-sm font-bold text-zinc-700 mb-1">Titolo</label>
                         <input
+                            ref={titleRef}
                             name="title"
                             defaultValue={initialData?.title}
                             required
@@ -221,6 +271,7 @@ export default function NewsForm({
                     <div>
                         <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Breve</label>
                         <textarea
+                            ref={descriptionRef}
                             name="description"
                             defaultValue={initialData?.description}
                             required
@@ -236,12 +287,69 @@ export default function NewsForm({
                     <div>
                         <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (Opzionale)</label>
                         <textarea
+                            ref={contentRef}
                             name="content"
                             defaultValue={initialData?.content ?? ""}
                             rows={8}
                             className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
                             placeholder="Testo completo dell'articolo..."
                         />
+                    </div>
+
+                    <div className="pt-4 border-t border-zinc-100">
+                        <div className="flex items-center justify-between mb-4">
+                            <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Traduzione Inglese (EN)</h3>
+                            <button
+                                type="button"
+                                onClick={handleTranslate}
+                                disabled={isTranslating}
+                                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 text-xs font-bold hover:bg-blue-100 transition-all disabled:opacity-50"
+                            >
+                                {isTranslating ? (
+                                    <Loader2 className="size-3 animate-spin" />
+                                ) : (
+                                    <Sparkles className="size-3" />
+                                )}
+                                Traduci in automatico
+                            </button>
+                        </div>
+
+                        <div className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-bold text-zinc-700 mb-1">Titolo (EN)</label>
+                                <input
+                                    name="titleEn"
+                                    value={titleEn}
+                                    onChange={(e) => setTitleEn(e.target.value)}
+                                    className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                                    placeholder="English title..."
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Breve (EN)</label>
+                                <textarea
+                                    name="descriptionEn"
+                                    value={descriptionEn}
+                                    onChange={(e) => setDescriptionEn(e.target.value)}
+                                    rows={2}
+                                    className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
+                                    placeholder="Short English description..."
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (EN - Opzionale)</label>
+                                <textarea
+                                    name="contentEn"
+                                    value={contentEn}
+                                    onChange={(e) => setContentEn(e.target.value)}
+                                    rows={8}
+                                    className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
+                                    placeholder="Full English content..."
+                                />
+                            </div>
+                        </div>
                     </div>
 
                     {/* Categorie (multi) */}

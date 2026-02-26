@@ -9,8 +9,11 @@ import { AssociationId } from "@/lib/associations"
 
 const newsSchema = z.object({
     title: z.string().min(1, "Il titolo è obbligatorio"),
+    titleEn: z.string().optional().nullable().or(z.literal("")),
     description: z.string().optional().nullable().or(z.literal("")),
+    descriptionEn: z.string().optional().nullable().or(z.literal("")),
     content: z.string().optional().nullable().or(z.literal("")),
+    contentEn: z.string().optional().nullable().or(z.literal("")),
     category: z.string().min(1, "La categoria è obbligatoria"),
     tags: z.string().optional().nullable().or(z.literal("")),
     image: z.string().optional().nullable().or(z.literal("")),
@@ -53,8 +56,11 @@ export async function createNews(data: any) {
         const newNews = await prisma.news.create({
             data: {
                 title: validData.title,
+                titleEn: validData.titleEn || null,
                 description: validData.description || "",
+                descriptionEn: validData.descriptionEn || null,
                 content: validData.content || null,
+                contentEn: validData.contentEn || null,
                 category: validData.category,
                 tags: validData.tags || null,
                 image: validData.image || null,
@@ -100,11 +106,20 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
             }
         }
 
-        const updateData: any = { ...validData }
+        const updateData: any = {}
 
-        if (updateData.date) {
-            updateData.date = new Date(updateData.date)
-        }
+        // Map validData to updateData, ensuring empty strings are null for optional localized fields
+        Object.entries(validData).forEach(([key, value]) => {
+            if (key === 'associations' && Array.isArray(value)) {
+                updateData.associations = { set: value }
+            } else if (key === 'date' && value) {
+                updateData.date = new Date(value as string)
+            } else if (typeof value === 'string' && value.trim() === '' && ['titleEn', 'descriptionEn', 'contentEn', 'tags', 'image'].includes(key)) {
+                updateData[key] = null
+            } else {
+                updateData[key] = value
+            }
+        })
 
         const oldNews = await prisma.news.findUnique({
             where: { id },
@@ -127,7 +142,8 @@ export async function updateNews(id: string, data: Partial<z.infer<typeof newsSc
         return { success: true }
     } catch (error) {
         console.error("Update news error:", error)
-        return { success: false, error: "Errore durante l'aggiornamento" }
+        const errorMessage = error instanceof Error ? error.message : "Errore durante l'aggiornamento"
+        return { success: false, error: errorMessage }
     }
 }
 
@@ -188,11 +204,10 @@ export async function duplicateNews(id: string) {
 }
 
 // Public: only published AND date <= now (scheduled publishing support)
-export async function getNews(category?: string, query?: string, association?: Association) {
-    console.log('getNews called with:', { category, query, association })
+export async function getNews(category?: string, query?: string, association?: Association, locale: string = 'it') {
+    console.log('getNews called with:', { category, query, association, locale })
     try {
         const now = new Date()
-        console.log('Now:', now.toISOString())
         const where: any = {
             published: true,
             date: { lte: now }
@@ -209,14 +224,24 @@ export async function getNews(category?: string, query?: string, association?: A
         if (query) {
             where.OR = [
                 { title: { contains: query } },
+                { titleEn: { contains: query } },
                 { description: { contains: query } },
+                { descriptionEn: { contains: query } },
             ]
         }
 
-        return await prisma.news.findMany({
+        const news = await prisma.news.findMany({
             where,
             orderBy: { date: "desc" },
         })
+
+        // Localization mapping
+        return news.map((item: any) => ({
+            ...item,
+            title: (locale === 'en' && item.titleEn) ? item.titleEn : item.title,
+            description: (locale === 'en' && item.descriptionEn) ? item.descriptionEn : item.description,
+            content: (locale === 'en' && item.contentEn) ? item.contentEn : item.content,
+        }))
     } catch (error) {
         console.error("Error fetching news:", error)
         return []
@@ -295,9 +320,18 @@ export async function getAllNews(filters?: {
     }
 }
 
-export async function getNewsById(id: string) {
+export async function getNewsById(id: string, locale: string = 'it') {
     try {
-        return await prisma.news.findUnique({ where: { id } })
+        const news = await prisma.news.findUnique({ where: { id } })
+        if (!news) return null
+
+        // Localization mapping
+        return {
+            ...news,
+            title: (locale === 'en' && (news as any).titleEn) ? (news as any).titleEn : news.title,
+            description: (locale === 'en' && (news as any).descriptionEn) ? (news as any).descriptionEn : news.description,
+            content: (locale === 'en' && (news as any).contentEn) ? (news as any).contentEn : news.content,
+        }
     } catch (error) {
         console.error("Error fetching news by id:", error)
         return null

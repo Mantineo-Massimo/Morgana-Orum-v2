@@ -6,8 +6,10 @@ import Image from "next/image"
 import { MainNav } from "@/components/main-nav"
 import { cn } from "@/lib/utils"
 import { useBrand } from "@/components/brand-provider"
+import { useTranslations } from "next-intl"
 
 export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
+    const t = useTranslations("Footer")
     const [isScrolled, setIsScrolled] = useState(false)
     const [hasMounted, setHasMounted] = useState(false)
 
@@ -149,11 +151,11 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                                 href="/"
                                 className="text-[7px] sm:text-[9px] md:text-[10px] uppercase tracking-normal md:tracking-[0.15em] font-bold mt-1.5 md:mt-2 opacity-70 leading-tight hover:underline underline-offset-2 hover:opacity-100 transition-all border-t border-white/10 pt-1"
                             >
-                                Torna al sito Morgana & O.R.U.M.
+                                {t("back_to_main")}
                             </Link>
                         ) : (
                             <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-normal md:tracking-[0.2em] font-bold mt-0.5 md:mt-1.5 opacity-90 leading-tight">
-                                Associazioni Universitarie
+                                {t("brand_tagline")}
                             </span>
                         )}
                     </div>

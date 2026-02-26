@@ -3,11 +3,12 @@
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, Save, Loader2, X, File, Upload } from "lucide-react"
+import { ArrowLeft, Save, Loader2, X, File, Upload, Sparkles } from "lucide-react"
+import { translateText } from "@/app/actions/translate"
 import { cn } from "@/lib/utils"
 import { createEvent, updateEvent } from "@/app/actions/events"
 import { departmentsData } from "@/lib/departments"
-import { ASSOCIATIONS, getAssociationName } from "@/lib/associations"
+import { ASSOCIATIONS } from "@/lib/associations"
 import { Association } from "@prisma/client"
 
 type EventFormProps = {
@@ -71,6 +72,51 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
     const [selectedCategories, setSelectedCategories] = useState<string[]>(
         initialData?.category ? initialData.category.split(",").map(c => c.trim()) : []
     )
+
+    // Translation states
+    const [isTranslating, setIsTranslating] = useState(false)
+    const [titleEn, setTitleEn] = useState((initialData as any)?.titleEn || "")
+    const [descriptionEn, setDescriptionEn] = useState((initialData as any)?.descriptionEn || "")
+    const [detailsEn, setDetailsEn] = useState((initialData as any)?.detailsEn || "")
+
+    // Refs for Italian fields
+    const titleRef = useRef<HTMLInputElement>(null)
+    const descriptionRef = useRef<HTMLTextAreaElement>(null)
+    const detailsRef = useRef<HTMLTextAreaElement>(null)
+
+    async function handleTranslate() {
+        const itTitle = titleRef.current?.value || ""
+        const itDesc = descriptionRef.current?.value || ""
+        const itDetails = detailsRef.current?.value || ""
+
+        if (!itTitle && !itDesc && !itDetails) {
+            setError("Inserisci almeno un testo in italiano da tradurre.")
+            return
+        }
+
+        setIsTranslating(true)
+        setError("")
+
+        try {
+            const results = await Promise.all([
+                itTitle ? translateText(itTitle) : Promise.resolve({ success: true, translation: "" }),
+                itDesc ? translateText(itDesc) : Promise.resolve({ success: true, translation: "" }),
+                itDetails ? translateText(itDetails) : Promise.resolve({ success: true, translation: "" }),
+            ])
+
+            if (results[0].success) setTitleEn(results[0].translation || "")
+            if (results[1].success) setDescriptionEn(results[1].translation || "")
+            if (results[2].success) setDetailsEn(results[2].translation || "")
+
+            if (results.some(r => !r.success)) {
+                setError("La traduzione automatica ha avuto qualche problema, ma abbiamo tradotto il possibile.")
+            }
+        } catch (err) {
+            setError("Errore durante la traduzione automatica.")
+        } finally {
+            setIsTranslating(false)
+        }
+    }
 
     // CFU State
     const [cfuType, setCfuType] = useState<string>(initialData?.cfuType || "")
@@ -150,8 +196,11 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
 
             const rawData = {
                 title: formData.get("title") as string,
+                titleEn: (formData.get("titleEn") as string) || undefined,
                 description: formData.get("description") as string,
+                descriptionEn: (formData.get("descriptionEn") as string) || undefined,
                 details: (formData.get("details") as string) || undefined,
+                detailsEn: (formData.get("detailsEn") as string) || undefined,
                 date: toISO(formData.get("date") as string)!,
                 endDate: toISO(formData.get("endDate") as string),
                 location: formData.get("location") as string,
@@ -255,22 +304,76 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 {/* Title */}
                 <div>
                     <label className={labelClass}>Titolo *</label>
-                    <input name="title" defaultValue={initialData?.title} required className={inputClass} placeholder="Es: Seminario AI e Diritto" />
+                    <input ref={titleRef} name="title" defaultValue={initialData?.title} required className={inputClass} placeholder="Es: Seminario AI e Diritto" />
                 </div>
 
                 {/* Description */}
                 <div>
                     <label className={labelClass}>Descrizione breve *</label>
-                    <textarea name="description" defaultValue={initialData?.description} required rows={3} className={cn(inputClass, "resize-none")} placeholder="Descrizione sintetica dell'evento..." />
+                    <textarea ref={descriptionRef} name="description" defaultValue={initialData?.description} required rows={3} className={cn(inputClass, "resize-none")} placeholder="Descrizione sintetica dell'evento..." />
                 </div>
 
                 {/* Details */}
                 <div>
                     <label className={labelClass}>Dettagli (programma, info aggiuntive)</label>
-                    <textarea name="details" defaultValue={initialData?.details || ""} rows={6} className={cn(inputClass, "resize-none")} placeholder="Programma dettagliato, relatori, informazioni pratiche..." />
+                    <textarea ref={detailsRef} name="details" defaultValue={initialData?.details || ""} rows={6} className={cn(inputClass, "resize-none")} placeholder="Programma dettagliato, relatori, informazioni pratiche..." />
                 </div>
 
+                <div className="pt-4 border-t border-zinc-100">
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-sm font-bold text-zinc-400 uppercase tracking-wider">Traduzione Inglese (EN)</h3>
+                        <button
+                            type="button"
+                            onClick={handleTranslate}
+                            disabled={isTranslating}
+                            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 text-xs font-bold hover:bg-blue-100 transition-all disabled:opacity-50"
+                        >
+                            {isTranslating ? (
+                                <Loader2 className="size-3 animate-spin" />
+                            ) : (
+                                <Sparkles className="size-3" />
+                            )}
+                            Traduci in automatico
+                        </button>
+                    </div>
 
+                    <div className="space-y-4">
+                        <div>
+                            <label className={labelClass}>Titolo (EN)</label>
+                            <input
+                                name="titleEn"
+                                value={titleEn}
+                                onChange={(e) => setTitleEn(e.target.value)}
+                                className={inputClass}
+                                placeholder="English title..."
+                            />
+                        </div>
+
+                        <div>
+                            <label className={labelClass}>Descrizione breve (EN)</label>
+                            <textarea
+                                name="descriptionEn"
+                                value={descriptionEn}
+                                onChange={(e) => setDescriptionEn(e.target.value)}
+                                rows={3}
+                                className={cn(inputClass, "resize-none")}
+                                placeholder="Short English description..."
+                            />
+                        </div>
+
+                        <div>
+                            <label className={labelClass}>Dettagli (EN)</label>
+                            <textarea
+                                name="detailsEn"
+                                value={detailsEn}
+                                onChange={(e) => setDetailsEn(e.target.value)}
+                                rows={6}
+                                className={cn(inputClass, "resize-none")}
+                                placeholder="Detailed English information..."
+                            />
+                        </div>
+                    </div>
+                </div>
 
                 {/* Date & End Date */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -636,7 +739,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 >
                     {isPending ? <><Loader2 className="size-4 animate-spin" /> Salvataggio in corso...</> : <><Save className="size-4" /> {initialData ? "Aggiorna Evento" : "Crea Evento"}</>}
                 </button>
-            </form>
-        </div>
+            </form >
+        </div >
     )
 }

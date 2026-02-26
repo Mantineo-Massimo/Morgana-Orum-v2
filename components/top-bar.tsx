@@ -5,6 +5,7 @@ import { Facebook, Instagram, Twitter, Youtube, User, Mail } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useBrand } from "@/components/brand-provider"
 import { useTranslations } from "next-intl"
+import { LanguageSwitcher } from "@/components/language-switcher"
 
 export function TopBar() {
     const t = useTranslations("Footer")
@@ -79,6 +80,12 @@ export function TopBar() {
                         <span className="text-[10px] md:text-xs uppercase font-bold text-zinc-500 mr-0.5 md:mr-1">O.R.U.M.:</span>
                         <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors"><Facebook className="size-3 md:size-3.5" /></a>
                         <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors"><Instagram className="size-3 md:size-3.5" /></a>
+                    </div>
+                    <div className="w-px h-3 md:h-4 bg-zinc-800"></div>
+
+                    {/* Language Switcher integration */}
+                    <div className="ml-1 md:ml-2">
+                        <LanguageSwitcher />
                     </div>
                 </div>
             </div>

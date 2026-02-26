@@ -1,7 +1,7 @@
-import Link from "@/i18n/routing"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { ArrowRight, Calendar, Users, HeartHandshake, Award } from "lucide-react"
-import { notFound } from "@/i18n/routing"
+import { notFound } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 

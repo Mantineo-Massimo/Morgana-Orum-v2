@@ -1,4 +1,4 @@
-import Link from "@/i18n/routing"
+import { Link } from "@/i18n/routing"
 import { Bus, ArrowLeft, MapPin, Clock, ExternalLink, Info } from "lucide-react"
 
 const TRANSPORT_DATA = [

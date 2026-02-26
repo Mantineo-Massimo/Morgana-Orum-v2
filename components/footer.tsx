@@ -124,11 +124,11 @@ export function Footer() {
                             {t("useful_links_title")}
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
-                            <li><Link href="/statuto" className={cn("transition-colors", mutedColor)}>Statuto Associazione</Link></li>
-                            <li><Link href="#" className={cn("transition-colors", mutedColor)}>Iscriviti</Link></li>
-                            <li><Link href="/privacy" className={cn("transition-colors", mutedColor)}>Privacy Policy</Link></li>
-                            <li><Link href="/cookies" className={cn("transition-colors", mutedColor)}>Cookie Policy</Link></li>
-                            <li><Link href="/contact" className={cn("transition-colors", mutedColor)}>Contattaci</Link></li>
+                            <li><Link href="/statuto" className={cn("transition-colors", mutedColor)}>{t("statute")}</Link></li>
+                            <li><Link href="#" className={cn("transition-colors", mutedColor)}>{t("join")}</Link></li>
+                            <li><Link href="/privacy" className={cn("transition-colors", mutedColor)}>{t("privacy")}</Link></li>
+                            <li><Link href="/cookie" className={cn("transition-colors", mutedColor)}>{t("cookies")}</Link></li>
+                            <li><Link href="/contact" className={cn("transition-colors", mutedColor)}>{t("contact")}</Link></li>
                         </ul>
                     </div>
 

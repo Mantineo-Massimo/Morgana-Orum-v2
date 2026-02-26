@@ -65,12 +65,12 @@ export function MainNav({
         routes.push(
             {
                 href: `/network/matricole/guides`,
-                label: "Guide",
+                label: nt("guides"),
                 active: pathname === `/network/matricole/guides`,
             },
             {
                 href: `/network/matricole/whatsapp`,
-                label: "Gruppi WhatsApp",
+                label: nt("whatsapp"),
                 active: pathname === `/network/matricole/whatsapp`,
             }
         )
@@ -110,7 +110,7 @@ export function MainNav({
                         "p-1.5 rounded-full transition-all ml-2",
                         isScrolled ? "text-zinc-500 hover:text-primary hover:bg-zinc-100" : "text-white/80 hover:text-white hover:bg-white/10"
                     )}
-                    title="Cerca (Ctrl+K)"
+                    title={nt("search_placeholder")}
                 >
                     <Search className="size-5" />
                 </button>
@@ -130,7 +130,7 @@ export function MainNav({
                         <button
                             onClick={() => logoutAction()}
                             className="p-1.5 xl:p-2 rounded-full text-zinc-500 hover:text-red-600 hover:bg-red-50 transition-colors"
-                            title="Logout"
+                            title={nt("logout")}
                         >
                             <LogOut className="size-5" />
                         </button>
@@ -207,7 +207,7 @@ export function MainNav({
                                         }}
                                         className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-zinc-100 text-zinc-600 hover:text-red-600 font-bold uppercase tracking-widest text-sm transition-colors"
                                     >
-                                        <LogOut className="size-5" /> Esci
+                                        <LogOut className="size-5" /> {nt("logout")}
                                     </button>
                                 </>
                             ) : (

@@ -14,7 +14,29 @@
         "newsletter_error": "Errore durante l'iscrizione.",
         "footer_tagline": "Associazioni Universitarie Morgana & O.R.U.M.",
         "footer_subline": "Impegno, passione e competenza al servizio della comunità accademica.",
-        "rights": "© {year} Associazioni Universitarie Morgana & O.R.U.M.. Tutti i diritti riservati."
+        "rights": "© {year} Associazioni Universitarie Morgana & O.R.U.M.. Tutti i diritti riservati.",
+        "statute": "Statuto Associazione",
+        "join": "Iscriviti",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookie Policy",
+        "contact": "Contattaci",
+        "back_to_main": "Torna al sito Morgana & O.R.U.M.",
+        "brand_tagline": "Associazioni Universitarie",
+        "contact_success_title": "Messaggio Inviato!",
+        "contact_success_desc": "Grazie per averci contattato. Abbiamo ricevuto la tua richiesta e ti risponderemo al più presto via email.",
+        "contact_desc": "Hai domande, suggerimenti o vuoi collaborare con noi? Inviaci un messaggio e ti risponderemo entro 24 ore.",
+        "office_title": "Sede Sociale",
+        "email": "Email",
+        "social_title": "Seguici sui Social",
+        "social_desc": "Resta aggiornato su tutte le nostre attività e i nuovi eventi in tempo reale.",
+        "form_name": "Nome Completo",
+        "form_name_placeholder": "Mario Rossi",
+        "form_subject": "Oggetto",
+        "form_subject_placeholder": "Informazioni su...",
+        "form_message": "Messaggio",
+        "form_message_placeholder": "Scrivi qui il tuo messaggio...",
+        "contact_sending": "Invio in corso...",
+        "contact_button": "Invia Messaggio"
     },
     "Navigation": {
         "home": "Home Portale",
@@ -24,7 +46,9 @@
         "representatives": "Rappresentanti",
         "reserved_area": "Area Riservata",
         "guides": "Guide",
-        "whatsapp": "Gruppi WhatsApp"
+        "whatsapp": "Gruppi WhatsApp",
+        "logout": "Esci",
+        "search_placeholder": "Cerca (Ctrl+K)"
     },
     "HomePage": {
         "hero_title": "Sempre dalla parte dello studente!",
@@ -32,10 +56,178 @@
         "events_title": "Prossimi Eventi",
         "events_all": "Calendario Completo",
         "events_empty": "Nessun evento programmato al momento.",
+        "no_news": "Nessuna notizia pubblicata recentemente.",
         "news_title": "Ultime Notizie",
         "news_all": "Tutte le Notizie",
         "news_empty": "Nessuna notizia trovata.",
         "network_title": "Scopri il nostro network!",
         "network_back": "Torna al sito Morgana & O.R.U.M."
+    },
+    "AboutPage": {
+        "title": "Chi Siamo",
+        "subtitle": "Sempre dalla parte dello studente.",
+        "description": "Due storie, una missione: Morgana e Orum uniscono le forze per trasformare l'università in un luogo di opportunità, diritti e crescita. Scopri chi siamo e cosa facciamo ogni giorno per te.",
+        "morgana_identity": "Dinamismo, Sociale, Territorio",
+        "orum_identity": "Istituzione, Risultati, Futuro",
+        "history_title": "La Nostra Storia",
+        "join_team_title": "Entra a far parte della squadra!",
+        "contact_instagram": "Contattaci su Instagram",
+        "counter_reps": "Rappresentanti Eletti",
+        "counter_students": "Studenti Supportati",
+        "counter_events": "Eventi ogni anno",
+        "morgana_story": "Morgana nasce dalla volontà di un gruppo di studenti decisi a non essere semplici spettatori del proprio percorso accademico. In pochi anni siamo diventati una realtà radicata non solo nell'Ateneo di Messina, ma in tutto il tessuto sociale cittadino. Siamo l'energia che muove l'università.",
+        "orum_story": "Orum rappresenta l'evoluzione della rappresentanza studentesca. Fondata su basi di serietà e competenza, l'associazione si è distinta per la capacità di dialogare ai massimi livelli istituzionali, ottenendo risultati concreti per il miglioramento della didattica e dei servizi agli studenti.",
+        "morgana_commitment": "Non aspettiamo che le cose cambino, le cambiamo insieme a te.",
+        "orum_commitment": "La tua voce nelle istituzioni, la tua sicurezza nel percorso di studi.",
+        "morgana_activity_1_title": "Rappresentanza Attiva",
+        "morgana_activity_1_desc": "Portiamo le tue istanze direttamente nei Consigli di Dipartimento e negli Organi di Ateneo con coraggio e determinazione.",
+        "morgana_activity_2_title": "Eventi e Cultura",
+        "morgana_activity_2_desc": "Organizziamo workshop, seminari e la celebre 'Piazza dell'Arte', trasformando l'università in un centro culturale vivo.",
+        "morgana_activity_3_title": "Solidarietà",
+        "morgana_activity_3_desc": "Crediamo nel valore del dono. Con iniziative come 'La Notte dei Regali', portiamo il supporto degli studenti oltre le mura delle aule.",
+        "orum_activity_1_title": "Governance Accademica",
+        "orum_activity_1_desc": "Con i nostri eletti in Senato Accademico e CdA, incidiamo sulle decisioni che contano, dalle tasse ai regolamenti didattici.",
+        "orum_activity_2_title": "Tutela del Diritto allo Studio",
+        "orum_activity_2_desc": "Supportiamo lo studente in ogni fase, dal primo test d'ingresso fino alla laurea, garantendo che nessuno rimanga indietro.",
+        "orum_activity_3_title": "Professionalizzazione",
+        "orum_activity_3_desc": "Creiamo ponti con il mondo del lavoro attraverso convenzioni e seminari tecnici che arricchiscono il tuo curriculum (CFU).",
+        "join_team_morgana": "Se hai passione, idee e voglia di metterti in gioco nel sociale e nel territorio, Morgana è il posto giusto per te.",
+        "join_team_orum": "Se vuoi incidere sulle decisioni istituzionali e supportare concretamente il diritto allo studio, unisciti ad Orum."
+    },
+    "Representatives": {
+        "biennium": "Biennio 2025-2027",
+        "title": "I Nostri Rappresentanti",
+        "subtitle": "Conosci gli studenti eletti che lavorano ogni giorno negli organi collegiali per difendere i tuoi diritti e migliorare l'ateneo.",
+        "stat_votes": "Voti Raggiunti",
+        "stat_elected": "Totale Eletti",
+        "stat_central": "Organi Centrali",
+        "stat_depts": "Dipartimenti Presenti",
+        "dept_suffix": " su 12",
+        "national_bodies": "Organi Nazionali",
+        "central_bodies": "Organi Centrali",
+        "dept_councils": "Consigli di Dipartimento",
+        "rep_label": "Rappresentante"
+    },
+    "Search": {
+        "placeholder": "Cerca notizie, eventi, rappresentanti...",
+        "loading": "Ricerca in corso...",
+        "empty_start": "Inizia a scrivere per cercare nel portale.",
+        "too_short": "Inserisci almeno due caratteri.",
+        "no_results_title": "Nessun risultato trovato",
+        "no_results_desc": "Prova con termini diversi.",
+        "news_label": "Notizie",
+        "events_label": "Eventi",
+        "reps_label": "Rappresentanti",
+        "nav_hint": "per navigare",
+        "select_hint": "per selezionare",
+        "read_more": "Leggi la notizia..."
+    },
+    "Events": {
+        "agenda": "Agenda Studentesca",
+        "upcoming": "Prossimi Eventi",
+        "past": "Eventi Passati",
+        "motto": "Uniti per costruire il futuro.",
+        "tab_upcoming": "In Arrivo",
+        "tab_past": "Archivio",
+        "search_title": "Ricerca",
+        "search_placeholder": "Cerca evento...",
+        "calendar_title": "Calendario",
+        "categories_title": "Categorie",
+        "all_categories": "Tutti",
+        "no_events": "Nessun evento trovato in questa categoria.",
+        "booking_closed": "Prenotazione chiusa",
+        "booking_opens": "Apre il {date}",
+        "booking_expired": "Prenotazione scaduta",
+        "booking_open": "Prenotazione aperta",
+        "registered": "Registrato"
+    },
+    "Network": {
+        "back_link": "Torna al sito Morgana & O.R.U.M.",
+        "passion_title": "Passione e Rappresentanza",
+        "dedication": "Dedizione",
+        "support": "Supporto",
+        "join_title": "Entra a far parte della squadra!",
+        "join_desc": "Vogliamo costruire un futuro migliore per il nostro dipartimento. Se hai passione, idee e voglia di metterti in gioco, {name} è il posto giusto per te.",
+        "learn_more": "Scopri di più",
+        "no_news": "Nessuna notizia pubblicata recentemente.",
+        "no_events": "Nessun evento programmato al momento."
+    },
+    "Brands": {
+        "unimhealth": {
+            "subtitle": "L'eccellenza della rappresentanza nell'area medico-sanitaria.",
+            "desc": "Unimhealth è l'anima del network dedicata agli studenti dell'area biomedica e sanitaria. Ci impegniamo ogni giorno per garantire una formazione di qualità e servizi all'altezza delle sfide del futuro medico."
+        },
+        "economia": {
+            "subtitle": "Protagonisti del cambiamento nell'area economica e giuridica.",
+            "desc": "Studenti Economia rappresenta il punto di riferimento per chi vive il Dipartimento di Economia. Passione, competenza e un forte spirito di gruppo al servizio della crescita accademica e professionale."
+        },
+        "matricole": {
+            "subtitle": "Il tuo primo passo sicuro nel mondo universitario.",
+            "desc": "Siamo qui per guidare i nuovi studenti nel loro ingresso in Ateneo. Dall'orientamento burocratico al supporto didattico, Unime Matricole è il tuo miglior alleato fin dal primo giorno."
+        },
+        "scipog": {
+            "subtitle": "La voce degli studenti tra Scienze Politiche e Giuridiche.",
+            "desc": "Passione civile e impegno costante definiscono Studenti Scipog. Lavoriamo per un dipartimento inclusivo, dinamico e capace di valorizzare il percorso di ogni singolo studente."
+        },
+        "dicam": {
+            "subtitle": "Creatività e cultura: l'anima del Dipartimento DICAM.",
+            "desc": "Inside Dicam è la realtà di riferimento per gli studenti dell'area umanistica. Promuoviamo la cultura, l'arte e il dialogo, garantendo una rappresentanza attenta alle esigenze di ogni corso di laurea."
+        }
+    },
+    "News": {
+        "filter_all": "Tutte",
+        "result_one": "risultato",
+        "result_many": "risultati",
+        "search_for": "per",
+        "search_in": "in",
+        "reset_filters": "Reset filtri",
+        "categories": {
+            "Eventi": "Eventi",
+            "Studenti": "Studenti",
+            "Università": "Università",
+            "Dipartimenti": "Dipartimenti"
+        },
+        "tags": {
+            "CULTURA": "Cultura",
+            "SOLIDARIETÀ": "Solidarietà",
+            "DIDATTICA": "Didattica"
+        },
+        "news_tag_fallback": "Notizia"
+    },
+    "Statuto": {
+        "intro": "Lo Statuto è il documento fondamentale che definisce i nostri valori, la nostra struttura e le regole di partecipazione alla vita associativa.",
+        "principles_title": "Estratto dei Principi Fondamentali",
+        "motto": "Le Associazioni Morgana e O.R.U.M. nascono con l'obiettivo di:",
+        "p1": "Rappresentare gli interessi degli studenti in tutti gli organi accademici dell'Università di Messina.",
+        "p2": "Promuovere attività culturali, didattiche e ricreative che favoriscano la crescita umana e professionale degli iscritti.",
+        "p3": "Favorire l'integrazione dei nuovi studenti (matricole) e il supporto costante durante tutto il percorso di studi.",
+        "doc_title": "Documentazione Integrale",
+        "doc_desc": "Puoi consultare o scaricare lo statuto completo in formato PDF cliccando sul bottone qui sotto.",
+        "download": "Scarica Statuto (PDF)",
+        "transparency_title": "Trasparenza e Partecipazione",
+        "transparency_desc": "La vita associativa è regolata dal principio di democrazia e partecipazione attiva. Ogni studente iscritto ha il diritto di partecipare alle assemblee e contribuire alla definizione delle linee programmatiche."
+    },
+    "Privacy": {
+        "intro": "La tua privacy è fondamentale per noi. In questa pagina trovi tutte le informazioni su come trattiamo i tuoi dati personali.",
+        "data_controller_title": "1. Titolare del Trattamento",
+        "data_controller_desc": "Le Associazioni Morgana e O.R.U.M. sono i contitolari del trattamento dei dati raccolti tramite questo portale.",
+        "data_types_title": "2. Dati raccolti",
+        "data_types_desc": "Raccogliamo solo i dati strettamente necessari per fornirti i nostri servizi, come nome, email e preferenze di navigazione.",
+        "purposes_title": "3. Finalità del trattamento",
+        "purposes_desc": "I dati vengono trattati esclusivamente per gestire le tue richieste, l'iscrizione alla newsletter e per scopi statistici anonimi.",
+        "rights_title": "4. I tuoi diritti",
+        "rights_desc": "Puoi richiedere in qualsiasi momento l'accesso, la rettifica o la cancellazione dei tuoi dati contattandoci via email."
+    },
+    "Cookie": {
+        "intro": "Utilizziamo i cookie per migliorare la tua esperienza di navigazione. In questa pagina trovi tutte le informazioni su quali cookie utilizziamo e come gestirli.",
+        "what_are_title": "1. Cosa sono i Cookie?",
+        "what_are_desc": "I cookie sono piccoli file di testo che i siti visitati dall'utente inviano al suo terminale, dove vengono memorizzati per essere poi ritrasmessi agli stessi siti alla visita successiva.",
+        "types_title": "2. Tipologie di Cookie utilizzati",
+        "t1": "Cookie Tecnici (Necessari): Indispensabili per il corretto funzionamento del sito, come la gestione delle sessioni di login. Non possono essere disattivati.",
+        "t2": "Cookie Analitici (Google Analytics 4): Utilizzati per raccogliere informazioni in forma anonima sul numero degli utenti e su come questi visitano il sito. Vengono attivati solo previo consenso esplicito tramite il banner informativo.",
+        "how_to_title": "3. Come disabilitare i Cookie",
+        "how_to_desc": "Puoi modificare le tue preferenze in qualsiasi momento cliccando sul tasto di gestione consenso (se presente) o agendo sulle impostazioni del tuo browser.",
+        "rights_title": "4. Diritti dell'Interessato",
+        "rights_desc": "Puoi esercitare i tuoi diritti previsti dal GDPR contattandoci via email. Per maggiori dettagli su come trattiamo i tuoi dati, consulta la nostra Privacy Policy."
     }
 }

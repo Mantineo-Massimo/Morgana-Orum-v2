@@ -4,7 +4,7 @@ import { useState } from "react"
 import { motion } from "framer-motion"
 import { ChevronDown, ChevronUp, Mail, Phone, Instagram } from "lucide-react"
 import { cn } from "@/lib/utils"
-
+import { useTranslations } from "next-intl"
 import { User } from "lucide-react"
 
 export function RepresentativesList({
@@ -14,6 +14,7 @@ export function RepresentativesList({
     departments: any[],
     onMemberClick?: (member: any) => void
 }) {
+    const t = useTranslations("Representatives")
     return (
         <div className="space-y-8">
             {departments.map((dept, idx) => (
@@ -24,6 +25,7 @@ export function RepresentativesList({
 }
 
 function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (member: any) => void }) {
+    const t = useTranslations("Representatives")
     const [isOpen, setIsOpen] = useState(true) // Default open on sub-sites
 
     return (
@@ -35,7 +37,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                 <div>
                     <h3 className="text-xl font-bold text-foreground font-serif uppercase tracking-tight">{dept.name}</h3>
                     <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">
-                        {dept.groups.reduce((acc: any, curr: any) => acc + curr.members.length, 0)} Rappresentanti Eletti
+                        {dept.groups.reduce((acc: any, curr: any) => acc + curr.members.length, 0)} {t("stat_elected")}
                     </p>
                 </div>
                 {isOpen ? <ChevronUp className="size-5 text-zinc-400" /> : <ChevronDown className="size-5 text-zinc-400" />}
@@ -100,7 +102,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                                     {member.name}
                                                 </h4>
                                                 <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
-                                                    {member.role || "Rappresentante"}
+                                                    {member.role || t("rep_label")}
                                                 </p>
                                             </div>
 

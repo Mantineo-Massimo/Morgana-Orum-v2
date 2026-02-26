@@ -14,7 +14,29 @@
         "newsletter_error": "Error during subscription.",
         "footer_tagline": "University Associations Morgana & O.R.U.M.",
         "footer_subline": "Commitment, passion, and competence at the service of the academic community.",
-        "rights": "© {year} University Associations Morgana & O.R.U.M.. All rights reserved."
+        "rights": "© {year} University Associations Morgana & O.R.U.M.. All rights reserved.",
+        "statute": "Association Statute",
+        "join": "Join Us",
+        "privacy": "Privacy Policy",
+        "cookies": "Cookie Policy",
+        "contact": "Contact Us",
+        "back_to_main": "Back to Morgana & O.R.U.M. site",
+        "brand_tagline": "University Associations",
+        "contact_success_title": "Message Sent!",
+        "contact_success_desc": "Thank you for contacting us. We have received your request and will get back to you as soon as possible via email.",
+        "contact_desc": "Do you have questions, suggestions or want to collaborate with us? Send us a message and we will get back to you within 24 hours.",
+        "office_title": "Headquarters",
+        "email": "Email",
+        "social_title": "Follow us on Social",
+        "social_desc": "Stay updated on all our activities and new events in real time.",
+        "form_name": "Full Name",
+        "form_name_placeholder": "John Doe",
+        "form_subject": "Subject",
+        "form_subject_placeholder": "Information about...",
+        "form_message": "Message",
+        "form_message_placeholder": "Write your message here...",
+        "contact_sending": "Sending...",
+        "contact_button": "Send Message"
     },
     "Navigation": {
         "home": "Portal Home",
@@ -24,7 +46,9 @@
         "representatives": "Representatives",
         "reserved_area": "Reserved Area",
         "guides": "Guides",
-        "whatsapp": "WhatsApp Groups"
+        "whatsapp": "WhatsApp Groups",
+        "logout": "Logout",
+        "search_placeholder": "Search (Ctrl+K)"
     },
     "HomePage": {
         "hero_title": "Always on the student's side!",
@@ -37,5 +61,171 @@
         "news_empty": "No news found.",
         "network_title": "Discover our network!",
         "network_back": "Back to Morgana & O.R.U.M. site"
+    },
+    "AboutPage": {
+        "title": "About Us",
+        "subtitle": "Always on the student's side.",
+        "description": "Two stories, one mission: Morgana and Orum join forces to transform the university into a place of opportunity, rights, and growth. Discover who we are and what we do for you every day.",
+        "morgana_identity": "Dynamism, Social, Territory",
+        "orum_identity": "Institution, Results, Future",
+        "history_title": "Our Story",
+        "join_team_title": "Join the team!",
+        "contact_instagram": "Contact us on Instagram",
+        "counter_reps": "Elected Representatives",
+        "counter_students": "Supported Students",
+        "counter_events": "Events every year",
+        "morgana_story": "Morgana was born from the will of a group of students determined not to be simple spectators of their academic career. In a few years we have become a reality rooted not only in the University of Messina, but in the entire social fabric of the city. We are the energy that moves the university.",
+        "orum_story": "Orum represents the evolution of student representation. Founded on foundations of seriousness and competence, the association has distinguished itself for its ability to dialogue at the highest institutional levels, obtaining concrete results for the improvement of teaching and student services.",
+        "morgana_commitment": "We don't wait for things to change, we change them together with you.",
+        "orum_commitment": "Your voice in the institutions, your security in the course of study.",
+        "morgana_activity_1_title": "Active Representation",
+        "morgana_activity_1_desc": "We bring your instances directly to the Department Councils and University Bodies with courage and determination.",
+        "morgana_activity_2_title": "Events and Culture",
+        "morgana_activity_2_desc": "We organize workshops, seminars, and the famous 'Piazza dell'Arte', transforming the university into a living cultural center.",
+        "morgana_activity_3_title": "Solidarity",
+        "morgana_activity_3_desc": "We believe in the value of the gift. With initiatives such as 'The Night of Gifts', we bring the support of students beyond the classroom walls.",
+        "orum_activity_1_title": "Academic Governance",
+        "orum_activity_1_desc": "With our elected members in the Academic Senate and Board of Directors, we influence the decisions that matter, from taxes to teaching regulations.",
+        "orum_activity_2_desc": "We support the student at every stage, from the first entrance test until graduation, ensuring that no one is left behind.",
+        "orum_activity_3_title": "Professionalization",
+        "orum_activity_3_desc": "We create bridges with the world of work through conventions and technical seminars that enrich your curriculum (CFU).",
+        "join_team_morgana": "If you have passion, ideas, and a desire to get involved in the social and the territory, Morgana is the right place for you.",
+        "join_team_orum": "If you want to influence institutional decisions and concretely support the right to study, join Orum."
+    },
+    "Representatives": {
+        "biennium": "Biennium 2025-2027",
+        "title": "Our Representatives",
+        "subtitle": "Get to know the elected students who work every day in the collegiate bodies to defend your rights and improve the university.",
+        "stat_votes": "Votes Achieved",
+        "stat_elected": "Total Elected",
+        "stat_central": "Central Bodies",
+        "stat_depts": "Departments Present",
+        "dept_suffix": " out of 12",
+        "national_bodies": "National Bodies",
+        "central_bodies": "Central Bodies",
+        "dept_councils": "Department Councils",
+        "rep_label": "Representative"
+    },
+    "Search": {
+        "placeholder": "Search news, events, representatives...",
+        "loading": "Searching...",
+        "empty_start": "Start typing to search the portal.",
+        "too_short": "Enter at least two characters.",
+        "no_results_title": "No results found",
+        "no_results_desc": "Try with different terms.",
+        "news_label": "News",
+        "events_label": "Events",
+        "reps_label": "Representatives",
+        "nav_hint": "to navigate",
+        "select_hint": "to select",
+        "read_more": "Read more..."
+    },
+    "Events": {
+        "agenda": "Student Agenda",
+        "upcoming": "Upcoming Events",
+        "past": "Past Events",
+        "motto": "United to build the future.",
+        "tab_upcoming": "Coming Up",
+        "tab_past": "Archive",
+        "search_title": "Search",
+        "search_placeholder": "Search event...",
+        "calendar_title": "Calendar",
+        "categories_title": "Categories",
+        "all_categories": "All",
+        "no_events": "No events found in this category.",
+        "booking_closed": "Booking closed",
+        "booking_opens": "Opens on {date}",
+        "booking_expired": "Booking expired",
+        "booking_open": "Booking open",
+        "registered": "Registered"
+    },
+    "Network": {
+        "back_link": "Back to Morgana & O.R.U.M. site",
+        "passion_title": "Passion and Representation",
+        "dedication": "Dedication",
+        "support": "Support",
+        "join_title": "Join the team!",
+        "join_desc": "We want to build a better future for our department. If you have passion, ideas, and a desire to get involved, {name} is the right place for you.",
+        "learn_more": "Discover more",
+        "no_news": "No news published recently.",
+        "no_events": "No events scheduled at the moment."
+    },
+    "Brands": {
+        "unimhealth": {
+            "subtitle": "Representation excellence in the medical-health area.",
+            "desc": "Unimhealth is the soul of the network dedicated to students of the biomedical and health area. We are committed every day to ensuring quality training and services up to the challenges of the future doctor."
+        },
+        "economia": {
+            "subtitle": "Protagonists of change in the economic and legal area.",
+            "desc": "Studenti Economia is the reference point for those who live in the Department of Economics. Passion, competence and a strong group spirit at the service of academic and professional growth."
+        },
+        "matricole": {
+            "subtitle": "Your safe first step in the university world.",
+            "desc": "We are here to guide new students in their entry to the University. From bureaucratic guidance to educational support, Unime Matricole is your best ally from day one."
+        },
+        "scipog": {
+            "subtitle": "The voice of students between Political and Legal Sciences.",
+            "desc": "Civil passion and constant commitment define Studenti Scipog. We work for an inclusive, dynamic department capable of valuing the path of every single student."
+        },
+        "dicam": {
+            "subtitle": "Creativity and culture: the soul of the DICAM Department.",
+            "desc": "Inside Dicam is the reality of reference for students of the humanities. Promuovaimana culture, art and dialogue, guaranteeing representation attentive to the needs of every degree course."
+        }
+    },
+    "News": {
+        "filter_all": "All",
+        "result_one": "result",
+        "result_many": "results",
+        "search_for": "for",
+        "search_in": "in",
+        "reset_filters": "Reset filters",
+        "categories": {
+            "Eventi": "Events",
+            "Studenti": "Students",
+            "Università": "University",
+            "Dipartimenti": "Departments"
+        },
+        "tags": {
+            "CULTURA": "Culture",
+            "SOLIDARIETÀ": "Solidarity",
+            "DIDATTICA": "Education"
+        },
+        "news_tag_fallback": "News"
+    },
+    "Statuto": {
+        "intro": "The Statute is the fundamental document that defines our values, our structure and the rules of participation in associative life.",
+        "principles_title": "Extract of Fundamental Principles",
+        "motto": "The Morgana and O.R.U.M. Associations were born with the aim of:",
+        "p1": "Representing the interests of students in all academic bodies of the University of Messina.",
+        "p2": "Promoting cultural, educational and recreational activities that favor the human and professional growth of the members.",
+        "p3": "Favoring the integration of new students (freshmen) and constant support throughout the course of study.",
+        "doc_title": "Full Documentation",
+        "doc_desc": "You can consult or download the complete statute in PDF format by clicking on the button below.",
+        "download": "Download Statute (PDF)",
+        "transparency_title": "Transparency and Participation",
+        "transparency_desc": "Associative life is regulated by the principle of democracy and active participation. Every registered student has the right to participate in assemblies and contribute to the definition of programmatic lines."
+    },
+    "Privacy": {
+        "intro": "Your privacy is fundamental to us. On this page you will find all the information on how we treat your personal data.",
+        "data_controller_title": "1. Data Controller",
+        "data_controller_desc": "The Morgana and O.R.U.M. Associations are the joint controllers of the data collected through this portal.",
+        "data_types_title": "2. Collected Data",
+        "data_types_desc": "We collect only the data strictly necessary to provide you with our services, such as name, email and browsing preferences.",
+        "purposes_title": "3. Purpose of Processing",
+        "purposes_desc": "The data is processed exclusively to manage your requests, subscription to the newsletter and for anonymous statistical purposes.",
+        "rights_title": "4. Your Rights",
+        "rights_desc": "You can request access, rectification or deletion of your data at any time by contacting us via email."
+    },
+    "Cookie": {
+        "intro": "We use cookies to improve your browsing experience. On this page you will find all the information on which cookies we use and how to manage them.",
+        "what_are_title": "1. What are Cookies?",
+        "what_are_desc": "Cookies are small text files that the sites visited by the user send to his terminal, where they are stored and then retransmitted to the same sites on the next visit.",
+        "types_title": "2. Types of Cookies used",
+        "t1": "Technical Cookies (Necessary): Essential for the correct functioning of the site, such as managing login sessions. They cannot be deactivated.",
+        "t2": "Analytical Cookies (Google Analytics 4): Used to collect information in anonymous form on the number of users and how they visit the site. They are activated only with explicit prior consent via the information banner.",
+        "how_to_title": "3. How to disable Cookies",
+        "how_to_desc": "You can change your preferences at any time by clicking on the consent management button (if present) or by acting on your browser settings.",
+        "rights_title": "4. Rights of the Interested Party",
+        "rights_desc": "You can exercise your rights under the GDPR by contacting us via email. For more details on how we process your data, see our Privacy Policy."
     }
 }
