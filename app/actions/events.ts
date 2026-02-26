@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { Association } from "@prisma/client"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, unstable_cache, revalidateTag } from "next/cache"
 import { sendEmail } from "@/lib/mail"
 import { getEventBookingTemplate, getNewsletterTemplate } from "@/lib/email-templates"
 import { sendPublicationNotification } from "./notifications"
@@ -32,7 +32,7 @@ async function checkContentPermission(itemAssociations?: Association[]) {
     return { allowed: false }
 }
 
-export async function getAllEvents(userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') {
+const getAllEventsInternal = async (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
     const now = new Date()
     const query: any = {
         where: {
@@ -69,7 +69,15 @@ export async function getAllEvents(userEmail?: string | null, association?: Asso
     }))
 }
 
-export async function getEventById(id: number, userEmail?: string | null, locale: string = 'it') {
+export const getAllEvents = unstable_cache(
+    async (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
+        return getAllEventsInternal(userEmail, association, mode, locale)
+    },
+    ['events-list'],
+    { revalidate: 3600, tags: ['events'] }
+)
+
+const getEventByIdInternal = async (id: number, userEmail?: string | null, locale: string = 'it') => {
     const query: any = {
         where: { id, published: true },
     }
@@ -98,6 +106,14 @@ export async function getEventById(id: number, userEmail?: string | null, locale
     }
 }
 
+export const getEventById = unstable_cache(
+    async (id: number, userEmail?: string | null, locale: string = 'it') => {
+        return getEventByIdInternal(id, userEmail, locale)
+    },
+    ['event-detail'],
+    { revalidate: 3600, tags: ['events'] }
+)
+
 export async function getEventCategories() {
     try {
         const cats = await prisma.eventCategory.findMany({ orderBy: { name: "asc" } })
@@ -114,6 +130,7 @@ export async function createEventCategory(name: string) {
         revalidatePath("/admin/events", "page")
         revalidatePath("/events", "page")
         revalidatePath("/", "layout")
+        revalidateTag('events')
         return { success: true }
     } catch (error) {
         console.error("Create category error:", error)
@@ -127,6 +144,7 @@ export async function deleteEventCategory(id: string) {
         revalidatePath("/admin/events", "page")
         revalidatePath("/events", "page")
         revalidatePath("/", "layout")
+        revalidateTag('events')
         return { success: true }
     } catch (error) {
         console.error("Delete category error:", error)
@@ -545,6 +563,7 @@ export async function duplicateEvent(eventId: number) {
         revalidatePath("/admin/events", "page")
         revalidatePath("/events", "page")
         revalidatePath("/", "layout")
+        revalidateTag('events')
         return { success: true }
     } catch (error) {
         console.error("Duplicate event error:", error)

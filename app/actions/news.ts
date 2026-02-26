@@ -1,6 +1,6 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
+import { revalidatePath, unstable_cache, revalidateTag } from "next/cache"
 import { z } from "zod"
 import prisma from "@/lib/prisma"
 import { Association } from "@prisma/client"
@@ -196,6 +196,7 @@ export async function duplicateNews(id: string) {
         revalidatePath("/news", "page")
         revalidatePath("/admin/news", "page")
         revalidatePath("/", "layout")
+        revalidateTag('news')
         return { success: true }
     } catch (error) {
         console.error("Duplicate news error:", error)
@@ -203,9 +204,9 @@ export async function duplicateNews(id: string) {
     }
 }
 
-// Public: only published AND date <= now (scheduled publishing support)
-export async function getNews(category?: string, query?: string, association?: Association, locale: string = 'it') {
-    console.log('getNews called with:', { category, query, association, locale })
+const getNewsInternal = async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
+    // ... logic remains same as original getNews ...
+    console.log('getNewsInternal called with:', { category, query, association, locale })
     try {
         const now = new Date()
         const where: any = {
@@ -247,6 +248,40 @@ export async function getNews(category?: string, query?: string, association?: A
         return []
     }
 }
+
+export const getNews = unstable_cache(
+    async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
+        return getNewsInternal(category, query, association, locale)
+    },
+    ['news-list'],
+    { revalidate: 3600, tags: ['news'] }
+)
+
+const getNewsByIdInternal = async (id: string, locale: string = 'it') => {
+    try {
+        const news = await prisma.news.findUnique({ where: { id } })
+        if (!news) return null
+
+        // Localization mapping
+        return {
+            ...news,
+            title: (locale === 'en' && (news as any).titleEn) ? (news as any).titleEn : news.title,
+            description: (locale === 'en' && (news as any).descriptionEn) ? (news as any).descriptionEn : news.description,
+            content: (locale === 'en' && (news as any).contentEn) ? (news as any).contentEn : news.content,
+        }
+    } catch (error) {
+        console.error("Error fetching news by id:", error)
+        return null
+    }
+}
+
+export const getNewsById = unstable_cache(
+    async (id: string, locale: string = 'it') => {
+        return getNewsByIdInternal(id, locale)
+    },
+    ['news-detail'],
+    { revalidate: 3600, tags: ['news'] }
+)
 
 // Admin: all news, with optional filters
 export async function getAllNews(filters?: {
@@ -320,23 +355,7 @@ export async function getAllNews(filters?: {
     }
 }
 
-export async function getNewsById(id: string, locale: string = 'it') {
-    try {
-        const news = await prisma.news.findUnique({ where: { id } })
-        if (!news) return null
 
-        // Localization mapping
-        return {
-            ...news,
-            title: (locale === 'en' && (news as any).titleEn) ? (news as any).titleEn : news.title,
-            description: (locale === 'en' && (news as any).descriptionEn) ? (news as any).descriptionEn : news.description,
-            content: (locale === 'en' && (news as any).contentEn) ? (news as any).contentEn : news.content,
-        }
-    } catch (error) {
-        console.error("Error fetching news by id:", error)
-        return null
-    }
-}
 
 export async function getNewsCategories(): Promise<string[]> {
     try {
