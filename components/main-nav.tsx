@@ -93,7 +93,7 @@ export function MainNav({
                         key={route.href}
                         href={route.href}
                         className={cn(
-                            "text-sm font-bold uppercase tracking-widest transition-colors relative",
+                            "text-sm font-bold uppercase tracking-widest transition-colors relative whitespace-nowrap",
                             route.active
                                 ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
                                 : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
@@ -120,16 +120,19 @@ export function MainNav({
                         <Link
                             href={`/dashboard`}
                             className={cn(
-                                "flex items-center gap-2 px-3 xl:px-4 py-2 rounded-full text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
+                                "flex items-center gap-2 px-4 py-1.5 rounded-full text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg max-w-[140px] leading-none text-center min-h-[40px] justify-center",
                                 brandColor
                             )}
                         >
-                            <User className="size-4 shrink-0" /> <span className="hidden xl:inline">{nt("reserved_area")}</span><span className="xl:hidden">{nt("reserved_area")}</span>
+                            <User className="size-4 shrink-0" />
+                            <span className="flex flex-col justify-center pt-0.5">
+                                {nt("reserved_area")}
+                            </span>
                         </Link>
 
                         <button
                             onClick={() => logoutAction()}
-                            className="p-1.5 xl:p-2 rounded-full text-zinc-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+                            className="p-1.5 xl:p-2 rounded-full text-zinc-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
                             title={nt("logout")}
                         >
                             <LogOut className="size-5" />
@@ -139,11 +142,11 @@ export function MainNav({
                     <Link
                         href={`/login`}
                         className={cn(
-                            "ml-4 px-6 py-2 rounded-full text-white font-bold uppercase tracking-widest text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg",
+                            "ml-4 px-6 py-1.5 rounded-full text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg max-w-[150px] leading-none text-center flex items-center justify-center min-h-[40px]",
                             brandColor
                         )}
                     >
-                        {nt("reserved_area")}
+                        <span className="pt-0.5">{nt("reserved_area")}</span>
                     </Link>
                 )}
             </nav>

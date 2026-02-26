@@ -60,11 +60,11 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     className={cn(
                         "absolute top-0 left-0 h-full transition-all duration-500 z-10",
                         brandColorClass,
-                        "rounded-br-[100px]",
+                        "rounded-br-[80px]",
                         // Dynamic width logic
                         isScrolled
-                            ? brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[30%] xl:w-[32%] 2xl:w-[35%]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[30%] xl:w-[32%] 2xl:w-[35%]"
-                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[35%] xl:w-[38%] 2xl:w-[40%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[35%] xl:w-[38%] 2xl:w-[40%]"
+                            ? brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[38%] xl:w-[39%] 2xl:w-[40%]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[38%] xl:w-[39%] 2xl:w-[40%]"
+                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]"
                     )}
                 />
             </div>
@@ -139,7 +139,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                             className="flex flex-col gap-0.5 hover:opacity-80 transition-opacity"
                         >
                             <span className={cn(
-                                "font-serif font-black uppercase tracking-tight leading-none transition-all duration-500",
+                                "font-serif font-black uppercase tracking-tight leading-none transition-all duration-500 whitespace-nowrap",
                                 isScrolled ? "text-sm lg:text-lg xl:text-xl" : "text-[15px] sm:text-lg lg:text-xl xl:text-2xl"
                             )}>
                                 {currentNetwork ? currentNetwork.name : "Morgana & O.R.U.M."}
@@ -162,7 +162,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 </div>
 
                 {/* Navigation Section - Right Aligned (including Mobile Menu) */}
-                <div className="flex items-center">
+                <div className="flex items-center ml-4 md:ml-8 lg:ml-8 xl:ml-12 2xl:ml-16 overflow-visible">
                     <MainNav
                         isScrolled={true} // Always white background style
                         isLoggedIn={isLoggedIn}
