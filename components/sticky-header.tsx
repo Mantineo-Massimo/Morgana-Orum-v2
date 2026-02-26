@@ -63,8 +63,8 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         "rounded-br-[100px]",
                         // Dynamic width logic
                         isScrolled
-                            ? brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[35%] xl:w-[38%] 2xl:w-[40%]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[35%] xl:w-[38%] 2xl:w-[40%]"
-                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[38%] xl:w-[41%] 2xl:w-[42%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[38%] xl:w-[41%] 2xl:w-[42%]"
+                            ? brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[30%] xl:w-[32%] 2xl:w-[35%]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[30%] xl:w-[32%] 2xl:w-[35%]"
+                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[35%] xl:w-[38%] 2xl:w-[40%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[35%] xl:w-[38%] 2xl:w-[40%]"
                     )}
                 />
             </div>
