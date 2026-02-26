@@ -1,7 +1,7 @@
 "use server"
 // Force TS re-evaluation
 
-import { revalidatePath } from "next/cache"
+import { revalidatePath, unstable_cache, revalidateTag } from "next/cache"
 import { z } from "zod"
 import prisma from "@/lib/prisma"
 import { Association } from "@prisma/client"
@@ -156,6 +156,7 @@ export async function duplicateRepresentative(id: string) {
         revalidatePath("/representatives", "page")
         revalidatePath("/admin/representatives", "page")
         revalidatePath("/", "layout")
+        revalidateTag('representatives')
         return { success: true }
     } catch (error) {
         console.error("Duplicate representative error:", error)
@@ -164,14 +165,15 @@ export async function duplicateRepresentative(id: string) {
 }
 
 
-export async function getRepresentatives(filters?: {
+const getRepresentativesInternal = async (filters?: {
     query?: string,
     list?: string,
     category?: string,
     department?: string,
     userRole?: string,
     userAssociation?: Association
-}) {
+}) => {
+    // ... logic remains same ...
     try {
         let user: any = null
 
@@ -189,10 +191,7 @@ export async function getRepresentatives(filters?: {
 
         // Enforce role-based visibility
         if (user?.role === "ADMIN_NETWORK") {
-            // Must be their association OR Morgana (central)
-            // But MUST match their department department keywords
             const keywords = ASSOCIATION_DEPARTMENT_KEYWORDS[user.association as string]
-
             if (keywords && keywords.length > 0) {
                 where.AND = [
                     { association: { in: [user.association, Association.MORGANA_ORUM] } },
@@ -241,3 +240,11 @@ export async function getRepresentatives(filters?: {
         return []
     }
 }
+
+export const getRepresentatives = unstable_cache(
+    async (filters?: any) => {
+        return getRepresentativesInternal(filters)
+    },
+    ['representatives-list'],
+    { revalidate: 3600, tags: ['representatives'] }
+)

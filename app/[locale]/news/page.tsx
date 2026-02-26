@@ -1,11 +1,11 @@
 import { getNews, getNewsCategories } from "@/app/actions/news"
 import NewsClient from "./news-client"
 
-export const dynamic = "force-dynamic"
-
 export default async function Page({ params: { locale } }: { params: { locale: string } }) {
-    const news = await getNews(undefined, undefined, undefined, locale)
-    const categories = await getNewsCategories()
+    const [news, categories] = await Promise.all([
+        getNews(undefined, undefined, undefined, locale),
+        getNewsCategories()
+    ])
 
     return (
         <NewsClient

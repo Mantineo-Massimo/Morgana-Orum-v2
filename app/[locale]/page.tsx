@@ -2,10 +2,9 @@ import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { ArrowRight, Calendar } from "lucide-react"
 import { HeroCarousel } from "@/components/hero-carousel"
-import prisma from "@/lib/prisma"
+import { getNews } from "@/app/actions/news"
+import { getAllEvents } from "@/app/actions/events"
 import { getTranslations } from "next-intl/server"
-
-export const dynamic = "force-dynamic"
 
 export default async function BrandHomePage({
     params: { locale }
@@ -14,18 +13,11 @@ export default async function BrandHomePage({
 }) {
     const t = await getTranslations("HomePage")
 
-    // CHIAMATA AL DATABASE: Peschiamo le vere notizie
-    const ultimeNotizie = await prisma.news.findMany({
-        where: { published: true },
-        orderBy: { date: 'desc' },
-        take: 3
-    });
-
-    const prossimiEventi = await prisma.event.findMany({
-        where: { date: { gte: new Date() } },
-        orderBy: { date: 'asc' },
-        take: 3
-    });
+    // Fetch data in parallel using cached actions
+    const [ultimeNotizie, prossimiEventi] = await Promise.all([
+        getNews(undefined, undefined, undefined, locale).then(news => news.slice(0, 3)),
+        getAllEvents(null, undefined, 'upcoming', locale).then(events => events.slice(0, 3))
+    ])
 
     // Content Configuration Unificata
     const content = {
