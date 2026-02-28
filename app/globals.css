@@ -174,14 +174,11 @@ body:has([data-admin-area]) #site-footer {
   }
 
   [data-brand="piazzadellarte"] {
-    --primary: 224 46% 7%;
-    /* #0a0f1c */
+    --primary: 197 74% 48%;
+    /* #1fbcd3 Cyan (Approx) */
     --primary-foreground: 0 0% 100%;
-    --background: 224 46% 7%;
-    --foreground: 0 0% 100%;
-    --ring: 224 46% 7%;
-    --muted: 224 46% 12%;
-    --muted-foreground: 0 0% 70%;
-    --border: 224 46% 15% / 0.5;
+    --background: 0 0% 100%;
+    --foreground: 240 31% 14%;
+    --ring: 197 74% 48%;
   }
 }

@@ -13,6 +13,17 @@ export async function generateMetadata({ params }: { params: { brandId: string }
     const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
     if (!config) return {}
 
+    const icons = params.brandId === "piazzadellarte" ? {
+        icon: [
+            { url: "/assets/piazzadellarte/favicon.ico" },
+            { url: "/assets/piazzadellarte/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+            { url: "/assets/piazzadellarte/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        ],
+        apple: [
+            { url: "/assets/piazzadellarte/apple-touch-icon.png" },
+        ],
+    } : undefined
+
     return {
         title: config.name,
         description: config.subtitle,
@@ -20,7 +31,8 @@ export async function generateMetadata({ params }: { params: { brandId: string }
             title: config.name,
             description: config.subtitle,
             images: [config.logo, config.bg],
-        }
+        },
+        icons
     }
 }
 
@@ -153,7 +165,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
             </section>
 
             {/* CHI SIAMO / DESCRIPTION SECTION */}
-            <section id="cos-e" className="py-20 bg-background text-foreground relative overflow-hidden">
+            <section id="cos-e" className="py-20 bg-white text-foreground relative overflow-hidden">
                 <div className="container relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
                         <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-8 uppercase tracking-widest">
@@ -163,7 +175,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                             className="w-24 h-1.5 mx-auto mb-10 rounded-full"
                             style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
                         ></div>
-                        <p className="text-xl md:text-2xl opacity-80 leading-relaxed font-serif">
+                        <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
                             {brandId === "piazzadellarte" ? config.desc : tb(`${brandId}.desc` as any)}
                         </p>
 
@@ -225,7 +237,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     </section>
 
                     {/* FANTA-PIAZZA SECTION */}
-                    <section id="fanta-piazza" className="py-24 bg-background text-foreground relative overflow-hidden">
+                    <section id="fanta-piazza" className="py-24 bg-[#0a0f1c] text-white relative overflow-hidden">
                         <div className="container grid md:grid-cols-2 gap-16 items-center">
                             <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
                                 <Image src="/assets/fantapiazza.png" fill className="object-cover group-hover:scale-110 transition-transform duration-700 blur-[2px]" alt="Fanta-Piazza" />
@@ -257,7 +269,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     </section>
 
                     {/* ARTISTI SECTION */}
-                    <section id="artisti" className="py-24 bg-background text-foreground border-y border-border/50 relative overflow-hidden">
+                    <section id="artisti" className="py-24 bg-zinc-50 text-foreground border-y border-border/50 relative overflow-hidden">
                         <div className="container relative z-10">
                             <div className="text-center mb-16">
                                 <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
