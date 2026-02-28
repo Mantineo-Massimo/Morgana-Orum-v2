@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter, Outfit } from "next/font/google"
 import { BrandProvider } from "@/components/brand-provider"
-import { GoogleAnalytics } from '@next/third-parties/google'
 import { cookies } from "next/headers"
 import { TopBar } from "@/components/top-bar"
 import { StickyHeader } from "@/components/sticky-header"
 import { Footer } from "@/components/footer"
 import { ClientLogger } from "@/components/analytics/client-logger"
 import { CookieConsent } from "@/components/cookie-consent"
+import Script from "next/script"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import "../globals.css"
@@ -78,7 +78,7 @@ export default async function RootLayout({
 
     return (
         <html lang={locale} suppressHydrationWarning>
-            <body className={`${inter.variable} ${outfit.variable}`}>
+            <body className={`${inter.className} ${outfit.className} antialiased`}>
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <BrandProvider defaultBrand={null}>
                         <div className="flex min-h-screen flex-col bg-background font-sans">
@@ -96,7 +96,24 @@ export default async function RootLayout({
                     </BrandProvider>
                 </NextIntlClientProvider>
                 {process.env.NEXT_PUBLIC_GA_ID && cookieConsent === "accepted" && (
-                    <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+                    <>
+                        <Script
+                            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+                            strategy="afterInteractive"
+                        />
+                        <Script id="google-analytics" strategy="afterInteractive">
+                            {`
+                                window.dataLayer = window.dataLayer || [];
+                                function gtag(){dataLayer.push(arguments);}
+                                gtag('js', new Date());
+                                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                                    page_path: window.location.pathname,
+                                    cookie_domain: 'auto',
+                                    cookie_flags: 'SameSite=None;Secure'
+                                });
+                            `}
+                        </Script>
+                    </>
                 )}
             </body>
         </html>
