@@ -1,6 +1,7 @@
 import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { ArrowRight, Calendar, ChevronLeft, Sparkles } from "lucide-react"
+import { cn } from "@/lib/utils"
 import { getNews } from "@/app/actions/news"
 import { getAllEvents } from "@/app/actions/events"
 import { notFound } from "next/navigation"
@@ -84,7 +85,7 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         desc: "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento.",
         association: "PIAZZA_DELLARTE" as Association,
         theme: {
-            primary: "#1fbcd3",   // Cyan
+            primary: "#0a0f1c",   // Dark Background
             secondary: "#27a85d", // Verde
             accent: "#f9a620"    // Yellow
         }
@@ -131,7 +132,10 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                 <div className="absolute inset-0 bg-black/40"></div>
 
                 <div className="container relative z-10 flex flex-col items-center">
-                    <div className="size-32 md:size-48 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden border-4 border-white/20 p-4 mb-8 transform hover:rotate-3 transition-transform duration-500">
+                    <div className={cn(
+                        "size-32 md:size-48 flex items-center justify-center overflow-hidden p-4 mb-8 transform hover:rotate-3 transition-transform duration-500",
+                        brandId === "piazzadellarte" ? "" : "rounded-full bg-white shadow-2xl border-4 border-white/20"
+                    )}>
                         <Image src={config.logo} width={180} height={180} className="w-full h-full object-contain" alt={config.name} />
                     </div>
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-black text-white text-center leading-tight mb-4 drop-shadow-2xl uppercase tracking-tighter">
@@ -149,7 +153,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
             </section>
 
             {/* CHI SIAMO / DESCRIPTION SECTION */}
-            <section id="cos-e" className="py-20 bg-white relative overflow-hidden">
+            <section id="cos-e" className="py-20 bg-background text-foreground relative overflow-hidden">
                 <div className="container relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
                         <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-8 uppercase tracking-widest">
@@ -159,7 +163,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                             className="w-24 h-1.5 mx-auto mb-10 rounded-full"
                             style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
                         ></div>
-                        <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
+                        <p className="text-xl md:text-2xl opacity-80 leading-relaxed font-serif">
                             {brandId === "piazzadellarte" ? config.desc : tb(`${brandId}.desc` as any)}
                         </p>
 
@@ -221,10 +225,10 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     </section>
 
                     {/* FANTA-PIAZZA SECTION */}
-                    <section id="fanta-piazza" className="py-24 bg-white relative overflow-hidden">
+                    <section id="fanta-piazza" className="py-24 bg-background text-foreground relative overflow-hidden">
                         <div className="container grid md:grid-cols-2 gap-16 items-center">
                             <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
-                                <Image src="/assets/slides/1.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 blur-[2px]" alt="Fanta-Piazza" />
+                                <Image src="/assets/fantapiazza.png" fill className="object-cover group-hover:scale-110 transition-transform duration-700 blur-[2px]" alt="Fanta-Piazza" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
                                 <div className="absolute inset-0 flex items-center justify-center">
                                     <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl border border-white/20 text-center transform -rotate-3 group-hover:rotate-0 transition-transform duration-500">
@@ -253,7 +257,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     </section>
 
                     {/* ARTISTI SECTION */}
-                    <section id="artisti" className="py-24 bg-zinc-50 border-y border-border/50 relative overflow-hidden">
+                    <section id="artisti" className="py-24 bg-background text-foreground border-y border-border/50 relative overflow-hidden">
                         <div className="container relative z-10">
                             <div className="text-center mb-16">
                                 <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">

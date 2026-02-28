@@ -172,4 +172,16 @@ body:has([data-admin-area]) #site-footer {
     --primary-foreground: 0 0% 98%;
     --ring: 322 88% 62%;
   }
+
+  [data-brand="piazzadellarte"] {
+    --primary: 224 46% 7%;
+    /* #0a0f1c */
+    --primary-foreground: 0 0% 100%;
+    --background: 224 46% 7%;
+    --foreground: 0 0% 100%;
+    --ring: 224 46% 7%;
+    --muted: 224 46% 12%;
+    --muted-foreground: 0 0% 70%;
+    --border: 224 46% 15% / 0.5;
+  }
 }
