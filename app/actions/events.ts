@@ -33,52 +33,54 @@ async function checkContentPermission(itemAssociations?: Association[]) {
 }
 
 const getAllEventsInternal = async (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
-    const now = new Date()
-    const query: any = {
-        where: {
-            published: true,
-            date: mode === 'upcoming' ? { gte: now } : { lt: now }
-        },
-        orderBy: { date: mode === 'upcoming' ? 'asc' : 'desc' },
-    }
+    try {
+        const now = new Date()
+        const query: any = {
+            where: {
+                published: true,
+                date: mode === 'upcoming' ? { gte: now } : { lt: now }
+            },
+            orderBy: { date: mode === 'upcoming' ? 'asc' : 'desc' },
+        }
 
-    if (association) {
-        query.where.associations = { hasSome: [association, Association.MORGANA_ORUM] }
-    }
+        if (association) {
+            query.where.associations = { hasSome: [association, Association.MORGANA_ORUM] }
+        }
 
-    if (userEmail) {
-        query.include = {
-            registrations: {
-                where: {
-                    user: { email: userEmail }
+        if (userEmail) {
+            query.include = {
+                registrations: {
+                    where: {
+                        user: { email: userEmail }
+                    }
                 }
             }
         }
+
+        const events = await prisma.event.findMany(query)
+        const typedEvents = events as any[]
+
+        return typedEvents.map((event: any) => ({
+            ...event,
+            title: (locale === 'en' && event.titleEn) ? event.titleEn : event.title,
+            description: (locale === 'en' && event.descriptionEn) ? event.descriptionEn : event.description,
+            details: (locale === 'en' && event.detailsEn) ? event.detailsEn : event.details,
+            isRegistered: event.registrations ? (event.registrations as any[]).length > 0 : false,
+            registrations: undefined
+        }))
+    } catch (error) {
+        console.error("Error in getAllEventsInternal:", error)
+        return []
     }
-
-    const events = await prisma.event.findMany(query)
-    const typedEvents = events as any[]
-
-    return typedEvents.map((event: any) => ({
-        ...event,
-        title: (locale === 'en' && event.titleEn) ? event.titleEn : event.title,
-        description: (locale === 'en' && event.descriptionEn) ? event.descriptionEn : event.description,
-        details: (locale === 'en' && event.detailsEn) ? event.detailsEn : event.details,
-        isRegistered: event.registrations ? (event.registrations as any[]).length > 0 : false,
-        registrations: undefined
-    }))
 }
 
-const getAllEventsCached = unstable_cache(
-    async (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
-        return getAllEventsInternal(userEmail, association, mode, locale)
-    },
-    ['events-list'],
-    { revalidate: 3600, tags: ['events'] }
-)
-
 export const getAllEvents = async (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
-    const events = await getAllEventsCached(userEmail, association, mode, locale)
+    const events = await unstable_cache(
+        async () => getAllEventsInternal(userEmail, association, mode, locale),
+        ['events-list', userEmail || 'guest', association || 'none', mode, locale],
+        { revalidate: 3600, tags: ['events'] }
+    )()
+
     return events.map(event => ({
         ...event,
         date: new Date(event.date)
@@ -86,44 +88,46 @@ export const getAllEvents = async (userEmail?: string | null, association?: Asso
 }
 
 const getEventByIdInternal = async (id: number, userEmail?: string | null, locale: string = 'it') => {
-    const query: any = {
-        where: { id, published: true },
-    }
+    try {
+        const query: any = {
+            where: { id, published: true },
+        }
 
-    if (userEmail) {
-        query.include = {
-            registrations: {
-                where: {
-                    user: { email: userEmail }
+        if (userEmail) {
+            query.include = {
+                registrations: {
+                    where: {
+                        user: { email: userEmail }
+                    }
                 }
             }
         }
-    }
 
-    const event = await prisma.event.findUnique(query) as any
+        const event = await prisma.event.findUnique(query) as any
 
-    if (!event) return null
+        if (!event) return null
 
-    return {
-        ...event,
-        title: (locale === 'en' && (event as any).titleEn) ? (event as any).titleEn : event.title,
-        description: (locale === 'en' && (event as any).descriptionEn) ? (event as any).descriptionEn : event.description,
-        details: (locale === 'en' && (event as any).detailsEn) ? (event as any).detailsEn : event.details,
-        isRegistered: event.registrations ? (event.registrations as any[]).length > 0 : false,
-        registrations: undefined
+        return {
+            ...event,
+            title: (locale === 'en' && (event as any).titleEn) ? (event as any).titleEn : event.title,
+            description: (locale === 'en' && (event as any).descriptionEn) ? (event as any).descriptionEn : event.description,
+            details: (locale === 'en' && (event as any).detailsEn) ? (event as any).detailsEn : event.details,
+            isRegistered: event.registrations ? (event.registrations as any[]).length > 0 : false,
+            registrations: undefined
+        }
+    } catch (error) {
+        console.error("Error in getEventByIdInternal:", error)
+        return null
     }
 }
 
-const getEventByIdCached = unstable_cache(
-    async (id: number, userEmail?: string | null, locale: string = 'it') => {
-        return getEventByIdInternal(id, userEmail, locale)
-    },
-    ['event-detail'],
-    { revalidate: 3600, tags: ['events'] }
-)
-
 export const getEventById = async (id: number, userEmail?: string | null, locale: string = 'it') => {
-    const event = await getEventByIdCached(id, userEmail, locale)
+    const event = await unstable_cache(
+        async () => getEventByIdInternal(id, userEmail, locale),
+        ['event-detail', id.toString(), userEmail || 'guest', locale],
+        { revalidate: 3600, tags: ['events'] }
+    )()
+
     if (!event) return null
     return {
         ...event,
@@ -352,26 +356,26 @@ export async function getAllAdminEvents(filters?: {
 
 export async function createEvent(data: {
     title: string
-    titleEn?: string
+    titleEn?: string | null
     description: string
-    descriptionEn?: string
-    details?: string
-    detailsEn?: string
+    descriptionEn?: string | null
+    details?: string | null
+    detailsEn?: string | null
     date: string
-    endDate?: string
+    endDate?: string | null
     location: string
-    cfuValue?: string
-    cfuType?: string
-    cfuDepartments?: string
-    image?: string
+    cfuValue?: string | null
+    cfuType?: string | null
+    cfuDepartments?: string | null
+    image?: string | null
     category: string
     bookingOpen: boolean
-    bookingStart?: string
-    bookingEnd?: string
-    attachments?: string
+    bookingStart?: string | null
+    bookingEnd?: string | null
+    attachments?: string | null
     associations?: Association[]
     published: boolean
-    youtubeUrl?: string
+    youtubeUrl?: string | null
 }) {
     try {
         const permission = await checkContentPermission(data.associations)
@@ -419,26 +423,26 @@ export async function createEvent(data: {
 
 export async function updateEvent(id: number, data: {
     title: string
-    titleEn?: string
+    titleEn?: string | null
     description: string
-    descriptionEn?: string
-    details?: string
-    detailsEn?: string
+    descriptionEn?: string | null
+    details?: string | null
+    detailsEn?: string | null
     date: string
-    endDate?: string
+    endDate?: string | null
     location: string
-    cfuValue?: string
-    cfuType?: string
-    cfuDepartments?: string
-    image?: string
+    cfuValue?: string | null
+    cfuType?: string | null
+    cfuDepartments?: string | null
+    image?: string | null
     category: string
     bookingOpen: boolean
-    bookingStart?: string
-    bookingEnd?: string
-    attachments?: string
+    bookingStart?: string | null
+    bookingEnd?: string | null
+    attachments?: string | null
     associations?: Association[]
     published: boolean
-    youtubeUrl?: string
+    youtubeUrl?: string | null
 }) {
     try {
         const existing = await prisma.event.findUnique({ where: { id } })
@@ -561,10 +565,10 @@ export async function duplicateEvent(eventId: number) {
             where: { id: eventId }
         })
 
-        if (!event) return { success: false, message: "Evento non trovato" }
+        if (!event) return { success: false, error: "Evento non trovato" }
 
         const permission = await checkContentPermission(event.associations)
-        if (!permission.allowed) return { success: false, message: "Non hai i permessi per questo evento." }
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questo evento." }
 
         const { id, ...eventData } = event
 
@@ -584,6 +588,6 @@ export async function duplicateEvent(eventId: number) {
         return { success: true }
     } catch (error) {
         console.error("Duplicate event error:", error)
-        return { success: false }
+        return { success: false, error: "Errore durante la duplicazione" }
     }
 }

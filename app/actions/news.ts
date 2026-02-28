@@ -1,26 +1,9 @@
 "use server"
 
-import { revalidatePath, unstable_cache, revalidateTag } from "next/cache"
-import { z } from "zod"
 import prisma from "@/lib/prisma"
 import { Association } from "@prisma/client"
+import { revalidatePath, unstable_cache, revalidateTag } from "next/cache"
 import { sendPublicationNotification } from "./notifications"
-import { AssociationId } from "@/lib/associations"
-
-const newsSchema = z.object({
-    title: z.string().min(1, "Il titolo è obbligatorio"),
-    titleEn: z.string().optional().nullable().or(z.literal("")),
-    description: z.string().optional().nullable().or(z.literal("")),
-    descriptionEn: z.string().optional().nullable().or(z.literal("")),
-    content: z.string().optional().nullable().or(z.literal("")),
-    contentEn: z.string().optional().nullable().or(z.literal("")),
-    category: z.string().min(1, "La categoria è obbligatoria"),
-    tags: z.string().optional().nullable().or(z.literal("")),
-    image: z.string().optional().nullable().or(z.literal("")),
-    date: z.string().optional(),
-    published: z.boolean().default(true),
-    associations: z.array(z.nativeEnum(Association)).default([Association.MORGANA_ORUM]),
-})
 
 async function checkContentPermission(itemAssociations?: Association[]) {
     const { cookies } = await import("next/headers")
@@ -47,196 +30,33 @@ async function checkContentPermission(itemAssociations?: Association[]) {
     return { allowed: false }
 }
 
-export async function createNews(data: any) {
-    try {
-        const validData = newsSchema.parse(data) as any
-        const permission = await checkContentPermission(validData.associations)
-        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
-
-        const newNews = await prisma.news.create({
-            data: {
-                title: validData.title,
-                titleEn: validData.titleEn || null,
-                description: validData.description || "",
-                descriptionEn: validData.descriptionEn || null,
-                content: validData.content || null,
-                contentEn: validData.contentEn || null,
-                category: validData.category,
-                tags: validData.tags || null,
-                image: validData.image || null,
-                date: validData.date ? new Date(validData.date) : new Date(),
-                published: validData.published,
-                associations: validData.associations || [Association.MORGANA_ORUM],
-            }
-        })
-
-        // -- INVIA NEWSLETTER A SOTTOSCRITTORI (SOLO SE PUBBLICATA) --
-        if (newNews.published) {
-            sendPublicationNotification(newNews, "Notizia")
-        }
-
-        revalidatePath("/news", "page")
-        revalidatePath("/admin/news", "page")
-        revalidatePath("/", "layout")
-        return { success: true }
-    } catch (error) {
-        console.error("Create news error:", error)
-        return { success: false, error: "Errore durante la creazione" }
-    }
-}
-
-export async function updateNews(id: string, data: Partial<z.infer<typeof newsSchema>>) {
-    try {
-        const existing = await prisma.news.findUnique({ where: { id } })
-        if (!existing) return { success: false, error: "Notizia non trovata" }
-
-        const permission = await checkContentPermission(existing.associations)
-        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
-
-        const validData = newsSchema.partial().parse(data)
-
-        // Extra protection: Network admins cannot modify associations of central content
-        if (permission.user?.role === "ADMIN_NETWORK" && existing.associations.includes(Association.MORGANA_ORUM)) {
-            if (validData.associations) {
-                const currentAssocs = [...existing.associations].sort()
-                const newAssocs = [...validData.associations].sort()
-                if (JSON.stringify(currentAssocs) !== JSON.stringify(newAssocs)) {
-                    return { success: false, error: "Non puoi modificare le associazioni di un contenuto centrale." }
-                }
-            }
-        }
-
-        const updateData: any = {}
-
-        // Map validData to updateData, ensuring empty strings are null for optional localized fields
-        Object.entries(validData).forEach(([key, value]) => {
-            if (key === 'associations' && Array.isArray(value)) {
-                updateData.associations = { set: value }
-            } else if (key === 'date' && value) {
-                updateData.date = new Date(value as string)
-            } else if (typeof value === 'string' && value.trim() === '' && ['titleEn', 'descriptionEn', 'contentEn', 'tags', 'image'].includes(key)) {
-                updateData[key] = null
-            } else {
-                updateData[key] = value
-            }
-        })
-
-        const oldNews = await prisma.news.findUnique({
-            where: { id },
-            select: { published: true }
-        })
-
-        const updatedNews = await prisma.news.update({
-            where: { id },
-            data: updateData,
-        })
-
-        // -- INVIA NEWSLETTER SE PASSA DA BOZZA A PUBBLICATA --
-        if (!oldNews?.published && updatedNews.published) {
-            sendPublicationNotification(updatedNews, "Notizia")
-        }
-
-        revalidatePath("/news", "page")
-        revalidatePath("/admin/news", "page")
-        revalidatePath("/", "layout")
-        return { success: true }
-    } catch (error) {
-        console.error("Update news error:", error)
-        const errorMessage = error instanceof Error ? error.message : "Errore durante l'aggiornamento"
-        return { success: false, error: errorMessage }
-    }
-}
-
-export async function deleteNews(id: string) {
-    try {
-        const existing = await prisma.news.findUnique({ where: { id } })
-        if (!existing) return { success: false, error: "Notizia non trovata" }
-
-        const permission = await checkContentPermission(existing.associations)
-        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
-
-        // Extra protection: Network admins cannot delete Morgana items
-        if (permission.user?.role === "ADMIN_NETWORK" && existing.associations.includes(Association.MORGANA_ORUM)) {
-            return { success: false, error: "Non puoi eliminare contenuti creati dall'amministrazione centrale." }
-        }
-
-        await prisma.news.delete({
-            where: { id }
-        })
-
-        revalidatePath("/news", "page")
-        revalidatePath("/admin/news", "page")
-        revalidatePath("/", "layout")
-        return { success: true }
-    } catch (error) {
-        console.error("Delete news error:", error)
-        return { success: false, error: "Errore durante l'eliminazione" }
-    }
-}
-
-export async function duplicateNews(id: string) {
-    try {
-        const existing = await prisma.news.findUnique({ where: { id } })
-        if (!existing) return { success: false, error: "Notizia non trovata" }
-
-        const permission = await checkContentPermission(existing.associations)
-        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
-
-        const { id: _, createdAt: __, updatedAt: ___, ...newsData } = existing
-
-        await prisma.news.create({
-            data: {
-                ...newsData,
-                title: `${existing.title} (Copia)`,
-                published: false, // La copia nasce sempre come bozza
-                date: new Date(),
-            }
-        })
-
-        revalidatePath("/news", "page")
-        revalidatePath("/admin/news", "page")
-        revalidatePath("/", "layout")
-        revalidateTag('news')
-        return { success: true }
-    } catch (error) {
-        console.error("Duplicate news error:", error)
-        return { success: false, error: "Errore durante la duplicazione" }
-    }
-}
-
 const getNewsInternal = async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
-    // ... logic remains same as original getNews ...
-    console.log('getNewsInternal called with:', { category, query, association, locale })
     try {
-        const now = new Date()
-        const where: any = {
-            published: true,
-            date: { lte: now }
-        }
+        const where: any = { published: true }
 
         if (category && category !== "Tutte") {
             where.category = category
+        }
+
+        if (query) {
+            where.OR = [
+                { title: { contains: query, mode: 'insensitive' } },
+                { description: { contains: query, mode: 'insensitive' } }
+            ]
         }
 
         if (association) {
             where.associations = { hasSome: [association, Association.MORGANA_ORUM] }
         }
 
-        if (query) {
-            where.OR = [
-                { title: { contains: query } },
-                { titleEn: { contains: query } },
-                { description: { contains: query } },
-                { descriptionEn: { contains: query } },
-            ]
-        }
-
-        const news = await prisma.news.findMany({
+        const newsRows = await prisma.news.findMany({
             where,
-            orderBy: { date: "desc" },
+            orderBy: { date: "desc" }
         })
 
-        // Localization mapping
+        const news = newsRows as any[]
+
+        // Simple local mapping for current language
         return news.map((item: any) => ({
             ...item,
             title: (locale === 'en' && item.titleEn) ? item.titleEn : item.title,
@@ -249,16 +69,13 @@ const getNewsInternal = async (category?: string, query?: string, association?: 
     }
 }
 
-const getNewsCached = unstable_cache(
-    async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
-        return getNewsInternal(category, query, association, locale)
-    },
-    ['news-list'],
-    { revalidate: 3600, tags: ['news'] }
-)
-
 export const getNews = async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
-    const news = await getNewsCached(category, query, association, locale)
+    const news = await unstable_cache(
+        async () => getNewsInternal(category, query, association, locale),
+        ['news-list', category || 'all', query || 'none', association || 'none', locale],
+        { revalidate: 3600, tags: ['news'] }
+    )()
+
     return news.map(item => ({
         ...item,
         date: new Date(item.date)
@@ -283,20 +100,78 @@ const getNewsByIdInternal = async (id: string, locale: string = 'it') => {
     }
 }
 
-const getNewsByIdCached = unstable_cache(
-    async (id: string, locale: string = 'it') => {
-        return getNewsByIdInternal(id, locale)
-    },
-    ['news-detail'],
-    { revalidate: 3600, tags: ['news'] }
-)
-
 export const getNewsById = async (id: string, locale: string = 'it') => {
-    const news = await getNewsByIdCached(id, locale)
+    const news = await unstable_cache(
+        async () => getNewsByIdInternal(id, locale),
+        ['news-detail', id, locale],
+        { revalidate: 3600, tags: ['news'] }
+    )()
+
     if (!news) return null
     return {
         ...news,
         date: new Date(news.date)
+    }
+}
+
+export async function getNewsCategories() {
+    try {
+        const cats = await prisma.newsCategory.findMany({ orderBy: { name: "asc" } })
+        return cats.map((c: any) => c.name)
+    } catch (error) {
+        console.error("Error fetching news categories:", error)
+        return []
+    }
+}
+
+export async function createNewsCategory(name: string) {
+    try {
+        await prisma.newsCategory.create({ data: { name } })
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/news", "page")
+        revalidatePath("/", "layout")
+        revalidateTag('news')
+        return { success: true }
+    } catch (error) {
+        console.error("Create news category error:", error)
+        return { success: false, error: "Categoria già esistente o errore" }
+    }
+}
+
+export async function deleteNewsCategory(id: string) {
+    try {
+        await prisma.newsCategory.delete({ where: { id } })
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/news", "page")
+        revalidatePath("/", "layout")
+        revalidateTag('news')
+        return { success: true }
+    } catch (error) {
+        console.error("Delete news category error:", error)
+        return { success: false, error: "Errore durante l'eliminazione" }
+    }
+}
+
+export async function getNewsCategoriesWithIds() {
+    try {
+        return await prisma.newsCategory.findMany({ orderBy: { name: "asc" } })
+    } catch (error) {
+        console.error("Error fetching news categories:", error)
+        return []
+    }
+}
+
+export async function getNewsYears() {
+    try {
+        const news = await prisma.news.findMany({
+            select: { date: true },
+            orderBy: { date: "desc" }
+        })
+        const years = Array.from(new Set(news.map(n => new Date(n.date).getFullYear())))
+        return years.sort((a, b) => b - a)
+    } catch (error) {
+        console.error("Error fetching news years:", error)
+        return []
     }
 }
 
@@ -338,8 +213,8 @@ export async function getAllNews(filters?: {
 
         if (filters?.query) {
             where.OR = [
-                { title: { contains: filters.query } },
-                { description: { contains: filters.query } },
+                { title: { contains: filters.query, mode: 'insensitive' } },
+                { description: { contains: filters.query, mode: 'insensitive' } },
             ]
         }
 
@@ -351,15 +226,6 @@ export async function getAllNews(filters?: {
             where.published = true
         } else if (filters?.status === "draft") {
             where.published = false
-        } else if (filters?.status === "scheduled") {
-            where.published = true
-            where.date = { gt: new Date() }
-        }
-
-        if (filters?.year) {
-            const yearStart = new Date(filters.year, 0, 1)
-            const yearEnd = new Date(filters.year + 1, 0, 1)
-            where.date = { ...where.date, gte: yearStart, lt: yearEnd }
         }
 
         return await prisma.news.findMany({
@@ -367,71 +233,169 @@ export async function getAllNews(filters?: {
             orderBy: { date: "desc" },
         })
     } catch (error) {
-        console.error("Error fetching all news:", error)
+        console.error("Error fetching admin news:", error)
         return []
     }
 }
 
-
-
-export async function getNewsCategories(): Promise<string[]> {
+export async function createNews(data: {
+    title: string
+    titleEn?: string | null
+    description: string
+    descriptionEn?: string | null
+    content?: string | null
+    contentEn?: string | null
+    image?: string | null
+    category: string
+    associations?: Association[]
+    published: boolean
+}) {
     try {
-        const cats = await prisma.newsCategory.findMany({ orderBy: { name: "asc" } })
-        return cats.map((c: any) => c.name)
-    } catch (error) {
-        console.error("Error fetching categories:", error)
-        return []
-    }
-}
+        const permission = await checkContentPermission(data.associations)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa associazione." }
 
-export async function createNewsCategory(name: string) {
-    try {
-        await prisma.newsCategory.create({ data: { name } })
-        revalidatePath("/news", "page")
-        revalidatePath("/admin/news", "page")
-        revalidatePath("/", "layout")
-        return { success: true }
-    } catch (error) {
-        console.error("Create category error:", error)
-        return { success: false, error: "Categoria già esistente o errore" }
-    }
-}
-
-export async function deleteNewsCategory(id: string) {
-    try {
-        await prisma.newsCategory.delete({ where: { id } })
-        revalidatePath("/news", "page")
-        revalidatePath("/admin/news", "page")
-        revalidatePath("/", "layout")
-        return { success: true }
-    } catch (error) {
-        console.error("Delete category error:", error)
-        return { success: false, error: "Errore durante l'eliminazione" }
-    }
-}
-
-export async function getNewsCategoriesWithIds() {
-    try {
-        return await prisma.newsCategory.findMany({ orderBy: { name: "asc" } })
-    } catch (error) {
-        console.error("Error fetching categories:", error)
-        return []
-    }
-}
-
-// Get distinct years from news for year filter
-export async function getNewsYears(): Promise<number[]> {
-    try {
-        const news = await prisma.news.findMany({
-            select: { date: true },
-            orderBy: { date: "desc" }
+        const newNews = await prisma.news.create({
+            data: {
+                title: data.title,
+                titleEn: (data as any).titleEn || null,
+                description: data.description,
+                descriptionEn: (data as any).descriptionEn || null,
+                content: data.content,
+                contentEn: (data as any).contentEn || null,
+                image: data.image || null,
+                category: data.category,
+                associations: data.associations || [Association.MORGANA_ORUM],
+                published: data.published,
+                date: new Date()
+            } as any
         })
-        const yearSet = new Set<number>()
-        news.forEach((n: any) => yearSet.add(new Date(n.date).getFullYear()))
-        const years = Array.from(yearSet)
-        return years.sort((a, b) => b - a)
+
+        if (newNews.published) {
+            sendPublicationNotification(newNews, "Notizia")
+        }
+
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
+        revalidateTag('news')
+        return { success: true }
     } catch (error) {
-        console.error("Error fetching news years:", error)
-        return []
+        console.error("Create news error:", error)
+        return { success: false, error: "Errore nella creazione della notizia." }
+    }
+}
+
+export async function updateNews(id: string, data: {
+    title: string
+    titleEn?: string | null
+    description: string
+    descriptionEn?: string | null
+    content?: string | null
+    contentEn?: string | null
+    image?: string | null
+    category: string
+    associations?: Association[]
+    published: boolean
+}) {
+    try {
+        const existing = await prisma.news.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Notizia non trovata" }
+
+        const permission = await checkContentPermission(existing.associations)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
+
+        // Extra protection: Network admins cannot modify associations of central content
+        if (permission.user?.role === "ADMIN_NETWORK" && existing.associations.includes(Association.MORGANA_ORUM)) {
+            const currentAssocs = [...existing.associations].sort()
+            const newAssocs = [...(data.associations || [Association.MORGANA_ORUM])].sort()
+            if (JSON.stringify(currentAssocs) !== JSON.stringify(newAssocs)) {
+                return { success: false, error: "Non puoi modificare le associazioni di un contenuto centrale." }
+            }
+        }
+
+        const updatedNews = await prisma.news.update({
+            where: { id },
+            data: {
+                title: data.title,
+                titleEn: (data as any).titleEn || null,
+                description: data.description,
+                descriptionEn: (data as any).descriptionEn || null,
+                content: data.content,
+                contentEn: (data as any).contentEn || null,
+                image: data.image || null,
+                category: data.category,
+                associations: { set: data.associations || [Association.MORGANA_ORUM] },
+                published: data.published,
+            } as any
+        })
+
+        if (!existing.published && updatedNews.published) {
+            sendPublicationNotification(updatedNews, "Notizia")
+        }
+
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
+        revalidateTag('news')
+        return { success: true }
+    } catch (error) {
+        console.error("Update news error:", error)
+        return { success: false, error: "Errore nell'aggiornamento della notizia." }
+    }
+}
+
+export async function deleteNews(id: string) {
+    try {
+        const existing = await prisma.news.findUnique({ where: { id } })
+        if (!existing) return { success: false, error: "Notizia non trovata" }
+
+        const permission = await checkContentPermission(existing.associations)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
+
+        if (permission.user?.role === "ADMIN_NETWORK" && existing.associations.includes(Association.MORGANA_ORUM)) {
+            return { success: false, error: "Non puoi eliminare contenuti creati dall'amministrazione centrale." }
+        }
+
+        await prisma.news.delete({ where: { id } })
+        revalidatePath("/news", "page")
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/", "layout")
+        revalidateTag('news')
+        return { success: true }
+    } catch (error) {
+        console.error("Delete news error:", error)
+        return { success: false, error: "Errore nell'eliminazione della notizia." }
+    }
+}
+
+export async function duplicateNews(newsId: string) {
+    try {
+        const news = await prisma.news.findUnique({
+            where: { id: newsId }
+        })
+
+        if (!news) return { success: false, error: "Notizia non trovata" }
+
+        const permission = await checkContentPermission(news.associations)
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa notizia." }
+
+        const { id, ...newsData } = news
+
+        await prisma.news.create({
+            data: {
+                ...newsData,
+                title: `${news.title} (Copia)`,
+                published: false,   // La copia nasce sempre come bozza
+            }
+        })
+
+        revalidatePath("/admin/news", "page")
+        revalidatePath("/news", "page")
+        revalidatePath("/", "layout")
+        revalidateTag('news')
+        return { success: true }
+    } catch (error) {
+        console.error("Duplicate news error:", error)
+        return { success: false, error: "Errore durante la duplicazione" }
     }
 }
