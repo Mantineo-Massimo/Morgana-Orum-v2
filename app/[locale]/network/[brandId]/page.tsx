@@ -128,7 +128,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
     return (
         <div className="flex flex-col min-h-screen">
             {/* SUB-SITE HERO */}
-            <section className="relative h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden">
+            <section className="relative min-h-[600px] lg:min-h-[700px] w-full bg-slate-900 flex items-center justify-center overflow-hidden py-16">
                 <Image src={config.bg} fill className="object-cover opacity-40 shadow-inner" alt="" sizes="100vw" priority />
 
                 {/* Overlay Personalizzato per il Brand */}
@@ -164,7 +164,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                         </div>
                     )}
 
-                    <Link href="/" className="mt-8 md:mt-10 flex items-center gap-2 text-white/90 hover:text-white transition-all bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 group text-sm md:text-base font-bold uppercase tracking-widest shadow-xl">
+                    <Link href="/" className="mt-8 md:mt-10 mb-8 md:mb-16 flex items-center gap-2 text-white/90 hover:text-white transition-all bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 group text-sm md:text-base font-bold uppercase tracking-widest shadow-xl">
                         <ChevronLeft className="size-5 group-hover:-translate-x-1 transition-transform" />
                         {t("back_link")}
                     </Link>
@@ -322,6 +322,35 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                 <p className="text-xl text-muted-foreground font-serif italic mb-8">
                                     Molti altri talenti si alterneranno sul palco e nel cortile...
                                 </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* SPONSORS CAROUSEL SECTION */}
+                    <section className="py-12 bg-white border-b border-border/50 overflow-hidden flex flex-col items-center">
+                        <h3 className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-8">
+                            Con il supporto di
+                        </h3>
+                        {/* Wrapper that hides horizontal overflow */}
+                        <div className="w-full flex overflow-hidden mask-image-linear-gradient-horizontal">
+                            {/* Inner element that animates -> duplicate content for seamless loop */}
+                            <div className="flex w-max animate-infinite-scroll hover:[animation-play-state:paused] items-center">
+                                {/* First set of logos */}
+                                {[1, 2, 3, 4, 5, 6].map((i) => (
+                                    <div key={i} className="mx-8 md:mx-16 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 flex items-center justify-center min-w-[120px]">
+                                        <div className="text-xl font-black text-zinc-400 uppercase tracking-widest border-2 border-zinc-200 px-6 py-3 rounded-lg">
+                                            Sponsor {i}
+                                        </div>
+                                    </div>
+                                ))}
+                                {/* Duplicate set for seamless looping */}
+                                {[1, 2, 3, 4, 5, 6].map((i) => (
+                                    <div key={`dup-${i}`} className="mx-8 md:mx-16 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 flex items-center justify-center min-w-[120px]">
+                                        <div className="text-xl font-black text-zinc-400 uppercase tracking-widest border-2 border-zinc-200 px-6 py-3 rounded-lg">
+                                            Sponsor {i}
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </section>
