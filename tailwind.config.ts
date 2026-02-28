@@ -78,19 +78,18 @@ const config: Config = {
 					'4': 'hsl(var(--chart-4))',
 					'5': 'hsl(var(--chart-5))'
 				}
+			},
+			keyframes: {
+				"infinite-scroll": {
+					from: { transform: 'translateX(0)' },
+					to: { transform: 'translateX(-50%)' },
+				}
+			},
+			animation: {
+				"infinite-scroll": "infinite-scroll 30s linear infinite",
 			}
 		},
-		keyframes: {
-			"infinite-scroll": {
-				from: { transform: 'translateX(0)' },
-				to: { transform: 'translateX(-50%)' },
-			}
-		},
-		animation: {
-			"infinite-scroll": "infinite-scroll 30s linear infinite",
-		}
-	}
-},
+	},
 	plugins: [require("tailwindcss-animate")],
 };
 export default config;
