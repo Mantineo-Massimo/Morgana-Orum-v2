@@ -1,13 +1,12 @@
 import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { ArrowRight, Calendar, ChevronLeft } from "lucide-react"
-import prisma from "@/lib/prisma"
+import { getNews } from "@/app/actions/news"
+import { getAllEvents } from "@/app/actions/events"
 import { notFound } from "next/navigation"
 import { Association } from "@prisma/client"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-
-export const dynamic = "force-dynamic"
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
     const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
@@ -78,29 +77,18 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
     if (!config) notFound()
 
-    const t = await getTranslations("Network")
-    const tb = await getTranslations("Brands")
-    const te = await getTranslations("Events")
-    const th = await getTranslations("HomePage")
-    const ts = await getTranslations("Search")
+    const [t, tb, te, th, ts, newsResult, eventsResult] = await Promise.all([
+        getTranslations("Network"),
+        getTranslations("Brands"),
+        getTranslations("Events"),
+        getTranslations("HomePage"),
+        getTranslations("Search"),
+        getNews(undefined, undefined, config.association, locale),
+        getAllEvents(null, config.association, 'upcoming', locale)
+    ])
 
-    const notizie = await prisma.news.findMany({
-        where: {
-            published: true,
-            associations: { has: config.association }
-        },
-        orderBy: { date: 'desc' },
-        take: 3
-    });
-
-    const eventi = await prisma.event.findMany({
-        where: {
-            date: { gte: new Date() },
-            associations: { has: config.association }
-        },
-        orderBy: { date: 'asc' },
-        take: 3
-    });
+    const notizie = newsResult.slice(0, 3)
+    const eventi = eventsResult.slice(0, 3)
 
     return (
         <div className="flex flex-col min-h-screen">
