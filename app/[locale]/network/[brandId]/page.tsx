@@ -23,7 +23,13 @@ export async function generateMetadata({ params }: { params: { brandId: string }
     }
 }
 
-const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg: string, subtitle: string, desc: string, association: Association }> = {
+type BrandTheme = {
+    primary: string
+    secondary: string
+    accent: string
+}
+
+const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg: string, subtitle: string, desc: string, association: Association, theme?: BrandTheme }> = {
     unimhealth: {
         id: "unimhealth",
         name: "Unimhealth",
@@ -76,7 +82,12 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         bg: "/assets/slides/1.jpg",
         subtitle: "Il cuore pulsante della creatività studentesca.",
         desc: "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento.",
-        association: Association.PIAZZA_DELLARTE
+        association: Association.PIAZZA_DELLARTE,
+        theme: {
+            primary: "#1fbcd3",   // Cyan
+            secondary: "#27a85d", // Verde
+            accent: "#f9a620"    // Yellow
+        }
     },
 }
 
@@ -106,7 +117,16 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                 <Image src={config.bg} fill className="object-cover opacity-40 shadow-inner" alt="" sizes="100vw" priority />
 
                 {/* Overlay Personalizzato per il Brand */}
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-background/90 mix-blend-multiply opacity-95"></div>
+                <div
+                    className="absolute inset-0 opacity-95 mix-blend-multiply"
+                    style={{
+                        background: config.theme
+                            ? `linear-gradient(to right, ${config.theme.primary}CC, ${config.theme.secondary}E6)`
+                            : undefined
+                    }}
+                >
+                    {!config.theme && <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-background/90"></div>}
+                </div>
                 <div className="absolute inset-0 bg-black/40"></div>
 
                 <div className="container relative z-10 flex flex-col items-center">
@@ -134,17 +154,20 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                         <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-8 uppercase tracking-widest">
                             {t("passion_title")}
                         </h2>
-                        <div className="w-24 h-1.5 bg-primary mx-auto mb-10 rounded-full"></div>
+                        <div
+                            className="w-24 h-1.5 mx-auto mb-10 rounded-full"
+                            style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
+                        ></div>
                         <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
                             {tb(`${brandId}.desc` as any)}
                         </p>
                         <div className="mt-12 flex flex-wrap justify-center gap-4">
                             <div className="bg-muted px-8 py-6 rounded-2xl border border-border/50 text-center flex-1 min-w-[200px]">
-                                <span className="block text-4xl font-black text-primary mb-1">100%</span>
+                                <span className="block text-4xl font-black mb-1" style={{ color: config.theme?.primary || 'var(--primary)' }}>100%</span>
                                 <span className="text-sm uppercase tracking-widest font-bold opacity-70">{t("dedication")}</span>
                             </div>
                             <div className="bg-muted px-8 py-6 rounded-2xl border border-border/50 text-center flex-1 min-w-[200px]">
-                                <span className="block text-4xl font-black text-primary mb-1">H24</span>
+                                <span className="block text-4xl font-black mb-1" style={{ color: config.theme?.secondary || 'var(--primary)' }}>H24</span>
                                 <span className="text-sm uppercase tracking-widest font-bold opacity-70">{t("support")}</span>
                             </div>
                         </div>
@@ -166,16 +189,24 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                     <h2 className="text-3xl md:text-4xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-2">
                                         {te("upcoming")}
                                     </h2>
-                                    <div className="h-1.5 w-full bg-primary rounded-full"></div>
+                                    <div
+                                        className="h-1.5 w-full rounded-full"
+                                        style={{ backgroundColor: config.theme?.primary || 'var(--primary)' }}
+                                    ></div>
                                 </div>
-                                <Link href={`/network/${brandId}/events`} className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary hover:underline">
+                                <Link href={`/network/${brandId}/events`} className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:underline" style={{ color: config.theme?.primary || 'var(--primary)' }}>
                                     {te("tab_past")} <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </div>
 
                             <div className="grid md:grid-cols-3 gap-8">
                                 {eventi.map((evento: any) => (
-                                    <Link href={`/network/${brandId}/events/${evento.id}`} key={evento.id} className="relative group overflow-hidden bg-muted aspect-[4/5] flex items-end p-8 border-b-8 border-primary shadow-2xl hover:-translate-y-2 transition-all duration-500 block rounded-2xl">
+                                    <Link
+                                        href={`/network/${brandId}/events/${evento.id}`}
+                                        key={evento.id}
+                                        className="relative group overflow-hidden bg-muted aspect-[4/5] flex items-end p-8 shadow-2xl hover:-translate-y-2 transition-all duration-500 block rounded-2xl border-b-8"
+                                        style={{ borderBottomColor: config.theme?.accent || 'var(--primary)' }}
+                                    >
                                         {evento.image && (
                                             <Image src={evento.image} alt={evento.title} fill className="object-cover z-0 group-hover:scale-110 transition-transform duration-700" />
                                         )}
@@ -183,7 +214,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
                                         {/* Date Badge Overlay */}
                                         <div className="absolute top-6 left-6 z-20 bg-white text-foreground text-center p-3 rounded-xl shadow-2xl transform group-hover:scale-110 transition-transform">
-                                            <span className="block text-xs font-black uppercase text-primary">
+                                            <span className="block text-xs font-black uppercase" style={{ color: config.theme?.primary || 'var(--primary)' }}>
                                                 {evento.date.toLocaleDateString(locale, { month: 'short' })}
                                             </span>
                                             <span className="block text-3xl font-black leading-none">
@@ -195,7 +226,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-3 block">
                                                 {evento.category}
                                             </span>
-                                            <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                                            <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2" style={{ color: 'inherit' }}>
                                                 {evento.title}
                                             </h3>
                                             <div className="mt-4 pt-4 border-t border-white/20 text-xs flex items-center justify-between gap-2 opacity-80">
@@ -224,9 +255,12 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                     <h2 className="text-3xl md:text-4xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-2">
                                         {th("news_title")}
                                     </h2>
-                                    <div className="h-1.5 w-full bg-primary rounded-full"></div>
+                                    <div
+                                        className="h-1.5 w-full rounded-full"
+                                        style={{ backgroundColor: config.theme?.secondary || 'var(--primary)' }}
+                                    ></div>
                                 </div>
-                                <Link href={`/network/${brandId}/news`} className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary hover:underline">
+                                <Link href={`/network/${brandId}/news`} className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:underline" style={{ color: config.theme?.secondary || 'var(--primary)' }}>
                                     {th("news_all")} <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                             </div>
@@ -242,7 +276,10 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                                     <Image src={config.logo} width={64} height={64} className="opacity-20" alt="" />
                                                 </div>
                                             )}
-                                            <div className="absolute top-4 left-4 bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg">
+                                            <div
+                                                className="absolute top-4 left-4 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg"
+                                                style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
+                                            >
                                                 {news.category || "General"}
                                             </div>
                                         </div>
@@ -250,14 +287,14 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                             <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest block">
                                                 {news.date.toLocaleDateString(locale, { day: '2-digit', month: 'long', year: 'numeric' })}
                                             </span>
-                                            <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                                            <h3 className="text-2xl font-bold leading-tight group-hover:opacity-80 transition-opacity line-clamp-2">
                                                 {news.title}
                                             </h3>
                                             <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed">
                                                 {news.description}
                                             </p>
                                             <div className="pt-2">
-                                                <span className="text-xs font-black uppercase tracking-widest text-primary flex items-center gap-2 group-hover:gap-3 transition-all">
+                                                <span className="text-xs font-black uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all" style={{ color: config.theme?.accent || 'var(--primary)' }}>
                                                     {ts("read_more")} <ArrowRight className="size-3" />
                                                 </span>
                                             </div>
@@ -281,7 +318,10 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                 <div className="absolute inset-0 opacity-30 pointer-events-none">
                     <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
                 </div>
-                <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+                <div
+                    className="absolute inset-0 mix-blend-multiply opacity-40"
+                    style={{ backgroundColor: config.theme?.primary || 'var(--primary)' }}
+                ></div>
 
                 <div className="container relative z-10 text-center">
                     <div className="max-w-3xl mx-auto">
