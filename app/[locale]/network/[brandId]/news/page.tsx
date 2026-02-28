@@ -11,6 +11,7 @@ const BRAND_TO_ASSOCIATION: Record<string, Association> = {
     matricole: Association.MATRICOLE,
     scipog: Association.SCIPOG,
     dicam: Association.INSIDE_DICAM,
+    piazzadellarte: Association.PIAZZA_DELLARTE,
 }
 
 export default async function Page({ params }: { params: { brandId: string } }) {

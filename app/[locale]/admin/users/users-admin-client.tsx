@@ -154,11 +154,6 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         const res = await updateUserRole(userId, newRole)
         if (res.success) {
             let finalAssoc = user.association
-            if (newRole === "SUPER_ADMIN" || newRole === "ADMIN_MORGANA") {
-                finalAssoc = "MORGANA_ORUM"
-            } else if (newRole === "ADMIN_NETWORK" && user.association === "MORGANA_ORUM") {
-                finalAssoc = "UNIMHEALTH"
-            }
 
             setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole, association: finalAssoc as Association } : u))
         } else {

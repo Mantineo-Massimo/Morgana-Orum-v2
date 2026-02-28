@@ -172,6 +172,10 @@
         "dicam": {
             "subtitle": "Creatività e cultura: l'anima del Dipartimento DICAM.",
             "desc": "Inside Dicam è la realtà di riferimento per gli studenti dell'area umanistica. Promuoviamo la cultura, l'arte e il dialogo, garantendo una rappresentanza attenta alle esigenze di ogni corso di laurea."
+        },
+        "piazzadellarte": {
+            "subtitle": "Il cuore pulsante della creatività studentesca.",
+            "desc": "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento."
         }
     },
     "News": {

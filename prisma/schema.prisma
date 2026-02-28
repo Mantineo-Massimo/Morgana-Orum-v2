@@ -183,4 +183,5 @@ enum Association {
   DICAM
   MATRICOLE
   INSIDE_DICAM
+  PIAZZA_DELLARTE
 }

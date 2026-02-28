@@ -69,6 +69,15 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         desc: "Inside Dicam è la realtà di riferimento per gli studenti dell'area umanistica. Promuoviamo la cultura, l'arte e il dialogo, garantendo una rappresentanza attenta alle esigenze di ogni corso di laurea.",
         association: Association.INSIDE_DICAM
     },
+    piazzadellarte: {
+        id: "piazzadellarte",
+        name: "Piazza Dell'Arte",
+        logo: "/assets/piazza_dellarte.png",
+        bg: "/assets/slides/1.jpg",
+        subtitle: "Il cuore pulsante della creatività studentesca.",
+        desc: "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento.",
+        association: Association.PIAZZA_DELLARTE
+    },
 }
 
 export default async function NetworkSubPage({ params }: { params: { brandId: string, locale: string } }) {
@@ -186,7 +195,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-3 block">
                                                 {evento.category}
                                             </span>
-                                            <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                            <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
                                                 {evento.title}
                                             </h3>
                                             <div className="mt-4 pt-4 border-t border-white/20 text-xs flex items-center justify-between gap-2 opacity-80">

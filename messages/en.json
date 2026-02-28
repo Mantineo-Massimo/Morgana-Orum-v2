@@ -169,7 +169,11 @@
         },
         "dicam": {
             "subtitle": "Creativity and culture: the soul of the DICAM Department.",
-            "desc": "Inside Dicam is the reality of reference for students of the humanities. Promuovaimana culture, art and dialogue, guaranteeing representation attentive to the needs of every degree course."
+            "desc": "Inside Dicam is the reference point for students in the humanities area. We promote culture, art, and dialogue, ensuring careful representation for the needs of every degree course."
+        },
+        "piazzadellarte": {
+            "subtitle": "The beating heart of student creativity.",
+            "desc": "Piazza Dell'Arte is the new space dedicated to free creative expression. A place where art meets student life, promoting events, exhibitions, and workshops to enhance every talent."
         }
     },
     "News": {
