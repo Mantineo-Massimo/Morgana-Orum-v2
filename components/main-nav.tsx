@@ -32,7 +32,7 @@ export function MainNav({
         return () => { document.body.style.overflow = 'unset' }
     }, [isOpen])
 
-    const routes = [
+    const routes: { href: string; label: string; active: boolean; color?: string }[] = [
         {
             href: brand ? `/network/${brand}` : `/`,
             label: nt("home"),
@@ -67,23 +67,29 @@ export function MainNav({
                 href: `/network/piazzadellarte#cos-e`,
                 label: nt("cose"),
                 active: false,
+                color: "text-[#27a85d]" // Green
             },
             {
                 href: `/network/piazzadellarte/news`,
                 label: nt("news"),
                 active: pathname.startsWith(`/network/piazzadellarte/news`),
+                color: "text-[#1fbcd3]" // Cyan
             },
             {
                 href: `/network/piazzadellarte#programma`,
                 label: nt("programma"),
                 active: false,
+                color: "text-[#f9a620]" // Yellow
             },
             {
                 href: `/network/piazzadellarte#artisti`,
                 label: nt("artisti"),
                 active: false,
+                color: "text-[#27a85d]" // Green
             }
         )
+        // Update Home color too
+        routes[0].color = "text-[#1fbcd3]" // Cyan (Home)
     }
 
     // Aggiungi link extra per Unime Matricole
@@ -122,15 +128,17 @@ export function MainNav({
                 className={cn("hidden lg:flex items-center space-x-4 lg:space-x-2 xl:space-x-4", className)}
                 {...props}
             >
-                {routes.map((route) => (
+                {routes.map((route: any) => (
                     <Link
                         key={route.href}
                         href={route.href}
                         className={cn(
-                            "text-sm font-bold uppercase tracking-widest transition-colors relative whitespace-nowrap",
+                            "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap",
                             route.active
                                 ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
-                                : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
+                                : brand === 'piazzadellarte' && route.color
+                                    ? `${route.color} hover:opacity-70 after:absolute after:bottom-[-4px] after:left-0 after:w-0 hover:after:w-full after:h-[2px] after:bg-current after:transition-all after:duration-300`
+                                    : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
                         )}
                     >
                         {route.label}
@@ -216,7 +224,11 @@ export function MainNav({
                                     onClick={() => setIsOpen(false)}
                                     className={cn(
                                         "text-3xl font-black uppercase tracking-widest transition-colors",
-                                        route.active ? "text-foreground" : "text-zinc-400 hover:text-zinc-600"
+                                        route.active
+                                            ? "text-foreground"
+                                            : brand === 'piazzadellarte' && route.color
+                                                ? route.color
+                                                : "text-zinc-400 hover:text-zinc-600"
                                     )}
                                 >
                                     {route.label}

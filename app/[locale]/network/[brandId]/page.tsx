@@ -97,7 +97,7 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         desc: "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento.",
         association: "PIAZZA_DELLARTE" as Association,
         theme: {
-            primary: "#0a0f1c",   // Dark Background
+            primary: "#1fbcd3",   // Cyan
             secondary: "#27a85d", // Verde
             accent: "#f9a620"    // Yellow
         }
