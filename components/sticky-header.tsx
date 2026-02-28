@@ -30,7 +30,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             brand === "matricole" ? "bg-[#f4b716]" :
                 brand === "scipog" ? "bg-[#fbc363]" :
                     brand === "dicam" ? "bg-[#f34ab4]" :
-                        brand === "piazzadellarte" ? "bg-[linear-gradient(45deg,#1fbcd3_0%,#27a85d_50%,#f9a620_100%)]" :
+                        brand === "piazzadellarte" ? "bg-[linear-gradient(45deg,#27a85d_0%,#f9a620_50%,#f9a620_100%)]" :
                             "bg-[linear-gradient(45deg,#c9041a_0%,#18182e_50%)]"
 
     // Mapping per i loghi e nomi del network
@@ -104,9 +104,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                                     brand !== "piazzadellarte" ? "bg-white rounded-full shadow-sm p-1" : "p-0 scale-125"
                                 )}>
                                     <div className={cn(
-                                        "relative",
-                                        brand === "piazzadellarte" ? "w-full h-full" : "w-4/5 h-4/5"
+                                        "relative transition-all duration-700",
+                                        brand === "piazzadellarte" ? "w-full h-full drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] hover:scale-110" : "w-4/5 h-4/5"
                                     )}>
+                                        {brand === "piazzadellarte" && (
+                                            <div className="absolute inset-0 bg-white/10 blur-xl rounded-full -z-10 animate-pulse"></div>
+                                        )}
                                         <Image
                                             src={currentNetwork.logo}
                                             alt={currentNetwork.name}

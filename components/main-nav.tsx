@@ -73,7 +73,7 @@ export function MainNav({
                 href: `/network/piazzadellarte/news`,
                 label: nt("news"),
                 active: pathname.startsWith(`/network/piazzadellarte/news`),
-                color: "text-[#1fbcd3]" // Cyan
+                color: "text-[#f9a620]" // Gold (Was Cyan)
             },
             {
                 href: `/network/piazzadellarte#programma`,
@@ -95,7 +95,7 @@ export function MainNav({
             }
         )
         // Update Home color too
-        routes[0].color = "text-[#1fbcd3]" // Cyan (Home)
+        routes[0].color = "text-[#f9a620]" // Gold (Home - Was Cyan)
     }
 
     // Aggiungi link extra per Unime Matricole

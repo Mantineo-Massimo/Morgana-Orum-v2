@@ -97,9 +97,9 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
         desc: "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento.",
         association: "PIAZZA_DELLARTE" as Association,
         theme: {
-            primary: "#1fbcd3",   // Cyan
+            primary: "#f9a620",   // Gold
             secondary: "#27a85d", // Verde
-            accent: "#f9a620"    // Yellow
+            accent: "#1fbcd3"    // Cyan (Swapped)
         }
     },
 }
@@ -239,7 +239,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     {/* FANTA-PIAZZA SECTION */}
                     <section id="fanta-piazza" className="py-24 bg-[#0a0f1c] text-white relative overflow-hidden">
                         <div className="container grid md:grid-cols-2 gap-16 items-center">
-                            <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-[3rem] overflow-hidden shadow-[0_0_50px_rgba(31,188,211,0.2)] group border border-white/10">
+                            <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-[3rem] overflow-hidden shadow-[0_0_50px_rgba(249,166,32,0.2)] group border border-white/10">
                                 <Image src="/assets/fantapiazza.png" fill className="object-cover group-hover:scale-110 transition-transform duration-1000" alt="Fanta-Piazza" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1c] via-transparent to-transparent opacity-80"></div>
                                 <div className="absolute bottom-12 left-12 right-12">
@@ -249,17 +249,17 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                             <span className="text-2xl font-bold text-white/50 uppercase tracking-widest">Armoni</span>
                                         </div>
                                         <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                                            <div className="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 w-3/4 animate-pulse"></div>
+                                            <div className="h-full bg-gradient-to-r from-amber-400 to-emerald-400 w-3/4 animate-pulse"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="flex flex-col items-start">
-                                <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-black uppercase tracking-[0.2em] mb-8 animate-bounce">
+                                <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-black uppercase tracking-[0.2em] mb-8 animate-bounce">
                                     <Sparkles className="size-4" /> Live Now
                                 </div>
                                 <h2 className="text-5xl md:text-8xl font-serif font-black text-white uppercase tracking-tighter leading-[0.9] mb-8">
-                                    Fanta<br /><span className="text-transparent border-t-4 border-cyan-400 pt-2" style={{ WebkitTextStroke: '1px white' }}>Piazza</span>
+                                    Fanta<br /><span className="text-transparent border-t-4 border-amber-500 pt-2" style={{ WebkitTextStroke: '1px white' }}>Piazza</span>
                                 </h2>
                                 <p className="text-xl md:text-2xl text-white/70 leading-relaxed font-serif mb-10 max-w-lg">
                                     Il gioco ufficiale della Piazza. Crea la tua squadra, accumula Armoni e sfida i tuoi amici nella competizione più creativa dell&apos;Ateneo.
@@ -274,7 +274,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                                 <Image src={`/assets/slides/${i}.jpg`} width={56} height={56} className="w-full h-full object-cover" alt="Player" />
                                             </div>
                                         ))}
-                                        <div className="size-14 rounded-full border-4 border-[#0a0f1c] bg-cyan-500 flex items-center justify-center text-black font-black text-xs ring-2 ring-white/10">
+                                        <div className="size-14 rounded-full border-4 border-[#0a0f1c] bg-amber-500 flex items-center justify-center text-black font-black text-xs ring-2 ring-white/10">
                                             +500
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                             </div>
                         </div>
                         {/* Background glow effects */}
-                        <div className="absolute -top-24 -right-24 size-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+                        <div className="absolute -top-24 -right-24 size-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
                         <div className="absolute -bottom-24 -left-24 size-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
                     </section>
 
