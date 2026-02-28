@@ -73,7 +73,7 @@ export function MainNav({
                 href: `/network/piazzadellarte/news`,
                 label: nt("news"),
                 active: pathname.startsWith(`/network/piazzadellarte/news`),
-                color: "text-[#f9a620]" // Gold (Was Cyan)
+                color: "text-[#f9a620]" // Gold instead of Cyan
             },
             {
                 href: `/network/piazzadellarte#programma`,
@@ -95,7 +95,7 @@ export function MainNav({
             }
         )
         // Update Home color too
-        routes[0].color = "text-[#f9a620]" // Gold (Home - Was Cyan)
+        routes[0].color = "text-[#f9a620]" // Gold (Home)
     }
 
     // Aggiungi link extra per Unime Matricole
@@ -124,7 +124,7 @@ export function MainNav({
             brand === "matricole" ? "bg-[#f4b716]" :
                 brand === "scipog" ? "bg-[#fbc363]" :
                     brand === "dicam" ? "bg-[#f34ab4]" :
-                        brand === "piazzadellarte" ? "bg-[#1fbcd3]" :
+                        brand === "piazzadellarte" ? "bg-[#f9a620]" : // Gold instead of Cyan
                             "bg-primary" // Morgana Red default
 
     return (
