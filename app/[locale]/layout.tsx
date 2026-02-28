@@ -76,7 +76,7 @@ export default async function RootLayout({
     const messages = await getMessages()
 
     return (
-        <html lang={locale}>
+        <html lang={locale} suppressHydrationWarning>
             <body className={`${inter.variable} ${outfit.variable}`}>
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <BrandProvider defaultBrand={null}>

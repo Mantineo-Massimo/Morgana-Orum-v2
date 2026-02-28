@@ -249,12 +249,16 @@ const getNewsInternal = async (category?: string, query?: string, association?: 
     }
 }
 
+const getNewsCached = unstable_cache(
+    async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
+        return getNewsInternal(category, query, association, locale)
+    },
+    ['news-list'],
+    { revalidate: 3600, tags: ['news'] }
+)
+
 export const getNews = (category?: string, query?: string, association?: Association, locale: string = 'it') => {
-    return unstable_cache(
-        async () => getNewsInternal(category, query, association, locale),
-        [`news-list-${category || 'all'}-${query || 'none'}-${association || 'none'}-${locale}`],
-        { revalidate: 3600, tags: ['news'] }
-    )()
+    return getNewsCached(category, query, association, locale)
 }
 
 const getNewsByIdInternal = async (id: string, locale: string = 'it') => {
@@ -275,12 +279,16 @@ const getNewsByIdInternal = async (id: string, locale: string = 'it') => {
     }
 }
 
+const getNewsByIdCached = unstable_cache(
+    async (id: string, locale: string = 'it') => {
+        return getNewsByIdInternal(id, locale)
+    },
+    ['news-detail'],
+    { revalidate: 3600, tags: ['news'] }
+)
+
 export const getNewsById = (id: string, locale: string = 'it') => {
-    return unstable_cache(
-        async () => getNewsByIdInternal(id, locale),
-        [`news-detail-${id}-${locale}`],
-        { revalidate: 3600, tags: ['news'] }
-    )()
+    return getNewsByIdCached(id, locale)
 }
 
 // Admin: all news, with optional filters

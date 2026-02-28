@@ -241,11 +241,14 @@ const getRepresentativesInternal = async (filters?: {
     }
 }
 
+const getRepresentativesCached = unstable_cache(
+    async (filters?: any) => {
+        return getRepresentativesInternal(filters)
+    },
+    ['representatives-list'],
+    { revalidate: 3600, tags: ['representatives'] }
+)
+
 export const getRepresentatives = (filters?: any) => {
-    const filtersKey = JSON.stringify(filters || {})
-    return unstable_cache(
-        async () => getRepresentativesInternal(filters),
-        [`representatives-list-${filtersKey}`],
-        { revalidate: 3600, tags: ['representatives'] }
-    )()
+    return getRepresentativesCached(filters)
 }
