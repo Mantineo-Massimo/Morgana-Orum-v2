@@ -86,6 +86,12 @@ export function MainNav({
                 label: nt("artisti"),
                 active: false,
                 color: "text-[#27a85d]" // Green
+            },
+            {
+                href: `https://fantapiazza.vercel.app`,
+                label: "FantaPiazza",
+                active: false,
+                color: "text-[#f34ab4]" // Pink/Accent
             }
         )
         // Update Home color too

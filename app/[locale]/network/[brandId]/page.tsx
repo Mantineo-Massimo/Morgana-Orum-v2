@@ -239,33 +239,51 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     {/* FANTA-PIAZZA SECTION */}
                     <section id="fanta-piazza" className="py-24 bg-[#0a0f1c] text-white relative overflow-hidden">
                         <div className="container grid md:grid-cols-2 gap-16 items-center">
-                            <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
-                                <Image src="/assets/fantapiazza.png" fill className="object-cover group-hover:scale-110 transition-transform duration-700 blur-[2px]" alt="Fanta-Piazza" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl border border-white/20 text-center transform -rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                                        <span className="block text-6xl md:text-8xl font-black text-white drop-shadow-2xl mb-2">100</span>
-                                        <span className="block text-xl font-bold text-white/90 uppercase tracking-[0.3em]">Armoni</span>
+                            <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-[3rem] overflow-hidden shadow-[0_0_50px_rgba(31,188,211,0.2)] group border border-white/10">
+                                <Image src="/assets/fantapiazza.png" fill className="object-cover group-hover:scale-110 transition-transform duration-1000" alt="Fanta-Piazza" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1c] via-transparent to-transparent opacity-80"></div>
+                                <div className="absolute bottom-12 left-12 right-12">
+                                    <div className="bg-white/5 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 transform -rotate-2 group-hover:rotate-0 transition-transform duration-700">
+                                        <div className="flex items-baseline gap-2 mb-2">
+                                            <span className="text-6xl md:text-8xl font-black text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">100</span>
+                                            <span className="text-2xl font-bold text-white/50 uppercase tracking-widest">Armoni</span>
+                                        </div>
+                                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                                            <div className="h-full bg-gradient-to-r from-cyan-400 to-emerald-400 w-3/4 animate-pulse"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-col">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-black uppercase tracking-widest mb-6 w-fit" style={{ color: config.theme?.accent, borderColor: config.theme?.accent + '33', backgroundColor: config.theme?.accent + '11' }}>
-                                    <Sparkles className="size-4" /> Gaming & Community
+                            <div className="flex flex-col items-start">
+                                <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-black uppercase tracking-[0.2em] mb-8 animate-bounce">
+                                    <Sparkles className="size-4" /> Live Now
                                 </div>
-                                <h2 className="text-4xl md:text-6xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-8">
-                                    FantaPiazza
+                                <h2 className="text-5xl md:text-8xl font-serif font-black text-white uppercase tracking-tighter leading-[0.9] mb-8">
+                                    Fanta<br /><span className="text-transparent border-t-4 border-cyan-400 pt-2" style={{ WebkitTextStroke: '1px white' }}>Piazza</span>
                                 </h2>
-                                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif mb-8">
-                                    Gioca con noi e scala la classifica della Piazza! Crea la tua squadra, gestisci i tuoi Armoni e sfida i tuoi amici in un gioco mozzafiato.
+                                <p className="text-xl md:text-2xl text-white/70 leading-relaxed font-serif mb-10 max-w-lg">
+                                    Il gioco ufficiale della Piazza. Crea la tua squadra, accumula Armoni e sfida i tuoi amici nella competizione più creativa dell&apos;Ateneo.
                                 </p>
-                                <div className="mt-10">
-                                    <a href="https://fantapiazza.vercel.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-zinc-900 text-white font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
-                                        Entra nel Gioco <ArrowRight className="size-5" />
+                                <div className="flex flex-wrap gap-6">
+                                    <a href="https://fantapiazza.vercel.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-white text-black font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] group">
+                                        Entra nel Gioco <ArrowRight className="size-6 group-hover:translate-x-2 transition-transform" />
                                     </a>
+                                    <div className="flex -space-x-4">
+                                        {[1, 2, 3].map((i) => (
+                                            <div key={i} className="size-14 rounded-full border-4 border-[#0a0f1c] bg-zinc-800 overflow-hidden ring-2 ring-white/10">
+                                                <Image src={`/assets/slides/${i}.jpg`} width={56} height={56} className="w-full h-full object-cover" alt="Player" />
+                                            </div>
+                                        ))}
+                                        <div className="size-14 rounded-full border-4 border-[#0a0f1c] bg-cyan-500 flex items-center justify-center text-black font-black text-xs ring-2 ring-white/10">
+                                            +500
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        {/* Background glow effects */}
+                        <div className="absolute -top-24 -right-24 size-[500px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+                        <div className="absolute -bottom-24 -left-24 size-[500px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none"></div>
                     </section>
 
                     {/* ARTISTI SECTION */}
