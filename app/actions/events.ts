@@ -69,13 +69,13 @@ const getAllEventsInternal = async (userEmail?: string | null, association?: Ass
     }))
 }
 
-export const getAllEvents = unstable_cache(
-    async (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
-        return getAllEventsInternal(userEmail, association, mode, locale)
-    },
-    ['events-list'],
-    { revalidate: 3600, tags: ['events'] }
-)
+export const getAllEvents = (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
+    return unstable_cache(
+        async () => getAllEventsInternal(userEmail, association, mode, locale),
+        [`events-list-${userEmail || 'guest'}-${association || 'all'}-${mode}-${locale}`],
+        { revalidate: 3600, tags: ['events'] }
+    )()
+}
 
 const getEventByIdInternal = async (id: number, userEmail?: string | null, locale: string = 'it') => {
     const query: any = {
@@ -106,13 +106,13 @@ const getEventByIdInternal = async (id: number, userEmail?: string | null, local
     }
 }
 
-export const getEventById = unstable_cache(
-    async (id: number, userEmail?: string | null, locale: string = 'it') => {
-        return getEventByIdInternal(id, userEmail, locale)
-    },
-    ['event-detail'],
-    { revalidate: 3600, tags: ['events'] }
-)
+export const getEventById = (id: number, userEmail?: string | null, locale: string = 'it') => {
+    return unstable_cache(
+        async () => getEventByIdInternal(id, userEmail, locale),
+        [`event-detail-${id}-${userEmail || 'guest'}-${locale}`],
+        { revalidate: 3600, tags: ['events'] }
+    )()
+}
 
 export async function getEventCategories() {
     try {
