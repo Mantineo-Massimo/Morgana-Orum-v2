@@ -9,6 +9,7 @@ import { Association } from "@prisma/client"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { CountdownTimer } from "@/components/countdown-timer"
+import { SponsorsCarousel } from "@/components/sponsors-carousel"
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
     const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
@@ -332,9 +333,16 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                             Con il supporto di
                         </h3>
                         {/* Wrapper that hides horizontal overflow */}
-                        <div className="w-full flex overflow-hidden mask-image-linear-gradient-horizontal">
-                            {/* Inner element that animates -> duplicate content for seamless loop */}
-                            <div className="flex w-max animate-infinite-scroll hover:[animation-play-state:paused] items-center">
+                        <div className="w-full relative overflow-hidden flex" style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}>
+                            <motion.div
+                                className="flex min-w-max py-4"
+                                animate={{ x: [0, -1035] }} // Adjust duration and x value based on width
+                                transition={{
+                                    repeat: Infinity,
+                                    ease: "linear",
+                                    duration: 20
+                                }}
+                            >
                                 {/* First set of logos */}
                                 {[1, 2, 3, 4, 5, 6].map((i) => (
                                     <div key={i} className="mx-8 md:mx-16 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 flex items-center justify-center min-w-[120px]">
@@ -351,173 +359,176 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                         </div>
                                     </div>
                                 ))}
-                            </div>
-                        </div>
-                    </section>
-                </>
-            )}
-
-            {/* EVENTI E NOTIZIE CONDIZIONALI */}
-            {brandId !== "matricole" && brandId !== "piazzadellarte" && (
-                <>
-                    {/* EVENTI ASSOCIATION */}
-                    <section className="py-20 bg-zinc-50 border-y border-border/50">
-                        <div className="container">
-                            <div className="flex items-center justify-between mb-12">
-                                <div className="flex flex-col">
-                                    <h2 className="text-3xl md:text-4xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-2">
-                                        {te("upcoming")}
-                                    </h2>
-                                    <div
-                                        className="h-1.5 w-full rounded-full"
-                                        style={{ backgroundColor: config.theme?.primary || 'var(--primary)' }}
-                                    ></div>
-                                </div>
-                                <Link href={`/network/${brandId}/events`} className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:underline" style={{ color: config.theme?.primary || 'var(--primary)' }}>
-                                    {te("tab_past")} <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                            </div>
-
-                            <div className="grid md:grid-cols-3 gap-8">
-                                {eventi.map((evento: any) => (
-                                    <Link
-                                        href={`/network/${brandId}/events/${evento.id}`}
-                                        key={evento.id}
-                                        className="relative group overflow-hidden bg-muted aspect-[4/5] flex items-end p-8 shadow-2xl hover:-translate-y-2 transition-all duration-500 block rounded-2xl border-b-8"
-                                        style={{ borderBottomColor: config.theme?.accent || 'var(--primary)' }}
-                                    >
-                                        {evento.image && (
-                                            <Image src={evento.image} alt={evento.title} fill className="object-cover z-0 group-hover:scale-110 transition-transform duration-700" />
-                                        )}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10"></div>
-
-                                        {/* Date Badge Overlay */}
-                                        <div className="absolute top-6 left-6 z-20 bg-white text-foreground text-center p-3 rounded-xl shadow-2xl transform group-hover:scale-110 transition-transform">
-                                            <span className="block text-xs font-black uppercase" style={{ color: config.theme?.primary || 'var(--primary)' }}>
-                                                {evento.date.toLocaleDateString(locale, { month: 'short' })}
-                                            </span>
-                                            <span className="block text-3xl font-black leading-none">
-                                                {evento.date.toLocaleDateString(locale, { day: '2-digit' })}
-                                            </span>
-                                        </div>
-
-                                        <div className="relative z-20 text-white w-full">
-                                            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-3 block">
-                                                {evento.category}
-                                            </span>
-                                            <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2" style={{ color: 'inherit' }}>
-                                                {evento.title}
-                                            </h3>
-                                            <div className="mt-4 pt-4 border-t border-white/20 text-xs flex items-center justify-between gap-2 opacity-80">
-                                                <div className="flex items-center gap-2">
-                                                    <Calendar className="size-3" /> {evento.location}
-                                                </div>
-                                                <ArrowRight className="size-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
-                                            </div>
-                                        </div>
-                                    </Link>
-                                ))}
-                                {eventi.length === 0 && (
-                                    <div className="md:col-span-3 text-center py-20 text-muted-foreground bg-white rounded-3xl border-2 border-dashed border-border/50">
-                                        {t("no_events")}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* NOTIZIE ASSOCIATION */}
-                    <section id="notizie-anchor" className="py-24 bg-zinc-50 border-y border-border/50 relative">
-                        <div className="container">
-                            <div className="flex items-center justify-between mb-12">
-                                <div className="flex flex-col">
-                                    <h2 className="text-3xl md:text-4xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-2">
-                                        {th("news_title")}
-                                    </h2>
-                                    <div
-                                        className="h-1.5 w-full rounded-full"
-                                        style={{ backgroundColor: config.theme?.secondary || 'var(--primary)' }}
-                                    ></div>
-                                </div>
-                                <Link href={`/network/${brandId}/news`} className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:underline" style={{ color: config.theme?.secondary || 'var(--primary)' }}>
-                                    {th("news_all")} <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                            </div>
-
-                            <div className="grid md:grid-cols-3 gap-10">
-                                {notizie.map((news: any) => (
-                                    <Link href={`/network/${brandId}/news/${news.id}`} key={news.id} className="group block">
-                                        <div className="relative aspect-video overflow-hidden rounded-2xl mb-6 shadow-lg border border-border/50">
-                                            {news.image ? (
-                                                <Image src={news.image} alt={news.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                                            ) : (
-                                                <div className="w-full h-full bg-muted flex items-center justify-center">
-                                                    <Image src={config.logo} width={64} height={64} className="opacity-20" alt="" />
-                                                </div>
-                                            )}
-                                            <div
-                                                className="absolute top-4 left-4 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg"
-                                                style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
-                                            >
-                                                {news.category || "General"}
-                                            </div>
-                                        </div>
-                                        <div className="space-y-3">
-                                            <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest block">
-                                                {news.date.toLocaleDateString(locale, { day: '2-digit', month: 'long', year: 'numeric' })}
-                                            </span>
-                                            <h3 className="text-2xl font-bold leading-tight group-hover:opacity-80 transition-opacity line-clamp-2">
-                                                {news.title}
-                                            </h3>
-                                            <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed">
-                                                {news.description}
-                                            </p>
-                                            <div className="pt-2">
-                                                <span className="text-xs font-black uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all" style={{ color: config.theme?.accent || 'var(--primary)' }}>
-                                                    {ts("read_more")} <ArrowRight className="size-3" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                ))}
-                                {notizie.length === 0 && (
-                                    <div className="md:col-span-3 text-center py-20 text-muted-foreground bg-zinc-50 rounded-3xl border border-zinc-100">
-                                        {t("no_news")}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </section>
-                </>
-            )}
-
-            {/* UNISCITI A NOI */}
-            {brandId !== "piazzadellarte" && (
-                <section className="py-24 bg-[#18182e] text-white relative overflow-hidden">
-                    {/* Background Pattern */}
-                    <div className="absolute inset-0 opacity-30 pointer-events-none">
-                        <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
-                    </div>
-                    <div
-                        className="absolute inset-0 mix-blend-multiply opacity-40"
-                        style={{ backgroundColor: config.theme?.primary || 'var(--primary)' }}
-                    ></div>
-
-                    <div className="container relative z-10 text-center">
-                        <div className="max-w-3xl mx-auto">
-                            <h2 className="text-4xl md:text-6xl font-serif font-black mb-6 uppercase tracking-tighter">
-                                {t("join_title")}
-                            </h2>
-                            <p className="text-xl text-white/80 mb-12 font-serif font-light leading-relaxed">
-                                {t("join_desc", { name: config.name })}
-                            </p>
-                            <Link href="/about" className="inline-flex items-center gap-3 bg-white text-zinc-900 border-2 border-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-transparent hover:text-white transition-all duration-300 group shadow-2xl text-sm md:text-base">
-                                {t("learn_more")} <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
-                            </Link>
+                            </motion.div>
                         </div>
                     </div>
                 </section>
-            )}
-        </div>
+        </>
+    )
+}
+
+{/* EVENTI E NOTIZIE CONDIZIONALI */ }
+{
+    brandId !== "matricole" && brandId !== "piazzadellarte" && (
+        <>
+            {/* EVENTI ASSOCIATION */}
+            <section className="py-20 bg-zinc-50 border-y border-border/50">
+                <div className="container">
+                    <div className="flex items-center justify-between mb-12">
+                        <div className="flex flex-col">
+                            <h2 className="text-3xl md:text-4xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-2">
+                                {te("upcoming")}
+                            </h2>
+                            <div
+                                className="h-1.5 w-full rounded-full"
+                                style={{ backgroundColor: config.theme?.primary || 'var(--primary)' }}
+                            ></div>
+                        </div>
+                        <Link href={`/network/${brandId}/events`} className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:underline" style={{ color: config.theme?.primary || 'var(--primary)' }}>
+                            {te("tab_past")} <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {eventi.map((evento: any) => (
+                            <Link
+                                href={`/network/${brandId}/events/${evento.id}`}
+                                key={evento.id}
+                                className="relative group overflow-hidden bg-muted aspect-[4/5] flex items-end p-8 shadow-2xl hover:-translate-y-2 transition-all duration-500 block rounded-2xl border-b-8"
+                                style={{ borderBottomColor: config.theme?.accent || 'var(--primary)' }}
+                            >
+                                {evento.image && (
+                                    <Image src={evento.image} alt={evento.title} fill className="object-cover z-0 group-hover:scale-110 transition-transform duration-700" />
+                                )}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10"></div>
+
+                                {/* Date Badge Overlay */}
+                                <div className="absolute top-6 left-6 z-20 bg-white text-foreground text-center p-3 rounded-xl shadow-2xl transform group-hover:scale-110 transition-transform">
+                                    <span className="block text-xs font-black uppercase" style={{ color: config.theme?.primary || 'var(--primary)' }}>
+                                        {evento.date.toLocaleDateString(locale, { month: 'short' })}
+                                    </span>
+                                    <span className="block text-3xl font-black leading-none">
+                                        {evento.date.toLocaleDateString(locale, { day: '2-digit' })}
+                                    </span>
+                                </div>
+
+                                <div className="relative z-20 text-white w-full">
+                                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-3 block">
+                                        {evento.category}
+                                    </span>
+                                    <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2" style={{ color: 'inherit' }}>
+                                        {evento.title}
+                                    </h3>
+                                    <div className="mt-4 pt-4 border-t border-white/20 text-xs flex items-center justify-between gap-2 opacity-80">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar className="size-3" /> {evento.location}
+                                        </div>
+                                        <ArrowRight className="size-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                        {eventi.length === 0 && (
+                            <div className="md:col-span-3 text-center py-20 text-muted-foreground bg-white rounded-3xl border-2 border-dashed border-border/50">
+                                {t("no_events")}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </section>
+
+            {/* NOTIZIE ASSOCIATION */}
+            <section id="notizie-anchor" className="py-24 bg-zinc-50 border-y border-border/50 relative">
+                <div className="container">
+                    <div className="flex items-center justify-between mb-12">
+                        <div className="flex flex-col">
+                            <h2 className="text-3xl md:text-4xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-2">
+                                {th("news_title")}
+                            </h2>
+                            <div
+                                className="h-1.5 w-full rounded-full"
+                                style={{ backgroundColor: config.theme?.secondary || 'var(--primary)' }}
+                            ></div>
+                        </div>
+                        <Link href={`/network/${brandId}/news`} className="group flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:underline" style={{ color: config.theme?.secondary || 'var(--primary)' }}>
+                            {th("news_all")} <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-10">
+                        {notizie.map((news: any) => (
+                            <Link href={`/network/${brandId}/news/${news.id}`} key={news.id} className="group block">
+                                <div className="relative aspect-video overflow-hidden rounded-2xl mb-6 shadow-lg border border-border/50">
+                                    {news.image ? (
+                                        <Image src={news.image} alt={news.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                                    ) : (
+                                        <div className="w-full h-full bg-muted flex items-center justify-center">
+                                            <Image src={config.logo} width={64} height={64} className="opacity-20" alt="" />
+                                        </div>
+                                    )}
+                                    <div
+                                        className="absolute top-4 left-4 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow-lg"
+                                        style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
+                                    >
+                                        {news.category || "General"}
+                                    </div>
+                                </div>
+                                <div className="space-y-3">
+                                    <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest block">
+                                        {news.date.toLocaleDateString(locale, { day: '2-digit', month: 'long', year: 'numeric' })}
+                                    </span>
+                                    <h3 className="text-2xl font-bold leading-tight group-hover:opacity-80 transition-opacity line-clamp-2">
+                                        {news.title}
+                                    </h3>
+                                    <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed">
+                                        {news.description}
+                                    </p>
+                                    <div className="pt-2">
+                                        <span className="text-xs font-black uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all" style={{ color: config.theme?.accent || 'var(--primary)' }}>
+                                            {ts("read_more")} <ArrowRight className="size-3" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                        {notizie.length === 0 && (
+                            <div className="md:col-span-3 text-center py-20 text-muted-foreground bg-zinc-50 rounded-3xl border border-zinc-100">
+                                {t("no_news")}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </section>
+        </>
+    )
+}
+
+{/* UNISCITI A NOI */ }
+{
+    brandId !== "piazzadellarte" && (
+        <section className="py-24 bg-[#18182e] text-white relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-30 pointer-events-none">
+                <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
+            </div>
+            <div
+                className="absolute inset-0 mix-blend-multiply opacity-40"
+                style={{ backgroundColor: config.theme?.primary || 'var(--primary)' }}
+            ></div>
+
+            <div className="container relative z-10 text-center">
+                <div className="max-w-3xl mx-auto">
+                    <h2 className="text-4xl md:text-6xl font-serif font-black mb-6 uppercase tracking-tighter">
+                        {t("join_title")}
+                    </h2>
+                    <p className="text-xl text-white/80 mb-12 font-serif font-light leading-relaxed">
+                        {t("join_desc", { name: config.name })}
+                    </p>
+                    <Link href="/about" className="inline-flex items-center gap-3 bg-white text-zinc-900 border-2 border-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-transparent hover:text-white transition-all duration-300 group shadow-2xl text-sm md:text-base">
+                        {t("learn_more")} <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
+                    </Link>
+                </div>
+            </div>
+        </section>
     )
 }
