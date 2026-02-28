@@ -173,7 +173,16 @@
         },
         "piazzadellarte": {
             "subtitle": "The beating heart of student creativity.",
-            "desc": "Piazza Dell'Arte is the new space dedicated to free creative expression. A place where art meets student life, promoting events, exhibitions, and workshops to enhance every talent."
+            "desc": "Piazza Dell'Arte is the major socio-cultural event that transforms the University into an open-air stage.",
+            "desc_long": "Mainly organized by the Morgana University Association, in collaboration with O.R.U.M. and Azione Universitaria, Piazza dell'Arte is one of the most anticipated events of the Messinese spring. The project values local young talents, offering them a free and participatory showcase in the University's Central Courtyard and on the Rectorate's Staircase.",
+            "schedule_title": "The Program",
+            "schedule_morning": "Artistic workshops, live painting, and cultural seminars (such as the 'Symposium').",
+            "schedule_night": "Live performances by bands, soloists, dancers, actors, and performers.",
+            "fanta_title": "New: Fanta-Piazza",
+            "fanta_desc": "Become a virtual 'Art Curator'! Create your Gallery with 5 artists and accumulate points based on what happens on stage.",
+            "fanta_rules": "You have 100 'Armoni' to compose your team. Bonuses for standing ovations and special awards; Penalties for delays or technical hitches!",
+            "associations_title": "The Network",
+            "associations_desc": "A choral project featuring the Morgana, O.R.U.M., and Azione Universitaria associations, with the support of UniMe, ERSU, and numerous local partners."
         }
     },
     "News": {

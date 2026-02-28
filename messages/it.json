@@ -175,7 +175,16 @@
         },
         "piazzadellarte": {
             "subtitle": "Il cuore pulsante della creatività studentesca.",
-            "desc": "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento."
+            "desc": "Piazza Dell'Arte è l'importante evento socio-culturale che trasforma l'Università in un palcoscenico a cielo aperto.",
+            "desc_long": "Organizzata principalmente dall'Associazione Universitaria Morgana, in collaborazione con O.R.U.M. e Azione Universitaria, la Piazza dell'Arte è uno degli appuntamenti più attesi della primavera messinese. Il progetto valorizza i giovani talenti del territorio, offrendo loro una vetrina gratuita e partecipata nel Cortile Centrale dell'Ateneo e sulla Scalinata del Rettorato.",
+            "schedule_title": "Il Programma",
+            "schedule_morning": "Laboratori artistici, estemporanee di pittura e seminari culturali (come il 'Simposio').",
+            "schedule_night": "Esibizioni dal vivo di band, solisti, ballerini, attori e performer.",
+            "fanta_title": "Novità: Il Fanta-Piazza",
+            "fanta_desc": "Diventa un 'Curatore d'Arte' virtuale! Crea la tua Galleria con 5 artisti e accumula punti in base a ciò che accade sul palco.",
+            "fanta_rules": "Hai 100 'Armoni' per comporre la tua squadra. Bonus per standing ovation e premi speciali; Malus per ritardi o imprevisti tecnici!",
+            "associations_title": "La Rete",
+            "associations_desc": "Un progetto corale che vede protagoniste le associazioni Morgana, O.R.U.M. e Azione Universitaria, con il supporto di UniMe, ERSU e numerosi partner territoriali."
         }
     },
     "News": {

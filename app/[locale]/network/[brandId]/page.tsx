@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/routing"
 import Image from "next/image"
-import { ArrowRight, Calendar, ChevronLeft } from "lucide-react"
+import { ArrowRight, Calendar, ChevronLeft, Sparkles } from "lucide-react"
 import { getNews } from "@/app/actions/news"
 import { getAllEvents } from "@/app/actions/events"
 import { notFound } from "next/navigation"
@@ -147,20 +147,27 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                 </div>
             </section>
 
-            {/* CHI SIAMO SNAPSHOT */}
+            {/* CHI SIAMO / DESCRIPTION SECTION */}
             <section className="py-20 bg-white relative overflow-hidden">
                 <div className="container relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
                         <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-8 uppercase tracking-widest">
-                            {t("passion_title")}
+                            {brandId === "piazzadellarte" ? tb("piazzadellarte.associations_title" as any) : t("passion_title")}
                         </h2>
                         <div
                             className="w-24 h-1.5 mx-auto mb-10 rounded-full"
                             style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
                         ></div>
                         <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
-                            {tb(`${brandId}.desc` as any)}
+                            {brandId === "piazzadellarte" ? tb("piazzadellarte.desc_long" as any) : tb(`${brandId}.desc` as any)}
                         </p>
+
+                        {brandId === "piazzadellarte" && (
+                            <p className="mt-8 text-lg text-muted-foreground/80 font-serif italic">
+                                {tb("piazzadellarte.associations_desc" as any)}
+                            </p>
+                        )}
+
                         <div className="mt-12 flex flex-wrap justify-center gap-4">
                             <div className="bg-muted px-8 py-6 rounded-2xl border border-border/50 text-center flex-1 min-w-[200px]">
                                 <span className="block text-4xl font-black mb-1" style={{ color: config.theme?.primary || 'var(--primary)' }}>100%</span>
@@ -177,6 +184,83 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
                 <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full -ml-32 -mb-32 blur-3xl"></div>
             </section>
+
+            {/* CUSTOM PIAZZA DELL'ARTE SECTIONS (SCHEDULE & FANTA-PIAZZA) */}
+            {brandId === "piazzadellarte" && (
+                <>
+                    {/* SCHEDULE SECTION */}
+                    <section className="py-24 bg-zinc-950 text-white overflow-hidden relative">
+                        <div className="container relative z-10">
+                            <div className="text-center mb-16">
+                                <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
+                                    {tb("piazzadellarte.schedule_title" as any)}
+                                </h2>
+                                <div className="w-24 h-1.5 bg-accent mx-auto rounded-full" style={{ backgroundColor: config.theme?.accent }}></div>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                                <div className="group bg-white/5 backdrop-blur-sm p-10 rounded-3xl border border-white/10 hover:bg-white/10 transition-all duration-500">
+                                    <div className="size-12 rounded-2xl mb-6 flex items-center justify-center text-2xl font-black shadow-lg" style={{ backgroundColor: config.theme?.primary }}>
+                                        01
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-4 uppercase tracking-widest" style={{ color: config.theme?.primary }}>Mattina & Pomeriggio</h3>
+                                    <p className="text-lg text-white/70 leading-relaxed font-serif">
+                                        {tb("piazzadellarte.schedule_morning" as any)}
+                                    </p>
+                                </div>
+                                <div className="group bg-white/5 backdrop-blur-sm p-10 rounded-3xl border border-white/10 hover:bg-white/10 transition-all duration-500">
+                                    <div className="size-12 rounded-2xl mb-6 flex items-center justify-center text-2xl font-black shadow-lg" style={{ backgroundColor: config.theme?.secondary }}>
+                                        02
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-4 uppercase tracking-widest" style={{ color: config.theme?.secondary }}>Dalla Sera a Notte</h3>
+                                    <p className="text-lg text-white/70 leading-relaxed font-serif">
+                                        {tb("piazzadellarte.schedule_night" as any)}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Abstract background glow */}
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[160px] opacity-20 pointer-events-none" style={{ background: `radial-gradient(circle, ${config.theme?.primary}, transparent)` }}></div>
+                    </section>
+
+                    {/* FANTA-PIAZZA SECTION */}
+                    <section className="py-24 bg-white relative overflow-hidden">
+                        <div className="container grid md:grid-cols-2 gap-16 items-center">
+                            <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
+                                <Image src="/assets/slides/1.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 blur-[2px]" alt="Fanta-Piazza" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl border border-white/20 text-center transform -rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                                        <span className="block text-6xl md:text-8xl font-black text-white drop-shadow-2xl mb-2">100</span>
+                                        <span className="block text-xl font-bold text-white/90 uppercase tracking-[0.3em]">Armoni</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-black uppercase tracking-widest mb-6 w-fit" style={{ color: config.theme?.accent, borderColor: config.theme?.accent + '33', backgroundColor: config.theme?.accent + '11' }}>
+                                    <Sparkles className="size-4" /> Gaming & Community
+                                </div>
+                                <h2 className="text-4xl md:text-6xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-8">
+                                    {tb("piazzadellarte.fanta_title" as any)}
+                                </h2>
+                                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif mb-8">
+                                    {tb("piazzadellarte.fanta_desc" as any)}
+                                </p>
+                                <div className="bg-zinc-50 p-8 rounded-3xl border border-zinc-100 shadow-inner">
+                                    <p className="text-lg text-zinc-600 font-serif leading-relaxed italic">
+                                        &ldquo;{tb("piazzadellarte.fanta_rules" as any)}&rdquo;
+                                    </p>
+                                </div>
+                                <div className="mt-10">
+                                    <Link href="/representatives" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-zinc-900 text-white font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
+                                        Entra nel Gioco <ArrowRight className="size-5" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </>
+            )}
 
             {/* EVENTI E NOTIZIE CONDIZIONALI */}
             {brandId !== "matricole" && (
