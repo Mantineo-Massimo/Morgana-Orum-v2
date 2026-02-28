@@ -257,8 +257,12 @@ const getNewsCached = unstable_cache(
     { revalidate: 3600, tags: ['news'] }
 )
 
-export const getNews = (category?: string, query?: string, association?: Association, locale: string = 'it') => {
-    return getNewsCached(category, query, association, locale)
+export const getNews = async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
+    const news = await getNewsCached(category, query, association, locale)
+    return news.map(item => ({
+        ...item,
+        date: new Date(item.date)
+    }))
 }
 
 const getNewsByIdInternal = async (id: string, locale: string = 'it') => {
@@ -287,8 +291,13 @@ const getNewsByIdCached = unstable_cache(
     { revalidate: 3600, tags: ['news'] }
 )
 
-export const getNewsById = (id: string, locale: string = 'it') => {
-    return getNewsByIdCached(id, locale)
+export const getNewsById = async (id: string, locale: string = 'it') => {
+    const news = await getNewsByIdCached(id, locale)
+    if (!news) return null
+    return {
+        ...news,
+        date: new Date(news.date)
+    }
 }
 
 // Admin: all news, with optional filters

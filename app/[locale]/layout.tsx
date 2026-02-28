@@ -16,6 +16,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-serif" })
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://morganaorum.it"),
     title: {
         default: "Morgana & O.R.U.M. - Associazioni Universitarie",
         template: "%s | Morgana & O.R.U.M."

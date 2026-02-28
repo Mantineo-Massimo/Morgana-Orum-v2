@@ -77,8 +77,12 @@ const getAllEventsCached = unstable_cache(
     { revalidate: 3600, tags: ['events'] }
 )
 
-export const getAllEvents = (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
-    return getAllEventsCached(userEmail, association, mode, locale)
+export const getAllEvents = async (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
+    const events = await getAllEventsCached(userEmail, association, mode, locale)
+    return events.map(event => ({
+        ...event,
+        date: new Date(event.date)
+    }))
 }
 
 const getEventByIdInternal = async (id: number, userEmail?: string | null, locale: string = 'it') => {
@@ -118,8 +122,13 @@ const getEventByIdCached = unstable_cache(
     { revalidate: 3600, tags: ['events'] }
 )
 
-export const getEventById = (id: number, userEmail?: string | null, locale: string = 'it') => {
-    return getEventByIdCached(id, userEmail, locale)
+export const getEventById = async (id: number, userEmail?: string | null, locale: string = 'it') => {
+    const event = await getEventByIdCached(id, userEmail, locale)
+    if (!event) return null
+    return {
+        ...event,
+        date: new Date(event.date)
+    }
 }
 
 export async function getEventCategories() {
