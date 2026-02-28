@@ -108,7 +108,7 @@ export default async function RootLayout({
                                 gtag('js', new Date());
                                 gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
                                     page_path: window.location.pathname,
-                                    cookie_domain: 'auto',
+                                    cookie_domain: 'none',
                                     cookie_flags: 'SameSite=None;Secure'
                                 });
                             `}

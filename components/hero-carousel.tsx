@@ -39,8 +39,6 @@ export function HeroCarousel() {
                         priority={currentSlide === 0}
                     />
 
-                    {/* Pattern Overlay to make backgrounds interesting */}
-                    <div className="absolute inset-0 bg-[url('/assets/pattern.svg')] opacity-10 mix-blend-overlay"></div>
                 </motion.div>
             </AnimatePresence>
         </div>
