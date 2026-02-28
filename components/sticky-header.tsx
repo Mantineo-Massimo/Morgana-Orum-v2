@@ -101,7 +101,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                             {currentNetwork ? (
                                 <div className={cn(
                                     "relative h-full flex items-center justify-center transition-all duration-500",
-                                    brand !== "piazzadellarte" ? "aspect-square bg-white rounded-full shadow-sm p-1" : "aspect-[2.5/1] w-auto py-1"
+                                    brand !== "piazzadellarte" ? "aspect-square bg-white rounded-full shadow-sm p-1" : "aspect-square p-0 scale-[1.3]"
                                 )}>
                                     <div className={cn(
                                         "relative",
@@ -145,7 +145,10 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     </Link>
 
                     {/* Text Section - Stacked Vertically */}
-                    <div className="flex flex-col text-white justify-center">
+                    <div className={cn(
+                        "flex flex-col text-white justify-center transition-all duration-500",
+                        brand === "piazzadellarte" && "-ml-2 md:-ml-4 lg:-ml-6 xl:-ml-8" // Pull text closer to the logo since it has scale-[1.3]
+                    )}>
                         <Link
                             href={currentNetwork ? `/network/${brand}` : "/"}
                             className="flex flex-col gap-0.5 hover:opacity-80 transition-opacity"

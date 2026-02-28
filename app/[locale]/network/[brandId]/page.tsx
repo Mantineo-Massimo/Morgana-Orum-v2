@@ -8,6 +8,7 @@ import { notFound } from "next/navigation"
 import { Association } from "@prisma/client"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { CountdownTimer } from "@/components/countdown-timer"
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
     const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
@@ -153,11 +154,17 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-black text-white text-center leading-tight mb-4 drop-shadow-2xl uppercase tracking-tighter">
                         {config.name}
                     </h1>
-                    <p className="text-lg md:text-2xl text-white/90 font-serif max-w-2xl text-center leading-relaxed drop-shadow-md italic">
+                    <p className="text-lg md:text-2xl text-white/90 font-serif max-w-2xl text-center leading-relaxed drop-shadow-md italic mb-4">
                         &ldquo;{tb(`${brandId}.subtitle` as any)}&rdquo;
                     </p>
 
-                    <Link href="/" className="mt-10 flex items-center gap-2 text-white/90 hover:text-white transition-all bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 group text-sm md:text-base font-bold uppercase tracking-widest shadow-xl">
+                    {brandId === "piazzadellarte" && (
+                        <div className="mt-8 mb-4">
+                            <CountdownTimer targetDate={new Date('2026-05-22T09:00:00')} />
+                        </div>
+                    )}
+
+                    <Link href="/" className="mt-8 md:mt-10 flex items-center gap-2 text-white/90 hover:text-white transition-all bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 group text-sm md:text-base font-bold uppercase tracking-widest shadow-xl">
                         <ChevronLeft className="size-5 group-hover:-translate-x-1 transition-transform" />
                         {t("back_link")}
                     </Link>
