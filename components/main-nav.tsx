@@ -105,7 +105,15 @@ export function MainNav({
     const textColor = isScrolled ? "text-foreground/70 hover:text-primary" : "text-white/80 hover:text-white"
     const activeColor = isScrolled ? "text-primary after:bg-primary" : "text-white after:bg-white"
     const hoverLineColor = isScrolled ? "after:bg-primary" : "after:bg-white"
-    const brandColor = "bg-primary" // Morgana Red per pulsanti
+
+    // Brand Colors Unificati
+    const brandColor = brand === "unimhealth" ? "bg-[#c9041a]" :
+        brand === "economia" ? "bg-[#202549]" :
+            brand === "matricole" ? "bg-[#f4b716]" :
+                brand === "scipog" ? "bg-[#fbc363]" :
+                    brand === "dicam" ? "bg-[#f34ab4]" :
+                        brand === "piazzadellarte" ? "bg-[#1fbcd3]" :
+                            "bg-primary" // Morgana Red default
 
     return (
         <>

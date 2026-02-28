@@ -95,7 +95,10 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                             )}
                         >
                             {currentNetwork ? (
-                                <div className="relative h-full aspect-square bg-white rounded-full p-1 shadow-sm flex items-center justify-center">
+                                <div className={cn(
+                                    "relative h-full aspect-square p-1 flex items-center justify-center",
+                                    brand !== "piazzadellarte" && "bg-white rounded-full shadow-sm"
+                                )}>
                                     <div className="relative w-4/5 h-4/5">
                                         <Image
                                             src={currentNetwork.logo}

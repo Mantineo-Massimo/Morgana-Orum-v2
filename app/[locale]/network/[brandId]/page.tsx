@@ -78,8 +78,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
     piazzadellarte: {
         id: "piazzadellarte",
         name: "Piazza Dell'Arte",
-        logo: "/assets/piazza_dellarte.png",
-        bg: "/assets/slides/1.jpg",
+        logo: "/assets/piazzadellarte.png",
+        bg: "/assets/piazza.png",
         subtitle: "Il cuore pulsante della creatività studentesca.",
         desc: "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento.",
         association: "PIAZZA_DELLARTE" as Association,
@@ -160,25 +160,21 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                             style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
                         ></div>
                         <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
-                            {brandId === "piazzadellarte" ? tb("piazzadellarte.desc_long" as any) : tb(`${brandId}.desc` as any)}
+                            {brandId === "piazzadellarte" ? config.desc : tb(`${brandId}.desc` as any)}
                         </p>
 
-                        {brandId === "piazzadellarte" && (
-                            <p className="mt-8 text-lg text-muted-foreground/80 font-serif italic">
-                                {tb("piazzadellarte.associations_desc" as any)}
-                            </p>
+                        {brandId !== "piazzadellarte" && (
+                            <div className="mt-12 flex flex-wrap justify-center gap-4">
+                                <div className="bg-muted px-8 py-6 rounded-2xl border border-border/50 text-center flex-1 min-w-[200px]">
+                                    <span className="block text-4xl font-black mb-1" style={{ color: config.theme?.primary || 'var(--primary)' }}>100%</span>
+                                    <span className="text-sm uppercase tracking-widest font-bold opacity-70">{t("dedication")}</span>
+                                </div>
+                                <div className="bg-muted px-8 py-6 rounded-2xl border border-border/50 text-center flex-1 min-w-[200px]">
+                                    <span className="block text-4xl font-black mb-1" style={{ color: config.theme?.secondary || 'var(--primary)' }}>H24</span>
+                                    <span className="text-sm uppercase tracking-widest font-bold opacity-70">{t("support")}</span>
+                                </div>
+                            </div>
                         )}
-
-                        <div className="mt-12 flex flex-wrap justify-center gap-4">
-                            <div className="bg-muted px-8 py-6 rounded-2xl border border-border/50 text-center flex-1 min-w-[200px]">
-                                <span className="block text-4xl font-black mb-1" style={{ color: config.theme?.primary || 'var(--primary)' }}>100%</span>
-                                <span className="text-sm uppercase tracking-widest font-bold opacity-70">{t("dedication")}</span>
-                            </div>
-                            <div className="bg-muted px-8 py-6 rounded-2xl border border-border/50 text-center flex-1 min-w-[200px]">
-                                <span className="block text-4xl font-black mb-1" style={{ color: config.theme?.secondary || 'var(--primary)' }}>H24</span>
-                                <span className="text-sm uppercase tracking-widest font-bold opacity-70">{t("support")}</span>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 {/* Decorative Elements */}
@@ -227,7 +223,32 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     {/* FANTA-PIAZZA SECTION */}
                     <section id="fanta-piazza" className="py-24 bg-white relative overflow-hidden">
                         <div className="container grid md:grid-cols-2 gap-16 items-center">
-                            {/* ... existing fanta-piazza content ... */}
+                            <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
+                                <Image src="/assets/slides/1.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 blur-[2px]" alt="Fanta-Piazza" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="bg-white/10 backdrop-blur-xl p-8 rounded-3xl border border-white/20 text-center transform -rotate-3 group-hover:rotate-0 transition-transform duration-500">
+                                        <span className="block text-6xl md:text-8xl font-black text-white drop-shadow-2xl mb-2">100</span>
+                                        <span className="block text-xl font-bold text-white/90 uppercase tracking-[0.3em]">Armoni</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs font-black uppercase tracking-widest mb-6 w-fit" style={{ color: config.theme?.accent, borderColor: config.theme?.accent + '33', backgroundColor: config.theme?.accent + '11' }}>
+                                    <Sparkles className="size-4" /> Gaming & Community
+                                </div>
+                                <h2 className="text-4xl md:text-6xl font-serif font-black text-foreground uppercase tracking-tighter leading-none mb-8">
+                                    FantaPiazza
+                                </h2>
+                                <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif mb-8">
+                                    Gioca con noi e scala la classifica della Piazza! Crea la tua squadra, gestisci i tuoi Armoni e sfida i tuoi amici in un gioco mozzafiato.
+                                </p>
+                                <div className="mt-10">
+                                    <a href="https://fantapiazza.vercel.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-zinc-900 text-white font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
+                                        Entra nel Gioco <ArrowRight className="size-5" />
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </section>
 
@@ -265,7 +286,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
             )}
 
             {/* EVENTI E NOTIZIE CONDIZIONALI */}
-            {brandId !== "matricole" && (
+            {brandId !== "matricole" && brandId !== "piazzadellarte" && (
                 <>
                     {/* EVENTI ASSOCIATION */}
                     <section className="py-20 bg-zinc-50 border-y border-border/50">
@@ -399,30 +420,32 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
             )}
 
             {/* UNISCITI A NOI */}
-            <section className="py-24 bg-[#18182e] text-white relative overflow-hidden">
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-30 pointer-events-none">
-                    <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
-                </div>
-                <div
-                    className="absolute inset-0 mix-blend-multiply opacity-40"
-                    style={{ backgroundColor: config.theme?.primary || 'var(--primary)' }}
-                ></div>
-
-                <div className="container relative z-10 text-center">
-                    <div className="max-w-3xl mx-auto">
-                        <h2 className="text-4xl md:text-6xl font-serif font-black mb-6 uppercase tracking-tighter">
-                            {t("join_title")}
-                        </h2>
-                        <p className="text-xl text-white/80 mb-12 font-serif font-light leading-relaxed">
-                            {t("join_desc", { name: config.name })}
-                        </p>
-                        <Link href="/about" className="inline-flex items-center gap-3 bg-white text-zinc-900 border-2 border-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-transparent hover:text-white transition-all duration-300 group shadow-2xl text-sm md:text-base">
-                            {t("learn_more")} <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
-                        </Link>
+            {brandId !== "piazzadellarte" && (
+                <section className="py-24 bg-[#18182e] text-white relative overflow-hidden">
+                    {/* Background Pattern */}
+                    <div className="absolute inset-0 opacity-30 pointer-events-none">
+                        <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
                     </div>
-                </div>
-            </section>
+                    <div
+                        className="absolute inset-0 mix-blend-multiply opacity-40"
+                        style={{ backgroundColor: config.theme?.primary || 'var(--primary)' }}
+                    ></div>
+
+                    <div className="container relative z-10 text-center">
+                        <div className="max-w-3xl mx-auto">
+                            <h2 className="text-4xl md:text-6xl font-serif font-black mb-6 uppercase tracking-tighter">
+                                {t("join_title")}
+                            </h2>
+                            <p className="text-xl text-white/80 mb-12 font-serif font-light leading-relaxed">
+                                {t("join_desc", { name: config.name })}
+                            </p>
+                            <Link href="/about" className="inline-flex items-center gap-3 bg-white text-zinc-900 border-2 border-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-transparent hover:text-white transition-all duration-300 group shadow-2xl text-sm md:text-base">
+                                {t("learn_more")} <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
+                            </Link>
+                        </div>
+                    </div>
+                </section>
+            )}
         </div>
     )
 }
