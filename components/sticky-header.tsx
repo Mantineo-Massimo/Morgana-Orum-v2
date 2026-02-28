@@ -65,8 +65,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         "rounded-br-[80px]",
                         // Dynamic width logic
                         isScrolled
-                            ? brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[38%] xl:w-[39%] 2xl:w-[40%]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[38%] xl:w-[39%] 2xl:w-[40%]"
-                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]"
+                            ? brand === "piazzadellarte"
+                                ? "w-[70%] sm:w-[60%] md:w-[40%] lg:w-[32%] xl:w-[34%] 2xl:w-[35%]"
+                                : brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[38%] xl:w-[39%] 2xl:w-[40%]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[38%] xl:w-[39%] 2xl:w-[40%]"
+                            : brand === "piazzadellarte"
+                                ? "w-[75%] sm:w-[65%] md:w-[45%] lg:w-[35%] xl:w-[37%] 2xl:w-[38%]"
+                                : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]"
                     )}
                 />
             </div>
@@ -170,7 +174,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 </div>
 
                 {/* Navigation Section - Right Aligned (including Mobile Menu) */}
-                <div className="flex items-center ml-4 md:ml-8 lg:ml-8 xl:ml-12 2xl:ml-16 overflow-visible">
+                <div className={cn(
+                    "flex items-center overflow-visible transition-all duration-500",
+                    brand === "piazzadellarte"
+                        ? "ml-6 md:ml-12 lg:ml-16 xl:ml-24 2xl:ml-32"
+                        : "ml-4 md:ml-8 lg:ml-8 xl:ml-12 2xl:ml-16"
+                )}>
                     <MainNav
                         isScrolled={true} // Always white background style
                         isLoggedIn={isLoggedIn}
