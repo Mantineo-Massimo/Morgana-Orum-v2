@@ -177,7 +177,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 <div className={cn(
                     "flex items-center overflow-visible transition-all duration-500",
                     brand === "piazzadellarte"
-                        ? "ml-6 md:ml-12 lg:ml-16 xl:ml-24 2xl:ml-32"
+                        ? "ml-2 md:ml-4 lg:ml-6 xl:ml-8 2xl:ml-12"
                         : "ml-4 md:ml-8 lg:ml-8 xl:ml-12 2xl:ml-16"
                 )}>
                     <MainNav
