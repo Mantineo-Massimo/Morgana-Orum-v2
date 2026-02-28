@@ -48,7 +48,10 @@
         "guides": "Guides",
         "whatsapp": "WhatsApp Groups",
         "logout": "Logout",
-        "search_placeholder": "Search (Ctrl+K)"
+        "search_placeholder": "Search (Ctrl+K)",
+        "cose": "About",
+        "programma": "Schedule",
+        "artisti": "Artists"
     },
     "HomePage": {
         "hero_title": "Always on the student's side!",

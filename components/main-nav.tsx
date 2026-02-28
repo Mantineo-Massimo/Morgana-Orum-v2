@@ -53,12 +53,38 @@ export function MainNav({
             label: nt("events"),
             active: pathname === (brand ? `/network/${brand}/events` : "/events") || pathname.startsWith(brand ? `/network/${brand}/events/` : "/events/"),
         }] : []),
-        ...(brand !== 'matricole' ? [{
+        ...(brand !== 'matricole' && brand !== 'piazzadellarte' ? [{
             href: brand ? `/network/${brand}/representatives` : `/representatives`,
             label: nt("representatives"),
             active: pathname === (brand ? `/network/${brand}/representatives` : "/representatives"),
         }] : []),
     ]
+
+    // Aggiungi link extra per Piazza dell'Arte
+    if (brand === 'piazzadellarte') {
+        routes.splice(1, 4, // Rimuovi About, News (verrà riaggiunto), Events, Representatives
+            {
+                href: `/network/piazzadellarte#cos-e`,
+                label: nt("cose"),
+                active: false,
+            },
+            {
+                href: `/network/piazzadellarte/news`,
+                label: nt("news"),
+                active: pathname.startsWith(`/network/piazzadellarte/news`),
+            },
+            {
+                href: `/network/piazzadellarte#programma`,
+                label: nt("programma"),
+                active: false,
+            },
+            {
+                href: `/network/piazzadellarte#artisti`,
+                label: nt("artisti"),
+                active: false,
+            }
+        )
+    }
 
     // Aggiungi link extra per Unime Matricole
     if (brand === 'matricole') {

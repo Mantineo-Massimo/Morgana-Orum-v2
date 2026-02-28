@@ -3,7 +3,7 @@
 import * as React from "react"
 import { usePathname } from "@/i18n/routing"
 
-export type Brand = "morgana" | "orum" | "unimhealth" | "economia" | "scipog" | "dicam" | "matricole" | null
+export type Brand = "morgana" | "orum" | "unimhealth" | "economia" | "scipog" | "dicam" | "matricole" | "piazzadellarte" | null
 
 interface BrandContextType {
   brand: Brand

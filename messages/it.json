@@ -48,7 +48,10 @@
         "guides": "Guide",
         "whatsapp": "Gruppi WhatsApp",
         "logout": "Esci",
-        "search_placeholder": "Cerca (Ctrl+K)"
+        "search_placeholder": "Cerca (Ctrl+K)",
+        "cose": "Cos'è",
+        "programma": "Programma",
+        "artisti": "Artisti"
     },
     "HomePage": {
         "hero_title": "Sempre dalla parte dello studente!",
