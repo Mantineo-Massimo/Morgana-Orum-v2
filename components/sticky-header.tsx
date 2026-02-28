@@ -146,8 +146,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
 
                     {/* Text Section - Stacked Vertically */}
                     <div className={cn(
-                        "flex flex-col text-white justify-center transition-all duration-500",
-                        brand === "piazzadellarte" && "-ml-2 md:-ml-4 lg:-ml-6 xl:-ml-8" // Pull text closer to the logo since it has scale-[1.3]
+                        "flex flex-col text-white justify-center transition-all duration-500"
                     )}>
                         <Link
                             href={currentNetwork ? `/network/${brand}` : "/"}
