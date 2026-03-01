@@ -173,21 +173,21 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
             </section>
 
             {/* CHI SIAMO / DESCRIPTION SECTION */}
-            <section id="cos-e" className="py-20 bg-white text-foreground relative overflow-hidden">
-                <div className="container relative z-10">
-                    <div className="max-w-4xl mx-auto text-center">
-                        <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-8 uppercase tracking-widest">
-                            {brandId === "piazzadellarte" ? tb("piazzadellarte.associations_title" as any) : t("passion_title")}
-                        </h2>
-                        <div
-                            className="w-24 h-1.5 mx-auto mb-10 rounded-full"
-                            style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
-                        ></div>
-                        <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
-                            {brandId === "piazzadellarte" ? config.desc : tb(`${brandId}.desc` as any)}
-                        </p>
+            {brandId !== "piazzadellarte" && (
+                <section id="cos-e" className="py-20 bg-white text-foreground relative overflow-hidden">
+                    <div className="container relative z-10">
+                        <div className="max-w-4xl mx-auto text-center">
+                            <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-8 uppercase tracking-widest">
+                                {t("passion_title")}
+                            </h2>
+                            <div
+                                className="w-24 h-1.5 mx-auto mb-10 rounded-full"
+                                style={{ backgroundColor: config.theme?.accent || 'var(--primary)' }}
+                            ></div>
+                            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
+                                {tb(`${brandId}.desc` as any)}
+                            </p>
 
-                        {brandId !== "piazzadellarte" && (
                             <div className="mt-12 flex flex-wrap justify-center gap-4">
                                 <div className="bg-muted px-8 py-6 rounded-2xl border border-border/50 text-center flex-1 min-w-[200px]">
                                     <span className="block text-4xl font-black mb-1" style={{ color: config.theme?.primary || 'var(--primary)' }}>100%</span>
@@ -198,140 +198,20 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                     <span className="text-sm uppercase tracking-widest font-bold opacity-70">{t("support")}</span>
                                 </div>
                             </div>
-                        )}
+                        </div>
                     </div>
-                </div>
-                {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full -ml-32 -mb-32 blur-3xl"></div>
-            </section>
+                    {/* Decorative Elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+                    <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full -ml-32 -mb-32 blur-3xl"></div>
+                </section>
+            )}
 
-            {/* CUSTOM PIAZZA DELL'ARTE SECTIONS (SCHEDULE & FANTA-PIAZZA) */}
+            {/* SPONSORS CAROUSEL SECTION */}
             {brandId === "piazzadellarte" && (
-                <>
-                    {/* SCHEDULE SECTION */}
-                    <section id="programma" className="py-24 bg-zinc-950 text-white overflow-hidden relative">
-                        <div className="container relative z-10">
-                            <div className="text-center mb-16">
-                                <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
-                                    {tb("piazzadellarte.schedule_title" as any)}
-                                </h2>
-                                <div className="w-24 h-1.5 bg-accent mx-auto rounded-full" style={{ backgroundColor: config.theme?.accent }}></div>
-                            </div>
-
-                            <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-                                <div className="group bg-white/5 backdrop-blur-sm p-10 rounded-3xl border border-white/10 hover:bg-white/10 transition-all duration-500">
-                                    <div className="size-12 rounded-2xl mb-6 flex items-center justify-center text-2xl font-black shadow-lg" style={{ backgroundColor: config.theme?.primary }}>
-                                        01
-                                    </div>
-                                    <h3 className="text-2xl font-bold mb-4 uppercase tracking-widest" style={{ color: config.theme?.primary }}>Mattina & Pomeriggio</h3>
-                                    <p className="text-lg text-white/70 leading-relaxed font-serif">
-                                        {tb("piazzadellarte.schedule_morning" as any)}
-                                    </p>
-                                </div>
-                                <div className="group bg-white/5 backdrop-blur-sm p-10 rounded-3xl border border-white/10 hover:bg-white/10 transition-all duration-500">
-                                    <div className="size-12 rounded-2xl mb-6 flex items-center justify-center text-2xl font-black shadow-lg" style={{ backgroundColor: config.theme?.secondary }}>
-                                        02
-                                    </div>
-                                    <h3 className="text-2xl font-bold mb-4 uppercase tracking-widest" style={{ color: config.theme?.secondary }}>Dalla Sera a Notte</h3>
-                                    <p className="text-lg text-white/70 leading-relaxed font-serif">
-                                        {tb("piazzadellarte.schedule_night" as any)}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Abstract background glow */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[160px] opacity-20 pointer-events-none" style={{ background: `radial-gradient(circle, ${config.theme?.primary}, transparent)` }}></div>
-                    </section>
-
-                    {/* FANTA-PIAZZA SECTION */}
-                    <section id="fanta-piazza" className="py-24 bg-[#0a0f1c] text-white relative overflow-hidden">
-                        <div className="container grid md:grid-cols-2 gap-16 items-center">
-                            <div className="relative aspect-square md:aspect-auto md:h-[600px] rounded-[3rem] overflow-hidden shadow-[0_0_50px_rgba(249,166,32,0.2)] group border border-white/10 flex items-center justify-center p-8 bg-zinc-900/50">
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1c] via-transparent to-transparent opacity-80 z-10 pointer-events-none"></div>
-                                <div className="relative w-full h-[60%] z-0">
-                                    <Image src="/assets/fantapiazza.png" fill className="object-contain group-hover:scale-105 transition-transform duration-1000" alt="Fanta-Piazza" />
-                                </div>
-                                <div className="absolute bottom-12 left-12 right-12 z-20">
-                                    <div className="bg-white/5 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 transform -rotate-2 group-hover:rotate-0 transition-transform duration-700">
-                                        <div className="flex items-baseline gap-2 mb-2">
-                                            <span className="text-6xl md:text-8xl font-black text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">100</span>
-                                            <span className="text-2xl font-bold text-white/50 uppercase tracking-widest">Armoni</span>
-                                        </div>
-                                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                                            <div className="h-full bg-gradient-to-r from-[#f9a620] to-yellow-300 w-3/4 animate-pulse"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex flex-col items-start">
-                                <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-[#f9a620]/10 border border-[#f9a620]/20 text-[#f9a620] text-xs font-black uppercase tracking-[0.2em] mb-8 animate-bounce">
-                                    <Sparkles className="size-4" /> Live Now
-                                </div>
-                                <h2 className="text-5xl md:text-8xl font-serif font-black text-white uppercase tracking-tighter leading-[0.9] mb-8">
-                                    Fanta<br /><span className="text-transparent border-t-4 border-[#f9a620] pt-2" style={{ WebkitTextStroke: '1px white' }}>Piazza</span>
-                                </h2>
-                                <p className="text-xl md:text-2xl text-white/70 leading-relaxed font-serif mb-10 max-w-lg">
-                                    Il gioco ufficiale della Piazza. Crea la tua squadra, accumula Armoni e sfida i tuoi amici nella competizione più creativa dell&apos;Ateneo.
-                                </p>
-                                <div className="flex flex-wrap gap-6">
-                                    <a href="https://fantapiazza.vercel.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-4 px-10 py-5 rounded-2xl bg-white text-black font-black uppercase tracking-widest hover:scale-105 transition-all shadow-[0_20px_40px_rgba(255,255,255,0.1)] group">
-                                        Entra nel Gioco <ArrowRight className="size-6 group-hover:translate-x-2 transition-transform" />
-                                    </a>
-                                    <div className="flex -space-x-4">
-                                        {[1, 2, 3].map((i) => (
-                                            <div key={i} className="size-14 rounded-full border-4 border-[#0a0f1c] bg-zinc-800 overflow-hidden ring-2 ring-white/10">
-                                                <Image src={`/assets/slides/${i}.jpg`} width={56} height={56} className="w-full h-full object-cover" alt="Player" />
-                                            </div>
-                                        ))}
-                                        <div className="size-14 rounded-full border-4 border-[#0a0f1c] bg-[#f9a620] flex items-center justify-center text-black font-black text-xs ring-2 ring-white/10">
-                                            +500
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Background glow effects */}
-                        <div className="absolute -top-24 -right-24 size-[500px] bg-[#f9a620]/10 rounded-full blur-[120px] pointer-events-none"></div>
-                        <div className="absolute -bottom-24 -left-24 size-[500px] bg-yellow-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-                    </section>
-
-                    {/* ARTISTI SECTION */}
-                    <section id="artisti" className="py-24 bg-zinc-50 text-foreground border-y border-border/50 relative overflow-hidden">
-                        <div className="container relative z-10">
-                            <div className="text-center mb-16">
-                                <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
-                                    {navT("artisti")}
-                                </h2>
-                                <div className="w-24 h-1.5 bg-primary mx-auto rounded-full" style={{ backgroundColor: config.theme?.primary }}></div>
-                            </div>
-
-                            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div key={i} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-zinc-200">
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10Opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                        <div className="absolute inset-0 flex items-end p-6 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
-                                            <div className="text-white">
-                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-1 block">Live Performance</span>
-                                                <h3 className="text-xl font-bold uppercase leading-tight">Artista {i}</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="mt-16 text-center">
-                                <p className="text-xl text-muted-foreground font-serif italic mb-8">
-                                    Molti altri talenti si alterneranno sul palco e nel cortile...
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* SPONSORS CAROUSEL SECTION */}
+                <div className="bg-white py-12">
                     <SponsorsCarousel />
-                </>
-            )
-            }
+                </div>
+            )}
 
             {/* EVENTI E NOTIZIE CONDIZIONALI */}
             {

@@ -5,7 +5,7 @@ import { notFound } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 
-const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, subtitle: string, desc: string, mission: string, values: string[] }> = {
+const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, subtitle: string, desc: string, mission: string, values: string[], theme?: { primary: string, secondary: string, accent: string } }> = {
     unimhealth: {
         name: "Unimhealth",
         logo: "/assets/unimhealth.png",
@@ -50,6 +50,20 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
         desc: "Inside Dicam è l'anima culturale del Dipartimento di Civiltà Antiche e Moderne. Ci battiamo per valorizzare il patrimonio umanistico e per offrire agli studenti spazi di espressione artistica e letteraria.",
         mission: "Custodire e rinnovare il valore delle materie umanistiche attraverso la rappresentanza e la cultura.",
         values: ["Cultura", "Arte", "Lettere", "Identità"]
+    },
+    piazzadellarte: {
+        name: "Piazza Dell'Arte",
+        logo: "/assets/piazzadellarte.png",
+        bg: "/assets/piazza.png",
+        subtitle: "Il cuore pulsante della creatività studentesca.",
+        desc: "Piazza Dell'Arte è l'importante evento socio-culturale che trasforma l'Università in un palcoscenico a cielo aperto.",
+        mission: "Due storie, una missione: Morgana e Orum uniscono le forze per trasformare l'università in un luogo di opportunità, diritti e crescita. Scopri chi siamo e cosa facciamo ogni giorno per te.",
+        values: ["Arte", "Cultura", "Musica", "Spettacolo"],
+        theme: {
+            primary: "#f9a620",
+            secondary: "#27a85d",
+            accent: "#1fbcd3"
+        }
     }
 }
 
@@ -59,6 +73,30 @@ export default function Page({ params }: { params: { brandId: string } }) {
 
     if (!config) {
         notFound()
+    }
+
+    if (params.brandId === 'piazzadellarte') {
+        const theme = (config as any).theme
+        return (
+            <div className="min-h-screen flex flex-col pt-32 pb-20 bg-white">
+                <section className="py-20 bg-white text-foreground relative overflow-hidden flex-1">
+                    <div className="container relative z-10">
+                        <div className="max-w-4xl mx-auto text-center">
+                            <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-8 uppercase tracking-widest">
+                                CHI SIAMO: MORGANA & O.R.U.M.
+                            </h2>
+                            <div
+                                className="w-24 h-1.5 mx-auto mb-10 rounded-full"
+                                style={{ backgroundColor: theme?.accent || 'var(--primary)' }}
+                            ></div>
+                            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
+                                {config.mission}
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        )
     }
 
     return (

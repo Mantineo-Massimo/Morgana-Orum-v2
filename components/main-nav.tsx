@@ -64,27 +64,27 @@ export function MainNav({
     if (brand === 'piazzadellarte') {
         routes.splice(1, 4, // Rimuovi About, News (verrà riaggiunto), Events, Representatives
             {
-                href: `/network/piazzadellarte#cos-e`,
+                href: `/network/piazzadellarte/about`,
                 label: nt("cose"),
-                active: false,
+                active: pathname === `/network/piazzadellarte/about`,
                 color: "text-[#27a85d]" // Green
             },
             {
-                href: `/network/piazzadellarte/news`,
-                label: nt("news"),
-                active: pathname.startsWith(`/network/piazzadellarte/news`),
-                color: "text-[#f9a620]" // Gold instead of Cyan
+                href: `/network/piazzadellarte/media`,
+                label: nt("news"), // This will be updated to fetch "Media" instead of "News" momentarily
+                active: pathname.startsWith(`/network/piazzadellarte/media`),
+                color: "text-[#f9a620]" // Gold
             },
             {
-                href: `/network/piazzadellarte#programma`,
+                href: `/network/piazzadellarte/programma`,
                 label: nt("programma"),
-                active: false,
+                active: pathname === `/network/piazzadellarte/programma`,
                 color: "text-[#f9a620]" // Yellow
             },
             {
-                href: `/network/piazzadellarte#artisti`,
+                href: `/network/piazzadellarte/artisti`,
                 label: nt("artisti"),
-                active: false,
+                active: pathname === `/network/piazzadellarte/artisti`,
                 color: "text-[#27a85d]" // Green
             },
             {
