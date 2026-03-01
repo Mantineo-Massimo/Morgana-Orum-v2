@@ -1,37 +1,86 @@
 "use client"
 
 import { useState } from "react"
-import { Plus, Trash2, X, Calendar, Clock } from "lucide-react"
+import { useRouter } from "next/navigation"
+import {
+    Plus, Trash2, X, Calendar, Clock,
+    Palette, Mic2, Music, Camera, Star,
+    Coffee, User, Users, MapPin, Ticket,
+    Play, Smile, Heart, Zap, Image as ImageIcon
+} from "lucide-react"
 import { createPiazzaProgramItem, deletePiazzaProgramItem } from "@/app/actions/piazza"
+import { cn } from "@/lib/utils"
 
 const SLOTS = ["Mattino", "Pomeriggio", "Sera"]
+
+const AVAILABLE_ICONS = [
+    { name: "Palette", icon: Palette },
+    { name: "Mic2", icon: Mic2 },
+    { name: "Music", icon: Music },
+    { name: "Camera", icon: Camera },
+    { name: "Star", icon: Star },
+    { name: "Coffee", icon: Coffee },
+    { name: "User", icon: User },
+    { name: "Users", icon: Users },
+    { name: "MapPin", icon: MapPin },
+    { name: "Ticket", icon: Ticket },
+    { name: "Play", icon: Play },
+    { name: "Smile", icon: Smile },
+    { name: "Heart", icon: Heart },
+    { name: "Zap", icon: Zap },
+    { name: "ImageIcon", icon: ImageIcon }
+]
+
+const ICON_MAP: Record<string, any> = {
+    Palette, Mic2, Music, Camera, Star, Coffee, User, Users, MapPin, Ticket, Play, Smile, Heart, Zap, ImageIcon
+}
 
 interface ProgramManagerProps {
     program: any[]
 }
 
 export function ProgramManager({ program }: ProgramManagerProps) {
+    const router = useRouter()
     const [isAdding, setIsAdding] = useState(false)
     const [loading, setLoading] = useState(false)
-    const [form, setForm] = useState({ title: "", description: "", timeSlot: "Mattino", startTime: "", endTime: "", icon: "Palette", order: 0 })
+    const [form, setForm] = useState({
+        title: "",
+        description: "",
+        timeSlot: "Mattino",
+        startTime: "",
+        endTime: "",
+        icon: "Palette",
+        order: 0
+    })
 
     const handleAdd = async () => {
         setLoading(true)
-        const res = await createPiazzaProgramItem(form)
-        if (res.success) {
-            setIsAdding(false)
-            setForm({ title: "", description: "", timeSlot: "Mattino", startTime: "", endTime: "", icon: "Palette", order: 0 })
-            window.location.reload()
-        } else {
-            alert(res.error)
+        try {
+            const res = await createPiazzaProgramItem(form)
+            if (res.success) {
+                setIsAdding(false)
+                setForm({ title: "", description: "", timeSlot: "Mattino", startTime: "", endTime: "", icon: "Palette", order: 0 })
+                router.refresh()
+            } else {
+                alert(res.error)
+            }
+        } catch (error) {
+            console.error("Save error:", error)
+            alert("Errore durante il salvataggio. Riprova.")
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
     }
 
     const handleDelete = async (id: string) => {
         if (!confirm("Sicuro di voler eliminare questa attività?")) return
         const res = await deletePiazzaProgramItem(id)
-        if (res.success) window.location.reload()
+        if (res.success) router.refresh()
+    }
+
+    const getIconComponent = (iconName: string) => {
+        const Icon = ICON_MAP[iconName] || Palette
+        return <Icon className="size-3 text-[#f9a620]" />
     }
 
     return (
@@ -67,21 +116,54 @@ export function ProgramManager({ program }: ProgramManagerProps) {
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Orario Inizio (Opzionale)</label>
-                            <input type="text" value={form.startTime} onChange={e => setForm({ ...form, startTime: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" placeholder="09:00" />
+                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-1.5 underline decoration-[#f9a620]/30">
+                                <Clock className="size-3" /> Orario Inizio (Opzionale)
+                            </label>
+                            <input
+                                type="time"
+                                value={form.startTime}
+                                onChange={e => setForm({ ...form, startTime: e.target.value })}
+                                className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none bg-zinc-50/50"
+                            />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Orario Fine (Opzionale)</label>
-                            <input type="text" value={form.endTime} onChange={e => setForm({ ...form, endTime: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" placeholder="13:00" />
+                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-1.5 underline decoration-[#f9a620]/30">
+                                <Clock className="size-3" /> Orario Fine (Opzionale)
+                            </label>
+                            <input
+                                type="time"
+                                value={form.endTime}
+                                onChange={e => setForm({ ...form, endTime: e.target.value })}
+                                className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none bg-zinc-50/50"
+                            />
                         </div>
                         <div className="md:col-span-2 space-y-2">
                             <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione</label>
                             <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none h-32 resize-none" placeholder="Descrizione dell'attività..." />
                         </div>
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Icona (Lucide Name)</label>
-                            <input type="text" value={form.icon} onChange={e => setForm({ ...form, icon: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" placeholder="Palette, Mic2, Star, etc." />
+
+                        <div className="md:col-span-2 space-y-4">
+                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Seleziona Icona</label>
+                            <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
+                                {AVAILABLE_ICONS.map((item) => (
+                                    <button
+                                        key={item.name}
+                                        type="button"
+                                        onClick={() => setForm({ ...form, icon: item.name })}
+                                        className={cn(
+                                            "flex items-center justify-center p-3 rounded-xl border transition-all hover:bg-zinc-50",
+                                            form.icon === item.name
+                                                ? "border-[#f9a620] bg-amber-50 text-[#f9a620] shadow-sm"
+                                                : "border-zinc-100 text-zinc-400"
+                                        )}
+                                        title={item.name}
+                                    >
+                                        <item.icon className="size-5" />
+                                    </button>
+                                ))}
+                            </div>
                         </div>
+
                         <div className="space-y-2">
                             <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine</label>
                             <input type="number" value={form.order} onChange={e => setForm({ ...form, order: parseInt(e.target.value) })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" />
@@ -121,7 +203,10 @@ export function ProgramManager({ program }: ProgramManagerProps) {
                                             <Clock className="size-3 text-[#f9a620]" />
                                             {p.startTime || "--:--"} {p.endTime && `- ${p.endTime}`}
                                         </div>
-                                        <span className="text-[9px] text-zinc-400 font-medium uppercase tracking-tighter">Icona: {p.icon}</span>
+                                        <div className="flex items-center gap-1.5">
+                                            <span className="text-[9px] text-zinc-400 font-medium uppercase tracking-tighter">Icona:</span>
+                                            {getIconComponent(p.icon)}
+                                        </div>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 text-right">
