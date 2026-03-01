@@ -6,6 +6,7 @@ import { getNews } from "@/app/actions/news"
 import { getAllEvents } from "@/app/actions/events"
 import { getTranslations } from "next-intl/server"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
+import { cookies } from "next/headers"
 
 export default async function BrandHomePage({
     params: { locale }
@@ -13,11 +14,12 @@ export default async function BrandHomePage({
     params: { locale: string }
 }) {
     const t = await getTranslations("HomePage")
+    const sessionEmail = cookies().get("session_email")?.value || null
 
     // Fetch data in parallel using cached actions
     const [ultimeNotizie, prossimiEventi] = await Promise.all([
         getNews(undefined, undefined, undefined, locale).then(news => news.slice(0, 3)),
-        getAllEvents(null, undefined, 'upcoming', locale).then(events => events.slice(0, 3))
+        getAllEvents(sessionEmail, undefined, 'upcoming', locale).then(events => events.slice(0, 3))
     ])
 
     // Content Configuration Unificata
