@@ -39,7 +39,7 @@ export function PiazzaTeaserBanner() {
 
                     {/* Text + countdown */}
                     <div className="flex-1 text-center md:text-left">
-                        <p className="text-[#27a85d] font-black text-sm uppercase tracking-widest mb-2">Prossimo evento</p>
+                        <p className="text-[#27a85d] font-black text-sm uppercase tracking-widest mb-2">Prossimo evento speciale</p>
                         <h2 className="text-3xl md:text-4xl font-serif font-black text-white uppercase tracking-tighter mb-3">
                             Piazza dell&apos;Arte 2026
                         </h2>

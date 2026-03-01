@@ -229,74 +229,84 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                         </div>
                     </section>
 
-                    {/* SCHEDULE SECTION */}
-                    <section id="programma" className="py-24 bg-zinc-950 text-white overflow-hidden relative">
+                    {/* ESPLORA SECTION — links to dedicated pages */}
+                    <section className="py-24 bg-zinc-950 text-white relative overflow-hidden">
+                        {/* Glows */}
+                        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full blur-[160px] opacity-10 pointer-events-none" style={{ backgroundColor: config.theme?.primary }}></div>
+                        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full blur-[160px] opacity-10 pointer-events-none" style={{ backgroundColor: config.theme?.accent }}></div>
+
                         <div className="container relative z-10">
                             <div className="text-center mb-16">
                                 <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
-                                    {tb("piazzadellarte.schedule_title" as any)}
+                                    Esplora
                                 </h2>
-                                <div className="w-24 h-1.5 bg-accent mx-auto rounded-full" style={{ backgroundColor: config.theme?.accent }}></div>
+                                <div className="w-24 h-1.5 mx-auto rounded-full" style={{ backgroundColor: config.theme?.primary }}></div>
                             </div>
-                            <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-                                <div className="group bg-white/5 backdrop-blur-sm p-10 rounded-3xl border border-white/10 hover:bg-white/10 transition-all duration-500">
-                                    <div className="size-12 rounded-2xl mb-6 flex items-center justify-center text-2xl font-black shadow-lg" style={{ backgroundColor: config.theme?.primary }}>
-                                        01
+
+                            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                                {/* Programma */}
+                                <Link href="/network/piazzadellarte/programma" className="group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/25 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col">
+                                    <div className="relative aspect-video overflow-hidden">
+                                        <Image src="/assets/slides/1.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Programma" />
+                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
+                                        <div className="absolute bottom-4 left-6">
+                                            <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme?.primary, color: "#18182e" }}>
+                                                Programma
+                                            </span>
+                                        </div>
                                     </div>
-                                    <h3 className="text-2xl font-bold mb-4 uppercase tracking-widest" style={{ color: config.theme?.primary }}>Mattina & Pomeriggio</h3>
-                                    <p className="text-lg text-white/70 leading-relaxed font-serif">
-                                        {tb("piazzadellarte.schedule_morning" as any)}
-                                    </p>
-                                </div>
-                                <div className="group bg-white/5 backdrop-blur-sm p-10 rounded-3xl border border-white/10 hover:bg-white/10 transition-all duration-500">
-                                    <div className="size-12 rounded-2xl mb-6 flex items-center justify-center text-2xl font-black shadow-lg" style={{ backgroundColor: config.theme?.secondary }}>
-                                        02
+                                    <div className="p-6 flex-1 flex flex-col">
+                                        <h3 className="text-xl font-black uppercase tracking-wide text-white mb-2" style={{ color: config.theme?.primary }}>Il Programma</h3>
+                                        <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">Mattino, pomeriggio e sera: scopri tutti gli appuntamenti della giornata divisi per fascia oraria.</p>
+                                        <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all group-hover:gap-3" style={{ color: config.theme?.primary }}>
+                                            Scopri <ArrowRight className="size-4" />
+                                        </span>
                                     </div>
-                                    <h3 className="text-2xl font-bold mb-4 uppercase tracking-widest" style={{ color: config.theme?.secondary }}>Dalla Sera a Notte</h3>
-                                    <p className="text-lg text-white/70 leading-relaxed font-serif">
-                                        {tb("piazzadellarte.schedule_night" as any)}
-                                    </p>
-                                </div>
+                                </Link>
+
+                                {/* Artisti */}
+                                <Link href="/network/piazzadellarte/artisti" className="group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/25 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col">
+                                    <div className="relative aspect-video overflow-hidden">
+                                        <Image src="/assets/slides/2.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Artisti" />
+                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
+                                        <div className="absolute bottom-4 left-6">
+                                            <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme?.secondary, color: "#fff" }}>
+                                                Artisti
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="p-6 flex-1 flex flex-col">
+                                        <h3 className="text-xl font-black uppercase tracking-wide mb-2" style={{ color: config.theme?.secondary }}>Gli Artisti</h3>
+                                        <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">Musica, danza, pittura e performance. Scopri i talenti che si esibiranno sul palco e nel cortile.</p>
+                                        <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all group-hover:gap-3" style={{ color: config.theme?.secondary }}>
+                                            Scopri <ArrowRight className="size-4" />
+                                        </span>
+                                    </div>
+                                </Link>
+
+                                {/* Media */}
+                                <Link href="/network/piazzadellarte/media" className="group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/25 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col">
+                                    <div className="relative aspect-video overflow-hidden">
+                                        <Image src="/assets/slides/3.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Media" />
+                                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
+                                        <div className="absolute bottom-4 left-6">
+                                            <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme?.accent, color: "#18182e" }}>
+                                                Media
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="p-6 flex-1 flex flex-col">
+                                        <h3 className="text-xl font-black uppercase tracking-wide mb-2" style={{ color: config.theme?.accent }}>Media</h3>
+                                        <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">Esibizioni, interviste esclusive e la galleria fotografica dei momenti più belli dell&apos;evento.</p>
+                                        <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all group-hover:gap-3" style={{ color: config.theme?.accent }}>
+                                            Scopri <ArrowRight className="size-4" />
+                                        </span>
+                                    </div>
+                                </Link>
                             </div>
                         </div>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[160px] opacity-20 pointer-events-none" style={{ background: `radial-gradient(circle, ${config.theme?.primary}, transparent)` }}></div>
                     </section>
 
-                    {/* ARTISTI CAROUSEL SECTION */}
-                    <section id="artisti" className="py-24 bg-zinc-50 border-y border-border/50 relative overflow-hidden">
-                        <div className="container relative z-10">
-                            <div className="text-center mb-16">
-                                <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
-                                    {navT("artisti")}
-                                </h2>
-                                <div className="w-24 h-1.5 bg-primary mx-auto rounded-full" style={{ backgroundColor: config.theme?.primary }}></div>
-                            </div>
-                            <ArtistiCarousel />
-                        </div>
-                    </section>
-
-                    {/* MEDIA BLOCK */}
-                    <section id="media" className="py-24 bg-white text-foreground relative overflow-hidden flex flex-col items-center">
-                        <div className="container relative z-10 w-full flex-1">
-                            <div className="text-center mb-16">
-                                <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
-                                    {navT("media")}
-                                </h2>
-                                <div className="w-24 h-1.5 bg-primary mx-auto rounded-full" style={{ backgroundColor: config.theme?.primary }}></div>
-                                <p className="mt-8 text-xl text-muted-foreground font-serif max-w-2xl mx-auto">
-                                    Le immagini e i momenti migliori della Piazza Dell&apos;Arte. Scopri la nostra galleria in continuo aggiornamento.
-                                </p>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-                                {[1, 2, 3, 4, 5, 6].map((i) => (
-                                    <div key={i} className="group relative aspect-video rounded-2xl overflow-hidden shadow-xl bg-zinc-200">
-                                        <Image src={`/assets/slides/${(i % 3) + 1}.jpg`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" alt={`Media ${i}`} />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
                     {brandId === "piazzadellarte" && (
                         <div className="bg-white py-12">
                             <SponsorsCarousel />
