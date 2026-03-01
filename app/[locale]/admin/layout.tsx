@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { getUserDashboardData } from "@/app/actions/users"
-import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar, Tag, BarChart3 } from "lucide-react"
+import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar, Tag, BarChart3, Sparkles } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
 import { getAssociationName } from "@/lib/associations"
@@ -64,6 +64,12 @@ export default async function AdminLayout({
                     label: "Eventi",
                     href: `/admin/events`,
                     iconName: "Calendar",
+                    exact: false
+                },
+                {
+                    label: "Piazza dell'Arte",
+                    href: `/piazza-admin`,
+                    iconName: "Sparkles",
                     exact: false
                 },
             ]
@@ -132,7 +138,8 @@ export default async function AdminLayout({
                                         Newspaper: Newspaper,
                                         Calendar: Calendar,
                                         Tag: Tag,
-                                        User: User
+                                        User: User,
+                                        Sparkles: Sparkles
                                     } as Record<string, any>)[item.iconName] || LayoutDashboard
 
                                     return (
