@@ -73,7 +73,7 @@ export function MainNav({
                 href: `/network/piazzadellarte/programma`,
                 label: nt("programma"),
                 active: false,
-                color: "text-[#f9a620]" // Yellow
+                color: "text-[#f9a620]" // Gold
             },
             {
                 href: `/network/piazzadellarte/artisti`,
@@ -85,17 +85,17 @@ export function MainNav({
                 href: `/network/piazzadellarte/media`,
                 label: nt("media"),
                 active: false,
-                color: "text-[#f34ab4]" // Magenta
+                color: "text-[#27a85d]" // Green
             },
             {
                 href: `https://fantapiazza.vercel.app`,
                 label: "FantaPiazza",
                 active: false,
-                color: "text-[#0a0f1c]" // Blue
+                color: "text-[#f9a620]" // Gold
             }
         )
         // Update Home color too
-        routes[0].color = "text-[#f9a620]" // Gold (Home)
+        routes[0].color = "text-[#1fbcd3]" // Cyan (Home)
     }
 
     // Aggiungi link extra per Unime Matricole
