@@ -40,7 +40,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
         matricole: { name: "Unime Matricole", logo: "/assets/unimematricole.png", motto: "Il tuo primo passo in Ateneo" },
         scipog: { name: "Studenti Scipog", logo: "/assets/studentiscipog.png", motto: "La voce tra Scienze Politiche e Giuridiche" },
         dicam: { name: "Inside Dicam", logo: "/assets/insidedicam.png", motto: "Creatività e cultura al DICAM" },
-        piazzadellarte: { name: "Piazza Dell'Arte", logo: "/assets/piazzadellarte.png", motto: "Il cuore della creatività studentesca" },
+        piazzadellarte: { name: "Piazza Dell'Arte 2026", logo: "/assets/piazzadellarte.png", motto: "Il cuore della creatività studentesca" },
     }
 
     const currentNetwork = brand && networkInfo[brand] ? networkInfo[brand] : null
