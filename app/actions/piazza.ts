@@ -1,7 +1,7 @@
 "use server"
 
 import prisma from "@/lib/prisma"
-import { revalidatePath, unstable_cache } from "next/cache"
+import { revalidatePath, revalidateTag, unstable_cache } from "next/cache"
 
 // --- ARTISTS ---
 
@@ -34,7 +34,8 @@ export async function createPiazzaArtist(data: {
     try {
         await prisma.piazzaArtist.create({ data })
         revalidatePath("/network/piazzadellarte/artisti")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Create Piazza artist error:", error)
@@ -49,7 +50,8 @@ export async function updatePiazzaArtist(id: string, data: any) {
             data
         })
         revalidatePath("/network/piazzadellarte/artisti")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Update Piazza artist error:", error)
@@ -61,7 +63,8 @@ export async function deletePiazzaArtist(id: string) {
     try {
         await prisma.piazzaArtist.delete({ where: { id } })
         revalidatePath("/network/piazzadellarte/artisti")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Delete Piazza artist error:", error)
@@ -103,7 +106,8 @@ export async function createPiazzaProgramItem(data: {
     try {
         await prisma.piazzaProgramItem.create({ data })
         revalidatePath("/network/piazzadellarte/programma")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Create Piazza program item error:", error)
@@ -118,7 +122,8 @@ export async function updatePiazzaProgramItem(id: string, data: any) {
             data
         })
         revalidatePath("/network/piazzadellarte/programma")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Update Piazza program item error:", error)
@@ -130,7 +135,8 @@ export async function deletePiazzaProgramItem(id: string) {
     try {
         await prisma.piazzaProgramItem.delete({ where: { id } })
         revalidatePath("/network/piazzadellarte/programma")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Delete Piazza program item error:", error)
@@ -174,7 +180,8 @@ export async function createPiazzaMediaItem(data: {
     try {
         await prisma.piazzaMediaItem.create({ data })
         revalidatePath("/network/piazzadellarte/media")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Create Piazza media item error:", error)
@@ -189,7 +196,8 @@ export async function updatePiazzaMediaItem(id: string, data: any) {
             data
         })
         revalidatePath("/network/piazzadellarte/media")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Update Piazza media item error:", error)
@@ -201,7 +209,8 @@ export async function deletePiazzaMediaItem(id: string) {
     try {
         await prisma.piazzaMediaItem.delete({ where: { id } })
         revalidatePath("/network/piazzadellarte/media")
-        revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Delete Piazza media item error:", error)
@@ -259,10 +268,10 @@ export async function updatePiazzaSettings(data: {
                 countdownVisible: data.countdownVisible ?? true
             }
         })
-        revalidatePath("/admin/piazza")
         revalidatePath("/piazza-admin")
         revalidatePath("/")
         revalidatePath("/network/piazzadellarte")
+        revalidateTag('piazza')
         return { success: true }
     } catch (error) {
         console.error("Update Piazza settings error:", error)

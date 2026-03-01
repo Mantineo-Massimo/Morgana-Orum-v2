@@ -116,8 +116,8 @@ export function ProgramManager({ program }: ProgramManagerProps) {
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-1.5 underline decoration-[#f9a620]/30">
-                                <Clock className="size-3" /> Orario Inizio (Opzionale)
+                            <label className="text-xs font-bold uppercase tracking-widest text-[#f9a620] flex items-center gap-1.5 font-bold">
+                                <Clock className="size-3" /> Orario Inizio (Formato 24h)
                             </label>
                             <input
                                 type="time"
@@ -125,10 +125,11 @@ export function ProgramManager({ program }: ProgramManagerProps) {
                                 onChange={e => setForm({ ...form, startTime: e.target.value })}
                                 className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none bg-zinc-50/50"
                             />
+                            <p className="text-[10px] text-zinc-400 italic">Esempio: 09:30, 23:59</p>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 flex items-center gap-1.5 underline decoration-[#f9a620]/30">
-                                <Clock className="size-3" /> Orario Fine (Opzionale)
+                            <label className="text-xs font-bold uppercase tracking-widest text-[#f9a620] flex items-center gap-1.5 font-bold">
+                                <Clock className="size-3" /> Orario Fine (Formato 24h)
                             </label>
                             <input
                                 type="time"
@@ -136,6 +137,7 @@ export function ProgramManager({ program }: ProgramManagerProps) {
                                 onChange={e => setForm({ ...form, endTime: e.target.value })}
                                 className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none bg-zinc-50/50"
                             />
+                            <p className="text-[10px] text-zinc-400 italic">Esempio: 13:00, 00:00</p>
                         </div>
                         <div className="md:col-span-2 space-y-2">
                             <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione</label>
