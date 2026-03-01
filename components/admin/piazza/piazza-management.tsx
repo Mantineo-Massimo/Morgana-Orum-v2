@@ -2,14 +2,13 @@
 
 import { useState } from "react"
 import {
-    Plus, Trash2, Edit2, Save, X,
-    User, Calendar, Play, Camera, Mic2,
-    ChevronRight, ArrowRight, Star, Palette, Users
+    Plus, Trash2, X, Palette, Settings, Music, Play, Camera, Mic2
 } from "lucide-react"
 import {
     createPiazzaArtist, deletePiazzaArtist,
     createPiazzaProgramItem, deletePiazzaProgramItem,
-    createPiazzaMediaItem, deletePiazzaMediaItem
+    createPiazzaMediaItem, deletePiazzaMediaItem,
+    updatePiazzaSettings
 } from "@/app/actions/piazza"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
@@ -18,14 +17,23 @@ interface Props {
     artists: any[]
     program: any[]
     media: any[]
+    settings: {
+        year: string
+        countdownVisible: boolean
+    }
 }
 
 const CATEGORIES = ["Musica", "Danza", "Pittura", "Performance"]
 const SLOTS = ["Mattino", "Pomeriggio", "Sera"]
 const MEDIA_TYPES = ["VIDEO", "PHOTO", "INTERVIEW"]
 
-export function PiazzaManagement({ artists: initialArtists, program: initialProgram, media: initialMedia }: Props) {
-    const [activeTab, setActiveTab] = useState<"artists" | "program" | "media">("artists")
+export function PiazzaManagement({
+    artists: initialArtists,
+    program: initialProgram,
+    media: initialMedia,
+    settings: initialSettings
+}: Props) {
+    const [activeTab, setActiveTab] = useState<"artists" | "program" | "media" | "settings">("artists")
     const [isAdding, setIsAdding] = useState(false)
     const [loading, setLoading] = useState(false)
 
@@ -33,6 +41,19 @@ export function PiazzaManagement({ artists: initialArtists, program: initialProg
     const [artistForm, setArtistForm] = useState({ name: "", role: "", category: "Musica", bio: "", image: "", badge: "", order: 0 })
     const [programForm, setProgramForm] = useState({ title: "", description: "", timeSlot: "Mattino", startTime: "", endTime: "", icon: "Palette", order: 0 })
     const [mediaForm, setMediaForm] = useState({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "", order: 0 })
+    const [settingsForm, setSettingsForm] = useState(initialSettings)
+
+    const handleUpdateSettings = async () => {
+        setLoading(true)
+        const res = await updatePiazzaSettings(settingsForm)
+        if (res.success) {
+            alert("Impostazioni salvate con successo!")
+            window.location.reload()
+        } else {
+            alert(res.error)
+        }
+        setLoading(false)
+    }
 
     const handleAddArtist = async () => {
         setLoading(true)
@@ -107,9 +128,15 @@ export function PiazzaManagement({ artists: initialArtists, program: initialProg
                     >
                         Media
                     </button>
+                    <button
+                        onClick={() => { setActiveTab("settings"); setIsAdding(false) }}
+                        className={cn("px-6 py-2 rounded-lg text-sm font-bold transition-all", activeTab === "settings" ? "bg-white shadow-sm text-zinc-900" : "text-zinc-500 hover:text-zinc-700")}
+                    >
+                        Impostazioni
+                    </button>
                 </div>
 
-                {!isAdding && (
+                {!isAdding && activeTab !== "settings" && (
                     <button
                         onClick={() => setIsAdding(true)}
                         className="flex items-center gap-2 px-4 py-2 bg-[#18182e] text-white rounded-xl text-sm font-bold hover:bg-zinc-800 transition-all shadow-lg"
@@ -120,7 +147,7 @@ export function PiazzaManagement({ artists: initialArtists, program: initialProg
             </div>
 
             {isAdding && (
-                <div className="bg-white p-8 rounded-3xl border border-zinc-200 shadow-xl space-y-6">
+                <div className="bg-white p-8 rounded-3xl border border-zinc-200 shadow-xl space-y-6 animate-in slide-in-from-top-4 duration-300">
                     <div className="flex items-center justify-between border-b pb-4">
                         <h3 className="text-xl font-bold uppercase tracking-tight">Nuovo {activeTab === "artists" ? "Artista" : activeTab === "program" ? "Attività" : "Media"}</h3>
                         <button onClick={() => setIsAdding(false)} className="text-zinc-400 hover:text-zinc-600"><X className="size-6" /></button>
@@ -217,7 +244,7 @@ export function PiazzaManagement({ artists: initialArtists, program: initialProg
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Titolo</label>
-                                    <input type="text" value={mediaForm.title} onChange={e => setMediaForm({ ...mediaForm, title: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#18182e] outline-none" placeholder="Tito del video/foto" />
+                                    <input type="text" value={mediaForm.title} onChange={e => setMediaForm({ ...mediaForm, title: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#18182e] outline-none" placeholder="Titolo del video/foto" />
                                 </div>
                                 {mediaForm.type === "INTERVIEW" && (
                                     <>
@@ -256,106 +283,160 @@ export function PiazzaManagement({ artists: initialArtists, program: initialProg
                 </div>
             )}
 
-            {/* LISTS */}
-            <div className="bg-white rounded-3xl border border-zinc-200 overflow-hidden shadow-sm">
-                <table className="w-full text-left">
-                    <thead className="bg-zinc-50 border-b">
-                        <tr>
-                            <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-400">Dettagli</th>
-                            <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-400">Classificazione</th>
-                            <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-400">Extra</th>
-                            <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-400 text-right">Azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                        {activeTab === "artists" && initialArtists.map((a: any) => (
-                            <tr key={a.id} className="hover:bg-zinc-50 transition-colors">
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-4">
-                                        <div className="size-10 rounded-lg overflow-hidden shrink-0 relative">
-                                            <Image src={a.image || "/assets/slides/1.jpg"} fill className="object-cover" alt="" />
-                                        </div>
-                                        <div>
-                                            <p className="font-bold text-sm">{a.name}</p>
-                                            <p className="text-xs text-zinc-500 italic">{a.role}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-zinc-100 rounded-full">{a.category}</span>
-                                </td>
-                                <td className="px-6 py-4 text-xs text-zinc-500">
-                                    {a.badge && <span className="text-amber-600 font-bold uppercase tracking-tighter mr-2">{a.badge}</span>}
-                                    Ordine: {a.order}
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <button onClick={() => handleDeleteArtist(a.id)} className="p-2 text-zinc-400 hover:text-red-500 transition-colors">
-                                        <Trash2 className="size-4" />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+            {/* SETTINGS TAB */}
+            {activeTab === "settings" && (
+                <div className="bg-white p-8 rounded-3xl border border-zinc-200 shadow-sm space-y-8 animate-in fade-in duration-500">
+                    <div className="flex items-center gap-3 border-b pb-4">
+                        <Settings className="size-6 text-zinc-400" />
+                        <h3 className="text-xl font-bold uppercase tracking-tight text-zinc-900">Impostazioni Globali</h3>
+                    </div>
 
-                        {activeTab === "program" && initialProgram.map((p: any) => (
-                            <tr key={p.id} className="hover:bg-zinc-50 transition-colors">
-                                <td className="px-6 py-4">
-                                    <p className="font-bold text-sm">{p.title}</p>
-                                    <p className="text-xs text-zinc-500 truncate max-w-[200px]">{p.description}</p>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-zinc-100 rounded-full">{p.timeSlot}</span>
-                                </td>
-                                <td className="px-6 py-4 text-xs text-zinc-500">
-                                    {p.startTime} - {p.endTime} <br /> Icona: {p.icon}
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <button onClick={() => handleDeleteProgram(p.id)} className="p-2 text-zinc-400 hover:text-red-500 transition-colors">
-                                        <Trash2 className="size-4" />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-
-                        {activeTab === "media" && initialMedia.map((m: any) => (
-                            <tr key={m.id} className="hover:bg-zinc-50 transition-colors">
-                                <td className="px-6 py-4">
-                                    <div className="flex items-center gap-4">
-                                        {m.thumbnail && (
-                                            <div className="size-10 rounded-lg overflow-hidden shrink-0 relative">
-                                                <Image src={m.thumbnail} fill className="object-cover" alt="" />
-                                            </div>
-                                        )}
-                                        <div>
-                                            <p className="font-bold text-sm">{m.title}</p>
-                                            <p className="text-xs text-zinc-500 italic max-w-[200px] truncate">{m.url}</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-zinc-100 rounded-full">{m.type}</span>
-                                </td>
-                                <td className="px-6 py-4 text-xs text-zinc-500">
-                                    {m.personName && <span>{m.personName} ({m.personRole})</span>}
-                                    {m.duration && <span>{m.duration}</span>}
-                                </td>
-                                <td className="px-6 py-4 text-right">
-                                    <button onClick={() => handleDeleteMedia(m.id)} className="p-2 text-zinc-400 hover:text-red-500 transition-colors">
-                                        <Trash2 className="size-4" />
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-
-                {((activeTab === "artists" && initialArtists.length === 0) ||
-                    (activeTab === "program" && initialProgram.length === 0) ||
-                    (activeTab === "media" && initialMedia.length === 0)) && !isAdding && (
-                        <div className="py-20 text-center text-zinc-400">
-                            Nessun elemento presente in questa categoria.
+                    <div className="max-w-md space-y-6">
+                        <div className="space-y-2">
+                            <label className="text-xs font-black uppercase tracking-widest text-zinc-500">Anno dell&apos;Evento</label>
+                            <input
+                                type="text"
+                                value={settingsForm.year}
+                                onChange={e => setSettingsForm({ ...settingsForm, year: e.target.value })}
+                                className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-amber-500 outline-none font-bold text-lg"
+                                placeholder="Es: 2026"
+                            />
+                            <p className="text-[10px] text-zinc-400 font-medium">L&apos;anno verrà mostrato nel titolo delle pagine della Piazza.</p>
                         </div>
-                    )}
-            </div>
+
+                        <div className="flex items-center justify-between p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
+                            <div>
+                                <p className="font-bold text-zinc-900">Visibilità Countdown</p>
+                                <p className="text-xs text-zinc-500">Mostra il banner con il countdown nelle home di Morgana e ORUM.</p>
+                            </div>
+                            <button
+                                onClick={() => setSettingsForm({ ...settingsForm, countdownVisible: !settingsForm.countdownVisible })}
+                                className={cn(
+                                    "w-14 h-8 rounded-full transition-all relative",
+                                    settingsForm.countdownVisible ? "bg-emerald-500" : "bg-zinc-300"
+                                )}
+                            >
+                                <div className={cn(
+                                    "absolute top-1 size-6 bg-white rounded-full shadow-md transition-all",
+                                    settingsForm.countdownVisible ? "left-7" : "left-1"
+                                )} />
+                            </button>
+                        </div>
+
+                        <button
+                            onClick={handleUpdateSettings}
+                            disabled={loading}
+                            className="w-full py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-800 disabled:opacity-50 transition-all shadow-lg active:scale-[0.98]"
+                        >
+                            {loading ? "Salvataggio..." : "Salva Impostazioni"}
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* LISTS (only for non-settings) */}
+            {activeTab !== "settings" && (
+                <div className="bg-white rounded-3xl border border-zinc-200 overflow-hidden shadow-sm animate-in fade-in duration-500">
+                    <table className="w-full text-left font-sans">
+                        <thead className="bg-zinc-50 border-b">
+                            <tr>
+                                <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-400">Dettagli</th>
+                                <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-400">Classificazione</th>
+                                <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-400">Extra</th>
+                                <th className="px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-400 text-right">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-zinc-100">
+                            {activeTab === "artists" && initialArtists.map((a: any) => (
+                                <tr key={a.id} className="hover:bg-zinc-50 transition-colors">
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-4">
+                                            <div className="size-10 rounded-lg overflow-hidden shrink-0 relative border border-zinc-100">
+                                                <Image src={a.image || "/assets/slides/1.jpg"} fill className="object-cover" alt="" />
+                                            </div>
+                                            <div>
+                                                <p className="font-bold text-sm text-zinc-900">{a.name}</p>
+                                                <p className="text-[10px] text-zinc-500 italic font-medium">{a.role}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 text-sm">
+                                        <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-zinc-100 rounded-full text-zinc-600">{a.category}</span>
+                                    </td>
+                                    <td className="px-6 py-4 text-[10px] text-zinc-500 font-bold uppercase tracking-tight">
+                                        {a.badge && <span className="text-amber-600 mr-2">{a.badge}</span>}
+                                        Pos: {a.order}
+                                    </td>
+                                    <td className="px-6 py-4 text-right">
+                                        <button onClick={() => handleDeleteArtist(a.id)} className="p-2 text-zinc-300 hover:text-red-500 transition-colors">
+                                            <Trash2 className="size-4" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+
+                            {activeTab === "program" && initialProgram.map((p: any) => (
+                                <tr key={p.id} className="hover:bg-zinc-50 transition-colors">
+                                    <td className="px-6 py-4">
+                                        <p className="font-bold text-sm text-zinc-900">{p.title}</p>
+                                        <p className="text-[10px] text-zinc-500 truncate max-w-[200px] font-medium">{p.description}</p>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-zinc-100 rounded-full text-zinc-600">{p.timeSlot}</span>
+                                    </td>
+                                    <td className="px-6 py-4 text-[10px] text-zinc-500 font-bold uppercase">
+                                        {p.startTime} {p.endTime && `- ${p.endTime}`} <br />
+                                        <span className="text-zinc-400">Icona: {p.icon}</span>
+                                    </td>
+                                    <td className="px-6 py-4 text-right">
+                                        <button onClick={() => handleDeleteProgram(p.id)} className="p-2 text-zinc-300 hover:text-red-500 transition-colors">
+                                            <Trash2 className="size-4" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+
+                            {activeTab === "media" && initialMedia.map((m: any) => (
+                                <tr key={m.id} className="hover:bg-zinc-50 transition-colors">
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center gap-4">
+                                            {m.thumbnail && (
+                                                <div className="size-10 rounded-lg overflow-hidden shrink-0 relative border border-zinc-100">
+                                                    <Image src={m.thumbnail} fill className="object-cover" alt="" />
+                                                </div>
+                                            )}
+                                            <div>
+                                                <p className="font-bold text-sm text-zinc-900">{m.title}</p>
+                                                <p className="text-[10px] text-zinc-500 italic max-w-[200px] truncate font-medium">{m.url}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-zinc-100 rounded-full text-zinc-600">{m.type}</span>
+                                    </td>
+                                    <td className="px-6 py-4 text-[10px] text-zinc-500 font-bold uppercase tracking-tight">
+                                        {m.personName && <span>{m.personName} ({m.personRole})</span>}
+                                        {m.duration && <span>{m.duration}</span>}
+                                    </td>
+                                    <td className="px-6 py-4 text-right">
+                                        <button onClick={() => handleDeleteMedia(m.id)} className="p-2 text-zinc-300 hover:text-red-500 transition-colors">
+                                            <Trash2 className="size-4" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+
+                    {((activeTab === "artists" && initialArtists.length === 0) ||
+                        (activeTab === "program" && initialProgram.length === 0) ||
+                        (activeTab === "media" && initialMedia.length === 0)) && !isAdding && (
+                            <div className="py-20 text-center text-zinc-400 font-serif italic text-sm">
+                                Nessun elemento presente in questa categoria.
+                            </div>
+                        )}
+                </div>
+            )}
         </div>
     )
 }

@@ -12,6 +12,7 @@ import { CountdownTimer } from "@/components/countdown-timer"
 import { SponsorsCarousel } from "@/components/sponsors-carousel"
 import { ArtistiCarousel } from "@/components/artisti-carousel"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
+import { getPiazzaSettings } from "@/app/actions/piazza"
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
     const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
@@ -114,7 +115,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
     if (!config) notFound()
 
-    const [t, tb, te, th, ts, navT, newsResult, eventsResult] = await Promise.all([
+    const [t, tb, te, th, ts, navT, newsResult, eventsResult, settings] = await Promise.all([
         getTranslations("Network"),
         getTranslations("Brands"),
         getTranslations("Events"),
@@ -122,28 +123,35 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
         getTranslations("Search"),
         getTranslations("Navigation"),
         getNews(undefined, undefined, config.association, locale),
-        getAllEvents(null, config.association, 'upcoming', locale)
+        getAllEvents(null, config.association, 'upcoming', locale),
+        getPiazzaSettings()
     ])
 
     const notizie = newsResult.slice(0, 3)
     const eventi = eventsResult.slice(0, 3)
 
+    // Dynamic brand config for Piazza
+    const dynamicConfig = { ...config }
+    if (brandId === 'piazzadellarte') {
+        dynamicConfig.name = `Piazza dell'Arte ${settings.year}`
+    }
+
     return (
         <div className="flex flex-col min-h-screen">
             {/* SUB-SITE HERO */}
             <section className="relative min-h-[600px] lg:min-h-[700px] w-full bg-slate-900 flex items-center justify-center overflow-hidden py-16">
-                <Image src={config.bg} fill className="object-cover opacity-40 shadow-inner" alt="" sizes="100vw" priority />
+                <Image src={dynamicConfig.bg} fill className="object-cover opacity-40 shadow-inner" alt="" sizes="100vw" priority />
 
                 {/* Overlay Personalizzato per il Brand */}
                 <div
                     className="absolute inset-0 opacity-95 mix-blend-multiply"
                     style={{
-                        background: config.theme
-                            ? `linear-gradient(to right, ${config.theme.primary}CC, ${config.theme.secondary}E6)`
+                        background: dynamicConfig.theme
+                            ? `linear-gradient(to right, ${dynamicConfig.theme.primary}CC, ${dynamicConfig.theme.secondary}E6)`
                             : undefined
                     }}
                 >
-                    {!config.theme && <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-background/90"></div>}
+                    {!dynamicConfig.theme && <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-background/90"></div>}
                 </div>
                 <div className="absolute inset-0 bg-black/40"></div>
 
@@ -152,10 +160,10 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                         "size-32 md:size-48 flex items-center justify-center overflow-hidden p-4 mb-8 transform hover:rotate-3 transition-transform duration-500",
                         brandId === "piazzadellarte" ? "" : "rounded-full bg-white shadow-2xl border-4 border-white/20"
                     )}>
-                        <Image src={config.logo} width={180} height={180} className="w-full h-full object-contain" alt={config.name} />
+                        <Image src={dynamicConfig.logo} width={180} height={180} className="w-full h-full object-contain" alt={dynamicConfig.name} />
                     </div>
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-black text-white text-center leading-tight mb-4 drop-shadow-2xl uppercase tracking-tighter">
-                        {config.name}
+                        {dynamicConfig.name}
                     </h1>
                     <p className="text-lg md:text-2xl text-white/90 font-serif max-w-2xl text-center leading-relaxed drop-shadow-md italic mb-4">
                         &ldquo;{tb(`${brandId}.subtitle` as any)}&rdquo;
@@ -163,7 +171,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
                     {brandId === "piazzadellarte" && (
                         <div className="mt-8 mb-4">
-                            <CountdownTimer targetDate={new Date('2026-05-22T09:00:00')} />
+                            <CountdownTimer targetDate={new Date(`${settings.year}-05-22T09:00:00`)} />
                         </div>
                     )}
 

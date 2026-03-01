@@ -4,7 +4,7 @@ import { Link, usePathname, useRouter } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
 import { logoutAction } from "@/app/actions/auth"
-import { LogOut, User, Menu, X, Mail, Search } from "lucide-react"
+import { LogOut, User, Menu, X, Mail, Search, Calendar } from "lucide-react"
 import { useBrand } from "@/components/brand-provider"
 import { SearchModal } from "./search-modal"
 import { useTranslations } from "next-intl"
@@ -165,6 +165,19 @@ export function MainNav({
 
                 {isLoggedIn ? (
                     <div className="flex items-center gap-3 ml-4">
+                        {/* Piazza dell'Arte Dedicated Admin Button */}
+                        <Link
+                            href="/admin/piazza"
+                            className={cn(
+                                "flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1fbcd3] text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg leading-none text-center min-h-[40px] justify-center"
+                            )}
+                        >
+                            <Calendar className="size-4 shrink-0" />
+                            <span className="flex flex-col justify-center pt-0.5">
+                                Area Personale Piazza
+                            </span>
+                        </Link>
+
                         <Link
                             href={`/dashboard`}
                             className={cn(
@@ -187,15 +200,17 @@ export function MainNav({
                         </button>
                     </div>
                 ) : (
-                    <Link
-                        href={`/login`}
-                        className={cn(
-                            "ml-4 px-6 py-1.5 rounded-full text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg max-w-[150px] leading-none text-center flex items-center justify-center min-h-[40px]",
-                            brandColor
-                        )}
-                    >
-                        <span className="pt-0.5">{nt("reserved_area")}</span>
-                    </Link>
+                    <div className="flex items-center gap-3 ml-4">
+                        <Link
+                            href={`/login`}
+                            className={cn(
+                                "px-6 py-1.5 rounded-full text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg max-w-[150px] leading-none text-center flex items-center justify-center min-h-[40px]",
+                                brandColor
+                            )}
+                        >
+                            <span className="pt-0.5">{nt("reserved_area")}</span>
+                        </Link>
+                    </div>
                 )}
             </nav>
 

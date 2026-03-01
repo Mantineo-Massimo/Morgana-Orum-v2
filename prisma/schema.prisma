@@ -226,3 +226,10 @@ model PiazzaMediaItem {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model PiazzaSettings {
+  id               String   @id @default("settings")
+  year             String   @default("2026")
+  countdownVisible Boolean  @default(true)
+  updatedAt        DateTime @updatedAt
+}

@@ -1,15 +1,16 @@
 import { getTranslations } from "next-intl/server"
 import { PiazzaManagement } from "@/components/admin/piazza/piazza-management"
-import { getPiazzaArtists, getPiazzaProgram, getPiazzaMedia } from "@/app/actions/piazza"
+import { getPiazzaArtists, getPiazzaProgram, getPiazzaMedia, getPiazzaSettings } from "@/app/actions/piazza"
 import { Sparkles } from "lucide-react"
 
 export default async function PiazzaAdminPage() {
     const t = await getTranslations("Admin")
 
-    const [artists, program, media] = await Promise.all([
+    const [artists, program, media, settings] = await Promise.all([
         getPiazzaArtists(),
         getPiazzaProgram(),
-        getPiazzaMedia()
+        getPiazzaMedia(),
+        getPiazzaSettings()
     ])
 
     return (
@@ -19,11 +20,11 @@ export default async function PiazzaAdminPage() {
                     <div className="flex items-center gap-3 mb-1">
                         <Sparkles className="size-6 text-amber-500" />
                         <h1 className="text-3xl font-black uppercase tracking-tighter text-zinc-900">
-                            Piazza dell&apos;Arte 2026
+                            Piazza dell&apos;Arte {settings.year}
                         </h1>
                     </div>
                     <p className="text-zinc-500 text-sm font-medium">
-                        Gestione dinamica di artisti, programma e contenuti multimediali.
+                        Gestione dinamica di artisti, programma, contenuti multimediali e impostazioni.
                     </p>
                 </div>
             </div>
@@ -32,6 +33,7 @@ export default async function PiazzaAdminPage() {
                 artists={artists}
                 program={program}
                 media={media}
+                settings={settings}
             />
         </div>
     )

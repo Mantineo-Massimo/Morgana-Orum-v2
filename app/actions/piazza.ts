@@ -208,3 +208,60 @@ export async function deletePiazzaMediaItem(id: string) {
         return { success: false, error: "Errore nell'eliminazione del contenuto media." }
     }
 }
+
+// --- SETTINGS ---
+
+const getPiazzaSettingsInternal = async () => {
+    try {
+        let settings = await prisma.piazzaSettings.findUnique({
+            where: { id: "settings" }
+        })
+
+        if (!settings) {
+            settings = await prisma.piazzaSettings.create({
+                data: {
+                    id: "settings",
+                    year: "2026",
+                    countdownVisible: true
+                }
+            })
+        }
+
+        return settings
+    } catch (error) {
+        console.error("Error fetching Piazza settings:", error)
+        return { year: "2026", countdownVisible: true }
+    }
+}
+
+export const getPiazzaSettings = async () => {
+    return await unstable_cache(
+        async () => getPiazzaSettingsInternal(),
+        ['piazza-settings'],
+        { revalidate: 3600, tags: ['piazza'] }
+    )()
+}
+
+export async function updatePiazzaSettings(data: {
+    year?: string,
+    countdownVisible?: boolean
+}) {
+    try {
+        await prisma.piazzaSettings.upsert({
+            where: { id: "settings" },
+            update: data,
+            create: {
+                id: "settings",
+                year: data.year || "2026",
+                countdownVisible: data.countdownVisible ?? true
+            }
+        })
+        revalidatePath("/admin/piazza")
+        revalidatePath("/")
+        revalidatePath("/network/piazzadellarte")
+        return { success: true }
+    } catch (error) {
+        console.error("Update Piazza settings error:", error)
+        return { success: false, error: "Errore nell'aggiornamento delle impostazioni." }
+    }
+}

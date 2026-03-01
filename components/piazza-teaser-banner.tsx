@@ -1,13 +1,16 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { CountdownTimer } from "@/components/countdown-timer"
+import { getPiazzaSettings } from "@/app/actions/piazza"
 
-const TARGET_DATE = new Date('2026-05-22T09:00:00')
+export async function PiazzaTeaserBanner() {
+    const settings = await getPiazzaSettings()
 
-export function PiazzaTeaserBanner() {
+    if (!settings.countdownVisible) return null
+
+    const TARGET_DATE = new Date(`${settings.year}-05-22T09:00:00`)
+
     return (
         <section className="py-16 relative overflow-hidden min-h-[240px]">
             {/* Background */}
@@ -41,7 +44,7 @@ export function PiazzaTeaserBanner() {
                     <div className="flex-1 text-center md:text-left">
                         <p className="text-[#27a85d] font-black text-sm uppercase tracking-widest mb-2">Prossimo evento speciale</p>
                         <h2 className="text-3xl md:text-4xl font-serif font-black text-white uppercase tracking-tighter mb-3">
-                            Piazza dell&apos;Arte 2026
+                            Piazza dell&apos;Arte {settings.year}
                         </h2>
                         <p className="text-white/60 font-serif mb-6">
                             L&apos;evento socio-culturale più atteso della primavera messinese. Musica, arte e spettacolo nel cuore dell&apos;università.
