@@ -171,7 +171,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
                     {brandId === "piazzadellarte" && (
                         <div className="mt-8 mb-4">
-                            <CountdownTimer targetDate={new Date(`${settings.year}-05-22T09:00:00`)} />
+                            <CountdownTimer targetDate={settings.eventDate ? new Date(settings.eventDate) : new Date(`${settings.year}-05-22T09:00:00`)} />
                         </div>
                     )}
 

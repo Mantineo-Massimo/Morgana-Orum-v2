@@ -9,7 +9,7 @@ export async function PiazzaTeaserBanner() {
 
     if (!settings.countdownVisible) return null
 
-    const TARGET_DATE = new Date(`${settings.year}-05-22T09:00:00`)
+    const TARGET_DATE = settings.eventDate ? new Date(settings.eventDate) : new Date(`${settings.year}-05-22T09:00:00`)
 
     return (
         <section className="py-16 relative overflow-hidden min-h-[240px]">

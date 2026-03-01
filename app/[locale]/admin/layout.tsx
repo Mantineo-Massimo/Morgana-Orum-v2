@@ -68,17 +68,6 @@ export default async function AdminLayout({
                 },
             ]
         },
-        {
-            section: "Piazza dell'Arte 2026",
-            items: [
-                {
-                    label: "Gestione Globale",
-                    href: `/admin/piazza`,
-                    iconName: "Sparkles",
-                    exact: false
-                },
-            ]
-        }
     ]
 
     // Only SUPER_ADMIN sees Conventions and User Management

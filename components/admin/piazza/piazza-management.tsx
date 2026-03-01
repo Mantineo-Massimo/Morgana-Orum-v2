@@ -13,12 +13,16 @@ import {
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
-interface Props {
+import { toast } from "react-hot-toast"
+import { Input } from "@/components/ui/input"
+
+interface PiazzaManagementProps {
     artists: any[]
     program: any[]
     media: any[]
     settings: {
         year: string
+        eventDate: Date | null | string
         countdownVisible: boolean
     }
 }
@@ -32,7 +36,7 @@ export function PiazzaManagement({
     program: initialProgram,
     media: initialMedia,
     settings: initialSettings
-}: Props) {
+}: PiazzaManagementProps) {
     const [activeTab, setActiveTab] = useState<"artists" | "program" | "media" | "settings">("artists")
     const [isAdding, setIsAdding] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -41,18 +45,33 @@ export function PiazzaManagement({
     const [artistForm, setArtistForm] = useState({ name: "", role: "", category: "Musica", bio: "", image: "", badge: "", order: 0 })
     const [programForm, setProgramForm] = useState({ title: "", description: "", timeSlot: "Mattino", startTime: "", endTime: "", icon: "Palette", order: 0 })
     const [mediaForm, setMediaForm] = useState({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "", order: 0 })
-    const [settingsForm, setSettingsForm] = useState(initialSettings)
+    // Settings Form State
+    const [settingsForm, setSettingsForm] = useState({
+        year: initialSettings.year,
+        eventDate: initialSettings.eventDate ? new Date(initialSettings.eventDate).toISOString().slice(0, 16) : '',
+        countdownVisible: initialSettings.countdownVisible
+    })
 
-    const handleUpdateSettings = async () => {
+    const handleUpdateSettings = async (e: React.FormEvent) => {
+        e.preventDefault()
         setLoading(true)
-        const res = await updatePiazzaSettings(settingsForm)
-        if (res.success) {
-            alert("Impostazioni salvate con successo!")
-            window.location.reload()
-        } else {
-            alert(res.error)
+        try {
+            const result = await updatePiazzaSettings({
+                year: settingsForm.year,
+                eventDate: settingsForm.eventDate ? new Date(settingsForm.eventDate) : undefined, // Pass as Date object or undefined
+                countdownVisible: settingsForm.countdownVisible
+            })
+            if (result.success) {
+                toast.success("Impostazioni aggiornate con successo")
+                window.location.reload() // Reload to reflect changes
+            } else {
+                toast.error(result.error)
+            }
+        } catch (error) {
+            toast.error("Errore nell'aggiornamento")
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
     }
 
     const handleAddArtist = async () => {
@@ -292,17 +311,29 @@ export function PiazzaManagement({
                     </div>
 
                     <div className="max-w-md space-y-6">
-                        <div className="space-y-2">
-                            <label className="text-xs font-black uppercase tracking-widest text-zinc-500">Anno dell&apos;Evento</label>
-                            <input
-                                type="text"
-                                value={settingsForm.year}
-                                onChange={e => setSettingsForm({ ...settingsForm, year: e.target.value })}
-                                className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-amber-500 outline-none font-bold text-lg"
-                                placeholder="Es: 2026"
-                            />
-                            <p className="text-[10px] text-zinc-400 font-medium">L&apos;anno verrà mostrato nel titolo delle pagine della Piazza.</p>
+                        <div className="grid gap-6">
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold uppercase tracking-widest text-zinc-500">Anno dell&apos;Evento</label>
+                                <Input
+                                    value={settingsForm.year}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSettingsForm({ ...settingsForm, year: e.target.value })}
+                                    placeholder="Es: 2026"
+                                    className="bg-white"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-sm font-bold uppercase tracking-widest text-zinc-500">Data e Ora Inizio Evento (Countdown)</label>
+                                <Input
+                                    type="datetime-local"
+                                    value={settingsForm.eventDate}
+                                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSettingsForm({ ...settingsForm, eventDate: e.target.value })}
+                                    className="bg-white"
+                                />
+                                <p className="text-[10px] text-zinc-400 italic">Questa data verrà utilizzata per il timer del countdown in tutto il sito.</p>
+                            </div>
                         </div>
+                        <p className="text-[10px] text-zinc-400 font-medium">L&apos;anno verrà mostrato nel titolo delle pagine della Piazza.</p>
 
                         <div className="flex items-center justify-between p-4 bg-zinc-50 rounded-2xl border border-zinc-100">
                             <div>

@@ -167,7 +167,7 @@ export function MainNav({
                     <div className="flex items-center gap-3 ml-4">
                         {/* Piazza dell'Arte Dedicated Admin Button */}
                         <Link
-                            href="/admin/piazza"
+                            href="/piazza-admin"
                             className={cn(
                                 "flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1fbcd3] text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg leading-none text-center min-h-[40px] justify-center"
                             )}
