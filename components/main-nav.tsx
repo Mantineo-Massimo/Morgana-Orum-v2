@@ -70,7 +70,7 @@ export function MainNav({
                 color: "text-[#27a85d]" // Green
             },
             {
-                href: `/network/piazzadellarte#programma`,
+                href: `/network/piazzadellarte/programma`,
                 label: nt("programma"),
                 active: false,
                 color: "text-[#f9a620]" // Yellow

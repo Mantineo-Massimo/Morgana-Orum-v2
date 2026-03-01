@@ -96,7 +96,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
 
                 <section className="py-24 bg-white text-zinc-900 relative">
                     <div className="container relative z-10">
-                        <div className="grid lg:grid-cols-2 gap-16 items-start max-w-6xl mx-auto">
+                        <div className="grid lg:grid-cols-2 gap-16 items-stretch max-w-6xl mx-auto">
                             {/* Left Column: Cosa facciamo */}
                             <div className="space-y-10">
                                 <div>
@@ -134,7 +134,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
                             </div>
 
                             {/* Right Column: Le Associazioni & Perchè è importante */}
-                            <div className="bg-[#18182e] p-8 md:p-10 rounded-3xl text-white shadow-xl relative overflow-hidden">
+                            <div className="bg-[#18182e] p-8 md:p-10 rounded-3xl text-white shadow-xl relative overflow-hidden h-full">
                                 <div className="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-[#27a85d] rounded-full blur-[80px] opacity-50"></div>
                                 <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-[#1fbcd3] rounded-full blur-[80px] opacity-50"></div>
 
