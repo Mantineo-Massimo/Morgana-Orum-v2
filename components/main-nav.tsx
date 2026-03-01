@@ -76,7 +76,7 @@ export function MainNav({
                 color: "text-[#f9a620]" // Yellow
             },
             {
-                href: `/network/piazzadellarte#artisti`,
+                href: `/network/piazzadellarte/artisti`,
                 label: nt("artisti"),
                 active: false,
                 color: "text-[#27a85d]" // Green

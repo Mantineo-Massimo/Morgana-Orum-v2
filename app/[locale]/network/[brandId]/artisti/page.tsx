@@ -1,8 +1,100 @@
-import { notFound } from "next/navigation"
-import { getTranslations } from "next-intl/server"
-import { Metadata } from "next"
+"use client"
 
-export const dynamic = "force-dynamic"
+import { notFound } from "next/navigation"
+import { Metadata } from "next"
+import { useState } from "react"
+import Image from "next/image"
+import Link from "next/link"
+import { ArrowLeft, Mic2, Music, Star, Palette, Users, Play } from "lucide-react"
+
+// ── ARTISTI DATA ────────────────────────────────────────────────────────────
+const CATEGORIES = ["Tutti", "Musica", "Danza", "Pittura", "Performance"] as const
+type Category = typeof CATEGORIES[number]
+
+const ARTISTS: {
+    id: number
+    name: string
+    role: string
+    category: Category
+    bio: string
+    image: string
+    badge?: string
+}[] = [
+        {
+            id: 1,
+            name: "Artista 1",
+            role: "Live Band",
+            category: "Musica",
+            bio: "Una band emergente dal cuore di Messina con sonorità indie-rock che mescola influenze moderne e tradizionali.",
+            image: "/assets/slides/1.jpg",
+            badge: "Headliner"
+        },
+        {
+            id: 2,
+            name: "Artista 2",
+            role: "DJ Set",
+            category: "Musica",
+            bio: "DJ di fama locale con un set elettronico coinvolgente, capace di far ballare migliaia di persone.",
+            image: "/assets/slides/2.jpg",
+        },
+        {
+            id: 3,
+            name: "Artista 3",
+            role: "Danza Contemporanea",
+            category: "Danza",
+            bio: "Compagnia di danza contemporanea che intreccia movimento e narrazione poetica in spettacoli unici.",
+            image: "/assets/slides/3.jpg",
+        },
+        {
+            id: 4,
+            name: "Artista 4",
+            role: "Acoustic Solo",
+            category: "Musica",
+            bio: "Singer-songwriter dalla voce potente e testi introspettivi. Un momento acustico di grande emozione.",
+            image: "/assets/slides/4.jpg",
+        },
+        {
+            id: 5,
+            name: "Artista 5",
+            role: "Street Art / Pittura",
+            category: "Pittura",
+            bio: "Artista visivo specializzato in estemporanee di pittura. Crea opere dal vivo davanti al pubblico.",
+            image: "/assets/slides/1.jpg",
+        },
+        {
+            id: 6,
+            name: "Artista 6",
+            role: "Performance Teatrale",
+            category: "Performance",
+            bio: "Performer teatrale con spettacoli interattivi che coinvolgono direttamente il pubblico.",
+            image: "/assets/slides/2.jpg",
+            badge: "Special Guest"
+        },
+        {
+            id: 7,
+            name: "Artista 7",
+            role: "Hip-Hop",
+            category: "Musica",
+            bio: "MC e rapper con testi impegnati e un flow incisivo, portavoce della nuova scena underground siciliana.",
+            image: "/assets/slides/3.jpg",
+        },
+        {
+            id: 8,
+            name: "Artista 8",
+            role: "Danza Classica",
+            category: "Danza",
+            bio: "Ballerino classico formato alla scuola dell'Università di Messina, con esibizioni di tecnica sopraffina.",
+            image: "/assets/slides/4.jpg",
+        },
+    ]
+
+const CATEGORY_ICONS: Record<string, any> = {
+    "Musica": Mic2,
+    "Danza": Star,
+    "Pittura": Palette,
+    "Performance": Play,
+    "Tutti": Users,
+}
 
 const THEME = {
     primary: "#f9a620",
@@ -10,53 +102,144 @@ const THEME = {
     accent: "#1fbcd3"
 }
 
-export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
-    if (params.brandId !== 'piazzadellarte') return {}
-    return {
-        title: "Artisti | Piazza Dell'Arte",
-    }
-}
+// ── COMPONENT ────────────────────────────────────────────────────────────────
+export default function ArtistiPage() {
+    const [activeCategory, setActiveCategory] = useState<Category>("Tutti")
 
-export default async function ArtistiPage({ params }: { params: { brandId: string, locale: string } }) {
-    if (params.brandId !== 'piazzadellarte') {
-        notFound()
-    }
-
-    const navT = await getTranslations("Navigation")
+    const filtered = activeCategory === "Tutti"
+        ? ARTISTS
+        : ARTISTS.filter(a => a.category === activeCategory)
 
     return (
-        <div className="min-h-screen pt-32 pb-24 bg-zinc-50 text-foreground relative overflow-hidden flex flex-col items-center">
-            <div className="container relative z-10 w-full flex-1">
-                <div className="text-center mb-16">
-                    <h1 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
-                        {navT("artisti")}
-                    </h1>
-                    <div className="w-24 h-1.5 bg-primary mx-auto rounded-full" style={{ backgroundColor: THEME.primary }}></div>
+        <div className="min-h-screen bg-zinc-950 text-white">
+            {/* HERO */}
+            <section className="relative pt-36 pb-20 overflow-hidden">
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full blur-[140px] opacity-20" style={{ backgroundColor: THEME.secondary }}></div>
+                    <div className="absolute top-0 right-1/4 w-[400px] h-[400px] rounded-full blur-[140px] opacity-15" style={{ backgroundColor: THEME.primary }}></div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-6xl mx-auto">
-                    {[1, 2, 3, 4].map((i) => (
-                        <div key={i} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-zinc-200">
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            <div className="absolute inset-0 flex items-end p-6 z-20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 opacity-0 group-hover:opacity-100">
-                                <div className="text-white">
-                                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-1 block">Live Performance</span>
-                                    <h3 className="text-xl font-bold uppercase leading-tight">Artista {i}</h3>
+                <div className="container relative z-10 text-center">
+                    <Link
+                        href="/network/piazzadellarte"
+                        className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-10 text-sm font-bold uppercase tracking-widest group"
+                    >
+                        <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+                        Torna alla home
+                    </Link>
+                    <h1 className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter mb-6">
+                        Gli <span style={{ color: THEME.secondary }}>Artisti</span>
+                    </h1>
+                    <p className="text-xl text-white/70 max-w-2xl mx-auto font-serif leading-relaxed">
+                        Talenti emergenti dal territorio siciliano e non solo. Scopri chi si esibirà alla Piazza dell&apos;Arte.
+                    </p>
+                    <div className="w-24 h-1.5 mx-auto mt-8 rounded-full" style={{ backgroundColor: THEME.secondary }}></div>
+                </div>
+            </section>
+
+            {/* FILTER PILLS */}
+            <section className="pb-12">
+                <div className="container">
+                    <div className="flex flex-wrap justify-center gap-3">
+                        {CATEGORIES.map((cat) => {
+                            const Icon = CATEGORY_ICONS[cat]
+                            const active = activeCategory === cat
+                            return (
+                                <button
+                                    key={cat}
+                                    onClick={() => setActiveCategory(cat)}
+                                    className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-black uppercase tracking-widest transition-all duration-300 border ${active
+                                            ? "text-[#18182e] border-transparent shadow-lg scale-105"
+                                            : "bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white"
+                                        }`}
+                                    style={active ? { backgroundColor: THEME.primary, borderColor: THEME.primary } : {}}
+                                >
+                                    <Icon className="size-4" />
+                                    {cat}
+                                </button>
+                            )
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            {/* ARTISTS GRID */}
+            <section className="pb-24">
+                <div className="container">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
+                        {filtered.map((artist) => (
+                            <div key={artist.id} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-zinc-800 cursor-pointer">
+                                {/* Image */}
+                                <Image
+                                    src={artist.image}
+                                    alt={artist.name}
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+
+                                {/* Gradient overlay */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent z-10"></div>
+
+                                {/* Badge */}
+                                {artist.badge && (
+                                    <div
+                                        className="absolute top-4 left-4 z-20 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg"
+                                        style={{ backgroundColor: THEME.primary, color: "#18182e" }}
+                                    >
+                                        {artist.badge}
+                                    </div>
+                                )}
+
+                                {/* Category pill */}
+                                <div className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white/80 border border-white/20">
+                                    {artist.category}
+                                </div>
+
+                                {/* Info — always visible at bottom */}
+                                <div className="absolute bottom-0 left-0 right-0 p-5 z-20">
+                                    <span
+                                        className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1 block"
+                                        style={{ color: THEME.secondary }}
+                                    >
+                                        {artist.role}
+                                    </span>
+                                    <h3 className="text-lg font-black uppercase leading-tight mb-2">{artist.name}</h3>
+
+                                    {/* Bio - slides up on hover */}
+                                    <p className="text-xs text-white/70 leading-relaxed max-h-0 overflow-hidden group-hover:max-h-24 transition-all duration-500">
+                                        {artist.bio}
+                                    </p>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-                <div className="mt-16 text-center max-w-xl mx-auto">
-                    <p className="text-xl text-muted-foreground font-serif italic mb-8">
-                        Molti altri talenti si alterneranno sul palco e nel cortile...
-                    </p>
-                </div>
-            </div>
+                        ))}
+                    </div>
 
-            {/* Decorative Elements */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full -ml-32 -mb-32 blur-3xl"></div>
+                    {filtered.length === 0 && (
+                        <div className="text-center py-20 text-white/40">
+                            <Music className="size-12 mx-auto mb-4 opacity-40" />
+                            <p className="text-lg">Nessun artista in questa categoria.</p>
+                        </div>
+                    )}
+                </div>
+            </section>
+
+            {/* CTA */}
+            <section className="py-16 border-t border-white/10">
+                <div className="container text-center">
+                    <p className="text-white/60 mb-2 text-lg font-serif">Sei un artista?</p>
+                    <h2 className="text-3xl font-black uppercase tracking-tighter mb-8" style={{ color: THEME.primary }}>
+                        Partecipa anche tu
+                    </h2>
+                    <Link
+                        href="https://fantapiazza.vercel.app"
+                        target="_blank"
+                        className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl"
+                        style={{ backgroundColor: THEME.primary, color: "#18182e" }}
+                    >
+                        Candidati su FantaPiazza
+                    </Link>
+                </div>
+            </section>
         </div>
     )
 }
