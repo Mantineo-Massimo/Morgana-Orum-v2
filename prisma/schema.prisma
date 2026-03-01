@@ -185,3 +185,44 @@ enum Association {
   INSIDE_DICAM
   PIAZZA_DELLARTE
 }
+
+model PiazzaArtist {
+  id        String   @id @default(uuid())
+  name      String
+  role      String
+  category  String   // Musica, Danza, Pittura, Performance
+  bio       String
+  image     String?
+  badge     String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PiazzaProgramItem {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  timeSlot    String   // Mattino, Pomeriggio, Sera
+  startTime   String?  // HH:mm
+  endTime     String?  // HH:mm
+  icon        String?  // Lucide icon name
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PiazzaMediaItem {
+  id          String   @id @default(uuid())
+  type        String   // VIDEO, PHOTO, INTERVIEW
+  title       String
+  description String?
+  url         String?  // YouTube URL or Image path
+  thumbnail   String?
+  personName  String?  // For interviews
+  personRole  String?  // For interviews
+  duration    String?  // For videos
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

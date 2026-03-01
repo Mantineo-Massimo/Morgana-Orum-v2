@@ -67,6 +67,17 @@ export default async function AdminLayout({
                     exact: false
                 },
             ]
+        },
+        {
+            section: "Piazza dell'Arte 2026",
+            items: [
+                {
+                    label: "Gestione Globale",
+                    href: `/admin/piazza`,
+                    iconName: "Sparkles",
+                    exact: false
+                },
+            ]
         }
     ]
 
