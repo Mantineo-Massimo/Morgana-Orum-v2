@@ -94,7 +94,7 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
     },
     piazzadellarte: {
         id: "piazzadellarte",
-        name: "Piazza Dell'Arte",
+        name: "Piazza dell'Arte 2026",
         logo: "/assets/piazzadellarte.png",
         bg: "/assets/piazza.png",
         subtitle: "Il cuore pulsante della creatività studentesca.",
