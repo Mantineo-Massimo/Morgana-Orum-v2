@@ -64,28 +64,28 @@ export function MainNav({
     if (brand === 'piazzadellarte') {
         routes.splice(1, 4, // Rimuovi About, News (verrà riaggiunto), Events, Representatives
             {
-                href: `/network/piazzadellarte/about`,
+                href: `/network/piazzadellarte#cos-e`,
                 label: nt("cose"),
-                active: pathname === `/network/piazzadellarte/about`,
+                active: false,
                 color: "text-[#27a85d]" // Green
             },
             {
-                href: `/network/piazzadellarte/media`,
-                label: nt("news"), // This will be updated to fetch "Media" instead of "News" momentarily
-                active: pathname.startsWith(`/network/piazzadellarte/media`),
-                color: "text-[#f9a620]" // Gold
-            },
-            {
-                href: `/network/piazzadellarte/programma`,
+                href: `/network/piazzadellarte#programma`,
                 label: nt("programma"),
-                active: pathname === `/network/piazzadellarte/programma`,
+                active: false,
                 color: "text-[#f9a620]" // Yellow
             },
             {
-                href: `/network/piazzadellarte/artisti`,
+                href: `/network/piazzadellarte#artisti`,
                 label: nt("artisti"),
-                active: pathname === `/network/piazzadellarte/artisti`,
+                active: false,
                 color: "text-[#27a85d]" // Green
+            },
+            {
+                href: `/network/piazzadellarte#media`,
+                label: nt("media"),
+                active: false,
+                color: "text-[#1fbcd3]" // Cyan
             },
             {
                 href: `https://fantapiazza.vercel.app`,

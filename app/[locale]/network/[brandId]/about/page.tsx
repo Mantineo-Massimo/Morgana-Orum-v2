@@ -75,30 +75,6 @@ export default function Page({ params }: { params: { brandId: string } }) {
         notFound()
     }
 
-    if (params.brandId === 'piazzadellarte') {
-        const theme = (config as any).theme
-        return (
-            <div className="min-h-screen flex flex-col pt-32 pb-20 bg-white">
-                <section className="py-20 bg-white text-foreground relative overflow-hidden flex-1">
-                    <div className="container relative z-10">
-                        <div className="max-w-4xl mx-auto text-center">
-                            <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mb-8 uppercase tracking-widest">
-                                CHI SIAMO: MORGANA & O.R.U.M.
-                            </h2>
-                            <div
-                                className="w-24 h-1.5 mx-auto mb-10 rounded-full"
-                                style={{ backgroundColor: theme?.accent || 'var(--primary)' }}
-                            ></div>
-                            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
-                                {config.mission}
-                            </p>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        )
-    }
-
     return (
         <div className="min-h-screen bg-zinc-50">
             {/* HERO ABOUT */}
