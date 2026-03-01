@@ -50,61 +50,68 @@ export default async function PiazzaAdminLayout({
     ]
 
     return (
-        <div className="min-h-screen bg-[#0a0f1c] text-zinc-100 flex flex-col lg:flex-row">
+        <div className="min-h-screen bg-zinc-50 flex flex-col lg:flex-row" data-admin-area>
             {/* Desktop Sidebar */}
-            <aside className="w-72 shrink-0 bg-[#0f172a] border-r border-zinc-800 hidden lg:flex flex-col sticky top-0 max-h-screen z-40">
-                <div className="p-8 border-b border-zinc-800 flex flex-col items-center text-center">
-                    <div className="size-20 rounded-2xl bg-[#f9a620] flex items-center justify-center mb-4 shadow-lg shadow-[#f9a620]/20">
-                        <Shield className="size-10 text-[#0f172a]" />
-                    </div>
-                    <h1 className="font-serif font-black text-xl tracking-tighter uppercase text-[#f9a620]">
-                        Piazza Admin
-                    </h1>
-                    <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">Control Center</p>
-                    <div className="mt-4 opacity-70">
+            <aside className="w-64 shrink-0 bg-[#0f172a] text-white hidden lg:flex flex-col sticky top-0 max-h-screen overflow-y-auto z-40">
+                <div className="p-6 border-b border-zinc-800 flex items-center gap-3">
+                    <Shield className="size-6 text-[#f9a620]" />
+                    <div>
+                        <h1 className="font-bold text-lg tracking-wide uppercase text-[#f9a620]">Piazza Admin</h1>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Control Center</p>
                         <SidebarClock />
                     </div>
                 </div>
 
-                <div className="flex-1 py-8 px-6 space-y-2 overflow-y-auto">
-                    {navigation.map((item) => {
-                        const Icon = item.icon
-                        return (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className="flex items-center gap-4 px-5 py-3.5 rounded-2xl text-zinc-400 hover:text-[#f9a620] hover:bg-[#f9a620]/5 transition-all group border border-transparent hover:border-[#f9a620]/20"
-                            >
-                                <Icon className="size-5 transition-colors" />
-                                <span className="font-bold text-sm uppercase tracking-wider">{item.label}</span>
-                            </Link>
-                        )
-                    })}
+                {/* Back to Personal Area - MOVED ABOVE NAV as requested */}
+                <div className="p-4 border-b border-zinc-800/50">
+                    <Link
+                        href={`/dashboard`}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-[#f9a620] hover:bg-white/5 transition-all group text-xs font-bold uppercase tracking-widest"
+                    >
+                        ← Area Personale
+                    </Link>
                 </div>
 
-                <div className="p-6 border-t border-zinc-800 bg-[#0a0f1c]/50">
-                    <Link
-                        href={`/network/piazzadellarte`}
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-500 hover:text-white transition-all text-xs font-bold uppercase tracking-widest"
-                    >
-                        <ChevronLeft className="size-4" /> Torna al Sito
-                    </Link>
-
-                    <div className="mt-6 flex items-center gap-3 px-2">
-                        <div className="size-10 rounded-full bg-[#f9a620] flex items-center justify-center text-[#0f172a] font-bold">
-                            {(data?.user?.name || "A").charAt(0)}
-                        </div>
-                        <div className="overflow-hidden">
-                            <p className="text-sm font-bold truncate text-zinc-200">{data?.user?.name || "Admin"}</p>
-                            <p className="text-[10px] text-[#f9a620] uppercase font-bold tracking-tighter">Event Manager</p>
+                <div className="flex-1 py-6 px-4 space-y-8">
+                    <div className="space-y-2">
+                        <h2 className="px-4 text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em]">
+                            Gestione Evento
+                        </h2>
+                        <div className="space-y-1">
+                            {navigation.map((item) => {
+                                const Icon = item.icon
+                                return (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-all group"
+                                    >
+                                        <Icon className="size-5 text-[#f9a620]/70 group-hover:text-[#f9a620] transition-colors" />
+                                        <span className="font-medium text-sm">{item.label}</span>
+                                    </Link>
+                                )
+                            })}
                         </div>
                     </div>
+                </div>
 
+                <div className="p-4 border-t border-zinc-800">
+                    <div className="flex items-center gap-3 px-4 py-3 mb-2">
+                        <div className="size-8 rounded-full bg-[#f9a620] flex items-center justify-center text-[#0f172a] text-xs font-bold">
+                            {(data?.user?.name || "A").charAt(0)}{(data?.user?.surname || "").charAt(0)}
+                        </div>
+                        <div className="overflow-hidden">
+                            <p className="text-sm font-bold truncate">{data?.user?.name || "Admin"}</p>
+                            <p className="text-[10px] text-[#f9a620] uppercase font-bold tracking-tighter">
+                                Event Manager
+                            </p>
+                        </div>
+                    </div>
                     <form action={async () => {
                         "use server"
                         await logoutAction()
-                    }} className="mt-4">
-                        <button className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all text-xs font-bold uppercase tracking-widest">
+                    }}>
+                        <button className="w-full flex items-center gap-2 px-4 py-2 rounded-lg text-red-500 hover:bg-red-500/10 transition-colors text-xs font-bold uppercase tracking-widest">
                             <LogOut className="size-4" /> Esci
                         </button>
                     </form>
@@ -112,7 +119,7 @@ export default async function PiazzaAdminLayout({
             </aside>
 
             {/* Main Content Area */}
-            <main className="flex-1 p-6 md:p-12 min-h-screen">
+            <main className="flex-1 p-4 md:p-8 mt-16 lg:mt-0">
                 <div className="max-w-7xl mx-auto">
                     {children}
                 </div>
