@@ -5,6 +5,7 @@ import { HeroCarousel } from "@/components/hero-carousel"
 import { getNews } from "@/app/actions/news"
 import { getAllEvents } from "@/app/actions/events"
 import { getTranslations } from "next-intl/server"
+import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
 
 export default async function BrandHomePage({
     params: { locale }
@@ -92,6 +93,9 @@ export default async function BrandHomePage({
                     </div>
                 </div>
             </section>
+
+            {/* PIAZZA DELL'ARTE TEASER */}
+            <PiazzaTeaserBanner />
 
             {/* RECENT NEWS SECTION */}
             <section className="py-20 bg-white">
