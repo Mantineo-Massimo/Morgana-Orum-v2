@@ -13,8 +13,6 @@ import {
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 
-import { toast } from "react-hot-toast"
-import { Input } from "@/components/ui/input"
 
 interface PiazzaManagementProps {
     artists: any[]
@@ -62,13 +60,13 @@ export function PiazzaManagement({
                 countdownVisible: settingsForm.countdownVisible
             })
             if (result.success) {
-                toast.success("Impostazioni aggiornate con successo")
+                alert("Impostazioni aggiornate con successo")
                 window.location.reload() // Reload to reflect changes
             } else {
-                toast.error(result.error)
+                alert(result.error)
             }
         } catch (error) {
-            toast.error("Errore nell'aggiornamento")
+            alert("Errore nell'aggiornamento")
         } finally {
             setLoading(false)
         }
@@ -314,21 +312,21 @@ export function PiazzaManagement({
                         <div className="grid gap-6">
                             <div className="space-y-2">
                                 <label className="text-sm font-bold uppercase tracking-widest text-zinc-500">Anno dell&apos;Evento</label>
-                                <Input
+                                <input
                                     value={settingsForm.year}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSettingsForm({ ...settingsForm, year: e.target.value })}
                                     placeholder="Es: 2026"
-                                    className="bg-white"
+                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-medium bg-white"
                                 />
                             </div>
 
                             <div className="space-y-2">
                                 <label className="text-sm font-bold uppercase tracking-widest text-zinc-500">Data e Ora Inizio Evento (Countdown)</label>
-                                <Input
+                                <input
                                     type="datetime-local"
                                     value={settingsForm.eventDate}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSettingsForm({ ...settingsForm, eventDate: e.target.value })}
-                                    className="bg-white"
+                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-medium bg-white"
                                 />
                                 <p className="text-[10px] text-zinc-400 italic">Questa data verrà utilizzata per il timer del countdown in tutto il sito.</p>
                             </div>
