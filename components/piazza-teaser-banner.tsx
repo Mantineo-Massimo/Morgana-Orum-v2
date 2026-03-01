@@ -30,8 +30,8 @@ export function PiazzaTeaserBanner() {
                     <div className="shrink-0">
                         <Image
                             src="/assets/piazzadellarte.png"
-                            width={120}
-                            height={120}
+                            width={200}
+                            height={200}
                             alt="Piazza dell'Arte"
                             className="drop-shadow-2xl"
                         />
