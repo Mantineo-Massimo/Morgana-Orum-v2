@@ -203,12 +203,11 @@ export default async function ProgrammaPage({ params }: { params: { brandId: str
                 <div className="container text-center">
                     <p className="text-white/60 mb-6 text-lg font-serif">Vuoi esibirti o partecipare?</p>
                     <Link
-                        href="https://fantapiazza.vercel.app"
-                        target="_blank"
+                        href="/network/piazzadellarte/artisti"
                         className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl"
                         style={{ backgroundColor: THEME.primary, color: "#18182e" }}
                     >
-                        Scopri FantaPiazza
+                        Scopri gli Artisti
                     </Link>
                 </div>
             </section>

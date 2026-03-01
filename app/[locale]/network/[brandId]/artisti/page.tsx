@@ -173,8 +173,8 @@ export default function ArtistiPage() {
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
                                     className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-black uppercase tracking-widest transition-all duration-300 border ${active
-                                            ? "text-[#18182e] border-transparent shadow-lg scale-105"
-                                            : "bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white"
+                                        ? "text-[#18182e] border-transparent shadow-lg scale-105"
+                                        : "bg-white/5 text-white/60 border-white/10 hover:bg-white/10 hover:text-white"
                                         }`}
                                     style={active ? { backgroundColor: THEME.primary, borderColor: THEME.primary } : {}}
                                 >
@@ -267,7 +267,7 @@ export default function ArtistiPage() {
                         className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl"
                         style={{ backgroundColor: THEME.primary, color: "#18182e" }}
                     >
-                        Candidati su FantaPiazza
+                        Candidati ora
                     </Link>
                 </div>
             </section>
