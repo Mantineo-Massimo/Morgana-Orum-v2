@@ -222,6 +222,7 @@ const getPiazzaSettingsInternal = async () => {
                 data: {
                     id: "settings",
                     year: "2026",
+                    eventDate: new Date("2026-05-22T09:00:00Z"),
                     countdownVisible: true
                 }
             })
@@ -230,7 +231,7 @@ const getPiazzaSettingsInternal = async () => {
         return settings
     } catch (error) {
         console.error("Error fetching Piazza settings:", error)
-        return { year: "2026", countdownVisible: true }
+        return { year: "2026", eventDate: new Date("2026-05-22T09:00:00Z"), countdownVisible: true }
     }
 }
 
@@ -244,6 +245,7 @@ export const getPiazzaSettings = async () => {
 
 export async function updatePiazzaSettings(data: {
     year?: string,
+    eventDate?: Date,
     countdownVisible?: boolean
 }) {
     try {
@@ -253,10 +255,12 @@ export async function updatePiazzaSettings(data: {
             create: {
                 id: "settings",
                 year: data.year || "2026",
+                eventDate: data.eventDate || new Date("2026-05-22T09:00:00Z"),
                 countdownVisible: data.countdownVisible ?? true
             }
         })
         revalidatePath("/admin/piazza")
+        revalidatePath("/piazza-admin")
         revalidatePath("/")
         revalidatePath("/network/piazzadellarte")
         return { success: true }

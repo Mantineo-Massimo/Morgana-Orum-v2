@@ -230,6 +230,7 @@ model PiazzaMediaItem {
 model PiazzaSettings {
   id               String   @id @default("settings")
   year             String   @default("2026")
+  eventDate        DateTime @default("2026-05-22T09:00:00Z")
   countdownVisible Boolean  @default(true)
   updatedAt        DateTime @updatedAt
 }
