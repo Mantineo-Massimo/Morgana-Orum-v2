@@ -82,7 +82,7 @@ export function MainNav({
                 color: "text-[#27a85d]" // Green
             },
             {
-                href: `/network/piazzadellarte#media`,
+                href: `/network/piazzadellarte/media`,
                 label: nt("media"),
                 active: false,
                 color: "text-[#1fbcd3]" // Cyan

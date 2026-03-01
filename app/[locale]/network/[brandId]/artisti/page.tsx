@@ -1,13 +1,12 @@
 "use client"
 
-import { notFound } from "next/navigation"
-import { Metadata } from "next"
 import { useState } from "react"
+import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Mic2, Music, Star, Palette, Users, Play } from "lucide-react"
+import { ArrowLeft, Mic2, Music, Star, Palette, Users, Play, Search, X } from "lucide-react"
 
-// ── ARTISTI DATA ────────────────────────────────────────────────────────────
+// ── ARTISTI DATA ─────────────────────────────────────────────────────────────
 const CATEGORIES = ["Tutti", "Musica", "Danza", "Pittura", "Performance"] as const
 type Category = typeof CATEGORIES[number]
 
@@ -102,13 +101,17 @@ const THEME = {
     accent: "#1fbcd3"
 }
 
-// ── COMPONENT ────────────────────────────────────────────────────────────────
+// ── COMPONENT ─────────────────────────────────────────────────────────────────
 export default function ArtistiPage() {
     const [activeCategory, setActiveCategory] = useState<Category>("Tutti")
+    const [search, setSearch] = useState("")
 
-    const filtered = activeCategory === "Tutti"
-        ? ARTISTS
-        : ARTISTS.filter(a => a.category === activeCategory)
+    const filtered = ARTISTS.filter(a => {
+        const matchCat = activeCategory === "Tutti" || a.category === activeCategory
+        const matchSearch = a.name.toLowerCase().includes(search.toLowerCase()) ||
+            a.role.toLowerCase().includes(search.toLowerCase())
+        return matchCat && matchSearch
+    })
 
     return (
         <div className="min-h-screen bg-zinc-950 text-white">
@@ -137,9 +140,30 @@ export default function ArtistiPage() {
                 </div>
             </section>
 
-            {/* FILTER PILLS */}
+            {/* SEARCH + FILTER */}
             <section className="pb-12">
-                <div className="container">
+                <div className="container max-w-3xl mx-auto space-y-5">
+                    {/* Search bar */}
+                    <div className="relative">
+                        <Search className="absolute left-5 top-1/2 -translate-y-1/2 size-5 text-white/40" />
+                        <input
+                            type="text"
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
+                            placeholder="Cerca per nome o ruolo..."
+                            className="w-full bg-white/5 border border-white/10 rounded-2xl pl-14 pr-12 py-4 text-white placeholder:text-white/30 text-base focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all"
+                        />
+                        {search && (
+                            <button
+                                onClick={() => setSearch("")}
+                                className="absolute right-5 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors"
+                            >
+                                <X className="size-5" />
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Category pills */}
                     <div className="flex flex-wrap justify-center gap-3">
                         {CATEGORIES.map((cat) => {
                             const Icon = CATEGORY_ICONS[cat]
@@ -163,24 +187,29 @@ export default function ArtistiPage() {
                 </div>
             </section>
 
+            {/* RESULTS COUNT */}
+            {(search || activeCategory !== "Tutti") && (
+                <div className="container pb-4">
+                    <p className="text-white/40 text-sm text-center">
+                        {filtered.length} artista{filtered.length !== 1 ? "i" : ""} trovati
+                    </p>
+                </div>
+            )}
+
             {/* ARTISTS GRID */}
             <section className="pb-24">
                 <div className="container">
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
                         {filtered.map((artist) => (
                             <div key={artist.id} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-zinc-800 cursor-pointer">
-                                {/* Image */}
                                 <Image
                                     src={artist.image}
                                     alt={artist.name}
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-
-                                {/* Gradient overlay */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent z-10"></div>
 
-                                {/* Badge */}
                                 {artist.badge && (
                                     <div
                                         className="absolute top-4 left-4 z-20 text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg"
@@ -190,12 +219,10 @@ export default function ArtistiPage() {
                                     </div>
                                 )}
 
-                                {/* Category pill */}
                                 <div className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white/80 border border-white/20">
                                     {artist.category}
                                 </div>
 
-                                {/* Info — always visible at bottom */}
                                 <div className="absolute bottom-0 left-0 right-0 p-5 z-20">
                                     <span
                                         className="text-[10px] font-bold uppercase tracking-[0.2em] mb-1 block"
@@ -204,8 +231,6 @@ export default function ArtistiPage() {
                                         {artist.role}
                                     </span>
                                     <h3 className="text-lg font-black uppercase leading-tight mb-2">{artist.name}</h3>
-
-                                    {/* Bio - slides up on hover */}
                                     <p className="text-xs text-white/70 leading-relaxed max-h-0 overflow-hidden group-hover:max-h-24 transition-all duration-500">
                                         {artist.bio}
                                     </p>
@@ -216,8 +241,14 @@ export default function ArtistiPage() {
 
                     {filtered.length === 0 && (
                         <div className="text-center py-20 text-white/40">
-                            <Music className="size-12 mx-auto mb-4 opacity-40" />
-                            <p className="text-lg">Nessun artista in questa categoria.</p>
+                            <Search className="size-12 mx-auto mb-4 opacity-40" />
+                            <p className="text-lg">Nessun artista trovato per &quot;{search}&quot;.</p>
+                            <button
+                                onClick={() => { setSearch(""); setActiveCategory("Tutti") }}
+                                className="mt-4 text-sm underline hover:text-white/70 transition-colors"
+                            >
+                                Reimposta filtri
+                            </button>
                         </div>
                     )}
                 </div>
