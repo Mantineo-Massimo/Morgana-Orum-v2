@@ -93,7 +93,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
                         </div>
                     </div>
                 </section>
-                
+
                 <section className="py-24 bg-white text-zinc-900 relative">
                     <div className="container relative z-10">
                         <div className="grid lg:grid-cols-2 gap-16 items-start max-w-6xl mx-auto">
@@ -134,75 +134,74 @@ export default function Page({ params }: { params: { brandId: string } }) {
                             </div>
 
                             {/* Right Column: Le Associazioni & Perchè è importante */}
-                            <div className="space-y-12">
-                                <div className="bg-[#18182e] p-8 md:p-10 rounded-3xl text-white shadow-xl relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-[#27a85d] rounded-full blur-[80px] opacity-50"></div>
-                                    <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-[#1fbcd3] rounded-full blur-[80px] opacity-50"></div>
-                                    
-                                    <h3 className="text-2xl font-black uppercase tracking-widest text-[#27a85d] mb-6 relative z-10">
-                                        Le Associazioni Coinvolte
-                                    </h3>
-                                    <p className="text-white/80 mb-8 relative z-10 text-lg">
-                                        Sebbene l&apos;organizzazione principale faccia capo all&apos;Associazione Morgana e O.R.U.M., l&apos;evento è il risultato di una rete di collaborazioni:
-                                    </p>
-                                    <ul className="space-y-6 relative z-10">
-                                        <li className="flex gap-4">
-                                            <div className="mt-1 shrink-0 text-[#f9a620]">
-                                                <ArrowRight className="size-5" />
-                                            </div>
-                                            <div>
-                                                <strong className="block text-white text-lg mb-1">Associazione Morgana e O.R.U.M.</strong>
-                                                <span className="text-white/70">È il motore dell&apos;iniziativa. Si occupa della logistica, dei bandi per gli artisti e del coordinamento dei volontari.</span>
-                                            </div>
-                                        </li>
-                                        <li className="flex gap-4">
-                                            <div className="mt-1 shrink-0 text-[#1fbcd3]">
-                                                <ArrowRight className="size-5" />
-                                            </div>
-                                            <div>
-                                                <strong className="block text-white text-lg mb-1">Partner Istituzionali</strong>
-                                                <span className="text-white/70">L&apos;evento gode del supporto dell&apos;Università degli Studi di Messina (UniMe) e dell&apos;ERSU.</span>
-                                            </div>
-                                        </li>
-                                        <li className="flex gap-4">
-                                            <div className="mt-1 shrink-0 text-[#27a85d]">
-                                                <ArrowRight className="size-5" />
-                                            </div>
-                                            <div>
-                                                <strong className="block text-white text-lg mb-1">Altre Realtà</strong>
-                                                <span className="text-white/70">Spesso sostenuta da altre associazioni studentesche o culturali (es. Forum dei giovani, Decimo Sommerso) rendendo l&apos;evento un momento di unità per tutta la comunità.</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div className="bg-[#18182e] p-8 md:p-10 rounded-3xl text-white shadow-xl relative overflow-hidden">
+                                <div className="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-[#27a85d] rounded-full blur-[80px] opacity-50"></div>
+                                <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-[#1fbcd3] rounded-full blur-[80px] opacity-50"></div>
 
-                                <div>
-                                    <h3 className="text-2xl font-black uppercase tracking-widest text-zinc-900 mb-6 flex items-center gap-3">
-                                        Perché è importante?
-                                    </h3>
-                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                                        <div className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg text-center group">
-                                            <div className="size-12 bg-[#1fbcd3]/10 group-hover:bg-[#1fbcd3] text-[#1fbcd3] group-hover:text-white transition-colors rounded-full flex items-center justify-center mx-auto mb-4">
-                                                <span className="font-bold text-xl">1</span>
-                                            </div>
-                                            <strong className="block text-zinc-900 mb-2">Connessione</strong>
-                                            <span className="text-sm text-muted-foreground leading-relaxed">Apre le porte dell&apos;Ateneo a tutta la cittadinanza, non solo agli studenti.</span>
+                                <h3 className="text-2xl font-black uppercase tracking-widest text-[#27a85d] mb-6 relative z-10">
+                                    Le Associazioni Coinvolte
+                                </h3>
+                                <p className="text-white/80 mb-8 relative z-10 text-lg">
+                                    Sebbene l&apos;organizzazione principale faccia capo all&apos;Associazione Morgana e O.R.U.M., l&apos;evento è il risultato di una rete di collaborazioni:
+                                </p>
+                                <ul className="space-y-6 relative z-10">
+                                    <li className="flex gap-4">
+                                        <div className="mt-1 shrink-0 text-[#f9a620]">
+                                            <ArrowRight className="size-5" />
                                         </div>
-                                        <div className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg text-center group">
-                                            <div className="size-12 bg-[#f9a620]/10 group-hover:bg-[#f9a620] text-[#f9a620] group-hover:text-white transition-colors rounded-full flex items-center justify-center mx-auto mb-4">
-                                                <span className="font-bold text-xl">2</span>
-                                            </div>
-                                            <strong className="block text-zinc-900 mb-2">Talento</strong>
-                                            <span className="text-sm text-muted-foreground leading-relaxed">Permette a giovani artisti emergenti di esibirsi davanti a migliaia di persone gratuitamente.</span>
+                                        <div>
+                                            <strong className="block text-white text-lg mb-1">Associazione Morgana e O.R.U.M.</strong>
+                                            <span className="text-white/70">È il motore dell&apos;iniziativa. Si occupa della logistica, dei bandi per gli artisti e del coordinamento dei volontari.</span>
                                         </div>
-                                        <div className="bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg text-center group">
-                                            <div className="size-12 bg-[#27a85d]/10 group-hover:bg-[#27a85d] text-[#27a85d] group-hover:text-white transition-colors rounded-full flex items-center justify-center mx-auto mb-4">
-                                                <span className="font-bold text-xl">3</span>
-                                            </div>
-                                            <strong className="block text-zinc-900 mb-2">Aggregazione</strong>
-                                            <span className="text-sm text-muted-foreground leading-relaxed">Esempio di &quot;cittadinanza attiva&quot; dove gli studenti promuovono cultura e divertimento sano.</span>
+                                    </li>
+                                    <li className="flex gap-4">
+                                        <div className="mt-1 shrink-0 text-[#1fbcd3]">
+                                            <ArrowRight className="size-5" />
                                         </div>
+                                        <div>
+                                            <strong className="block text-white text-lg mb-1">Partner Istituzionali</strong>
+                                            <span className="text-white/70">L&apos;evento gode del supporto dell&apos;Università degli Studi di Messina (UniMe) e dell&apos;ERSU.</span>
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-4">
+                                        <div className="mt-1 shrink-0 text-[#27a85d]">
+                                            <ArrowRight className="size-5" />
+                                        </div>
+                                        <div>
+                                            <strong className="block text-white text-lg mb-1">Altre Realtà</strong>
+                                            <span className="text-white/70">Spesso sostenuta da altre associazioni studentesche o culturali (es. Forum dei giovani, Decimo Sommerso) rendendo l&apos;evento un momento di unità per tutta la comunità.</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Full-width below: Perché è importante? */}
+                        <div className="max-w-6xl mx-auto mt-20 pt-16 border-t border-zinc-100">
+                            <h3 className="text-3xl font-black uppercase tracking-widest text-zinc-900 mb-10 text-center">
+                                Perché è importante?
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                                <div className="bg-white p-8 rounded-2xl border border-zinc-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg text-center group">
+                                    <div className="size-14 bg-[#1fbcd3]/10 group-hover:bg-[#1fbcd3] text-[#1fbcd3] group-hover:text-white transition-colors rounded-full flex items-center justify-center mx-auto mb-5">
+                                        <span className="font-bold text-xl">1</span>
                                     </div>
+                                    <strong className="block text-zinc-900 text-lg mb-2">Connessione</strong>
+                                    <span className="text-sm text-muted-foreground leading-relaxed">Apre le porte dell&apos;Ateneo a tutta la cittadinanza, non solo agli studenti.</span>
+                                </div>
+                                <div className="bg-white p-8 rounded-2xl border border-zinc-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg text-center group">
+                                    <div className="size-14 bg-[#f9a620]/10 group-hover:bg-[#f9a620] text-[#f9a620] group-hover:text-white transition-colors rounded-full flex items-center justify-center mx-auto mb-5">
+                                        <span className="font-bold text-xl">2</span>
+                                    </div>
+                                    <strong className="block text-zinc-900 text-lg mb-2">Talento</strong>
+                                    <span className="text-sm text-muted-foreground leading-relaxed">Permette a giovani artisti emergenti di esibirsi davanti a migliaia di persone gratuitamente.</span>
+                                </div>
+                                <div className="bg-white p-8 rounded-2xl border border-zinc-200 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg text-center group">
+                                    <div className="size-14 bg-[#27a85d]/10 group-hover:bg-[#27a85d] text-[#27a85d] group-hover:text-white transition-colors rounded-full flex items-center justify-center mx-auto mb-5">
+                                        <span className="font-bold text-xl">3</span>
+                                    </div>
+                                    <strong className="block text-zinc-900 text-lg mb-2">Aggregazione</strong>
+                                    <span className="text-sm text-muted-foreground leading-relaxed">Esempio di &quot;cittadinanza attiva&quot; dove gli studenti promuovono cultura e divertimento sano.</span>
                                 </div>
                             </div>
                         </div>
