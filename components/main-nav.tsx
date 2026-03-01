@@ -64,7 +64,7 @@ export function MainNav({
     if (brand === 'piazzadellarte') {
         routes.splice(1, 4, // Rimuovi About, News (verrà riaggiunto), Events, Representatives
             {
-                href: `/network/piazzadellarte#cos-e`,
+                href: `/network/piazzadellarte/about`,
                 label: nt("cose"),
                 active: false,
                 color: "text-[#27a85d]" // Green
