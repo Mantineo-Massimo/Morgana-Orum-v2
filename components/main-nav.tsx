@@ -79,19 +79,19 @@ export function MainNav({
                 href: `/network/piazzadellarte/artisti`,
                 label: nt("artisti"),
                 active: false,
-                color: "text-[#27a85d]" // Green
+                color: "text-[#1fbcd3]" // Cyan
             },
             {
                 href: `/network/piazzadellarte/media`,
                 label: nt("media"),
                 active: false,
-                color: "text-[#1fbcd3]" // Cyan
+                color: "text-[#f34ab4]" // Magenta
             },
             {
                 href: `https://fantapiazza.vercel.app`,
                 label: "FantaPiazza",
                 active: false,
-                color: "text-[#f34ab4]" // Pink/Accent
+                color: "text-[#0a0f1c]" // Blue
             }
         )
         // Update Home color too
