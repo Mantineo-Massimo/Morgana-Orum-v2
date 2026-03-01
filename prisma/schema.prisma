@@ -203,6 +203,7 @@ model PiazzaProgramItem {
   id          String   @id @default(uuid())
   title       String
   description String
+  location    String?  // Added field
   timeSlot    String   // Mattino, Pomeriggio, Sera
   startTime   String?  // HH:mm
   endTime     String?  // HH:mm

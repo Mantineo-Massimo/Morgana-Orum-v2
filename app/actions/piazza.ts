@@ -97,6 +97,7 @@ export const getPiazzaProgram = unstable_cache(
 export async function createPiazzaProgramItem(data: {
     title: string,
     description: string,
+    location?: string | null,
     timeSlot: string,
     startTime?: string | null,
     endTime?: string | null,
@@ -115,7 +116,16 @@ export async function createPiazzaProgramItem(data: {
     }
 }
 
-export async function updatePiazzaProgramItem(id: string, data: any) {
+export async function updatePiazzaProgramItem(id: string, data: {
+    title?: string,
+    description?: string,
+    location?: string | null,
+    timeSlot?: string,
+    startTime?: string | null,
+    endTime?: string | null,
+    icon?: string | null,
+    order?: number
+}) {
     try {
         await prisma.piazzaProgramItem.update({
             where: { id },

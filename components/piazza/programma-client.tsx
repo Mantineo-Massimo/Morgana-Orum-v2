@@ -1,8 +1,15 @@
 "use client"
 
-import { Sun, Sunset, Music, Palette, Users, Camera, Trophy, Mic2, Star } from "lucide-react"
+import { useState } from "react"
+import { Sun, Sunset, Music, Palette, Users, Camera, Trophy, Mic2, Star, Clock, MapPin, Coffee, Ticket, Play, Smile, Heart, Zap, Image as ImageIcon } from "lucide-react"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, X } from "lucide-react"
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+} from "@/components/ui/dialog"
 
 const THEME = {
     primary: "#f9a620",
@@ -11,7 +18,7 @@ const THEME = {
 }
 
 const ICONS: Record<string, any> = {
-    Sun, Sunset, Music, Palette, Users, Camera, Trophy, Mic2, Star
+    Sun, Sunset, Music, Palette, Users, Camera, Trophy, Mic2, Star, Coffee, Ticket, Play, Smile, Heart, Zap, ImageIcon
 }
 
 interface Props {
@@ -19,9 +26,47 @@ interface Props {
 }
 
 export function ProgrammaClient({ program }: Props) {
+    const [selectedItem, setSelectedItem] = useState<any>(null)
+
     const morningItems = program.filter(p => p.timeSlot === "Mattino")
     const afternoonItems = program.filter(p => p.timeSlot === "Pomeriggio")
     const eveningItems = program.filter(p => p.timeSlot === "Sera")
+
+    const renderItem = (item: any, color: string) => {
+        const Icon = ICONS[item.icon] || Palette
+        return (
+            <div
+                key={item.id}
+                onClick={() => setSelectedItem(item)}
+                className="bg-white/5 backdrop-blur-sm p-7 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
+            >
+                <div className="flex items-center gap-3 mb-4">
+                    <div className="size-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${color}25` }}>
+                        <Icon className="size-5" style={{ color: color }} />
+                    </div>
+                    <h3 className="font-black text-lg uppercase tracking-wide" style={{ color: color }}>
+                        {item.title}
+                    </h3>
+                </div>
+                <p className="text-white/70 leading-relaxed line-clamp-2">
+                    {item.description}
+                </p>
+
+                <div className="flex items-center gap-4 mt-4">
+                    {(item.startTime || item.endTime) && (
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 flex items-center gap-1.5">
+                            <Clock className="size-3" /> {item.startTime} {item.endTime && `— ${item.endTime}`}
+                        </p>
+                    )}
+                    {item.location && (
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 flex items-center gap-1.5">
+                            <MapPin className="size-3" /> {item.location}
+                        </p>
+                    )}
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="min-h-screen bg-zinc-950 text-white">
@@ -66,29 +111,7 @@ export function ProgrammaClient({ program }: Props) {
                             </div>
 
                             <div className="grid sm:grid-cols-2 gap-5 pl-2 border-l-2" style={{ borderColor: THEME.primary }}>
-                                {morningItems.map((item: any) => {
-                                    const Icon = ICONS[item.icon] || Palette
-                                    return (
-                                        <div key={item.id} className="bg-white/5 backdrop-blur-sm p-7 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl">
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <div className="size-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${THEME.primary}25` }}>
-                                                    <Icon className="size-5" style={{ color: THEME.primary }} />
-                                                </div>
-                                                <h3 className="font-black text-lg uppercase tracking-wide" style={{ color: THEME.primary }}>
-                                                    {item.title}
-                                                </h3>
-                                            </div>
-                                            <p className="text-white/70 leading-relaxed">
-                                                {item.description}
-                                            </p>
-                                            {(item.startTime || item.endTime) && (
-                                                <p className="mt-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
-                                                    {item.startTime} {item.endTime && `— ${item.endTime}`}
-                                                </p>
-                                            )}
-                                        </div>
-                                    )
-                                })}
+                                {morningItems.map(item => renderItem(item, THEME.primary))}
                             </div>
                         </div>
                     )}
@@ -105,29 +128,7 @@ export function ProgrammaClient({ program }: Props) {
                             </div>
 
                             <div className="grid sm:grid-cols-2 gap-5 pl-2 border-l-2" style={{ borderColor: THEME.secondary }}>
-                                {afternoonItems.map((item: any) => {
-                                    const Icon = ICONS[item.icon] || Palette
-                                    return (
-                                        <div key={item.id} className="bg-white/5 backdrop-blur-sm p-7 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl">
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <div className="size-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${THEME.secondary}25` }}>
-                                                    <Icon className="size-5" style={{ color: THEME.secondary }} />
-                                                </div>
-                                                <h3 className="font-black text-lg uppercase tracking-wide" style={{ color: THEME.secondary }}>
-                                                    {item.title}
-                                                </h3>
-                                            </div>
-                                            <p className="text-white/70 leading-relaxed">
-                                                {item.description}
-                                            </p>
-                                            {(item.startTime || item.endTime) && (
-                                                <p className="mt-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
-                                                    {item.startTime} {item.endTime && `— ${item.endTime}`}
-                                                </p>
-                                            )}
-                                        </div>
-                                    )
-                                })}
+                                {afternoonItems.map(item => renderItem(item, THEME.secondary))}
                             </div>
                         </div>
                     )}
@@ -144,29 +145,7 @@ export function ProgrammaClient({ program }: Props) {
                             </div>
 
                             <div className="grid sm:grid-cols-3 gap-5 pl-2 border-l-2" style={{ borderColor: THEME.accent }}>
-                                {eveningItems.map((item: any) => {
-                                    const Icon = ICONS[item.icon] || Music
-                                    return (
-                                        <div key={item.id} className="bg-white/5 backdrop-blur-sm p-7 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1 hover:shadow-2xl">
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <div className="size-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${THEME.accent}25` }}>
-                                                    <Icon className="size-5" style={{ color: THEME.accent }} />
-                                                </div>
-                                                <h3 className="font-black text-lg uppercase tracking-wide" style={{ color: THEME.accent }}>
-                                                    {item.title}
-                                                </h3>
-                                            </div>
-                                            <p className="text-white/70 leading-relaxed">
-                                                {item.description}
-                                            </p>
-                                            {(item.startTime || item.endTime) && (
-                                                <p className="mt-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
-                                                    {item.startTime} {item.endTime && `— ${item.endTime}`}
-                                                </p>
-                                            )}
-                                        </div>
-                                    )
-                                })}
+                                {eveningItems.map(item => renderItem(item, THEME.accent))}
                             </div>
                         </div>
                     )}
@@ -179,6 +158,76 @@ export function ProgrammaClient({ program }: Props) {
 
                 </div>
             </section>
+
+            {/* DETAIL DIALOG */}
+            <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
+                <DialogContent className="max-w-2xl p-0 overflow-hidden border-none bg-zinc-900 rounded-3xl shadow-2xl">
+                    <div className="relative pb-12">
+                        {/* Background blobs */}
+                        <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+                            <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full blur-[100px] opacity-20" style={{ backgroundColor: THEME.primary }}></div>
+                        </div>
+
+                        <div className="relative z-10 p-8 md:p-12 space-y-8">
+                            <DialogHeader>
+                                <div className="flex items-center gap-4 mb-4">
+                                    <div className="size-14 rounded-2xl flex items-center justify-center shadow-lg" style={{ backgroundColor: `${THEME.primary}25` }}>
+                                        {selectedItem && (() => {
+                                            const Icon = ICONS[selectedItem.icon] || Palette
+                                            return <Icon className="size-7" style={{ color: THEME.primary }} />
+                                        })()}
+                                    </div>
+                                    <span className="text-xs font-black uppercase tracking-[0.3em] text-white/40">
+                                        Attività {selectedItem?.timeSlot}
+                                    </span>
+                                </div>
+                                <DialogTitle className="text-3xl md:text-4xl font-serif font-black uppercase tracking-tighter text-white">
+                                    {selectedItem?.title}
+                                </DialogTitle>
+                            </DialogHeader>
+
+                            <div className="flex flex-wrap items-center gap-6 py-6 border-y border-white/5">
+                                {(selectedItem?.startTime || selectedItem?.endTime) && (
+                                    <div className="flex items-center gap-3">
+                                        <div className="size-8 rounded-full bg-white/5 flex items-center justify-center">
+                                            <Clock className="size-4" style={{ color: THEME.primary }} />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] font-black uppercase tracking-widest text-white/30 leading-none mb-1">Orario</p>
+                                            <p className="text-sm font-bold text-white/80">{selectedItem?.startTime} {selectedItem?.endTime && `— ${selectedItem?.endTime}`}</p>
+                                        </div>
+                                    </div>
+                                )}
+                                {selectedItem?.location && (
+                                    <div className="flex items-center gap-3">
+                                        <div className="size-8 rounded-full bg-white/5 flex items-center justify-center">
+                                            <MapPin className="size-4" style={{ color: THEME.accent }} />
+                                        </div>
+                                        <div>
+                                            <p className="text-[10px] font-black uppercase tracking-widest text-white/30 leading-none mb-1">Luogo</p>
+                                            <p className="text-sm font-bold text-white/80">{selectedItem?.location}</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="space-y-4">
+                                <h4 className="text-[10px] font-black uppercase tracking-widest text-white/30">Descrizione</h4>
+                                <p className="text-lg text-white/70 font-serif leading-relaxed italic">
+                                    &quot;{selectedItem?.description}&quot;
+                                </p>
+                            </div>
+
+                            <button
+                                onClick={() => setSelectedItem(null)}
+                                className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-sm transition-all hover:bg-white/10 border border-white/10"
+                            >
+                                Chiudi
+                            </button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
 
             {/* CTA */}
             <section className="py-16 border-t border-white/10">
