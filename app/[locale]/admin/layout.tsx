@@ -66,12 +66,6 @@ export default async function AdminLayout({
                     iconName: "Calendar",
                     exact: false
                 },
-                {
-                    label: "Piazza dell'Arte",
-                    href: `/piazza-admin`,
-                    iconName: "Sparkles",
-                    exact: false
-                },
             ]
         },
     ]
@@ -161,7 +155,14 @@ export default async function AdminLayout({
                     ))}
                 </div>
 
-                <div className="p-4 border-t border-zinc-800">
+                <div className="p-4 border-t border-zinc-800 space-y-1">
+                    <Link
+                        href={`/piazza-admin`}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-[#f9a620] hover:bg-zinc-800 transition-all group text-xs font-bold uppercase tracking-widest"
+                    >
+                        <Sparkles className="size-4 text-[#f9a620]" />
+                        Piazza dell&apos;Arte
+                    </Link>
                     <Link
                         href={`/dashboard`}
                         className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all group text-xs font-medium"

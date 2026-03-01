@@ -62,16 +62,6 @@ export default async function PiazzaAdminLayout({
                     </div>
                 </div>
 
-                {/* Back to Personal Area - MOVED ABOVE NAV as requested */}
-                <div className="p-4 border-b border-zinc-800/50">
-                    <Link
-                        href={`/dashboard`}
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-[#f9a620] hover:bg-white/5 transition-all group text-xs font-bold uppercase tracking-widest"
-                    >
-                        ← Area Personale
-                    </Link>
-                </div>
-
                 <div className="flex-1 py-6 px-4 space-y-8">
                     <div className="space-y-2">
                         <h2 className="px-4 text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em]">
@@ -93,6 +83,22 @@ export default async function PiazzaAdminLayout({
                             })}
                         </div>
                     </div>
+                </div>
+
+                <div className="p-4 border-t border-zinc-800 space-y-1">
+                    <Link
+                        href={`/admin`}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-white/5 transition-all group text-xs font-bold uppercase tracking-widest"
+                    >
+                        <Shield className="size-4 text-red-500" />
+                        Admin Morgana/ORUM
+                    </Link>
+                    <Link
+                        href={`/dashboard`}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-500 hover:text-white hover:bg-white/5 transition-all group text-xs font-medium"
+                    >
+                        ← Area Personale
+                    </Link>
                 </div>
 
                 <div className="p-4 border-t border-zinc-800">
