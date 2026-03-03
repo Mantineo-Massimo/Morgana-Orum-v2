@@ -195,10 +195,7 @@ export default function RepresentativesClient({
                                                     {/* Info */}
                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
                                                         <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words group-hover:text-blue-600 transition-colors uppercase tracking-tight">{member.name}</h4>
-                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-bold uppercase tracking-wider mb-1">
-                                                            {member.role || t("rep_label")}
-                                                        </p>
-                                                        <p className="text-[9px] md:text-[11px] text-zinc-400 font-medium">
+                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
                                                             {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                         </p>
                                                     </div>
@@ -243,78 +240,39 @@ export default function RepresentativesClient({
                             const bottomBodies = centralBodies.filter(b => b.name.startsWith("CdS") || b.name.startsWith("SIR"))
                             return (
                                 <>
-                                    <div className="flex flex-wrap justify-center gap-4 mb-8">
-                                        {topBodies.map((body, idx) => (
-                                            <div key={idx} className="bg-white rounded-3xl border border-zinc-100 shadow-sm p-5 md:p-6 flex flex-col h-full w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1rem)] max-w-full overflow-hidden hover:shadow-md transition-shadow">
-                                                <div className="flex items-center gap-3 mb-6 bg-zinc-50 -mx-6 -mt-6 p-4 border-b border-zinc-100">
-                                                    <div className="size-10 rounded-2xl bg-white border border-zinc-100 flex items-center justify-center shadow-sm shrink-0">
-                                                        {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-500" /> })()}
+                                    <div className="space-y-16">
+                                        {centralBodies.map((body, idx) => (
+                                            <div key={idx} className="relative">
+                                                {/* Visual Separator between bodies */}
+                                                {idx > 0 && (
+                                                    <div className="flex items-center gap-4 mb-16 max-w-5xl mx-auto">
+                                                        <div className="h-px bg-zinc-200 flex-1 opacity-50"></div>
+                                                        <div className="size-2 rounded-full bg-zinc-200 opacity-50"></div>
+                                                        <div className="h-px bg-zinc-200 flex-1 opacity-50"></div>
                                                     </div>
-                                                    <h3 className="text-sm md:text-base font-black text-foreground uppercase tracking-tight leading-tight">
-                                                        {body.name}
-                                                    </h3>
-                                                </div>
-                                                <div className="flex flex-col gap-4 flex-grow w-full justify-center items-center py-2">
-                                                    {body.groups.flatMap((group: any) =>
-                                                        group.members.map((member: any, memIdx: number) => (
-                                                            <motion.button
-                                                                key={`${group.listName}-${memIdx}`}
-                                                                onClick={() => handleRepClick(member)}
-                                                                whileHover={{ scale: 1.02 }}
-                                                                whileTap={{ scale: 0.98 }}
-                                                                className="flex items-center gap-3 md:gap-4 bg-zinc-50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-sm text-left"
-                                                            >
-                                                                <div className="size-14 md:size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
-                                                                    {member.image ? (
-                                                                        // eslint-disable-next-line @next/next/no-img-element
-                                                                        <img src={member.image} alt={member.name} className="size-full object-cover" />
-                                                                    ) : (
-                                                                        <User className="size-6 md:size-8 text-zinc-300" />
-                                                                    )}
-                                                                </div>
-                                                                <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                    <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
-                                                                    <p className="text-[10px] md:text-sm text-zinc-500 font-bold uppercase tracking-wider mb-1">
-                                                                        {member.role || t("rep_label")}
-                                                                    </p>
-                                                                    <p className="text-[9px] md:text-[11px] text-zinc-400 font-medium">
-                                                                        {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
-                                                                    </p>
-                                                                </div>
-                                                                <div className="shrink-0 size-8 md:size-12 relative opacity-90 flex items-center justify-center">
-                                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                    <img
-                                                                        src={
-                                                                            group.listName === "MORGANA" ? "/assets/morgana.png" :
-                                                                                group.listName === "O.R.U.M." ? "/assets/orum.png" :
-                                                                                    "/assets/azione.png"
-                                                                        }
-                                                                        alt={group.listName}
-                                                                        className="size-full object-contain"
-                                                                    />
-                                                                </div>
-                                                            </motion.button>
-                                                        ))
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
+                                                )}
 
-                                    {/* Bottom Row: Consiglio degli Studenti */}
-                                    {bottomBodies.length > 0 && (
-                                        <div className="flex flex-wrap justify-center gap-8">
-                                            {bottomBodies.map((body, idx) => (
-                                                <div key={idx} className="bg-white rounded-3xl border border-zinc-100 shadow-sm p-6 flex flex-col h-full w-full lg:w-[calc(50%-2rem)] max-w-full overflow-hidden hover:shadow-md transition-shadow">
-                                                    <div className="flex items-center gap-3 mb-8 bg-zinc-50 -mx-6 -mt-6 p-5 border-b border-zinc-100">
-                                                        <div className="size-12 rounded-2xl bg-white border border-zinc-100 flex items-center justify-center shadow-sm shrink-0">
-                                                            {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-6 text-zinc-500" /> })()}
+                                                <div className="bg-white rounded-3xl border border-zinc-100 shadow-sm p-6 md:p-10 max-w-5xl mx-auto overflow-hidden">
+                                                    {/* Body Header */}
+                                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 border-b border-zinc-50 pb-8">
+                                                        <div className="flex items-center gap-5">
+                                                            <div className="size-16 rounded-2xl bg-zinc-50 flex items-center justify-center border border-zinc-100 shadow-inner">
+                                                                {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-8 text-zinc-400 shrink-0" /> })()}
+                                                            </div>
+                                                            <div>
+                                                                <h3 className="text-2xl md:text-3xl font-bold text-foreground font-serif uppercase tracking-tight leading-tight">
+                                                                    {body.name}
+                                                                </h3>
+                                                                <p className="text-sm font-bold text-zinc-400 uppercase tracking-widest mt-1.5 flex items-center gap-2">
+                                                                    <span className="size-1.5 rounded-full bg-zinc-200"></span>
+                                                                    {body.groups.reduce((acc: any, curr: any) => acc + curr.members.length, 0)} {t("stat_elected")}
+                                                                </p>
+                                                            </div>
                                                         </div>
-                                                        <h3 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight leading-tight">
-                                                            {body.name}
-                                                        </h3>
                                                     </div>
-                                                    <div className="flex flex-wrap items-center justify-center gap-4 flex-grow w-full py-2">
+
+                                                    {/* Members Grid for this Body */}
+                                                    <div className="flex flex-wrap justify-center gap-6 md:gap-8">
                                                         {body.groups.flatMap((group: any) =>
                                                             group.members.map((member: any, memIdx: number) => (
                                                                 <motion.button
@@ -322,45 +280,54 @@ export default function RepresentativesClient({
                                                                     onClick={() => handleRepClick(member)}
                                                                     whileHover={{ scale: 1.02 }}
                                                                     whileTap={{ scale: 0.98 }}
-                                                                    className="flex items-center gap-3 md:gap-4 bg-zinc-50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-sm md:w-[calc(50%-0.5rem)] text-left"
+                                                                    className="flex items-center gap-5 md:gap-6 bg-zinc-50/50 rounded-2xl p-4 md:p-6 border border-zinc-100 hover:border-blue-200 hover:bg-blue-50/30 hover:shadow-lg transition-all w-full max-w-md text-left group"
                                                                 >
-                                                                    <div className="size-14 md:size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                                    {/* Photo */}
+                                                                    <div className="size-16 md:size-28 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm group-hover:border-blue-200 transition-colors">
                                                                         {member.image ? (
                                                                             // eslint-disable-next-line @next/next/no-img-element
                                                                             <img src={member.image} alt={member.name} className="size-full object-cover" />
                                                                         ) : (
-                                                                            <User className="size-6 md:size-8 text-zinc-300" />
+                                                                            <User className="size-8 md:size-14 text-zinc-300" />
                                                                         )}
                                                                     </div>
+
+                                                                    {/* Info */}
                                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                        <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
-                                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-bold uppercase tracking-wider mb-1">
-                                                                            {member.role || t("rep_label")}
-                                                                        </p>
-                                                                        <p className="text-[9px] md:text-[11px] text-zinc-400 font-medium">
-                                                                            {group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
-                                                                        </p>
-                                                                    </div>
-                                                                    <div className="shrink-0 size-8 md:size-12 relative opacity-90 flex items-center justify-center">
-                                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                        <img
-                                                                            src={
-                                                                                group.listName === "MORGANA" ? "/assets/morgana.png" :
-                                                                                    group.listName === "O.R.U.M." ? "/assets/orum.png" :
-                                                                                        "/assets/azione.png"
-                                                                            }
-                                                                            alt={group.listName}
-                                                                            className="size-full object-contain"
-                                                                        />
+                                                                        <h4 className="font-bold text-foreground text-sm md:text-xl lg:text-lg xl:text-xl mb-1 md:mb-2 leading-tight break-words uppercase tracking-tight group-hover:text-blue-600 transition-colors">
+                                                                            {member.name}
+                                                                        </h4>
+                                                                        <div className="space-y-1">
+                                                                            <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
+                                                                                {member.role || t("rep_label")}
+                                                                            </p>
+                                                                            <div className="flex items-center gap-2">
+                                                                                <div className="size-5 md:size-6 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all opacity-60 group-hover:opacity-100">
+                                                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                                    <img
+                                                                                        src={
+                                                                                            group.listName === "MORGANA" ? "/assets/morgana.png" :
+                                                                                                group.listName === "O.R.U.M." ? "/assets/orum.png" :
+                                                                                                    "/assets/azione.png"
+                                                                                        }
+                                                                                        alt={group.listName}
+                                                                                        className="size-full object-contain"
+                                                                                    />
+                                                                                </div>
+                                                                                <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-none">
+                                                                                    {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </motion.button>
                                                             ))
                                                         )}
                                                     </div>
                                                 </div>
-                                            ))}
-                                        </div>
-                                    )}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </>
                             )
                         })()}
