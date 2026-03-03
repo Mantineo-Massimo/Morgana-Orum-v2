@@ -33,12 +33,11 @@ const centralRolesList = [
     "CSASU (Comitato per lo Sport Universitario)",
     "ERSU (Ente Regionale per il Diritto allo Studio Universitario)",
     "SIR (Struttura Interdipartimentale di Raccordo di \"Facoltà di Medicina e Chirurgia\")",
-    "Altro"
+    "CUG (Comitato Unico di Garanzia)",
 ]
 
 const nationalRolesList = [
     "CNSU (Consiglio Nazionale degli Studenti Universitari)",
-    "Altro"
 ]
 
 export default function RepresentativeForm({
