@@ -2,6 +2,7 @@ import { getNews, getNewsCategories } from "@/app/actions/news"
 import { getTranslations } from "next-intl/server"
 import NewsClient from "./news-client"
 
+export const dynamic = "force-dynamic"
 export default async function Page({ params: { locale } }: { params: { locale: string } }) {
     const [news, categories, t, tc] = await Promise.all([
         getNews(undefined, undefined, undefined, locale),

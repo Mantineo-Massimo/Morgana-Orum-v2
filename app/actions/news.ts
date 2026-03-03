@@ -30,7 +30,7 @@ async function checkContentPermission(itemAssociations?: Association[]) {
     return { allowed: false }
 }
 
-const getNewsInternal = async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
+export const getNewsInternal = async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
     try {
         const where: any = { published: true }
 
