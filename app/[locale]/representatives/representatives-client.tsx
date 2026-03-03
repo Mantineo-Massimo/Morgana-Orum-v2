@@ -234,121 +234,85 @@ export default function RepresentativesClient({
                             <div className="h-px bg-zinc-200 flex-1"></div>
                         </div>
 
-                        {/* Top Row: SA, CdA, ERSU, CSASU */}
+                        {/* Central Bodies Rows */}
                         {(() => {
-                            const topBodies = centralBodies.filter(b => !b.name.startsWith("CdS") && !b.name.startsWith("SIR"))
-                            const bottomBodies = centralBodies.filter(b => b.name.startsWith("CdS") || b.name.startsWith("SIR"))
-                            return (
-                                <>
-                                    <div className="flex flex-wrap justify-center gap-8 md:gap-12 mb-12">
-                                        {topBodies.map((body, idx) => (
-                                            <div key={idx} className="relative flex flex-col w-full md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] xl:w-[calc(25%-3rem)]">
-                                                <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full hover:shadow-md transition-shadow">
-                                                    <h3 className="text-base md:text-lg font-bold text-foreground mb-4 flex items-center gap-2 border-b border-zinc-50 pb-3">
-                                                        {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
-                                                        <span className="leading-tight uppercase tracking-wide">{body.name}</span>
-                                                    </h3>
-                                                    <div className="flex flex-col gap-4 flex-grow w-full justify-center items-center py-2">
-                                                        {body.groups.flatMap((group: any) =>
-                                                            group.members.map((member: any, memIdx: number) => (
-                                                                <motion.button
-                                                                    key={`${group.listName}-${memIdx}`}
-                                                                    onClick={() => handleRepClick(member)}
-                                                                    whileHover={{ scale: 1.02 }}
-                                                                    whileTap={{ scale: 0.98 }}
-                                                                    className="flex items-center gap-3 md:gap-4 bg-zinc-50/50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:bg-white transition-all w-full max-w-sm text-left shadow-sm"
-                                                                >
-                                                                    <div className="size-14 md:size-16 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
-                                                                        {member.image ? (
-                                                                            // eslint-disable-next-line @next/next/no-img-element
-                                                                            <img src={member.image} alt={member.name} className="size-full object-cover" />
-                                                                        ) : (
-                                                                            <User className="size-6 md:size-8 text-zinc-300" />
-                                                                        )}
-                                                                    </div>
-                                                                    <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                        <h4 className="font-bold text-foreground text-xs md:text-sm lg:text-base mb-0.5 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
-                                                                        <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
-                                                                            {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
-                                                                        </p>
-                                                                    </div>
-                                                                    <div className="shrink-0 size-6 md:size-8 relative opacity-80 flex items-center justify-center">
-                                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                        <img
-                                                                            src={
-                                                                                group.listName === "MORGANA" ? "/assets/morgana.png" :
-                                                                                    group.listName === "O.R.U.M." ? "/assets/orum.png" :
-                                                                                        "/assets/azione.png"
-                                                                            }
-                                                                            alt={group.listName}
-                                                                            className="size-full object-contain"
-                                                                        />
-                                                                    </div>
-                                                                </motion.button>
-                                                            ))
-                                                        )}
-                                                    </div>
+                            const row1Bodies = centralBodies.filter(b => b.name.startsWith("SA") || b.name.startsWith("ERSU") || b.name.startsWith("CdA"))
+                            const row2Bodies = centralBodies.filter(b => b.name.startsWith("CUG"))
+                            const row3Bodies = centralBodies.filter(b => b.name.startsWith("CdS") || b.name.startsWith("SIR"))
+
+                            const renderBodyRow = (bodies: any[], rowGap: string = "gap-8 md:gap-12") => (
+                                <div className={cn("flex flex-wrap justify-center mb-12", rowGap)}>
+                                    {bodies.map((body, idx) => (
+                                        <div key={idx} className={cn(
+                                            "relative flex flex-col w-full",
+                                            bodies.length === 1 ? "max-w-xl" :
+                                                bodies.length === 2 ? "md:w-[calc(50%-2rem)] max-w-2xl" :
+                                                    "md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] xl:w-[calc(25%-3rem)]"
+                                        )}>
+                                            <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+                                                <h3 className="text-base md:text-lg font-bold text-foreground mb-4 flex items-center gap-2 border-b border-zinc-50 pb-3">
+                                                    {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
+                                                    <span className="leading-tight uppercase tracking-wide">{body.name}</span>
+                                                </h3>
+                                                <div className="flex flex-wrap items-center justify-center gap-4 flex-grow w-full py-2">
+                                                    {body.groups.flatMap((group: any) =>
+                                                        group.members.map((member: any, memIdx: number) => (
+                                                            <motion.button
+                                                                key={`${group.listName}-${memIdx}`}
+                                                                onClick={() => handleRepClick(member)}
+                                                                whileHover={{ scale: 1.02 }}
+                                                                whileTap={{ scale: 0.98 }}
+                                                                className={cn(
+                                                                    "flex items-center gap-3 md:gap-4 bg-zinc-50/50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:bg-white transition-all w-full text-left shadow-sm",
+                                                                    bodies.length <= 2 ? "max-w-sm" : ""
+                                                                )}
+                                                            >
+                                                                <div className="size-14 md:size-16 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                                    {member.image ? (
+                                                                        // eslint-disable-next-line @next/next/no-img-element
+                                                                        <img src={member.image} alt={member.name} className="size-full object-cover" />
+                                                                    ) : (
+                                                                        <User className="size-6 md:size-8 text-zinc-300" />
+                                                                    )}
+                                                                </div>
+                                                                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                                                    <h4 className="font-bold text-foreground text-xs md:text-sm lg:text-base mb-0.5 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
+                                                                    <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
+                                                                        {group.listName === "AZIONE UNIVERITARIA" || group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="shrink-0 size-6 md:size-8 relative opacity-80 flex items-center justify-center">
+                                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                    <img
+                                                                        src={
+                                                                            group.listName === "MORGANA" ? "/assets/morgana.png" :
+                                                                                group.listName === "O.R.U.M." ? "/assets/orum.png" :
+                                                                                    "/assets/azione.png"
+                                                                        }
+                                                                        alt={group.listName}
+                                                                        className="size-full object-contain"
+                                                                    />
+                                                                </div>
+                                                            </motion.button>
+                                                        ))
+                                                    )}
                                                 </div>
                                             </div>
-                                        ))}
-                                    </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )
 
-                                    {/* Bottom Row: Consiglio degli Studenti */}
-                                    {bottomBodies.length > 0 && (
-                                        <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-                                            {bottomBodies.map((body, idx) => (
-                                                <div key={idx} className="relative flex flex-col w-full lg:w-[calc(50%-2rem)]">
-                                                    <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full hover:shadow-md transition-shadow">
-                                                        <h3 className="text-lg md:text-xl font-bold text-foreground mb-6 flex items-center gap-3 border-b border-zinc-50 pb-4">
-                                                            {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400 shrink-0" /> })()}
-                                                            <span className="leading-snug uppercase tracking-wide">{body.name}</span>
-                                                        </h3>
-                                                        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 flex-grow w-full py-2">
-                                                            {body.groups.flatMap((group: any) =>
-                                                                group.members.map((member: any, memIdx: number) => (
-                                                                    <motion.button
-                                                                        key={`${group.listName}-${memIdx}`}
-                                                                        onClick={() => handleRepClick(member)}
-                                                                        whileHover={{ scale: 1.02 }}
-                                                                        whileTap={{ scale: 0.98 }}
-                                                                        className="flex items-center gap-3 md:gap-4 bg-zinc-50/50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:bg-white transition-all w-full max-w-sm md:w-[calc(50%-1.5rem)] text-left shadow-sm"
-                                                                    >
-                                                                        <div className="size-14 md:size-16 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
-                                                                            {member.image ? (
-                                                                                // eslint-disable-next-line @next/next/no-img-element
-                                                                                <img src={member.image} alt={member.name} className="size-full object-cover" />
-                                                                            ) : (
-                                                                                <User className="size-6 md:size-8 text-zinc-300" />
-                                                                            )}
-                                                                        </div>
-                                                                        <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                            <h4 className="font-bold text-foreground text-sm md:text-base mb-0.5 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
-                                                                            <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
-                                                                                {group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
-                                                                            </p>
-                                                                        </div>
-                                                                        <div className="shrink-0 size-6 md:size-8 relative opacity-80 flex items-center justify-center">
-                                                                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                            <img
-                                                                                src={
-                                                                                    group.listName === "MORGANA" ? "/assets/morgana.png" :
-                                                                                        group.listName === "O.R.U.M." ? "/assets/orum.png" :
-                                                                                            "/assets/azione.png"
-                                                                                }
-                                                                                alt={group.listName}
-                                                                                className="size-full object-contain"
-                                                                            />
-                                                                        </div>
-                                                                    </motion.button>
-                                                                ))
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
+                            return (
+                                <div className="space-y-12">
+                                    {row1Bodies.length > 0 && renderBodyRow(row1Bodies)}
+                                    {row2Bodies.length > 0 && (
+                                        <div className="flex justify-center">
+                                            {renderBodyRow(row2Bodies)}
                                         </div>
                                     )}
-                                </>
+                                    {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "gap-8 md:gap-16")}
+                                </div>
                             )
                         })()}
                     </section>
