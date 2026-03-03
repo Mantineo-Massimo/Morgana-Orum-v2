@@ -241,14 +241,23 @@ const getRepresentativesInternal = async (filters?: {
     }
 }
 
-const getRepresentativesCached = unstable_cache(
-    async (filters?: any) => {
-        return getRepresentativesInternal(filters)
-    },
-    ['representatives-list'],
-    { revalidate: 3600, tags: ['representatives'] }
-)
-
-export const getRepresentatives = (filters?: any) => {
-    return getRepresentativesCached(filters)
+export const getRepresentatives = async (filters?: {
+    query?: string,
+    list?: string,
+    category?: string,
+    department?: string,
+    userRole?: string,
+    userAssociation?: Association
+}) => {
+    return unstable_cache(
+        async () => getRepresentativesInternal(filters),
+        ['representatives-list',
+            filters?.query || 'none',
+            filters?.list || 'all',
+            filters?.category || 'all',
+            filters?.department || 'none',
+            filters?.userRole || 'public'
+        ],
+        { revalidate: 3600, tags: ['representatives'] }
+    )()
 }
