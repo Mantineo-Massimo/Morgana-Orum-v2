@@ -98,7 +98,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
 
                                             {/* Info */}
                                             <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors truncate">
+                                                <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors break-words uppercase tracking-tight">
                                                     {member.name}
                                                 </h4>
                                                 <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">

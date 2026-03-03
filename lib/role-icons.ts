@@ -1,4 +1,4 @@
-import { BadgeEuro, GraduationCap, BriefcaseBusiness, Users, User, Building2, University, Container, Volleyball, Stethoscope } from "lucide-react"
+import { BadgeEuro, GraduationCap, BriefcaseBusiness, Users, User, Building2, University, Container, Volleyball, Stethoscope, Landmark } from "lucide-react"
 
 /**
  * Returns the appropriate Lucide icon component for a representative role/body name.
@@ -7,6 +7,7 @@ export function getRoleIcon(roleName: string) {
     if (roleName.startsWith("CdA")) return BadgeEuro
     if (roleName.startsWith("SA ") || roleName.startsWith("SA(")) return GraduationCap
     if (roleName.startsWith("ERSU")) return BriefcaseBusiness
+    if (roleName.startsWith("CUG")) return Landmark
     if (roleName.startsWith("CdS")) return Users
     if (roleName.startsWith("CNSU")) return User
     if (roleName.startsWith("CSASU")) return Volleyball

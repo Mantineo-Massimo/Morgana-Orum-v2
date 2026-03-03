@@ -194,7 +194,7 @@ export default function RepresentativesClient({
 
                                                     {/* Info */}
                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                        <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1 group-hover:text-blue-600 transition-colors">{member.name}</h4>
+                                                        <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words group-hover:text-blue-600 transition-colors uppercase tracking-tight">{member.name}</h4>
                                                         <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
                                                             {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                         </p>
@@ -245,7 +245,7 @@ export default function RepresentativesClient({
                                             <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-5 flex flex-col h-full w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1rem)] max-w-full overflow-hidden">
                                                 <h3 className="text-base md:text-lg font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
                                                     {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
-                                                    <span className="truncate">{body.name}</span>
+                                                    <span className="leading-tight">{body.name}</span>
                                                 </h3>
                                                 <div className="flex flex-col gap-3 md:gap-4 flex-grow w-full justify-center items-center py-4">
                                                     {body.groups.flatMap((group: any) =>
@@ -266,7 +266,7 @@ export default function RepresentativesClient({
                                                                     )}
                                                                 </div>
                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                    <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1">{member.name}</h4>
+                                                                    <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
                                                                     <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
                                                                         {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                                     </p>
@@ -298,7 +298,7 @@ export default function RepresentativesClient({
                                                 <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full w-full lg:w-[calc(50%-2rem)] max-w-full overflow-hidden">
                                                     <h3 className="text-lg md:text-xl font-bold text-foreground mb-4 md:mb-6 flex items-center gap-2">
                                                         {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400 shrink-0" /> })()}
-                                                        <span className="truncate">{body.name}</span>
+                                                        <span className="leading-snug">{body.name}</span>
                                                     </h3>
                                                     <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 flex-grow w-full py-4">
                                                         {body.groups.flatMap((group: any) =>
@@ -319,7 +319,7 @@ export default function RepresentativesClient({
                                                                         )}
                                                                     </div>
                                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                        <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words line-clamp-2 md:line-clamp-1">{member.name}</h4>
+                                                                        <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
                                                                         <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
                                                                             {group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
                                                                         </p>
