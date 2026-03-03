@@ -245,7 +245,7 @@ export default function RepresentativesClient({
                                     {bodies.map((body, idx) => (
                                         <div key={idx} className={cn(
                                             "relative flex flex-col w-full",
-                                            bodies.length === 1 ? "max-w-xl" :
+                                            bodies.length === 1 ? "max-w-6xl" :
                                                 bodies.length === 2 ? "md:w-[calc(50%-2rem)] max-w-2xl" :
                                                     "md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] xl:w-[calc(25%-3rem)]"
                                         )}>
@@ -254,7 +254,7 @@ export default function RepresentativesClient({
                                                     {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
                                                     <span className="leading-tight uppercase tracking-wide">{body.name}</span>
                                                 </h3>
-                                                <div className="flex flex-wrap items-center justify-center gap-4 flex-grow w-full py-2">
+                                                <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 flex-grow w-full py-2">
                                                     {body.groups.flatMap((group: any) =>
                                                         group.members.map((member: any, memIdx: number) => (
                                                             <motion.button
@@ -263,8 +263,9 @@ export default function RepresentativesClient({
                                                                 whileHover={{ scale: 1.02 }}
                                                                 whileTap={{ scale: 0.98 }}
                                                                 className={cn(
-                                                                    "flex items-center gap-3 md:gap-4 bg-zinc-50/50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:bg-white transition-all w-full text-left shadow-sm",
-                                                                    bodies.length <= 2 ? "max-w-sm" : ""
+                                                                    "flex items-center gap-3 md:gap-4 bg-zinc-50/50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:bg-white transition-all text-left shadow-sm",
+                                                                    bodies.length === 1 ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]" : "w-full",
+                                                                    bodies.length === 2 ? "max-w-sm" : ""
                                                                 )}
                                                             >
                                                                 <div className="size-14 md:size-16 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
