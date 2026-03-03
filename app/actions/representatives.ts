@@ -189,7 +189,7 @@ const getRepresentativesInternal = async (filters?: {
 
         const where: any = {}
 
-        // Enforce role-based visibility
+        // Enforce role-based visibility ONLY for admins
         if (user?.role === "ADMIN_NETWORK") {
             const keywords = ASSOCIATION_DEPARTMENT_KEYWORDS[user.association as string]
             if (keywords && keywords.length > 0) {
@@ -204,8 +204,6 @@ const getRepresentativesInternal = async (filters?: {
             } else {
                 where.association = { in: [user.association, Association.MORGANA_ORUM] }
             }
-        } else if (filters?.userAssociation) {
-            where.association = filters.userAssociation
         }
 
         if (filters?.department) {
