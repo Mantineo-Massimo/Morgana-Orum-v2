@@ -247,15 +247,6 @@ export const getRepresentatives = async (filters?: {
     userRole?: string,
     userAssociation?: Association
 }) => {
-    return unstable_cache(
-        async () => getRepresentativesInternal(filters),
-        ['representatives-list',
-            filters?.query || 'none',
-            filters?.list || 'all',
-            filters?.category || 'all',
-            filters?.department || 'none',
-            filters?.userRole || 'public'
-        ],
-        { revalidate: 3600, tags: ['representatives'] }
-    )()
+    // Temporarily bypass cache to debug Vercel issue
+    return getRepresentativesInternal(filters)
 }
