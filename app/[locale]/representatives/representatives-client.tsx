@@ -154,10 +154,10 @@ export default function RepresentativesClient({
                 {/* National Bodies Section */}
                 {nationalBodies.length > 0 && (
                     <section className="mb-20">
-                        <div className="flex items-center gap-4 mb-8">
+                        <div className="flex items-center gap-4 mb-12">
                             <div className="h-px bg-zinc-200 flex-1"></div>
-                            <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
-                                <Landmark className="size-6 text-zinc-400" /> {t("national_bodies")}
+                            <h2 className="px-6 py-2 bg-zinc-100 rounded-full text-sm md:text-base font-black text-zinc-600 uppercase tracking-[0.2em] flex items-center gap-3 shadow-sm border border-zinc-200/50">
+                                <Landmark className="size-5 text-zinc-400" /> {t("national_bodies")}
                             </h2>
                             <div className="h-px bg-zinc-200 flex-1"></div>
                         </div>
@@ -167,8 +167,9 @@ export default function RepresentativesClient({
                             nationalBodies.length === 1 ? "max-w-3xl mx-auto" : "lg:grid-cols-2"
                         )}>
                             {nationalBodies.map((body, idx) => (
-                                <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-6 flex flex-col h-full">
-                                    <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
+                                <div key={idx} className="bg-white rounded-3xl border border-zinc-200 shadow-sm p-8 flex flex-col h-full relative overflow-hidden group hover:shadow-xl transition-all duration-500">
+                                    <div className="absolute top-0 left-0 w-2 h-full bg-zinc-400 group-hover:w-3 transition-all"></div>
+                                    <h3 className="text-xl font-bold text-foreground mb-8 flex items-center gap-3 pl-2">
                                         {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400" /> })()}
                                         {body.name}
                                     </h3>
@@ -226,10 +227,10 @@ export default function RepresentativesClient({
                 {/* Central Bodies Section */}
                 {centralBodies.length > 0 && (
                     <section className="mb-20">
-                        <div className="flex items-center gap-4 mb-8">
+                        <div className="flex items-center gap-4 mb-12">
                             <div className="h-px bg-zinc-200 flex-1"></div>
-                            <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
-                                <CentralSectionIcon className="size-6 text-zinc-400" /> {t("central_bodies")}
+                            <h2 className="px-6 py-2 bg-white rounded-full text-sm md:text-base font-black text-blue-600 uppercase tracking-[0.2em] flex items-center gap-3 shadow-md border border-blue-100">
+                                <CentralSectionIcon className="size-5 text-blue-500" /> {t("central_bodies")}
                             </h2>
                             <div className="h-px bg-zinc-200 flex-1"></div>
                         </div>
@@ -240,10 +241,11 @@ export default function RepresentativesClient({
                             const bottomBodies = centralBodies.filter(b => b.name.startsWith("CdS") || b.name.startsWith("SIR"))
                             return (
                                 <>
-                                    <div className="flex flex-wrap justify-center gap-4 mb-8">
+                                    <div className="flex flex-wrap justify-center gap-6 mb-12">
                                         {topBodies.map((body, idx) => (
-                                            <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-5 flex flex-col h-full w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1rem)] max-w-full overflow-hidden">
-                                                <h3 className="text-base md:text-lg font-bold text-foreground mb-3 md:mb-4 flex items-center gap-2">
+                                            <div key={idx} className="bg-white rounded-3xl border border-zinc-200 shadow-sm p-6 md:p-8 flex flex-col h-full w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)] max-w-full overflow-hidden relative group hover:shadow-xl transition-all duration-500">
+                                                <div className="absolute top-0 left-0 w-2 h-full bg-blue-500 group-hover:w-3 transition-all"></div>
+                                                <h3 className="text-lg md:text-xl font-bold text-foreground mb-6 flex items-center gap-3 pl-2">
                                                     {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
                                                     <span className="leading-tight">{body.name}</span>
                                                 </h3>
@@ -295,8 +297,9 @@ export default function RepresentativesClient({
                                     {bottomBodies.length > 0 && (
                                         <div className="flex flex-wrap justify-center gap-8">
                                             {bottomBodies.map((body, idx) => (
-                                                <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full w-full lg:w-[calc(50%-2rem)] max-w-full overflow-hidden">
-                                                    <h3 className="text-lg md:text-xl font-bold text-foreground mb-4 md:mb-6 flex items-center gap-2">
+                                                <div key={idx} className="bg-white rounded-3xl border border-zinc-200 shadow-sm p-6 md:p-8 flex flex-col h-full w-full lg:w-[calc(50%-2rem)] max-w-full overflow-hidden relative group hover:shadow-xl transition-all duration-500">
+                                                    <div className="absolute top-0 left-0 w-2 h-full bg-blue-500 group-hover:w-3 transition-all"></div>
+                                                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-8 flex items-center gap-4 pl-2">
                                                         {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400 shrink-0" /> })()}
                                                         <span className="leading-snug">{body.name}</span>
                                                     </h3>
@@ -352,10 +355,10 @@ export default function RepresentativesClient({
 
                 {/* Department Councils Section */}
                 <section>
-                    <div className="flex items-center gap-4 mb-8">
+                    <div className="flex items-center gap-4 mb-12">
                         <div className="h-px bg-zinc-200 flex-1"></div>
-                        <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
-                            <DepartmentSectionIcon className="size-6 text-zinc-400" /> {t("dept_councils")}
+                        <h2 className="px-6 py-2 bg-white rounded-full text-sm md:text-base font-black text-red-600 uppercase tracking-[0.2em] flex items-center gap-3 shadow-md border border-red-100">
+                            <DepartmentSectionIcon className="size-5 text-red-500" /> {t("dept_councils")}
                         </h2>
                         <div className="h-px bg-zinc-200 flex-1"></div>
                     </div>
