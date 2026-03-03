@@ -154,10 +154,10 @@ export default function RepresentativesClient({
                 {/* National Bodies Section */}
                 {nationalBodies.length > 0 && (
                     <section className="mb-20">
-                        <div className="flex items-center gap-4 mb-12">
+                        <div className="flex items-center gap-4 mb-8">
                             <div className="h-px bg-zinc-200 flex-1"></div>
-                            <h2 className="px-6 py-2 bg-zinc-100 rounded-full text-sm md:text-base font-black text-zinc-600 uppercase tracking-[0.2em] flex items-center gap-3 shadow-sm border border-zinc-200/50">
-                                <Landmark className="size-5 text-zinc-400" /> {t("national_bodies")}
+                            <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
+                                <Landmark className="size-6 text-zinc-400" /> {t("national_bodies")}
                             </h2>
                             <div className="h-px bg-zinc-200 flex-1"></div>
                         </div>
@@ -167,9 +167,8 @@ export default function RepresentativesClient({
                             nationalBodies.length === 1 ? "max-w-3xl mx-auto" : "lg:grid-cols-2"
                         )}>
                             {nationalBodies.map((body, idx) => (
-                                <div key={idx} className="bg-white rounded-3xl border border-zinc-200 shadow-sm p-8 flex flex-col h-full relative overflow-hidden group hover:shadow-xl transition-all duration-500">
-                                    <div className="absolute top-0 left-0 w-2 h-full bg-zinc-400 group-hover:w-3 transition-all"></div>
-                                    <h3 className="text-xl font-bold text-foreground mb-8 flex items-center gap-3 pl-2">
+                                <div key={idx} className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-6 flex flex-col h-full">
+                                    <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
                                         {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400" /> })()}
                                         {body.name}
                                     </h3>
@@ -196,7 +195,10 @@ export default function RepresentativesClient({
                                                     {/* Info */}
                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
                                                         <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words group-hover:text-blue-600 transition-colors uppercase tracking-tight">{member.name}</h4>
-                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
+                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-bold uppercase tracking-wider mb-1">
+                                                            {member.role || t("rep_label")}
+                                                        </p>
+                                                        <p className="text-[9px] md:text-[11px] text-zinc-400 font-medium">
                                                             {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                         </p>
                                                     </div>
@@ -227,10 +229,10 @@ export default function RepresentativesClient({
                 {/* Central Bodies Section */}
                 {centralBodies.length > 0 && (
                     <section className="mb-20">
-                        <div className="flex items-center gap-4 mb-12">
+                        <div className="flex items-center gap-4 mb-8">
                             <div className="h-px bg-zinc-200 flex-1"></div>
-                            <h2 className="px-6 py-2 bg-white rounded-full text-sm md:text-base font-black text-blue-600 uppercase tracking-[0.2em] flex items-center gap-3 shadow-md border border-blue-100">
-                                <CentralSectionIcon className="size-5 text-blue-500" /> {t("central_bodies")}
+                            <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
+                                <CentralSectionIcon className="size-6 text-zinc-400" /> {t("central_bodies")}
                             </h2>
                             <div className="h-px bg-zinc-200 flex-1"></div>
                         </div>
@@ -241,15 +243,18 @@ export default function RepresentativesClient({
                             const bottomBodies = centralBodies.filter(b => b.name.startsWith("CdS") || b.name.startsWith("SIR"))
                             return (
                                 <>
-                                    <div className="flex flex-wrap justify-center gap-6 mb-12">
+                                    <div className="flex flex-wrap justify-center gap-4 mb-8">
                                         {topBodies.map((body, idx) => (
-                                            <div key={idx} className="bg-white rounded-3xl border border-zinc-200 shadow-sm p-6 md:p-8 flex flex-col h-full w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)] max-w-full overflow-hidden relative group hover:shadow-xl transition-all duration-500">
-                                                <div className="absolute top-0 left-0 w-2 h-full bg-blue-500 group-hover:w-3 transition-all"></div>
-                                                <h3 className="text-lg md:text-xl font-bold text-foreground mb-6 flex items-center gap-3 pl-2">
-                                                    {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
-                                                    <span className="leading-tight">{body.name}</span>
-                                                </h3>
-                                                <div className="flex flex-col gap-3 md:gap-4 flex-grow w-full justify-center items-center py-4">
+                                            <div key={idx} className="bg-white rounded-3xl border border-zinc-100 shadow-sm p-5 md:p-6 flex flex-col h-full w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] xl:w-[calc(25%-1rem)] max-w-full overflow-hidden hover:shadow-md transition-shadow">
+                                                <div className="flex items-center gap-3 mb-6 bg-zinc-50 -mx-6 -mt-6 p-4 border-b border-zinc-100">
+                                                    <div className="size-10 rounded-2xl bg-white border border-zinc-100 flex items-center justify-center shadow-sm shrink-0">
+                                                        {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-500" /> })()}
+                                                    </div>
+                                                    <h3 className="text-sm md:text-base font-black text-foreground uppercase tracking-tight leading-tight">
+                                                        {body.name}
+                                                    </h3>
+                                                </div>
+                                                <div className="flex flex-col gap-4 flex-grow w-full justify-center items-center py-2">
                                                     {body.groups.flatMap((group: any) =>
                                                         group.members.map((member: any, memIdx: number) => (
                                                             <motion.button
@@ -269,7 +274,10 @@ export default function RepresentativesClient({
                                                                 </div>
                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center">
                                                                     <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
-                                                                    <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
+                                                                    <p className="text-[10px] md:text-sm text-zinc-500 font-bold uppercase tracking-wider mb-1">
+                                                                        {member.role || t("rep_label")}
+                                                                    </p>
+                                                                    <p className="text-[9px] md:text-[11px] text-zinc-400 font-medium">
                                                                         {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                                     </p>
                                                                 </div>
@@ -297,13 +305,16 @@ export default function RepresentativesClient({
                                     {bottomBodies.length > 0 && (
                                         <div className="flex flex-wrap justify-center gap-8">
                                             {bottomBodies.map((body, idx) => (
-                                                <div key={idx} className="bg-white rounded-3xl border border-zinc-200 shadow-sm p-6 md:p-8 flex flex-col h-full w-full lg:w-[calc(50%-2rem)] max-w-full overflow-hidden relative group hover:shadow-xl transition-all duration-500">
-                                                    <div className="absolute top-0 left-0 w-2 h-full bg-blue-500 group-hover:w-3 transition-all"></div>
-                                                    <h3 className="text-xl md:text-2xl font-bold text-foreground mb-8 flex items-center gap-4 pl-2">
-                                                        {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400 shrink-0" /> })()}
-                                                        <span className="leading-snug">{body.name}</span>
-                                                    </h3>
-                                                    <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 flex-grow w-full py-4">
+                                                <div key={idx} className="bg-white rounded-3xl border border-zinc-100 shadow-sm p-6 flex flex-col h-full w-full lg:w-[calc(50%-2rem)] max-w-full overflow-hidden hover:shadow-md transition-shadow">
+                                                    <div className="flex items-center gap-3 mb-8 bg-zinc-50 -mx-6 -mt-6 p-5 border-b border-zinc-100">
+                                                        <div className="size-12 rounded-2xl bg-white border border-zinc-100 flex items-center justify-center shadow-sm shrink-0">
+                                                            {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-6 text-zinc-500" /> })()}
+                                                        </div>
+                                                        <h3 className="text-xl md:text-2xl font-black text-foreground uppercase tracking-tight leading-tight">
+                                                            {body.name}
+                                                        </h3>
+                                                    </div>
+                                                    <div className="flex flex-wrap items-center justify-center gap-4 flex-grow w-full py-2">
                                                         {body.groups.flatMap((group: any) =>
                                                             group.members.map((member: any, memIdx: number) => (
                                                                 <motion.button
@@ -323,7 +334,10 @@ export default function RepresentativesClient({
                                                                     </div>
                                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
                                                                         <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
-                                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
+                                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-bold uppercase tracking-wider mb-1">
+                                                                            {member.role || t("rep_label")}
+                                                                        </p>
+                                                                        <p className="text-[9px] md:text-[11px] text-zinc-400 font-medium">
                                                                             {group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
                                                                         </p>
                                                                     </div>
@@ -355,10 +369,10 @@ export default function RepresentativesClient({
 
                 {/* Department Councils Section */}
                 <section>
-                    <div className="flex items-center gap-4 mb-12">
+                    <div className="flex items-center gap-4 mb-8">
                         <div className="h-px bg-zinc-200 flex-1"></div>
-                        <h2 className="px-6 py-2 bg-white rounded-full text-sm md:text-base font-black text-red-600 uppercase tracking-[0.2em] flex items-center gap-3 shadow-md border border-red-100">
-                            <DepartmentSectionIcon className="size-5 text-red-500" /> {t("dept_councils")}
+                        <h2 className="text-2xl font-bold text-foreground uppercase tracking-widest flex items-center gap-3">
+                            <DepartmentSectionIcon className="size-6 text-zinc-400" /> {t("dept_councils")}
                         </h2>
                         <div className="h-px bg-zinc-200 flex-1"></div>
                     </div>
