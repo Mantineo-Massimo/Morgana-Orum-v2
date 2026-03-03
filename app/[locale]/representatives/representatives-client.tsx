@@ -245,16 +245,17 @@ export default function RepresentativesClient({
                                     {bodies.map((body, idx) => (
                                         <div key={idx} className={cn(
                                             "relative flex flex-col w-full",
-                                            bodies.length === 1 ? "max-w-6xl" :
-                                                bodies.length === 2 ? "md:w-[calc(50%-2rem)] max-w-2xl" :
-                                                    "md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] xl:w-[calc(25%-3rem)]"
+                                            bodies.length === 1 ? "max-w-7xl" :
+                                                body.name.startsWith("CdS") || body.name.startsWith("SIR") ? "max-w-7xl" :
+                                                    bodies.length === 2 ? "md:w-[calc(50%-2rem)] max-w-2xl" :
+                                                        "md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] xl:w-[calc(25%-3rem)]"
                                         )}>
                                             <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full hover:shadow-md transition-shadow">
                                                 <h3 className="text-base md:text-lg font-bold text-foreground mb-4 flex items-center gap-2 border-b border-zinc-50 pb-3">
                                                     {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
                                                     <span className="leading-tight uppercase tracking-wide">{body.name}</span>
                                                 </h3>
-                                                <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 flex-grow w-full py-2">
+                                                <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5 flex-grow w-full py-2">
                                                     {body.groups.flatMap((group: any) =>
                                                         group.members.map((member: any, memIdx: number) => (
                                                             <motion.button
@@ -264,8 +265,10 @@ export default function RepresentativesClient({
                                                                 whileTap={{ scale: 0.98 }}
                                                                 className={cn(
                                                                     "flex items-center gap-3 md:gap-4 bg-zinc-50/50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:bg-white transition-all text-left shadow-sm",
-                                                                    bodies.length === 1 ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]" : "w-full",
-                                                                    bodies.length === 2 ? "max-w-sm" : ""
+                                                                    body.name.startsWith("CdS") ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)]" :
+                                                                        body.name.startsWith("SIR") || bodies.length === 1 ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]" :
+                                                                            "w-full",
+                                                                    bodies.length === 2 && !body.name.startsWith("CdS") && !body.name.startsWith("SIR") ? "max-w-sm" : ""
                                                                 )}
                                                             >
                                                                 <div className="size-14 md:size-16 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
