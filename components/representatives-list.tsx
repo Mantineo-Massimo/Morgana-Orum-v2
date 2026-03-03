@@ -29,8 +29,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
     const [isOpen, setIsOpen] = useState(true) // Default open on sub-sites
 
     return (
-        <div className="bg-white rounded-3xl border border-zinc-200 shadow-sm overflow-hidden group hover:shadow-xl transition-all duration-500 relative">
-            <div className="absolute top-0 left-0 w-1.5 h-full bg-red-500 group-hover:w-2.5 transition-all"></div>
+        <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden">
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-full flex items-center justify-between p-6 hover:bg-zinc-50 transition-colors text-left border-b border-zinc-50"
