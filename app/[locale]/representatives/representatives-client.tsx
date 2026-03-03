@@ -180,28 +180,28 @@ export default function RepresentativesClient({
                                                     onClick={() => handleRepClick(member)}
                                                     whileHover={{ scale: 1.02 }}
                                                     whileTap={{ scale: 0.98 }}
-                                                    className="flex items-center gap-3 md:gap-4 bg-zinc-50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-sm lg:max-w-none lg:w-[calc(50%-0.5rem)] text-left"
+                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-sm lg:max-w-none lg:w-[calc(50%-0.5rem)] text-left group shadow-sm"
                                                 >
                                                     {/* Photo */}
-                                                    <div className="size-14 md:size-20 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                    <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
                                                         {member.image ? (
                                                             // eslint-disable-next-line @next/next/no-img-element
                                                             <img src={member.image} alt={member.name} className="size-full object-cover" />
                                                         ) : (
-                                                            <User className="size-6 md:size-8 text-zinc-300" />
+                                                            <User className="size-8 text-zinc-300" />
                                                         )}
                                                     </div>
 
                                                     {/* Info */}
                                                     <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                        <h4 className="font-bold text-foreground text-sm md:text-lg lg:text-base xl:text-lg mb-0.5 md:mb-1 leading-tight break-words group-hover:text-blue-600 transition-colors uppercase tracking-tight">{member.name}</h4>
-                                                        <p className="text-[10px] md:text-sm text-zinc-500 font-medium leading-tight">
+                                                        <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors break-words uppercase tracking-tight">{member.name}</h4>
+                                                        <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
                                                             {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
                                                         </p>
                                                     </div>
 
                                                     {/* Logo */}
-                                                    <div className="shrink-0 size-8 md:size-12 relative opacity-90 flex items-center justify-center">
+                                                    <div className="shrink-0 size-8 md:size-10 relative opacity-40 group-hover:opacity-100 transition-opacity">
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                                         <img
                                                             src={
@@ -264,28 +264,28 @@ export default function RepresentativesClient({
                                                                 whileHover={{ scale: 1.02 }}
                                                                 whileTap={{ scale: 0.98 }}
                                                                 className={cn(
-                                                                    "flex items-center gap-3 md:gap-4 bg-zinc-50/50 rounded-xl p-3 md:p-4 border border-zinc-100 hover:border-zinc-300 hover:bg-white transition-all text-left shadow-sm",
+                                                                    "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm",
                                                                     body.name.startsWith("CdS") ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)]" :
                                                                         body.name.startsWith("SIR") || bodies.length === 1 ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]" :
                                                                             "w-full",
                                                                     bodies.length === 2 && !body.name.startsWith("CdS") && !body.name.startsWith("SIR") ? "max-w-sm" : ""
                                                                 )}
                                                             >
-                                                                <div className="size-14 md:size-16 rounded-full bg-white border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                                <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
                                                                     {member.image ? (
                                                                         // eslint-disable-next-line @next/next/no-img-element
                                                                         <img src={member.image} alt={member.name} className="size-full object-cover" />
                                                                     ) : (
-                                                                        <User className="size-6 md:size-8 text-zinc-300" />
+                                                                        <User className="size-8 text-zinc-300" />
                                                                     )}
                                                                 </div>
                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                                                    <h4 className="font-bold text-foreground text-xs md:text-sm lg:text-base mb-0.5 leading-tight break-words uppercase tracking-tight">{member.name}</h4>
+                                                                    <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors break-words uppercase tracking-tight">{member.name}</h4>
                                                                     <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
                                                                         {group.listName === "AZIONE UNIVERITARIA" || group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
                                                                     </p>
                                                                 </div>
-                                                                <div className="shrink-0 size-6 md:size-8 relative opacity-80 flex items-center justify-center">
+                                                                <div className="shrink-0 size-8 md:size-10 relative opacity-40 group-hover:opacity-100 transition-opacity">
                                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                     <img
                                                                         src={
