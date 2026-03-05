@@ -12,8 +12,8 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import "../globals.css"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-serif" })
+const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "700", "900"], variable: "--font-sans" })
+const outfit = Outfit({ subsets: ["latin"], weight: ["300", "400", "500", "700", "900"], variable: "--font-serif" })
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://morganaorum.it"),

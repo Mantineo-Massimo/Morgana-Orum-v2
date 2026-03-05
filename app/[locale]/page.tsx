@@ -38,7 +38,7 @@ export default async function BrandHomePage({
                 <div className="absolute inset-0 bg-black/30"></div>
 
                 <div className="container relative z-10 text-center px-4">
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-black text-white leading-tight mb-6 drop-shadow-lg">
+                    <h1 className="text-4xl md:text-6xl lg:text-6xl xl:text-7xl font-serif font-black text-white leading-[1.1] mb-6 drop-shadow-lg tracking-normal text-balance">
                         {t("hero_title")}
                     </h1>
                     <p className="text-lg md:text-2xl text-white/90 font-serif max-w-4xl mx-auto leading-relaxed drop-shadow-md">
@@ -161,7 +161,7 @@ export default async function BrandHomePage({
                     <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
                     <div className="container relative z-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-14 px-6 text-center">
                         <Image src="/assets/morgana.png" width={112} height={112} className="h-12 sm:h-20 md:h-28 w-auto object-contain drop-shadow-2xl" alt="Morgana" />
-                        <h2 className="text-2xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none">
+                        <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tighter leading-none">
                             {t("network_title")}
                         </h2>
                         <Image src="/assets/orum.png" width={112} height={112} className="h-12 sm:h-20 md:h-28 w-auto object-contain drop-shadow-2xl" alt="O.R.U.M." />
