@@ -350,36 +350,39 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                         <Link
                                             href={`/network/${brandId}/events/${evento.id}`}
                                             key={evento.id}
-                                            className="relative group overflow-hidden bg-muted aspect-[4/5] flex items-end p-8 shadow-2xl hover:-translate-y-2 transition-all duration-500 block rounded-2xl border-b-8"
-                                            style={{ borderBottomColor: config.theme?.accent || 'var(--primary)' }}
+                                            className="relative group overflow-hidden bg-muted aspect-[4/3] flex items-end p-6 border-b-4 shadow-sm hover:shadow-lg transition-all block"
+                                            style={{ borderBottomColor: config.theme?.primary || 'var(--primary)' }}
                                         >
                                             {evento.image && (
-                                                <Image src={evento.image} alt={evento.title} fill className="object-cover z-0 group-hover:scale-110 transition-transform duration-700" />
+                                                <Image src={evento.image} alt={evento.title} fill className="object-cover z-0" />
                                             )}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10"></div>
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
 
                                             {/* Date Badge Overlay */}
-                                            <div className="absolute top-6 left-6 z-20 bg-white text-foreground text-center p-3 rounded-xl shadow-2xl transform group-hover:scale-110 transition-transform">
-                                                <span className="block text-xs font-black uppercase" style={{ color: config.theme?.primary || 'var(--primary)' }}>
+                                            <div className="absolute top-4 left-4 z-20 bg-white text-foreground text-center p-2 min-w-[3.5rem] shadow-sm">
+                                                <span className="block text-xs font-bold uppercase text-muted-foreground">
                                                     {evento.date.toLocaleDateString(locale, { month: 'short' })}
                                                 </span>
-                                                <span className="block text-3xl font-black leading-none">
+                                                <span className="block text-2xl font-black leading-none">
                                                     {evento.date.toLocaleDateString(locale, { day: '2-digit' })}
                                                 </span>
                                             </div>
 
-                                            <div className="relative z-20 text-white w-full">
-                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-3 block">
+                                            <div className="relative z-20 text-white mt-auto">
+                                                <span
+                                                    className="text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 mb-2 inline-block"
+                                                    style={{
+                                                        backgroundColor: config.theme?.primary || 'var(--primary)',
+                                                        color: config.theme ? '#fff' : 'var(--primary-foreground)'
+                                                    }}
+                                                >
                                                     {evento.category}
                                                 </span>
-                                                <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2" style={{ color: 'inherit' }}>
+                                                <h3 className="text-xl font-bold leading-tight group-hover:underline underline-offset-4" style={{ textDecorationColor: config.theme?.primary || 'var(--primary)' }}>
                                                     {evento.title}
                                                 </h3>
-                                                <div className="mt-4 pt-4 border-t border-white/20 text-xs flex items-center justify-between gap-2 opacity-80">
-                                                    <div className="flex items-center gap-2">
-                                                        <Calendar className="size-3" /> {evento.location}
-                                                    </div>
-                                                    <ArrowRight className="size-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
+                                                <div className="mt-2 text-xs flex items-center gap-2 opacity-80">
+                                                    <Calendar className="size-3" /> {evento.location}
                                                 </div>
                                             </div>
                                         </Link>
