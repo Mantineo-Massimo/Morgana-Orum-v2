@@ -38,10 +38,10 @@ export default async function BrandHomePage({
                 <div className="absolute inset-0 bg-black/30"></div>
 
                 <div className="container relative z-10 text-center px-4">
-                    <h1 className="text-4xl md:text-6xl lg:text-6xl xl:text-7xl font-serif font-black text-white leading-[1.1] mb-6 tracking-tight text-balance subpixel-antialiased" style={{ textShadow: '0 4px 8px rgba(0,0,0,0.3)' }}>
+                    <h1 className="text-4xl md:text-6xl lg:text-6xl xl:text-7xl font-serif font-bold text-white leading-[1.1] mb-6 tracking-tight text-balance antialiased drop-shadow-sm">
                         {t("hero_title")}
                     </h1>
-                    <p className="text-lg md:text-2xl text-white/90 font-serif max-w-4xl mx-auto leading-relaxed subpixel-antialiased" style={{ textShadow: '0 2px 4px rgba(0,0,0,0.3)' }}>
+                    <p className="text-lg md:text-2xl text-white/90 font-serif max-w-4xl mx-auto leading-relaxed antialiased drop-shadow-sm">
                         {t("hero_subtitle")}
                     </p>
                 </div>
