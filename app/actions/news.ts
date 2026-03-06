@@ -46,7 +46,7 @@ export const getNewsInternal = async (category?: string, query?: string, associa
         }
 
         if (association) {
-            where.associations = { hasSome: [association, Association.MORGANA_ORUM] }
+            where.associations = { has: association }
         }
 
         const newsRows = await prisma.news.findMany({

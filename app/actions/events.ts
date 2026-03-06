@@ -44,7 +44,7 @@ const getAllEventsInternal = async (userEmail?: string | null, association?: Ass
         }
 
         if (association) {
-            query.where.associations = { hasSome: [association, Association.MORGANA_ORUM] }
+            query.where.associations = { has: association }
         }
 
         if (userEmail) {
