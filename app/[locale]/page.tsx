@@ -4,6 +4,7 @@ import { ArrowRight, Calendar } from "lucide-react"
 import { HeroCarousel } from "@/components/hero-carousel"
 import { getNews } from "@/app/actions/news"
 import { getAllEvents } from "@/app/actions/events"
+import { Association } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
 import { EventCard } from "@/components/event-card"
@@ -20,8 +21,8 @@ export default async function BrandHomePage({
 
     // Fetch data in parallel using cached actions
     const [ultimeNotizie, prossimiEventi] = await Promise.all([
-        getNews(undefined, undefined, undefined, locale).then(news => news.slice(0, 3)),
-        getAllEvents(sessionEmail, undefined, 'upcoming', locale).then(events => events.slice(0, 3))
+        getNews(undefined, undefined, Association.MORGANA_ORUM, locale).then(news => news.slice(0, 3)),
+        getAllEvents(sessionEmail, Association.MORGANA_ORUM, 'upcoming', locale).then(events => events.slice(0, 3))
     ])
 
     // Content Configuration Unificata

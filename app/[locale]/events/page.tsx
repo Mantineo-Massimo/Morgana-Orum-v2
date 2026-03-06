@@ -1,4 +1,5 @@
 import { getAllEvents, getEventCategories } from "@/app/actions/events"
+import { Association } from "@prisma/client"
 import { cookies } from "next/headers"
 import { getTranslations } from "next-intl/server"
 import EventsClient from "./events-client"
@@ -7,7 +8,7 @@ export default async function Page({ params: { locale } }: { params: { locale: s
     const sessionEmail = cookies().get("session_email")?.value || null
 
     const [events, categories, t] = await Promise.all([
-        getAllEvents(sessionEmail, undefined, 'upcoming', locale),
+        getAllEvents(sessionEmail, Association.MORGANA_ORUM, 'upcoming', locale),
         getEventCategories(),
         getTranslations("Events")
     ])
