@@ -127,7 +127,7 @@ export function ArtistiClient({ artists }: Props) {
                         {filtered.map((artist) => (
                             <div key={artist.id} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-zinc-800 cursor-pointer">
                                 <Image
-                                    src={artist.image || "/assets/slides/1.jpg"}
+                                    src={artist.image || "/assets/slides/1.webp"}
                                     alt={artist.name}
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-110"

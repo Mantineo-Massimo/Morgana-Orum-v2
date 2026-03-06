@@ -147,7 +147,7 @@ export default function AboutPage() {
                                 </div>
                                 <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-all duration-500">
                                     <Image
-                                        src={`/assets/${activeTab === 'morgana' ? 'morgana' : 'orum'}.png`}
+                                        src={`/assets/${activeTab === 'morgana' ? 'morgana' : 'orum'}.webp`}
                                         alt="Brand Story"
                                         fill
                                         className="object-contain p-12 bg-white"
@@ -182,7 +182,7 @@ export default function AboutPage() {
             <section className="py-24 bg-[#18182e] text-white relative overflow-hidden">
                 {/* Background Pattern */}
                 <div className="absolute inset-0 opacity-30 pointer-events-none">
-                    <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
+                    <Image src="/assets/slides/1.webp" fill className="object-cover grayscale" alt="" sizes="100vw" />
                 </div>
                 <div className={cn("absolute inset-0 mix-blend-multiply opacity-20", isMorgana ? "bg-[#c12830]" : "bg-[#18182e]")}></div>
 

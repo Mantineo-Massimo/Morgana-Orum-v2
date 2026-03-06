@@ -131,8 +131,8 @@ export default function EventsAdminClient({
                 })
             }
 
-            const logoMorgana = await loadLogo("/assets/morgana.png")
-            const logoOrum = await loadLogo("/assets/orum.png")
+            const logoMorgana = await loadLogo("/assets/morgana.webp")
+            const logoOrum = await loadLogo("/assets/orum.webp")
 
             const drawPageContent = (docInstance: any, titleOverride?: string) => {
                 const margin = 15

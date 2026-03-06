@@ -54,7 +54,7 @@ export function ArtistiCarousel() {
                         >
                             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-xl bg-zinc-200 h-full">
                                 <Image
-                                    src={`/assets/slides/${artist.image}.jpg`}
+                                    src={`/assets/slides/${artist.image}.webp`}
                                     alt={artist.name}
                                     fill
                                     className="object-cover group-hover:scale-105 transition-transform duration-700"

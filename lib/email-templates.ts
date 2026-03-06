@@ -8,46 +8,46 @@ export const BRANDS: Record<string, BrandConfig> = {
     morgana: {
         name: "Associazione Morgana",
         color: "#18182b",
-        logo: "https://morganaorum.vercel.app/assets/morgana.png"
+        logo: "https://morganaorum.vercel.app/assets/morgana.webp"
     },
     orum: {
         name: "Associazione O.R.U.M.",
         color: "#18182b",
-        logo: "https://morganaorum.vercel.app/assets/orum.png"
+        logo: "https://morganaorum.vercel.app/assets/orum.webp"
     },
     unimhealth: {
         name: "Unimhealth",
         color: "#c9041a",
-        logo: "https://morganaorum.vercel.app/assets/unimhealth.png"
+        logo: "https://morganaorum.vercel.app/assets/unimhealth.webp"
     },
     economia: {
         name: "Studenti Economia",
         color: "#202549",
-        logo: "https://morganaorum.vercel.app/assets/studentieconomia.png"
+        logo: "https://morganaorum.vercel.app/assets/studentieconomia.webp"
     },
     matricole: {
         name: "Unime Matricole",
         color: "#0d6cab",
-        logo: "https://morganaorum.vercel.app/assets/unimematricole.png"
+        logo: "https://morganaorum.vercel.app/assets/unimematricole.webp"
     },
     scipog: {
         name: "Studenti Scipog",
         color: "#fbc363",
-        logo: "https://morganaorum.vercel.app/assets/studentiscipog.png"
+        logo: "https://morganaorum.vercel.app/assets/studentiscipog.webp"
     },
     dicam: {
         name: "Inside Dicam",
         color: "#f34ab4",
-        logo: "https://morganaorum.vercel.app/assets/insidedicam.png"
+        logo: "https://morganaorum.vercel.app/assets/insidedicam.webp"
     }
 }
 
 const getEmailHeader = (title: string, bgColor: string) => `
         <div style="background-color: ${bgColor}; padding: 30px; text-align: center;">
             <div style="display: inline-block;">
-                <img src="https://morganaorum.vercel.app/assets/morgana.png" alt="Morgana" style="height: 55px; width: auto; vertical-align: middle; margin-right: 15px;" />
+                <img src="https://morganaorum.vercel.app/assets/morgana.webp" alt="Morgana" style="height: 55px; width: auto; vertical-align: middle; margin-right: 15px;" />
                 <span style="font-size: 30px; color: rgba(255,255,255,0.2); vertical-align: middle;">|</span>
-                <img src="https://morganaorum.vercel.app/assets/orum.png" alt="O.R.U.M." style="height: 55px; width: auto; vertical-align: middle; margin-left: 15px;" />
+                <img src="https://morganaorum.vercel.app/assets/orum.webp" alt="O.R.U.M." style="height: 55px; width: auto; vertical-align: middle; margin-left: 15px;" />
             </div>
             <h1 style="color: white; margin-top: 25px; font-size: 24px; font-weight: 600;">${title}</h1>
         </div>
@@ -59,11 +59,11 @@ const getEmailFooter = (disclaimer: string) => `
             <div style="text-align: center; margin-bottom: 25px;">
                 <p style="font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px; font-weight: bold;">Scopri il Nostro Network</p>
                 <div style="display: inline-block;">
-                    <img src="https://morganaorum.vercel.app/assets/unimhealth.png" alt="Unimhealth" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/studentieconomia.png" alt="Economia" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/unimematricole.png" alt="Matricole" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/studentiscipog.png" alt="Scipog" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/insidedicam.png" alt="Dicam" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/unimhealth.webp" alt="Unimhealth" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/studentieconomia.webp" alt="Economia" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/unimematricole.webp" alt="Matricole" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/studentiscipog.webp" alt="Scipog" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/insidedicam.webp" alt="Dicam" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
                 </div>
             </div>
 

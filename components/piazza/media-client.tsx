@@ -100,7 +100,7 @@ export function MediaClient({ media }: Props) {
                             {esibizioni.map((video) => (
                                 <div key={video.id} className="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer">
                                     <div className="relative aspect-video">
-                                        <Image src={video.thumbnail || "/assets/slides/1.jpg"} alt={video.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <Image src={video.thumbnail || "/assets/slides/1.webp"} alt={video.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors"></div>
                                         <div className="absolute inset-0 flex items-center justify-center">
                                             <div className="size-16 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: THEME.accent }}>
@@ -129,7 +129,7 @@ export function MediaClient({ media }: Props) {
                             {interviste.map((item) => (
                                 <div key={item.id} className="group flex gap-6 p-7 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer">
                                     <div className="relative shrink-0 size-20 md:size-24 rounded-2xl overflow-hidden bg-zinc-800 ring-2 ring-white/10">
-                                        <Image src={item.thumbnail || "/assets/slides/1.jpg"} alt={item.personName} fill className="object-cover" />
+                                        <Image src={item.thumbnail || "/assets/slides/1.webp"} alt={item.personName} fill className="object-cover" />
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <div className="mb-3">
@@ -156,7 +156,7 @@ export function MediaClient({ media }: Props) {
                                 <div key={f.id} className="group relative break-inside-avoid rounded-2xl overflow-hidden bg-zinc-800 cursor-pointer">
                                     <div className="relative">
                                         <Image
-                                            src={f.thumbnail || f.url || "/assets/slides/1.jpg"}
+                                            src={f.thumbnail || f.url || "/assets/slides/1.webp"}
                                             alt={f.title}
                                             width={600}
                                             height={400}

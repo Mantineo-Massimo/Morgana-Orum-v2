@@ -81,7 +81,7 @@ export function ArtistsManager({ artists }: ArtistsManagerProps) {
                         </div>
                         <div className="space-y-2">
                             <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Immagine (Asset Path)</label>
-                            <input type="text" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" placeholder="/assets/artisti/nome.jpg" />
+                            <input type="text" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" placeholder="/assets/artisti/nome.webp" />
                         </div>
                         <div className="space-y-2">
                             <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine</label>
@@ -112,7 +112,7 @@ export function ArtistsManager({ artists }: ArtistsManagerProps) {
                                 <td className="px-6 py-4">
                                     <div className="flex items-center gap-4">
                                         <div className="size-10 rounded-lg overflow-hidden shrink-0 relative border border-zinc-100">
-                                            <Image src={a.image || "/assets/slides/1.jpg"} fill className="object-cover" alt="" />
+                                            <Image src={a.image || "/assets/slides/1.webp"} fill className="object-cover" alt="" />
                                         </div>
                                         <div>
                                             <p className="font-bold text-sm text-zinc-900">{a.name}</p>

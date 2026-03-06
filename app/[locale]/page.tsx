@@ -102,7 +102,7 @@ export default async function BrandHomePage({
                             <Link href={`/news/${news.id}`} key={news.id} className="group cursor-pointer">
                                 <div className="relative h-64 w-full overflow-hidden rounded-3xl mb-6 shadow-xl ring-1 ring-black/5">
                                     <Image
-                                        src={news.image || "/assets/morgana.png"}
+                                        src={news.image || "/assets/morgana.webp"}
                                         alt={news.title}
                                         fill
                                         className="object-cover group-hover:scale-110 transition-transform duration-700"

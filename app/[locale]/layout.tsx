@@ -40,7 +40,7 @@ export const metadata: Metadata = {
         description: "Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
         images: [
             {
-                url: "/assets/morganaorum/og-image.jpg",
+                url: "/assets/morganaorum/og-image.webp",
                 width: 1200,
                 height: 630,
                 alt: "Morgana & O.R.U.M. Associazioni Universitarie",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Morgana & O.R.U.M. - Associazioni Universitarie",
         description: "Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
-        images: ["/assets/morganaorum/og-image.jpg"],
+        images: ["/assets/morganaorum/og-image.webp"],
     },
     icons: {
         icon: [

@@ -24,9 +24,9 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={
-                                    representative.listName === "MORGANA" ? "/assets/morgana.png" :
-                                        representative.listName === "O.R.U.M." ? "/assets/orum.png" :
-                                            "/assets/azione.png"
+                                    representative.listName === "MORGANA" ? "/assets/morgana.webp" :
+                                        representative.listName === "O.R.U.M." ? "/assets/orum.webp" :
+                                            "/assets/azione.webp"
                                 }
                                 alt={representative.listName}
                                 className="w-4/5 object-contain grayscale"

@@ -12,7 +12,7 @@ export default function Loading() {
                 <div className="flex items-center gap-6 md:gap-12 animate-in fade-in zoom-in duration-700">
                     <div className="relative size-20 md:size-28 animate-pulse">
                         <Image
-                            src="/assets/morgana.png"
+                            src="/assets/morgana.webp"
                             alt="Morgana Loading"
                             fill
                             className="object-contain drop-shadow-[0_0_15px_rgba(193,40,48,0.3)]"
@@ -21,7 +21,7 @@ export default function Loading() {
                     <div className="h-12 w-px bg-zinc-800 animate-in fade-in slide-in-from-bottom duration-1000"></div>
                     <div className="relative size-20 md:size-28 animate-pulse delay-300">
                         <Image
-                            src="/assets/orum.png"
+                            src="/assets/orum.webp"
                             alt="Orum Loading"
                             fill
                             className="object-contain drop-shadow-[0_0_15px_rgba(24,24,46,0.5)]"

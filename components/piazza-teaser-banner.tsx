@@ -32,7 +32,7 @@ export async function PiazzaTeaserBanner() {
                     {/* Logo */}
                     <div className="shrink-0">
                         <Image
-                            src="/assets/piazzadellarte.png"
+                            src="/assets/piazzadellarte.webp"
                             width={200}
                             height={200}
                             alt="Piazza dell'Arte"

@@ -256,7 +256,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                 {/* Programma */}
                                 <Link href="/network/piazzadellarte/programma" className="group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/25 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col">
                                     <div className="relative aspect-video overflow-hidden">
-                                        <Image src="/assets/slides/1.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Programma" />
+                                        <Image src="/assets/slides/1.webp" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Programma" />
                                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
                                         <div className="absolute bottom-4 left-6">
                                             <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme?.primary, color: "#18182e" }}>
@@ -276,7 +276,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                 {/* Artisti */}
                                 <Link href="/network/piazzadellarte/artisti" className="group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/25 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col">
                                     <div className="relative aspect-video overflow-hidden">
-                                        <Image src="/assets/slides/2.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Artisti" />
+                                        <Image src="/assets/slides/2.webp" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Artisti" />
                                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
                                         <div className="absolute bottom-4 left-6">
                                             <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme?.secondary, color: "#fff" }}>
@@ -296,7 +296,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                 {/* Media */}
                                 <Link href="/network/piazzadellarte/media" className="group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/25 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col">
                                     <div className="relative aspect-video overflow-hidden">
-                                        <Image src="/assets/slides/3.jpg" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Media" />
+                                        <Image src="/assets/slides/3.webp" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Media" />
                                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
                                         <div className="absolute bottom-4 left-6">
                                             <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme?.accent, color: "#18182e" }}>
@@ -442,7 +442,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                     <section className="py-24 bg-[#18182e] text-white relative overflow-hidden">
                         {/* Background Pattern */}
                         <div className="absolute inset-0 opacity-30 pointer-events-none">
-                            <Image src="/assets/slides/1.jpg" fill className="object-cover grayscale" alt="" sizes="100vw" />
+                            <Image src="/assets/slides/1.webp" fill className="object-cover grayscale" alt="" sizes="100vw" />
                         </div>
                         <div
                             className="absolute inset-0 mix-blend-multiply opacity-40"

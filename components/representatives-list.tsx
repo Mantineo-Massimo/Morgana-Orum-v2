@@ -61,9 +61,9 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                             {/* eslint-disable-next-line @next/next/no-img-element */}
                                             <img
                                                 src={
-                                                    group.listName === "MORGANA" ? "/assets/morgana.png" :
-                                                        group.listName === "O.R.U.M." ? "/assets/orum.png" :
-                                                            "/assets/azione.png"
+                                                    group.listName === "MORGANA" ? "/assets/morgana.webp" :
+                                                        group.listName === "O.R.U.M." ? "/assets/orum.webp" :
+                                                            "/assets/azione.webp"
                                                 }
                                                 alt={group.listName}
                                                 className="size-full object-contain"
@@ -113,9 +113,9 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
                                                     src={
-                                                        group.listName === "MORGANA" ? "/assets/morgana.png" :
-                                                            group.listName === "O.R.U.M." ? "/assets/orum.png" :
-                                                                "/assets/azione.png"
+                                                        group.listName === "MORGANA" ? "/assets/morgana.webp" :
+                                                            group.listName === "O.R.U.M." ? "/assets/orum.webp" :
+                                                                "/assets/azione.webp"
                                                     }
                                                     alt={group.listName}
                                                     className="size-full object-contain"
