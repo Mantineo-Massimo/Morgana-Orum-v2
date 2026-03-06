@@ -70,11 +70,7 @@ export const getNewsInternal = async (category?: string, query?: string, associa
 }
 
 export const getNews = async (category?: string, query?: string, association?: Association, locale: string = 'it') => {
-    const news = await unstable_cache(
-        async () => getNewsInternal(category, query, association, locale),
-        ['news-list', category || 'all', query || 'none', association || 'none', locale],
-        { revalidate: 3600, tags: ['news'] }
-    )()
+    const news = await getNewsInternal(category, query, association, locale)
 
     return news.map(item => ({
         ...item,
