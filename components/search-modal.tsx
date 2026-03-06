@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
+import { useRouter } from "@/i18n/routing"
 import { Search, X, Newspaper, Calendar, User, ArrowRight, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { globalSearch } from "@/app/actions/search"

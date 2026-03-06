@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone, Loader2, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"

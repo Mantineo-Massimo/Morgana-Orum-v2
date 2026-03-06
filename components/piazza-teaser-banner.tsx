@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { ArrowRight } from "lucide-react"
 import { CountdownTimer } from "@/components/countdown-timer"
 import { getPiazzaSettings } from "@/app/actions/piazza"
