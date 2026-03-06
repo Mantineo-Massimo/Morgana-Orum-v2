@@ -8,8 +8,6 @@ import { getTranslations } from "next-intl/server"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
 import { cookies } from "next/headers"
 
-import { Association } from "@prisma/client"
-
 export const dynamic = "force-dynamic"
 export default async function BrandHomePage({
     params: { locale }
@@ -21,8 +19,8 @@ export default async function BrandHomePage({
 
     // Fetch data in parallel using cached actions
     const [ultimeNotizie, prossimiEventi] = await Promise.all([
-        getNews(undefined, undefined, Association.MORGANA_ORUM, locale).then(news => news.slice(0, 3)),
-        getAllEvents(sessionEmail, Association.MORGANA_ORUM, 'upcoming', locale).then(events => events.slice(0, 3))
+        getNews(undefined, undefined, undefined, locale).then(news => news.slice(0, 3)),
+        getAllEvents(sessionEmail, undefined, 'upcoming', locale).then(events => events.slice(0, 3))
     ])
 
     // Content Configuration Unificata
