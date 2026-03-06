@@ -139,59 +139,59 @@ export default async function BrandHomePage({
             {/* OUR NETWORK SECTION */}
             <section className="bg-[#18182e] border-b border-white/5 relative z-0">
                 <div className="relative h-[180px] md:h-[280px] flex items-center justify-center overflow-hidden">
-                    <Image src="/assets/unime.png" fill className="object-cover opacity-20" alt="" sizes="100vw" />
+                    <Image src="/assets/unime.webp" fill className="object-cover opacity-20" alt="" sizes="100vw" />
                     <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
                     <div className="container relative z-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-14 px-6 text-center">
-                        <Image src="/assets/morgana.png" width={112} height={112} className="h-12 sm:h-20 md:h-28 w-auto object-contain drop-shadow-2xl" alt="Morgana" />
+                        <Image src="/assets/morgana.webp" width={112} height={112} className="h-12 sm:h-20 md:h-28 w-auto object-contain drop-shadow-2xl" alt="Morgana" />
                         <h2 className="text-2xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tighter leading-none">
                             {t("network_title")}
                         </h2>
-                        <Image src="/assets/orum.png" width={112} height={112} className="h-12 sm:h-20 md:h-28 w-auto object-contain drop-shadow-2xl" alt="O.R.U.M." />
+                        <Image src="/assets/orum.webp" width={112} height={112} className="h-12 sm:h-20 md:h-28 w-auto object-contain drop-shadow-2xl" alt="O.R.U.M." />
                     </div>
                 </div>
 
                 <div className="flex flex-col md:flex-row h-auto md:h-[450px] overflow-hidden">
                     <Link href="/network/unimhealth" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c9041a] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/policlinico.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
+                        <Image src="/assets/policlinico.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pr-20">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
-                                <Image src="/assets/unimhealth.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unimhealth" />
+                                <Image src="/assets/unimhealth.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unimhealth" />
                             </div>
                         </div>
                     </Link>
 
                     <Link href="/network/economia" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#202549] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/economia.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
+                        <Image src="/assets/economia.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
-                                <Image src="/assets/studentieconomia.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Economia" />
+                                <Image src="/assets/studentieconomia.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Economia" />
                             </div>
                         </div>
                     </Link>
 
                     <Link href="/network/matricole" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#f6f6f6] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-20 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/matricole.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
+                        <Image src="/assets/matricole.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
-                                <Image src="/assets/unimematricole.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unime Matricole" />
+                                <Image src="/assets/unimematricole.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unime Matricole" />
                             </div>
                         </div>
                     </Link>
 
                     <Link href="/network/scipog" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#fbc363] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-10 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/scipog.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
+                        <Image src="/assets/scipog.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
-                                <Image src="/assets/studentiscipog.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Scipog" />
+                                <Image src="/assets/studentiscipog.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Scipog" />
                             </div>
                         </div>
                     </Link>
 
                     <Link href="/network/dicam" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#f34ab4] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500">
-                        <Image src="/assets/dicam.png" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
+                        <Image src="/assets/dicam.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pl-20">
                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
-                                <Image src="/assets/insidedicam.png" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Inside Dicam" />
+                                <Image src="/assets/insidedicam.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Inside Dicam" />
                             </div>
                         </div>
                     </Link>

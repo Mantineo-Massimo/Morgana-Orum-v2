@@ -57,15 +57,15 @@ export function Footer() {
                             <div className="flex items-center gap-3">
                                 {/* Morgana */}
                                 <Link href="/" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
-                                    <Image src="/assets/morgana.png" alt="Morgana logo" fill className="object-contain" sizes="56px" />
+                                    <Image src="/assets/morgana.webp" alt="Morgana logo" fill className="object-contain" sizes="56px" />
                                 </Link>
                                 {/* Orum */}
                                 <Link href="/" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
-                                    <Image src="/assets/orum.png" alt="Orum logo" fill className="object-contain" sizes="56px" />
+                                    <Image src="/assets/orum.webp" alt="Orum logo" fill className="object-contain" sizes="56px" />
                                 </Link>
                                 {/* Azione Universitaria */}
                                 <a href="https://azioneuniversitaria.it" target="_blank" rel="noopener noreferrer" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
-                                    <Image src="/assets/azione.png" alt="Azione Universitaria logo" fill className="object-contain" sizes="56px" />
+                                    <Image src="/assets/azione.webp" alt="Azione Universitaria logo" fill className="object-contain" sizes="56px" />
                                 </a>
                             </div>
                         </div>

@@ -8,8 +8,8 @@ export const dynamic = "force-dynamic"
 const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, subtitle: string, desc: string, mission: string, values: string[], theme?: { primary: string, secondary: string, accent: string } }> = {
     unimhealth: {
         name: "Unimhealth",
-        logo: "/assets/unimhealth.png",
-        bg: "/assets/policlinico.png",
+        logo: "/assets/unimhealth.webp",
+        bg: "/assets/policlinico.webp",
         subtitle: "L&apos;eccellenza della rappresentanza nell&apos;area medico-sanitaria.",
         desc: "Unimhealth è l'associazione di riferimento per gli studenti dell'area medica e delle professioni sanitarie dell'Università di Messina. Nata dalla fusione di passione per la sanità e impegno civile, ci occupiamo di tutelare i diritti degli studenti nei policlinici e nelle aule.",
         mission: "Garantire una formazione di qualità e un ambiente di tirocinio sicuro e dignitoso per tutti i futuri professionisti della salute.",
@@ -17,8 +17,8 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
     },
     economia: {
         name: "Studenti Economia",
-        logo: "/assets/studentieconomia.png",
-        bg: "/assets/economia.png",
+        logo: "/assets/studentieconomia.webp",
+        bg: "/assets/economia.webp",
         subtitle: "Protagonisti del cambiamento nel Dipartimento di Economia.",
         desc: "Siamo il punto di riferimento per gli studenti di Economia a Messina. Organizziamo seminari tecnici, workshop e supportiamo quotidianamente i colleghi nel loro percorso accademico, facilitando il dialogo con i docenti.",
         mission: "Creare un ponte concreto tra l'università e il mondo del lavoro, valorizzando il merito e le competenze.",
@@ -26,8 +26,8 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
     },
     matricole: {
         name: "Unime Matricole",
-        logo: "/assets/unimematricole.png",
-        bg: "/assets/matricole.png",
+        logo: "/assets/unimematricole.webp",
+        bg: "/assets/matricole.webp",
         subtitle: "La tua bussola nel mondo universitario messinese.",
         desc: "Unime Matricole nasce con l'obiettivo di non lasciare nessuno indietro. Sappiamo quanto sia difficile il primo impatto con l'università: burocrazia, aule, esami. Noi siamo qui per guidarti passo dopo passo.",
         mission: "Semplificare l'accesso all'università e supportare i nuovi studenti nella loro integrazione.",
@@ -35,8 +35,8 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
     },
     scipog: {
         name: "Studenti Scipog",
-        logo: "/assets/studentiscipog.png",
-        bg: "/assets/scipog.png",
+        logo: "/assets/studentiscipog.webp",
+        bg: "/assets/scipog.webp",
         subtitle: "La voce tra Scienze Politiche e Giuridiche.",
         desc: "Studenti Scipog è la realtà che unisce gli studenti di Scienze Politiche e Giuridiche. Promuoviamo il dibattito democratico, la conoscenza del diritto e la partecipazione attiva alla vita di dipartimento.",
         mission: "Promuovere la cultura della legalità e della partecipazione politica attiva tra gli studenti.",
@@ -44,8 +44,8 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
     },
     dicam: {
         name: "Inside Dicam",
-        logo: "/assets/insidedicam.png",
-        bg: "/assets/dicam.png",
+        logo: "/assets/insidedicam.webp",
+        bg: "/assets/dicam.webp",
         subtitle: "Passione per le Lettere e la Cultura a Messina.",
         desc: "Inside Dicam è l'anima culturale del Dipartimento di Civiltà Antiche e Moderne. Ci battiamo per valorizzare il patrimonio umanistico e per offrire agli studenti spazi di espressione artistica e letteraria.",
         mission: "Custodire e rinnovare il valore delle materie umanistiche attraverso la rappresentanza e la cultura.",
@@ -53,8 +53,8 @@ const BRAND_CONFIG: Record<string, { name: string, logo: string, bg: string, sub
     },
     piazzadellarte: {
         name: "Piazza Dell'Arte",
-        logo: "/assets/piazzadellarte.png",
-        bg: "/assets/piazza.png",
+        logo: "/assets/piazzadellarte.webp",
+        bg: "/assets/piazza.webp",
         subtitle: "Il cuore pulsante della creatività studentesca.",
         desc: "Piazza Dell'Arte è l'importante evento socio-culturale che trasforma l'Università in un palcoscenico a cielo aperto.",
         mission: "Due storie, una missione: Morgana e Orum uniscono le forze per trasformare l'università in un luogo di opportunità, diritti e crescita. Scopri chi siamo e cosa facciamo ogni giorno per te.",
@@ -80,7 +80,7 @@ export default function Page({ params }: { params: { brandId: string } }) {
             <div className="min-h-screen bg-white">
                 <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-zinc-50">
                     <div className="absolute inset-0 z-0 opacity-10">
-                        <Image src="/assets/piazza.png" fill className="object-cover grayscale" alt="" priority />
+                        <Image src="/assets/piazza.webp" fill className="object-cover grayscale" alt="" priority />
                     </div>
                     <div className="container relative z-10">
                         <div className="max-w-4xl mx-auto text-center mb-16">

@@ -52,8 +52,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
     unimhealth: {
         id: "unimhealth",
         name: "Unimhealth",
-        logo: "/assets/unimhealth.png",
-        bg: "/assets/policlinico.png",
+        logo: "/assets/unimhealth.webp",
+        bg: "/assets/policlinico.webp",
         subtitle: "L'eccellenza della rappresentanza nell'area medico-sanitaria.",
         desc: "Unimhealth è l'anima del network dedicata agli studenti dell'area biomedica e sanitaria. Ci impegniamo ogni giorno per garantire una formazione di qualità e servizi all'altezza delle sfide del futuro medico.",
         association: Association.UNIMHEALTH
@@ -61,8 +61,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
     economia: {
         id: "studentieconomia",
         name: "Studenti Economia",
-        logo: "/assets/studentieconomia.png",
-        bg: "/assets/economia.png",
+        logo: "/assets/studentieconomia.webp",
+        bg: "/assets/economia.webp",
         subtitle: "Protagonisti del cambiamento nell'area economica e giuridica.",
         desc: "Studenti Economia rappresenta il punto di riferimento per chi vive il Dipartimento di Economia. Passione, competenza e un forte spirito di gruppo al servizio della crescita accademica e professionale.",
         association: Association.ECONOMIA
@@ -70,8 +70,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
     matricole: {
         id: "unimematricole",
         name: "Unime Matricole",
-        logo: "/assets/unimematricole.png",
-        bg: "/assets/matricole.png",
+        logo: "/assets/unimematricole.webp",
+        bg: "/assets/matricole.webp",
         subtitle: "Il tuo primo passo sicuro nel mondo universitario.",
         desc: "Siamo qui per guidare i nuovi studenti nel loro ingresso in Ateneo. Dall'orientamento burocratico al supporto didattico, Unime Matricole è il tuo miglior alleato fin dal primo giorno.",
         association: Association.MATRICOLE
@@ -79,8 +79,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
     scipog: {
         id: "studentiscipog",
         name: "Studenti Scipog",
-        logo: "/assets/studentiscipog.png",
-        bg: "/assets/scipog.png",
+        logo: "/assets/studentiscipog.webp",
+        bg: "/assets/scipog.webp",
         subtitle: "La voce degli studenti tra Scienze Politiche e Giuridiche.",
         desc: "Passione civile e impegno costante definiscono Studenti Scipog. Lavoriamo per un dipartimento inclusivo, dinamico e capace di valorizzare il percorso di ogni singolo studente.",
         association: Association.SCIPOG
@@ -88,8 +88,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
     dicam: {
         id: "insidedicam",
         name: "Inside Dicam",
-        logo: "/assets/insidedicam.png",
-        bg: "/assets/dicam.png",
+        logo: "/assets/insidedicam.webp",
+        bg: "/assets/dicam.webp",
         subtitle: "Creatività e cultura: l'anima del Dipartimento DICAM.",
         desc: "Inside Dicam è la realtà di riferimento per gli studenti dell'area umanistica. Promuoviamo la cultura, l'arte e il dialogo, garantendo una rappresentanza attenta alle esigenze di ogni corso di laurea.",
         association: Association.INSIDE_DICAM
@@ -97,8 +97,8 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
     piazzadellarte: {
         id: "piazzadellarte",
         name: "Piazza dell'Arte 2026",
-        logo: "/assets/piazzadellarte.png",
-        bg: "/assets/piazza.png",
+        logo: "/assets/piazzadellarte.webp",
+        bg: "/assets/piazza.webp",
         subtitle: "Il cuore pulsante della creatività studentesca.",
         desc: "Piazza Dell'Arte è il nuovo spazio dedicato alla libera espressione creativa. Un luogo dove l'arte incontra la vita studentesca, promuovendo eventi, mostre e workshop per valorizzare ogni talento.",
         association: "PIAZZA_DELLARTE" as Association,

@@ -16,10 +16,10 @@ export async function PiazzaTeaserBanner() {
             {/* Background */}
             <div className="absolute inset-0 z-0 bg-[#18182e]">
                 <Image
-                    src="/assets/piazza.png"
+                    src="/assets/piazza.webp"
                     fill
                     className="object-cover grayscale opacity-20"
-                    alt=""
+                    alt="Piazza dell'Arte"
                     sizes="100vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-[#18182e] via-[#18182e]/95 to-[#18182e]/80"></div>

@@ -33,12 +33,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
 
     // Mapping per i loghi e nomi del network
     const networkInfo: Record<string, { name: string, logo: string, motto: string }> = {
-        unimhealth: { name: "Unimhealth", logo: "/assets/unimhealth.png", motto: "Rappresentanza medico-sanitaria" },
-        economia: { name: "Studenti Economia", logo: "/assets/studentieconomia.png", motto: "Protagonisti del cambiamento" },
-        matricole: { name: "Unime Matricole", logo: "/assets/unimematricole.png", motto: "Il tuo primo passo in Ateneo" },
-        scipog: { name: "Studenti Scipog", logo: "/assets/studentiscipog.png", motto: "La voce tra Scienze Politiche e Giuridiche" },
-        dicam: { name: "Inside Dicam", logo: "/assets/insidedicam.png", motto: "Creatività e cultura al DICAM" },
-        piazzadellarte: { name: "Piazza Dell'Arte 2026", logo: "/assets/piazzadellarte.png", motto: "Il cuore della creatività studentesca" },
+        unimhealth: { name: "Unimhealth", logo: "/assets/unimhealth.webp", motto: "Rappresentanza medico-sanitaria" },
+        economia: { name: "Studenti Economia", logo: "/assets/studentieconomia.webp", motto: "Protagonisti del cambiamento" },
+        matricole: { name: "Unime Matricole", logo: "/assets/unimematricole.webp", motto: "Il tuo primo passo in Ateneo" },
+        scipog: { name: "Studenti Scipog", logo: "/assets/studentiscipog.webp", motto: "La voce tra Scienze Politiche e Giuridiche" },
+        dicam: { name: "Inside Dicam", logo: "/assets/insidedicam.webp", motto: "Creatività e cultura al DICAM" },
+        piazzadellarte: { name: "Piazza Dell'Arte 2026", logo: "/assets/piazzadellarte.webp", motto: "Il cuore della creatività studentesca" },
     }
 
     const currentNetwork = brand && networkInfo[brand] ? networkInfo[brand] : null
@@ -116,7 +116,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                                 <>
                                     <div className="relative h-full aspect-square">
                                         <Image
-                                            src={`/assets/morgana.png`}
+                                            src={`/assets/morgana.webp`}
                                             alt="Morgana logo"
                                             fill
                                             className="object-contain"
@@ -127,7 +127,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                                     <div className="h-full w-px bg-white/20 mx-1" />
                                     <div className="relative h-full aspect-square">
                                         <Image
-                                            src={`/assets/orum.png`}
+                                            src={`/assets/orum.webp`}
                                             alt="Orum logo"
                                             fill
                                             className="object-contain"
