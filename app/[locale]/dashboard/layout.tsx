@@ -1,7 +1,6 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { Link, usePathname } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { LayoutDashboard, Calendar, FileText, Settings, LogOut, Loader2, HelpCircle, Bell } from "lucide-react"
 import { logoutAction } from "@/app/actions/auth"

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { motion, AnimatePresence } from "framer-motion"
 import { Calendar, ChevronRight, Filter, Newspaper, Search, X } from "lucide-react"
 import { cn } from "@/lib/utils"

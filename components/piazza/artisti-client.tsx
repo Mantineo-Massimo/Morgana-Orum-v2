@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { ArrowLeft, Mic2, Music, Star, Palette, Users, Play, Search, X } from "lucide-react"
 
 const CATEGORIES = ["Tutti", "Musica", "Danza", "Pittura", "Performance"] as const

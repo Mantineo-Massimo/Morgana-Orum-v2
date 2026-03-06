@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { ArrowLeft, Play, Camera, Mic2, ChevronRight } from "lucide-react"
 
 const THEME = {

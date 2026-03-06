@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, forwardRef } from "react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { Calendar as CalendarIcon, MapPin, Clock, Search, CheckCircle, Lock, Ticket, Award, ChevronLeft, ChevronRight, X } from "lucide-react"

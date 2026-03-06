@@ -2,7 +2,7 @@
 
 import React from "react"
 import { ArrowLeft, Send, Mail, Phone, MapPin, CheckCircle2, Loader2 } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { submitContactForm } from "@/app/actions/contact"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"

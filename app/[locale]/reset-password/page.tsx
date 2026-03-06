@@ -1,10 +1,10 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { Link, useRouter } from "@/i18n/routing"
+import { useSearchParams } from "next/navigation"
 import { resetPassword } from "@/app/actions/auth"
 import { Loader2, Lock, CheckCircle, AlertCircle } from "lucide-react"
-import Link from "next/link"
 
 export default function ResetPasswordPage() {
 

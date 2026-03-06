@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { requestPasswordReset } from "@/app/actions/auth"
 import { Loader2, Mail, ArrowLeft, CheckCircle } from "lucide-react"
 

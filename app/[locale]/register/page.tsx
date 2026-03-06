@@ -2,8 +2,7 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
+import { useRouter, Link } from "@/i18n/routing"
 import { registerUser } from "@/app/actions/auth"
 import { ArrowRight, Loader2 } from "lucide-react"
 import { departmentsData } from "@/lib/departments"

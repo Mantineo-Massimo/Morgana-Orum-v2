@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Sun, Sunset, Music, Palette, Users, Camera, Trophy, Mic2, Star, Clock, MapPin, Coffee, Ticket, Play, Smile, Heart, Zap, Image as ImageIcon } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { ArrowLeft, X } from "lucide-react"
 import {
     Dialog,

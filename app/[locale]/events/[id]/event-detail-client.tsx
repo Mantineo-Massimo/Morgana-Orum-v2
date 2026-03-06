@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { Calendar, Clock, MapPin, CheckCircle, ChevronLeft, Lock, Ticket, Download, FileText, LogIn, UserPlus } from "lucide-react"
 import { cn } from "@/lib/utils"
