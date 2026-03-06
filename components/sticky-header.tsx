@@ -11,10 +11,8 @@ import { useTranslations } from "next-intl"
 export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
     const t = useTranslations("Footer")
     const [isScrolled, setIsScrolled] = useState(false)
-    const [hasMounted, setHasMounted] = useState(false)
 
     useEffect(() => {
-        setHasMounted(true)
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50)
         }
@@ -44,8 +42,6 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
     }
 
     const currentNetwork = brand && networkInfo[brand] ? networkInfo[brand] : null
-
-    if (!hasMounted) return null
 
     return (
         <header
