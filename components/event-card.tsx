@@ -28,45 +28,66 @@ export function EventCard({ event, locale, href, variant = "default", primaryCol
         <Link
             href={href}
             className={cn(
-                "relative group overflow-hidden bg-muted aspect-[4/3] flex items-end p-6 shadow-sm hover:shadow-lg transition-all block",
-                isNetwork ? "rounded-2xl border-b-8 shadow-2xl hover:-translate-y-2 duration-500" : "border-b-4 border-primary"
+                "group flex flex-col bg-white overflow-hidden transition-all duration-300",
+                isNetwork
+                    ? "rounded-2xl border-b-8 shadow-xl hover:-translate-y-1"
+                    : "border border-zinc-100 rounded-xl hover:shadow-xl hover:border-primary/20"
             )}
             style={isNetwork && accentColor ? { borderBottomColor: accentColor } : undefined}
         >
-            {event.image && (
-                <Image
-                    src={event.image}
-                    alt={event.title}
-                    fill
-                    className="object-cover z-0 group-hover:scale-110 transition-transform duration-700"
-                />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
+            {/* Image Container */}
+            <div className="relative aspect-video overflow-hidden">
+                {event.image ? (
+                    <Image
+                        src={event.image}
+                        alt={event.title}
+                        fill
+                        className="object-cover z-0 group-hover:scale-105 transition-transform duration-500"
+                    />
+                ) : (
+                    <div className="w-full h-full bg-zinc-100 flex items-center justify-center">
+                        <Calendar className="size-10 text-zinc-300" />
+                    </div>
+                )}
 
-            <div className="absolute top-4 left-4 z-20 bg-white text-foreground text-center p-2 min-w-[3.5rem] shadow-sm rounded-lg sm:rounded-none">
-                <span
-                    className="block text-xs font-bold uppercase text-muted-foreground"
-                    style={isNetwork && primaryColor ? { color: primaryColor } : undefined}
-                >
-                    {event.date.toLocaleDateString(locale, { month: 'short' })}
-                </span>
-                <span className="block text-2xl font-black leading-none text-foreground">
-                    {event.date.toLocaleDateString(locale, { day: '2-digit' })}
-                </span>
+                {/* Date Badge Overlay */}
+                <div className="absolute top-3 left-3 z-20 bg-white/95 backdrop-blur-sm text-foreground text-center p-1.5 min-w-[3rem] shadow-lg rounded-lg border border-black/5">
+                    <span
+                        className="block text-[10px] font-bold uppercase text-muted-foreground leading-none mb-1"
+                        style={isNetwork && primaryColor ? { color: primaryColor } : undefined}
+                    >
+                        {event.date.toLocaleDateString(locale, { month: 'short' })}
+                    </span>
+                    <span className="block text-xl font-black leading-none text-foreground">
+                        {event.date.toLocaleDateString(locale, { day: '2-digit' })}
+                    </span>
+                </div>
+
+                {/* Optional: Subtle gradient on image for badge visibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60"></div>
             </div>
 
-            <div className="relative z-20 text-white mt-auto w-full">
-                <span
-                    className="text-[10px] font-bold uppercase tracking-widest text-primary-foreground/80 bg-primary px-2 py-0.5 mb-2 inline-block"
-                    style={isNetwork && primaryColor ? { backgroundColor: primaryColor } : undefined}
-                >
-                    {event.category}
-                </span>
-                <h3 className="text-xl font-bold leading-tight group-hover:underline decoration-primary underline-offset-4 line-clamp-2">
+            {/* Content Container */}
+            <div className="p-5 flex flex-col flex-1">
+                <div className="mb-3">
+                    <span
+                        className={cn(
+                            "text-[9px] font-black uppercase tracking-[0.2em] px-2 py-0.5 rounded flex-shrink-0",
+                            !isNetwork ? "bg-primary text-white" : ""
+                        )}
+                        style={isNetwork && primaryColor ? { backgroundColor: primaryColor, color: '#fff' } : undefined}
+                    >
+                        {event.category}
+                    </span>
+                </div>
+
+                <h3 className="text-lg font-serif font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2 mb-4">
                     {event.title}
                 </h3>
-                <div className="mt-2 text-xs flex items-center gap-2 opacity-80 border-t border-white/20 pt-2">
-                    <Calendar className="size-3" /> {event.location}
+
+                <div className="mt-auto pt-4 border-t border-zinc-50 flex items-center gap-2 text-zinc-500 text-[11px] font-medium italic">
+                    <Calendar className="size-3 flex-shrink-0" />
+                    <span className="truncate">{event.location}</span>
                 </div>
             </div>
         </Link>
