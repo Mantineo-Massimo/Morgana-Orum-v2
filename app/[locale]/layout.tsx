@@ -10,6 +10,7 @@ import { CookieConsent } from "@/components/cookie-consent"
 import Script from "next/script"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "../globals.css"
 
 const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "700", "900"], variable: "--font-sans" })
@@ -81,6 +82,7 @@ export default async function RootLayout({
             <body className={`${inter.className} ${outfit.className} antialiased`}>
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <BrandProvider defaultBrand={null}>
+                        <SpeedInsights />
                         <div className="flex min-h-screen flex-col bg-background font-sans">
                             <TopBar />
                             <StickyHeader isLoggedIn={isLoggedIn} />

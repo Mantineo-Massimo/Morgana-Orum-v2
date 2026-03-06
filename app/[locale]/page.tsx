@@ -6,6 +6,7 @@ import { getNews } from "@/app/actions/news"
 import { getAllEvents } from "@/app/actions/events"
 import { getTranslations } from "next-intl/server"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
+import { EventCard } from "@/components/event-card"
 import { cookies } from "next/headers"
 
 export const dynamic = "force-dynamic"
@@ -61,32 +62,12 @@ export default async function BrandHomePage({
 
                     <div className="grid md:grid-cols-3 gap-6">
                         {prossimiEventi.map((evento) => (
-                            <Link href={`/events/${evento.id}`} key={evento.id} className="relative group overflow-hidden bg-muted aspect-[4/3] flex items-end p-6 border-b-4 border-primary shadow-sm hover:shadow-lg transition-all block">
-                                {evento.image && (
-                                    <Image src={evento.image} alt={evento.title} fill className="object-cover z-0" />
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10"></div>
-                                <div className="absolute top-4 left-4 z-20 bg-white text-foreground text-center p-2 min-w-[3.5rem] shadow-sm">
-                                    <span className="block text-xs font-bold uppercase text-muted-foreground">
-                                        {evento.date.toLocaleDateString(locale, { month: 'short' })}
-                                    </span>
-                                    <span className="block text-2xl font-black leading-none">
-                                        {evento.date.toLocaleDateString(locale, { day: '2-digit' })}
-                                    </span>
-                                </div>
-
-                                <div className="relative z-20 text-white mt-auto">
-                                    <span className="text-[10px] font-bold uppercase tracking-widest text-primary-foreground/80 bg-primary px-2 py-0.5 mb-2 inline-block">
-                                        {evento.category}
-                                    </span>
-                                    <h3 className="text-xl font-bold leading-tight group-hover:underline decoration-primary underline-offset-4">
-                                        {evento.title}
-                                    </h3>
-                                    <div className="mt-2 text-xs flex items-center gap-2 opacity-80">
-                                        <Calendar className="size-3" /> {evento.location}
-                                    </div>
-                                </div>
-                            </Link>
+                            <EventCard
+                                key={evento.id}
+                                event={evento}
+                                locale={locale}
+                                href={`/events/${evento.id}`}
+                            />
                         ))}
                         {prossimiEventi.length === 0 && (
                             <div className="md:col-span-3 text-center py-12 text-zinc-500 bg-zinc-50 rounded-2xl border border-zinc-100">

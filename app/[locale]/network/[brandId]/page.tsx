@@ -13,6 +13,7 @@ import { SponsorsCarousel } from "@/components/sponsors-carousel"
 import { ArtistiCarousel } from "@/components/artisti-carousel"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
 import { getPiazzaSettings } from "@/app/actions/piazza"
+import { EventCard } from "@/components/event-card"
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
     const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
@@ -347,42 +348,15 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
                                 <div className="grid md:grid-cols-3 gap-8">
                                     {eventi.map((evento: any) => (
-                                        <Link
-                                            href={`/network/${brandId}/events/${evento.id}`}
+                                        <EventCard
                                             key={evento.id}
-                                            className="relative group overflow-hidden bg-muted aspect-[4/5] flex items-end p-8 shadow-2xl hover:-translate-y-2 transition-all duration-500 block rounded-2xl border-b-8"
-                                            style={{ borderBottomColor: config.theme?.accent || 'var(--primary)' }}
-                                        >
-                                            {evento.image && (
-                                                <Image src={evento.image} alt={evento.title} fill className="object-cover z-0 group-hover:scale-110 transition-transform duration-700" />
-                                            )}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent z-10"></div>
-
-                                            {/* Date Badge Overlay */}
-                                            <div className="absolute top-6 left-6 z-20 bg-white text-foreground text-center p-3 rounded-xl shadow-2xl transform group-hover:scale-110 transition-transform">
-                                                <span className="block text-xs font-black uppercase" style={{ color: config.theme?.primary || 'var(--primary)' }}>
-                                                    {evento.date.toLocaleDateString(locale, { month: 'short' })}
-                                                </span>
-                                                <span className="block text-3xl font-black leading-none">
-                                                    {evento.date.toLocaleDateString(locale, { day: '2-digit' })}
-                                                </span>
-                                            </div>
-
-                                            <div className="relative z-20 text-white w-full">
-                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 mb-3 block">
-                                                    {evento.category}
-                                                </span>
-                                                <h3 className="text-2xl font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2" style={{ color: 'inherit' }}>
-                                                    {evento.title}
-                                                </h3>
-                                                <div className="mt-4 pt-4 border-t border-white/20 text-xs flex items-center justify-between gap-2 opacity-80">
-                                                    <div className="flex items-center gap-2">
-                                                        <Calendar className="size-3" /> {evento.location}
-                                                    </div>
-                                                    <ArrowRight className="size-4 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
-                                                </div>
-                                            </div>
-                                        </Link>
+                                            event={evento}
+                                            locale={locale}
+                                            href={`/network/${brandId}/events/${evento.id}`}
+                                            variant="network"
+                                            primaryColor={config.theme?.primary || 'var(--primary)'}
+                                            accentColor={config.theme?.accent || 'var(--primary)'}
+                                        />
                                     ))}
                                     {eventi.length === 0 && (
                                         <div className="md:col-span-3 text-center py-20 text-muted-foreground bg-white rounded-3xl border-2 border-dashed border-border/50">
