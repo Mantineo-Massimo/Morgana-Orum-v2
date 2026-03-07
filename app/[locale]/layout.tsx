@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Outfit } from "next/font/google"
-import { BrandProvider } from "@/components/brand-provider"
-import { cookies } from "next/headers"
+import { BrandProvider, Brand } from "@/components/brand-provider"
+import { cookies, headers } from "next/headers"
 import { TopBar } from "@/components/top-bar"
 import { StickyHeader } from "@/components/sticky-header"
 import { Footer } from "@/components/footer"
@@ -77,11 +77,15 @@ export default async function RootLayout({
     const cookieConsent = cookies().get("cookie-consent")?.value
     const messages = await getMessages()
 
+    // Get brand from middleware header for server-side initialization
+    const brandHeader = headers().get("x-brand")
+    const brand = (brandHeader && brandHeader !== "null" ? brandHeader : null) as Brand
+
     return (
-        <html lang={locale} suppressHydrationWarning>
+        <html lang={locale} suppressHydrationWarning data-brand={brand || undefined}>
             <body className={`${inter.className} ${outfit.className} antialiased`}>
                 <NextIntlClientProvider messages={messages} locale={locale}>
-                    <BrandProvider defaultBrand={null}>
+                    <BrandProvider defaultBrand={brand}>
                         <SpeedInsights />
                         <div className="flex min-h-screen flex-col bg-background font-sans">
                             <TopBar />
