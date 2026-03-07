@@ -1,49 +1,22 @@
-"use client"
-
-import { useState } from "react"
 import { Link } from "@/i18n/routing"
 import Image from "next/image"
-import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone, Loader2, CheckCircle2 } from "lucide-react"
+import { Facebook, Instagram, Youtube, Mail, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { useBrand } from "@/components/brand-provider"
-import { subscribeToNewsletter } from "@/lib/newsletter"
-import { useTranslations } from "next-intl"
+import { headers } from "next/headers"
+import { Brand } from "@/components/brand-provider"
+import { getTranslations } from "next-intl/server"
+import { NewsletterForm } from "@/components/newsletter-form"
 
-export function Footer() {
-    const t = useTranslations("Footer")
-    const nt = useTranslations("Navigation")
-    const { brand } = useBrand()
-    const [email, setEmail] = useState("")
-    const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
-    const [message, setMessage] = useState("")
+export async function Footer() {
+    const t = await getTranslations("Footer")
+    const nt = await getTranslations("Navigation")
+
+    const brandHeader = headers().get("x-brand")
+    const brand = (brandHeader && brandHeader !== "null" ? brandHeader : null) as Brand
 
     const bgColor = "bg-zinc-900"
     const textColor = "text-white"
     const mutedColor = "text-white/70 hover:text-white"
-
-    const handleSubscribe = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setStatus("loading")
-
-        const formData = new FormData()
-        formData.append("email", email)
-
-        const result = await subscribeToNewsletter(formData)
-
-        if (result.success) {
-            setStatus("success")
-            setEmail("")
-            setMessage(t("newsletter_success"))
-            setTimeout(() => {
-                setStatus("idle")
-                setMessage("")
-            }, 5000)
-        } else {
-            setStatus("error")
-            setMessage(result.error || t("newsletter_error"))
-            setTimeout(() => setStatus("idle"), 5000)
-        }
-    }
 
     return (
         <footer id="site-footer" className={cn("w-full pt-16 pb-8", bgColor, textColor)}>
@@ -162,43 +135,7 @@ export function Footer() {
                         <h3 className="text-2xl font-serif font-black mb-2">{t("newsletter_title")}</h3>
                         <p className="text-white/60 font-medium">{t("newsletter_desc")}</p>
                     </div>
-                    <form
-                        onSubmit={handleSubscribe}
-                        className="w-full lg:w-auto flex flex-col sm:flex-row gap-3 relative"
-                    >
-                        <div className="flex flex-col gap-2 w-full">
-                            <input
-                                required
-                                type="email"
-                                name="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder={t("newsletter_placeholder")}
-                                className="bg-white/10 border border-white/20 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-white/20 text-white placeholder:text-white/30 font-medium w-full sm:min-w-[300px]"
-                                disabled={status === "loading"}
-                            />
-                            {message && (
-                                <p className={cn(
-                                    "text-xs font-bold absolute -bottom-6 left-2 flex items-center gap-1",
-                                    status === "success" ? "text-green-400" : "text-red-400"
-                                )}>
-                                    {status === "success" && <CheckCircle2 className="size-3" />}
-                                    {message}
-                                </p>
-                            )}
-                        </div>
-                        <button
-                            type="submit"
-                            disabled={status === "loading"}
-                            className="bg-white text-zinc-900 px-8 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-200 transition-all shrink-0 flex items-center justify-center min-w-[140px]"
-                        >
-                            {status === "loading" ? (
-                                <Loader2 className="size-5 animate-spin" />
-                            ) : (
-                                t("newsletter_button")
-                            )}
-                        </button>
-                    </form>
+                    <NewsletterForm />
                 </div>
 
                 {/* Bottom Bar */}

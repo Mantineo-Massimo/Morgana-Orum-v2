@@ -1,15 +1,16 @@
-"use client"
-
 import { Link } from "@/i18n/routing"
-import { Facebook, Instagram, Twitter, Youtube, User, Mail } from "lucide-react"
+import { Facebook, Instagram, Twitter, Youtube, Mail } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { useBrand } from "@/components/brand-provider"
-import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server"
 import { LanguageSwitcher } from "@/components/language-switcher"
+import { headers } from "next/headers"
+import { Brand } from "@/components/brand-provider"
 
-export function TopBar() {
-    const t = useTranslations("Footer")
-    const { brand } = useBrand()
+export async function TopBar() {
+    const t = await getTranslations("Footer")
+    const brandHeader = headers().get("x-brand")
+    const brand = (brandHeader && brandHeader !== "null" ? brandHeader : null) as Brand
+
     // Unificato: Colore neutro scuro per la top bar
     const bgColor = "bg-zinc-900"
 
