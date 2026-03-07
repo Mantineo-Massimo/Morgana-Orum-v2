@@ -44,7 +44,8 @@ export async function POST(request: NextRequest) {
             const uploadStream = cloudinary.uploader.upload_stream(
                 {
                     folder: `morgana-orum/${folder}`,
-                    resource_type: "auto", // Automatically detect if image or raw (PDF/Doc)
+                    resource_type: "auto",
+                    format: file.type.startsWith("image/") ? "webp" : undefined,
                 },
                 (error, result) => {
                     if (error) reject(error)
