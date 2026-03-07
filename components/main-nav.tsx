@@ -158,6 +158,7 @@ export function MainNav({
                         "p-1.5 rounded-full transition-all ml-2",
                         isScrolled ? "text-zinc-500 hover:text-primary hover:bg-zinc-100" : "text-white/80 hover:text-white hover:bg-white/10"
                     )}
+                    aria-label={nt("search_placeholder")}
                     title={nt("search_placeholder")}
                 >
                     <Search className="size-5" />
@@ -181,6 +182,7 @@ export function MainNav({
                         <button
                             onClick={() => logoutAction()}
                             className="p-1.5 xl:p-2 rounded-full text-zinc-500 hover:text-red-600 hover:bg-red-50 transition-colors shrink-0"
+                            aria-label={nt("logout")}
                             title={nt("logout")}
                         >
                             <LogOut className="size-5" />
