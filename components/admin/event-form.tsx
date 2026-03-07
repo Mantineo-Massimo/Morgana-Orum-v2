@@ -324,6 +324,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                         onChange={setDetails}
                         placeholder="Programma dettagliato, relatori, informazioni pratiche..."
                     />
+                    <input type="hidden" name="details" value={details} />
                 </div>
 
                 <div className="pt-4 border-t border-zinc-100">
@@ -375,6 +376,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                                 onChange={setDetailsEn}
                                 placeholder="Detailed English information..."
                             />
+                            <input type="hidden" name="detailsEn" value={detailsEn} />
                         </div>
                     </div>
                 </div>

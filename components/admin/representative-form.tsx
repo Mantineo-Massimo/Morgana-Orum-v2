@@ -374,6 +374,7 @@ export default function RepresentativeForm({
                             onChange={setDescription}
                             placeholder="Breve descrizione del rappresentante..."
                         />
+                        <input type="hidden" name="description" value={description} />
                     </div>
 
                     {/* Role Description */}
@@ -384,6 +385,7 @@ export default function RepresentativeForm({
                             onChange={setRoleDescription}
                             placeholder="Descrizione del ruolo istituzionale..."
                         />
+                        <input type="hidden" name="roleDescription" value={roleDescription} />
                     </div>
 
                 </div>

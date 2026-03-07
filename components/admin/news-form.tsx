@@ -336,7 +336,6 @@ export default function NewsForm({
                                     placeholder="Short English description..."
                                 />
                             </div>
-
                             <div>
                                 <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (EN - Rich Text)</label>
                                 <RichTextEditor
@@ -344,6 +343,7 @@ export default function NewsForm({
                                     onChange={setContentEn}
                                     placeholder="Full English content..."
                                 />
+                                <input type="hidden" name="contentEn" value={contentEn} />
                             </div>
                         </div>
                     </div>
@@ -558,7 +558,7 @@ export default function NewsForm({
                         )}
                     </button>
                 </div>
-            </form>
-        </div>
+            </form >
+        </div >
     )
 }
