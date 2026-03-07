@@ -81,19 +81,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         href={currentNetwork ? `/network/${brand}` : "/"}
                         className="relative transition-all duration-500 flex items-center h-full"
                     >
-                        <div
-                            className={cn(
-                                "relative transition-all duration-500 flex items-center h-full",
-                                isScrolled
-                                    ? "scale-95 origin-left"
-                                    : "scale-100 origin-left"
-                            )}
-                        >
+                        <div className="relative transition-all duration-500 flex items-center h-full">
                             <div className="relative h-12 md:h-16 flex items-center gap-2 md:gap-4 p-1">
                                 {currentNetwork ? (
                                     <div className={cn(
                                         "relative h-full flex items-center justify-center transition-all duration-500",
-                                        brand !== "piazzadellarte" ? "aspect-square bg-white rounded-full shadow-sm p-1" : "aspect-square p-0 scale-[1.1]"
+                                        brand !== "piazzadellarte" ? "aspect-square bg-white rounded-full shadow-sm p-1" : "aspect-square p-0 scale-[1.2]"
                                     )}>
                                         <div className={cn(
                                             "relative",
@@ -138,10 +131,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     </Link>
 
                     {/* Text Section - Stacked Vertically */}
-                    <div className={cn(
-                        "flex flex-col text-white justify-center transition-all duration-500",
-                        isScrolled ? "scale-100 origin-left" : "scale-100 origin-left"
-                    )}>
+                    <div className="flex flex-col text-white justify-center transition-all duration-500">
                         <Link
                             href={currentNetwork ? `/network/${brand}` : "/"}
                             className="flex flex-col gap-0.5 hover:opacity-80 transition-opacity"
@@ -172,7 +162,6 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 {/* Navigation Section - Right Aligned (including Mobile Menu) */}
                 <div className={cn(
                     "flex items-center transition-all duration-500",
-                    isScrolled ? "scale-100 origin-right" : "scale-100 origin-right",
                     brand === "piazzadellarte"
                         ? "ml-2 md:ml-4 lg:ml-6 xl:ml-8 2xl:ml-12"
                         : "ml-4 md:ml-8 lg:ml-8 xl:ml-12 2xl:ml-16"
