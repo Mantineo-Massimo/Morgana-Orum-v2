@@ -245,6 +245,7 @@ export async function createNews(data: {
     category: string
     associations?: Association[]
     published: boolean
+    tags?: string | null
 }) {
     try {
         const permission = await checkContentPermission(data.associations)
@@ -262,6 +263,7 @@ export async function createNews(data: {
                 category: data.category,
                 associations: data.associations || [Association.MORGANA_ORUM],
                 published: data.published,
+                tags: data.tags || null,
                 date: new Date()
             } as any
         })
@@ -292,6 +294,7 @@ export async function updateNews(id: string, data: {
     category: string
     associations?: Association[]
     published: boolean
+    tags?: string | null
 }) {
     try {
         const existing = await prisma.news.findUnique({ where: { id } })
@@ -322,6 +325,7 @@ export async function updateNews(id: string, data: {
                 category: data.category,
                 associations: { set: data.associations || [Association.MORGANA_ORUM] },
                 published: data.published,
+                tags: data.tags || null,
             } as any
         })
 
