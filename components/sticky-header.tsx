@@ -59,14 +59,10 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         "absolute top-0 left-0 h-full transition-all duration-700 ease-in-out z-10",
                         brandColorClass,
                         "rounded-br-[80px]",
-                        // Dynamic width logic
-                        isScrolled
-                            ? brand === "piazzadellarte"
-                                ? "w-[70%] sm:w-[60%] md:w-[40%] lg:w-[32%] xl:w-[34%] 2xl:w-[35%]"
-                                : brand ? "w-[85%] sm:w-[75%] md:w-[48%] lg:w-[38%] xl:w-[39%] 2xl:w-[40%]" : "w-[75%] sm:w-[65%] md:w-[42%] lg:w-[38%] xl:w-[39%] 2xl:w-[40%]"
-                            : brand === "piazzadellarte"
-                                ? "w-[75%] sm:w-[65%] md:w-[45%] lg:w-[35%] xl:w-[37%] 2xl:w-[38%]"
-                                : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]"
+                        // Unified width logic for absolute stability
+                        brand === "piazzadellarte"
+                            ? "w-[75%] sm:w-[65%] md:w-[45%] lg:w-[35%] xl:w-[37%] 2xl:w-[38%]"
+                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]"
                     )}
                 />
             </div>
@@ -75,7 +71,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             <div
                 className={cn(
                     "container relative z-20 flex items-center transition-all duration-500 justify-between h-full",
-                    isScrolled ? "py-2" : "py-4 md:py-6"
+                    "py-4" // Constant padding to avoid content jumping
                 )}
             >
                 {/* Logo Section - Left Aligned */}
@@ -89,7 +85,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                             className={cn(
                                 "relative transition-all duration-500 flex items-center h-full",
                                 isScrolled
-                                    ? "scale-90 origin-left"
+                                    ? "scale-95 origin-left"
                                     : "scale-100 origin-left"
                             )}
                         >
@@ -97,7 +93,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                                 {currentNetwork ? (
                                     <div className={cn(
                                         "relative h-full flex items-center justify-center transition-all duration-500",
-                                        brand !== "piazzadellarte" ? "aspect-square bg-white rounded-full shadow-sm p-1" : "aspect-square p-0 scale-[1.3]"
+                                        brand !== "piazzadellarte" ? "aspect-square bg-white rounded-full shadow-sm p-1" : "aspect-square p-0 scale-[1.1]"
                                     )}>
                                         <div className={cn(
                                             "relative",
@@ -144,7 +140,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     {/* Text Section - Stacked Vertically */}
                     <div className={cn(
                         "flex flex-col text-white justify-center transition-all duration-500",
-                        isScrolled ? "scale-95 origin-left" : "scale-100 origin-left"
+                        isScrolled ? "scale-100 origin-left" : "scale-100 origin-left"
                     )}>
                         <Link
                             href={currentNetwork ? `/network/${brand}` : "/"}
@@ -152,7 +148,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         >
                             <span className={cn(
                                 "font-serif font-black uppercase tracking-tight leading-none transition-all duration-500 whitespace-nowrap",
-                                isScrolled ? "text-[13px] md:text-base lg:text-lg" : "text-[15px] sm:text-lg lg:text-xl xl:text-2xl"
+                                isScrolled ? "text-[14px] md:text-lg lg:text-xl" : "text-[15px] sm:text-lg lg:text-xl xl:text-2xl"
                             )}>
                                 {currentNetwork ? currentNetwork.name : "Morgana & O.R.U.M."}
                             </span>
@@ -176,7 +172,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 {/* Navigation Section - Right Aligned (including Mobile Menu) */}
                 <div className={cn(
                     "flex items-center transition-all duration-500",
-                    isScrolled ? "scale-95 origin-right" : "scale-100 origin-right",
+                    isScrolled ? "scale-100 origin-right" : "scale-100 origin-right",
                     brand === "piazzadellarte"
                         ? "ml-2 md:ml-4 lg:ml-6 xl:ml-8 2xl:ml-12"
                         : "ml-4 md:ml-8 lg:ml-8 xl:ml-12 2xl:ml-16"
