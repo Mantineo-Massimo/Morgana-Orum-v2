@@ -9,19 +9,25 @@
  * Translates text from Italian to English using a public translation API.
  * Handles long texts by splitting them into chunks to respect API limits.
  */
+/**
+ * Translates text from Italian to English using a public translation API.
+ * Handles long texts by splitting them into chunks to respect API limits.
+ * Preserves HTML tags by protecting them during the translation process.
+ */
 export async function translateText(text: string): Promise<{ success: boolean; translation?: string; error?: string }> {
     if (!text || text.trim() === "") {
         return { success: true, translation: "" }
     }
 
     try {
+        // Step 1: Protect HTML tags
+        const { protectedText, tagsMap } = protectTags(text)
+
         const MAX_CHUNK_LENGTH = 450 // Staying under 500 limit for MyMemory
-        const chunks = splitTextIntoChunks(text, MAX_CHUNK_LENGTH)
+        const chunks = splitTextIntoChunks(protectedText, MAX_CHUNK_LENGTH)
         const translatedChunks: string[] = []
 
         for (const chunk of chunks) {
-            // Using MyMemory API (free tier, limited)
-            // https://mymemory.translated.net/doc/spec.php
             const response = await fetch(
                 `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=it|en`
             )
@@ -39,23 +45,26 @@ export async function translateText(text: string): Promise<{ success: boolean; t
             if (data.responseData && data.responseData.translatedText) {
                 translatedChunks.push(data.responseData.translatedText)
             } else {
-                // If one chunk fails, we return what we have so far but with an error flag
                 return {
                     success: false,
-                    translation: translatedChunks.join(" "),
+                    translation: restoreTags(translatedChunks.join(" "), tagsMap),
                     error: "Una parte del testo non è stata tradotta correttamente."
                 }
             }
 
-            // Subtle delay to avoid rate limiting if many chunks
             if (chunks.length > 1) {
                 await new Promise(resolve => setTimeout(resolve, 200))
             }
         }
 
+        const fullTranslation = translatedChunks.join(" ")
+
+        // Step 2: Restore HTML tags
+        const restoredTranslation = restoreTags(fullTranslation, tagsMap)
+
         return {
             success: true,
-            translation: translatedChunks.join(" ")
+            translation: restoredTranslation
         }
     } catch (error) {
         console.error("Translation error:", error)
@@ -64,6 +73,45 @@ export async function translateText(text: string): Promise<{ success: boolean; t
             error: error instanceof Error ? error.message : "Errore durante la traduzione"
         }
     }
+}
+
+/**
+ * Protects HTML tags by replacing them with unique placeholders.
+ * This prevents the translation API from mangling or removing them.
+ */
+function protectTags(text: string): { protectedText: string; tagsMap: Map<string, string> } {
+    const tagsMap = new Map<string, string>()
+    let counter = 0
+
+    // Match HTML tags: <tag>, </tag>, <tag />
+    const protectedText = text.replace(/<[^>]+>/g, (match) => {
+        const placeholder = `[[#${counter}#]]`
+        tagsMap.set(placeholder, match)
+        counter++
+        return placeholder
+    })
+
+    return { protectedText, tagsMap }
+}
+
+/**
+ * Restores HTML tags from placeholders.
+ * Handles potential spaces added by translation APIs around placeholders.
+ */
+function restoreTags(text: string, tagsMap: Map<string, string>): string {
+    let restoredText = text
+
+    tagsMap.forEach((originalTag, placeholder) => {
+        // Use a fuzzy regex to find the placeholder because translators often add spaces:
+        // [[ # 0 # ]] instead of [[#0#]]
+        const parts = placeholder.replace(/\[\[|\]\]/g, '').split('#')
+        const escapedId = parts[1]
+        const fuzzyRegex = new RegExp(`\\[\\s*\\[\\s*#\\s*${escapedId}\\s*#\\s*\\]\\s*\\]`, 'g')
+
+        restoredText = restoredText.replace(fuzzyRegex, originalTag)
+    })
+
+    return restoredText
 }
 
 /**
@@ -77,7 +125,6 @@ function splitTextIntoChunks(text: string, maxLength: number): string[] {
         let chunkEnd = currentPos + maxLength
 
         if (chunkEnd < text.length) {
-            // Try to find the last space, newline or punctuation to avoid breaking words
             const lastSpace = text.lastIndexOf(" ", chunkEnd)
             const lastNewline = text.lastIndexOf("\n", chunkEnd)
             const splitPoint = Math.max(lastSpace, lastNewline)
