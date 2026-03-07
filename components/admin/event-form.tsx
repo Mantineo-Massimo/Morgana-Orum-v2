@@ -199,9 +199,9 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
 
             const rawData = {
                 title: formData.get("title") as string,
-                titleEn: (formData.get("titleEn") as string) || undefined,
+                titleEn: titleEn || undefined,
                 description: formData.get("description") as string,
-                descriptionEn: (formData.get("descriptionEn") as string) || undefined,
+                descriptionEn: descriptionEn || undefined,
                 details: details || undefined,
                 detailsEn: detailsEn || undefined,
                 date: toISO(formData.get("date") as string)!,
@@ -324,7 +324,6 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                         onChange={setDetails}
                         placeholder="Programma dettagliato, relatori, informazioni pratiche..."
                     />
-                    <input type="hidden" name="details" value={details} />
                 </div>
 
                 <div className="pt-4 border-t border-zinc-100">
@@ -376,7 +375,6 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                                 onChange={setDetailsEn}
                                 placeholder="Detailed English information..."
                             />
-                            <input type="hidden" name="detailsEn" value={detailsEn} />
                         </div>
                     </div>
                 </div>

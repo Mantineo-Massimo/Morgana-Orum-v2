@@ -77,7 +77,7 @@ export async function translateText(text: string): Promise<{ success: boolean; t
 
 /**
  * Protects HTML tags by replacing them with unique placeholders.
- * This prevents the translation API from mangling or removing them.
+ * Uses a format that is unlikely to be mangled by translators: {PH_0_PH}
  */
 function protectTags(text: string): { protectedText: string; tagsMap: Map<string, string> } {
     const tagsMap = new Map<string, string>()
@@ -85,7 +85,7 @@ function protectTags(text: string): { protectedText: string; tagsMap: Map<string
 
     // Match HTML tags: <tag>, </tag>, <tag />
     const protectedText = text.replace(/<[^>]+>/g, (match) => {
-        const placeholder = `[[#${counter}#]]`
+        const placeholder = `{PH_${counter}_PH}`
         tagsMap.set(placeholder, match)
         counter++
         return placeholder
@@ -96,17 +96,21 @@ function protectTags(text: string): { protectedText: string; tagsMap: Map<string
 
 /**
  * Restores HTML tags from placeholders.
- * Handles potential spaces added by translation APIs around placeholders.
+ * Handles potential spaces or case changes added by translation APIs.
  */
 function restoreTags(text: string, tagsMap: Map<string, string>): string {
     let restoredText = text
 
     tagsMap.forEach((originalTag, placeholder) => {
-        // Use a fuzzy regex to find the placeholder because translators often add spaces:
-        // [[ # 0 # ]] instead of [[#0#]]
-        const parts = placeholder.replace(/\[\[|\]\]/g, '').split('#')
-        const escapedId = parts[1]
-        const fuzzyRegex = new RegExp(`\\[\\s*\\[\\s*#\\s*${escapedId}\\s*#\\s*\\]\\s*\\]`, 'g')
+        // Create a regex to find the placeholder even if the translator adds spaces:
+        // { PH _ 0 _ PH } instead of {PH_0_PH}
+        // Also handle potential case changes: {ph_0_ph}
+        const parts = placeholder.replace(/\{|\}/g, '').split('_') // PH, 0, PH
+        const id = parts[1]
+
+        // Escape for regex and allow optional whitespace around any character
+        const fuzzyPattern = `\\{\\s*PH\\s*_\\s*${id}\\s*_\\s*PH\\s*\\}`
+        const fuzzyRegex = new RegExp(fuzzyPattern, 'gi')
 
         restoredText = restoredText.replace(fuzzyRegex, originalTag)
     })

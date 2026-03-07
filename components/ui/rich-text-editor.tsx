@@ -110,8 +110,15 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
 
     // Sync editor content when value prop changes externally (e.g. from translation)
     useEffect(() => {
-        if (editor && value !== editor.getHTML()) {
-            editor.commands.setContent(value)
+        if (!editor) return
+
+        const currentHTML = editor.getHTML()
+        if (value !== currentHTML) {
+            // Only update if the editor is NOT focused to avoid cursor resetting while typing
+            // OR if the content is significantly different (e.g. after a translation)
+            if (!editor.isFocused || Math.abs(value.length - currentHTML.length) > 50) {
+                editor.commands.setContent(value, { emitUpdate: false })
+            }
         }
     }, [value, editor])
 

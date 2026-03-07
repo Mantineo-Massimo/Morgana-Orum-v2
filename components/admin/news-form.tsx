@@ -122,11 +122,11 @@ export default function NewsForm({
 
         const rawData = {
             title: formData.get("title") as string,
-            titleEn: formData.get("titleEn") as string || null,
+            titleEn: titleEn || null,
             description: formData.get("description") as string,
-            descriptionEn: formData.get("descriptionEn") as string || null,
-            content: formData.get("content") as string || null,
-            contentEn: formData.get("contentEn") as string || null,
+            descriptionEn: descriptionEn || null,
+            content: content || null,
+            contentEn: contentEn || null,
             category: selectedCategories.join(", "),
             tags: formData.get("tags") as string || null,
             image: imageUrl || null,
@@ -292,7 +292,6 @@ export default function NewsForm({
                             onChange={setContent}
                             placeholder="Scrivi il corpo della notizia qui..."
                         />
-                        <input type="hidden" name="content" value={content} />
                     </div>
 
                     <div className="pt-4 border-t border-zinc-100">
@@ -343,7 +342,6 @@ export default function NewsForm({
                                     onChange={setContentEn}
                                     placeholder="Full English content..."
                                 />
-                                <input type="hidden" name="contentEn" value={contentEn} />
                             </div>
                         </div>
                     </div>
