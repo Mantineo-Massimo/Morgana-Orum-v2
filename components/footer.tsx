@@ -52,13 +52,13 @@ export async function Footer() {
                                 {t("footer_subline")}
                             </p>
                         </div>
-                        <div className="flex items-center gap-4 mt-2">
-                            <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-5" /></a>
-                            <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-5" /></a>
-                            <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors" aria-label="YouTube Associazione Morgana"><Youtube className="size-5" /></a>
-                            <div className="w-px h-5 bg-white/20 mx-1"></div>
-                            <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors" aria-label="Facebook Associazione Orum"><Facebook className="size-5" /></a>
-                            <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors" aria-label="Instagram Associazione Orum"><Instagram className="size-5" /></a>
+                        <div className="flex items-center gap-5 mt-4">
+                            <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-6" /></a>
+                            <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-6" /></a>
+                            <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-400 transition-colors" aria-label="YouTube Associazione Morgana"><Youtube className="size-6" /></a>
+                            <div className="w-px h-6 bg-white/20 mx-1"></div>
+                            <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-blue-500 transition-colors" aria-label="Facebook Associazione Orum"><Facebook className="size-6" /></a>
+                            <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-blue-400 transition-colors" aria-label="Instagram Associazione Orum"><Instagram className="size-6" /></a>
                         </div>
                     </div>
 

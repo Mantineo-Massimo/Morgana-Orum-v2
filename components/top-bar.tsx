@@ -58,29 +58,29 @@ export async function TopBar() {
                 <div className="flex items-center gap-3 md:gap-4">
                     {networkIG && (
                         <>
-                            <div className="flex items-center gap-1.5 md:gap-2">
+                            <div className="flex items-center gap-3 md:gap-4">
                                 <span className={cn(
-                                    "text-[10px] md:text-xs uppercase font-bold mr-0.5 md:mr-1",
-                                    brand === "matricole" ? "text-[#193a68]" : "text-zinc-400"
+                                    "text-[10px] md:text-xs uppercase font-bold mr-1 md:mr-2",
+                                    brand === "matricole" ? "text-white" : "text-zinc-300"
                                 )}>
                                     {networkName}:
                                 </span>
-                                <a href={`https://www.instagram.com/${networkIG}`} target="_blank" rel="noopener noreferrer" className={cn("transition-colors", `hover:${networkColor}`)} aria-label={`Instagram ${networkName}`}><Instagram className="size-3 md:size-3.5" /></a>
+                                <a href={`https://www.instagram.com/${networkIG}`} target="_blank" rel="noopener noreferrer" className={cn("p-1.5 transition-colors", `hover:${networkColor}`)} aria-label={`Instagram ${networkName}`}><Instagram className="size-3.5 md:size-4" /></a>
                             </div>
-                            <div className="w-px h-3 md:h-4 bg-zinc-800"></div>
+                            <div className="w-px h-4 md:h-5 bg-zinc-800 mx-1"></div>
                         </>
                     )}
-                    <div className="flex items-center gap-1.5 md:gap-2">
-                        <span className="text-[10px] md:text-xs uppercase font-bold text-zinc-400 mr-0.5 md:mr-1">Morgana:</span>
-                        <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-3 md:size-3.5" /></a>
-                        <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-3 md:size-3.5" /></a>
-                        <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="hover:text-red-500 transition-colors" aria-label="YouTube Associazione Morgana"><Youtube className="size-3 md:size-3.5" /></a>
+                    <div className="flex items-center gap-2 md:gap-3">
+                        <span className="text-[10px] md:text-xs uppercase font-bold text-zinc-300 mr-1 md:mr-2">Morgana:</span>
+                        <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="p-1.5 hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-3.5 md:size-4" /></a>
+                        <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1.5 hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-3.5 md:size-4" /></a>
+                        <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="p-1.5 hover:text-red-500 transition-colors" aria-label="YouTube Associazione Morgana"><Youtube className="size-3.5 md:size-4" /></a>
                     </div>
-                    <div className="w-px h-3 md:h-4 bg-zinc-800"></div>
-                    <div className="flex items-center gap-1.5 md:gap-2">
-                        <span className="text-[10px] md:text-xs uppercase font-bold text-zinc-400 mr-0.5 md:mr-1">O.R.U.M.:</span>
-                        <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors" aria-label="Facebook Associazione Orum"><Facebook className="size-3 md:size-3.5" /></a>
-                        <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 transition-colors" aria-label="Instagram Associazione Orum"><Instagram className="size-3 md:size-3.5" /></a>
+                    <div className="w-px h-4 md:h-5 bg-zinc-800 mx-1"></div>
+                    <div className="flex items-center gap-2 md:gap-3">
+                        <span className="text-[10px] md:text-xs uppercase font-bold text-zinc-300 mr-1 md:mr-2">O.R.U.M.:</span>
+                        <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="p-1.5 hover:text-blue-500 transition-colors" aria-label="Facebook Associazione Orum"><Facebook className="size-3.5 md:size-4" /></a>
+                        <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="p-1.5 hover:text-blue-400 transition-colors" aria-label="Instagram Associazione Orum"><Instagram className="size-3.5 md:size-4" /></a>
                     </div>
                     <div className="w-px h-3 md:h-4 bg-zinc-800"></div>
 

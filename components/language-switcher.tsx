@@ -22,7 +22,7 @@ export function LanguageSwitcher() {
                     aria-label="Lingua Italiana"
                     className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase transition-all ${locale === "it"
                         ? "bg-white text-zinc-900 shadow-sm"
-                        : "text-zinc-500 hover:text-white"
+                        : "text-zinc-400 hover:text-white"
                         }`}
                 >
                     IT
@@ -32,7 +32,7 @@ export function LanguageSwitcher() {
                     aria-label="English Language"
                     className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase transition-all ${locale === "en"
                         ? "bg-white text-zinc-900 shadow-sm"
-                        : "text-zinc-500 hover:text-white"
+                        : "text-zinc-400 hover:text-white"
                         }`}
                 >
                     EN

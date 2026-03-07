@@ -51,11 +51,12 @@ export function CookieConsent() {
                             <h3 className="text-lg font-black text-zinc-900 tracking-tight">Utilizziamo i Cookie</h3>
                             <p className="text-sm text-zinc-500 font-medium leading-relaxed mt-1">
                                 Usiamo i cookie per migliorare la tua esperienza e per analizzare il traffico del sito.
-                                <span className="block mt-1 text-zinc-400 text-xs italic">Aiutaci a crescere!</span>
+                                <span className="block mt-1 text-zinc-500 text-xs italic">Aiutaci a crescere!</span>
                             </p>
                         </div>
                         <button
                             onClick={() => setIsVisible(false)}
+                            aria-label="Chiudi"
                             className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-400 transition-colors"
                         >
                             <X className="size-4" />
@@ -79,8 +80,8 @@ export function CookieConsent() {
                         </button>
                     </div>
 
-                    <p className="text-[10px] text-zinc-400 text-center mt-4">
-                        Consultando il sito accetti la nostra <a href="#" className="underline hover:text-zinc-600">Privacy Policy</a>.
+                    <p className="text-[10px] text-zinc-500 text-center mt-4">
+                        Consultando il sito accetti la nostra <a href="/privacy" className="underline hover:text-zinc-600">Privacy Policy</a>.
                     </p>
                 </div>
             </div>
