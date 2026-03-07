@@ -9,6 +9,7 @@ import { getTranslations } from "next-intl/server"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
 import { EventCard } from "@/components/event-card"
 import { cookies } from "next/headers"
+import { Suspense } from "react"
 
 export const dynamic = "force-dynamic"
 export default async function BrandHomePage({
@@ -18,12 +19,6 @@ export default async function BrandHomePage({
 }) {
     const t = await getTranslations("HomePage")
     const sessionEmail = cookies().get("session_email")?.value || null
-
-    // Fetch data in parallel using cached actions
-    const [ultimeNotizie, prossimiEventi] = await Promise.all([
-        getNews(undefined, undefined, Association.MORGANA_ORUM, locale).then(news => news.slice(0, 3)),
-        getAllEvents(sessionEmail, Association.MORGANA_ORUM, 'upcoming', locale).then(events => events.slice(0, 3))
-    ])
 
     // Content Configuration Unificata
     const content = {
@@ -37,7 +32,7 @@ export default async function BrandHomePage({
             <section className="relative h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden">
                 <HeroCarousel />
                 <div className={`absolute inset-0 bg-gradient-to-r ${content.gradient} mix-blend-multiply opacity-90`}></div>
-                <div className="absolute inset-0 bg-black/30"></div>
+                <div className="absolute inset-0 bg-black/60"></div>
 
                 <div className="container relative z-10 text-center px-4">
                     <h1 className="text-4xl md:text-6xl lg:text-6xl xl:text-7xl font-serif font-bold text-white leading-[1.1] mb-6 tracking-tight text-balance antialiased drop-shadow-sm">
@@ -61,21 +56,11 @@ export default async function BrandHomePage({
                         </Link>
                     </div>
 
-                    <div className="grid md:grid-cols-3 gap-6">
-                        {prossimiEventi.map((evento) => (
-                            <EventCard
-                                key={evento.id}
-                                event={evento}
-                                locale={locale}
-                                href={`/events/${evento.id}`}
-                            />
-                        ))}
-                        {prossimiEventi.length === 0 && (
-                            <div className="md:col-span-3 text-center py-12 text-zinc-500 bg-zinc-50 rounded-2xl border border-zinc-100">
-                                {t("events_empty")}
-                            </div>
-                        )}
-                    </div>
+                    <Suspense fallback={<div className="grid md:grid-cols-3 gap-6 animate-pulse">
+                        {[1, 2, 3].map(i => <div key={i} className="h-48 bg-zinc-100 rounded-2xl"></div>)}
+                    </div>}>
+                        <EventsList locale={locale} />
+                    </Suspense>
                 </div>
             </section>
 
@@ -97,43 +82,11 @@ export default async function BrandHomePage({
                         </Link>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {ultimeNotizie.map((news) => (
-                            <Link href={`/news/${news.id}`} key={news.id} className="group cursor-pointer">
-                                <div className="relative h-64 w-full overflow-hidden rounded-3xl mb-6 shadow-xl ring-1 ring-black/5">
-                                    <Image
-                                        src={news.image || "/assets/morgana.webp"}
-                                        alt={news.title}
-                                        fill
-                                        className="object-cover group-hover:scale-110 transition-transform duration-700"
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                                        <div className="text-[10px] font-bold uppercase tracking-widest bg-primary px-2 py-1 inline-block mb-2">
-                                            {news.category}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="px-2">
-                                    <div className="text-xs font-bold text-muted-foreground mb-2 flex items-center gap-2">
-                                        <Calendar className="size-3" /> {news.date.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })}
-                                    </div>
-                                    <h3 className="text-xl font-serif font-black leading-tight group-hover:text-primary transition-colors line-clamp-2">
-                                        {news.title}
-                                    </h3>
-                                    <p className="mt-2 text-xs opacity-80 line-clamp-2">
-                                        {news.description}
-                                    </p>
-                                </div>
-                            </Link>
-                        ))}
-                        {ultimeNotizie.length === 0 && (
-                            <div className="md:col-span-3 text-center py-12 text-zinc-500 bg-zinc-50 rounded-2xl border border-zinc-100">
-                                {t("news_empty")}
-                            </div>
-                        )}
-                    </div>
+                    <Suspense fallback={<div className="grid grid-cols-1 md:grid-cols-3 gap-8 animate-pulse">
+                        {[1, 2, 3].map(i => <div key={i} className="h-80 bg-zinc-100 rounded-3xl"></div>)}
+                    </div>}>
+                        <NewsList locale={locale} />
+                    </Suspense>
                 </div>
             </section>
 
@@ -199,5 +152,74 @@ export default async function BrandHomePage({
                 </div>
             </section>
         </div >
+    )
+}
+
+async function EventsList({ locale }: { locale: string }) {
+    const t = await getTranslations("HomePage")
+    const sessionEmail = cookies().get("session_email")?.value || null
+    const prossimiEventi = await getAllEvents(sessionEmail, Association.MORGANA_ORUM, 'upcoming', locale).then(events => events.slice(0, 3))
+
+    return (
+        <div className="grid md:grid-cols-3 gap-6">
+            {prossimiEventi.map((evento) => (
+                <EventCard
+                    key={evento.id}
+                    event={evento}
+                    locale={locale}
+                    href={`/events/${evento.id}`}
+                />
+            ))}
+            {prossimiEventi.length === 0 && (
+                <div className="md:col-span-3 text-center py-12 text-zinc-500 bg-zinc-50 rounded-2xl border border-zinc-100">
+                    {t("events_empty")}
+                </div>
+            )}
+        </div>
+    )
+}
+
+async function NewsList({ locale }: { locale: string }) {
+    const t = await getTranslations("HomePage")
+    const ultimeNotizie = await getNews(undefined, undefined, Association.MORGANA_ORUM, locale).then(news => news.slice(0, 3))
+
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {ultimeNotizie.map((news) => (
+                <Link href={`/news/${news.id}`} key={news.id} className="group cursor-pointer">
+                    <div className="relative h-64 w-full overflow-hidden rounded-3xl mb-6 shadow-xl ring-1 ring-black/5">
+                        <Image
+                            src={news.image || "/assets/morgana.webp"}
+                            alt={news.title}
+                            fill
+                            className="object-cover group-hover:scale-110 transition-transform duration-700"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div className="absolute bottom-4 left-4 right-4 text-white">
+                            <div className="text-[10px] font-bold uppercase tracking-widest bg-primary px-2 py-1 inline-block mb-2">
+                                {news.category}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="px-2">
+                        <div className="text-xs font-bold text-muted-foreground mb-2 flex items-center gap-2">
+                            <Calendar className="size-3" /> {news.date.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" })}
+                        </div>
+                        <h3 className="text-xl font-serif font-black leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                            {news.title}
+                        </h3>
+                        <p className="mt-2 text-xs opacity-80 line-clamp-2">
+                            {news.description}
+                        </p>
+                    </div>
+                </Link>
+            ))}
+            {ultimeNotizie.length === 0 && (
+                <div className="md:col-span-3 text-center py-12 text-zinc-500 bg-zinc-50 rounded-2xl border border-zinc-100">
+                    {t("news_empty")}
+                </div>
+            )}
+        </div>
     )
 }

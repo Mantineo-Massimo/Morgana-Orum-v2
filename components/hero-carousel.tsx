@@ -37,6 +37,7 @@ export function HeroCarousel() {
                         fill
                         className="object-cover opacity-60"
                         priority={currentSlide === 0}
+                        sizes="100vw"
                         {...(currentSlide === 0 ? { fetchPriority: "high" } : {})}
                     />
 
