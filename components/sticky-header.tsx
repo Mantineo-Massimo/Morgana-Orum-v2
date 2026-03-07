@@ -136,10 +136,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                             href={currentNetwork ? `/network/${brand}` : "/"}
                             className="flex flex-col gap-0.5 hover:opacity-80 transition-opacity"
                         >
-                            <span className={cn(
-                                "font-serif font-black uppercase tracking-tight leading-none transition-all duration-500 whitespace-nowrap",
-                                isScrolled ? "text-[14px] md:text-lg lg:text-xl" : "text-[15px] sm:text-lg lg:text-xl xl:text-2xl"
-                            )}>
+                            <span className="font-serif font-black uppercase tracking-tight leading-none transition-all duration-500 whitespace-nowrap text-[15px] sm:text-lg lg:text-xl xl:text-2xl">
                                 {currentNetwork ? currentNetwork.name : "Morgana & O.R.U.M."}
                             </span>
                         </Link>
