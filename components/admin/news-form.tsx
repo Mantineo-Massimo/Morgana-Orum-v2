@@ -10,6 +10,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { ASSOCIATIONS } from "@/lib/associations"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 
 
 export default function NewsForm({
@@ -49,15 +50,17 @@ export default function NewsForm({
     const [descriptionEn, setDescriptionEn] = useState(initialData?.descriptionEn || "")
     const [contentEn, setContentEn] = useState(initialData?.contentEn || "")
 
+    // Italian content state (for RichTextEditor)
+    const [content, setContent] = useState(initialData?.content || "")
+
     // Refs for Italian fields to read their current values
     const titleRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLTextAreaElement>(null)
-    const contentRef = useRef<HTMLTextAreaElement>(null)
 
     async function handleTranslate() {
         const italianTitle = titleRef.current?.value || ""
         const italianDescription = descriptionRef.current?.value || ""
-        const italianContent = contentRef.current?.value || ""
+        const italianContent = content || ""
 
         if (!italianTitle && !italianDescription && !italianContent) {
             setError("Inserisci almeno un testo in italiano da tradurre.")
@@ -281,19 +284,15 @@ export default function NewsForm({
                         />
                     </div>
 
-
-
                     {/* Content */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (Opzionale)</label>
-                        <textarea
-                            ref={contentRef}
-                            name="content"
-                            defaultValue={initialData?.content ?? ""}
-                            rows={8}
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
-                            placeholder="Testo completo dell'articolo..."
+                        <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (Rich Text)</label>
+                        <RichTextEditor
+                            value={content}
+                            onChange={setContent}
+                            placeholder="Scrivi il corpo della notizia qui..."
                         />
+                        <input type="hidden" name="content" value={content} />
                     </div>
 
                     <div className="pt-4 border-t border-zinc-100">
@@ -339,13 +338,10 @@ export default function NewsForm({
                             </div>
 
                             <div>
-                                <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (EN - Opzionale)</label>
-                                <textarea
-                                    name="contentEn"
+                                <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (EN - Rich Text)</label>
+                                <RichTextEditor
                                     value={contentEn}
-                                    onChange={(e) => setContentEn(e.target.value)}
-                                    rows={8}
-                                    className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
+                                    onChange={setContentEn}
                                     placeholder="Full English content..."
                                 />
                             </div>

@@ -95,18 +95,20 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                             {representative.description && (
                                 <div>
                                     <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Chi Sono</h4>
-                                    <p className="text-zinc-600 text-sm leading-relaxed whitespace-pre-line">
-                                        {representative.description}
-                                    </p>
+                                    <div
+                                        className="prose prose-zinc prose-sm max-w-none text-zinc-600 leading-relaxed"
+                                        dangerouslySetInnerHTML={{ __html: representative.description }}
+                                    />
                                 </div>
                             )}
 
                             {representative.roleDescription && (
                                 <div>
                                     <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Il Mio Ruolo</h4>
-                                    <p className="text-zinc-600 text-sm leading-relaxed whitespace-pre-line">
-                                        {representative.roleDescription}
-                                    </p>
+                                    <div
+                                        className="prose prose-zinc prose-sm max-w-none text-zinc-600 leading-relaxed"
+                                        dangerouslySetInnerHTML={{ __html: representative.roleDescription }}
+                                    />
                                 </div>
                             )}
 

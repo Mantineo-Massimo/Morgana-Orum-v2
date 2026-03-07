@@ -196,9 +196,10 @@ export default function EventDetailClient({
                             <div>
                                 <h2 className="text-2xl font-bold text-foreground mb-4">Dettagli</h2>
                                 <div className="bg-zinc-50 rounded-2xl p-6 border border-zinc-100">
-                                    <div className="text-sm text-zinc-700 leading-relaxed whitespace-pre-line">
-                                        {event.details}
-                                    </div>
+                                    <div
+                                        className="prose prose-zinc prose-sm max-w-none text-zinc-700 leading-relaxed font-medium"
+                                        dangerouslySetInnerHTML={{ __html: event.details }}
+                                    />
                                 </div>
                             </div>
                         )}

@@ -112,9 +112,10 @@ export default async function NewsDetailPage({ params: { id, locale } }: { param
                         <div className="lg:col-span-12">
                             {article.content ? (
                                 <div className="bg-white rounded-[2rem] border border-zinc-100 p-8 md:p-16 shadow-sm">
-                                    <div className="prose prose-zinc prose-lg md:prose-xl max-w-none text-foreground leading-relaxed whitespace-pre-line font-medium">
-                                        {article.content}
-                                    </div>
+                                    <div
+                                        className="prose prose-zinc prose-lg md:prose-xl max-w-none text-foreground leading-relaxed font-medium"
+                                        dangerouslySetInnerHTML={{ __html: article.content }}
+                                    />
 
                                     {/* Tags Footer */}
                                     {tags.length > 0 && (

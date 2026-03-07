@@ -9,6 +9,7 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { ASSOCIATIONS } from "@/lib/associations"
 import { Association } from "@prisma/client"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 
 // Mapping for Department dropdown
 const departmentsList = [
@@ -61,6 +62,9 @@ export default function RepresentativeForm({
     const fileInputRef = useRef<HTMLInputElement>(null)
     const isEditing = !!initialData
 
+    const [description, setDescription] = useState(initialData?.description || "")
+    const [roleDescription, setRoleDescription] = useState(initialData?.roleDescription || "")
+
     // Logic for association selection
     const isNetworkAdmin = userRole === "ADMIN_NETWORK"
     const availableAssociations = isNetworkAdmin
@@ -101,8 +105,8 @@ export default function RepresentativeForm({
             email: formData.get("email") as string || null,
             phone: formData.get("phone") as string || null,
             instagram: formData.get("instagram") as string || null,
-            description: formData.get("description") as string || null,
-            roleDescription: formData.get("roleDescription") as string || null,
+            description: description || null,
+            roleDescription: roleDescription || null,
             association: formData.get("association") as Association,
         }
 
@@ -364,24 +368,20 @@ export default function RepresentativeForm({
 
                     {/* Description */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Persona (Opzionale)</label>
-                        <textarea
-                            name="description"
-                            defaultValue={initialData?.description ?? ""}
-                            rows={3}
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
+                        <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Persona (Rich Text)</label>
+                        <RichTextEditor
+                            value={description}
+                            onChange={setDescription}
                             placeholder="Breve descrizione del rappresentante..."
                         />
                     </div>
 
                     {/* Role Description */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Ruolo (Opzionale)</label>
-                        <textarea
-                            name="roleDescription"
-                            defaultValue={initialData?.roleDescription ?? ""}
-                            rows={4}
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
+                        <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Ruolo (Rich Text)</label>
+                        <RichTextEditor
+                            value={roleDescription}
+                            onChange={setRoleDescription}
                             placeholder="Descrizione del ruolo istituzionale..."
                         />
                     </div>

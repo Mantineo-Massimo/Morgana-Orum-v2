@@ -10,6 +10,7 @@ import { createEvent, updateEvent } from "@/app/actions/events"
 import { departmentsData } from "@/lib/departments"
 import { ASSOCIATIONS } from "@/lib/associations"
 import { Association } from "@prisma/client"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 
 type EventFormProps = {
     initialData?: {
@@ -79,15 +80,17 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
     const [descriptionEn, setDescriptionEn] = useState((initialData as any)?.descriptionEn || "")
     const [detailsEn, setDetailsEn] = useState((initialData as any)?.detailsEn || "")
 
+    // Italian content state
+    const [details, setDetails] = useState((initialData as any)?.details || "")
+
     // Refs for Italian fields
     const titleRef = useRef<HTMLInputElement>(null)
     const descriptionRef = useRef<HTMLTextAreaElement>(null)
-    const detailsRef = useRef<HTMLTextAreaElement>(null)
 
     async function handleTranslate() {
         const itTitle = titleRef.current?.value || ""
         const itDesc = descriptionRef.current?.value || ""
-        const itDetails = detailsRef.current?.value || ""
+        const itDetails = details || ""
 
         if (!itTitle && !itDesc && !itDetails) {
             setError("Inserisci almeno un testo in italiano da tradurre.")
@@ -199,8 +202,8 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 titleEn: (formData.get("titleEn") as string) || undefined,
                 description: formData.get("description") as string,
                 descriptionEn: (formData.get("descriptionEn") as string) || undefined,
-                details: (formData.get("details") as string) || undefined,
-                detailsEn: (formData.get("detailsEn") as string) || undefined,
+                details: details || undefined,
+                detailsEn: detailsEn || undefined,
                 date: toISO(formData.get("date") as string)!,
                 endDate: toISO(formData.get("endDate") as string),
                 location: formData.get("location") as string,
@@ -315,8 +318,12 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
 
                 {/* Details */}
                 <div>
-                    <label className={labelClass}>Dettagli (programma, info aggiuntive)</label>
-                    <textarea ref={detailsRef} name="details" defaultValue={initialData?.details || ""} rows={6} className={cn(inputClass, "resize-none")} placeholder="Programma dettagliato, relatori, informazioni pratiche..." />
+                    <label className={labelClass}>Dettagli (programma, info aggiuntive - Rich Text)</label>
+                    <RichTextEditor
+                        value={details}
+                        onChange={setDetails}
+                        placeholder="Programma dettagliato, relatori, informazioni pratiche..."
+                    />
                 </div>
 
                 <div className="pt-4 border-t border-zinc-100">
@@ -362,13 +369,10 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                         </div>
 
                         <div>
-                            <label className={labelClass}>Dettagli (EN)</label>
-                            <textarea
-                                name="detailsEn"
+                            <label className={labelClass}>Dettagli (EN - Rich Text)</label>
+                            <RichTextEditor
                                 value={detailsEn}
-                                onChange={(e) => setDetailsEn(e.target.value)}
-                                rows={6}
-                                className={cn(inputClass, "resize-none")}
+                                onChange={setDetailsEn}
                                 placeholder="Detailed English information..."
                             />
                         </div>
