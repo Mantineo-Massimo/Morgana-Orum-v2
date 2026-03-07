@@ -47,16 +47,16 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
         <header
             id="site-header"
             className={cn(
-                "sticky top-0 z-50 transition-all duration-500 ease-in-out shadow-md",
-                "bg-white" // Base is always white now
+                "sticky top-0 z-50 transition-all duration-500 ease-in-out",
+                "h-24 md:h-28" // Constant height to prevent CLS
             )}
         >
             {/* BACKGROUND LAYER - Handles Colors & Shapes */}
-            <div className="absolute inset-0 h-full w-full pointer-events-none z-0 overflow-hidden">
+            <div className="absolute inset-0 h-full w-full pointer-events-none z-0 overflow-hidden bg-white">
                 {/* Colored Part OVERLAY */}
                 <div
                     className={cn(
-                        "absolute top-0 left-0 h-full transition-all duration-500 z-10",
+                        "absolute top-0 left-0 h-full transition-all duration-700 ease-in-out z-10",
                         brandColorClass,
                         "rounded-br-[80px]",
                         // Dynamic width logic
@@ -74,75 +74,77 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             {/* CONTENT LAYER - Handles Alignment with Container */}
             <div
                 className={cn(
-                    "container relative z-20 flex items-center transition-all duration-500 justify-between",
-                    isScrolled ? "h-20 md:h-24" : "h-32 md:h-40"
+                    "container relative z-20 flex items-center transition-all duration-500 justify-between h-full",
+                    isScrolled ? "py-2" : "py-4 md:py-6"
                 )}
             >
                 {/* Logo Section - Left Aligned */}
-                <div className="flex items-center gap-1.5 md:gap-2 xl:gap-4">
+                <div className="flex items-center gap-1.5 md:gap-2 xl:gap-4 h-full">
                     {/* Logo - Leads to Sub-site Home */}
                     <Link
                         href={currentNetwork ? `/network/${brand}` : "/"}
-                        className="relative transition-all duration-500 flex items-center backdrop-blur-sm rounded-2xl"
-                        style={{ height: isScrolled ? 'fit-content' : 'auto' }}
+                        className="relative transition-all duration-500 flex items-center h-full"
                     >
                         <div
                             className={cn(
-                                "relative transition-all duration-500 flex items-center",
+                                "relative transition-all duration-500 flex items-center h-full",
                                 isScrolled
-                                    ? "h-14 md:h-16 lg:h-18 xl:h-20 gap-1.5 md:gap-2 p-1 md:p-1.5"
-                                    : "h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28 gap-1.5 md:gap-4 p-1 md:p-2"
+                                    ? "scale-90 origin-left"
+                                    : "scale-100 origin-left"
                             )}
                         >
-                            {currentNetwork ? (
-                                <div className={cn(
-                                    "relative h-full flex items-center justify-center transition-all duration-500",
-                                    brand !== "piazzadellarte" ? "aspect-square bg-white rounded-full shadow-sm p-1" : "aspect-square p-0 scale-[1.3]"
-                                )}>
+                            <div className="relative h-12 md:h-16 flex items-center gap-2 md:gap-4 p-1">
+                                {currentNetwork ? (
                                     <div className={cn(
-                                        "relative",
-                                        brand === "piazzadellarte" ? "w-full h-full" : "w-4/5 h-4/5"
+                                        "relative h-full flex items-center justify-center transition-all duration-500",
+                                        brand !== "piazzadellarte" ? "aspect-square bg-white rounded-full shadow-sm p-1" : "aspect-square p-0 scale-[1.3]"
                                     )}>
-                                        <Image
-                                            src={currentNetwork.logo}
-                                            alt={currentNetwork.name}
-                                            fill
-                                            className="object-contain"
-                                            priority
-                                        />
+                                        <div className={cn(
+                                            "relative",
+                                            brand === "piazzadellarte" ? "w-full h-full" : "w-4/5 h-4/5"
+                                        )}>
+                                            <Image
+                                                src={currentNetwork.logo}
+                                                alt={currentNetwork.name}
+                                                fill
+                                                className="object-contain"
+                                                priority
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="relative h-full aspect-square">
-                                        <Image
-                                            src={`/assets/morgana.webp`}
-                                            alt="Morgana logo"
-                                            fill
-                                            className="object-contain"
-                                            priority
-                                            sizes="(max-width: 768px) 96px, 128px"
-                                        />
-                                    </div>
-                                    <div className="h-full w-px bg-white/20 mx-1" />
-                                    <div className="relative h-full aspect-square">
-                                        <Image
-                                            src={`/assets/orum.webp`}
-                                            alt="Orum logo"
-                                            fill
-                                            className="object-contain"
-                                            priority
-                                            sizes="(max-width: 768px) 96px, 128px"
-                                        />
-                                    </div>
-                                </>
-                            )}
+                                ) : (
+                                    <>
+                                        <div className="relative h-full aspect-square">
+                                            <Image
+                                                src={`/assets/morgana.webp`}
+                                                alt="Morgana logo"
+                                                fill
+                                                className="object-contain"
+                                                priority
+                                                sizes="(max-width: 768px) 96px, 128px"
+                                            />
+                                        </div>
+                                        <div className="h-full w-px bg-white/20 mx-1" />
+                                        <div className="relative h-full aspect-square">
+                                            <Image
+                                                src={`/assets/orum.webp`}
+                                                alt="Orum logo"
+                                                fill
+                                                className="object-contain"
+                                                priority
+                                                sizes="(max-width: 768px) 96px, 128px"
+                                            />
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </Link>
 
                     {/* Text Section - Stacked Vertically */}
                     <div className={cn(
-                        "flex flex-col text-white justify-center transition-all duration-500"
+                        "flex flex-col text-white justify-center transition-all duration-500",
+                        isScrolled ? "scale-95 origin-left" : "scale-100 origin-left"
                     )}>
                         <Link
                             href={currentNetwork ? `/network/${brand}` : "/"}
@@ -150,7 +152,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         >
                             <span className={cn(
                                 "font-serif font-black uppercase tracking-tight leading-none transition-all duration-500 whitespace-nowrap",
-                                isScrolled ? "text-sm lg:text-lg xl:text-xl" : "text-[15px] sm:text-lg lg:text-xl xl:text-2xl"
+                                isScrolled ? "text-[13px] md:text-base lg:text-lg" : "text-[15px] sm:text-lg lg:text-xl xl:text-2xl"
                             )}>
                                 {currentNetwork ? currentNetwork.name : "Morgana & O.R.U.M."}
                             </span>
@@ -159,12 +161,12 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         {currentNetwork ? (
                             <Link
                                 href="/"
-                                className="text-[7px] sm:text-[9px] md:text-[10px] uppercase tracking-normal md:tracking-[0.15em] font-bold mt-1.5 md:mt-2 opacity-70 leading-tight hover:underline underline-offset-2 hover:opacity-100 transition-all border-t border-white/10 pt-1"
+                                className="text-[7px] sm:text-[9px] md:text-[10px] uppercase tracking-normal md:tracking-[0.15em] font-bold mt-1 md:mt-1.5 opacity-70 leading-tight hover:underline underline-offset-2 hover:opacity-100 transition-all border-t border-white/10 pt-1"
                             >
                                 {t("back_to_main")}
                             </Link>
                         ) : (
-                            <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-normal md:tracking-[0.2em] font-bold mt-0.5 md:mt-1.5 opacity-90 leading-tight">
+                            <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-normal md:tracking-[0.2em] font-bold mt-0.5 md:mt-1 opacity-90 leading-tight">
                                 {t("brand_tagline")}
                             </span>
                         )}
@@ -173,7 +175,8 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
 
                 {/* Navigation Section - Right Aligned (including Mobile Menu) */}
                 <div className={cn(
-                    "flex items-center overflow-visible transition-all duration-500",
+                    "flex items-center transition-all duration-500",
+                    isScrolled ? "scale-95 origin-right" : "scale-100 origin-right",
                     brand === "piazzadellarte"
                         ? "ml-2 md:ml-4 lg:ml-6 xl:ml-8 2xl:ml-12"
                         : "ml-4 md:ml-8 lg:ml-8 xl:ml-12 2xl:ml-16"
@@ -185,7 +188,6 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 </div>
             </div>
         </header>
-
     )
 }
 

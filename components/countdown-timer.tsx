@@ -40,12 +40,11 @@ export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
         return () => clearInterval(timer)
     }, [targetDate])
 
-    // Prevent hydration mismatch by returning empty space first
     if (!hasMounted) {
         return (
-            <div className={cn("flex flex-wrap justify-center gap-4 opacity-0", className)}>
+            <div className={cn("flex flex-wrap justify-center gap-2 sm:gap-4 opacity-0", className)}>
                 {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="bg-black/40 rounded-2xl min-w-[80px] md:min-w-[100px] h-[80px] md:h-[100px]"></div>
+                    <div key={i} className="bg-black/40 rounded-2xl min-w-[70px] sm:min-w-[90px] md:min-w-[110px] h-20 sm:h-24 md:h-28"></div>
                 ))}
             </div>
         )
