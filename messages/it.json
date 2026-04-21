@@ -14,7 +14,9 @@
         "newsletter_error": "Errore durante l'iscrizione.",
         "footer_tagline": "Associazioni Universitarie Morgana & O.R.U.M.",
         "footer_subline": "Impegno, passione e competenza al servizio della comunità accademica.",
-        "rights": "© {year} Associazioni Universitarie Morgana & O.R.U.M.. Tutti i diritti riservati.",
+        "rights": "© {year} Organismo Rappresentanti Universitari Messina (ORUM). Tutti i diritti riservati. In collaborazione con Associazione Morgana.",
+        "legal_info": "Organismo Rappresentanti Universitari Messina (ORUM) - Sede Legale: Messina, SNC, CAP 98165 - C.F.: 27068650833 - Presidente: Luigi Grillo",
+        "partnership_info": "In collaborazione con Associazione Morgana - C.F.: 97103490831",
         "statute": "Statuto Associazione",
         "join": "Iscriviti",
         "privacy": "Privacy Policy",
@@ -225,15 +227,15 @@
         "transparency_desc": "La vita associativa è regolata dal principio di democrazia e partecipazione attiva. Ogni studente iscritto ha il diritto di partecipare alle assemblee e contribuire alla definizione delle linee programmatiche."
     },
     "Privacy": {
-        "intro": "La tua privacy è fondamentale per noi. In questa pagina trovi tutte le informazioni su come trattiamo i tuoi dati personali.",
-        "data_controller_title": "1. Titolare del Trattamento",
-        "data_controller_desc": "Le Associazioni Morgana e O.R.U.M. sono i contitolari del trattamento dei dati raccolti tramite questo portale.",
+        "intro": "La tua privacy è fondamentale per noi. In questa pagina trovi tutte le informazioni su come trattiamo i tuoi dati personali in conformità al GDPR (UE 2016/679).",
+        "data_controller_title": "1. Contitolari del Trattamento",
+        "data_controller_desc": "I dati raccolti tramite questo portale per la gestione di eventi, news e servizi universitari sono trattati in regime di Contitolarità tra: Organismo Rappresentanti Universitari Messina (ORUM), C.F. 27068650833 e Associazione Morgana, C.F. 97103490831.",
         "data_types_title": "2. Dati raccolti",
-        "data_types_desc": "Raccogliamo solo i dati strettamente necessari per fornirti i nostri servizi, come nome, email e preferenze di navigazione.",
-        "purposes_title": "3. Finalità del trattamento",
-        "purposes_desc": "I dati vengono trattati esclusivamente per gestire le tue richieste, l'iscrizione alla newsletter e per scopi statistici anonimi.",
+        "data_types_desc": "Raccogliamo solo i dati strettamente necessari per fornirti i nostri servizi, come nome, email, matricola e preferenze di navigazione.",
+        "purposes_title": "3. Finalità del trattamento e Consensi",
+        "purposes_desc": "I dati vengono trattati per gestire le iscrizioni agli eventi, inviare comunicazioni tramite newsletter (previo consenso separato per ORUM e Morgana) e per l'erogazione dei servizi dell'area riservata.",
         "rights_title": "4. I tuoi diritti",
-        "rights_desc": "Puoi richiedere in qualsiasi momento l'accesso, la rettifica o la cancellazione dei tuoi dati contattandoci via email."
+        "rights_desc": "Puoi richiedere in qualsiasi momento l'accesso, la rettifica, la portabilità o la cancellazione dei tuoi dati contattando i Contitolari agli indirizzi email istituzionali."
     },
     "Cookie": {
         "intro": "Utilizziamo i cookie per migliorare la tua esperienza di navigazione. In questa pagina trovi tutte le informazioni su quali cookie utilizziamo e come gestirli.",

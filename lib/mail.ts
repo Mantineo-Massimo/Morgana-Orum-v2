@@ -5,14 +5,28 @@ interface SendEmailOptions {
     to: string
     subject: string
     html: string
-    brand?: "morgana" | "orum"
+    brand?: "morgana" | "orum" | "joint"
 }
 
-export async function sendEmail({ to, subject, html, brand = "morgana" }: SendEmailOptions) {
-    const isMorgana = brand === "morgana"
-    const senderName = isMorgana ? "Associazione Morgana" : "Associazione O.R.U.M."
-    // Prioritize SMTP_SENDER from .env, then SMTP_USER, then fallback
-    const senderEmail = process.env.SMTP_SENDER || process.env.SMTP_USER || (isMorgana ? "associazionemorgana@gmail.com" : "orum_unime@gmail.com")
+export async function sendEmail({ to, subject, html, brand = "joint" }: SendEmailOptions) {
+    let senderName: string
+    let senderEmail: string
+
+    switch (brand) {
+        case "orum":
+            senderName = "Associazione O.R.U.M."
+            senderEmail = "orum.unime@gmail.com"
+            break
+        case "morgana":
+            senderName = "Associazione Morgana"
+            senderEmail = "associazione.morgana@gmail.com"
+            break
+        case "joint":
+        default:
+            senderName = "ORUM & Morgana News"
+            senderEmail = process.env.SMTP_SENDER || "orum.unime@gmail.com"
+            break
+    }
 
     // Create transporter based on AWS configuration
     if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {

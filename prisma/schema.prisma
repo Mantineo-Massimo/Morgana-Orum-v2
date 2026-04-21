@@ -23,10 +23,13 @@ model User {
   createdAt        DateTime       @default(now())
   resetToken       String?        @unique
   resetTokenExpiry DateTime?
-  newsletter       Boolean        @default(false)
-  role             Role           @default(USER)
-  association      Association    @default(MORGANA_ORUM)
-  registrations    Registration[]
+  newsletter                     Boolean        @default(false)
+  consenso_marketing_orum        Boolean        @default(false)
+  consenso_marketing_morgana     Boolean        @default(false)
+  accettazione_termini_condivisi Boolean        @default(false)
+  role                           Role           @default(USER)
+  association                    Association    @default(MORGANA_ORUM)
+  registrations                  Registration[]
 }
 
 model Event {

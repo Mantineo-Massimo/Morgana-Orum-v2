@@ -72,7 +72,7 @@ export default function PrivacyPage() {
                             <li>Revocare il consenso in qualsiasi momento.</li>
                         </ul>
                         <p className="mt-6">
-                            Per esercitare i tuoi diritti, puoi scrivere a: <a href="mailto:associazionemorgana@gmail.com" className="text-primary hover:underline">associazionemorgana@gmail.com</a>.
+                            Per esercitare i tuoi diritti, puoi scrivere ai Contitolari: <a href="mailto:orum.unime@gmail.com" className="text-primary hover:underline font-bold">orum.unime@gmail.com</a> oppure <a href="mailto:associazione.morgana@gmail.com" className="text-primary hover:underline">associazione.morgana@gmail.com</a>.
                         </p>
                     </div>
                 </div>
