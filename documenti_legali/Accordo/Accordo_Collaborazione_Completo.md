@@ -1,0 +1,73 @@
+<div align="center">
+    <img src="public/assets/orum.webp" alt="Logo ORUM" width="120" style="margin-right: 50px;" />
+    <img src="public/assets/morgana.webp" alt="Logo Morgana" width="120" style="margin-left: 50px;" />
+</div>
+
+<br><br>
+
+# ACCORDO DI COLLABORAZIONE E CONTITOLARITÀ DATI
+
+La presente scrittura privata, redatta in data **21 Aprile 2026**, intercorre tra:
+
+*   **Associazione Organismo Rappresentanti Universitari Messina (ORUM)**, con sede legale in Messina in Contrada Petraro Top Residence Ganzirri, CAP 98165, C.F. 27068650833, legalmente rappresentata dal Presidente pro-tempore Luigi Grillo (nato a Delianuova il 10/06/1975, C.F. GRLLU78H10D268D);
+*   **Associazione Morgana**, con sede legale in Messina in Via Del Vespro n°57, CAP 98123, C.F. 97103490831, legalmente rappresentata dal Presidente pro-tempore Giuseppe Di Giorgio.
+
+***
+
+### Art. 1 - Oggetto dell'Accordo
+
+Le parti concordano la gestione comune di un portale web unico finalizzato alla promozione di eventi studenteschi, alla divulgazione di news universitarie e all'offerta di servizi agli associati. 
+Il dominio web è legalmente e tecnicamente intestato all’Associazione ORUM, tuttavia l’utilizzo pratico, i contenuti e il branding del portale sono condivisi pariteticamente con l’Associazione Morgana.
+
+### Art. 2 - Durata e Recesso
+
+Il presente accordo ha validità per l'intera durata del mandato di rappresentanza studentesca corrente (**Biennio Accademico 2025-2027**) e si intenderà tacitamente rinnovato alla sua scadenza, salvo diversa comunicazione o accordo tra le parti.
+
+Ciascuna associazione ha la facoltà di recedere dal presente accordo in qualsiasi momento, previa comunicazione scritta tramite Posta Elettronica Certificata (PEC) o raccomandata A/R all'altra parte, con un **preavviso minimo di 30 (trenta) giorni**.
+In caso di recesso:
+*   La titolarità del dominio e dell'infrastruttura di base rimarrà in capo all'Associazione ORUM.
+*   I dati degli utenti raccolti fino a quel momento saranno gestiti in conformità al GDPR, garantendo agli interessati il diritto di richiedere la cancellazione o la migrazione dei propri dati (ove applicabile) prima della scissione dei database.
+
+### Art. 3 - Gestione Tecnica e Sviluppo
+
+Le parti nominano congiuntamente il Sig. **Massimo Mantineo** (C.F. MNTMSM03S10F158Y) quale **Responsabile Tecnico** (e Data Processor ai fini Privacy), incaricato in via esclusiva dello sviluppo, dell'aggiornamento, della manutenzione ordinaria e straordinaria e della sicurezza informatica della piattaforma web e dei database ad essa collegati.
+
+### Art. 4 - Oneri e Costi
+
+I costi relativi al mantenimento annuale del dominio, ai servizi di hosting, ai certificati di sicurezza (SSL) ed eventuali spese accessorie per l'infrastruttura tecnologica saranno ripartiti equamente (al 50%) tra le due associazioni, salvo diversi accordi interni redatti annualmente per specifiche necessità di potenziamento.
+
+### Art. 5 - Contitolarità dei Dati Personali (GDPR)
+
+Ai sensi dell'art. 26 del Regolamento UE 2016/679 (GDPR), le associazioni ORUM e Morgana assumono il ruolo di **Contitolari del Trattamento** per tutti i dati personali raccolti tramite il portale. A tale scopo, esse si impegnano a:
+1.  **Trasparenza**: Garantire agli utenti un'informativa chiara e completa (redatta separatamente) indicante le finalità e le basi giuridiche del trattamento.
+2.  **Gestione delle Istanze**: Fornire risposte tempestive alle richieste di esercizio dei diritti degli interessati. L'utente potrà rivolgersi indifferentemente a una qualsiasi delle due associazioni; la parte che riceve la richiesta dovrà informare l'altra entro 48 ore lavorative.
+3.  **Data Breach**: In caso di violazione della sicurezza dei dati, le parti si obbligano a collaborare e a darsi immediata comunicazione scritta entro il termine massimo di 24 (ventiquattro) ore dalla scoperta dell'evento, per procedere alle necessarie notifiche all'Autorità Garante e agli interessati, se richiesto dalla legge.
+4.  **Ripartizione Sanzioni**: Ripartire equamente eventuali oneri o sanzioni derivanti da violazioni della normativa Privacy, qualora l'infrazione sia imputabile a difetti strutturali o accordi congiunti. Se la violazione deriva esclusivamente da negligenza grave, dolo o mancato rispetto dei protocolli di sicurezza da parte di una singola associazione, quest'ultima se ne assumerà l'intera responsabilità economica e legale.
+
+### Art. 6 - Tutela del Brand e dell'Immagine
+
+Le associazioni sono autorizzate all'utilizzo reciproco dei loghi e dei marchi registrati o di fatto esclusivamente per la promozione delle attività congiunte presenti sul portale (es. locandine di eventi co-organizzati, comunicati stampa condivisi). 
+Qualsiasi altro utilizzo del nome o dell'immagine dell'altra associazione per iniziative separate o non contemplate nel presente accordo dovrà essere richiesto e autorizzato preventivamente per iscritto.
+
+---
+
+<br>
+
+*Letto, approvato e sottoscritto in Messina, lì 21 Aprile 2026*
+
+<br>
+
+<table style="width: 100%; text-align: center; border: none;">
+  <tr>
+    <td style="border: none; padding: 20px;">
+      <strong>Per Associazione ORUM</strong><br>
+      <em>Luigi Grillo (Presidente)</em><br><br>
+      _________________________
+    </td>
+    <td style="border: none; padding: 20px;">
+      <strong>Per Associazione Morgana</strong><br>
+      <em>Giuseppe Di Giorgio (Presidente)</em><br><br>
+      _________________________
+    </td>
+  </tr>
+</table>
