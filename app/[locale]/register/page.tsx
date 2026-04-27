@@ -38,15 +38,15 @@ export default function Page() {
     }
 
     return (
-        <div className="min-h-screen grid items-center justify-center bg-zinc-50 p-6">
-            <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-zinc-100 my-10">
+        <div className="min-h-screen grid items-center justify-center bg-zinc-50 p-4 md:p-6">
+            <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-zinc-100 my-10">
                 <div className="text-center mb-8">
-                    <h1 className="text-xl font-bold text-foreground">Unisciti alla community di Orum e Morgana!</h1>
-                    <p className="text-sm text-zinc-500 mt-1">Sempre dalla parte dello studente</p>
+                    <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Unisciti alla community!</h1>
+                    <p className="text-xs md:text-sm text-zinc-500 mt-1 uppercase font-bold tracking-widest">Orum & Morgana</p>
                 </div>
 
                 <form onSubmit={onSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider block mb-1">Nome</label>
                             <input name="name" type="text" required placeholder="Mario" className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-900 text-sm" />

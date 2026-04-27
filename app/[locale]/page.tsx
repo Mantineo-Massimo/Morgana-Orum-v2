@@ -29,12 +29,12 @@ export default async function BrandHomePage({
         <div className="flex flex-col min-h-screen">
 
             {/* HERO SECTION - Carousel & New Text */}
-            <section className="relative h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden">
+            <section className="relative min-h-[500px] md:h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden">
                 <HeroCarousel />
                 <div className={`absolute inset-0 bg-gradient-to-r ${content.gradient} mix-blend-multiply opacity-90`}></div>
                 <div className="absolute inset-0 bg-black/60"></div>
 
-                <div className="container relative z-10 text-center px-4">
+                <div className="container relative z-10 text-center px-4 py-20">
                     <h1 className="text-4xl md:text-6xl lg:text-6xl xl:text-7xl font-serif font-bold text-white leading-[1.1] mb-6 tracking-tight text-balance antialiased drop-shadow-sm">
                         {t("hero_title")}
                     </h1>
@@ -46,9 +46,9 @@ export default async function BrandHomePage({
 
             {/* HIGHLIGHTED EVENTS SECTION */}
             <section className="py-12 bg-white border-b border-border/50">
-                <div className="container">
+                <div className="container px-4 sm:px-6">
                     <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-3xl font-serif font-bold text-foreground uppercase tracking-tight pl-4 border-l-4 border-primary">
+                        <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground uppercase tracking-tight pl-4 border-l-4 border-primary">
                             {t("events_title")}
                         </h2>
                         <Link href={`/events`} className="text-xs font-bold uppercase tracking-widest text-primary hover:underline" >
@@ -56,7 +56,7 @@ export default async function BrandHomePage({
                         </Link>
                     </div>
 
-                    <Suspense fallback={<div className="grid md:grid-cols-3 gap-6 animate-pulse">
+                    <Suspense fallback={<div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-pulse">
                         {[1, 2, 3].map(i => <div key={i} className="h-48 bg-zinc-100 rounded-2xl"></div>)}
                     </div>}>
                         <EventsList locale={locale} />
@@ -68,11 +68,11 @@ export default async function BrandHomePage({
             <PiazzaTeaserBanner />
 
             {/* RECENT NEWS SECTION */}
-            <section className="py-20 bg-white">
-                <div className="container">
-                    <div className="flex items-end justify-between mb-12">
+            <section className="py-16 md:py-20 bg-white">
+                <div className="container px-4 sm:px-6">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                         <div className="flex flex-col gap-2">
-                            <h2 className="text-4xl md:text-5xl font-serif font-black text-foreground uppercase tracking-tighter">
+                            <h2 className="text-3xl md:text-5xl font-serif font-black text-foreground uppercase tracking-tighter">
                                 {t("news_title")}
                             </h2>
                             <div className="h-1.5 w-24 bg-primary rounded-full"></div>
@@ -105,50 +105,52 @@ export default async function BrandHomePage({
                 </div>
 
                 <div className="flex flex-col md:flex-row h-auto md:h-[450px] overflow-hidden">
-                    <Link href="/network/unimhealth" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c9041a] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/unimhealth" className="relative group flex-1 min-h-[200px] md:min-h-0 bg-[#c9041a] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/policlinico.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pr-20">
-                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                            <div className="size-28 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/unimhealth.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unimhealth" />
                             </div>
                         </div>
                     </Link>
 
-                    <Link href="/network/economia" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#202549] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/economia" className="relative group flex-1 min-h-[200px] md:min-h-0 bg-[#202549] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/economia.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
-                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                            <div className="size-28 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/studentieconomia.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Economia" />
                             </div>
                         </div>
                     </Link>
 
-                    <Link href="/network/matricole" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#f6f6f6] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-20 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/matricole" className="relative group flex-1 min-h-[200px] md:min-h-0 bg-[#f6f6f6] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-20 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/matricole.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
-                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                            <div className="size-28 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/unimematricole.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unime Matricole" />
                             </div>
                         </div>
                     </Link>
 
-                    <Link href="/network/scipog" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#fbc363] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-10 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/scipog" className="relative group flex-1 min-h-[200px] md:min-h-0 bg-[#fbc363] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-10 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/scipog.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
-                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                            <div className="size-28 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/studentiscipog.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Scipog" />
                             </div>
                         </div>
                     </Link>
 
-                    <Link href="/network/dicam" className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#f34ab4] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500">
+                    <Link href="/network/dicam" className="relative group flex-1 min-h-[200px] md:min-h-0 bg-[#f34ab4] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500">
                         <Image src="/assets/dicam.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="" sizes="(max-width: 768px) 100vw, 20vw" />
                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pl-20">
-                            <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                            <div className="size-28 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
                                 <Image src="/assets/insidedicam.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Inside Dicam" />
                             </div>
                         </div>
                     </Link>
+                </div>
+            </section>
                 </div>
             </section>
         </div >

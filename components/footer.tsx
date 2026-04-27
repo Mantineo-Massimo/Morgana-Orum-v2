@@ -19,52 +19,52 @@ export async function Footer() {
     const mutedColor = "text-white/70 hover:text-white"
 
     return (
-        <footer id="site-footer" className={cn("w-full pt-16 pb-8", bgColor, textColor)}>
-            <div className="container">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+        <footer id="site-footer" className={cn("w-full pt-12 md:pt-16 pb-8", bgColor, textColor)}>
+            <div className="container px-4 sm:px-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 md:gap-12 mb-16">
 
                     {/* Column 1: Brand Info */}
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
                         <div className="flex flex-col gap-4 mb-2">
                             {/* Logos Row */}
                             <div className="flex items-center gap-3">
                                 {/* Morgana */}
-                                <Link href="/" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
+                                <Link href="/" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer">
                                     <Image src="/assets/morgana.webp" alt="Morgana logo" fill className="object-contain" sizes="56px" />
                                 </Link>
                                 {/* Orum */}
-                                <Link href="/" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
+                                <Link href="/" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer">
                                     <Image src="/assets/orum.webp" alt="Orum logo" fill className="object-contain" sizes="56px" />
                                 </Link>
                                 {/* Azione Universitaria */}
-                                <a href="https://azioneuniversitaria.it" target="_blank" rel="noopener noreferrer" className="relative h-14 w-14 hover:scale-110 transition-transform cursor-pointer">
+                                <a href="https://azioneuniversitaria.it" target="_blank" rel="noopener noreferrer" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer">
                                     <Image src="/assets/azione.webp" alt="Azione Universitaria logo" fill className="object-contain" sizes="56px" />
                                 </a>
                             </div>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <p className="text-sm font-bold uppercase tracking-widest opacity-90">
+                            <p className="text-xs md:text-sm font-bold uppercase tracking-widest opacity-90">
                                 {t.rich("footer_tagline", {
-                                    br: () => <br />
+                                    br: () => <br className="hidden sm:block" />
                                 })}
                             </p>
-                            <p className="text-[11px] leading-relaxed opacity-60 italic font-medium">
+                            <p className="text-[10px] md:text-[11px] leading-relaxed opacity-60 italic font-medium">
                                 {t("footer_subline")}
                             </p>
                         </div>
-                        <div className="flex items-center gap-5 mt-4">
-                            <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-6" /></a>
-                            <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-6" /></a>
-                            <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-400 transition-colors" aria-label="YouTube Associazione Morgana"><Youtube className="size-6" /></a>
+                        <div className="flex items-center gap-4 md:gap-5 mt-2">
+                            <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-5 md:size-6" /></a>
+                            <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-5 md:size-6" /></a>
+                            <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-400 transition-colors" aria-label="YouTube Associazione Morgana"><Youtube className="size-5 md:size-6" /></a>
                             <div className="w-px h-6 bg-white/20 mx-1"></div>
-                            <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-blue-500 transition-colors" aria-label="Facebook Associazione Orum"><Facebook className="size-6" /></a>
-                            <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-blue-400 transition-colors" aria-label="Instagram Associazione Orum"><Instagram className="size-6" /></a>
+                            <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-blue-500 transition-colors" aria-label="Facebook Associazione Orum"><Facebook className="size-5 md:size-6" /></a>
+                            <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-blue-400 transition-colors" aria-label="Instagram Associazione Orum"><Instagram className="size-5 md:size-6" /></a>
                         </div>
                     </div>
 
                     {/* Column 2: Navigazione */}
                     <div className="flex flex-col gap-4">
-                        <h3 className="text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
+                        <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
                             {t("nav_title")}
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
@@ -79,7 +79,7 @@ export async function Footer() {
 
                     {/* Column 3: Il Nostro Network */}
                     <div className="flex flex-col gap-4">
-                        <h3 className="text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
+                        <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
                             {t("network_title")}
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
@@ -91,9 +91,9 @@ export async function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 3: Link Utili / Legali */}
+                    {/* Column 4: Link Utili / Legali */}
                     <div className="flex flex-col gap-4">
-                        <h3 className="text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
+                        <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
                             {t("useful_links_title")}
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
@@ -104,9 +104,9 @@ export async function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 4: Contatti */}
+                    {/* Column 5: Contatti */}
                     <div className="flex flex-col gap-4">
-                        <h3 className="text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
+                        <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
                             {t("contacts_title")}
                         </h3>
                         <div className="flex flex-col gap-3 text-sm opacity-80">
@@ -121,9 +121,9 @@ export async function Footer() {
                             </div>
                             <div className="flex items-center gap-3">
                                 <Mail className="size-4 shrink-0" />
-                                <div className="flex flex-col gap-1">
-                                    <a href="mailto:orum.unime@gmail.com" className="hover:underline text-blue-100 font-bold">orum.unime@gmail.com</a>
-                                    <a href="mailto:associazione.morgana@gmail.com" className="hover:underline text-red-100 font-bold">associazione.morgana@gmail.com</a>
+                                <div className="flex flex-col gap-1 overflow-hidden">
+                                    <a href="mailto:orum.unime@gmail.com" className="hover:underline text-blue-100 font-bold truncate">orum.unime@gmail.com</a>
+                                    <a href="mailto:associazione.morgana@gmail.com" className="hover:underline text-red-100 font-bold truncate">associazione.morgana@gmail.com</a>
                                 </div>
                             </div>
                         </div>
@@ -131,21 +131,23 @@ export async function Footer() {
                 </div>
 
                 {/* Newsletter Box */}
-                <div className="mb-16 bg-white/5 rounded-[2.5rem] p-8 md:p-12 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div className="mb-16 bg-white/5 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-8">
                     <div className="flex-1 text-center lg:text-left">
-                        <h3 className="text-2xl font-serif font-black mb-2">{t("newsletter_title")}</h3>
-                        <p className="text-white/60 font-medium">{t("newsletter_desc")}</p>
+                        <h3 className="text-xl md:text-2xl font-serif font-black mb-2">{t("newsletter_title")}</h3>
+                        <p className="text-white/60 font-medium text-sm md:text-base">{t("newsletter_desc")}</p>
                     </div>
-                    <NewsletterForm />
+                    <div className="w-full lg:w-auto">
+                        <NewsletterForm />
+                    </div>
                 </div>
 
                 {/* Bottom Bar */}
                 <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] md:text-xs opacity-60">
-                    <div className="flex flex-col gap-2 flex-1">
-                        <p className="text-center md:text-left font-bold">{t("rights", { year: new Date().getFullYear() })}</p>
-                        <p className="text-center md:text-left">{t("legal_info_orum")}</p>
-                        <p className="text-center md:text-left">{t("legal_info_morgana")}</p>
-                        <p className="text-center md:text-left font-mono uppercase tracking-tighter opacity-40 mt-1">{t("legal_version")}</p>
+                    <div className="flex flex-col gap-2 flex-1 text-center md:text-left">
+                        <p className="font-bold">{t("rights", { year: new Date().getFullYear() })}</p>
+                        <p>{t("legal_info_orum")}</p>
+                        <p>{t("legal_info_morgana")}</p>
+                        <p className="font-mono uppercase tracking-tighter opacity-40 mt-1">{t("legal_version")}</p>
                     </div>
                     <div className="w-full md:w-auto border-t border-white/10 md:border-0 pt-4 md:pt-0 text-center md:text-right flex flex-col gap-1">
                         <p className="font-bold">{t("partnership_info")}</p>

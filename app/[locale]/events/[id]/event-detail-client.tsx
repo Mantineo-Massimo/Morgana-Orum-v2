@@ -161,12 +161,12 @@ export default function EventDetailClient({
             </div>
 
             {/* Content */}
-            <div className="container mx-auto px-6 -mt-10 relative z-20">
-                <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-zinc-100 grid lg:grid-cols-3 gap-12">
+            <div className="container mx-auto px-4 md:px-6 -mt-10 relative z-20">
+                <div className="bg-white rounded-3xl shadow-xl p-6 md:p-12 border border-zinc-100 grid lg:grid-cols-3 gap-10 md:gap-12">
                     <div className="lg:col-span-2 space-y-8">
                         {/* Description */}
                         <div>
-                            <h2 className="text-2xl font-bold text-foreground mb-4">Descrizione</h2>
+                            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4">Descrizione</h2>
                             <p className="text-lg text-zinc-600 leading-relaxed text-pretty">
                                 {event.description}
                             </p>
