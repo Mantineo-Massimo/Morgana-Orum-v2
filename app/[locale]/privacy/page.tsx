@@ -1,26 +1,21 @@
-import { Link } from "@/i18n/routing"
-import { ArrowLeft, Shield } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { Shield, Eye, Lock, Database, UserCheck, FileText, Bell, MessageSquare } from "lucide-react"
 
 export default function PrivacyPage() {
-    const t = useTranslations("Footer")
-    const tp = useTranslations("Privacy")
-    return (
-        <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
-            <div className="container max-w-4xl mx-auto px-6">
-                <Link
-                    href="/"
-                    className="group inline-flex items-center gap-2 text-zinc-500 hover:text-foreground transition-colors mb-12"
-                >
-                    <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                    <span className="text-sm font-bold uppercase tracking-widest">{t("back_to_main")}</span>
-                </Link>
+    const t = useTranslations("Privacy")
 
-                <div className="bg-white rounded-[2.5rem] border border-zinc-200 p-8 md:p-16 shadow-sm">
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
-                            <Shield className="size-6" />
-                        </div>
+    const sections = [
+        { id: "data_controller", icon: UserCheck },
+        { id: "data_processor", icon: Lock },
+        { id: "data_types", icon: Database },
+        { id: "purposes", icon: MessageSquare },
+        { id: "recipients", icon: FileText },
+        { id: "retention", icon: Lock },
+        { id: "rights", icon: Shield },
+        { id: "security", icon: Bell },
+    ]
+
+    return (
         <main className="min-h-screen bg-[#fafafa] pt-32 pb-24 relative overflow-hidden">
             {/* Background Decorations */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
@@ -33,12 +28,12 @@ export default function PrivacyPage() {
                 <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-10 duration-700">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 text-white text-[10px] font-black uppercase tracking-[0.2em] mb-6">
                         <Shield className="size-3" />
-                        <span>{t("title")}</span>
+                        <span>Privacy Policy</span>
                     </div>
                     <h1 className="text-5xl md:text-7xl font-serif font-black italic tracking-tighter mb-8 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-500 bg-clip-text text-transparent">
                         Privacy Policy
                     </h1>
-                    <p className="text-zinc-500 font-medium max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-zinc-500 font-medium max-w-2xl mx-auto leading-relaxed italic">
                         {t("intro")}
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-4 text-xs font-bold text-zinc-400 uppercase tracking-widest">
