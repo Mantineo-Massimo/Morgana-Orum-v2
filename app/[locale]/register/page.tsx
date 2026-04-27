@@ -149,21 +149,21 @@ export default function Page() {
 
                     <div className="space-y-4 pt-2">
                                     <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                                        <input type="checkbox" required name="accettazione_termini_condivisi" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <input type="checkbox" required name="accettazione_termini_condivisi" value="yes" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
                                         <p className="text-[11px] text-zinc-600 leading-snug">
                                             {t("accept_privacy_start")}<Link href="/privacy" className="underline font-bold text-foreground">{t("privacy_policy")}</Link>{t("accept_privacy_end")}
                                         </p>
                                     </label>
 
                                     <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                                        <input type="checkbox" name="consenso_marketing_orum" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <input type="checkbox" name="consenso_marketing_orum" value="yes" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
                                         <span className="text-[11px] text-zinc-600 leading-snug">
                                             {t("consent_orum")}
                                         </span>
                                     </label>
 
                                     <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                                        <input type="checkbox" name="consenso_marketing_morgana" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <input type="checkbox" name="consenso_marketing_morgana" value="yes" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
                                         <span className="text-[11px] text-zinc-600 leading-snug">
                                             {t("consent_morgana")}
                                         </span>
