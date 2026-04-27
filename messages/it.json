@@ -194,7 +194,7 @@
             "schedule_title": "Il Programma",
             "schedule_morning": "Laboratori artistici, estemporanee di pittura e seminari culturali (come il 'Simposio').",
             "schedule_night": "Esibizioni dal vivo di band, solisti, ballerini, attori e performer.",
-            "fanta_title": "Novità: Il Fanta-Piazza",
+            "fanta_title": "FantaArte",
             "fanta_desc": "Diventa un 'Curatore d'Arte' virtuale! Crea la tua Galleria con 5 artisti e accumula punti in base a ciò che accade sul palco.",
             "fanta_rules": "Hai 100 'Armoni' per comporre la tua squadra. Bonus per standing ovation e premi speciali; Malus per ritardi o imprevisti tecnici!",
             "associations_title": "La Rete",
@@ -294,15 +294,15 @@
         "fuorisede": "Fuorisede"
     },
     "Cookie": {
+        "title": "Gestione Cookie",
         "intro": "Utilizziamo i cookie per migliorare la tua esperienza di navigazione. In questa pagina trovi tutte le informazioni su quali cookie utilizziamo e come gestirli.",
-        "what_are_title": "1. Cosa sono i Cookie?",
-        "what_are_desc": "I cookie sono piccoli file di testo che i siti visitati dall'utente inviano al suo terminale, dove vengono memorizzati per essere poi ritrasmessi agli stessi siti alla visita successiva.",
-        "types_title": "2. Tipologie di Cookie utilizzati",
-        "t1": "Cookie Tecnici (Necessari): Indispensabili per il corretto funzionamento del sito, come la gestione delle sessioni di login. Non possono essere disattivati.",
-        "t2": "Cookie Analitici (Google Analytics 4): Utilizzati per raccogliere informazioni in forma anonima sul numero degli utenti e su come questi visitano il sito. Vengono attivati solo previo consenso esplicito tramite il banner informativo.",
-        "how_to_title": "3. Come disabilitare i Cookie",
-        "how_to_desc": "Puoi modificare le tue preferenze in qualsiasi momento cliccando sul tasto di gestione consenso (se presente) o agendo sulle impostazioni del tuo browser.",
-        "rights_title": "4. Diritti dell'Interessato",
-        "rights_desc": "Puoi esercitare i tuoi diritti previsti dal GDPR contattandoci via email. Per maggiori dettagli su come trattiamo i tuoi dati, consulta la nostra Privacy Policy."
+        "intro_title": "Cosa sono i Cookie?",
+        "intro_desc": "I cookie sono piccoli file di testo che i siti visitati dall'utente inviano al suo terminale, dove vengono memorizzati per essere poi ritrasmessi agli stessi siti alla visita successiva.",
+        "technical_title": "Cookie Tecnici",
+        "technical_desc": "Indispensabili per il corretto funzionamento del sito, come la gestione delle sessioni di login e la sicurezza. Non possono essere disattivati.",
+        "analytics_title": "Cookie Analitici",
+        "analytics_desc": "Utilizzati per raccogliere informazioni in forma anonima sul numero degli utenti e su come questi visitano il sito (Google Analytics 4). Vengono attivati solo previo consenso.",
+        "management_title": "Gestione e Diritti",
+        "management_desc": "Puoi modificare le tue preferenze agendo sulle impostazioni del tuo browser. Consulta la nostra Privacy Policy per conoscere i tuoi diritti."
     }
 }

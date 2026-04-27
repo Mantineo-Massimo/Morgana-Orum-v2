@@ -192,7 +192,7 @@
             "schedule_title": "The Program",
             "schedule_morning": "Artistic workshops, live painting, and cultural seminars (such as the 'Symposium').",
             "schedule_night": "Live performances by bands, soloists, dancers, actors, and performers.",
-            "fanta_title": "New: Fanta-Piazza",
+            "fanta_title": "FantaArte",
             "fanta_desc": "Become a virtual 'Art Curator'! Create your Gallery with 5 artists and accumulate points based on what happens on stage.",
             "fanta_rules": "You have 100 'Armoni' to compose your team. Bonuses for standing ovations and special awards; Penalties for delays or technical hitches!",
             "associations_title": "The Network",
@@ -292,15 +292,15 @@
         "fuorisede": "Off-campus"
     },
     "Cookie": {
-        "intro": "We use cookies to improve your browsing experience. On this page you will find all the information on which cookies we use and how to manage them.",
-        "what_are_title": "1. What are Cookies?",
-        "what_are_desc": "Cookies are small text files that the sites visited by the user send to his terminal, where they are stored and then retransmitted to the same sites on the next visit.",
-        "types_title": "2. Types of Cookies used",
-        "t1": "Technical Cookies (Necessary): Essential for the correct functioning of the site, such as managing login sessions. They cannot be deactivated.",
-        "t2": "Analytical Cookies (Google Analytics 4): Used to collect information in anonymous form on the number of users and how they visit the site. They are activated only with explicit prior consent via the information banner.",
-        "how_to_title": "3. How to disable Cookies",
-        "how_to_desc": "You can change your preferences at any time by clicking on the consent management button (if present) or by acting on your browser settings.",
-        "rights_title": "4. Rights of the Interested Party",
-        "rights_desc": "You can exercise your rights under the GDPR by contacting us via email. For more details on how we process your data, see our Privacy Policy."
+        "title": "Cookie Management",
+        "intro": "We use cookies to improve your browsing experience. On this page you will find all the information about which cookies we use and how to manage them.",
+        "intro_title": "What are Cookies?",
+        "intro_desc": "Cookies are small text files that websites visited by users send to their terminals, where they are stored to be then retransmitted to the same sites on the next visit.",
+        "technical_title": "Technical Cookies",
+        "technical_desc": "Essential for the correct functioning of the site, such as managing login sessions and security. They cannot be deactivated.",
+        "analytics_title": "Analytical Cookies",
+        "analytics_desc": "Used to collect information in anonymous form on the number of users and how they visit the site (Google Analytics 4). They are only activated upon consent.",
+        "management_title": "Management and Rights",
+        "management_desc": "You can change your preferences by acting on your browser settings. Consult our Privacy Policy to know your rights."
     }
 }
