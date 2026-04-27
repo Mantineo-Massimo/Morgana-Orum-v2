@@ -27,7 +27,10 @@ type UserItem = {
     accettazione_termini_condivisi?: boolean
 }
 
+import { useTranslations } from "next-intl"
+
 export default function UsersAdminClient({ initialUsers }: { initialUsers: UserItem[] }) {
+    const tAdmin = useTranslations("AdminUsers")
     const [users, setUsers] = useState(initialUsers)
     const [loadingId, setLoadingId] = useState<number | null>(null)
     const [search, setSearch] = useState("")
@@ -605,7 +608,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
                                             className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Newsletter</span>
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">{tAdmin("newsletter")}</span>
                                     </label>
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
@@ -614,7 +617,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             onChange={(e) => setFormData({ ...formData, consenso_marketing_orum: e.target.checked })}
                                             className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Mktg ORUM</span>
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">{tAdmin("mktg_orum")}</span>
                                     </label>
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
@@ -623,7 +626,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             onChange={(e) => setFormData({ ...formData, consenso_marketing_morgana: e.target.checked })}
                                             className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Mktg Morgana</span>
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">{tAdmin("mktg_morgana")}</span>
                                     </label>
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
@@ -632,7 +635,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             onChange={(e) => setFormData({ ...formData, accettazione_termini_condivisi: e.target.checked })}
                                             className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Privacy OK</span>
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">{tAdmin("privacy_ok")}</span>
                                     </label>
                                 </div>
 

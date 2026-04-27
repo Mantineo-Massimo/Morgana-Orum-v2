@@ -145,28 +145,28 @@ export default function Page() {
 
 
 
-                    {/* Removed Association Field as requested */}
+                    <div className="space-y-4 pt-2">
+                                    <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
+                                        <input type="checkbox" required name="accettazione_termini_condivisi" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <p className="text-[11px] text-zinc-600 leading-snug">
+                                            {t("accept_privacy_start")}<Link href="/privacy" className="underline font-bold text-foreground">{t("privacy_policy")}</Link>{t("accept_privacy_end")}
+                                        </p>
+                                    </label>
 
-                    <div className="space-y-3 pt-2">
-                        <label className="flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                            <input name="accettazione_termini_condivisi" value="yes" type="checkbox" required className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
-                            <span className="text-[11px] text-zinc-600 leading-snug">
-                                Dichiaro di aver letto e compreso l&apos;<Link href="/privacy" className="underline font-bold text-foreground">informativa sulla privacy</Link> e accetto il trattamento dei miei dati personali.*
-                            </span>
-                        </label>
-                        <label className="flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                            <input name="consenso_marketing_orum" value="yes" type="checkbox" className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
-                            <span className="text-[11px] text-zinc-600 leading-snug">
-                                Acconsento al trattamento dei dati da parte di Associazione O.R.U.M. per finalità di marketing e comunicazioni (Opzionale).
-                            </span>
-                        </label>
-                        <label className="flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                            <input name="consenso_marketing_morgana" value="yes" type="checkbox" className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
-                            <span className="text-[11px] text-zinc-600 leading-snug">
-                                Acconsento al trattamento dei dati da parte di Associazione Morgana per finalità di marketing e comunicazioni (Opzionale).
-                            </span>
-                        </label>
-                    </div>
+                                    <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
+                                        <input type="checkbox" name="consenso_marketing_orum" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <span className="text-[11px] text-zinc-600 leading-snug">
+                                            {t("consent_orum")}
+                                        </span>
+                                    </label>
+
+                                    <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
+                                        <input type="checkbox" name="consenso_marketing_morgana" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <span className="text-[11px] text-zinc-600 leading-snug">
+                                            {t("consent_morgana")}
+                                        </span>
+                                    </label>
+                                </div>
 
                     {error && <p className="text-sm text-red-500 font-bold text-center">{error}</p>}
 

@@ -5,7 +5,10 @@ import { Shield, Trash2, Download, CheckCircle2, Loader2, AlertTriangle } from "
 import { updateUserConsents, deleteOwnAccount, exportUserData } from "@/app/actions/users"
 import { cn } from "@/lib/utils"
 
+import { useTranslations } from "next-intl"
+
 export default function SettingsClient({ initialUser }: { initialUser: any }) {
+    const t = useTranslations("Settings")
     const [orumConsent, setOrumConsent] = useState(initialUser.consenso_marketing_orum)
     const [morganaConsent, setMorganaConsent] = useState(initialUser.consenso_marketing_morgana)
     const [isPending, startTransition] = useTransition()
@@ -15,10 +18,10 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
         startTransition(async () => {
             const res = await updateUserConsents({ orum: orumConsent, morgana: morganaConsent })
             if (res.success) {
-                setMessage({ type: 'success', text: "Preferenze aggiornate con successo!" })
+                setMessage({ type: 'success', text: t("success") })
                 setTimeout(() => setMessage(null), 3000)
             } else {
-                setMessage({ type: 'error', text: "Errore durante l'aggiornamento." })
+                setMessage({ type: 'error', text: t("error") })
             }
         })
     }
@@ -53,8 +56,8 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-black text-foreground">Impostazioni Account</h1>
-                <p className="text-zinc-500 mt-2">Gestisci la tua privacy e i tuoi dati personali.</p>
+                <h1 className="text-3xl font-black text-foreground">{t("title")}</h1>
+                <p className="text-zinc-500 mt-2">{t("desc")}</p>
             </div>
 
             {message && (
@@ -76,17 +79,17 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                 <Shield className="size-6" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-black text-foreground">Privacy & Consensi</h2>
-                                <p className="text-xs text-zinc-400 font-medium tracking-wider uppercase">GDPR Compliance</p>
+                                <h2 className="text-xl font-black text-foreground">{t("privacy_title")}</h2>
+                                <p className="text-xs text-zinc-400 font-medium tracking-wider uppercase">{t("gdpr_badge")}</p>
                             </div>
                         </div>
 
                         <div className="space-y-6">
                             <div className="flex items-center justify-between p-6 bg-zinc-50 rounded-3xl border border-zinc-100 group hover:bg-white hover:shadow-md transition-all">
                                 <div className="space-y-1">
-                                    <h3 className="font-bold text-zinc-900 text-lg">Marketing Associazione O.R.U.M.</h3>
+                                    <h3 className="font-bold text-zinc-900 text-lg">{t("orum_mktg")}</h3>
                                     <p className="text-xs text-zinc-500 max-w-sm">
-                                        Ricevi comunicazioni su eventi, newsletter e opportunità dedicate da parte di O.R.U.M.
+                                        {t("orum_mktg_desc")}
                                     </p>
                                 </div>
                                 <button
@@ -105,9 +108,9 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
 
                             <div className="flex items-center justify-between p-6 bg-zinc-50 rounded-3xl border border-zinc-100 group hover:bg-white hover:shadow-md transition-all">
                                 <div className="space-y-1">
-                                    <h3 className="font-bold text-zinc-900 text-lg">Marketing Associazione Morgana</h3>
+                                    <h3 className="font-bold text-zinc-900 text-lg">{t("morgana_mktg")}</h3>
                                     <p className="text-xs text-zinc-500 max-w-sm">
-                                        Ricevi comunicazioni su eventi, newsletter e opportunità dedicate da parte di Morgana.
+                                        {t("morgana_mktg_desc")}
                                     </p>
                                 </div>
                                 <button
@@ -130,7 +133,7 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                     disabled={isPending}
                                     className="w-full md:w-auto px-10 py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-black transition-all flex items-center justify-center gap-2"
                                 >
-                                    {isPending ? <Loader2 className="size-4 animate-spin" /> : "Salva Preferenze"}
+                                    {isPending ? <Loader2 className="size-4 animate-spin" /> : t("save_prefs")}
                                 </button>
                             </div>
                         </div>
@@ -141,9 +144,9 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:scale-110 transition-transform duration-700" />
                         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                             <div className="space-y-3 text-center md:text-left">
-                                <h3 className="text-2xl font-serif font-black italic tracking-tight">I tuoi dati sono al sicuro.</h3>
+                                <h3 className="text-2xl font-serif font-black italic tracking-tight">{t("data_safe_title")}</h3>
                                 <p className="text-white/60 text-sm max-w-md font-medium leading-relaxed">
-                                    Il portale Morgana & O.R.U.M. è progettato secondo i principi di Privacy by Design. Puoi richiedere la cancellazione o l&apos;esportazione dei dati in qualsiasi momento.
+                                    {t("data_safe_desc")}
                                 </p>
                             </div>
                             <button
@@ -151,7 +154,7 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                 className="px-8 py-4 bg-white text-zinc-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-zinc-100 transition-all flex items-center gap-3 shrink-0"
                             >
                                 <Download className="size-4" />
-                                Esporta Dati (JSON)
+                                {t("export_button")}
                             </button>
                         </div>
                     </div>
@@ -165,8 +168,8 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                 <Trash2 className="size-6" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-black text-foreground">Zona Pericolo</h2>
-                                <p className="text-xs text-red-400 font-bold tracking-wider uppercase">Azioni Irreversibili</p>
+                                <h2 className="text-xl font-black text-foreground">{t("danger_zone")}</h2>
+                                <p className="text-xs text-red-400 font-bold tracking-wider uppercase">{t("danger_desc")}</p>
                             </div>
                         </div>
 
@@ -175,33 +178,33 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                 <div className="flex items-start gap-3 text-red-700 mb-6">
                                     <AlertTriangle className="size-5 shrink-0 mt-0.5" />
                                     <p className="text-xs font-bold leading-relaxed">
-                                        L&apos;eliminazione dell&apos;account comporterà la perdita di tutte le prenotazioni, attestati e dello storico della tua attività sul portale.
+                                        {t("delete_warning")}
                                     </p>
                                 </div>
                                 <button
                                     onClick={handleDeleteAccount}
                                     className="w-full py-4 bg-white text-red-600 border border-red-100 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-red-600 hover:text-white transition-all"
                                 >
-                                    Elimina Account Definitivamente
+                                    {t("delete_button")}
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <div className="bg-zinc-50 rounded-[2.5rem] p-8 border border-zinc-100">
-                        <h4 className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-4">Informazioni</h4>
+                        <h4 className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-4">{t("info_title")}</h4>
                         <div className="space-y-3 text-xs text-zinc-500 font-medium">
                             <div className="flex justify-between py-2 border-b border-zinc-100">
-                                <span>Matricola</span>
+                                <span>{t("info_matricola")}</span>
                                 <span className="font-bold text-zinc-900">{initialUser.matricola}</span>
                             </div>
                             <div className="flex justify-between py-2 border-b border-zinc-100">
-                                <span>Iscritto dal</span>
+                                <span>{t("info_member_since")}</span>
                                 <span className="font-bold text-zinc-900">{initialUser.memberSince}</span>
                             </div>
                             <div className="flex justify-between py-2 border-b border-zinc-100">
-                                <span>Status Privacy</span>
-                                <span className="text-green-600 font-bold">Verificato</span>
+                                <span>{t("info_status")}</span>
+                                <span className="text-green-600 font-bold">{t("status_verified")}</span>
                             </div>
                         </div>
                     </div>

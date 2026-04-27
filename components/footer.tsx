@@ -145,10 +145,12 @@ export async function Footer() {
                         <p className="text-center md:text-left font-bold">{t("rights", { year: new Date().getFullYear() })}</p>
                         <p className="text-center md:text-left">{t("legal_info_orum")}</p>
                         <p className="text-center md:text-left">{t("legal_info_morgana")}</p>
+                        <p className="text-center md:text-left font-mono uppercase tracking-tighter opacity-40 mt-1">{t("legal_version")}</p>
                     </div>
                     <div className="w-full md:w-auto border-t border-white/10 md:border-0 pt-4 md:pt-0 text-center md:text-right flex flex-col gap-1">
                         <p className="font-bold">{t("partnership_info")}</p>
-                        <p>Codice Fiscale: MNTMSM03S10F158Y</p>
+                        <p>Massimo Mantineo (C.F. MNTMSM03S10F158Y)</p>
+                        <p className="italic uppercase tracking-widest text-[9px] opacity-70">Technical & Privacy Manager</p>
                     </div>
                 </div>
             </div>
