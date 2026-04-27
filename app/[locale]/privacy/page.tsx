@@ -21,62 +21,71 @@ export default function PrivacyPage() {
                         <div className="size-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                             <Shield className="size-6" />
                         </div>
-                        <h1 className="text-3xl md:text-5xl font-serif font-black text-foreground">
-                            Privacy Policy
-                        </h1>
+        <main className="min-h-screen bg-[#fafafa] pt-32 pb-24 relative overflow-hidden">
+            {/* Background Decorations */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden z-0">
+                <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-red-500/5 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/5 rounded-full blur-[120px]" />
+            </div>
+
+            <div className="container relative z-10 max-w-5xl">
+                {/* Header */}
+                <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-10 duration-700">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 text-white text-[10px] font-black uppercase tracking-[0.2em] mb-6">
+                        <Shield className="size-3" />
+                        <span>{t("title")}</span>
                     </div>
-
-                    <div className="prose prose-zinc max-w-none text-zinc-600 leading-relaxed font-medium">
-                        <p className="text-xl text-zinc-500 mb-12 italic border-l-4 border-zinc-200 pl-6">
-                            {tp("intro")}
-                        </p>
-
-                        <section className="mt-12">
-                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("data_controller_title")}</h2>
-                            <p>{tp("data_controller_desc")}</p>
-                        </section>
-
-                        <section className="mt-12">
-                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("data_processor_title")}</h2>
-                            <p>{tp("data_processor_desc")}</p>
-                        </section>
-
-                        <section className="mt-12">
-                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("data_types_title")}</h2>
-                            <p>{tp("data_types_desc")}</p>
-                        </section>
-
-                        <section className="mt-12">
-                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("purposes_title")}</h2>
-                            <p>{tp("purposes_desc")}</p>
-                        </section>
-
-                        <section className="mt-12">
-                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("recipients_title")}</h2>
-                            <p>{tp("recipients_desc")}</p>
-                        </section>
-
-                        <section className="mt-12">
-                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("retention_title")}</h2>
-                            <p>{tp("retention_desc")}</p>
-                        </section>
-
-                        <section className="mt-12">
-                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("rights_title")}</h2>
-                            <p>{tp("rights_desc")}</p>
-                        </section>
-
-                        <section className="mt-12">
-                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("security_title")}</h2>
-                            <p>{tp("security_desc")}</p>
-                        </section>
-
-                        <div className="mt-20 pt-10 border-t border-zinc-100 text-sm text-zinc-400">
-                            <p>{tp("last_update")}</p>
-                        </div>
+                    <h1 className="text-5xl md:text-7xl font-serif font-black italic tracking-tighter mb-8 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-500 bg-clip-text text-transparent">
+                        Privacy Policy
+                    </h1>
+                    <p className="text-zinc-500 font-medium max-w-2xl mx-auto leading-relaxed">
+                        {t("intro")}
+                    </p>
+                    <div className="mt-10 flex items-center justify-center gap-4 text-xs font-bold text-zinc-400 uppercase tracking-widest">
+                        <div className="w-12 h-px bg-zinc-200" />
+                        <span>{t("last_update")}</span>
+                        <div className="w-12 h-px bg-zinc-200" />
                     </div>
                 </div>
+
+                {/* Content Sections */}
+                <div className="space-y-8">
+                    {sections.map((section, idx) => (
+                        <section 
+                            key={section.id}
+                            className="bg-white/80 backdrop-blur-xl border border-white rounded-[2.5rem] p-8 md:p-12 shadow-sm hover:shadow-xl transition-all duration-500 group animate-in fade-in slide-in-from-bottom-10"
+                            style={{ animationDelay: `${idx * 100}ms` }}
+                        >
+                            <div className="flex flex-col md:flex-row gap-8 items-start">
+                                <div className="size-16 rounded-3xl bg-zinc-50 border border-zinc-100 flex items-center justify-center text-zinc-400 group-hover:bg-zinc-900 group-hover:text-white transition-all duration-500 shrink-0">
+                                    <section.icon className="size-8" />
+                                </div>
+                                <div className="space-y-4">
+                                    <h2 className="text-2xl font-black text-zinc-900 tracking-tight">
+                                        {t(`${section.id}_title`)}
+                                    </h2>
+                                    <div className="prose prose-zinc max-w-none text-zinc-500 leading-relaxed font-medium">
+                                        {t.rich(`${section.id}_desc`, {
+                                            p: (chunks) => <p className="mb-4">{chunks}</p>,
+                                            b: (chunks) => <strong className="text-zinc-900">{chunks}</strong>,
+                                            li: (chunks) => <li className="ml-4 list-disc mb-1">{chunks}</li>,
+                                            ul: (chunks) => <ul className="mb-4">{chunks}</ul>
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    ))}
+                </div>
+
+                {/* Footer Note */}
+                <div className="mt-20 text-center animate-in fade-in duration-1000 delay-1000">
+                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-4">
+                        Morgana & O.R.U.M. Portal
+                    </p>
+                    <div className="inline-block h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 rounded-full" />
+                </div>
             </div>
-        </div>
+        </main>
     )
 }

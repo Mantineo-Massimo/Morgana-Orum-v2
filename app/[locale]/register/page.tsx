@@ -9,8 +9,10 @@ import { departmentsData } from "@/lib/departments"
 
 export const dynamic = "force-dynamic"
 
-export default function Page() {
+import { useTranslations } from "next-intl"
 
+export default function Page() {
+    const t = useTranslations("Privacy")
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")

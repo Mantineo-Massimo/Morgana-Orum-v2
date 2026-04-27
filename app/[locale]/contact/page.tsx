@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl"
 
 export default function ContactPage() {
     const t = useTranslations("Footer")
+    const tp = useTranslations("Privacy")
     const [status, setStatus] = React.useState<'idle' | 'loading' | 'success' | 'error'>('idle')
     const [errorMessage, setErrorMessage] = React.useState("")
 
@@ -176,7 +177,7 @@ export default function ContactPage() {
                                     <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
                                         <input type="checkbox" required className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
                                         <p className="text-[10px] text-zinc-500 font-medium leading-relaxed">
-                                            Dichiaro di aver letto e compreso l&apos;<Link href="/privacy" className="underline hover:text-primary font-bold">Informativa sulla Privacy</Link> e acconsento al trattamento dei miei dati per le finalità legate alla mia richiesta.*
+                                            {tp("contact_privacy_notice")}
                                         </p>
                                     </label>
                                 </div>

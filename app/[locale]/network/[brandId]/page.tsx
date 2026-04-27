@@ -158,10 +158,19 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
                 <div className="container relative z-10 flex flex-col items-center">
                     <div className={cn(
-                        "size-32 md:size-48 flex items-center justify-center overflow-hidden p-4 mb-8 transform hover:rotate-3 transition-transform duration-500",
-                        brandId === "piazzadellarte" ? "" : "rounded-full bg-white shadow-2xl border-4 border-white/20"
+                        "flex items-center justify-center gap-6 mb-8 transform hover:scale-105 transition-transform duration-500",
+                        brandId === "piazzadellarte" ? "" : "size-32 md:size-48 rounded-full bg-white shadow-2xl border-4 border-white/20 p-4"
                     )}>
-                        <Image src={dynamicConfig.logo} width={180} height={180} className="w-full h-full object-contain" alt={dynamicConfig.name} />
+                        {brandId === "piazzadellarte" ? (
+                            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-8">
+                                <Image src="/assets/morgana.webp" width={80} height={80} className="size-14 md:size-20 object-contain drop-shadow-xl" alt="Morgana" />
+                                <Image src="/assets/orum.webp" width={80} height={80} className="size-14 md:size-20 object-contain drop-shadow-xl" alt="Orum" />
+                                <Image src={dynamicConfig.logo} width={180} height={180} className="size-28 md:size-48 object-contain drop-shadow-2xl mx-2" alt={dynamicConfig.name} />
+                                <Image src="/assets/azione.webp" width={80} height={80} className="size-14 md:size-20 object-contain drop-shadow-xl" alt="Azione Universitaria" />
+                            </div>
+                        ) : (
+                            <Image src={dynamicConfig.logo} width={180} height={180} className="w-full h-full object-contain" alt={dynamicConfig.name} />
+                        )}
                     </div>
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-black text-white text-center leading-tight mb-4 drop-shadow-2xl uppercase tracking-tighter">
                         {dynamicConfig.name}

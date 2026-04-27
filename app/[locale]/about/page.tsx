@@ -172,6 +172,48 @@ export default function AboutPage() {
 
                         </motion.div>
                     </AnimatePresence>
+
+                    {/* Strategic Alliance Section */}
+                    <div className="mt-32 max-w-5xl mx-auto">
+                        <div className="bg-zinc-900 rounded-[3rem] p-10 md:p-20 text-white relative overflow-hidden group">
+                            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-red-500/20 to-blue-500/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-[100px] group-hover:scale-110 transition-transform duration-1000" />
+                            
+                            <div className="relative z-10">
+                                <div className="flex flex-col md:flex-row items-center gap-12">
+                                    <div className="flex-1 space-y-6">
+                                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-white/80 text-[10px] font-black uppercase tracking-[0.2em]">
+                                            <HeartHandshake className="size-3 text-red-400" />
+                                            <span>{t("alliance_badge")}</span>
+                                        </div>
+                                        <h2 className="text-4xl md:text-6xl font-serif font-black italic tracking-tighter leading-tight">
+                                            {t("alliance_title")}
+                                        </h2>
+                                        <p className="text-white/60 text-lg md:text-xl font-medium leading-relaxed">
+                                            {t("alliance_desc")}
+                                        </p>
+                                        <div className="pt-6 flex flex-wrap gap-6 text-sm font-bold uppercase tracking-widest text-white/40">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-2 h-2 rounded-full bg-red-500" />
+                                                Associazione Morgana
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-2 h-2 rounded-full bg-blue-500" />
+                                                O.R.U.M.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="shrink-0 flex items-center gap-4">
+                                        <div className="size-24 md:size-32 rounded-3xl bg-white p-4 shadow-2xl rotate-[-6deg] hover:rotate-0 transition-transform duration-500">
+                                            <Image src="/assets/morgana.webp" width={100} height={100} className="w-full h-full object-contain" alt="Morgana" />
+                                        </div>
+                                        <div className="size-24 md:size-32 rounded-3xl bg-white p-4 shadow-2xl rotate-[6deg] hover:rotate-0 transition-transform duration-500">
+                                            <Image src="/assets/orum.webp" width={100} height={100} className="w-full h-full object-contain" alt="Orum" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
