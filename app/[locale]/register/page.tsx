@@ -24,6 +24,16 @@ export default function Page() {
         setError("")
 
         const formData = new FormData(event.currentTarget)
+        
+        const password = formData.get("password") as string
+        const confirmPassword = formData.get("confirmPassword") as string
+
+        if (password !== confirmPassword) {
+            setError("Le password non corrispondono.")
+            setIsLoading(false)
+            return
+        }
+
         // Hidden field or default for association
         formData.append("association", "MORGANA_ORUM")
 
@@ -70,6 +80,11 @@ export default function Page() {
                     <div>
                         <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider block mb-1">Password</label>
                         <input name="password" type="password" required placeholder="••••••••" className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-900 text-sm" />
+                    </div>
+
+                    <div>
+                        <label className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider block mb-1">Conferma Password</label>
+                        <input name="confirmPassword" type="password" required placeholder="••••••••" className="w-full p-3 rounded-xl border border-zinc-200 bg-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-900 text-sm" />
                     </div>
 
                     <div className="grid grid-cols-2 gap-4">
