@@ -1,8 +1,8 @@
 import { Cookie, ShieldAlert, Settings, Info, MousePointer2 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server"
 
-export default function CookiePage() {
-    const t = useTranslations("Cookie")
+export default async function CookiePage() {
+    const t = await getTranslations("Cookie")
 
     const sections = [
         { id: "intro", icon: Info },

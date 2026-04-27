@@ -1,8 +1,8 @@
-import { useTranslations } from "next-intl"
+import { getTranslations } from "next-intl/server"
 import { Shield, Eye, Lock, Database, UserCheck, FileText, Bell, MessageSquare } from "lucide-react"
 
-export default function PrivacyPage() {
-    const t = useTranslations("Privacy")
+export default async function PrivacyPage() {
+    const t = await getTranslations("Privacy")
 
     const sections = [
         { id: "data_controller", icon: UserCheck },
