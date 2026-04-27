@@ -90,7 +90,8 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-foreground">{t("office_title")}</h3>
-                                    <p className="text-sm text-zinc-500">Via Sant&apos;Elia 11, 98122 Messina (ME)</p>
+                                    <p className="text-sm text-zinc-500">{t("orum_address")}</p>
+                                    <p className="text-sm text-zinc-500 mt-1">{t("morgana_address")}</p>
                                 </div>
                             </div>
                             <div className="flex items-start gap-4">
@@ -99,8 +100,8 @@ export default function ContactPage() {
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-foreground">{t("email")}</h3>
-                                    <p className="text-sm text-zinc-500">associazionemorgana@gmail.com</p>
-                                    <p className="text-sm text-zinc-500">orum_unime@gmail.com</p>
+                                    <p className="text-sm text-zinc-500">{t("orum_email")}</p>
+                                    <p className="text-sm text-zinc-500">{t("morgana_email")}</p>
                                 </div>
                             </div>
                         </div>
@@ -171,6 +172,15 @@ export default function ContactPage() {
                                     </div>
                                 )}
 
+                                <div className="space-y-4 pt-2">
+                                    <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
+                                        <input type="checkbox" required className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <p className="text-[10px] text-zinc-500 font-medium leading-relaxed">
+                                            Dichiaro di aver letto e compreso l&apos;<Link href="/privacy" className="underline hover:text-primary font-bold">Informativa sulla Privacy</Link> e acconsento al trattamento dei miei dati per le finalità legate alla mia richiesta.*
+                                        </p>
+                                    </label>
+                                </div>
+
                                 <button
                                     disabled={status === 'loading'}
                                     type="submit"
@@ -191,10 +201,6 @@ export default function ContactPage() {
                                         </>
                                     )}
                                 </button>
-
-                                <p className="text-[10px] text-center text-zinc-400 font-medium px-8 leading-relaxed">
-                                    Inviando questo modulo, accetti che i tuoi dati vengano trattati per rispondere alla tua richiesta, in conformità con la nostra <Link href="/privacy" className="underline hover:text-primary">Privacy Policy</Link>.
-                                </p>
                             </form>
                         </div>
                     </div>

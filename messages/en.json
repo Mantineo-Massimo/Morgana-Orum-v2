@@ -39,7 +39,11 @@
         "form_message": "Message",
         "form_message_placeholder": "Write your message here...",
         "contact_sending": "Sending...",
-        "contact_button": "Send Message"
+        "contact_button": "Send Message",
+        "orum_address": "Contrada Petraro Top Residence Ganzirri, 98165 Messina",
+        "morgana_address": "Via Del Vespro n°57, 98123 Messina",
+        "orum_email": "orum.unime@gmail.com",
+        "morgana_email": "associazione.morgana@gmail.com"
     },
     "Navigation": {
         "home": "Home",
