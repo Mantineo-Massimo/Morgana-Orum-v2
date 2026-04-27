@@ -49,7 +49,9 @@ export async function registerUser(formData: FormData) {
     const department = formData.get("department") as string
     const degreeCourse = formData.get("degreeCourse") as string
     const isFuorisede = formData.get("isFuorisede") === "yes"
-    const newsletter = formData.get("newsletter") === "yes"
+    const consenso_marketing_orum = formData.get("consenso_marketing_orum") === "yes"
+    const consenso_marketing_morgana = formData.get("consenso_marketing_morgana") === "yes"
+    const accettazione_termini_condivisi = formData.get("accettazione_termini_condivisi") === "yes"
     let rawAssociation = (formData.get("association") as string) || "MORGANA_ORUM"
 
     if (rawAssociation.toLowerCase().includes("morgana")) {
@@ -59,8 +61,8 @@ export async function registerUser(formData: FormData) {
     const association = rawAssociation as Association
 
     // Validazione base
-    if (!name || !surname || !email || !password || !birthDateStr || !matricola || !department || !degreeCourse) {
-        return { success: false, error: "Tutti i campi sono obbligatori." }
+    if (!name || !surname || !email || !password || !birthDateStr || !matricola || !department || !degreeCourse || !accettazione_termini_condivisi) {
+        return { success: false, error: "Tutti i campi obbligatori devono essere compilati, inclusa l'accettazione della privacy." }
     }
 
     try {
@@ -77,7 +79,10 @@ export async function registerUser(formData: FormData) {
                 department,
                 degreeCourse,
                 isFuorisede,
-                newsletter,
+                consenso_marketing_orum,
+                consenso_marketing_morgana,
+                accettazione_termini_condivisi,
+                newsletter: consenso_marketing_orum || consenso_marketing_morgana, // Sync legacy field
                 association,
                 role: "USER"
             }

@@ -113,16 +113,18 @@ export async function Footer() {
                         <div className="flex flex-col gap-3 text-sm opacity-80">
                             <div className="flex items-start gap-3">
                                 <MapPin className="size-4 mt-1 shrink-0" />
-                                <span>
-                                    Messina, SNC<br />
-                                    CAP 98165 Messina (ME)
-                                </span>
+                                <div className="flex flex-col gap-1">
+                                    <span className="font-bold">ORUM:</span>
+                                    <span>Contrada Petraro Top Residence Ganzirri, 98165</span>
+                                    <span className="font-bold mt-1">Morgana:</span>
+                                    <span>Via Del Vespro n°57, 98123 Messina</span>
+                                </div>
                             </div>
                             <div className="flex items-center gap-3">
                                 <Mail className="size-4 shrink-0" />
                                 <div className="flex flex-col gap-1">
-                                    <a href="mailto:orum.unime@gmail.com" className="hover:underline text-blue-100 font-bold">orum.unime@gmail.com (Titolare)</a>
-                                    <a href="mailto:associazione.morgana@gmail.com" className="hover:underline text-red-100">associazione.morgana@gmail.com (Partner)</a>
+                                    <a href="mailto:orum.unime@gmail.com" className="hover:underline text-blue-100 font-bold">orum.unime@gmail.com</a>
+                                    <a href="mailto:associazione.morgana@gmail.com" className="hover:underline text-red-100 font-bold">associazione.morgana@gmail.com</a>
                                 </div>
                             </div>
                         </div>
@@ -139,14 +141,15 @@ export async function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[10px] md:text-xs opacity-60">
-                    <div className="flex flex-col gap-1">
+                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] md:text-xs opacity-60">
+                    <div className="flex flex-col gap-2 flex-1">
                         <p className="text-center md:text-left font-bold">{t("rights", { year: new Date().getFullYear() })}</p>
-                        <p className="text-center md:text-left">{t("legal_info")}</p>
-                        <p className="text-center md:text-left">{t("partnership_info")}</p>
+                        <p className="text-center md:text-left">{t("legal_info_orum")}</p>
+                        <p className="text-center md:text-left">{t("legal_info_morgana")}</p>
                     </div>
-                    <div className="w-full md:w-auto border-t border-white/10 md:border-0 pt-4 md:pt-0 text-center md:text-right">
-                        <p>Responsabile Tecnico: Massimo Mantineo (MNTMSM03S10F158Y)</p>
+                    <div className="w-full md:w-auto border-t border-white/10 md:border-0 pt-4 md:pt-0 text-center md:text-right flex flex-col gap-1">
+                        <p className="font-bold">{t("partnership_info")}</p>
+                        <p>Codice Fiscale: MNTMSM03S10F158Y</p>
                     </div>
                 </div>
             </div>

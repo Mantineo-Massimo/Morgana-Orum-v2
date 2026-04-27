@@ -31,27 +31,34 @@ export default function CookiesPage() {
                             {tp("intro")}
                         </p>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">{tp("what_are_title")}</h2>
-                        <p>{tp("what_are_desc")}</p>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("what_are_title")}</h2>
+                            <p>{tp("what_are_desc")}</p>
+                        </section>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">{tp("types_title")}</h2>
-                        <ul>
-                            <li><strong>{tp("t1")}</strong></li>
-                            <li><strong>{tp("t2")}</strong></li>
-                        </ul>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("types_title")}</h2>
+                            <ul className="space-y-4">
+                                <li><strong>{tp("t1")}</strong></li>
+                                <li><strong>{tp("t2")}</strong></li>
+                            </ul>
+                        </section>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">{tp("how_to_title")}</h2>
-                        <p>{tp("how_to_desc")}</p>
-                        <ul className="mt-4">
-                            <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" className="text-primary hover:underline">Chrome Settings</a></li>
-                            <li><a href="https://support.mozilla.org/it/kb/Gestione%20dei%20cookie" target="_blank" className="text-primary hover:underline">Firefox Settings</a></li>
-                            <li><a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" className="text-primary hover:underline">Safari Settings</a></li>
-                        </ul>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("how_to_title")}</h2>
+                            <p>{tp("how_to_desc")}</p>
+                            <ul className="mt-6 space-y-2">
+                                <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" className="text-primary hover:underline font-bold">Google Chrome</a></li>
+                                <li><a href="https://support.mozilla.org/it/kb/Gestione%20dei%20cookie" target="_blank" className="text-primary hover:underline font-bold">Mozilla Firefox</a></li>
+                                <li><a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank" className="text-primary hover:underline font-bold">Apple Safari</a></li>
+                                <li><a href="https://support.microsoft.com/it-it/windows/eliminare-e-gestire-i-cookie-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" className="text-primary hover:underline font-bold">Microsoft Edge</a></li>
+                            </ul>
+                        </section>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">{tp("rights_title")}</h2>
-                        <p>
-                            {tp("rights_desc")}
-                        </p>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("rights_title")}</h2>
+                            <p>{tp("rights_desc")}</p>
+                        </section>
                     </div>
                 </div>
             </div>

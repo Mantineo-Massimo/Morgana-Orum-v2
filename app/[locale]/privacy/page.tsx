@@ -31,49 +31,49 @@ export default function PrivacyPage() {
                             {tp("intro")}
                         </p>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">{tp("data_controller_title")}</h2>
-                        <p>
-                            {tp("data_controller_desc")}
-                        </p>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("data_controller_title")}</h2>
+                            <p>{tp("data_controller_desc")}</p>
+                        </section>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">{tp("data_types_title")}</h2>
-                        <p>
-                            {tp("data_types_desc")}
-                        </p>
-                        <ul>
-                            <li><strong>Dati di registrazione:</strong> Nome, cognome, email, matricola, dipartimento, corso di laurea forniti durante la creazione dell&apos;account.</li>
-                            <li><strong>Dati di navigazione:</strong> Indirizzo IP, tipo di browser, tempo di permanenza (raccolti in modo anonimo tramite Google Analytics 4, previo consenso).</li>
-                            <li><strong>Preferenze:</strong> Scelta di iscrizione alla newsletter.</li>
-                        </ul>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("data_processor_title")}</h2>
+                            <p>{tp("data_processor_desc")}</p>
+                        </section>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">{tp("purposes_title")}</h2>
-                        <p>
-                            {tp("purposes_desc")}
-                        </p>
-                        <ul>
-                            <li>Garantire l&apos;accesso ai servizi dell&apos;Area Riservata (prenotazione eventi, scarico attestati).</li>
-                            <li>Inviare comunicazioni istituzionali e newsletter (solo se espressamente richiesto).</li>
-                            <li>Analizzare in forma aggregata l&apos;utilizzo del sito per migliorarne i contenuti.</li>
-                        </ul>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("data_types_title")}</h2>
+                            <p>{tp("data_types_desc")}</p>
+                        </section>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">4. Base Giuridica</h2>
-                        <p>
-                            Il trattamento si basa sul consenso dell&apos;interessato (per newsletter e cookie) e sull&apos;esecuzione di un contratto/servizio (per la gestione dell&apos;account e prenotazione eventi).
-                        </p>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("purposes_title")}</h2>
+                            <p>{tp("purposes_desc")}</p>
+                        </section>
 
-                        <h2 className="text-2xl font-bold text-foreground mt-12 mb-6">{tp("rights_title")}</h2>
-                        <p>
-                            {tp("rights_desc")}
-                        </p>
-                        <ul>
-                            <li>Accedere ai tuoi dati e richiederne una copia.</li>
-                            <li>Rettificare dati inesatti o incompleti.</li>
-                            <li>Richiedere la cancellazione dei tuoi dati (&quot;diritto all&apos;oblio&quot;).</li>
-                            <li>Revocare il consenso in qualsiasi momento.</li>
-                        </ul>
-                        <p className="mt-6">
-                            Per esercitare i tuoi diritti, puoi scrivere ai Contitolari: <a href="mailto:orum.unime@gmail.com" className="text-primary hover:underline font-bold">orum.unime@gmail.com</a> oppure <a href="mailto:associazione.morgana@gmail.com" className="text-primary hover:underline">associazione.morgana@gmail.com</a>.
-                        </p>
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("recipients_title")}</h2>
+                            <p>{tp("recipients_desc")}</p>
+                        </section>
+
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("retention_title")}</h2>
+                            <p>{tp("retention_desc")}</p>
+                        </section>
+
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("rights_title")}</h2>
+                            <p>{tp("rights_desc")}</p>
+                        </section>
+
+                        <section className="mt-12">
+                            <h2 className="text-2xl font-bold text-foreground mb-6">{tp("security_title")}</h2>
+                            <p>{tp("security_desc")}</p>
+                        </section>
+
+                        <div className="mt-20 pt-10 border-t border-zinc-100 text-sm text-zinc-400">
+                            <p>{tp("last_update")}</p>
+                        </div>
                     </div>
                 </div>
             </div>

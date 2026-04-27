@@ -149,15 +149,21 @@ export default function Page() {
 
                     <div className="space-y-3 pt-2">
                         <label className="flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                            <input type="checkbox" required className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
+                            <input name="accettazione_termini_condivisi" value="yes" type="checkbox" required className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
                             <span className="text-[11px] text-zinc-600 leading-snug">
-                                Dichiaro di aver letto e compreso l&apos;informativa sulla privacy e accetto il trattamento dei miei dati personali.*
+                                Dichiaro di aver letto e compreso l&apos;<Link href="/privacy" className="underline font-bold text-foreground">informativa sulla privacy</Link> e accetto il trattamento dei miei dati personali.*
                             </span>
                         </label>
                         <label className="flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                            <input name="newsletter" value="yes" type="checkbox" className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
+                            <input name="consenso_marketing_orum" value="yes" type="checkbox" className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
                             <span className="text-[11px] text-zinc-600 leading-snug">
-                                Avvisami sulle nuove convenzioni, feste o scadenze tramite email (Opzionale).
+                                Acconsento al trattamento dei dati da parte di Associazione O.R.U.M. per finalità di marketing e comunicazioni (Opzionale).
+                            </span>
+                        </label>
+                        <label className="flex items-start gap-3 p-3 bg-zinc-50 border border-zinc-200 rounded-xl cursor-pointer hover:bg-zinc-100 transition-colors">
+                            <input name="consenso_marketing_morgana" value="yes" type="checkbox" className="mt-0.5 w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 shrink-0" />
+                            <span className="text-[11px] text-zinc-600 leading-snug">
+                                Acconsento al trattamento dei dati da parte di Associazione Morgana per finalità di marketing e comunicazioni (Opzionale).
                             </span>
                         </label>
                     </div>
