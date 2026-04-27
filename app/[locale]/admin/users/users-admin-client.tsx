@@ -22,6 +22,9 @@ type UserItem = {
     degreeCourse?: string
     isFuorisede?: boolean
     newsletter?: boolean
+    consenso_marketing_orum?: boolean
+    consenso_marketing_morgana?: boolean
+    accettazione_termini_condivisi?: boolean
 }
 
 export default function UsersAdminClient({ initialUsers }: { initialUsers: UserItem[] }) {
@@ -57,6 +60,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         degreeCourse: "",
         isFuorisede: false,
         newsletter: false,
+        consenso_marketing_orum: false,
+        consenso_marketing_morgana: false,
+        accettazione_termini_condivisi: false,
         role: "USER" as Role,
         association: "MORGANA_ORUM" as Association
     })
@@ -101,6 +107,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                 degreeCourse: user.degreeCourse || "",
                 isFuorisede: user.isFuorisede || false,
                 newsletter: user.newsletter || false,
+                consenso_marketing_orum: user.consenso_marketing_orum || false,
+                consenso_marketing_morgana: user.consenso_marketing_morgana || false,
+                accettazione_termini_condivisi: user.accettazione_termini_condivisi || false,
                 role: user.role,
                 association: user.association
             })
@@ -117,6 +126,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                 degreeCourse: "",
                 isFuorisede: false,
                 newsletter: false,
+                consenso_marketing_orum: false,
+                consenso_marketing_morgana: false,
+                accettazione_termini_condivisi: false,
                 role: "USER",
                 association: "MORGANA_ORUM"
             })
@@ -593,7 +605,34 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
                                             className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Iscritto alla Newsletter</span>
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Newsletter</span>
+                                    </label>
+                                    <label className="flex items-center gap-2 cursor-pointer group">
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.consenso_marketing_orum}
+                                            onChange={(e) => setFormData({ ...formData, consenso_marketing_orum: e.target.checked })}
+                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                        />
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Mktg ORUM</span>
+                                    </label>
+                                    <label className="flex items-center gap-2 cursor-pointer group">
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.consenso_marketing_morgana}
+                                            onChange={(e) => setFormData({ ...formData, consenso_marketing_morgana: e.target.checked })}
+                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                        />
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Mktg Morgana</span>
+                                    </label>
+                                    <label className="flex items-center gap-2 cursor-pointer group">
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.accettazione_termini_condivisi}
+                                            onChange={(e) => setFormData({ ...formData, accettazione_termini_condivisi: e.target.checked })}
+                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                        />
+                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Privacy OK</span>
                                     </label>
                                 </div>
 
