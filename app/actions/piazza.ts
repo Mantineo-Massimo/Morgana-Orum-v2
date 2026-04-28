@@ -302,11 +302,9 @@ const getPiazzaSponsorsInternal = async () => {
     }
 }
 
-export const getPiazzaSponsors = unstable_cache(
-    async () => getPiazzaSponsorsInternal(),
-    ['piazza-sponsors-list'],
-    { revalidate: 3600, tags: ['piazza'] }
-)
+export const getPiazzaSponsors = async () => {
+    return await getPiazzaSponsorsInternal()
+}
 
 export async function createPiazzaSponsor(data: {
     name: string,
@@ -318,6 +316,7 @@ export async function createPiazzaSponsor(data: {
     try {
         await prisma.piazzaSponsor.create({ data })
         revalidatePath("/network/piazzadellarte")
+        revalidatePath("/[locale]/network/[brandId]", "page")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }

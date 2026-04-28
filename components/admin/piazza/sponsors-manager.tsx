@@ -13,7 +13,7 @@ import {
     DialogDescription,
 } from "@/components/ui/dialog"
 
-const TIERS = ["Main Partner", "Gold Sponsor", "Silver Sponsor", "Technical Partner", "Media Partner"]
+const TIERS = ["Main Partner", "PremiumPartner", "OfficialPartner", "FantaPartner"]
 
 interface SponsorsManagerProps {
     sponsors: any[]
