@@ -15,6 +15,8 @@ import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
 import { getPiazzaSettings, getPiazzaSponsors } from "@/app/actions/piazza"
 import { EventCard } from "@/components/event-card"
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
     const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
     if (!config) return {}
