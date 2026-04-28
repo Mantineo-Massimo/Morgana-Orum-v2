@@ -181,7 +181,7 @@ export function ArtistsManager({ artists }: ArtistsManagerProps) {
                                             ) : (
                                                 <div className="flex flex-col items-center gap-1">
                                                     <Upload className="size-5 text-zinc-400 mb-1" />
-                                                    <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Clicca o trascina un'immagine</span>
+                                                    <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Clicca o trascina un&apos;immagine</span>
                                                 </div>
                                             )}
                                             <input
