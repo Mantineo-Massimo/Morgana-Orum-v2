@@ -111,29 +111,29 @@ export function MediaClient({ media }: Props) {
 
                     {/* ── ESIBIZIONI ── */}
                     {activeTab === "Esibizioni" && (
-                        <div className="grid md:grid-cols-2 gap-6">
+                        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
                             {esibizioni.map((video) => (
                                 <div 
                                     key={video.id} 
                                     onClick={() => setSelectedMedia(video)}
-                                    className="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
+                                    className="break-inside-avoid group relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
                                 >
                                     <div className={`relative ${video.duration === "9:16" ? "aspect-[9/16]" : "aspect-video"}`}>
                                         <Image src={video.thumbnail || "/assets/slides/1.webp"} alt={video.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors"></div>
                                         <div className="absolute inset-0 flex items-center justify-center">
-                                            <div className="size-16 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: THEME.accent }}>
-                                                <Play className="size-7 fill-[#18182e] text-[#18182e] ml-1" />
+                                            <div className="size-14 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: THEME.accent }}>
+                                                <Play className="size-6 fill-[#18182e] text-[#18182e] ml-1" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="p-6">
-                                        <h3 className="font-black text-lg uppercase tracking-wide mb-2 group-hover:text-[#1fbcd3] transition-colors">{video.title}</h3>
-                                        {video.description && <p className="text-white/60 text-sm leading-relaxed">{video.description}</p>}
+                                    <div className="p-5">
+                                        <h3 className="font-black text-base uppercase tracking-wide mb-1.5 group-hover:text-[#1fbcd3] transition-colors">{video.title}</h3>
+                                        {video.description && <p className="text-white/60 text-xs leading-relaxed line-clamp-3">{video.description}</p>}
                                     </div>
                                 </div>
                             ))}
-                            {esibizioni.length === 0 && <p className="col-span-2 text-center text-white/40 py-20 font-serif">Nessuna esibizione disponibile.</p>}
+                            {esibizioni.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">Nessuna esibizione disponibile.</p>}
                         </div>
                     )}
 
