@@ -144,7 +144,7 @@ export function ProgrammaClient({ program }: Props) {
                                 <span className="text-white/40 text-sm font-bold tracking-widest">20:00 — Fine</span>
                             </div>
 
-                            <div className="grid sm:grid-cols-3 gap-5 pl-2 border-l-2" style={{ borderColor: THEME.accent }}>
+                            <div className="grid sm:grid-cols-2 gap-5 pl-2 border-l-2" style={{ borderColor: THEME.accent }}>
                                 {eveningItems.map(item => renderItem(item, THEME.accent))}
                             </div>
                         </div>
