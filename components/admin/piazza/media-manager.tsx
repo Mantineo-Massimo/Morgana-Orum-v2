@@ -289,7 +289,7 @@ export function MediaManager({ media }: MediaManagerProps) {
                                 </td>
                             </tr>
                         ))}
-                        {media.length === 0 && !isAdding && (
+                        {media.length === 0 && !isOpen && (
                             <tr>
                                 <td colSpan={4} className="py-20 text-center text-zinc-400 font-serif italic text-sm">
                                     Nessun media caricato.

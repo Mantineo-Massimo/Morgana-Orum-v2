@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { Plus, Trash2, X, Users, Upload, Loader2, ImageIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { Plus, Trash2, X, Users, Upload, Loader2, ImageIcon, Pencil } from "lucide-react"
 import { createPiazzaArtist, updatePiazzaArtist, deletePiazzaArtist } from "@/app/actions/piazza"
 import Image from "next/image"
@@ -19,6 +19,7 @@ interface ArtistsManagerProps {
 }
 
 export function ArtistsManager({ artists }: ArtistsManagerProps) {
+    const router = useRouter()
     const [isOpen, setIsOpen] = useState(false)
     const [editingId, setEditingId] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
@@ -253,7 +254,7 @@ export function ArtistsManager({ artists }: ArtistsManagerProps) {
                                 </td>
                             </tr>
                         ))}
-                        {artists.length === 0 && !isAdding && (
+                        {artists.length === 0 && !isOpen && (
                             <tr>
                                 <td colSpan={4} className="py-20 text-center text-zinc-400 font-serif italic text-sm">
                                     Nessun artista presente.
