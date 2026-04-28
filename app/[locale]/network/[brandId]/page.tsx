@@ -319,11 +319,49 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                         </div>
                     </section>
 
-                    {brandId === "piazzadellarte" && (
-                        <div className="bg-white py-12">
-                            <SponsorsCarousel />
+                    {/* SPONSORS SECTION */}
+                    <section className="py-20 bg-white border-y border-zinc-100">
+                        <div className="container max-w-6xl mx-auto text-center">
+                            <div className="mb-12">
+                                <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 mb-2">Con il supporto di</h2>
+                                <div className="h-0.5 w-12 bg-zinc-200 mx-auto rounded-full"></div>
+                            </div>
+                            
+                            <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20 opacity-60 hover:opacity-100 transition-opacity duration-500">
+                                {piazzaSponsors && piazzaSponsors.length > 0 ? (
+                                    piazzaSponsors.map((s: any) => (
+                                        <a 
+                                            key={s.id}
+                                            href={s.website || "#"}
+                                            target={s.website ? "_blank" : undefined}
+                                            rel="noopener noreferrer"
+                                            className="group relative block w-32 md:w-40 aspect-[3/2] transition-all hover:scale-110"
+                                            title={s.name}
+                                        >
+                                            {s.logo ? (
+                                                <Image 
+                                                    src={s.logo} 
+                                                    alt={s.name} 
+                                                    fill 
+                                                    className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" 
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full border-2 border-dashed border-zinc-100 rounded-xl flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-zinc-300 group-hover:border-zinc-200 transition-colors">
+                                                    {s.name}
+                                                </div>
+                                            )}
+                                        </a>
+                                    ))
+                                ) : (
+                                    [1, 2, 3, 4, 5].map((i) => (
+                                        <div key={i} className="w-32 h-12 bg-zinc-50 border border-zinc-100 rounded-lg flex items-center justify-center">
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-300">Sponsor {i}</span>
+                                        </div>
+                                    ))
+                                )}
+                            </div>
                         </div>
-                    )}
+                    </section>
                 </>
             )}
 
@@ -436,50 +474,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                             </div>
                         </section>
 
-                        {/* SPONSORS SECTION */}
-                        <section className="py-20 bg-white border-t border-zinc-100">
-                            <div className="container max-w-6xl mx-auto text-center">
-                                <div className="mb-12">
-                                    <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 mb-2">Con il supporto di ({piazzaSponsors?.length || 0})</h2>
-                                    <div className="h-0.5 w-12 bg-zinc-200 mx-auto rounded-full"></div>
-                                </div>
-                                
-                                <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20 opacity-60 hover:opacity-100 transition-opacity duration-500">
-                                    {piazzaSponsors && piazzaSponsors.length > 0 ? (
-                                        piazzaSponsors.map((s: any) => (
-                                            <a 
-                                                key={s.id}
-                                                href={s.website || "#"}
-                                                target={s.website ? "_blank" : undefined}
-                                                rel="noopener noreferrer"
-                                                className="group relative block w-32 md:w-40 aspect-[3/2] transition-all hover:scale-110"
-                                                title={s.name}
-                                            >
-                                                {s.logo ? (
-                                                    <Image 
-                                                        src={s.logo} 
-                                                        alt={s.name} 
-                                                        fill 
-                                                        className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" 
-                                                    />
-                                                ) : (
-                                                    <div className="w-full h-full border-2 border-dashed border-zinc-100 rounded-xl flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-zinc-300 group-hover:border-zinc-200 transition-colors">
-                                                        {s.name}
-                                                    </div>
-                                                )}
-                                            </a>
-                                        ))
-                                    ) : (
-                                        // Fallback placeholders if no sponsors are added yet
-                                        [1, 2, 3, 4, 5].map((i) => (
-                                            <div key={i} className="w-32 h-12 bg-zinc-50 border border-zinc-100 rounded-lg flex items-center justify-center">
-                                                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-300">Sponsor {i}</span>
-                                            </div>
-                                        ))
-                                    )}
-                                </div>
-                            </div>
-                        </section>
+
                     </>
                 )
             }
