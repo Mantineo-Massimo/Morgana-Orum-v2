@@ -440,7 +440,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                         <section className="py-20 bg-white border-t border-zinc-100">
                             <div className="container max-w-6xl mx-auto text-center">
                                 <div className="mb-12">
-                                    <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 mb-2">Con il supporto di</h2>
+                                    <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 mb-2">Con il supporto di ({piazzaSponsors?.length || 0})</h2>
                                     <div className="h-0.5 w-12 bg-zinc-200 mx-auto rounded-full"></div>
                                 </div>
                                 

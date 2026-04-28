@@ -293,9 +293,11 @@ export async function updatePiazzaSettings(data: {
 
 const getPiazzaSponsorsInternal = async () => {
     try {
-        return await prisma.piazzaSponsor.findMany({
+        const sponsors = await prisma.piazzaSponsor.findMany({
             orderBy: { order: "asc" }
         })
+        console.log("FETCHED SPONSORS FROM DB:", sponsors.length)
+        return sponsors
     } catch (error) {
         console.error("Error fetching Piazza sponsors:", error)
         return []
