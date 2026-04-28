@@ -6,6 +6,7 @@ const BRAND_ASSET_MAPPING: Record<string, string> = {
     scipog: "studentiscipog",
     dicam: "insidedicam",
     matricole: "unimematricole",
+    piazzadellarte: "piazzadellarte",
 }
 
 const BRAND_NAMES: Record<string, string> = {
@@ -14,6 +15,7 @@ const BRAND_NAMES: Record<string, string> = {
     scipog: "Studenti Scipog",
     dicam: "Inside Dicam",
     matricole: "Unime Matricole",
+    piazzadellarte: "Piazza Dell'Arte",
 }
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {

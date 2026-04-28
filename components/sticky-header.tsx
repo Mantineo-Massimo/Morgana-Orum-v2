@@ -28,7 +28,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
             brand === "matricole" ? "bg-[#f4b716]" :
                 brand === "scipog" ? "bg-[#fbc363]" :
                     brand === "dicam" ? "bg-[#f34ab4]" :
-                        brand === "piazzadellarte" ? "bg-[linear-gradient(45deg,#109fae_0%,#22824b_50%,#c4791d_100%)]" :
+                        brand === "piazzadellarte" ? "bg-[linear-gradient(45deg,#7ac9d6_0%,#79d19a_50%,#f0bd6c_100%)]" :
                             "bg-[linear-gradient(45deg,#c9041a_0%,#18182e_50%)]"
 
     // Mapping per i loghi e nomi del network
