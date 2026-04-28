@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { getUserDashboardData } from "@/app/actions/users"
-import { Sparkles, Users, Calendar, Video, Settings, LogOut, Shield, ChevronLeft } from "lucide-react"
+import { Sparkles, Users, Calendar, Video, Settings, LogOut, Shield, ChevronLeft, Building2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
 import { SidebarClock } from "@/components/admin/sidebar-clock"
@@ -41,6 +41,11 @@ export default async function PiazzaAdminLayout({
             label: "Media & Video",
             href: `/piazza-admin/media`,
             icon: Video
+        },
+        {
+            label: "Sponsor",
+            href: `/piazza-admin/sponsors`,
+            icon: Building2
         },
         {
             label: "Impostazioni",
