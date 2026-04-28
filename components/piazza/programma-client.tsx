@@ -251,8 +251,8 @@ export function ProgrammaClient({ program }: Props) {
 
                             <div className="space-y-4">
                                 <h4 className="text-[10px] font-black uppercase tracking-widest text-white/30">Descrizione</h4>
-                                <p className="text-lg text-white/70 font-serif leading-relaxed italic">
-                                    &quot;{selectedItem?.description}&quot;
+                                <p className="text-lg text-white/70 font-serif leading-relaxed italic whitespace-pre-wrap">
+                                    {selectedItem?.description}
                                 </p>
                             </div>
 
