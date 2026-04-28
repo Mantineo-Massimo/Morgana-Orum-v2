@@ -12,7 +12,7 @@ import { CountdownTimer } from "@/components/countdown-timer"
 import { SponsorsCarousel } from "@/components/sponsors-carousel"
 import { ArtistiCarousel } from "@/components/artisti-carousel"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
-import { getPiazzaSettings } from "@/app/actions/piazza"
+import { getPiazzaSettings, getPiazzaSponsors } from "@/app/actions/piazza"
 import { EventCard } from "@/components/event-card"
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
@@ -116,7 +116,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
 
     if (!config) notFound()
 
-    const [t, tb, te, th, ts, navT, newsResult, eventsResult, settings] = await Promise.all([
+    const [t, tb, te, th, ts, navT, newsResult, eventsResult, settings, piazzaSponsors] = await Promise.all([
         getTranslations("Network"),
         getTranslations("Brands"),
         getTranslations("Events"),
@@ -125,7 +125,8 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
         getTranslations("Navigation"),
         getNews(undefined, undefined, config.association, locale),
         getAllEvents(null, config.association, 'upcoming', locale),
-        getPiazzaSettings()
+        getPiazzaSettings(),
+        getPiazzaSponsors()
     ])
 
     const notizie = newsResult.slice(0, 3)
@@ -428,6 +429,51 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                         <div className="md:col-span-3 text-center py-20 text-muted-foreground bg-zinc-50 rounded-3xl border border-zinc-100">
                                             {t("no_news")}
                                         </div>
+                                    )}
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* SPONSORS SECTION */}
+                        <section className="py-20 bg-white border-t border-zinc-100">
+                            <div className="container max-w-6xl mx-auto text-center">
+                                <div className="mb-12">
+                                    <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-zinc-400 mb-2">Con il supporto di</h2>
+                                    <div className="h-0.5 w-12 bg-zinc-200 mx-auto rounded-full"></div>
+                                </div>
+                                
+                                <div className="flex flex-wrap items-center justify-center gap-12 md:gap-20 opacity-60 hover:opacity-100 transition-opacity duration-500">
+                                    {piazzaSponsors && piazzaSponsors.length > 0 ? (
+                                        piazzaSponsors.map((s: any) => (
+                                            <a 
+                                                key={s.id}
+                                                href={s.website || "#"}
+                                                target={s.website ? "_blank" : undefined}
+                                                rel="noopener noreferrer"
+                                                className="group relative block w-32 md:w-40 aspect-[3/2] transition-all hover:scale-110"
+                                                title={s.name}
+                                            >
+                                                {s.logo ? (
+                                                    <Image 
+                                                        src={s.logo} 
+                                                        alt={s.name} 
+                                                        fill 
+                                                        className="object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" 
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full border-2 border-dashed border-zinc-100 rounded-xl flex items-center justify-center text-[10px] font-black uppercase tracking-widest text-zinc-300 group-hover:border-zinc-200 transition-colors">
+                                                        {s.name}
+                                                    </div>
+                                                )}
+                                            </a>
+                                        ))
+                                    ) : (
+                                        // Fallback placeholders if no sponsors are added yet
+                                        [1, 2, 3, 4, 5].map((i) => (
+                                            <div key={i} className="w-32 h-12 bg-zinc-50 border border-zinc-100 rounded-lg flex items-center justify-center">
+                                                <span className="text-[10px] font-black uppercase tracking-widest text-zinc-300">Sponsor {i}</span>
+                                            </div>
+                                        ))
                                     )}
                                 </div>
                             </div>

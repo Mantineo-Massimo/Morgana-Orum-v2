@@ -288,3 +288,70 @@ export async function updatePiazzaSettings(data: {
         return { success: false, error: "Errore nell'aggiornamento delle impostazioni." }
     }
 }
+
+// --- SPONSORS ---
+
+const getPiazzaSponsorsInternal = async () => {
+    try {
+        return await prisma.piazzaSponsor.findMany({
+            orderBy: { order: "asc" }
+        })
+    } catch (error) {
+        console.error("Error fetching Piazza sponsors:", error)
+        return []
+    }
+}
+
+export const getPiazzaSponsors = unstable_cache(
+    async () => getPiazzaSponsorsInternal(),
+    ['piazza-sponsors-list'],
+    { revalidate: 3600, tags: ['piazza'] }
+)
+
+export async function createPiazzaSponsor(data: {
+    name: string,
+    logo?: string | null,
+    website?: string | null,
+    tier?: string | null,
+    order?: number
+}) {
+    try {
+        await prisma.piazzaSponsor.create({ data })
+        revalidatePath("/network/piazzadellarte")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
+        return { success: true }
+    } catch (error) {
+        console.error("Create Piazza sponsor error:", error)
+        return { success: false, error: "Errore nella creazione dello sponsor." }
+    }
+}
+
+export async function updatePiazzaSponsor(id: string, data: any) {
+    try {
+        await prisma.piazzaSponsor.update({
+            where: { id },
+            data
+        })
+        revalidatePath("/network/piazzadellarte")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
+        return { success: true }
+    } catch (error) {
+        console.error("Update Piazza sponsor error:", error)
+        return { success: false, error: "Errore nell'aggiornamento dello sponsor." }
+    }
+}
+
+export async function deletePiazzaSponsor(id: string) {
+    try {
+        await prisma.piazzaSponsor.delete({ where: { id } })
+        revalidatePath("/network/piazzadellarte")
+        revalidatePath("/piazza-admin")
+        revalidateTag('piazza')
+        return { success: true }
+    } catch (error) {
+        console.error("Delete Piazza sponsor error:", error)
+        return { success: false, error: "Errore nell'eliminazione dello sponsor." }
+    }
+}

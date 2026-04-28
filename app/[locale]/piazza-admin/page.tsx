@@ -1,21 +1,23 @@
-import { getPiazzaArtists, getPiazzaProgram, getPiazzaMedia, getPiazzaSettings } from "@/app/actions/piazza"
-import { Users, Calendar, Video, Settings, Activity, Clock } from "lucide-react"
+import { getPiazzaArtists, getPiazzaProgram, getPiazzaMedia, getPiazzaSettings, getPiazzaSponsors } from "@/app/actions/piazza"
+import { Users, Calendar, Video, Settings, Activity, Clock, Building2 } from "lucide-react"
 import Link from "next/link"
 
 export const dynamic = 'force-dynamic'
 
 export default async function PiazzaAdminPage() {
-    const [artists, program, media, settings] = await Promise.all([
+    const [artists, program, media, settings, sponsors] = await Promise.all([
         getPiazzaArtists(),
         getPiazzaProgram(),
         getPiazzaMedia(),
-        getPiazzaSettings()
+        getPiazzaSettings(),
+        getPiazzaSponsors()
     ])
 
     const stats = [
         { label: "Artisti", count: artists.length, icon: Users, color: "text-blue-500", bg: "bg-blue-50", href: "/piazza-admin/artists" },
         { label: "Programma", count: program.length, icon: Calendar, color: "text-amber-500", bg: "bg-amber-50", href: "/piazza-admin/program" },
         { label: "Contenuti Media", count: media.length, icon: Video, color: "text-emerald-500", bg: "bg-emerald-50", href: "/piazza-admin/media" },
+        { label: "Sponsor & Partner", count: sponsors.length, icon: Building2, color: "text-rose-500", bg: "bg-rose-50", href: "/piazza-admin/sponsors" },
     ]
 
     return (
@@ -51,7 +53,7 @@ export default async function PiazzaAdminPage() {
             </div>
 
             {/* Stats Grid */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {stats.map((stat) => (
                     <Link
                         key={stat.label}

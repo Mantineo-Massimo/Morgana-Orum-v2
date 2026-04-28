@@ -238,3 +238,14 @@ model PiazzaSettings {
   countdownVisible Boolean  @default(true)
   updatedAt        DateTime @updatedAt
 }
+
+model PiazzaSponsor {
+  id        String   @id @default(uuid())
+  name      String
+  logo      String?
+  website   String?
+  tier      String?  // Main, Partner, etc.
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
