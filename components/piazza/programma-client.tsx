@@ -32,6 +32,44 @@ export function ProgrammaClient({ program }: Props) {
     const afternoonItems = program.filter(p => p.timeSlot === "Pomeriggio")
     const eveningItems = program.filter(p => p.timeSlot === "Sera")
 
+    const getTimeRange = (items: any[], defaultFallback: string) => {
+        if (!items || items.length === 0) return defaultFallback;
+
+        const parseTime = (t: string) => {
+            if (!t) return -1;
+            const match = t.match(/(\d{1,2}):(\d{2})/);
+            if (!match) return -1;
+            let hours = parseInt(match[1], 10);
+            const mins = parseInt(match[2], 10);
+            if (hours >= 0 && hours <= 6) hours += 24; // Handle past midnight up to 6am
+            return hours * 60 + mins;
+        }
+
+        const formatTime = (totalMins: number) => {
+            const h = Math.floor(totalMins / 60) % 24;
+            const m = totalMins % 60;
+            return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+        }
+
+        let minStartMins = Infinity;
+        let maxEndMins = -Infinity;
+
+        items.forEach(item => {
+            const startMins = parseTime(item.startTime);
+            const endMins = parseTime(item.endTime);
+
+            if (startMins !== -1 && startMins < minStartMins) minStartMins = startMins;
+            if (endMins !== -1 && endMins > maxEndMins) maxEndMins = endMins;
+        });
+
+        if (minStartMins === Infinity) return defaultFallback;
+
+        const startStr = formatTime(minStartMins);
+        const endStr = maxEndMins !== -Infinity ? formatTime(maxEndMins) : "Fine";
+
+        return `${startStr} — ${endStr}`;
+    }
+
     const renderItem = (item: any, color: string) => {
         const Icon = ICONS[item.icon] || Palette
         return (
@@ -107,7 +145,7 @@ export function ProgrammaClient({ program }: Props) {
                                     <Sun className="size-5" />
                                     Mattino
                                 </div>
-                                <span className="text-white/40 text-sm font-bold tracking-widest">09:00 — 13:00</span>
+                                <span className="text-white/40 text-sm font-bold tracking-widest">{getTimeRange(morningItems, "09:00 — 13:00")}</span>
                             </div>
 
                             <div className="grid sm:grid-cols-2 gap-5 pl-2 border-l-2" style={{ borderColor: THEME.primary }}>
@@ -124,7 +162,7 @@ export function ProgrammaClient({ program }: Props) {
                                     <Sunset className="size-5" />
                                     Pomeriggio
                                 </div>
-                                <span className="text-white/40 text-sm font-bold tracking-widest">14:00 — 19:00</span>
+                                <span className="text-white/40 text-sm font-bold tracking-widest">{getTimeRange(afternoonItems, "14:00 — 19:00")}</span>
                             </div>
 
                             <div className="grid sm:grid-cols-2 gap-5 pl-2 border-l-2" style={{ borderColor: THEME.secondary }}>
@@ -141,7 +179,7 @@ export function ProgrammaClient({ program }: Props) {
                                     <Music className="size-5" />
                                     Sera
                                 </div>
-                                <span className="text-white/40 text-sm font-bold tracking-widest">20:00 — Fine</span>
+                                <span className="text-white/40 text-sm font-bold tracking-widest">{getTimeRange(eveningItems, "20:00 — Fine")}</span>
                             </div>
 
                             <div className="grid sm:grid-cols-2 gap-5 pl-2 border-l-2" style={{ borderColor: THEME.accent }}>
