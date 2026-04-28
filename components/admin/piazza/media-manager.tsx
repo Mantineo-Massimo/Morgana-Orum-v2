@@ -25,7 +25,7 @@ export function MediaManager({ media }: MediaManagerProps) {
     const [editingId, setEditingId] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
-    const [form, setForm] = useState({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "", order: 0 })
+    const [form, setForm] = useState({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
     const [isUploading, setIsUploading] = useState(false)
     const [isUploadingContent, setIsUploadingContent] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
@@ -72,7 +72,7 @@ export function MediaManager({ media }: MediaManagerProps) {
     const handleOpenAdd = () => {
         setEditingId(null)
         setError(null)
-        setForm({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "", order: 0 })
+        setForm({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
         setIsOpen(true)
     }
 
@@ -102,7 +102,7 @@ export function MediaManager({ media }: MediaManagerProps) {
             
         if (res.success) {
             setIsOpen(false)
-            setForm({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "", order: 0 })
+            setForm({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
             router.refresh()
         } else {
             setError(res.error || "Errore durante il salvataggio")
@@ -292,10 +292,26 @@ export function MediaManager({ media }: MediaManagerProps) {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="md:col-span-2 space-y-2">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione</label>
+                                    <textarea 
+                                        value={form.description} 
+                                        onChange={e => setForm({ ...form, description: e.target.value })} 
+                                        className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none h-24 resize-none" 
+                                        placeholder="Inserisci una descrizione..." 
+                                    />
+                                </div>
                                 {form.type === "VIDEO" && (
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Durata</label>
-                                        <input type="text" value={form.duration} onChange={e => setForm({ ...form, duration: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" placeholder="Es: 3:45" />
+                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Formato Video (Aspect Ratio)</label>
+                                        <select 
+                                            value={form.duration} 
+                                            onChange={e => setForm({ ...form, duration: e.target.value })} 
+                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none bg-white"
+                                        >
+                                            <option value="16:9">Orizzontale (16:9)</option>
+                                            <option value="9:16">Verticale (9:16 / Reel)</option>
+                                        </select>
                                     </div>
                                 )}
                                 <div className="space-y-2">
@@ -352,7 +368,7 @@ export function MediaManager({ media }: MediaManagerProps) {
                                 <td className="px-6 py-4">
                                     <div className="flex flex-col gap-0.5 text-[10px] text-zinc-500 font-bold uppercase tracking-tight">
                                         {m.personName && <span className="text-zinc-600">{m.personName} ({m.personRole})</span>}
-                                        {m.duration && <span>Durata: {m.duration}</span>}
+                                        {m.type === "VIDEO" && <span>Formato: {m.duration || "16:9"}</span>}
                                         <span>Pos: {m.order}</span>
                                     </div>
                                 </td>

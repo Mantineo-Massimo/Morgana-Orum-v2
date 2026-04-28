@@ -118,7 +118,7 @@ export function MediaClient({ media }: Props) {
                                     onClick={() => setSelectedMedia(video)}
                                     className="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
                                 >
-                                    <div className="relative aspect-video">
+                                    <div className={`relative ${video.duration === "9:16" ? "aspect-[9/16]" : "aspect-video"}`}>
                                         <Image src={video.thumbnail || "/assets/slides/1.webp"} alt={video.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors"></div>
                                         <div className="absolute inset-0 flex items-center justify-center">
@@ -126,11 +126,6 @@ export function MediaClient({ media }: Props) {
                                                 <Play className="size-7 fill-[#18182e] text-[#18182e] ml-1" />
                                             </div>
                                         </div>
-                                        {video.duration && (
-                                            <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-lg">
-                                                {video.duration}
-                                            </div>
-                                        )}
                                     </div>
                                     <div className="p-6">
                                         <h3 className="font-black text-lg uppercase tracking-wide mb-2 group-hover:text-[#1fbcd3] transition-colors">{video.title}</h3>
@@ -207,7 +202,7 @@ export function MediaClient({ media }: Props) {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
                     <div className="absolute inset-0 bg-black/95 backdrop-blur-sm" onClick={() => setSelectedMedia(null)}></div>
                     
-                    <div className="relative w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+                    <div className={`relative w-full ${selectedMedia.duration === "9:16" ? "max-w-[400px] aspect-[9/16]" : "max-w-5xl aspect-video"} bg-black rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300`}>
                         <button 
                             onClick={() => setSelectedMedia(null)}
                             className="absolute top-6 right-6 z-50 size-12 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center transition-all"
