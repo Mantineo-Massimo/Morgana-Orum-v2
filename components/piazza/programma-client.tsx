@@ -258,7 +258,8 @@ export function ProgrammaClient({ program }: Props) {
 
                             <button
                                 onClick={() => setSelectedItem(null)}
-                                className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-sm transition-all hover:bg-white/10 border border-white/10"
+                                className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-sm text-white transition-all shadow-lg hover:shadow-2xl hover:-translate-y-1"
+                                style={{ background: `linear-gradient(90deg, ${THEME.primary}, ${THEME.secondary}, ${THEME.accent})` }}
                             >
                                 Chiudi
                             </button>
