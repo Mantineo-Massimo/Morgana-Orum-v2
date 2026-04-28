@@ -26,7 +26,9 @@ export function MediaManager({ media }: MediaManagerProps) {
     const [error, setError] = useState<string | null>(null)
     const [form, setForm] = useState({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "", order: 0 })
     const [isUploading, setIsUploading] = useState(false)
+    const [isUploadingContent, setIsUploadingContent] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
+    const fileInputContentRef = useRef<HTMLInputElement>(null)
 
     async function handleImageUpload(file: File) {
         setIsUploading(true)
@@ -44,6 +46,25 @@ export function MediaManager({ media }: MediaManagerProps) {
             alert("Errore nel caricamento dell'immagine")
         } finally {
             setIsUploading(false)
+        }
+    }
+
+    async function handleContentUpload(file: File) {
+        setIsUploadingContent(true)
+        try {
+            const formData = new FormData()
+            formData.append("file", file)
+            const res = await fetch("/api/upload", { method: "POST", body: formData })
+            const data = await res.json()
+            if (res.ok) {
+                setForm(prev => ({ ...prev, url: data.url }))
+            } else {
+                alert(data.error || "Errore nel caricamento del file")
+            }
+        } catch {
+            alert("Errore nel caricamento del file")
+        } finally {
+            setIsUploadingContent(false)
         }
     }
 
@@ -157,9 +178,69 @@ export function MediaManager({ media }: MediaManagerProps) {
                                     </>
                                 )}
 
-                                <div className="md:col-span-2 space-y-2">
-                                    <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Link URL / Citazione</label>
-                                    <input type="text" value={form.url} onChange={e => setForm({ ...form, url: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" placeholder="YouTube URL o Testo citazione" />
+                                <div className="md:col-span-2 space-y-4">
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Link URL (YouTube, Instagram Reel, ecc.)</label>
+                                        <input 
+                                            type="text" 
+                                            value={form.url} 
+                                            onChange={e => setForm({ ...form, url: e.target.value })} 
+                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" 
+                                            placeholder="https://..." 
+                                        />
+                                    </div>
+                                    <div className="relative">
+                                        <div className="absolute inset-0 flex items-center">
+                                            <span className="w-full border-t border-zinc-100" />
+                                        </div>
+                                        <div className="relative flex justify-center text-xs uppercase">
+                                            <span className="bg-white px-4 text-zinc-400 font-bold tracking-widest">Oppure carica un file</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        onClick={() => fileInputContentRef.current?.click()}
+                                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
+                                        onDrop={(e) => {
+                                            e.preventDefault(); e.stopPropagation()
+                                            const file = e.dataTransfer.files[0]
+                                            if (file) handleContentUpload(file)
+                                        }}
+                                        className="border-2 border-dashed border-zinc-300 rounded-xl p-8 text-center cursor-pointer hover:border-[#f9a620] hover:bg-[#f9a620]/5 transition-all flex flex-col items-center justify-center gap-2"
+                                    >
+                                        {isUploadingContent ? (
+                                            <div className="flex items-center gap-2 text-zinc-500">
+                                                <Loader2 className="size-5 animate-spin" />
+                                                <span className="text-sm font-bold uppercase tracking-widest">Caricamento in corso...</span>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <Upload className="size-6 text-zinc-400 mb-1" />
+                                                <span className="text-xs font-black uppercase tracking-widest text-zinc-500">
+                                                    Trascina o clicca per caricare {form.type === "VIDEO" ? "il video" : "la foto"}
+                                                </span>
+                                                <span className="text-[10px] text-zinc-400 font-medium">MP4, JPG, PNG, WEBP, ecc.</span>
+                                            </>
+                                        )}
+                                        <input
+                                            ref={fileInputContentRef}
+                                            type="file"
+                                            accept={form.type === "VIDEO" ? "video/*" : "image/*"}
+                                            className="hidden"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0]
+                                                if (file) handleContentUpload(file)
+                                            }}
+                                        />
+                                    </div>
+                                    {form.url && !form.url.startsWith('http') && (
+                                        <div className="flex items-center gap-2 p-3 bg-zinc-50 rounded-lg border border-zinc-100">
+                                            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 shrink-0">File caricato:</span>
+                                            <span className="text-xs font-medium text-zinc-600 truncate">{form.url}</span>
+                                            <button onClick={() => setForm({ ...form, url: "" })} className="ml-auto text-red-500 hover:text-red-700">
+                                                <X className="size-4" />
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="md:col-span-2 space-y-2">
                                     <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Thumbnail / Foto Media</label>

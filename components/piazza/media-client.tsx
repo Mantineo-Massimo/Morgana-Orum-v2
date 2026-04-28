@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Link } from "@/i18n/routing"
-import { ArrowLeft, Play, Camera, Mic2, ChevronRight } from "lucide-react"
+import { ArrowLeft, Play, Camera, Mic2, ChevronRight, X } from "lucide-react"
 
 const THEME = {
     primary: "#f9a620",
@@ -20,6 +20,7 @@ interface Props {
 
 export function MediaClient({ media }: Props) {
     const [activeTab, setActiveTab] = useState<Tab>("Esibizioni")
+    const [selectedMedia, setSelectedMedia] = useState<any>(null)
 
     const esibizioni = media.filter(m => m.type === "VIDEO")
     const interviste = media.filter(m => m.type === "INTERVIEW")
@@ -35,6 +36,20 @@ export function MediaClient({ media }: Props) {
         "Esibizioni": THEME.accent,
         "Interviste": THEME.primary,
         "Foto": THEME.secondary,
+    }
+
+    const getEmbedUrl = (url: string) => {
+        if (!url) return null
+        
+        // YouTube
+        const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&?]+)/)
+        if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`
+        
+        // Instagram Reel
+        const igMatch = url.match(/instagram\.com\/(?:reels|p|reel)\/([^/?#&]+)/)
+        if (igMatch) return `https://www.instagram.com/reels/${igMatch[1]}/embed`
+        
+        return null
     }
 
     return (
@@ -98,7 +113,11 @@ export function MediaClient({ media }: Props) {
                     {activeTab === "Esibizioni" && (
                         <div className="grid md:grid-cols-2 gap-6">
                             {esibizioni.map((video) => (
-                                <div key={video.id} className="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer">
+                                <div 
+                                    key={video.id} 
+                                    onClick={() => setSelectedMedia(video)}
+                                    className="group relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
+                                >
                                     <div className="relative aspect-video">
                                         <Image src={video.thumbnail || "/assets/slides/1.webp"} alt={video.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
                                         <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors"></div>
@@ -127,7 +146,11 @@ export function MediaClient({ media }: Props) {
                     {activeTab === "Interviste" && (
                         <div className="space-y-6 max-w-3xl mx-auto">
                             {interviste.map((item) => (
-                                <div key={item.id} className="group flex gap-6 p-7 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer">
+                                <div 
+                                    key={item.id} 
+                                    onClick={() => setSelectedMedia(item)}
+                                    className="group flex gap-6 p-7 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-pointer"
+                                >
                                     <div className="relative shrink-0 size-20 md:size-24 rounded-2xl overflow-hidden bg-zinc-800 ring-2 ring-white/10">
                                         <Image src={item.thumbnail || "/assets/slides/1.webp"} alt={item.personName} fill className="object-cover" />
                                     </div>
@@ -153,7 +176,11 @@ export function MediaClient({ media }: Props) {
                     {activeTab === "Foto" && (
                         <div className="columns-2 md:columns-3 gap-4 space-y-4">
                             {foto.map((f) => (
-                                <div key={f.id} className="group relative break-inside-avoid rounded-2xl overflow-hidden bg-zinc-800 cursor-pointer">
+                                <div 
+                                    key={f.id} 
+                                    onClick={() => setSelectedMedia(f)}
+                                    className="group relative break-inside-avoid rounded-2xl overflow-hidden bg-zinc-800 cursor-pointer"
+                                >
                                     <div className="relative">
                                         <Image
                                             src={f.thumbnail || f.url || "/assets/slides/1.webp"}
@@ -174,6 +201,95 @@ export function MediaClient({ media }: Props) {
 
                 </div>
             </section>
+
+            {/* LIGHTBOX MODAL */}
+            {selectedMedia && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
+                    <div className="absolute inset-0 bg-black/95 backdrop-blur-sm" onClick={() => setSelectedMedia(null)}></div>
+                    
+                    <div className="relative w-full max-w-5xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300">
+                        <button 
+                            onClick={() => setSelectedMedia(null)}
+                            className="absolute top-6 right-6 z-50 size-12 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white rounded-full flex items-center justify-center transition-all"
+                        >
+                            <X className="size-6" />
+                        </button>
+
+                        <div className="w-full h-full flex flex-col">
+                            <div className="flex-1 min-h-0 bg-black flex items-center justify-center">
+                                {selectedMedia.type === "PHOTO" ? (
+                                    <div className="relative w-full h-full p-4">
+                                        <Image 
+                                            src={selectedMedia.url || selectedMedia.thumbnail} 
+                                            alt={selectedMedia.title} 
+                                            fill 
+                                            className="object-contain"
+                                        />
+                                    </div>
+                                ) : (
+                                    (() => {
+                                        const embedUrl = getEmbedUrl(selectedMedia.url)
+                                        if (embedUrl) {
+                                            return (
+                                                <iframe 
+                                                    src={embedUrl}
+                                                    className="w-full h-full border-none"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    allowFullScreen
+                                                ></iframe>
+                                            )
+                                        } else if (selectedMedia.url?.match(/\.(mp4|webm|ogg)$/i) || !selectedMedia.url?.startsWith('http')) {
+                                            return (
+                                                <video 
+                                                    src={selectedMedia.url} 
+                                                    controls 
+                                                    autoPlay 
+                                                    className="w-full h-full max-h-full"
+                                                ></video>
+                                            )
+                                        } else {
+                                            return (
+                                                <div className="text-center p-10">
+                                                    <p className="text-white/40 mb-4 font-serif italic text-lg">Contenuto non incorporabile direttamente.</p>
+                                                    <a 
+                                                        href={selectedMedia.url} 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer"
+                                                        className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-black uppercase tracking-widest text-xs"
+                                                    >
+                                                        Visualizza su {selectedMedia.url.includes('instagram') ? 'Instagram' : 'Sorgente'} <ChevronRight className="size-4" />
+                                                    </a>
+                                                </div>
+                                            )
+                                        }
+                                    })()
+                                )}
+                            </div>
+                            
+                            <div className="p-6 md:p-8 bg-zinc-900/50 backdrop-blur-md border-t border-white/5">
+                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                                    <div>
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <span className="text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full" style={{ backgroundColor: selectedMedia.type === "PHOTO" ? THEME.secondary : selectedMedia.type === "INTERVIEW" ? THEME.primary : THEME.accent, color: "#18182e" }}>
+                                                {selectedMedia.type}
+                                            </span>
+                                            {selectedMedia.personName && (
+                                                <span className="text-white/40 text-[10px] font-black uppercase tracking-widest">
+                                                    Intervista a: <span className="text-white">{selectedMedia.personName}</span>
+                                                </span>
+                                            )}
+                                        </div>
+                                        <h2 className="text-xl md:text-2xl font-black uppercase tracking-tight">{selectedMedia.title}</h2>
+                                    </div>
+                                    <div className="text-white/60 text-sm max-w-md font-serif italic leading-relaxed">
+                                        {selectedMedia.description}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
