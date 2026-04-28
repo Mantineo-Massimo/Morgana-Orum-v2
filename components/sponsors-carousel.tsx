@@ -53,7 +53,7 @@ export function SponsorsCarousel({ sponsors }: SponsorsCarouselProps) {
                     }}
                 >
                     {displaySponsors.map((s, idx) => (
-                        <div key={`${s.id}-${idx}`} className="mx-12 md:mx-20 grayscale hover:grayscale-0 transition-all duration-500 opacity-60 hover:opacity-100 flex items-center justify-center min-w-[120px] md:min-w-[160px]">
+                        <div key={`${s.id}-${idx}`} className="mx-12 md:mx-20 transition-all duration-500 opacity-60 hover:opacity-100 flex items-center justify-center min-w-[120px] md:min-w-[160px]">
                             {s.logo ? (
                                 <a 
                                     href={s.website || "#"} 
