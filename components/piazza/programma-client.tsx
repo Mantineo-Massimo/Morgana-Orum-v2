@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Sun, Sunset, Music, Palette, Users, Camera, Trophy, Mic2, Star, Clock, MapPin, Coffee, Ticket, Play, Smile, Heart, Zap, Image as ImageIcon } from "lucide-react"
+import { Sun, Sunset, Moon, Music, Palette, Users, Camera, Trophy, Mic2, Star, Clock, MapPin, Coffee, Ticket, Play, Smile, Heart, Zap, Image as ImageIcon } from "lucide-react"
 import { Link } from "@/i18n/routing"
 import { ArrowLeft, X } from "lucide-react"
 import {
@@ -18,7 +18,7 @@ const THEME = {
 }
 
 const ICONS: Record<string, any> = {
-    Sun, Sunset, Music, Palette, Users, Camera, Trophy, Mic2, Star, Coffee, Ticket, Play, Smile, Heart, Zap, ImageIcon
+    Sun, Sunset, Moon, Music, Palette, Users, Camera, Trophy, Mic2, Star, Coffee, Ticket, Play, Smile, Heart, Zap, ImageIcon
 }
 
 interface Props {
@@ -176,7 +176,7 @@ export function ProgrammaClient({ program }: Props) {
                         <div className="relative">
                             <div className="flex items-center gap-4 mb-6">
                                 <div className="flex items-center gap-3 px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg" style={{ backgroundColor: THEME.accent, color: "#18182e" }}>
-                                    <Music className="size-5" />
+                                    <Moon className="size-5" />
                                     Sera
                                 </div>
                                 <span className="text-white/40 text-sm font-bold tracking-widest">{getTimeRange(eveningItems, "20:00 — Fine")}</span>
@@ -199,14 +199,14 @@ export function ProgrammaClient({ program }: Props) {
 
             {/* DETAIL DIALOG */}
             <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
-                <DialogContent className="max-w-2xl p-0 overflow-hidden border-none bg-zinc-900 rounded-3xl shadow-2xl">
-                    <div className="relative pb-12">
+                <DialogContent className="max-w-2xl p-0 overflow-hidden border-none bg-zinc-900 rounded-3xl shadow-2xl max-h-[90vh] w-[95vw] md:w-full flex flex-col">
+                    <div className="relative overflow-y-auto w-full h-full pb-6 md:pb-12">
                         {/* Background blobs */}
                         <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
                             <div className="absolute top-0 right-0 w-[300px] h-[300px] rounded-full blur-[100px] opacity-20" style={{ backgroundColor: THEME.primary }}></div>
                         </div>
 
-                        <div className="relative z-10 p-8 md:p-12 space-y-8">
+                        <div className="relative z-10 p-6 md:p-12 space-y-6 md:space-y-8">
                             <DialogHeader>
                                 <div className="flex items-center gap-4 mb-4">
                                     <div className="size-14 rounded-2xl flex items-center justify-center shadow-lg" style={{ backgroundColor: `${THEME.primary}25` }}>

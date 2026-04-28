@@ -89,7 +89,7 @@ export function MainNav({
             },
             {
                 href: `https://fantapiazza.vercel.app`,
-                label: "FantaArte",
+                label: "FantArte",
                 active: false,
                 color: "text-[#f9a620]" // Gold
             }
