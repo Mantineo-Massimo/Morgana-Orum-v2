@@ -233,6 +233,7 @@ export function MediaManager({ media }: MediaManagerProps) {
                         </div>
                     </DialogContent>
                 </Dialog>
+            </div>
 
             <div className="bg-white rounded-3xl border border-zinc-200 overflow-hidden shadow-sm">
                 <table className="w-full text-left">
