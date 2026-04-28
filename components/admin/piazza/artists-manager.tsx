@@ -10,6 +10,7 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogDescription,
 } from "@/components/ui/dialog"
 
 const CATEGORIES = ["Musica", "Danza", "Pittura", "Performance"]
@@ -113,6 +114,9 @@ export function ArtistsManager({ artists }: ArtistsManagerProps) {
                                     {editingId ? <Pencil className="size-6 text-[#f9a620]" /> : <Plus className="size-6 text-[#f9a620]" />}
                                     {editingId ? "Modifica Artista" : "Nuovo Artista"}
                                 </DialogTitle>
+                                <DialogDescription className="sr-only">
+                                    Compila il modulo per gestire le informazioni dell&apos;artista.
+                                </DialogDescription>
                             </DialogHeader>
 
                             {error && (

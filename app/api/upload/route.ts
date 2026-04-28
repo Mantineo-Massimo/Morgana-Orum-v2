@@ -21,12 +21,13 @@ export async function POST(request: NextRequest) {
         // Validate file type
         const imageTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"]
         const docTypes = ["application/pdf", "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"]
+        const videoTypes = ["video/mp4", "video/webm", "video/ogg", "video/quicktime"]
 
-        let allowedTypes = [...imageTypes, ...docTypes]
+        let allowedTypes = [...imageTypes, ...docTypes, ...videoTypes]
 
         if (!allowedTypes.includes(file.type) && folder !== "attachments") {
             // Basic check, allows more if in attachments but let's keep it safe
-            if (!file.type.startsWith("image/") && !file.type.startsWith("application/")) {
+            if (!file.type.startsWith("image/") && !file.type.startsWith("application/") && !file.type.startsWith("video/")) {
                 return NextResponse.json({ error: "Tipo di file non supportato." }, { status: 400 })
             }
         }

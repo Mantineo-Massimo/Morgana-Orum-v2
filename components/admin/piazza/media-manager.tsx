@@ -10,6 +10,7 @@ import {
     DialogContent,
     DialogHeader,
     DialogTitle,
+    DialogDescription,
 } from "@/components/ui/dialog"
 
 const MEDIA_TYPES = ["VIDEO", "PHOTO", "INTERVIEW"]
@@ -145,6 +146,9 @@ export function MediaManager({ media }: MediaManagerProps) {
                                     {editingId ? <Pencil className="size-6 text-[#f9a620]" /> : <Plus className="size-6 text-[#f9a620]" />}
                                     {editingId ? "Modifica Media" : "Nuovo Media"}
                                 </DialogTitle>
+                                <DialogDescription className="sr-only">
+                                    Carica o modifica file multimediali per la Piazza dell&apos;Arte.
+                                </DialogDescription>
                             </DialogHeader>
 
                             {error && (
