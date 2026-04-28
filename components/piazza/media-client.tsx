@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Link } from "@/i18n/routing"
-import { ArrowLeft, Play, Camera, Mic2, ChevronRight, X } from "lucide-react"
+import { ArrowLeft, Play, Camera, Mic2, ChevronRight, X, Download } from "lucide-react"
 
 const THEME = {
     primary: "#f9a620",
@@ -281,8 +281,21 @@ export function MediaClient({ media }: Props) {
                                         </div>
                                         <h2 className="text-xl md:text-2xl font-black uppercase tracking-tight">{selectedMedia.title}</h2>
                                     </div>
-                                    <div className="text-white/60 text-sm max-w-md font-serif italic leading-relaxed">
-                                        {selectedMedia.description}
+                                    <div className="flex items-center gap-4">
+                                        {selectedMedia.url && (
+                                            <a 
+                                                href={selectedMedia.url} 
+                                                download 
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-3 px-6 py-3 bg-[#f9a620] text-[#18182e] rounded-xl font-black uppercase tracking-widest text-xs hover:bg-[#e89a1c] transition-all shadow-lg shadow-amber-900/20"
+                                            >
+                                                <Download className="size-4" /> Scarica File
+                                            </a>
+                                        )}
+                                        <div className="text-white/60 text-sm max-w-md font-serif italic leading-relaxed">
+                                            {selectedMedia.description}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -179,24 +179,7 @@ export function MediaManager({ media }: MediaManagerProps) {
                                 )}
 
                                 <div className="md:col-span-2 space-y-4">
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Link URL (YouTube, Instagram Reel, ecc.)</label>
-                                        <input 
-                                            type="text" 
-                                            value={form.url} 
-                                            onChange={e => setForm({ ...form, url: e.target.value })} 
-                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" 
-                                            placeholder="https://..." 
-                                        />
-                                    </div>
-                                    <div className="relative">
-                                        <div className="absolute inset-0 flex items-center">
-                                            <span className="w-full border-t border-zinc-100" />
-                                        </div>
-                                        <div className="relative flex justify-center text-xs uppercase">
-                                            <span className="bg-white px-4 text-zinc-400 font-bold tracking-widest">Oppure carica un file</span>
-                                        </div>
-                                    </div>
+                                    <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">File Multimediale (Video, Foto, Documento)</label>
                                     <div
                                         onClick={() => fileInputContentRef.current?.click()}
                                         onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
@@ -205,26 +188,31 @@ export function MediaManager({ media }: MediaManagerProps) {
                                             const file = e.dataTransfer.files[0]
                                             if (file) handleContentUpload(file)
                                         }}
-                                        className="border-2 border-dashed border-zinc-300 rounded-xl p-8 text-center cursor-pointer hover:border-[#f9a620] hover:bg-[#f9a620]/5 transition-all flex flex-col items-center justify-center gap-2"
+                                        className="border-2 border-dashed border-zinc-300 rounded-2xl p-10 text-center cursor-pointer hover:border-[#f9a620] hover:bg-[#f9a620]/5 transition-all flex flex-col items-center justify-center gap-4 bg-zinc-50/50"
                                     >
                                         {isUploadingContent ? (
-                                            <div className="flex items-center gap-2 text-zinc-500">
-                                                <Loader2 className="size-5 animate-spin" />
+                                            <div className="flex flex-col items-center gap-3 text-zinc-500">
+                                                <Loader2 className="size-8 animate-spin text-[#f9a620]" />
                                                 <span className="text-sm font-bold uppercase tracking-widest">Caricamento in corso...</span>
                                             </div>
                                         ) : (
                                             <>
-                                                <Upload className="size-6 text-zinc-400 mb-1" />
-                                                <span className="text-xs font-black uppercase tracking-widest text-zinc-500">
-                                                    Trascina o clicca per caricare {form.type === "VIDEO" ? "il video" : "la foto"}
-                                                </span>
-                                                <span className="text-[10px] text-zinc-400 font-medium">MP4, JPG, PNG, WEBP, ecc.</span>
+                                                <div className="size-16 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400 group-hover:bg-white transition-colors">
+                                                    <Upload className="size-8" />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <span className="block text-sm font-black uppercase tracking-widest text-zinc-600">
+                                                        Trascina o clicca per caricare il file
+                                                    </span>
+                                                    <span className="text-xs text-zinc-400 font-medium italic">
+                                                        Questo file sarà visualizzabile e scaricabile dagli utenti
+                                                    </span>
+                                                </div>
                                             </>
                                         )}
                                         <input
                                             ref={fileInputContentRef}
                                             type="file"
-                                            accept={form.type === "VIDEO" ? "video/*" : "image/*"}
                                             className="hidden"
                                             onChange={(e) => {
                                                 const file = e.target.files?.[0]
@@ -232,12 +220,17 @@ export function MediaManager({ media }: MediaManagerProps) {
                                             }}
                                         />
                                     </div>
-                                    {form.url && !form.url.startsWith('http') && (
-                                        <div className="flex items-center gap-2 p-3 bg-zinc-50 rounded-lg border border-zinc-100">
-                                            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 shrink-0">File caricato:</span>
-                                            <span className="text-xs font-medium text-zinc-600 truncate">{form.url}</span>
-                                            <button onClick={() => setForm({ ...form, url: "" })} className="ml-auto text-red-500 hover:text-red-700">
-                                                <X className="size-4" />
+                                    {form.url && (
+                                        <div className="flex items-center gap-3 p-4 bg-zinc-900 text-white rounded-2xl border border-zinc-800 shadow-xl animate-in fade-in slide-in-from-top-2">
+                                            <div className="size-10 rounded-lg bg-zinc-800 flex items-center justify-center shrink-0">
+                                                <Play className="size-5 text-[#f9a620]" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 mb-0.5">File pronto:</p>
+                                                <p className="text-xs font-bold truncate opacity-90">{form.url.split('/').pop()}</p>
+                                            </div>
+                                            <button onClick={() => setForm({ ...form, url: "" })} className="p-2 hover:bg-white/10 rounded-full transition-colors text-zinc-400 hover:text-white">
+                                                <X className="size-5" />
                                             </button>
                                         </div>
                                     )}
