@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { Plus, Trash2, X, Play, Camera, Mic2, Video as VideoIcon, Upload, Loader2, ImageIcon, Pencil } from "lucide-react"
+import { Plus, Trash2, X, Play, Camera, Mic2, Video as VideoIcon, Upload, Loader2, ImageIcon, Pencil, Sparkles, Share2 } from "lucide-react"
 import { createPiazzaMediaItem, updatePiazzaMediaItem, deletePiazzaMediaItem } from "@/app/actions/piazza"
 import Image from "next/image"
 import {
@@ -13,7 +13,7 @@ import {
     DialogDescription,
 } from "@/components/ui/dialog"
 
-const MEDIA_TYPES = ["VIDEO", "PHOTO", "INTERVIEW"]
+const MEDIA_TYPES = ["ESIBIZIONI", "INTERVISTE", "FOTO", "CONCORSO_FOTO", "SOCIAL"]
 
 interface MediaManagerProps {
     media: any[]
@@ -25,7 +25,7 @@ export function MediaManager({ media }: MediaManagerProps) {
     const [editingId, setEditingId] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
-    const [form, setForm] = useState({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
+    const [form, setForm] = useState({ type: "ESIBIZIONI", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
     const [isUploading, setIsUploading] = useState(false)
     const [isUploadingContent, setIsUploadingContent] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
@@ -72,7 +72,7 @@ export function MediaManager({ media }: MediaManagerProps) {
     const handleOpenAdd = () => {
         setEditingId(null)
         setError(null)
-        setForm({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
+        setForm({ type: "ESIBIZIONI", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
         setIsOpen(true)
     }
 
@@ -80,7 +80,7 @@ export function MediaManager({ media }: MediaManagerProps) {
         setEditingId(item.id)
         setError(null)
         setForm({
-            type: item.type || "VIDEO",
+            type: item.type || "ESIBIZIONI",
             title: item.title || "",
             description: item.description || "",
             url: item.url || "",
@@ -102,7 +102,7 @@ export function MediaManager({ media }: MediaManagerProps) {
             
         if (res.success) {
             setIsOpen(false)
-            setForm({ type: "VIDEO", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
+            setForm({ type: "ESIBIZIONI", title: "", description: "", url: "", thumbnail: "", personName: "", personRole: "", duration: "16:9", order: 0 })
             router.refresh()
         } else {
             setError(res.error || "Errore durante il salvataggio")
@@ -118,9 +118,11 @@ export function MediaManager({ media }: MediaManagerProps) {
 
     const getIcon = (type: string) => {
         switch (type) {
-            case "VIDEO": return <Play className="size-4" />
-            case "PHOTO": return <Camera className="size-4" />
-            case "INTERVIEW": return <Mic2 className="size-4" />
+            case "ESIBIZIONI": return <Play className="size-4" />
+            case "FOTO": return <Camera className="size-4" />
+            case "INTERVISTE": return <Mic2 className="size-4" />
+            case "CONCORSO_FOTO": return <Sparkles className="size-4" />
+            case "SOCIAL": return <Share2 className="size-4" />
             default: return <VideoIcon className="size-4" />
         }
     }

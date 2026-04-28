@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Link } from "@/i18n/routing"
-import { ArrowLeft, Play, Camera, Mic2, ChevronRight, X, Download } from "lucide-react"
+import { ArrowLeft, Play, Camera, Mic2, ChevronRight, X, Download, Sparkles, Share2 } from "lucide-react"
 
 const THEME = {
     primary: "#f9a620",
@@ -11,7 +11,7 @@ const THEME = {
     accent: "#1fbcd3"
 }
 
-const TABS = ["Esibizioni", "Interviste", "Foto"] as const
+const TABS = ["Concorso Foto", "Social", "Esibizioni", "Interviste", "Foto"] as const
 type Tab = typeof TABS[number]
 
 interface Props {
@@ -22,17 +22,23 @@ export function MediaClient({ media }: Props) {
     const [activeTab, setActiveTab] = useState<Tab>("Esibizioni")
     const [selectedMedia, setSelectedMedia] = useState<any>(null)
 
-    const esibizioni = media.filter(m => m.type === "VIDEO")
-    const interviste = media.filter(m => m.type === "INTERVIEW")
-    const foto = media.filter(m => m.type === "PHOTO")
+    const esibizioni = media.filter(m => m.type === "ESIBIZIONI")
+    const interviste = media.filter(m => m.type === "INTERVISTE")
+    const foto = media.filter(m => m.type === "FOTO")
+    const concorso = media.filter(m => m.type === "CONCORSO_FOTO")
+    const social = media.filter(m => m.type === "SOCIAL")
 
     const TAB_ICONS: Record<Tab, any> = {
+        "Concorso Foto": Sparkles,
+        "Social": Share2,
         "Esibizioni": Play,
         "Interviste": Mic2,
         "Foto": Camera,
     }
 
     const TAB_COLORS: Record<Tab, string> = {
+        "Concorso Foto": THEME.primary,
+        "Social": "#E1306C", // Instagram-ish
         "Esibizioni": THEME.accent,
         "Interviste": THEME.primary,
         "Foto": THEME.secondary,
@@ -108,6 +114,60 @@ export function MediaClient({ media }: Props) {
             {/* TAB CONTENT */}
             <section className="pb-24">
                 <div className="container max-w-6xl mx-auto">
+                    {/* ── CONCORSO FOTO ── */}
+                    {activeTab === "Concorso Foto" && (
+                        <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                            {concorso.map((f) => (
+                                <div 
+                                    key={f.id} 
+                                    onClick={() => setSelectedMedia(f)}
+                                    className="group relative break-inside-avoid rounded-2xl overflow-hidden bg-zinc-800 cursor-pointer"
+                                >
+                                    <div className="relative">
+                                        <Image
+                                            src={f.thumbnail || f.url || "/assets/slides/1.webp"}
+                                            alt={f.title}
+                                            width={600}
+                                            height={400}
+                                            className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-5">
+                                            <span className="text-white text-xs font-black uppercase tracking-widest">{f.title}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                            {concorso.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">Nessuna foto del concorso disponibile.</p>}
+                        </div>
+                    )}
+
+                    {/* ── SOCIAL ── */}
+                    {activeTab === "Social" && (
+                        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                            {social.map((video) => (
+                                <div 
+                                    key={video.id} 
+                                    onClick={() => setSelectedMedia(video)}
+                                    className="break-inside-avoid group relative rounded-2xl overflow-hidden bg-zinc-900 border border-white/10 hover:border-white/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
+                                >
+                                    <div className={`relative ${video.duration === "9:16" ? "aspect-[9/16]" : "aspect-video"}`}>
+                                        <Image src={video.thumbnail || "/assets/slides/1.webp"} alt={video.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
+                                        <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition-colors"></div>
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <div className="size-14 rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300" style={{ backgroundColor: "#E1306C" }}>
+                                                <Play className="size-6 fill-white text-white ml-1" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="p-5">
+                                        <h3 className="font-black text-base uppercase tracking-wide mb-1.5 group-hover:text-[#E1306C] transition-colors">{video.title}</h3>
+                                        {video.description && <p className="text-white/60 text-xs leading-relaxed line-clamp-3">{video.description}</p>}
+                                    </div>
+                                </div>
+                            ))}
+                            {social.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">Nessun contenuto social disponibile.</p>}
+                        </div>
+                    )}
 
                     {/* ── ESIBIZIONI ── */}
                     {activeTab === "Esibizioni" && (
@@ -154,7 +214,7 @@ export function MediaClient({ media }: Props) {
                                             <strong className="block text-white font-black text-lg">{item.personName}</strong>
                                             <span className="text-sm font-bold uppercase tracking-widest" style={{ color: THEME.primary }}>{item.personRole}</span>
                                         </div>
-                                        <p className="text-white/70 leading-relaxed italic text-base">
+                                        <p className="text-white/70 leading-relaxed italic text-base line-clamp-3">
                                             &ldquo;{item.description || item.title}&rdquo;
                                         </p>
                                         <span className="inline-flex items-center gap-1.5 mt-4 text-xs font-black uppercase tracking-widest transition-colors group-hover:text-white text-white/40">
@@ -169,7 +229,7 @@ export function MediaClient({ media }: Props) {
 
                     {/* ── FOTO ── */}
                     {activeTab === "Foto" && (
-                        <div className="columns-2 md:columns-3 gap-4 space-y-4">
+                        <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
                             {foto.map((f) => (
                                 <div 
                                     key={f.id} 
@@ -185,7 +245,7 @@ export function MediaClient({ media }: Props) {
                                             className="w-full object-cover group-hover:scale-105 transition-transform duration-700"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-5">
-                                            <span className="text-white text-sm font-bold uppercase tracking-widest">{f.title}</span>
+                                            <span className="text-white text-xs font-black uppercase tracking-widest">{f.title}</span>
                                         </div>
                                     </div>
                                 </div>
