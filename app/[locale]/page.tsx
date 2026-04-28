@@ -151,9 +151,7 @@ export default async function BrandHomePage({
                     </Link>
                 </div>
             </section>
-                </div>
-            </section>
-        </div >
+        </div>
     )
 }
 
