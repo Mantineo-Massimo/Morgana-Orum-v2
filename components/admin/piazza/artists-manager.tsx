@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { Plus, Trash2, X, Users } from "lucide-react"
+import { useState, useRef } from "react"
+import { Plus, Trash2, X, Users, Upload, Loader2, ImageIcon } from "lucide-react"
 import { createPiazzaArtist, deletePiazzaArtist } from "@/app/actions/piazza"
 import Image from "next/image"
 
@@ -15,6 +15,27 @@ export function ArtistsManager({ artists }: ArtistsManagerProps) {
     const [isAdding, setIsAdding] = useState(false)
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({ name: "", role: "", category: "Musica", bio: "", image: "", badge: "", order: 0 })
+    const [isUploading, setIsUploading] = useState(false)
+    const fileInputRef = useRef<HTMLInputElement>(null)
+
+    async function handleImageUpload(file: File) {
+        setIsUploading(true)
+        try {
+            const formData = new FormData()
+            formData.append("file", file)
+            const res = await fetch("/api/upload", { method: "POST", body: formData })
+            const data = await res.json()
+            if (res.ok) {
+                setForm(prev => ({ ...prev, image: data.url }))
+            } else {
+                alert(data.error || "Errore nel caricamento dell'immagine")
+            }
+        } catch {
+            alert("Errore nel caricamento dell'immagine")
+        } finally {
+            setIsUploading(false)
+        }
+    }
 
     const handleAdd = async () => {
         setLoading(true)
@@ -79,9 +100,58 @@ export function ArtistsManager({ artists }: ArtistsManagerProps) {
                             <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Bio</label>
                             <textarea value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none h-32 resize-none" placeholder="Breve biografia..." />
                         </div>
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Immagine (Asset Path)</label>
-                            <input type="text" value={form.image} onChange={e => setForm({ ...form, image: e.target.value })} className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-[#f9a620]/20 outline-none" placeholder="/assets/artisti/nome.webp" />
+                        <div className="md:col-span-2 space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Immagine Artista</label>
+                            <div className="flex items-start gap-6">
+                                <div className="relative w-24 h-24 rounded-2xl bg-zinc-100 border-2 border-dashed border-zinc-300 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                    {form.image ? (
+                                        <>
+                                            <Image src={form.image} alt="Preview" fill sizes="96px" className="object-cover" />
+                                            <button
+                                                type="button"
+                                                onClick={() => setForm(prev => ({ ...prev, image: "" }))}
+                                                className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors z-10"
+                                            >
+                                                <X className="size-3" />
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <ImageIcon className="size-6 text-zinc-400" />
+                                    )}
+                                </div>
+                                <div
+                                    onClick={() => fileInputRef.current?.click()}
+                                    onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
+                                    onDrop={(e) => {
+                                        e.preventDefault(); e.stopPropagation()
+                                        const file = e.dataTransfer.files[0]
+                                        if (file) handleImageUpload(file)
+                                    }}
+                                    className="flex-1 border-2 border-dashed border-zinc-300 rounded-xl p-4 text-center cursor-pointer hover:border-[#f9a620] hover:bg-[#f9a620]/5 transition-all h-24 flex items-center justify-center"
+                                >
+                                    {isUploading ? (
+                                        <div className="flex items-center justify-center gap-2 text-zinc-500">
+                                            <Loader2 className="size-5 animate-spin" />
+                                            <span className="text-sm font-bold uppercase tracking-widest">Caricamento...</span>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col items-center gap-1">
+                                            <Upload className="size-5 text-zinc-400 mb-1" />
+                                            <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Clicca o trascina un'immagine</span>
+                                        </div>
+                                    )}
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/jpeg,image/png,image/webp,image/gif"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0]
+                                            if (file) handleImageUpload(file)
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div className="space-y-2">
                             <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine</label>
