@@ -276,7 +276,7 @@ export default async function NetworkSubPage({ params }: { params: { brandId: st
                                 {/* Artisti */}
                                 <Link href="/network/piazzadellarte/artisti" className="group relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-white/25 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col">
                                     <div className="relative aspect-video overflow-hidden">
-                                        <Image src="/assets/slides/2.webp" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Artisti" />
+                                        <Image src="/assets/artisti.webp" fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-70" alt="Artisti" />
                                         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
                                         <div className="absolute bottom-4 left-6">
                                             <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme?.secondary, color: "#fff" }}>
