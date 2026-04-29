@@ -1,8 +1,8 @@
 # Fdb version 4
-["pdflatex"] 1776808715.50199 "/home/massimo/Scrivania/Siti/Morgana-Orum-v2/documenti_legali/GDPR/Informativa_Privacy_Completa.tex" "Informativa_Privacy_Completa.pdf" "Informativa_Privacy_Completa" 1776808722.29166 0
+["pdflatex"] 1777470498.52193 "/home/massimo/Scrivania/Siti/Morgana-Orum-v2/documenti_legali/GDPR/Informativa_Privacy_Completa.tex" "Informativa_Privacy_Completa.pdf" "Informativa_Privacy_Completa" 1777470502.24566 0
   "/etc/texmf/web2c/texmf.cnf" 1774877862.92368 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/massimo/.texlive2023/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1095.600pk" 1776808647.6421 12644 2ee07776de31a6ece3d992426477f175 ""
-  "/home/massimo/Scrivania/Siti/Morgana-Orum-v2/documenti_legali/GDPR/Informativa_Privacy_Completa.tex" 1776808583.06247 7229 3391402fe6da48626a975380ce600ebf ""
+  "/home/massimo/Scrivania/Siti/Morgana-Orum-v2/documenti_legali/GDPR/Informativa_Privacy_Completa.tex" 1777470498.34883 7385 ec94ea6a8aa60becf5e3b290fe7c2883 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm" 1136768653 1536 02c06700a42be0f5a28664c7273f82e7 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm" 1136768653 1328 c834bbb027764024c09d3d2bf908b5f0 ""
@@ -76,9 +76,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1774877873.37872 128028 f533b797fba58d231669ea19e894e23e ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1774877914 6802369 e4393ba1408e1268397e5aac66ef022a ""
-  "Informativa_Privacy_Completa.aux" 1776808722.24775 264 4b5f0885c3321da82a2e9c4838c26077 "pdflatex"
-  "Informativa_Privacy_Completa.out" 1776808715.89078 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "Informativa_Privacy_Completa.tex" 1776808583.06247 7229 3391402fe6da48626a975380ce600ebf ""
+  "Informativa_Privacy_Completa.aux" 1777470502.13785 264 4b5f0885c3321da82a2e9c4838c26077 "pdflatex"
+  "Informativa_Privacy_Completa.out" 1777470498.73983 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "Informativa_Privacy_Completa.tex" 1777470498.34883 7385 ec94ea6a8aa60becf5e3b290fe7c2883 ""
   "morgana.png" 1776808683.72192 1478127 2b9fb05bd5bbbbe804cd0d83261cc27d ""
   "orum.png" 1776808683.71992 3895699 c2b4fc85820bd2a489a7c44fbc555c89 ""
   (generated)

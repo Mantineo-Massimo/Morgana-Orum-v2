@@ -15,8 +15,8 @@ Ai sensi degli artt. 13 e 14 del **Regolamento (UE) 2016/679 (GDPR)**, si inform
 
 I dati personali sono trattati in regime di contitolarità da:
 
-*   **Associazione Organismo Rappresentanti Universitari Messina (ORUM)**, con sede legale in Messina in Contrada Petraro Top Residence Ganzirri, CAP 98165, C.F. 27068650833, rappresentata dal Presidente pro-tempore Luigi Grillo.
 *   **Associazione Morgana**, con sede legale in Messina in Via Del Vespro n°57, CAP 98123, C.F. 97103490831, rappresentata dal Presidente pro-tempore Giuseppe Di Giorgio.
+*   **Associazione Organismo Rappresentanti Universitari Messina (ORUM)**, con sede legale in Messina in Contrada Petraro Top Residence Ganzirri, CAP 98165, C.F. 27068650833, rappresentata dal Presidente pro-tempore Luigi Grillo.
 
 I Contitolari hanno stipulato un apposito accordo interno, ai sensi dell’art. 26 del GDPR, con cui hanno definito le rispettive responsabilità in merito all’osservanza degli obblighi derivanti dalla normativa applicabile. 
 
@@ -87,7 +87,7 @@ I dati sono protetti tramite adeguate misure tecniche (tra cui connessioni HTTPS
 
 <br>
 
-*Messina, lì 21 Aprile 2026*
+*Messina, lì 29 Aprile 2026*
 
 <br>
 
