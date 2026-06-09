@@ -78,7 +78,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                 <div className="flex items-center gap-1.5 md:gap-2 xl:gap-4 h-full">
                     {/* Logo - Leads to Sub-site Home */}
                     <Link
-                        href={currentNetwork ? `/network/${brand}` : "/"}
+                        href={currentNetwork ? (brand === 'piazzadellarte' ? '/piazzadellarte' : `/network/${brand}`) : "/"}
                         className="relative transition-all duration-500 flex items-center h-full"
                     >
                         <div className="relative transition-all duration-500 flex items-center h-full">
@@ -133,7 +133,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     {/* Text Section - Stacked Vertically */}
                     <div className="flex flex-col text-white justify-center transition-all duration-500">
                         <Link
-                            href={currentNetwork ? `/network/${brand}` : "/"}
+                            href={currentNetwork ? (brand === 'piazzadellarte' ? '/piazzadellarte' : `/network/${brand}`) : "/"}
                             className="flex flex-col gap-0.5 hover:opacity-80 transition-opacity"
                         >
                             <span className="font-serif font-black uppercase tracking-tight leading-none transition-all duration-500 whitespace-nowrap text-[15px] sm:text-lg lg:text-xl xl:text-2xl">
