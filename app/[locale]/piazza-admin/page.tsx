@@ -115,7 +115,7 @@ export default async function PiazzaAdminPage() {
                         Coordina gli artisti e carica i media aggiornati per garantire la migliore esperienza durante la Piazza dell&apos;Arte.
                     </p>
                     <div className="flex gap-4">
-                        <Link href="/network/piazzadellarte" target="_blank" className="flex-1 py-4 bg-zinc-100 text-zinc-900 rounded-2xl text-center font-black uppercase tracking-widest text-[9px] hover:bg-zinc-200 transition-all">
+                        <Link href="/piazzadellarte" target="_blank" className="flex-1 py-4 bg-zinc-100 text-zinc-900 rounded-2xl text-center font-black uppercase tracking-widest text-[9px] hover:bg-zinc-200 transition-all">
                             Visualizza Sito
                         </Link>
                     </div>

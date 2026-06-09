@@ -8,12 +8,13 @@ const intlMiddleware = createMiddleware(routing);
 export default function middleware(request: NextRequest) {
     const response = intlMiddleware(request);
 
-    // Extract brand from URL if present: /[locale]/network/[brandId]
     const pathname = request.nextUrl.pathname;
     const pathParts = pathname.split('/').filter(Boolean);
 
-    // Parts are usually [locale, 'network', brandId]
-    if (pathParts.length >= 3 && pathParts[1] === 'network') {
+    // Parts are usually [locale, 'piazzadellarte'] or [locale, 'network', brandId]
+    if (pathParts.length >= 2 && pathParts[1] === 'piazzadellarte') {
+        response.headers.set('x-brand', 'piazzadellarte');
+    } else if (pathParts.length >= 3 && pathParts[1] === 'network') {
         const brandId = pathParts[2];
         response.headers.set('x-brand', brandId);
     } else {

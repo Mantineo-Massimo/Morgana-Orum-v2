@@ -83,10 +83,10 @@ export async function Footer() {
                             Piazza dell&apos;Arte
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
-                            <li><Link href="/network/piazzadellarte" className={cn("transition-colors", mutedColor)}>Sito Ufficiale</Link></li>
-                            <li><Link href="/network/piazzadellarte/programma" className={cn("transition-colors", mutedColor)}>Programma</Link></li>
-                            <li><Link href="/network/piazzadellarte/artisti" className={cn("transition-colors", mutedColor)}>Artisti</Link></li>
-                            <li><Link href="/network/piazzadellarte/media" className={cn("transition-colors", mutedColor)}>Media</Link></li>
+                            <li><Link href="/piazzadellarte" className={cn("transition-colors", mutedColor)}>Sito Ufficiale</Link></li>
+                            <li><Link href="/piazzadellarte/programma" className={cn("transition-colors", mutedColor)}>Programma</Link></li>
+                            <li><Link href="/piazzadellarte/artisti" className={cn("transition-colors", mutedColor)}>Artisti</Link></li>
+                            <li><Link href="/piazzadellarte/media" className={cn("transition-colors", mutedColor)}>Media</Link></li>
                         </ul>
                     </div>
 
