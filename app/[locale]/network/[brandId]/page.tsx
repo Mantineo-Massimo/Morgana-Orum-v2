@@ -18,6 +18,7 @@ import { EventCard } from "@/components/event-card"
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
+    if (params.brandId !== "piazzadellarte") return {}
     const config = BRAND_CONFIG[params.brandId as keyof typeof BRAND_CONFIG]
     if (!config) return {}
 
@@ -113,7 +114,9 @@ const BRAND_CONFIG: Record<string, { id: string, name: string, logo: string, bg:
 }
 
 export default async function NetworkSubPage({ params }: { params: { brandId: string, locale: string } }) {
-    const { brandId, locale } = params
+    const { brandId: rawBrandId, locale } = params
+    if (rawBrandId !== "piazzadellarte") notFound()
+    const brandId = rawBrandId as string
     const config = BRAND_CONFIG[brandId as keyof typeof BRAND_CONFIG]
 
     if (!config) notFound()

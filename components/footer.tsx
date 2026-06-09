@@ -77,17 +77,16 @@ export async function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 3: Il Nostro Network */}
+                    {/* Column 3: Piazza dell'Arte */}
                     <div className="flex flex-col gap-4">
                         <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
-                            {t("network_title")}
+                            Piazza dell&apos;Arte
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
-                            <li><Link href="/network/unimhealth" className={cn("transition-colors", mutedColor)}>Unimhealth</Link></li>
-                            <li><Link href="/network/economia" className={cn("transition-colors", mutedColor)}>Studenti Economia</Link></li>
-                            <li><Link href="/network/matricole" className={cn("transition-colors", mutedColor)}>Unime Matricole</Link></li>
-                            <li><Link href="/network/scipog" className={cn("transition-colors", mutedColor)}>Studenti Scipog</Link></li>
-                            <li><Link href="/network/dicam" className={cn("transition-colors", mutedColor)}>Inside Dicam</Link></li>
+                            <li><Link href="/network/piazzadellarte" className={cn("transition-colors", mutedColor)}>Sito Ufficiale</Link></li>
+                            <li><Link href="/network/piazzadellarte/programma" className={cn("transition-colors", mutedColor)}>Programma</Link></li>
+                            <li><Link href="/network/piazzadellarte/artisti" className={cn("transition-colors", mutedColor)}>Artisti</Link></li>
+                            <li><Link href="/network/piazzadellarte/media" className={cn("transition-colors", mutedColor)}>Media</Link></li>
                         </ul>
                     </div>
 

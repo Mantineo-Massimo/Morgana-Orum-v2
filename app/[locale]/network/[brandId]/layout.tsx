@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import { notFound } from "next/navigation"
 
 const BRAND_ASSET_MAPPING: Record<string, string> = {
     unimhealth: "unimhealth",
@@ -19,6 +20,7 @@ const BRAND_NAMES: Record<string, string> = {
 }
 
 export async function generateMetadata({ params }: { params: { brandId: string } }): Promise<Metadata> {
+    if (params.brandId !== "piazzadellarte") return {}
     const folder = BRAND_ASSET_MAPPING[params.brandId] || "morganaorum"
     const brandName = BRAND_NAMES[params.brandId] || "Network"
 
@@ -39,8 +41,13 @@ export async function generateMetadata({ params }: { params: { brandId: string }
 
 export default function NetworkLayout({
     children,
+    params,
 }: {
     children: React.ReactNode
+    params: { brandId: string }
 }) {
+    if (params.brandId !== "piazzadellarte") {
+        notFound()
+    }
     return <>{children}</>
 }
