@@ -33,7 +33,7 @@ export async function createPiazzaArtist(data: {
 }) {
     try {
         await prisma.piazzaArtist.create({ data })
-        revalidatePath("/network/piazzadellarte/artisti")
+        revalidatePath("/piazzadellarte/artisti")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -49,7 +49,7 @@ export async function updatePiazzaArtist(id: string, data: any) {
             where: { id },
             data
         })
-        revalidatePath("/network/piazzadellarte/artisti")
+        revalidatePath("/piazzadellarte/artisti")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -62,7 +62,7 @@ export async function updatePiazzaArtist(id: string, data: any) {
 export async function deletePiazzaArtist(id: string) {
     try {
         await prisma.piazzaArtist.delete({ where: { id } })
-        revalidatePath("/network/piazzadellarte/artisti")
+        revalidatePath("/piazzadellarte/artisti")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -106,7 +106,7 @@ export async function createPiazzaProgramItem(data: {
 }) {
     try {
         await prisma.piazzaProgramItem.create({ data })
-        revalidatePath("/network/piazzadellarte/programma")
+        revalidatePath("/piazzadellarte/programma")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -131,7 +131,7 @@ export async function updatePiazzaProgramItem(id: string, data: {
             where: { id },
             data
         })
-        revalidatePath("/network/piazzadellarte/programma")
+        revalidatePath("/piazzadellarte/programma")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -144,7 +144,7 @@ export async function updatePiazzaProgramItem(id: string, data: {
 export async function deletePiazzaProgramItem(id: string) {
     try {
         await prisma.piazzaProgramItem.delete({ where: { id } })
-        revalidatePath("/network/piazzadellarte/programma")
+        revalidatePath("/piazzadellarte/programma")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -189,7 +189,7 @@ export async function createPiazzaMediaItem(data: {
 }) {
     try {
         await prisma.piazzaMediaItem.create({ data })
-        revalidatePath("/network/piazzadellarte/media")
+        revalidatePath("/piazzadellarte/media")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -205,7 +205,7 @@ export async function updatePiazzaMediaItem(id: string, data: any) {
             where: { id },
             data
         })
-        revalidatePath("/network/piazzadellarte/media")
+        revalidatePath("/piazzadellarte/media")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -218,7 +218,7 @@ export async function updatePiazzaMediaItem(id: string, data: any) {
 export async function deletePiazzaMediaItem(id: string) {
     try {
         await prisma.piazzaMediaItem.delete({ where: { id } })
-        revalidatePath("/network/piazzadellarte/media")
+        revalidatePath("/piazzadellarte/media")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -280,7 +280,7 @@ export async function updatePiazzaSettings(data: {
         })
         revalidatePath("/piazza-admin")
         revalidatePath("/")
-        revalidatePath("/network/piazzadellarte")
+        revalidatePath("/piazzadellarte")
         revalidateTag('piazza')
         return { success: true }
     } catch (error) {
@@ -317,8 +317,8 @@ export async function createPiazzaSponsor(data: {
 }) {
     try {
         await prisma.piazzaSponsor.create({ data })
-        revalidatePath("/network/piazzadellarte")
-        revalidatePath("/[locale]/network/[brandId]", "page")
+        revalidatePath("/piazzadellarte")
+        revalidatePath("/[locale]/piazzadellarte", "page")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -334,7 +334,7 @@ export async function updatePiazzaSponsor(id: string, data: any) {
             where: { id },
             data
         })
-        revalidatePath("/network/piazzadellarte")
+        revalidatePath("/piazzadellarte")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }
@@ -347,7 +347,7 @@ export async function updatePiazzaSponsor(id: string, data: any) {
 export async function deletePiazzaSponsor(id: string) {
     try {
         await prisma.piazzaSponsor.delete({ where: { id } })
-        revalidatePath("/network/piazzadellarte")
+        revalidatePath("/piazzadellarte")
         revalidatePath("/piazza-admin")
         revalidateTag('piazza')
         return { success: true }

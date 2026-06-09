@@ -27,6 +27,8 @@ export function BrandProvider({
     if (pathname.startsWith("/network/")) {
       const detectedBrand = pathname.split("/")[2] as Brand
       if (detectedBrand) setBrand(detectedBrand)
+    } else if (pathname.startsWith("/piazzadellarte")) {
+      setBrand("piazzadellarte")
     } else {
       setBrand(null) // Reset to default on home, login, etc.
     }

@@ -34,9 +34,9 @@ export function MainNav({
 
     const routes: { href: string; label: string; active: boolean; color?: string }[] = [
         {
-            href: brand ? `/network/${brand}` : `/`,
+            href: brand === 'piazzadellarte' ? '/piazzadellarte' : brand ? `/network/${brand}` : `/`,
             label: nt("home"),
-            active: brand ? pathname === `/network/${brand}` : (pathname === "/" || pathname === ``),
+            active: brand === 'piazzadellarte' ? pathname === '/piazzadellarte' : brand ? pathname === `/network/${brand}` : (pathname === "/" || pathname === ``),
         },
         {
             href: brand ? `/network/${brand}/about` : `/about`,
@@ -64,27 +64,27 @@ export function MainNav({
     if (brand === 'piazzadellarte') {
         routes.splice(1, 4, // Rimuovi About, News (verrà riaggiunto), Events, Representatives
             {
-                href: `/network/piazzadellarte/about`,
+                href: `/piazzadellarte/about`,
                 label: nt("cose"),
-                active: false,
+                active: pathname === `/piazzadellarte/about`,
                 color: "text-[#27a85d]" // Green
             },
             {
-                href: `/network/piazzadellarte/programma`,
+                href: `/piazzadellarte/programma`,
                 label: nt("programma"),
-                active: false,
+                active: pathname === `/piazzadellarte/programma`,
                 color: "text-[#f9a620]" // Gold
             },
             {
-                href: `/network/piazzadellarte/artisti`,
+                href: `/piazzadellarte/artisti`,
                 label: nt("artisti"),
-                active: false,
+                active: pathname === `/piazzadellarte/artisti`,
                 color: "text-[#1fbcd3]" // Cyan
             },
             {
-                href: `/network/piazzadellarte/media`,
+                href: `/piazzadellarte/media`,
                 label: nt("media"),
-                active: false,
+                active: pathname === `/piazzadellarte/media`,
                 color: "text-[#27a85d]" // Green
             },
             {
