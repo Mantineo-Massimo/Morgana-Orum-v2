@@ -23,7 +23,7 @@ export async function sendEmail({ to, subject, html, brand = "joint" }: SendEmai
             break
         case "joint":
         default:
-            senderName = "ORUM & Morgana News"
+            senderName = "Morgana & ORUM News"
             senderEmail = process.env.SMTP_SENDER || "orum.unime@gmail.com"
             break
     }

@@ -52,7 +52,7 @@ export default function Page() {
             <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-6 md:p-8 border border-zinc-100 my-10">
                 <div className="text-center mb-8">
                     <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Unisciti alla community!</h1>
-                    <p className="text-xs md:text-sm text-zinc-500 mt-1 uppercase font-bold tracking-widest">Orum & Morgana</p>
+                    <p className="text-xs md:text-sm text-zinc-500 mt-1 uppercase font-bold tracking-widest">Morgana & Orum</p>
                 </div>
 
                 <form onSubmit={onSubmit} className="space-y-4">
@@ -171,16 +171,16 @@ export default function Page() {
                                     </label>
 
                                     <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                                        <input type="checkbox" name="consenso_marketing_orum" value="yes" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <input type="checkbox" name="consenso_marketing_morgana" value="yes" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
                                         <span className="text-[11px] text-zinc-600 leading-snug">
-                                            {t("consent_orum")}
+                                            {t("consent_morgana")}
                                         </span>
                                     </label>
 
                                     <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
-                                        <input type="checkbox" name="consenso_marketing_morgana" value="yes" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
+                                        <input type="checkbox" name="consenso_marketing_orum" value="yes" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
                                         <span className="text-[11px] text-zinc-600 leading-snug">
-                                            {t("consent_morgana")}
+                                            {t("consent_orum")}
                                         </span>
                                     </label>
                                 </div>
