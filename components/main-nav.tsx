@@ -218,11 +218,11 @@ export function MainNav({
                             <AnimatePresence>
                                 {isServiziOpen && (
                                     <motion.div
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: 10 }}
+                                        initial={{ opacity: 0, y: 10, x: "-50%" }}
+                                        animate={{ opacity: 1, y: 0, x: "-50%" }}
+                                        exit={{ opacity: 0, y: 10, x: "-50%" }}
                                         transition={{ duration: 0.15 }}
-                                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[580px] bg-white rounded-3xl shadow-2xl border border-zinc-100 p-6 z-50 text-left before:content-[''] before:absolute before:top-[-16px] before:left-0 before:right-0 before:h-[16px] before:bg-transparent"
+                                        className="absolute left-1/2 top-full mt-2 w-[580px] bg-white rounded-3xl shadow-2xl border border-zinc-100 p-6 z-50 text-left before:content-[''] before:absolute before:top-[-16px] before:left-0 before:right-0 before:h-[16px] before:bg-transparent"
                                     >
                                         <div className="grid grid-cols-2 gap-6">
                                             {/* Column 1: Vita Accademica */}
