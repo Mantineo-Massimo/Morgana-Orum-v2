@@ -414,11 +414,14 @@ export function MainNav({
                         <Link
                             href={`/login`}
                             className={cn(
-                                "px-6 py-1.5 rounded-full text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg max-w-[150px] leading-none text-center flex items-center justify-center min-h-[40px]",
+                                "flex items-center gap-2 px-4 py-1.5 rounded-full text-white font-bold uppercase tracking-widest text-[10px] xl:text-xs transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg max-w-[140px] leading-none text-center min-h-[40px] justify-center",
                                 brandColor
                             )}
                         >
-                            <span className="pt-0.5">{nt("reserved_area")}</span>
+                            <User className="size-4 shrink-0" />
+                            <span className="flex flex-col justify-center pt-0.5">
+                                {nt("reserved_area")}
+                            </span>
                         </Link>
                     </div>
                 )}
@@ -600,11 +603,11 @@ export function MainNav({
                                     href={`/login`}
                                     onClick={() => setIsOpen(false)}
                                     className={cn(
-                                        "w-full py-4 rounded-2xl text-center text-white font-bold uppercase tracking-widest text-sm shadow-xl",
+                                        "flex items-center justify-center gap-2 w-full py-4 rounded-2xl text-white font-bold uppercase tracking-widest text-sm shadow-xl",
                                         brandColor
                                     )}
                                 >
-                                    {nt("reserved_area")}
+                                    <User className="size-5" /> {nt("reserved_area")}
                                 </Link>
                             )}
 
