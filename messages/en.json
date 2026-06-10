@@ -307,5 +307,19 @@
         "analytics_desc": "Used to collect information in anonymous form on the number of users and how they visit the site (Google Analytics 4). They are only activated upon consent.",
         "management_title": "Management and Rights",
         "management_desc": "You can change your preferences by acting on your browser settings. Consult our Privacy Policy to know your rights."
+    },
+    "SocialPage": {
+        "title": "Our Social Channels",
+        "subtitle": "Stay updated on Unime news. Follow us on our official channels for news, events, guides, and university deadlines.",
+        "morgana_section": "Associazione Morgana",
+        "orum_section": "Associazione O.R.U.M.",
+        "community_title": "Discover our community",
+        "community_subtitle": "Click on the logos to access our official social media channels and join our network.",
+        "morgana_desc": "Official news, activities and student guidance of the Morgana Association.",
+        "orum_desc": "Right to education, representation and news of the O.R.U.M. Association.",
+        "matricole_desc": "Guidance, guides and groups dedicated to freshmen.",
+        "morgana_fb_desc": "Our Facebook page for updates and events.",
+        "orum_fb_desc": "The official Facebook page of the O.R.U.M. Association.",
+        "morgana_yt_desc": "Video footage of events, conferences and university video guides."
     }
 }

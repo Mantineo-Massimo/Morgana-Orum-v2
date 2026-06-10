@@ -309,5 +309,19 @@
         "analytics_desc": "Utilizzati per raccogliere informazioni in forma anonima sul numero degli utenti e su come questi visitano il sito (Google Analytics 4). Vengono attivati solo previo consenso.",
         "management_title": "Gestione e Diritti",
         "management_desc": "Puoi modificare le tue preferenze agendo sulle impostazioni del tuo browser. Consulta la nostra Privacy Policy per conoscere i tuoi diritti."
+    },
+    "SocialPage": {
+        "title": "I Nostri Canali Social",
+        "subtitle": "Rimani sempre aggiornato sulle novità di Unime. Seguici sui nostri canali ufficiali per news, eventi, guide e scadenze universitarie.",
+        "morgana_section": "Associazione Morgana",
+        "orum_section": "Associazione O.R.U.M.",
+        "community_title": "Scopri la nostra community",
+        "community_subtitle": "Clicca sui loghi per accedere ai nostri canali social ufficiali ed entrare a far parte della nostra rete.",
+        "morgana_desc": "Notizie ufficiali, attività e orientamento dell'Associazione Morgana.",
+        "orum_desc": "Diritto allo studio, rappresentanza e news dell'Associazione O.R.U.M.",
+        "matricole_desc": "Orientamento, guide e gruppi dedicati alle matricole.",
+        "morgana_fb_desc": "La nostra pagina Facebook per aggiornamenti ed eventi.",
+        "orum_fb_desc": "La pagina Facebook ufficiale dell'Associazione O.R.U.M.",
+        "morgana_yt_desc": "Riprese video di eventi, conferenze e video guide universitarie."
     }
 }
