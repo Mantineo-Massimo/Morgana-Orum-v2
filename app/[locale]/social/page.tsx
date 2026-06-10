@@ -131,8 +131,8 @@ export default function SocialPage() {
     }
 
     return (
-        <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
-            <div className="container mx-auto px-6 max-w-5xl">
+        <div className="min-h-screen bg-zinc-50 pt-32 pb-0 flex flex-col justify-between">
+            <div className="container mx-auto px-6 max-w-5xl mb-20 flex-1">
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <div className="size-20 bg-primary/10 text-primary rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
@@ -165,53 +165,111 @@ export default function SocialPage() {
                     </div>
                     {renderGrid(ORUM_SOCIALS)}
                 </div>
+            </div>
 
-                {/* Community Section */}
-                <div className="mt-20 border-t border-zinc-200 pt-16 text-center max-w-3xl mx-auto">
-                    <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
-                        {t("community_title")}
-                    </h2>
-                    <p className="text-zinc-600 font-medium leading-relaxed mb-10 max-w-2xl mx-auto">
-                        {t("community_subtitle")}
-                    </p>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-16">
-                        {/* Morgana Logo */}
-                        <a
-                            href="https://www.instagram.com/associazione.morgana"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative flex items-center justify-center p-6 bg-white border border-zinc-100 rounded-[2.5rem] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-48 h-48"
-                        >
-                            <div className="relative w-32 h-32 transform group-hover:scale-110 transition-transform duration-300">
-                                <Image
-                                    src="/assets/morgana.webp"
-                                    alt="Morgana Logo"
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
-                        </a>
-
-                        {/* Orum Logo */}
-                        <a
-                            href="https://www.instagram.com/orum_unime"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="group relative flex items-center justify-center p-6 bg-white border border-zinc-100 rounded-[2.5rem] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-48 h-48"
-                        >
-                            <div className="relative w-32 h-32 transform group-hover:scale-110 transition-transform duration-300">
-                                <Image
-                                    src="/assets/orum.webp"
-                                    alt="O.R.U.M. Logo"
-                                    fill
-                                    className="object-contain"
-                                />
-                            </div>
-                        </a>
+            {/* Community Section (Full Width Diagonal Grid) */}
+            <section className="bg-zinc-900 border-t border-white/5 relative z-0 w-full">
+                {/* Network Header */}
+                <div className="relative h-[180px] md:h-[280px] flex items-center justify-center overflow-hidden">
+                    <Image
+                         src="/assets/unime.webp"
+                         fill
+                         className="object-cover opacity-20"
+                         alt=""
+                         priority
+                    />
+                    <div className="absolute inset-0 bg-primary/20 mix-blend-multiply"></div>
+                    <div className="container relative z-10 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-14 px-6 text-center">
+                        <div className="relative h-12 sm:h-20 md:h-28 w-12 sm:w-20 md:w-28 shrink-0">
+                            <Image src="/assets/morgana.webp" fill className="object-contain drop-shadow-2xl" alt="Morgana" />
+                        </div>
+                        <h2 className="text-2xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none whitespace-nowrap">
+                            {t("community_title")}
+                        </h2>
+                        <div className="relative h-12 sm:h-20 md:h-28 w-12 sm:w-20 md:w-28 shrink-0">
+                            <Image src="/assets/orum.webp" fill className="object-contain drop-shadow-2xl" alt="O.R.U.M." />
+                        </div>
                     </div>
                 </div>
 
-            </div>
+                {/* Diagonal Network Grid */}
+                <div className="flex flex-col md:flex-row h-auto md:h-[450px] overflow-hidden">
+                    {/* Unimhealth */}
+                    <a 
+                         href="https://www.instagram.com/unimhealth"
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#c12830] overflow-hidden md:[clip-path:polygon(0_0,100%_0,75%_100%,0_100%)] z-40 transition-all hover:flex-[1.3] duration-500"
+                    >
+                         <Image src="/assets/policlinico.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="Unimhealth Background" sizes="(max-width: 768px) 100vw, 20vw" />
+                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pr-20">
+                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                 <Image src="/assets/unimhealth.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unimhealth Logo" />
+                             </div>
+                         </div>
+                    </a>
+
+                    {/* Studenti Economia */}
+                    <a 
+                         href="https://www.instagram.com/studentieconomia"
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#0055a4] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-30 transition-all hover:flex-[1.3] duration-500"
+                    >
+                         <Image src="/assets/economia.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="Economia Background" sizes="(max-width: 768px) 100vw, 20vw" />
+                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
+                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                 <Image src="/assets/studentieconomia.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Economia Logo" />
+                             </div>
+                         </div>
+                    </a>
+
+                    {/* Unime Matricole */}
+                    <a 
+                         href="https://www.instagram.com/unime.matricole"
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="relative group flex-1 min-h-[250px] md:min-h-0 bg-gradient-to-br from-[#ffffff] to-[#afafaf] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-20 transition-all hover:flex-[1.3] duration-500"
+                    >
+                         <Image src="/assets/matricole.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="Matricole Background" sizes="(max-width: 768px) 100vw, 20vw" />
+                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
+                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                 <Image src="/assets/unimematricole.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Unime Matricole Logo" />
+                             </div>
+                         </div>
+                    </a>
+
+                    {/* Studenti Scipog */}
+                    <a 
+                         href="https://www.instagram.com/studentiscipog"
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#ffcc00] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,75%_100%,0_100%)] md:-ml-[8%] z-10 transition-all hover:flex-[1.3] duration-500"
+                    >
+                         <Image src="/assets/scipog.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="Scipog Background" sizes="(max-width: 768px) 100vw, 20vw" />
+                         <div className="absolute inset-0 flex items-center justify-center p-8 md:px-16">
+                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                 <Image src="/assets/studentiscipog.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Studenti Scipog Logo" />
+                             </div>
+                         </div>
+                    </a>
+
+                    {/* Inside Dicam */}
+                    <a 
+                         href="https://www.instagram.com/insidedicam"
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#d81b60] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500"
+                    >
+                         <Image src="/assets/dicam.webp" fill className="object-cover opacity-40 group-hover:scale-110 transition-transform duration-700" alt="Dicam Background" sizes="(max-width: 768px) 100vw, 20vw" />
+                         <div className="absolute inset-0 flex items-center justify-center p-8 md:pl-20">
+                             <div className="size-32 md:size-40 rounded-full bg-white shadow-2xl flex items-center justify-center overflow-hidden transform group-hover:scale-110 transition-transform duration-500 border-4 border-white/20">
+                                 <Image src="/assets/insidedicam.webp" width={160} height={160} className="w-[85%] h-[85%] object-contain transition-transform group-hover:scale-125 duration-500" alt="Inside Dicam Logo" />
+                             </div>
+                         </div>
+                    </a>
+                </div>
+            </section>
         </div>
     )
 }
