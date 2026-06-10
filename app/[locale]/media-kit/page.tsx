@@ -1,32 +1,118 @@
 "use client"
 
 import { useState } from "react"
-import { FileDown, Image as ImageIcon, Paintbrush, FileText, Check } from "lucide-react"
+import { FileDown, Image as ImageIcon, Paintbrush, FileText, Check, Copy } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 
 export const dynamic = "force-dynamic"
 
+type BrandColor = {
+    name: string
+    hex: string
+    desc: string
+}
+
 type BrandAsset = {
     titleKey: string
     logoUrl: string
     filename: string
+    colors: BrandColor[]
 }
 
 const BRANDS: BrandAsset[] = [
-    { titleKey: "morgana_title", logoUrl: "/assets/morgana.webp", filename: "associazione_morgana" },
-    { titleKey: "orum_title", logoUrl: "/assets/orum.webp", filename: "associazione_orum" },
-    { titleKey: "matricole_title", logoUrl: "/assets/unimematricole.webp", filename: "unime_matricole" },
-    { titleKey: "unimhealth_title", logoUrl: "/assets/unimhealth.webp", filename: "unimhealth" },
-    { titleKey: "economia_title", logoUrl: "/assets/studentieconomia.webp", filename: "studenti_economia" },
-    { titleKey: "scipog_title", logoUrl: "/assets/studentiscipog.webp", filename: "studenti_scipog" },
-    { titleKey: "dicam_title", logoUrl: "/assets/insidedicam.webp", filename: "inside_dicam" },
-    { titleKey: "piazza_title", logoUrl: "/assets/piazzadellarte.webp", filename: "piazza_dell_arte" }
+    {
+        titleKey: "morgana_title",
+        logoUrl: "/assets/morgana.webp",
+        filename: "associazione_morgana",
+        colors: [
+            { name: "Morgana Red", hex: "#c12830", desc: "Colore primario istituzionale" },
+            { name: "Charcoal Black", hex: "#1c1c1e", desc: "Testi e contrasti scuri" },
+            { name: "Soft Gray", hex: "#f4f4f5", desc: "Sfondi e bordi neutri" }
+        ]
+    },
+    {
+        titleKey: "orum_title",
+        logoUrl: "/assets/orum.webp",
+        filename: "associazione_orum",
+        colors: [
+            { name: "Orum Navy", hex: "#18182e", desc: "Colore primario istituzionale" },
+            { name: "Slate Blue", hex: "#3b3f5c", desc: "Toni secondari e icone" },
+            { name: "Pure White", hex: "#ffffff", desc: "Sfondi e aree ad alto contrasto" }
+        ]
+    },
+    {
+        titleKey: "matricole_title",
+        logoUrl: "/assets/unimematricole.webp",
+        filename: "unime_matricole",
+        colors: [
+            { name: "Deep Navy", hex: "#0f172a", desc: "Colore primario di base" },
+            { name: "Bright Amber", hex: "#f59e0b", desc: "Accento energico per le matricole" },
+            { name: "Warm Orange", hex: "#f97316", desc: "Toni secondari e pulsanti" }
+        ]
+    },
+    {
+        titleKey: "unimhealth_title",
+        logoUrl: "/assets/unimhealth.webp",
+        filename: "unimhealth",
+        colors: [
+            { name: "Medical Crimson", hex: "#c12830", desc: "Colore primario della salute" },
+            { name: "Pure White", hex: "#ffffff", desc: "Pulizia visiva ed elementi medicali" },
+            { name: "Soft Rose", hex: "#fef2f2", desc: "Sfondi e pannelli informativi" }
+        ]
+    },
+    {
+        titleKey: "economia_title",
+        logoUrl: "/assets/studentieconomia.webp",
+        filename: "studenti_economia",
+        colors: [
+            { name: "Academic Blue", hex: "#0055a4", desc: "Colore primario istituzionale" },
+            { name: "Royal Navy", hex: "#1e3a8a", desc: "Titoli e sezioni principali" },
+            { name: "Sky Blue", hex: "#3b82f6", desc: "Dettagli ed evidenziazioni" }
+        ]
+    },
+    {
+        titleKey: "scipog_title",
+        logoUrl: "/assets/studentiscipog.webp",
+        filename: "studenti_scipog",
+        colors: [
+            { name: "Political Gold", hex: "#ffcc00", desc: "Colore primario comunicativo" },
+            { name: "Dark Gray", hex: "#333333", desc: "Testo ad alta leggibilità" },
+            { name: "Warm Sand", hex: "#fef3c7", desc: "Sfondi e box secondari" }
+        ]
+    },
+    {
+        titleKey: "dicam_title",
+        logoUrl: "/assets/insidedicam.webp",
+        filename: "inside_dicam",
+        colors: [
+            { name: "Dicam Magenta", hex: "#d81b60", desc: "Tono primario giovanile" },
+            { name: "Deep Rose", hex: "#be185d", desc: "Contrasti e hover di navigazione" },
+            { name: "Blush Pink", hex: "#fdf2f8", desc: "Sfondi delicati e sfumature" }
+        ]
+    },
+    {
+        titleKey: "piazza_title",
+        logoUrl: "/assets/piazzadellarte.webp",
+        filename: "piazza_dell_arte",
+        colors: [
+            { name: "Piazza Gold", hex: "#f9a620", desc: "Colore artistico principale (Oro)" },
+            { name: "Piazza Green", hex: "#27a85d", desc: "Tono creativo secondario (Verde)" },
+            { name: "Piazza Cyan", hex: "#1fbcd3", desc: "Accento vivace dell'arte (Ciano)" }
+        ]
+    }
 ]
 
 export default function MediaKitPage() {
     const t = useTranslations("MediaKitPage")
     const [downloading, setDownloading] = useState<Record<string, boolean>>({})
+    const [copiedColor, setCopiedColor] = useState<string | null>(null)
+
+    const copyToClipboard = (hex: string) => {
+        navigator.clipboard.writeText(hex)
+        setCopiedColor(hex)
+        setTimeout(() => setCopiedColor(null), 2000)
+    }
 
     const handleDownload = async (key: string, fn: () => Promise<void> | void) => {
         setDownloading(prev => ({ ...prev, [key]: true }))
@@ -207,14 +293,6 @@ export default function MediaKitPage() {
         }
     }
 
-    const brandColors = [
-        { name: "Morgana Red", hex: "#c12830", desc: "Colore primario di Associazione Morgana" },
-        { name: "Orum Blue", hex: "#18182e", desc: "Colore primario di Associazione O.R.U.M." },
-        { name: "Piazza Gold", hex: "#f9a620", desc: "Colore primario di Piazza dell'Arte (Oro)" },
-        { name: "Piazza Green", hex: "#27a85d", desc: "Colore secondario di Piazza dell'Arte" },
-        { name: "Piazza Cyan", hex: "#1fbcd3", desc: "Colore d'accento di Piazza dell'Arte" }
-    ]
-
     return (
         <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
             <div className="container mx-auto px-6 max-w-6xl">
@@ -231,21 +309,20 @@ export default function MediaKitPage() {
                     </p>
                 </div>
 
+                {/* Brands Divided into Sections */}
                 <div className="space-y-16">
-                    {/* 1. Assets Downloads */}
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-3">
-                            <ImageIcon className="size-5 text-primary" />
-                            <h2 className="text-xl font-black uppercase tracking-wider text-zinc-800 font-serif">
-                                Loghi Ufficiali
-                            </h2>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {BRANDS.map((brand) => (
-                                <div key={brand.filename} className="bg-white border border-zinc-100 rounded-[2rem] p-6 shadow-sm flex flex-col justify-between hover:shadow-lg transition-all duration-300 group">
-                                    <div>
-                                        <div className="h-44 flex items-center justify-center mb-6 bg-zinc-50 rounded-2xl border border-zinc-100/50 p-6 relative overflow-hidden">
-                                            <div className="relative w-28 h-28 transform group-hover:scale-105 transition-transform duration-300">
+                    {BRANDS.map((brand, index) => {
+                        const isEven = index % 2 === 0
+                        return (
+                            <section 
+                                key={brand.filename} 
+                                className="bg-white border border-zinc-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm hover:shadow-xl transition-all duration-500 group"
+                            >
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+                                    {/* Logo Column (Span 5) */}
+                                    <div className={`lg:col-span-5 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                                        <div className="h-64 flex items-center justify-center bg-zinc-50 rounded-3xl border border-zinc-100 p-8 relative overflow-hidden group-hover:bg-zinc-100/50 transition-colors">
+                                            <div className="relative w-40 h-40 transform group-hover:scale-105 transition-transform duration-300">
                                                 <Image
                                                     src={brand.logoUrl}
                                                     alt={t(brand.titleKey)}
@@ -254,118 +331,159 @@ export default function MediaKitPage() {
                                                 />
                                             </div>
                                         </div>
-                                        <h3 className="text-lg font-black text-zinc-900 mb-2 uppercase tracking-wide">
-                                            {t(brand.titleKey)}
-                                        </h3>
-                                        <p className="text-xs text-zinc-400 mb-6 font-medium">
-                                            {t("logo_desc")}
-                                        </p>
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <div className="flex gap-2">
-                                            <button 
-                                                onClick={() => handleDownload(`${brand.filename}_svg`, () => downloadAsSvg(brand.logoUrl, brand.filename))}
-                                                disabled={downloading[`${brand.filename}_svg`]}
-                                                className="flex-1 py-2.5 bg-zinc-900 text-white hover:bg-zinc-800 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer"
-                                            >
-                                                {downloading[`${brand.filename}_svg`] ? (
-                                                    <>
-                                                        <Check className="size-3 text-emerald-400" />
-                                                        <span>Fatto</span>
-                                                    </>
-                                                ) : (
-                                                    t("download_svg")
-                                                )}
-                                            </button>
-                                            <button 
-                                                onClick={() => handleDownload(`${brand.filename}_png`, () => downloadAsPng(brand.logoUrl, brand.filename))}
-                                                disabled={downloading[`${brand.filename}_png`]}
-                                                className="flex-1 py-2.5 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1 cursor-pointer"
-                                            >
-                                                {downloading[`${brand.filename}_png`] ? (
-                                                    <>
-                                                        <Check className="size-3 text-emerald-600" />
-                                                        <span>Fatto</span>
-                                                    </>
-                                                ) : (
-                                                    t("download_png")
-                                                )}
-                                            </button>
+
+                                    {/* Brand Info & Colors Column (Span 7) */}
+                                    <div className={`lg:col-span-7 space-y-6 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+                                        <div>
+                                            <div className="flex items-center gap-3 mb-3">
+                                                <span className="h-2 w-8 rounded-full bg-primary shrink-0"></span>
+                                                <h2 className="text-2xl md:text-3xl font-black text-zinc-900 uppercase tracking-wide font-serif">
+                                                    {t(brand.titleKey)}
+                                                </h2>
+                                            </div>
+                                            <p className="text-zinc-500 text-sm leading-relaxed">
+                                                {t("logo_desc")}
+                                            </p>
                                         </div>
-                                        <button 
-                                            onClick={() => handleDownload(`${brand.filename}_webp`, () => downloadAsWebp(brand.logoUrl, brand.filename))}
-                                            disabled={downloading[`${brand.filename}_webp`]}
-                                            className="w-full py-2 bg-zinc-50 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 disabled:opacity-75 text-[9px] font-black uppercase tracking-widest rounded-xl transition-all border border-zinc-200/50 flex items-center justify-center gap-1 cursor-pointer"
-                                        >
-                                            {downloading[`${brand.filename}_webp`] ? (
-                                                <>
-                                                    <Check className="size-2.5 text-emerald-600" />
-                                                    <span>Fatto</span>
-                                                </>
-                                            ) : (
-                                                t("download_webp")
-                                            )}
-                                        </button>
+
+                                        {/* Color Palette Row */}
+                                        <div>
+                                            <h4 className="text-xs font-black uppercase tracking-wider text-zinc-400 mb-3 flex items-center gap-2">
+                                                <Paintbrush className="size-3.5 text-primary" />
+                                                {t("color_palette_label")}
+                                            </h4>
+                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                                {brand.colors.map((color) => (
+                                                    <div 
+                                                        key={color.hex} 
+                                                        onClick={() => copyToClipboard(color.hex)}
+                                                        className="bg-zinc-50 hover:bg-zinc-100 border border-zinc-100 hover:border-zinc-200 rounded-2xl p-3 flex items-center gap-3 transition-all cursor-pointer relative group/swatch"
+                                                        title="Clicca per copiare il codice HEX"
+                                                    >
+                                                        <div 
+                                                            className="size-10 rounded-xl shadow-inner shrink-0" 
+                                                            style={{ backgroundColor: color.hex }}
+                                                        />
+                                                        <div className="overflow-hidden flex-1">
+                                                            <span className="font-bold text-zinc-800 text-xs block truncate leading-tight">
+                                                                {color.name}
+                                                            </span>
+                                                            <span className="font-mono text-[10px] text-zinc-400 font-bold block flex items-center gap-1">
+                                                                {color.hex}
+                                                                <Copy className="size-2.5 opacity-0 group-hover/swatch:opacity-100 transition-opacity" />
+                                                            </span>
+                                                        </div>
+                                                        
+                                                        {/* Copied Success Indicator */}
+                                                        {copiedColor === color.hex && (
+                                                            <span className="absolute inset-0 bg-zinc-900/90 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-1 animate-fade-in z-10">
+                                                                <Check className="size-3 text-emerald-400" />
+                                                                {t("copied_label")}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {/* Download Buttons Row */}
+                                        <div className="pt-2">
+                                            <h4 className="text-xs font-black uppercase tracking-wider text-zinc-400 mb-3 flex items-center gap-2">
+                                                <ImageIcon className="size-3.5 text-primary" />
+                                                {t("download_assets_label")}
+                                            </h4>
+                                            <div className="flex flex-wrap gap-2">
+                                                <button 
+                                                    onClick={() => handleDownload(`${brand.filename}_svg`, () => downloadAsSvg(brand.logoUrl, brand.filename))}
+                                                    disabled={downloading[`${brand.filename}_svg`]}
+                                                    className="py-2.5 px-5 bg-zinc-900 text-white hover:bg-zinc-800 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                                                >
+                                                    {downloading[`${brand.filename}_svg`] ? (
+                                                        <>
+                                                            <Check className="size-3 text-emerald-400" />
+                                                            <span>{t("download_done")} SVG</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <FileDown className="size-3.5" />
+                                                            <span>{t("download_svg")}</span>
+                                                        </>
+                                                    )}
+                                                </button>
+                                                <button 
+                                                    onClick={() => handleDownload(`${brand.filename}_png`, () => downloadAsPng(brand.logoUrl, brand.filename))}
+                                                    disabled={downloading[`${brand.filename}_png`]}
+                                                    className="py-2.5 px-5 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                                                >
+                                                    {downloading[`${brand.filename}_png`] ? (
+                                                        <>
+                                                            <Check className="size-3 text-emerald-600" />
+                                                            <span>{t("download_done")} PNG</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <FileDown className="size-3.5" />
+                                                            <span>{t("download_png")}</span>
+                                                        </>
+                                                    )}
+                                                </button>
+                                                <button 
+                                                    onClick={() => handleDownload(`${brand.filename}_webp`, () => downloadAsWebp(brand.logoUrl, brand.filename))}
+                                                    disabled={downloading[`${brand.filename}_webp`]}
+                                                    className="py-2.5 px-5 bg-zinc-50 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 border border-zinc-200/50 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                                                >
+                                                    {downloading[`${brand.filename}_webp`] ? (
+                                                        <>
+                                                            <Check className="size-3 text-emerald-600" />
+                                                            <span>{t("download_done")} WebP</span>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <FileDown className="size-3.5" />
+                                                            <span>{t("download_webp")}</span>
+                                                        </>
+                                                    )}
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
+                            </section>
+                        )
+                    })}
+                </div>
 
-                    {/* 2. Color Palette */}
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-3">
-                            <Paintbrush className="size-5 text-primary" />
-                            <h2 className="text-xl font-black uppercase tracking-wider text-zinc-800 font-serif">
-                                {t("colors_title")}
-                            </h2>
+                {/* Guidelines Section */}
+                <div className="mt-16 bg-zinc-900 text-white rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="relative z-10 flex-1 space-y-4 text-center md:text-left">
+                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-white/80 text-[10px] font-black uppercase tracking-widest">
+                            <FileText className="size-3.5 text-primary" /> {t("guidelines_title")}
                         </div>
-                        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                            {brandColors.map((color) => (
-                                <div key={color.name} className="bg-white border border-zinc-100 rounded-3xl p-5 shadow-sm text-center">
-                                    <div
-                                        className="w-full aspect-square rounded-2xl mb-4 shadow-inner"
-                                        style={{ backgroundColor: color.hex }}
-                                    ></div>
-                                    <h3 className="font-bold text-zinc-900 leading-tight mb-1 text-sm">{color.name}</h3>
-                                    <span className="font-mono text-xs font-black text-zinc-400 block mb-2">{color.hex}</span>
-                                    <p className="text-[10px] text-zinc-400 font-medium leading-tight">{color.desc}</p>
-                                </div>
-                            ))}
-                        </div>
+                        <h3 className="text-2xl md:text-3xl font-serif font-black uppercase tracking-tighter leading-none">
+                            {t("guidelines_title")}
+                        </h3>
+                        <p className="text-white/60 text-sm max-w-xl">
+                            {t("guidelines_desc")}
+                        </p>
                     </div>
-
-                    {/* 3. Typography & Guidelines */}
-                    <div className="bg-zinc-900 text-white rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-                        <div className="relative z-10 flex-1 space-y-4 text-center md:text-left">
-                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-white/80 text-[10px] font-black uppercase tracking-widest">
-                                <FileText className="size-3.5 text-primary" /> {t("guidelines_title")}
-                            </div>
-                            <h3 className="text-2xl md:text-3xl font-serif font-black uppercase tracking-tighter leading-none">
-                                {t("guidelines_title")}
-                            </h3>
-                            <p className="text-white/60 text-sm max-w-xl">
-                                {t("guidelines_desc")}
-                            </p>
-                        </div>
-                        <button 
-                            onClick={() => handleDownload("guidelines_pdf", downloadGuidelinesPdf)}
-                            disabled={downloading["guidelines_pdf"]}
-                            className="relative z-10 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-zinc-900 font-black uppercase tracking-widest text-xs hover:scale-105 transition-transform disabled:opacity-75 shrink-0 cursor-pointer"
-                        >
-                            {downloading["guidelines_pdf"] ? (
-                                <>
-                                    <Check className="size-4 text-emerald-600 animate-bounce" />
-                                    <span>Scaricato</span>
-                                </>
-                            ) : (
-                                <>
-                                    <FileText className="size-4" />
-                                    <span>{t("download_guidelines")}</span>
-                                </>
-                            )}
-                        </button>
-                    </div>
+                    <button 
+                        onClick={() => handleDownload("guidelines_pdf", downloadGuidelinesPdf)}
+                        disabled={downloading["guidelines_pdf"]}
+                        className="relative z-10 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-zinc-900 font-black uppercase tracking-widest text-xs hover:scale-105 transition-transform disabled:opacity-75 shrink-0 cursor-pointer"
+                    >
+                        {downloading["guidelines_pdf"] ? (
+                            <>
+                                <Check className="size-4 text-emerald-600 animate-bounce" />
+                                <span>{t("download_done")}</span>
+                            </>
+                        ) : (
+                            <>
+                                <FileText className="size-4" />
+                                <span>{t("download_guidelines")}</span>
+                            </>
+                        )}
+                    </button>
                 </div>
             </div>
         </div>
