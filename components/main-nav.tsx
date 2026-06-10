@@ -199,9 +199,9 @@ export function MainNav({
                             </AnimatePresence>
                         </div>
 
-                        {/* Servizi Mega Menu */}
+                        {/* Servizi Dropdown Menu */}
                         <div 
-                            className="static"
+                            className="relative"
                             onMouseEnter={() => setIsServiziOpen(true)}
                             onMouseLeave={() => setIsServiziOpen(false)}
                         >
@@ -211,7 +211,7 @@ export function MainNav({
                                     (pathname.startsWith("/representatives") || pathname.startsWith("/gruppi") || pathname.startsWith("/guide") || pathname.startsWith("/faq") || pathname.startsWith("/events") || pathname.startsWith("/convenzioni") || pathname.startsWith("/social") || pathname.startsWith("/media-kit"))
                                         ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
                                         : `${textColor}`
-                                )}
+                                    )}
                             >
                                 Servizi <ChevronDown className="size-4 transition-transform duration-300" style={{ transform: isServiziOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
                             </button>
@@ -222,9 +222,9 @@ export function MainNav({
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 10 }}
                                         transition={{ duration: 0.15 }}
-                                        className="absolute left-0 right-0 top-full mt-2 w-full bg-white rounded-3xl shadow-2xl border border-zinc-100 p-8 z-50 text-left before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px] before:bg-transparent"
+                                        className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-[580px] bg-white rounded-3xl shadow-2xl border border-zinc-100 p-6 z-50 text-left before:content-[''] before:absolute before:top-[-16px] before:left-0 before:right-0 before:h-[16px] before:bg-transparent"
                                     >
-                                        <div className="grid grid-cols-2 gap-8 max-w-4xl mx-auto">
+                                        <div className="grid grid-cols-2 gap-6">
                                             {/* Column 1: Vita Accademica */}
                                             <div className="space-y-4">
                                                 <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
