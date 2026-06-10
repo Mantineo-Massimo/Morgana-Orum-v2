@@ -12,6 +12,7 @@ import {
     Home,
     Wifi
 } from "lucide-react"
+import { Link } from "@/i18n/routing"
 
 const SERVICES = [
     {
@@ -316,14 +317,12 @@ export function ServicesGuide() {
                             >
                                 Sito Ufficiale UniMe <ExternalLink className="size-4" />
                             </a>
-                            <a
-                                href={`https://www.instagram.com/${igHandle}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                            <Link
+                                href="/representatives"
                                 className="bg-zinc-800 text-white px-8 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-zinc-700 transition-colors border border-zinc-700"
                             >
                                 Contatta Rappresentanti
-                            </a>
+                            </Link>
                         </div>
                     </div>
                     {/* Blur Background */}

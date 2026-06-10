@@ -62,7 +62,13 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                         // Unified width logic for absolute stability
                         brand === "piazzadellarte"
                             ? "w-[75%] sm:w-[65%] md:w-[45%] lg:w-[35%] xl:w-[37%] 2xl:w-[38%]"
-                            : brand ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]" : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]"
+                            : brand
+                                ? isLoggedIn
+                                    ? "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[35%] xl:w-[38%] 2xl:w-[40%]"
+                                    : "w-[90%] sm:w-[80%] md:w-[58%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]"
+                                : isLoggedIn
+                                    ? "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[35%] xl:w-[38%] 2xl:w-[40%]"
+                                    : "w-[80%] sm:w-[70%] md:w-[52%] lg:w-[40%] xl:w-[42%] 2xl:w-[44%]"
                     )}
                 />
             </div>
