@@ -207,6 +207,32 @@ export function MainNav({
                             </AnimatePresence>
                         </div>
 
+                        {/* Notizie Link */}
+                        <Link
+                            href={brand ? `/network/${brand}/news` : `/news`}
+                            className={cn(
+                                "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap pb-1",
+                                (pathname.startsWith("/news") || pathname.startsWith(brand ? `/network/${brand}/news` : "/news/"))
+                                    ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
+                                    : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
+                            )}
+                        >
+                            {nt("news")}
+                        </Link>
+
+                        {/* Eventi Link */}
+                        <Link
+                            href={brand ? `/network/${brand}/events` : `/events`}
+                            className={cn(
+                                "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap pb-1",
+                                (pathname.startsWith("/events") || pathname.startsWith(brand ? `/network/${brand}/events` : "/events/"))
+                                    ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
+                                    : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
+                            )}
+                        >
+                            {nt("events")}
+                        </Link>
+
                         {/* Servizi Dropdown Menu */}
                         <div 
                             className="relative"
@@ -285,7 +311,7 @@ export function MainNav({
                                                     </Link>
                                                 </div>
                                             </div>
-
+ 
                                             {/* Column 2: Community & Extra */}
                                             <div className="space-y-4">
                                                 <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
@@ -343,32 +369,6 @@ export function MainNav({
                                 )}
                             </AnimatePresence>
                         </div>
-
-                        {/* Notizie Link */}
-                        <Link
-                            href={brand ? `/network/${brand}/news` : `/news`}
-                            className={cn(
-                                "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap pb-1",
-                                (pathname.startsWith("/news") || pathname.startsWith(brand ? `/network/${brand}/news` : "/news/"))
-                                    ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
-                                    : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
-                            )}
-                        >
-                            {nt("news")}
-                        </Link>
-
-                        {/* Eventi Link */}
-                        <Link
-                            href={brand ? `/network/${brand}/events` : `/events`}
-                            className={cn(
-                                "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap pb-1",
-                                (pathname.startsWith("/events") || pathname.startsWith(brand ? `/network/${brand}/events` : "/events/"))
-                                    ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
-                                    : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
-                            )}
-                        >
-                            {nt("events")}
-                        </Link>
                     </>
                 )}
 
@@ -510,6 +510,34 @@ export function MainNav({
                                         </AnimatePresence>
                                     </div>
 
+                                    {/* Notizie Mobile Link */}
+                                    <Link
+                                        href={brand ? `/network/${brand}/news` : `/news`}
+                                        onClick={() => setIsOpen(false)}
+                                        className={cn(
+                                            "text-2xl font-black uppercase tracking-widest transition-colors",
+                                            pathname.startsWith("/news")
+                                                ? "text-foreground"
+                                                : "text-zinc-400 hover:text-zinc-600"
+                                        )}
+                                    >
+                                        {nt("news")}
+                                    </Link>
+
+                                    {/* Eventi Mobile Link */}
+                                    <Link
+                                        href={brand ? `/network/${brand}/events` : `/events`}
+                                        onClick={() => setIsOpen(false)}
+                                        className={cn(
+                                            "text-2xl font-black uppercase tracking-widest transition-colors",
+                                            pathname.startsWith("/events")
+                                                ? "text-foreground"
+                                                : "text-zinc-400 hover:text-zinc-600"
+                                        )}
+                                    >
+                                        {nt("events")}
+                                    </Link>
+
                                     {/* Servizi Mobile Accordion */}
                                     <div className="flex flex-col items-center">
                                         <button
@@ -540,34 +568,6 @@ export function MainNav({
                                             )}
                                         </AnimatePresence>
                                     </div>
-
-                                    {/* Notizie Mobile Link */}
-                                    <Link
-                                        href={brand ? `/network/${brand}/news` : `/news`}
-                                        onClick={() => setIsOpen(false)}
-                                        className={cn(
-                                            "text-2xl font-black uppercase tracking-widest transition-colors",
-                                            pathname.startsWith("/news")
-                                                ? "text-foreground"
-                                                : "text-zinc-400 hover:text-zinc-600"
-                                        )}
-                                    >
-                                        {nt("news")}
-                                    </Link>
-
-                                    {/* Eventi Mobile Link */}
-                                    <Link
-                                        href={brand ? `/network/${brand}/events` : `/events`}
-                                        onClick={() => setIsOpen(false)}
-                                        className={cn(
-                                            "text-2xl font-black uppercase tracking-widest transition-colors",
-                                            pathname.startsWith("/events")
-                                                ? "text-foreground"
-                                                : "text-zinc-400 hover:text-zinc-600"
-                                        )}
-                                    >
-                                        {nt("events")}
-                                    </Link>
                                 </>
                             )}
                         </nav>
