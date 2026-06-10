@@ -4,6 +4,8 @@ import { useState } from "react"
 import { BookOpen, Bus, Info, MapPin, Download, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
 import nextDynamic from "next/dynamic"
+import { ServicesGuide } from "@/components/services-guide"
+import { TransportGuide } from "@/components/transport-guide"
 
 const InteractiveMap = nextDynamic(
     () => import("@/components/interactive-map"),
@@ -128,7 +130,7 @@ export default function GuidePage() {
 
                 {/* Expanded Details Section */}
                 <div className="bg-white rounded-[2.5rem] border border-zinc-100 shadow-2xl p-8 md:p-12">
-                    <div className={cn("mx-auto", selectedGuide === "mappa" ? "max-w-full" : "max-w-4xl")}>
+                    <div className={cn("mx-auto", (selectedGuide === "mappa" || selectedGuide === "servizi" || selectedGuide === "trasporti") ? "max-w-full" : "max-w-4xl")}>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 block mb-2">
                             Guida In Primo Piano
                         </span>
@@ -142,6 +144,14 @@ export default function GuidePage() {
                         {selectedGuide === "mappa" ? (
                             <div className="mt-8 z-10 relative">
                                 <InteractiveMap />
+                            </div>
+                        ) : selectedGuide === "servizi" ? (
+                            <div className="mt-8 z-10 relative">
+                                <ServicesGuide />
+                            </div>
+                        ) : selectedGuide === "trasporti" ? (
+                            <div className="mt-8 z-10 relative">
+                                <TransportGuide />
                             </div>
                         ) : (
                             <div className="space-y-8">
