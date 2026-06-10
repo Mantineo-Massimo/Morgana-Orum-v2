@@ -114,7 +114,7 @@ const pdfTranslations = {
             "L'applicazione coerente di questi elementi grafici e fondamentale per mantenere",
             "la riconoscibilita e la professionalita dell'identita visiva della nostra rete."
         ],
-        logo_title: "2. LOGO E DOWNLOAD",
+        logo_title: "2. LOGO E ASSETS",
         logo_desc: "Utilizzare sempre la versione ad alta risoluzione del logo. Non deformare,",
         logo_desc_2: "non ruotare e non alterare i colori originali per nessuna ragione.",
         palette_title: "3. TAVOLOZZA COLORI UFFICIALE",
@@ -304,83 +304,93 @@ export default function MediaKitPage() {
             doc.setFontSize(10)
             doc.text(strings.subtitle, 20, 36)
 
+            let y = 65
+
             // Section 1: Introduction
             doc.setTextColor(24, 24, 46)
             doc.setFont("helvetica", "bold")
-            doc.setFontSize(14)
-            doc.text(strings.intro_title, 20, 68)
+            doc.setFontSize(13)
+            doc.text(strings.intro_title, 20, y)
             
+            y += 8
             doc.setFont("helvetica", "normal")
             doc.setFontSize(10)
             doc.setTextColor(60, 60, 60)
-            doc.text(strings.intro_text(brandName), 20, 76)
+            const lines = strings.intro_text(brandName)
+            doc.text(lines, 20, y)
+            y += lines.length * 5 + 5
 
             // Section 2: Logo image integration
             doc.setTextColor(24, 24, 46)
             doc.setFont("helvetica", "bold")
-            doc.setFontSize(14)
-            doc.text(strings.logo_title, 20, 105)
+            doc.setFontSize(13)
+            doc.text(strings.logo_title, 20, y)
 
+            y += 6
             doc.setFont("helvetica", "normal")
             doc.setFontSize(9)
             doc.setTextColor(100, 100, 100)
-            doc.text(`${strings.logo_desc} ${strings.logo_desc_2}`, 20, 113)
+            doc.text(`${strings.logo_desc} ${strings.logo_desc_2}`, 20, y)
 
             // Fetch and draw logo on-the-fly
+            y += 8
             try {
                 const logoPngBase64 = await fetchImageAsPngBase64(brand.logoUrl)
-                doc.addImage(logoPngBase64, "PNG", 80, 120, 50, 50)
+                doc.addImage(logoPngBase64, "PNG", 85, y, 40, 40)
             } catch (err) {
                 console.error("Failed to load logo in PDF", err)
-                // Draw a fallback box if image loading fails
                 doc.setDrawColor(200, 200, 200)
-                doc.rect(80, 120, 50, 50)
+                doc.rect(85, y, 40, 40)
                 doc.setTextColor(150, 150, 150)
                 doc.setFontSize(8)
-                doc.text("[Logo Image]", 95, 147)
+                doc.text("[Logo Image]", 96, y + 22)
             }
+            y += 48
 
             // Section 3: Color Palette
             doc.setTextColor(24, 24, 46)
             doc.setFont("helvetica", "bold")
-            doc.setFontSize(14)
-            doc.text(strings.palette_title, 20, 185)
+            doc.setFontSize(13)
+            doc.text(strings.palette_title, 20, y)
 
-            let startY = 195
+            y += 8
             brand.colors.forEach((c) => {
                 const [cr, cg, cb] = hexToRgb(c.hex)
                 
                 // Draw color block
                 doc.setFillColor(cr, cg, cb)
-                doc.rect(20, startY, 12, 12, "F")
+                doc.rect(20, y, 10, 10, "F")
                 
                 // Color text labels
                 doc.setTextColor(24, 24, 46)
                 doc.setFont("helvetica", "bold")
-                doc.setFontSize(10)
-                doc.text(c.name, 38, startY + 5)
+                doc.setFontSize(9)
+                doc.text(c.name, 35, y + 4)
                 
                 doc.setFont("helvetica", "normal")
                 doc.setFontSize(8)
                 doc.setTextColor(120, 120, 120)
-                doc.text(`HEX: ${c.hex} | RGB: (${cr}, ${cg}, ${cb})`, 38, startY + 10)
+                doc.text(`HEX: ${c.hex} | RGB: (${cr}, ${cg}, ${cb})`, 35, y + 8)
                 
                 doc.setTextColor(80, 80, 80)
-                doc.text(c.desc, 110, startY + 7)
+                doc.setFontSize(8)
+                doc.text(c.desc, 110, y + 6)
 
-                startY += 17
+                y += 13
             })
+            y += 5
 
             // Section 4: Rules
             doc.setTextColor(24, 24, 46)
             doc.setFont("helvetica", "bold")
-            doc.setFontSize(14)
-            doc.text(strings.rules_title, 20, 253)
+            doc.setFontSize(13)
+            doc.text(strings.rules_title, 20, y)
 
+            y += 8
             doc.setFont("helvetica", "normal")
             doc.setFontSize(9)
             doc.setTextColor(60, 60, 60)
-            doc.text(strings.rules, 20, 261)
+            doc.text(strings.rules, 20, y)
 
             // Footer info
             doc.setFontSize(7)
@@ -390,135 +400,6 @@ export default function MediaKitPage() {
             doc.save(`${brand.filename}_brand_manual.pdf`)
         } catch (err) {
             console.error("Failed to generate PDF guide", err)
-        }
-    }
-
-    const downloadGlobalGuidelinesPdf = async () => {
-        try {
-            const { jsPDF } = await import("jspdf")
-            const doc = new jsPDF()
-
-            const activeLocale = (locale === "it" || locale === "en") ? locale : "it"
-            const strings = pdfTranslations[activeLocale]
-
-            for (let i = 0; i < BRANDS.length; i++) {
-                const brand = BRANDS[i]
-                const brandName = t(brand.titleKey)
-
-                // If not the first page, add a new page
-                if (i > 0) {
-                    doc.addPage()
-                }
-
-                // Extract primary color RGB for header banner
-                const primaryColorHex = brand.colors[0].hex
-                const [pr, pg, pb] = hexToRgb(primaryColorHex)
-
-                // Draw Header Banner with brand primary color
-                doc.setFillColor(pr, pg, pb)
-                doc.rect(0, 0, 210, 50, "F")
-
-                // Title inside header banner
-                doc.setTextColor(255, 255, 255)
-                doc.setFont("helvetica", "bold")
-                doc.setFontSize(20)
-                doc.text(`${brandName.toUpperCase()}`, 20, 24)
-                doc.setFont("helvetica", "normal")
-                doc.setFontSize(10)
-                doc.text(strings.subtitle, 20, 35)
-
-                // Page Number / Total Pages
-                doc.setFontSize(8)
-                doc.text(`${i + 1} / ${BRANDS.length}`, 190, 24, { align: "right" })
-
-                // Section 1: Introduction
-                doc.setTextColor(24, 24, 46)
-                doc.setFont("helvetica", "bold")
-                doc.setFontSize(14)
-                doc.text(strings.intro_title, 20, 68)
-                
-                doc.setFont("helvetica", "normal")
-                doc.setFontSize(10)
-                doc.setTextColor(60, 60, 60)
-                doc.text(strings.intro_text(brandName), 20, 76)
-
-                // Section 2: Logo image integration
-                doc.setTextColor(24, 24, 46)
-                doc.setFont("helvetica", "bold")
-                doc.setFontSize(14)
-                doc.text(strings.logo_title, 20, 105)
-
-                doc.setFont("helvetica", "normal")
-                doc.setFontSize(9)
-                doc.setTextColor(100, 100, 100)
-                doc.text(`${strings.logo_desc} ${strings.logo_desc_2}`, 20, 113)
-
-                // Fetch and draw logo on-the-fly
-                try {
-                    const logoPngBase64 = await fetchImageAsPngBase64(brand.logoUrl)
-                    doc.addImage(logoPngBase64, "PNG", 80, 120, 50, 50)
-                } catch (err) {
-                    console.error("Failed to load logo in PDF", err)
-                    // Draw a fallback box if image loading fails
-                    doc.setDrawColor(200, 200, 200)
-                    doc.rect(80, 120, 50, 50)
-                    doc.setTextColor(150, 150, 150)
-                    doc.setFontSize(8)
-                    doc.text("[Logo Image]", 95, 147)
-                }
-
-                // Section 3: Color Palette
-                doc.setTextColor(24, 24, 46)
-                doc.setFont("helvetica", "bold")
-                doc.setFontSize(14)
-                doc.text(strings.palette_title, 20, 185)
-
-                let startY = 195
-                brand.colors.forEach((c) => {
-                    const [cr, cg, cb] = hexToRgb(c.hex)
-                    
-                    // Draw color block
-                    doc.setFillColor(cr, cg, cb)
-                    doc.rect(20, startY, 10, 10, "F")
-                    
-                    // Color text labels
-                    doc.setTextColor(24, 24, 46)
-                    doc.setFont("helvetica", "bold")
-                    doc.setFontSize(9)
-                    doc.text(c.name, 35, startY + 4)
-                    
-                    doc.setFont("helvetica", "normal")
-                    doc.setFontSize(8)
-                    doc.setTextColor(120, 120, 120)
-                    doc.text(`HEX: ${c.hex} | RGB: (${cr}, ${cg}, ${cb})`, 35, startY + 8)
-                    
-                    doc.setTextColor(80, 80, 80)
-                    doc.setFontSize(8)
-                    doc.text(c.desc, 110, startY + 6)
-
-                    startY += 13
-                })
-
-                // Section 4: Rules
-                doc.setTextColor(24, 24, 46)
-                doc.setFont("helvetica", "bold")
-                doc.setFontSize(14)
-                doc.text(strings.rules_title, 20, 253)
-
-                doc.setFont("helvetica", "normal")
-                doc.setFontSize(9)
-                doc.setTextColor(60, 60, 60)
-                doc.text(strings.rules, 20, 261)
-
-                // Footer info
-                doc.setFontSize(7)
-                doc.setTextColor(160, 160, 160)
-                doc.text(`${strings.footer} | Locale: ${activeLocale.toUpperCase()}`, 20, 288)
-            }
-
-            doc.save("Brands_Identity_Guidelines.pdf")
-        } catch (err) {
-            console.error("Failed to generate global PDF manual", err)
         }
     }
 
@@ -699,38 +580,6 @@ export default function MediaKitPage() {
                             </section>
                         )
                     })}
-                </div>
-
-                {/* Global Guidelines Section */}
-                <div className="mt-16 bg-zinc-900 text-white rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-8">
-                    <div className="relative z-10 flex-1 space-y-4 text-center md:text-left">
-                        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 text-white/80 text-[10px] font-black uppercase tracking-widest">
-                            <FileText className="size-3.5 text-primary" /> {t("guidelines_title")}
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-serif font-black uppercase tracking-tighter leading-none">
-                            {t("guidelines_title")}
-                        </h3>
-                        <p className="text-white/60 text-sm max-w-xl">
-                            {t("guidelines_desc")}
-                        </p>
-                    </div>
-                    <button 
-                        onClick={() => handleDownload("guidelines_pdf", downloadGlobalGuidelinesPdf)}
-                        disabled={downloading["guidelines_pdf"]}
-                        className="relative z-10 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-zinc-900 font-black uppercase tracking-widest text-xs hover:scale-105 transition-transform disabled:opacity-75 shrink-0 cursor-pointer"
-                    >
-                        {downloading["guidelines_pdf"] ? (
-                            <>
-                                <Check className="size-4 text-emerald-600 animate-bounce" />
-                                <span>{t("download_done")}</span>
-                            </>
-                        ) : (
-                            <>
-                                <FileText className="size-4" />
-                                <span>{t("download_guidelines")}</span>
-                            </>
-                        )}
-                    </button>
                 </div>
             </div>
         </div>
