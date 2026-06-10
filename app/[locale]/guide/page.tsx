@@ -3,6 +3,19 @@
 import { useState } from "react"
 import { BookOpen, Bus, Info, MapPin, Download, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
+import nextDynamic from "next/dynamic"
+
+const InteractiveMap = nextDynamic(
+    () => import("@/components/interactive-map"),
+    {
+        ssr: false,
+        loading: () => (
+            <div className="h-[600px] w-full bg-zinc-50 border border-zinc-100 animate-pulse rounded-[2rem] flex items-center justify-center text-zinc-400 font-semibold text-xs tracking-wider">
+                Caricamento mappa interattiva...
+            </div>
+        )
+    }
+)
 
 export const dynamic = "force-dynamic"
 
@@ -115,7 +128,7 @@ export default function GuidePage() {
 
                 {/* Expanded Details Section */}
                 <div className="bg-white rounded-[2.5rem] border border-zinc-100 shadow-2xl p-8 md:p-12">
-                    <div className="max-w-4xl">
+                    <div className={cn("mx-auto", selectedGuide === "mappa" ? "max-w-full" : "max-w-4xl")}>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 block mb-2">
                             Guida In Primo Piano
                         </span>
@@ -126,19 +139,25 @@ export default function GuidePage() {
                             {activeGuideData.description}
                         </p>
 
-                        <div className="space-y-8">
-                            {activeGuideData.steps.map((step, index) => (
-                                <div key={index} className="flex gap-6 items-start">
-                                    <div className={cn("size-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5", activeGuideData.bg, activeGuideData.color)}>
-                                        {index + 1}
+                        {selectedGuide === "mappa" ? (
+                            <div className="mt-8 z-10 relative">
+                                <InteractiveMap />
+                            </div>
+                        ) : (
+                            <div className="space-y-8">
+                                {activeGuideData.steps.map((step, index) => (
+                                    <div key={index} className="flex gap-6 items-start">
+                                        <div className={cn("size-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5", activeGuideData.bg, activeGuideData.color)}>
+                                            {index + 1}
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className="text-lg font-bold text-zinc-900 leading-tight">{step.title}</h4>
+                                            <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
+                                        </div>
                                     </div>
-                                    <div className="space-y-1">
-                                        <h4 className="text-lg font-bold text-zinc-900 leading-tight">{step.title}</h4>
-                                        <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
 
                         <div className="mt-12 pt-8 border-t border-zinc-100 flex flex-wrap gap-4">
                             <button className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-zinc-900 text-white hover:bg-zinc-800 transition-colors font-black uppercase tracking-widest text-xs shadow-md">
