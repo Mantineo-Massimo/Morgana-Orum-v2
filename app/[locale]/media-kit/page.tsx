@@ -37,8 +37,8 @@ const BRANDS: BrandAsset[] = [
         filename: "associazione_orum",
         colors: [
             { name: "Orum Navy", hex: "#18182e", desc: "Colore primario istituzionale" },
-            { name: "Slate Blue", hex: "#3b3f5c", desc: "Toni secondari e icone" },
-            { name: "Pure White", hex: "#ffffff", desc: "Sfondi e aree ad alto contrasto" }
+            { name: "Morgana Red", hex: "#c12830", desc: "Bordo e dettagli secondari" },
+            { name: "Pure White", hex: "#ffffff", desc: "Sfondi e contrasti chiari" }
         ]
     },
     {
@@ -46,9 +46,9 @@ const BRANDS: BrandAsset[] = [
         logoUrl: "/assets/unimematricole.webp",
         filename: "unime_matricole",
         colors: [
-            { name: "Deep Navy", hex: "#0f172a", desc: "Colore primario di base" },
-            { name: "Bright Amber", hex: "#f59e0b", desc: "Accento energico per le matricole" },
-            { name: "Warm Orange", hex: "#f97316", desc: "Toni secondari e pulsanti" }
+            { name: "Matricole Navy", hex: "#0a3a60", desc: "Colore primario dei testi" },
+            { name: "Matricole Yellow", hex: "#f9a620", desc: "Colore secondario del nastro" },
+            { name: "Pure White", hex: "#ffffff", desc: "Sfondo del logo circolare" }
         ]
     },
     {
@@ -56,9 +56,9 @@ const BRANDS: BrandAsset[] = [
         logoUrl: "/assets/unimhealth.webp",
         filename: "unimhealth",
         colors: [
-            { name: "Medical Crimson", hex: "#c12830", desc: "Colore primario della salute" },
-            { name: "Pure White", hex: "#ffffff", desc: "Pulizia visiva ed elementi medicali" },
-            { name: "Soft Rose", hex: "#fef2f2", desc: "Sfondi e pannelli informativi" }
+            { name: "Unimhealth Red", hex: "#c12830", desc: "Colore primario del cerchio" },
+            { name: "Pure White", hex: "#ffffff", desc: "Elemento anatomico interno" },
+            { name: "Soft Rose", hex: "#fef2f2", desc: "Tono di sfondo e dettagli" }
         ]
     },
     {
@@ -66,9 +66,9 @@ const BRANDS: BrandAsset[] = [
         logoUrl: "/assets/studentieconomia.webp",
         filename: "studenti_economia",
         colors: [
-            { name: "Academic Blue", hex: "#0055a4", desc: "Colore primario istituzionale" },
-            { name: "Royal Navy", hex: "#1e3a8a", desc: "Titoli e sezioni principali" },
-            { name: "Sky Blue", hex: "#3b82f6", desc: "Dettagli ed evidenziazioni" }
+            { name: "Economia Navy", hex: "#18224b", desc: "Colore primario del cerchio" },
+            { name: "Warm Silver", hex: "#e2e8f0", desc: "Dettagli di contrasto neutri" },
+            { name: "Pure White", hex: "#ffffff", desc: "Icona ed elementi interni" }
         ]
     },
     {
@@ -76,9 +76,9 @@ const BRANDS: BrandAsset[] = [
         logoUrl: "/assets/studentiscipog.webp",
         filename: "studenti_scipog",
         colors: [
-            { name: "Political Gold", hex: "#ffcc00", desc: "Colore primario comunicativo" },
-            { name: "Dark Gray", hex: "#333333", desc: "Testo ad alta leggibilità" },
-            { name: "Warm Sand", hex: "#fef3c7", desc: "Sfondi e box secondari" }
+            { name: "Scipog Gold", hex: "#f4b43b", desc: "Colore primario del cerchio" },
+            { name: "Dark Charcoal", hex: "#212529", desc: "Testi ed elemento di contorno" },
+            { name: "Pure White", hex: "#ffffff", desc: "Dettagli interni del tocco" }
         ]
     },
     {
@@ -86,9 +86,9 @@ const BRANDS: BrandAsset[] = [
         logoUrl: "/assets/insidedicam.webp",
         filename: "inside_dicam",
         colors: [
-            { name: "Dicam Magenta", hex: "#d81b60", desc: "Tono primario giovanile" },
-            { name: "Deep Rose", hex: "#be185d", desc: "Contrasti e hover di navigazione" },
-            { name: "Blush Pink", hex: "#fdf2f8", desc: "Sfondi delicati e sfumature" }
+            { name: "Dicam Cyan", hex: "#00b4d8", desc: "Cerchio esterno e testo 'inside'" },
+            { name: "Dicam Pink", hex: "#d81b60", desc: "Cerchio interno e testo 'DICAM'" },
+            { name: "Pure White", hex: "#ffffff", desc: "Sfondo del cerchio interno" }
         ]
     },
     {
@@ -96,9 +96,9 @@ const BRANDS: BrandAsset[] = [
         logoUrl: "/assets/piazzadellarte.webp",
         filename: "piazza_dell_arte",
         colors: [
-            { name: "Piazza Gold", hex: "#f9a620", desc: "Colore artistico principale (Oro)" },
-            { name: "Piazza Green", hex: "#27a85d", desc: "Tono creativo secondario (Verde)" },
-            { name: "Piazza Cyan", hex: "#1fbcd3", desc: "Accento vivace dell'arte (Ciano)" }
+            { name: "Piazza Gold", hex: "#f9a620", desc: "Colore primario 'Piazza'" },
+            { name: "Piazza Green", hex: "#27a85d", desc: "Colore secondario 'dell'Arte'" },
+            { name: "Piazza Cyan", hex: "#1fbcd3", desc: "Accento ciano dello sfondo" }
         ]
     }
 ]
