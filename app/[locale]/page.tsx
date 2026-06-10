@@ -45,14 +45,17 @@ export default async function BrandHomePage({
             </section>
 
             {/* HIGHLIGHTED EVENTS SECTION */}
-            <section className="py-12 bg-white border-b border-border/50">
+            <section className="py-16 md:py-20 bg-white border-b border-border/50">
                 <div className="container px-4 sm:px-6">
-                    <div className="flex items-center justify-between mb-8">
-                        <h2 className="text-2xl md:text-3xl font-serif font-bold text-foreground uppercase tracking-tight pl-4 border-l-4 border-primary">
-                            {t("events_title")}
-                        </h2>
-                        <Link href={`/events`} className="text-xs font-bold uppercase tracking-widest text-primary hover:underline" >
-                            {t("events_all")}
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                        <div className="flex flex-col gap-2">
+                            <h2 className="text-3xl md:text-5xl font-serif font-black text-foreground uppercase tracking-tighter">
+                                {t("events_title")}
+                            </h2>
+                            <div className="h-1.5 w-24 bg-primary rounded-full"></div>
+                        </div>
+                        <Link href="/events" className="flex items-center gap-2 text-sm font-black uppercase tracking-widest text-primary hover:gap-4 transition-all group">
+                            {t("events_all")} <ArrowRight className="size-4 group-hover:animate-pulse" />
                         </Link>
                     </div>
 

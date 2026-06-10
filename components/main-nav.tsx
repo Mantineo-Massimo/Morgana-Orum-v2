@@ -224,7 +224,7 @@ export function MainNav({
                                         transition={{ duration: 0.15 }}
                                         className="absolute left-0 right-0 top-full mt-2 w-full bg-white rounded-3xl shadow-2xl border border-zinc-100 p-8 z-50 text-left before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px] before:bg-transparent"
                                     >
-                                        <div className="grid grid-cols-3 gap-8 max-w-7xl mx-auto">
+                                        <div className="grid grid-cols-2 gap-8 max-w-4xl mx-auto">
                                             {/* Column 1: Vita Accademica */}
                                             <div className="space-y-4">
                                                 <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
@@ -328,33 +328,6 @@ export function MainNav({
                                                             <span className="text-[10px] text-zinc-400 font-medium leading-none">Loghi e grafiche ufficiali</span>
                                                         </div>
                                                     </Link>
-                                                </div>
-                                            </div>
-
-                                            {/* Column 3: Featured Banner/Card */}
-                                            <div className="bg-gradient-to-br from-zinc-50 to-zinc-100/50 rounded-2xl p-6 border border-zinc-100 flex flex-col justify-between">
-                                                <div className="space-y-2">
-                                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-[#c9041a]/10 text-[#c9041a] dark:text-[#c9041a]">
-                                                        Associazioni Universitarie
-                                                    </span>
-                                                    <h4 className="text-base font-black uppercase tracking-tight text-zinc-800">
-                                                        Morgana & O.R.U.M.
-                                                    </h4>
-                                                    <p className="text-[11px] text-zinc-500 leading-relaxed font-medium">
-                                                        Uniti per garantire rappresentanza, servizi, eventi e supporto a tutti gli studenti dell&apos;Università di Messina.
-                                                    </p>
-                                                </div>
-                                                <div className="pt-4 border-t border-zinc-200/60 flex items-center justify-between">
-                                                    <Link 
-                                                        href="/about"
-                                                        onClick={() => setIsServiziOpen(false)}
-                                                        className="text-[10px] font-black uppercase tracking-widest text-[#c9041a] hover:underline"
-                                                    >
-                                                        Chi Siamo &rarr;
-                                                    </Link>
-                                                    <span className="text-[9px] text-zinc-400 font-semibold uppercase tracking-wider">
-                                                        Sempre al tuo fianco
-                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

@@ -77,16 +77,19 @@ export async function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 3: Piazza dell'Arte */}
+                    {/* Column 3: Servizi */}
                     <div className="flex flex-col gap-4">
                         <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
-                            Piazza dell&apos;Arte
+                            {nt("services")}
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
-                            <li><Link href="/piazzadellarte" className={cn("transition-colors", mutedColor)}>Sito Ufficiale</Link></li>
-                            <li><Link href="/piazzadellarte/programma" className={cn("transition-colors", mutedColor)}>Programma</Link></li>
-                            <li><Link href="/piazzadellarte/artisti" className={cn("transition-colors", mutedColor)}>Artisti</Link></li>
-                            <li><Link href="/piazzadellarte/media" className={cn("transition-colors", mutedColor)}>Media</Link></li>
+                            <li><Link href="/representatives" className={cn("transition-colors", mutedColor)}>{nt("representatives")}</Link></li>
+                            <li><Link href="/gruppi" className={cn("transition-colors", mutedColor)}>{nt("whatsapp")}</Link></li>
+                            <li><Link href="/guide" className={cn("transition-colors", mutedColor)}>{nt("guides")}</Link></li>
+                            <li><Link href="/faq" className={cn("transition-colors", mutedColor)}>FAQ</Link></li>
+                            <li><Link href="/convenzioni" className={cn("transition-colors", mutedColor)}>{nt("conventions")}</Link></li>
+                            <li><Link href="/social" className={cn("transition-colors", mutedColor)}>{nt("social")}</Link></li>
+                            <li><Link href="/media-kit" className={cn("transition-colors", mutedColor)}>{nt("media_kit")}</Link></li>
                         </ul>
                     </div>
 

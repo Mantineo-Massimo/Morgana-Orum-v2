@@ -60,7 +60,11 @@
         "programma": "Schedule",
         "artisti": "Artists",
         "media": "Media",
-        "contact": "Contact Us"
+        "contact": "Contact Us",
+        "services": "Services",
+        "conventions": "Conventions",
+        "social": "Social",
+        "media_kit": "Media Kit"
     },
     "HomePage": {
         "hero_title": "Always on the student's side!",

@@ -60,7 +60,11 @@
         "programma": "Programma",
         "artisti": "Artisti",
         "media": "Media",
-        "contact": "Contattaci"
+        "contact": "Contattaci",
+        "services": "Servizi",
+        "conventions": "Convenzioni",
+        "social": "Social",
+        "media_kit": "Media Kit"
     },
     "HomePage": {
         "hero_title": "Sempre dalla parte dello studente!",
