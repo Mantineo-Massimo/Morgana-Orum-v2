@@ -401,99 +401,124 @@ export default function MediaKitPage() {
             const activeLocale = (locale === "it" || locale === "en") ? locale : "it"
             const strings = pdfTranslations[activeLocale]
 
-            // Draw Header Banner
-            doc.setFillColor(24, 24, 46) // Orum Navy (#18182e)
-            doc.rect(0, 0, 210, 50, "F")
+            for (let i = 0; i < BRANDS.length; i++) {
+                const brand = BRANDS[i]
+                const brandName = t(brand.titleKey)
 
-            doc.setTextColor(255, 255, 255)
-            doc.setFont("helvetica", "bold")
-            doc.setFontSize(22)
-            doc.text("BRAND MANUAL & VISUAL IDENTITY", 20, 28)
-            doc.setFont("helvetica", "normal")
-            doc.setFontSize(10)
-            doc.text("Official Guidelines and Brand Identity Manual", 20, 38)
+                // If not the first page, add a new page
+                if (i > 0) {
+                    doc.addPage()
+                }
 
-            // Section 1: Introduction
-            doc.setTextColor(24, 24, 46)
-            doc.setFont("helvetica", "bold")
-            doc.setFontSize(16)
-            doc.text("1. INTRODUCTION", 20, 70)
-            
-            doc.setFont("helvetica", "normal")
-            doc.setFontSize(10)
-            doc.setTextColor(60, 60, 60)
-            const introText = [
-                "This document contains the guidelines for the visual representation of our brand network,",
-                "including Associazione Morgana, Associazione O.R.U.M., Unime Matricole, and other associated",
-                "organizations. Consistency in design, color usage, and logo placement is essential to maintain",
-                "our identity's integrity and professional presence across all channels."
-            ]
-            doc.text(introText, 20, 80)
+                // Extract primary color RGB for header banner
+                const primaryColorHex = brand.colors[0].hex
+                const [pr, pg, pb] = hexToRgb(primaryColorHex)
 
-            // Section 2: Color Palette
-            doc.setTextColor(24, 24, 46)
-            doc.setFont("helvetica", "bold")
-            doc.setFontSize(16)
-            doc.text("2. COLOR PALETTE SYSTEM", 20, 115)
+                // Draw Header Banner with brand primary color
+                doc.setFillColor(pr, pg, pb)
+                doc.rect(0, 0, 210, 50, "F")
 
-            // Draw color boxes and details
-            const colors = [
-                { name: "Morgana Red", hex: "#C12830", rgb: [193, 40, 48], desc: "Primary color for Associazione Morgana." },
-                { name: "Orum Blue", hex: "#18182E", rgb: [24, 24, 46], desc: "Primary color for Associazione O.R.U.M." },
-                { name: "Piazza Gold", hex: "#F9A620", rgb: [249, 166, 32], desc: "Primary color for Piazza dell'Arte (Gold)." },
-                { name: "Piazza Green", hex: "#27A85D", rgb: [39, 168, 93], desc: "Secondary color for Piazza dell'Arte (Green)." },
-                { name: "Piazza Cyan", hex: "#1FBCD3", rgb: [31, 188, 211], desc: "Accent color for Piazza dell'Arte (Cyan)." }
-            ]
-
-            let startY = 125
-            colors.forEach((c) => {
-                // Color preview box
-                doc.setFillColor(c.rgb[0], c.rgb[1], c.rgb[2])
-                doc.rect(20, startY, 15, 15, "F")
-                
-                // Color Info
-                doc.setTextColor(24, 24, 46)
+                // Title inside header banner
+                doc.setTextColor(255, 255, 255)
                 doc.setFont("helvetica", "bold")
-                doc.setFontSize(11)
-                doc.text(c.name, 42, startY + 6)
+                doc.setFontSize(20)
+                doc.text(`${brandName.toUpperCase()}`, 20, 24)
                 doc.setFont("helvetica", "normal")
                 doc.setFontSize(10)
-                doc.setTextColor(120, 120, 120)
-                doc.text(`HEX: ${c.hex} | RGB: (${c.rgb.join(", ")})`, 42, startY + 12)
+                doc.text(strings.subtitle, 20, 35)
+
+                // Page Number / Total Pages
+                doc.setFontSize(8)
+                doc.text(`${i + 1} / ${BRANDS.length}`, 190, 24, { align: "right" })
+
+                // Section 1: Introduction
+                doc.setTextColor(24, 24, 46)
+                doc.setFont("helvetica", "bold")
+                doc.setFontSize(14)
+                doc.text(strings.intro_title, 20, 68)
                 
+                doc.setFont("helvetica", "normal")
+                doc.setFontSize(10)
                 doc.setTextColor(60, 60, 60)
+                doc.text(strings.intro_text(brandName), 20, 76)
+
+                // Section 2: Logo image integration
+                doc.setTextColor(24, 24, 46)
+                doc.setFont("helvetica", "bold")
+                doc.setFontSize(14)
+                doc.text(strings.logo_title, 20, 105)
+
+                doc.setFont("helvetica", "normal")
                 doc.setFontSize(9)
-                doc.text(c.desc, 110, startY + 9)
-                
-                startY += 22
-            })
+                doc.setTextColor(100, 100, 100)
+                doc.text(`${strings.logo_desc} ${strings.logo_desc_2}`, 20, 113)
 
-            // Section 3: Rules & Guidelines
-            doc.setTextColor(24, 24, 46)
-            doc.setFont("helvetica", "bold")
-            doc.setFontSize(16)
-            doc.text("3. LOGO USAGE GUIDELINES", 20, 245)
+                // Fetch and draw logo on-the-fly
+                try {
+                    const logoPngBase64 = await fetchImageAsPngBase64(brand.logoUrl)
+                    doc.addImage(logoPngBase64, "PNG", 80, 120, 50, 50)
+                } catch (err) {
+                    console.error("Failed to load logo in PDF", err)
+                    // Draw a fallback box if image loading fails
+                    doc.setDrawColor(200, 200, 200)
+                    doc.rect(80, 120, 50, 50)
+                    doc.setTextColor(150, 150, 150)
+                    doc.setFontSize(8)
+                    doc.text("[Logo Image]", 95, 147)
+                }
 
-            doc.setFont("helvetica", "normal")
-            doc.setFontSize(10)
-            doc.setTextColor(60, 60, 60)
-            const usageRules = [
-                "- Always use the high-resolution vector (SVG) version when scaling or printing logos.",
-                "- Do not alter, stretch, skew, or rotate the logotypes under any circumstances.",
-                "- Ensure a clear safety margin / exclusion zone around the logos of at least 15% of the logo's width.",
-                "- Use the logos on clear backgrounds; use the monochrome versions if the background lacks contrast.",
-                "- Never overlay other graphics, texts, or colors directly onto the official brand logos."
-            ]
-            doc.text(usageRules, 20, 255)
+                // Section 3: Color Palette
+                doc.setTextColor(24, 24, 46)
+                doc.setFont("helvetica", "bold")
+                doc.setFontSize(14)
+                doc.text(strings.palette_title, 20, 185)
 
-            // Footer
-            doc.setFontSize(8)
-            doc.setTextColor(150, 150, 150)
-            doc.text(`${strings.footer} | Locale: ${activeLocale.toUpperCase()}`, 20, 288)
+                let startY = 195
+                brand.colors.forEach((c) => {
+                    const [cr, cg, cb] = hexToRgb(c.hex)
+                    
+                    // Draw color block
+                    doc.setFillColor(cr, cg, cb)
+                    doc.rect(20, startY, 10, 10, "F")
+                    
+                    // Color text labels
+                    doc.setTextColor(24, 24, 46)
+                    doc.setFont("helvetica", "bold")
+                    doc.setFontSize(9)
+                    doc.text(c.name, 35, startY + 4)
+                    
+                    doc.setFont("helvetica", "normal")
+                    doc.setFontSize(8)
+                    doc.setTextColor(120, 120, 120)
+                    doc.text(`HEX: ${c.hex} | RGB: (${cr}, ${cg}, ${cb})`, 35, startY + 8)
+                    
+                    doc.setTextColor(80, 80, 80)
+                    doc.setFontSize(8)
+                    doc.text(c.desc, 110, startY + 6)
 
-            doc.save("Brand_Identity_Guidelines.pdf")
+                    startY += 13
+                })
+
+                // Section 4: Rules
+                doc.setTextColor(24, 24, 46)
+                doc.setFont("helvetica", "bold")
+                doc.setFontSize(14)
+                doc.text(strings.rules_title, 20, 253)
+
+                doc.setFont("helvetica", "normal")
+                doc.setFontSize(9)
+                doc.setTextColor(60, 60, 60)
+                doc.text(strings.rules, 20, 261)
+
+                // Footer info
+                doc.setFontSize(7)
+                doc.setTextColor(160, 160, 160)
+                doc.text(`${strings.footer} | Locale: ${activeLocale.toUpperCase()}`, 20, 288)
+            }
+
+            doc.save("Brands_Identity_Guidelines.pdf")
         } catch (err) {
-            console.error("Failed to generate PDF manual", err)
+            console.error("Failed to generate global PDF manual", err)
         }
     }
 
