@@ -324,5 +324,25 @@
         "orum_fb_desc": "La pagina Facebook ufficiale dell'Associazione O.R.U.M.",
         "morgana_yt_desc": "Riprese video di eventi, conferenze e video guide universitarie.",
         "morgana_tt_desc": "Il nostro profilo TikTok ufficiale con video divertenti, trend e momenti della vita associativa."
+    },
+    "MediaKitPage": {
+        "title": "Media Kit",
+        "subtitle": "Scarica i loghi ufficiali e le risorse visive per partner, sponsor e rappresentanti.",
+        "download_svg": "Scarica SVG",
+        "download_png": "Scarica PNG",
+        "download_webp": "Scarica WebP",
+        "morgana_title": "Associazione Morgana",
+        "orum_title": "Associazione O.R.U.M.",
+        "matricole_title": "Unime Matricole",
+        "unimhealth_title": "Unimhealth",
+        "economia_title": "Studenti Economia",
+        "scipog_title": "Studenti Scipog",
+        "dicam_title": "Inside Dicam",
+        "piazza_title": "Piazza dell'Arte",
+        "logo_desc": "Logo ufficiale ad alta risoluzione. Disponibile in formati WebP, PNG e SVG.",
+        "colors_title": "Tavolozza Colori",
+        "guidelines_title": "Linee Guida del Brand",
+        "guidelines_desc": "Scopri come combinare font, loghi e colori per creare materiali coerenti con l'identità visiva del nostro network.",
+        "download_guidelines": "Scarica Guida (.PDF)"
     }
 }

@@ -322,5 +322,25 @@
         "orum_fb_desc": "The official Facebook page of the O.R.U.M. Association.",
         "morgana_yt_desc": "Video footage of events, conferences and university video guides.",
         "morgana_tt_desc": "Our official TikTok profile with fun videos, trends, and moments of association life."
+    },
+    "MediaKitPage": {
+        "title": "Media Kit",
+        "subtitle": "Download official logos and visual assets for partners, sponsors, and representatives.",
+        "download_svg": "Download SVG",
+        "download_png": "Download PNG",
+        "download_webp": "Download WebP",
+        "morgana_title": "Associazione Morgana",
+        "orum_title": "Associazione O.R.U.M.",
+        "matricole_title": "Unime Matricole",
+        "unimhealth_title": "Unimhealth",
+        "economia_title": "Studenti Economia",
+        "scipog_title": "Studenti Scipog",
+        "dicam_title": "Inside Dicam",
+        "piazza_title": "Piazza dell'Arte",
+        "logo_desc": "Official high-resolution logo. Available in WebP, PNG, and SVG formats.",
+        "colors_title": "Color Palette",
+        "guidelines_title": "Brand Guidelines",
+        "guidelines_desc": "Learn how to combine fonts, logos, and colors to create materials consistent with our network's visual identity.",
+        "download_guidelines": "Download Guide (.PDF)"
     }
 }
