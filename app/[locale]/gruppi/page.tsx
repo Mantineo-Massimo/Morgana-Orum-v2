@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search } from "lucide-react"
+import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, Film, Home as HomeIcon } from "lucide-react"
 
 type CourseGroup = { name: string; link: string };
 
@@ -106,6 +106,30 @@ const DEPARTMENTS: Record<string, CourseGroup[]> = {
     ]
 };
 
+const COMMUNITY_GROUPS = [
+    {
+        name: "Gruppo Generale",
+        desc: "Il punto di ritrovo principale per tutti gli studenti Morgana e Orum. News, avvisi e discussioni generali sull'Ateneo.",
+        link: "https://chat.whatsapp.com/invite/generale-morgana-orum",
+        icon: Users,
+        theme: "text-blue-500 bg-blue-50 border-blue-100 hover:border-blue-200 hover:bg-blue-50/70"
+    },
+    {
+        name: "Gruppo Cineforum",
+        desc: "Spazio dedicato agli amanti del cinema e cineforum delle associazioni. Recensioni, consigli e news.",
+        link: "https://chat.whatsapp.com/invite/cineforum-morgana-orum",
+        icon: Film,
+        theme: "text-purple-500 bg-purple-50 border-purple-100 hover:border-purple-200 hover:bg-purple-50/70"
+    },
+    {
+        name: "Gruppo Affittacase",
+        desc: "Bacheca per studenti fuori sede. Cerca appartamenti in affitto, stanze libere o coinquilini a Messina.",
+        link: "https://chat.whatsapp.com/invite/affittacase-morgana-orum",
+        icon: HomeIcon,
+        theme: "text-amber-500 bg-amber-50 border-amber-100 hover:border-amber-200 hover:bg-amber-50/70"
+    }
+];
+
 export default function GruppiPage() {
     const [search, setSearch] = useState("");
 
@@ -127,10 +151,10 @@ export default function GruppiPage() {
                     </div>
                     <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-6 uppercase tracking-tight">Gruppi WhatsApp</h1>
                     <p className="text-lg text-zinc-600 leading-relaxed mb-8">
-                        Unisciti alla più grande community di studenti dell&apos;Ateneo. Seleziona il tuo corso di laurea per entrare nel gruppo ufficiale gestito dai nostri rappresentanti.
+                        Unisciti alla più grande community di studenti dell&apos;Ateneo. Seleziona il tuo gruppo ufficiale gestito dai nostri rappresentanti.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium text-zinc-500 mb-10">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium text-zinc-500">
                         <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-zinc-100">
                             <CheckCircle2 className="size-4 text-green-500" /> Moderazione attiva
                         </div>
@@ -138,66 +162,129 @@ export default function GruppiPage() {
                             <AlertCircle className="size-4 text-blue-500" /> Solo info verificate
                         </div>
                     </div>
+                </div>
 
-                    {/* Search bar */}
-                    <div className="relative max-w-xl mx-auto">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
-                        <input
-                            type="text"
-                            placeholder="Cerca il tuo corso di laurea (es. Lettere, Economia)..."
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:ring-2 focus:ring-zinc-900/5 transition-all outline-none text-sm shadow-sm"
-                        />
+                {/* Section 1: Gruppi Corsi Accademici */}
+                <section className="mb-24">
+                    <div className="max-w-3xl mx-auto mb-12 text-center">
+                        <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
+                            Gruppi Corsi Accademici
+                        </h2>
+                        <p className="text-zinc-500 mb-8 text-sm max-w-xl mx-auto">
+                            Trova il gruppo WhatsApp del tuo corso di laurea selezionando il tuo dipartimento o utilizzando la barra di ricerca.
+                        </p>
+
+                        {/* Search bar */}
+                        <div className="relative max-w-xl mx-auto">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+                            <input
+                                type="text"
+                                placeholder="Cerca il tuo corso di laurea (es. Lettere, Economia)..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:ring-2 focus:ring-zinc-900/5 transition-all outline-none text-sm shadow-sm"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Academic Groups Grid */}
+                    <div className="space-y-12">
+                        {Object.keys(filteredDepartments).length === 0 ? (
+                            <div className="text-center py-16 text-zinc-400">
+                                <Search className="size-12 mx-auto mb-4 opacity-20" />
+                                <p className="text-lg">Nessun gruppo trovato per la tua ricerca.</p>
+                            </div>
+                        ) : (
+                            Object.entries(filteredDepartments).map(([dept, groups]) => (
+                                <div key={dept} className="space-y-6">
+                                    <div className="flex items-center gap-4 mb-4">
+                                        <div className="h-px flex-1 bg-zinc-200"></div>
+                                        <h3 className="text-xs font-serif font-black uppercase tracking-widest text-zinc-400 px-4 text-center">
+                                            {dept}
+                                        </h3>
+                                        <div className="h-px flex-1 bg-zinc-200"></div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {groups.map((group, idx) => (
+                                            <div key={idx} className="group relative bg-white border border-zinc-100 rounded-2xl p-5 hover:border-[#25D366]/30 hover:shadow-xl hover:shadow-green-500/5 transition-all duration-300">
+                                                <div className="flex items-start justify-between gap-4">
+                                                    <div className="space-y-1">
+                                                        <h4 className="font-bold text-zinc-900 group-hover:text-[#25D366] transition-colors leading-tight">
+                                                            {group.name}
+                                                        </h4>
+                                                        <p className="text-xs text-zinc-400 font-medium uppercase tracking-tighter">
+                                                            Gruppo Ufficiale
+                                                        </p>
+                                                    </div>
+                                                    <a
+                                                        href={group.link}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="shrink-0 size-10 bg-zinc-900 text-white rounded-xl flex items-center justify-center group-hover:bg-[#25D366] transition-all duration-300 shadow-lg shadow-zinc-200 group-hover:shadow-green-500/20"
+                                                    >
+                                                        <ArrowRight className="size-5 group-hover:translate-x-0.5 transition-transform" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+                </section>
+
+                {/* Divider */}
+                <div className="relative my-20">
+                    <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full border-t border-zinc-200/80"></div>
+                    </div>
+                    <div className="relative flex justify-center">
+                        <span className="bg-zinc-50 px-4 text-zinc-300 text-sm">✦</span>
                     </div>
                 </div>
 
-                {/* Groups Grid */}
-                <div className="space-y-16">
-                    {Object.keys(filteredDepartments).length === 0 ? (
-                        <div className="text-center py-20 text-zinc-400">
-                            <Search className="size-12 mx-auto mb-4 opacity-20" />
-                            <p className="text-lg">Nessun gruppo trovato per la tua ricerca.</p>
-                        </div>
-                    ) : (
-                        Object.entries(filteredDepartments).map(([dept, groups]) => (
-                            <div key={dept} className="space-y-6">
-                                <div className="flex items-center gap-4 mb-4">
-                                    <div className="h-px flex-1 bg-zinc-200"></div>
-                                    <h2 className="text-xs font-serif font-black uppercase tracking-widest text-zinc-400 px-4 text-center">
-                                        {dept}
-                                    </h2>
-                                    <div className="h-px flex-1 bg-zinc-200"></div>
-                                </div>
+                {/* Section 2: Gruppi Community Morgana e O.R.U.M. */}
+                <section className="mb-24">
+                    <div className="max-w-3xl mx-auto mb-16 text-center">
+                        <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
+                            Gruppi Community Morgana e O.R.U.M.
+                        </h2>
+                        <p className="text-zinc-500 text-sm max-w-xl mx-auto">
+                            Entra a far parte delle nostre community tematiche per fare amicizia, restare informato ed essere parte attiva delle attività studentesche.
+                        </p>
+                    </div>
 
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {groups.map((group, idx) => (
-                                        <div key={idx} className="group relative bg-white border border-zinc-100 rounded-2xl p-5 hover:border-[#25D366]/30 hover:shadow-xl hover:shadow-green-500/5 transition-all duration-300">
-                                            <div className="flex items-start justify-between gap-4">
-                                                <div className="space-y-1">
-                                                    <h3 className="font-bold text-zinc-900 group-hover:text-[#25D366] transition-colors leading-tight">
-                                                        {group.name}
-                                                    </h3>
-                                                    <p className="text-xs text-zinc-400 font-medium uppercase tracking-tighter">
-                                                        Gruppo Ufficiale
-                                                    </p>
-                                                </div>
-                                                <a
-                                                    href={group.link}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="shrink-0 size-10 bg-zinc-900 text-white rounded-xl flex items-center justify-center group-hover:bg-[#25D366] transition-all duration-300 shadow-lg shadow-zinc-200 group-hover:shadow-green-500/20"
-                                                >
-                                                    <ArrowRight className="size-5 group-hover:translate-x-0.5 transition-transform" />
-                                                </a>
-                                            </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {COMMUNITY_GROUPS.map((group, idx) => {
+                            const Icon = group.icon
+                            return (
+                                <div key={idx} className="group relative bg-white border border-zinc-100 rounded-3xl p-8 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full">
+                                    <div>
+                                        <div className={`size-12 rounded-2xl flex items-center justify-center mb-6 border transition-all ${group.theme}`}>
+                                            <Icon className="size-6" />
                                         </div>
-                                    ))}
+                                        <h3 className="text-xl font-bold text-zinc-900 mb-3 group-hover:text-[#25D366] transition-colors uppercase tracking-tight font-serif">
+                                            {group.name}
+                                        </h3>
+                                        <p className="text-zinc-500 text-sm leading-relaxed mb-8">
+                                            {group.desc}
+                                        </p>
+                                    </div>
+                                    <a
+                                        href={group.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full flex items-center justify-center gap-2 bg-zinc-900 text-white hover:bg-[#25D366] font-bold text-xs uppercase tracking-widest py-4 rounded-xl transition-all duration-300 shadow-md group-hover:shadow-green-500/20"
+                                    >
+                                        Entra nel gruppo <ArrowRight className="size-4" />
+                                    </a>
                                 </div>
-                            </div>
-                        ))
-                    )}
-                </div>
+                            )
+                        })}
+                    </div>
+                </section>
 
                 {/* Footer box */}
                 <div className="mt-20 max-w-2xl mx-auto bg-blue-50/50 border border-blue-100 rounded-3xl p-8 text-center text-blue-900">
