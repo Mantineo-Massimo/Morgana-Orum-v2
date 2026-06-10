@@ -162,7 +162,7 @@ export function MainNav({
                             <button
                                 className={cn(
                                     "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap flex items-center gap-1 pb-1",
-                                    (pathname.startsWith("/about") || pathname.startsWith("/organigramma") || pathname.startsWith("/contact"))
+                                    (pathname.startsWith("/about") || pathname.startsWith("/organigramma"))
                                         ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
                                         : `${textColor}`
                                 )}
@@ -194,14 +194,6 @@ export function MainNav({
                                             <span className="text-xs font-black uppercase tracking-wider text-zinc-800">Organigramma</span>
                                             <span className="text-[10px] text-zinc-400 font-medium">I componenti e la struttura</span>
                                         </Link>
-                                        <Link
-                                            href="/contact"
-                                            onClick={() => setIsAssocOpen(false)}
-                                            className="flex flex-col p-3 rounded-xl hover:bg-zinc-50 transition-colors"
-                                        >
-                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">Contattaci</span>
-                                            <span className="text-[10px] text-zinc-400 font-medium">Form di contatto e info sedi</span>
-                                        </Link>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -209,7 +201,7 @@ export function MainNav({
 
                         {/* Servizi Mega Menu */}
                         <div 
-                            className="relative"
+                            className="static"
                             onMouseEnter={() => setIsServiziOpen(true)}
                             onMouseLeave={() => setIsServiziOpen(false)}
                         >
@@ -230,117 +222,159 @@ export function MainNav({
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: 10 }}
                                         transition={{ duration: 0.15 }}
-                                        className="absolute left-1/2 -translate-x-1/2 mt-2 w-[650px] bg-white rounded-3xl shadow-2xl border border-zinc-100 p-6 grid grid-cols-2 gap-6 z-50 text-left"
+                                        className="absolute left-0 right-0 top-full mt-2 w-full bg-white rounded-3xl shadow-2xl border border-zinc-100 p-8 z-50 text-left before:content-[''] before:absolute before:top-[-12px] before:left-0 before:right-0 before:h-[12px] before:bg-transparent"
                                     >
-                                        {/* Column 1: Vita Accademica */}
-                                        <div className="space-y-4">
-                                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
-                                                Vita Accademica
-                                            </h4>
-                                            <div className="flex flex-col gap-2">
-                                                <Link 
-                                                    href="/representatives" 
-                                                    onClick={() => setIsServiziOpen(false)}
-                                                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
-                                                >
-                                                    <Users className="size-4 mt-1 text-[#c9041a] shrink-0" />
-                                                    <div>
-                                                        <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Rappresentanti</span>
-                                                        <span className="text-[10px] text-zinc-400 font-medium leading-none">La squadra eletta nei dipartimenti</span>
-                                                    </div>
-                                                </Link>
-                                                <Link 
-                                                    href="/gruppi" 
-                                                    onClick={() => setIsServiziOpen(false)}
-                                                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
-                                                >
-                                                    <Phone className="size-4 mt-1 text-green-500 shrink-0" />
-                                                    <div>
-                                                        <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Gruppi</span>
-                                                        <span className="text-[10px] text-zinc-400 font-medium leading-none">Link diretti alle community WhatsApp</span>
-                                                    </div>
-                                                </Link>
-                                                <Link 
-                                                    href="/guide" 
-                                                    onClick={() => setIsServiziOpen(false)}
-                                                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
-                                                >
-                                                    <BookOpen className="size-4 mt-1 text-blue-500 shrink-0" />
-                                                    <div>
-                                                        <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Guide</span>
-                                                        <span className="text-[10px] text-zinc-400 font-medium leading-none">Materiale utile e burocrazia</span>
-                                                    </div>
-                                                </Link>
-                                                <Link 
-                                                    href="/faq" 
-                                                    onClick={() => setIsServiziOpen(false)}
-                                                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
-                                                >
-                                                    <HelpCircle className="size-4 mt-1 text-purple-500 shrink-0" />
-                                                    <div>
-                                                        <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">FAQ</span>
-                                                        <span className="text-[10px] text-zinc-400 font-medium leading-none">Domande frequenti e risposte rapide</span>
-                                                    </div>
-                                                </Link>
+                                        <div className="grid grid-cols-3 gap-8 max-w-7xl mx-auto">
+                                            {/* Column 1: Vita Accademica */}
+                                            <div className="space-y-4">
+                                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
+                                                    Vita Accademica
+                                                </h4>
+                                                <div className="flex flex-col gap-2">
+                                                    <Link 
+                                                        href="/representatives" 
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
+                                                    >
+                                                        <Users className="size-4 mt-1 text-[#c9041a] shrink-0" />
+                                                        <div>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Rappresentanti</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">La squadra eletta nei dipartimenti</span>
+                                                        </div>
+                                                    </Link>
+                                                    <Link 
+                                                        href="/gruppi" 
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
+                                                    >
+                                                        <Phone className="size-4 mt-1 text-green-500 shrink-0" />
+                                                        <div>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Gruppi</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Link diretti alle community WhatsApp</span>
+                                                        </div>
+                                                    </Link>
+                                                    <Link 
+                                                        href="/guide" 
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
+                                                    >
+                                                        <BookOpen className="size-4 mt-1 text-blue-500 shrink-0" />
+                                                        <div>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Guide</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Materiale utile e burocrazia</span>
+                                                        </div>
+                                                    </Link>
+                                                    <Link 
+                                                        href="/faq" 
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
+                                                    >
+                                                        <HelpCircle className="size-4 mt-1 text-purple-500 shrink-0" />
+                                                        <div>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">FAQ</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Domande frequenti e risposte rapide</span>
+                                                        </div>
+                                                    </Link>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        {/* Column 2: Community & Extra */}
-                                        <div className="space-y-4">
-                                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
-                                                Community & Extra
-                                            </h4>
-                                            <div className="flex flex-col gap-2">
-                                                <Link 
-                                                    href="/events" 
-                                                    onClick={() => setIsServiziOpen(false)}
-                                                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
-                                                >
-                                                    <Calendar className="size-4 mt-1 text-[#f9a620] shrink-0" />
-                                                    <div>
-                                                        <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Le Nostre Iniziative</span>
-                                                        <span className="text-[10px] text-zinc-400 font-medium leading-none">Piazza dell&apos;Arte, seminari e progetti</span>
-                                                    </div>
-                                                </Link>
-                                                <Link 
-                                                    href="/convenzioni" 
-                                                    onClick={() => setIsServiziOpen(false)}
-                                                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
-                                                >
-                                                    <Tag className="size-4 mt-1 text-rose-500 shrink-0" />
-                                                    <div>
-                                                        <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Convenzioni</span>
-                                                        <span className="text-[10px] text-zinc-400 font-medium leading-none">Sconti e vantaggi per gli studenti</span>
-                                                    </div>
-                                                </Link>
-                                                <Link 
-                                                    href="/social" 
-                                                    onClick={() => setIsServiziOpen(false)}
-                                                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
-                                                >
-                                                    <Share2 className="size-4 mt-1 text-cyan-500 shrink-0" />
-                                                    <div>
-                                                        <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Social</span>
-                                                        <span className="text-[10px] text-zinc-400 font-medium leading-none">Collegamenti rapidi alle community</span>
-                                                    </div>
-                                                </Link>
-                                                <Link 
-                                                    href="/media-kit" 
-                                                    onClick={() => setIsServiziOpen(false)}
-                                                    className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
-                                                >
-                                                    <FileDown className="size-4 mt-1 text-emerald-500 shrink-0" />
-                                                    <div>
-                                                        <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Media Kit</span>
-                                                        <span className="text-[10px] text-zinc-400 font-medium leading-none">Loghi e grafiche ufficiali</span>
-                                                    </div>
-                                                </Link>
+                                            {/* Column 2: Community & Extra */}
+                                            <div className="space-y-4">
+                                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
+                                                    Community & Extra
+                                                </h4>
+                                                <div className="flex flex-col gap-2">
+                                                    <Link 
+                                                        href="/events" 
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
+                                                    >
+                                                        <Calendar className="size-4 mt-1 text-[#f9a620] shrink-0" />
+                                                        <div>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Le Nostre Iniziative</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Piazza dell&apos;Arte, seminari e progetti</span>
+                                                        </div>
+                                                    </Link>
+                                                    <Link 
+                                                        href="/convenzioni" 
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
+                                                    >
+                                                        <Tag className="size-4 mt-1 text-rose-500 shrink-0" />
+                                                        <div>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Convenzioni</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Sconti e vantaggi per gli studenti</span>
+                                                        </div>
+                                                    </Link>
+                                                    <Link 
+                                                        href="/social" 
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
+                                                    >
+                                                        <Share2 className="size-4 mt-1 text-cyan-500 shrink-0" />
+                                                        <div>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Social</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Collegamenti rapidi alle community</span>
+                                                        </div>
+                                                    </Link>
+                                                    <Link 
+                                                        href="/media-kit" 
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
+                                                    >
+                                                        <FileDown className="size-4 mt-1 text-emerald-500 shrink-0" />
+                                                        <div>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Media Kit</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Loghi e grafiche ufficiali</span>
+                                                        </div>
+                                                    </Link>
+                                                </div>
+                                            </div>
+
+                                            {/* Column 3: Featured Banner/Card */}
+                                            <div className="bg-gradient-to-br from-zinc-50 to-zinc-100/50 rounded-2xl p-6 border border-zinc-100 flex flex-col justify-between">
+                                                <div className="space-y-2">
+                                                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[9px] font-black uppercase tracking-wider bg-[#c9041a]/10 text-[#c9041a] dark:text-[#c9041a]">
+                                                        Associazioni Universitarie
+                                                    </span>
+                                                    <h4 className="text-base font-black uppercase tracking-tight text-zinc-800">
+                                                        Morgana & O.R.U.M.
+                                                    </h4>
+                                                    <p className="text-[11px] text-zinc-500 leading-relaxed font-medium">
+                                                        Uniti per garantire rappresentanza, servizi, eventi e supporto a tutti gli studenti dell&apos;Università di Messina.
+                                                    </p>
+                                                </div>
+                                                <div className="pt-4 border-t border-zinc-200/60 flex items-center justify-between">
+                                                    <Link 
+                                                        href="/about"
+                                                        onClick={() => setIsServiziOpen(false)}
+                                                        className="text-[10px] font-black uppercase tracking-widest text-[#c9041a] hover:underline"
+                                                    >
+                                                        Chi Siamo &rarr;
+                                                    </Link>
+                                                    <span className="text-[9px] text-zinc-400 font-semibold uppercase tracking-wider">
+                                                        Sempre al tuo fianco
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </motion.div>
                                 )}
                             </AnimatePresence>
                         </div>
+
+                        {/* Contattaci Link */}
+                        <Link
+                            href="/contact"
+                            className={cn(
+                                "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap pb-1",
+                                pathname.startsWith("/contact")
+                                    ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
+                                    : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
+                            )}
+                        >
+                            {nt("contact")}
+                        </Link>
                     </>
                 )}
 
@@ -476,7 +510,6 @@ export function MainNav({
                                                 >
                                                     <Link href="/about" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Chi Siamo</Link>
                                                     <Link href="/organigramma" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Organigramma</Link>
-                                                    <Link href="/contact" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Contattaci</Link>
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
@@ -512,6 +545,20 @@ export function MainNav({
                                             )}
                                         </AnimatePresence>
                                     </div>
+
+                                    {/* Contattaci Mobile Link */}
+                                    <Link
+                                        href="/contact"
+                                        onClick={() => setIsOpen(false)}
+                                        className={cn(
+                                            "text-2xl font-black uppercase tracking-widest transition-colors",
+                                            pathname.startsWith("/contact")
+                                                ? "text-foreground"
+                                                : "text-zinc-400 hover:text-zinc-600"
+                                        )}
+                                    >
+                                        {nt("contact")}
+                                    </Link>
                                 </>
                             )}
                         </nav>
