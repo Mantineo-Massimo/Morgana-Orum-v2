@@ -162,7 +162,7 @@ export function MainNav({
                             <button
                                 className={cn(
                                     "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap flex items-center gap-1 pb-1",
-                                    (pathname.startsWith("/about") || pathname.startsWith("/organigramma"))
+                                    (pathname.startsWith("/about") || pathname.startsWith("/organigramma") || pathname.startsWith("/contact"))
                                         ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
                                         : `${textColor}`
                                 )}
@@ -193,6 +193,14 @@ export function MainNav({
                                         >
                                             <span className="text-xs font-black uppercase tracking-wider text-zinc-800">Organigramma</span>
                                             <span className="text-[10px] text-zinc-400 font-medium">I componenti e la struttura</span>
+                                        </Link>
+                                        <Link
+                                            href="/contact"
+                                            onClick={() => setIsAssocOpen(false)}
+                                            className="flex flex-col p-3 rounded-xl hover:bg-zinc-50 transition-colors"
+                                        >
+                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">Contattaci</span>
+                                            <span className="text-[10px] text-zinc-400 font-medium">Scrivici o vieni a trovarci</span>
                                         </Link>
                                     </motion.div>
                                 )}
@@ -336,17 +344,30 @@ export function MainNav({
                             </AnimatePresence>
                         </div>
 
-                        {/* Contattaci Link */}
+                        {/* Notizie Link */}
                         <Link
-                            href="/contact"
+                            href={brand ? `/network/${brand}/news` : `/news`}
                             className={cn(
                                 "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap pb-1",
-                                pathname.startsWith("/contact")
+                                (pathname.startsWith("/news") || pathname.startsWith(brand ? `/network/${brand}/news` : "/news/"))
                                     ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
                                     : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
                             )}
                         >
-                            {nt("contact")}
+                            {nt("news")}
+                        </Link>
+
+                        {/* Eventi Link */}
+                        <Link
+                            href={brand ? `/network/${brand}/events` : `/events`}
+                            className={cn(
+                                "text-sm font-black uppercase tracking-widest transition-all relative whitespace-nowrap pb-1",
+                                (pathname.startsWith("/events") || pathname.startsWith(brand ? `/network/${brand}/events` : "/events/"))
+                                    ? `${activeColor} after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[2px]`
+                                    : `${textColor} hover:after:w-full after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] ${hoverLineColor} after:transition-all after:duration-300`
+                            )}
+                        >
+                            {nt("events")}
                         </Link>
                     </>
                 )}
@@ -483,6 +504,7 @@ export function MainNav({
                                                 >
                                                     <Link href="/about" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Chi Siamo</Link>
                                                     <Link href="/organigramma" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Organigramma</Link>
+                                                    <Link href="/contact" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Contattaci</Link>
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
@@ -519,18 +541,32 @@ export function MainNav({
                                         </AnimatePresence>
                                     </div>
 
-                                    {/* Contattaci Mobile Link */}
+                                    {/* Notizie Mobile Link */}
                                     <Link
-                                        href="/contact"
+                                        href={brand ? `/network/${brand}/news` : `/news`}
                                         onClick={() => setIsOpen(false)}
                                         className={cn(
                                             "text-2xl font-black uppercase tracking-widest transition-colors",
-                                            pathname.startsWith("/contact")
+                                            pathname.startsWith("/news")
                                                 ? "text-foreground"
                                                 : "text-zinc-400 hover:text-zinc-600"
                                         )}
                                     >
-                                        {nt("contact")}
+                                        {nt("news")}
+                                    </Link>
+
+                                    {/* Eventi Mobile Link */}
+                                    <Link
+                                        href={brand ? `/network/${brand}/events` : `/events`}
+                                        onClick={() => setIsOpen(false)}
+                                        className={cn(
+                                            "text-2xl font-black uppercase tracking-widest transition-colors",
+                                            pathname.startsWith("/events")
+                                                ? "text-foreground"
+                                                : "text-zinc-400 hover:text-zinc-600"
+                                        )}
+                                    >
+                                        {nt("events")}
                                     </Link>
                                 </>
                             )}
