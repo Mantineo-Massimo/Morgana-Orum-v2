@@ -4,13 +4,27 @@ import { Instagram, Facebook, Youtube, Share2, ArrowRight } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 
+const TiktokIcon = ({ className }: { className?: string }) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+    >
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+)
+
 export const dynamic = "force-dynamic"
 
 type SocialLink = {
     name: string
     handle: string
     url: string
-    platform: "instagram" | "facebook" | "youtube"
+    platform: "instagram" | "facebook" | "youtube" | "tiktok"
     color: string
     hoverColor: string
     bg: string
@@ -29,14 +43,14 @@ const MORGANA_SOCIALS: SocialLink[] = [
         descKey: "morgana_desc"
     },
     {
-        name: "Instagram Unime Matricole",
-        handle: "@unime.matricole",
-        url: "https://www.instagram.com/unime.matricole",
-        platform: "instagram",
-        color: "text-pink-600",
-        hoverColor: "hover:bg-pink-50 hover:border-pink-200",
-        bg: "bg-pink-500",
-        descKey: "matricole_desc"
+        name: "TikTok Morgana",
+        handle: "@associazione.morgana",
+        url: "https://www.tiktok.com/@associazione.morgana",
+        platform: "tiktok",
+        color: "text-zinc-900",
+        hoverColor: "hover:bg-zinc-50 hover:border-zinc-200",
+        bg: "bg-zinc-900",
+        descKey: "morgana_tt_desc"
     },
     {
         name: "Facebook Morgana",
@@ -92,7 +106,8 @@ export default function SocialPage() {
                 {socials.map((s) => {
                     const Icon = s.platform === "instagram" ? Instagram 
                         : s.platform === "facebook" ? Facebook 
-                        : Youtube
+                        : s.platform === "youtube" ? Youtube
+                        : TiktokIcon
                     return (
                         <a
                             key={s.name}
@@ -256,7 +271,7 @@ export default function SocialPage() {
 
                     {/* Inside Dicam */}
                     <a 
-                         href="https://www.instagram.com/insidedicam"
+                         href="https://www.instagram.com/inside_dicam"
                          target="_blank"
                          rel="noopener noreferrer"
                          className="relative group flex-1 min-h-[250px] md:min-h-0 bg-[#d81b60] overflow-hidden md:[clip-path:polygon(25%_0,100%_0,100%_100%,0_100%)] md:-ml-[8%] z-0 transition-all hover:flex-[1.3] duration-500"

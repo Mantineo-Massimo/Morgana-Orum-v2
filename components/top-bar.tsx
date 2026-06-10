@@ -19,7 +19,7 @@ export async function TopBar() {
         unimhealth: "unimhealth",
         economia: "studentieconomia",
         scipog: "studentiscipog",
-        dicam: "insidedicam"
+        dicam: "inside_dicam"
     }
 
     const BRAND_NAMES: Record<string, string> = {
