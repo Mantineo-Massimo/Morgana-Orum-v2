@@ -156,7 +156,22 @@
         "booking_opens": "Opens on {date}",
         "booking_expired": "Booking expired",
         "booking_open": "Booking open",
-        "registered": "Registered"
+        "registered": "Registered",
+        "tab_projects": "Our Initiatives",
+        "projects_title": "Our Projects & Initiatives",
+        "projects_subtitle": "Everything we have accomplished and continue to do to animate the university and support the students.",
+        "project_piazza_title": "Piazza dell'Arte",
+        "project_piazza_desc": "The most anticipated socio-cultural event of the spring in Messina. We transform the Central Courtyard of the University of Messina into an open-air stage with live music, dance, acting, and art exhibitions, highlighting local talent for free.",
+        "project_regali_title": "The Night of Gifts",
+        "project_regali_desc": "Our historical Christmas toy drive organized in synergy with local organizations and non-profits. An initiative of pure solidarity to bring joy and gifts to children in family homes and pediatric wards.",
+        "project_sport_title": "University Sports Tournaments",
+        "project_sport_desc": "Futsal, basketball, and volleyball tournaments organized at the Sports Citadel of the Annunziata Campus. An opportunity to combine sport, wellness, and community spirit outside of university classrooms.",
+        "project_seminari_title": "Cultural Seminars & Conferences",
+        "project_seminari_desc": "Conferences, historical and geopolitical debates (such as the 'Symposium' and Remembrance Day) with national guests to stimulate critical thinking and cultural debate, also offering credits (CFU).",
+        "project_didattica_title": "Educational Support & Entrance Exams",
+        "project_didattica_desc": "Free mock admission tests for future freshmen, orientation seminars, and practical guides for study plans and university bureaucracy.",
+        "project_community_title": "WhatsApp Community & Info Points",
+        "project_community_desc": "Management of a widespread network of WhatsApp groups for degree courses and departments to daily support over 12,000 students with real-time information and answers to their questions."
     },
     "Network": {
         "back_link": "Back to Morgana & O.R.U.M. site",

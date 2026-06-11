@@ -158,7 +158,22 @@
         "booking_opens": "Apre il {date}",
         "booking_expired": "Prenotazione scaduta",
         "booking_open": "Prenotazione aperta",
-        "registered": "Registrato"
+        "registered": "Registrato",
+        "tab_projects": "Le Nostre Iniziative",
+        "projects_title": "I Nostri Progetti & Iniziative",
+        "projects_subtitle": "Tutto quello che abbiamo realizzato e continuiamo a fare per animare l'ateneo e sostenere gli studenti.",
+        "project_piazza_title": "Piazza dell'Arte",
+        "project_piazza_desc": "L'evento socio-culturale più atteso della primavera messinese. Trasformiamo il Cortile Centrale dell'Università di Messina in un palcoscenico a cielo aperto con musica dal vivo, danza, recitazione ed estemporanee d'arte, valorizzando gratuitamente i talenti locali.",
+        "project_regali_title": "La Notte dei Regali",
+        "project_regali_desc": "La nostra storica raccolta di giocattoli e doni natalizi organizzata in sinergia con realtà del territorio e onlus locali. Un'iniziativa di pura solidarietà per portare gioia e regali ai bambini delle case famiglia e dei reparti pediatrici.",
+        "project_sport_title": "Tornei Sportivi Universitari",
+        "project_sport_desc": "Tornei di calcio a 5, basket e pallavolo organizzati presso la Cittadella Sportiva del Polo dell'Annunziata. Un'occasione per unire lo sport, il benessere e lo spirito di community al di fuori delle aule universitarie.",
+        "project_seminari_title": "Seminari e Convegni Culturali",
+        "project_seminari_desc": "Cicli di conferenze, dibattiti storici e geopolitici (come il 'Simposio' e la Giornata del Ricordo) con ospiti nazionali per stimolare lo spirito critico e il dibattito culturale, offrendo anche crediti formativi (CFU).",
+        "project_didattica_title": "Supporto Didattico & Test d'Ingresso",
+        "project_didattica_desc": "Simulazioni gratuite dei test d'ingresso per le future matricole, seminari di orientamento e redazione di guide pratiche per i piani di studio e la burocrazia universitaria.",
+        "project_community_title": "Community WhatsApp e Info Point",
+        "project_community_desc": "Gestione di una rete capillare di gruppi WhatsApp per corsi di laurea e dipartimenti per supportare quotidianamente oltre 12.000 studenti con informazioni in tempo reale e risposte ai loro dubbi."
     },
     "Network": {
         "back_link": "Torna al sito Morgana & O.R.U.M.",
