@@ -4,7 +4,7 @@ import { useState, forwardRef } from "react"
 import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
-import { Calendar as CalendarIcon, MapPin, Clock, Search, CheckCircle, Lock, Ticket, Award, ChevronLeft, ChevronRight, X, Mic2, HeartHandshake, Trophy, BookOpen, GraduationCap, Users } from "lucide-react"
+import { Calendar as CalendarIcon, MapPin, Clock, Search, CheckCircle, Lock, Ticket, Award, ChevronLeft, ChevronRight, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Association } from "@prisma/client"
 import { useTranslations, useLocale } from "next-intl"
@@ -64,61 +64,10 @@ export default function EventsClient({
 }: {
     events: EventItem[]
     categories: string[]
-    mode?: 'upcoming' | 'past' | 'projects'
+    mode?: 'upcoming' | 'past'
 }) {
     const t = useTranslations("Events")
     const locale = useLocale()
-
-    const projects = [
-        {
-            title: t("project_piazza_title"),
-            desc: t("project_piazza_desc"),
-            icon: Mic2,
-            iconColor: "text-amber-600",
-            iconBg: "bg-amber-50",
-            tag: locale === 'it' ? "CULTURA & ARTE" : "CULTURE & ART"
-        },
-        {
-            title: t("project_regali_title"),
-            desc: t("project_regali_desc"),
-            icon: HeartHandshake,
-            iconColor: "text-red-600",
-            iconBg: "bg-red-50",
-            tag: locale === 'it' ? "SOLIDARIETÀ" : "SOLIDARITY"
-        },
-        {
-            title: t("project_sport_title"),
-            desc: t("project_sport_desc"),
-            icon: Trophy,
-            iconColor: "text-blue-600",
-            iconBg: "bg-blue-50",
-            tag: locale === 'it' ? "SPORT & SOCIALITÀ" : "SPORT & COMMUNITY"
-        },
-        {
-            title: t("project_seminari_title"),
-            desc: t("project_seminari_desc"),
-            icon: BookOpen,
-            iconColor: "text-purple-600",
-            iconBg: "bg-purple-50",
-            tag: locale === 'it' ? "CULTURA & CFU" : "CULTURE & CREDITS"
-        },
-        {
-            title: t("project_didattica_title"),
-            desc: t("project_didattica_desc"),
-            icon: GraduationCap,
-            iconColor: "text-emerald-600",
-            iconBg: "bg-emerald-50",
-            tag: locale === 'it' ? "DIDATTICA & ORIENTAMENTO" : "TEACHING & GUIDANCE"
-        },
-        {
-            title: t("project_community_title"),
-            desc: t("project_community_desc"),
-            icon: Users,
-            iconColor: "text-cyan-600",
-            iconBg: "bg-cyan-50",
-            tag: locale === 'it' ? "SERVIZI & COMMUNITY" : "SERVICES & COMMUNITY"
-        }
-    ]
     const [activeCategory, setActiveCategory] = useState(t("all_categories"))
     const [searchQuery, setSearchQuery] = useState("")
     const [selectedDate, setSelectedDate] = useState<Date | null>(null)
@@ -180,10 +129,10 @@ export default function EventsClient({
                             {t("agenda")}
                         </span>
                         <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-4">
-                            {mode === 'upcoming' ? t("upcoming") : mode === 'past' ? t("past") : t("projects_title")}
+                            {mode === 'upcoming' ? t("upcoming") : t("past")}
                         </h1>
                         <p className="text-xl text-zinc-600 font-medium italic">
-                            {mode === 'projects' ? t("projects_subtitle") : t("motto")}
+                            {t("motto")}
                         </p>
                     </div>
 
@@ -210,174 +159,130 @@ export default function EventsClient({
                         >
                             {t("tab_past")}
                         </Link>
-                        <Link
-                            href="/events/projects"
-                            className={cn(
-                                "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
-                                mode === 'projects'
-                                    ? "bg-[#18182e] text-white border-[#18182e] shadow-lg shadow-zinc-200"
-                                    : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
-                            )}
-                        >
-                            {t("tab_projects")}
-                        </Link>
                     </div>
                 </div>
             </div>
 
-            {mode === 'projects' ? (
-                <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {projects.map((project, idx) => (
-                            <motion.div
-                                key={idx}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                                className="bg-white rounded-3xl p-8 border border-zinc-150 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
-                            >
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br opacity-5 rounded-full translate-x-10 -translate-y-10 group-hover:scale-125 transition-transform duration-500" />
-                                <div>
-                                    <div className={cn("size-14 rounded-2xl flex items-center justify-center mb-6 text-white font-bold shadow-md", project.iconBg)}>
-                                        <project.icon className={cn("size-7", project.iconColor)} />
-                                    </div>
-                                    <h3 className="text-2xl font-bold text-foreground mb-4 group-hover:text-[#18182e] transition-colors font-serif">
-                                        {project.title}
-                                    </h3>
-                                    <p className="text-zinc-600 text-sm leading-relaxed mb-6">
-                                        {project.desc}
-                                    </p>
-                                </div>
-                                <div className="border-t border-zinc-100 pt-4 flex items-center justify-between text-xs font-bold text-zinc-400">
-                                    <span>{project.tag}</span>
-                                    <span className="text-[#18182e] group-hover:translate-x-1 transition-transform">→</span>
-                                </div>
-                            </motion.div>
-                        ))}
+            <div className="container mx-auto px-6 grid lg:grid-cols-4 gap-12">
+                {/* Left Sidebar: Filters & Calendar */}
+                <div className="lg:col-span-1 space-y-8">
+
+                    {/* Search */}
+                    <div className="space-y-3">
+                        <h3 className="font-bold text-foreground">{t("search_title")}</h3>
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                            <input
+                                type="text"
+                                placeholder={t("search_placeholder")}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm bg-white"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Calendar */}
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                            <h3 className="font-bold text-foreground">{t("calendar_title")}</h3>
+                            {selectedDate && (
+                                <button onClick={() => setSelectedDate(null)} className="text-xs text-red-500 hover:text-red-600 font-bold flex items-center">
+                                    <X className="size-3 mr-1" /> Reset
+                                </button>
+                            )}
+                        </div>
+                        <div className="bg-white p-4 rounded-2xl border border-zinc-100 shadow-sm">
+                            <div className="flex items-center justify-between mb-4">
+                                <button onClick={prevMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronLeft className="size-4" /></button>
+                                <span className="font-bold text-sm text-foreground">{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
+                                <button onClick={nextMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronRight className="size-4" /></button>
+                            </div>
+                            <div className="grid grid-cols-7 gap-1 text-center mb-2">
+                                {locale === 'it'
+                                    ? ['L', 'M', 'M', 'G', 'V', 'S', 'D'].map((d, i) => (
+                                        <div key={i} className="text-[10px] font-bold text-zinc-400">{d}</div>
+                                    ))
+                                    : ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+                                        <div key={i} className="text-[10px] font-bold text-zinc-400">{d}</div>
+                                    ))
+                                }
+                            </div>
+                            <div className="grid grid-cols-7 gap-1">
+                                {days.map((d, i) => {
+                                    if (!d) return <div key={`empty-${i}`} />
+                                    const dateObj = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d)
+                                    const isSelected = selectedDate?.toDateString() === dateObj.toDateString()
+                                    const isToday = new Date().toDateString() === dateObj.toDateString()
+                                    const hasEvent = events.some(e => new Date(e.date).toDateString() === dateObj.toDateString())
+
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => setSelectedDate(dateObj)}
+                                            className={cn(
+                                                "h-8 rounded-lg text-xs font-bold transition-colors flex flex-col items-center justify-center relative",
+                                                isSelected
+                                                    ? "bg-[#18182e] text-white shadow-md"
+                                                    : isToday
+                                                        ? "bg-red-50 text-red-600 border border-red-100"
+                                                        : "hover:bg-zinc-100 text-zinc-700",
+                                                !isSelected && !isToday && hasEvent && "text-foreground bg-zinc-50"
+                                            )}
+                                        >
+                                            {d}
+                                            {!isSelected && hasEvent && <span className="absolute bottom-1 size-1 rounded-full bg-red-600" />}
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Categories */}
+                    <div className="space-y-3">
+                        <h3 className="font-bold text-foreground">{t("categories_title")}</h3>
+                        <div className="space-y-1">
+                            {allCategories.map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => setActiveCategory(cat)}
+                                    className={cn(
+                                        "w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center justify-between group",
+                                        activeCategory === cat
+                                            ? "bg-white text-foreground shadow-sm border border-zinc-200"
+                                            : "text-zinc-500 hover:bg-zinc-100 hover:text-foreground border border-transparent"
+                                    )}
+                                >
+                                    {cat}
+                                    {activeCategory === cat && <CheckCircle className="size-4 text-green-500" />}
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            ) : (
-                <div className="container mx-auto px-6 grid lg:grid-cols-4 gap-12">
-                    {/* Left Sidebar: Filters & Calendar */}
-                    <div className="lg:col-span-1 space-y-8">
 
-                        {/* Search */}
-                        <div className="space-y-3">
-                            <h3 className="font-bold text-foreground">{t("search_title")}</h3>
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
-                                <input
-                                    type="text"
-                                    placeholder={t("search_placeholder")}
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm bg-white"
+                {/* Main Content: Event Grid */}
+                <div className="lg:col-span-3 space-y-8">
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <AnimatePresence mode="popLayout">
+                            {filteredEvents.map((item) => (
+                                <EventCard
+                                    key={item.id}
+                                    item={item}
                                 />
-                            </div>
-                        </div>
-
-                        {/* Calendar */}
-                        <div className="space-y-3">
-                            <div className="flex items-center justify-between">
-                                <h3 className="font-bold text-foreground">{t("calendar_title")}</h3>
-                                {selectedDate && (
-                                    <button onClick={() => setSelectedDate(null)} className="text-xs text-red-500 hover:text-red-600 font-bold flex items-center">
-                                        <X className="size-3 mr-1" /> Reset
-                                    </button>
-                                )}
-                            </div>
-                            <div className="bg-white p-4 rounded-2xl border border-zinc-100 shadow-sm">
-                                <div className="flex items-center justify-between mb-4">
-                                    <button onClick={prevMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronLeft className="size-4" /></button>
-                                    <span className="font-bold text-sm text-foreground">{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
-                                    <button onClick={nextMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronRight className="size-4" /></button>
-                                </div>
-                                <div className="grid grid-cols-7 gap-1 text-center mb-2">
-                                    {locale === 'it'
-                                        ? ['L', 'M', 'M', 'G', 'V', 'S', 'D'].map((d, i) => (
-                                            <div key={i} className="text-[10px] font-bold text-zinc-400">{d}</div>
-                                        ))
-                                        : ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-                                            <div key={i} className="text-[10px] font-bold text-zinc-400">{d}</div>
-                                        ))
-                                    }
-                                </div>
-                                <div className="grid grid-cols-7 gap-1">
-                                    {days.map((d, i) => {
-                                        if (!d) return <div key={`empty-${i}`} />
-                                        const dateObj = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d)
-                                        const isSelected = selectedDate?.toDateString() === dateObj.toDateString()
-                                        const isToday = new Date().toDateString() === dateObj.toDateString()
-                                        const hasEvent = events.some(e => new Date(e.date).toDateString() === dateObj.toDateString())
-
-                                        return (
-                                            <button
-                                                key={i}
-                                                onClick={() => setSelectedDate(dateObj)}
-                                                className={cn(
-                                                    "h-8 rounded-lg text-xs font-bold transition-colors flex flex-col items-center justify-center relative",
-                                                    isSelected
-                                                        ? "bg-[#18182e] text-white shadow-md"
-                                                        : isToday
-                                                            ? "bg-red-50 text-red-600 border border-red-100"
-                                                            : "hover:bg-zinc-100 text-zinc-700",
-                                                    !isSelected && !isToday && hasEvent && "text-foreground bg-zinc-50"
-                                                )}
-                                            >
-                                                {d}
-                                                {!isSelected && hasEvent && <span className="absolute bottom-1 size-1 rounded-full bg-red-600" />}
-                                            </button>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Categories */}
-                        <div className="space-y-3">
-                            <h3 className="font-bold text-foreground">{t("categories_title")}</h3>
-                            <div className="space-y-1">
-                                {allCategories.map((cat) => (
-                                    <button
-                                        key={cat}
-                                        onClick={() => setActiveCategory(cat)}
-                                        className={cn(
-                                            "w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center justify-between group",
-                                            activeCategory === cat
-                                                ? "bg-white text-foreground shadow-sm border border-zinc-200"
-                                                : "text-zinc-500 hover:bg-zinc-100 hover:text-foreground border border-transparent"
-                                        )}
-                                    >
-                                        {cat}
-                                        {activeCategory === cat && <CheckCircle className="size-4 text-green-500" />}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+                            ))}
+                        </AnimatePresence>
                     </div>
 
-                    {/* Main Content: Event Grid */}
-                    <div className="lg:col-span-3 space-y-8">
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <AnimatePresence mode="popLayout">
-                                {filteredEvents.map((item) => (
-                                    <EventCard
-                                        key={item.id}
-                                        item={item}
-                                    />
-                                ))}
-                            </AnimatePresence>
+                    {filteredEvents.length === 0 && (
+                        <div className="text-center py-20 text-zinc-400">
+                            <CalendarIcon className="size-12 mx-auto mb-4 opacity-30" />
+                            <p className="text-lg font-medium">{t("no_events")}</p>
                         </div>
-
-                        {filteredEvents.length === 0 && (
-                            <div className="text-center py-20 text-zinc-400">
-                                <CalendarIcon className="size-12 mx-auto mb-4 opacity-30" />
-                                <p className="text-lg font-medium">{t("no_events")}</p>
-                            </div>
-                        )}
-                    </div>
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     )
 }
