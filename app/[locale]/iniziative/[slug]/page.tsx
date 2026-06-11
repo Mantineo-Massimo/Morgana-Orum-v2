@@ -45,23 +45,23 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeEn: "CULTURE",
         highlightsIt: [
             "Proiezioni ad ingresso totalmente gratuito per tutta la comunità studentesca.",
-            "Dibattiti post-proiezione guidati da esperti del settore cinematografico e sociale.",
-            "Approfondimento di macro-temi di attualità, ambiente e diritti civili."
+            "Ideato dal Senato Accademico e sviluppato dal Centro Informatico CIAM dal 2019.",
+            "Approfondimento di macro-temi di attualità, ambiente e diritti civili con dibattito."
         ],
         highlightsEn: [
             "Completely free screenings for the entire university community.",
-            "Post-screening debates led by cinema and social experts.",
-            "In-depth analysis of contemporary, environmental, and civil rights themes."
+            "Conceived by the Academic Senate and developed by the CIAM IT Center since 2019.",
+            "In-depth analysis of contemporary, environmental, and civil rights themes with debate."
         ],
         detailsIt: [
-            { label: "Frequenza", value: "Ciclica durante l'anno accademico" },
-            { label: "Target", value: "Tutti gli studenti iscritti" },
-            { label: "Ingresso", value: "Gratuito" }
+            { label: "Sviluppo Tecnico", value: "CIAM (Centro Informatico Ateneo)" },
+            { label: "Proposta", value: "Rappr. Senato Accademico (Lavinia Parisi)" },
+            { label: "Sede Storica", value: "Palazzo Mariani / Aule di Ateneo" }
         ],
         detailsEn: [
-            { label: "Frequency", value: "Cyclical throughout the academic year" },
-            { label: "Target", value: "All enrolled students" },
-            { label: "Entry", value: "Free" }
+            { label: "Technical Dev", value: "CIAM (University IT Center)" },
+            { label: "Proponent", value: "Senate Representative (Lavinia Parisi)" },
+            { label: "Historic Venue", value: "Palazzo Mariani / Campus Halls" }
         ]
     },
     "piazza-dell-arte": {
@@ -73,24 +73,24 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeIt: "ARTE & MUSICA",
         badgeEn: "ART & MUSIC",
         highlightsIt: [
-            "Grande festival primaverile con performance live di band, solisti e ballerini.",
-            "Estemporanee di pittura e laboratori creativi nel cortile dell'Ateneo.",
-            "FantArte: l'esclusivo gioco di curatori d'arte virtuale per coinvolgere gli studenti."
+            "Grande festival primaverile giunto alla XI edizione con band, solisti e ballerini live.",
+            "Estemporanee di pittura, laboratori creativi ed esposizione di sculture.",
+            "FantArte: la prima piattaforma di gamification dell'arte a Messina (www.fantarte.it)."
         ],
         highlightsEn: [
-            "Large spring festival featuring live performances by bands, soloists, and dancers.",
-            "Live painting and creative workshops in the University courtyard.",
-            "FantArte: the exclusive virtual art curation game to engage students."
+            "Large spring festival now in its 11th edition featuring live bands, soloists, and dancers.",
+            "Live painting, creative workshops, and sculpture showcase.",
+            "FantArte: the first art gamification platform in Messina (www.fantarte.it)."
         ],
         detailsIt: [
-            { label: "Periodo", value: "Primavera (Maggio/Giugno)" },
+            { label: "Edizione", value: "XI Edizione Primavera" },
             { label: "Location", value: "Cortile Centrale Ateneo e Scalinata Rettorato" },
-            { label: "Partecipazione", value: "Esposizione gratuita per artisti emergenti" }
+            { label: "Gamification", value: "FantArte (budget di 100 Armoni)" }
         ],
         detailsEn: [
-            { label: "Period", value: "Spring (May/June)" },
+            { label: "Edition", value: "11th Spring Edition" },
             { label: "Location", value: "Central Courtyard and Rectorate Staircase" },
-            { label: "Participation", value: "Free showcase for emerging artists" }
+            { label: "Gamification", value: "FantArte (100 Armoni budget)" }
         ]
     },
     "notte-dei-regali": {
@@ -102,24 +102,24 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeIt: "SOLIDARIETÀ",
         badgeEn: "SOLIDARITY",
         highlightsIt: [
-            "Raccolta benefica di giocattoli, libri e regali natalizi coordinata dagli studenti.",
-            "Donazione diretta ai bambini dei reparti di pediatria del Policlinico di Messina.",
-            "Supporto attivo a case famiglia e associazioni di volontariato del territorio."
+            "Raccolta benefica natalizia di giocattoli, libri e regali coordinata dagli studenti.",
+            "Collaborazione con Gli Invisibili Onlus, Leo Club Messina Host, UGL e ACR Messina.",
+            "Centralizzata presso l'hub logistico di Via del Vespro a supporto di case famiglia e pediatrie."
         ],
         highlightsEn: [
-            "Charitable collection of toys, books, and Christmas gifts managed by students.",
-            "Direct donation to children in the pediatric wards of the Policlinico of Messina.",
-            "Active support for local family shelters and non-profit volunteer organizations."
+            "Charitable Christmas collection of toys, books, and gifts managed by students.",
+            "Partnership with Gli Invisibili Onlus, Leo Club Messina Host, UGL, and ACR Messina.",
+            "Centralized at the Via del Vespro logistics hub supporting family shelters and pediatric wards."
         ],
         detailsIt: [
-            { label: "Periodo", value: "Dicembre (Festività Natalizie)" },
-            { label: "Beneficiari", value: "Reparti pediatrici e case famiglia locali" },
-            { label: "Tipo di Raccolta", value: "Giocattoli nuovi, libri e articoli da regalo" }
+            { label: "Hub Logistico", value: "Sede Morgana - Via Del Vespro" },
+            { label: "Beneficiari", value: "Reparti Pediatria Policlinico e Case Famiglia" },
+            { label: "Partner Sociali", value: "Gli Invisibili Onlus, ACR Messina, Leo Club" }
         ],
         detailsEn: [
-            { label: "Period", value: "December (Christmas Holidays)" },
-            { label: "Beneficiaries", value: "Pediatric wards and local family shelters" },
-            { label: "Collection Type", value: "New toys, books, and gift items" }
+            { label: "Logistics Hub", value: "Morgana HQ - Via Del Vespro" },
+            { label: "Beneficiaries", value: "Policlinico Pediatric Wards & Local Shelters" },
+            { label: "Social Partners", value: "Gli Invisibili Onlus, ACR Messina, Leo Club" }
         ]
     },
     "conferenze": {
@@ -131,24 +131,24 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeIt: "FORMAZIONE & CFU",
         badgeEn: "CFU SEMINARS",
         highlightsIt: [
-            "Convegni e seminari di alto spessore istituzionale e accademico.",
-            "Incontri con magistrati, giornalisti, storici e accademici di fama nazionale.",
-            "Possibilità di conseguire CFU per le attività didattiche a scelta dello studente."
+            "Seminari e convegni accreditati per l'ottenimento di CFU accademici.",
+            "Focus su legalità e relazioni internazionali, come il dibattito 'Due popoli in due Stati'.",
+            "Winter School annuale in collaborazione con Amnesty International ed il dipartimento Scipog."
         ],
         highlightsEn: [
-            "Conferences and seminars of high institutional and academic standing.",
-            "Encounters with nationally renowned judges, journalists, historians, and academics.",
-            "Opportunity to earn university training credits (CFU) for elective courses."
+            "Accredited seminars and conferences for earning university credits (CFU).",
+            "Focus on legality and international relations, such as the 'Two Peoples, Two States' debate.",
+            "Annual Winter School in partnership with Amnesty International and the Scipog department."
         ],
         detailsIt: [
-            { label: "Riconoscimento", value: "Rilascio CFU (previa approvazione dipartimento)" },
-            { label: "Tematiche", value: "Legalità, Geopolitica, Sviluppo Professionale" },
-            { label: "Modalità", value: "In presenza e webinar online" }
+            { label: "Iniziative Chiave", value: "Winter School Amnesty, Dibattiti Geopolitici" },
+            { label: "Crediti Didattici", value: "Riconoscimento CFU accademici (0,25 - 1,50 CFU)" },
+            { label: "Relatori", value: "Magistrati, storici, giornalisti ed accademici" }
         ],
         detailsEn: [
-            { label: "Recognition", value: "CFU accreditation (subject to dept. approval)" },
-            { label: "Themes", value: "Legality, Geopolitics, Career Development" },
-            { label: "Format", value: "In-person and online webinars" }
+            { label: "Key Initiatives", value: "Amnesty Winter School, Geopolitical Debates" },
+            { label: "Academic Credits", value: "CFU accreditation (0.25 - 1.50 CFU)" },
+            { label: "Speakers", value: "Judges, historians, journalists, and academics" }
         ]
     },
     "sport": {
@@ -161,23 +161,23 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeEn: "SPORTS",
         highlightsIt: [
             "Tornei interdipartimentali di calcio a 5, pallavolo e basket maschile/femminile.",
-            "Svolti in collaborazione con il CUS Messina presso la Cittadella Sportiva dell'Annunziata.",
-            "Promozione dell'aggregazione giovanile e del benessere psico-fisico attraverso lo sport."
+            "Partenariato ufficiale con SSD Unime e CUS Messina per l'uso delle strutture olimpiche.",
+            "Valenza accademica con rilascio di crediti formativi (0,25 CFU) ai partecipanti dei tornei."
         ],
         highlightsEn: [
             "Interdepartmental futsal, volleyball, and basketball tournaments (men/women).",
-            "Held in partnership with CUS Messina at the Annunziata Sports Citadel.",
-            "Promotion of youth integration and mental/physical well-being through sport."
+            "Official partnership with SSD Unime and CUS Messina for Olympic facility use.",
+            "Academic value with format credits (0.25 CFU) awarded to tournament participants."
         ],
         detailsIt: [
             { label: "Location", value: "Cittadella Sportiva Universitaria (Polo Annunziata)" },
-            { label: "Discipline", value: "Calcio a 5, Basket 3x3, Pallavolo" },
-            { label: "Premiazioni", value: "Coppe, medaglie e riconoscimenti associativi" }
+            { label: "Crediti Sportivi", value: "0,25 CFU accreditati dall'Ateneo" },
+            { label: "Collaboratori", value: "SSD Unime & CUS Messina" }
         ],
         detailsEn: [
             { label: "Location", value: "University Sports Citadel (Annunziata Campus)" },
-            { label: "Disciplines", value: "Futsal, 3x3 Basketball, Volleyball" },
-            { label: "Awards", value: "Cups, medals, and association recognitions" }
+            { label: "Sports Credits", value: "0.25 CFU accredited by the University" },
+            { label: "Collaborators", value: "SSD Unime & CUS Messina" }
         ]
     },
     "svago": {
@@ -189,24 +189,24 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeIt: "SOCIALITÀ",
         badgeEn: "SOCIAL",
         highlightsIt: [
-            "Aperitivi di benvenuto e giornate informative per l'integrazione delle matricole.",
-            "Attività ricreative, tornei di giochi da tavolo ed eventi di socializzazione.",
-            "Creazione di una community inclusiva al di fuori delle aule universitarie."
+            "Orientamento e tutorato in ingresso per agevolare l'integrazione accademica.",
+            "Coordinamento della 'Rete Contatti Unime 2027' per le scuole secondarie provinciali.",
+            "Iniziative ricreative, guide all'immatricolazione e community di supporto digitale."
         ],
         highlightsEn: [
-            "Welcome gatherings and info days to support freshman integration.",
-            "Recreational activities, board game tournaments, and social events.",
-            "Building an inclusive community environment outside the classrooms."
+            "Incoming guidance and tutoring to ease academic integration.",
+            "Coordination of the 'Unime Contatti 2027' network for provincial high schools.",
+            "Recreational initiatives, enrollment guides, and digital support communities."
         ],
         detailsIt: [
-            { label: "Obiettivo", value: "Networking e integrazione delle matricole" },
-            { label: "Attività", value: "Socialità, orienteering e feste di benvenuto" },
-            { label: "Frequenza", value: "Incontri periodici e benvenuto autunnale" }
+            { label: "Rete Scuole", value: "Liceo Caminiti Trimarchi, Pugliatti Furci/Taormina" },
+            { label: "Canali Informativi", value: "Video guide YouTube, Gruppi WhatsApp e Social" },
+            { label: "Supporto Matricole", value: "Simulazioni test, giornate accoglienza, wayfinding" }
         ],
         detailsEn: [
-            { label: "Goal", value: "Networking and freshman integration" },
-            { label: "Activities", value: "Socializing, orienteering, and welcome parties" },
-            { label: "Frequency", value: "Periodic meetups and fall welcome events" }
+            { label: "School Network", value: "Caminiti Trimarchi Lyceum, Pugliatti Furci/Taormina" },
+            { label: "Info Channels", value: "YouTube video guides, WhatsApp & Social groups" },
+            { label: "Freshman Support", value: "Mock tests, welcome days, wayfinding assistance" }
         ]
     }
 }
