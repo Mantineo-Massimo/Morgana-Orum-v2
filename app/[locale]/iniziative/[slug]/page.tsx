@@ -32,6 +32,12 @@ interface DetailItem {
     icon: LucideIcon
 }
 
+interface DetailItem {
+    label: string
+    value: string
+    icon: LucideIcon
+}
+
 interface InitiativeConfig {
     prefix: string
     image: string
@@ -45,6 +51,7 @@ interface InitiativeConfig {
     highlightsEn: string[]
     detailsIt: DetailItem[]
     detailsEn: DetailItem[]
+    gallery: string[]
 }
 
 const slugMap: Record<string, InitiativeConfig> = {
@@ -59,23 +66,30 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeEn: "CULTURE",
         highlightsIt: [
             "Proiezioni ad ingresso totalmente gratuito per tutta la comunità studentesca.",
-            "Ideato dal Senato Accademico e sviluppato dal Centro Informatico CIAM dal 2019.",
-            "Approfondimento di macro-temi di attualità, ambiente e diritti civili con dibattito."
+            "Dibattiti post-proiezione guidati da esperti del settore cinematografico e sociale.",
+            "Approfondimento di macro-temi di attualità, ambiente e diritti civili.",
+            "Incontri accreditati dall'Ateneo con eventuale riconoscimento di CFU."
         ],
         highlightsEn: [
             "Completely free screenings for the entire university community.",
-            "Conceived by the Academic Senate and developed by the CIAM IT Center since 2019.",
-            "In-depth analysis of contemporary, environmental, and civil rights themes with debate."
+            "Post-screening debates led by cinema and social experts.",
+            "In-depth analysis of contemporary, environmental, and civil rights themes.",
+            "Accredited university sessions with potential training credits (CFU)."
         ],
         detailsIt: [
-            { label: "Sviluppo Tecnico", value: "CIAM (Centro Informatico)", icon: Laptop },
-            { label: "Proposta", value: "Rappr. Senato (Lavinia Parisi)", icon: User },
-            { label: "Sede Storica", value: "Palazzo Mariani / Aule Ateneo", icon: MapPin }
+            { label: "Periodo", value: "Ciclico durante l'anno accademico", icon: Calendar },
+            { label: "Luogo", value: "Aule dei plessi universitari", icon: MapPin },
+            { label: "Destinatari", value: "Tutti gli studenti iscritti ad Unime", icon: Users }
         ],
         detailsEn: [
-            { label: "Technical Dev", value: "CIAM (University IT Center)", icon: Laptop },
-            { label: "Proponent", value: "Senate Representative (Lavinia Parisi)", icon: User },
-            { label: "Historic Venue", value: "Palazzo Mariani / Campus Halls", icon: MapPin }
+            { label: "Period", value: "Cyclical throughout the academic year", icon: Calendar },
+            { label: "Locations", value: "University campus lecture halls", icon: MapPin },
+            { label: "Target", value: "All enrolled Unime students", icon: Users }
+        ],
+        gallery: [
+            "/assets/slides/2.webp",
+            "/assets/programma.webp",
+            "/assets/unime.webp"
         ]
     },
     "piazza-dell-arte": {
@@ -90,22 +104,29 @@ const slugMap: Record<string, InitiativeConfig> = {
         highlightsIt: [
             "Grande festival primaverile giunto alla XI edizione con band, solisti e ballerini live.",
             "Estemporanee di pittura, laboratori creativi ed esposizione di sculture.",
-            "FantArte: la prima piattaforma di gamification dell'arte a Messina (www.fantarte.it)."
+            "FantArte: la prima piattaforma di gamification dell'arte a Messina (www.fantarte.it).",
+            "Promozione e valorizzazione gratuita dei giovani talenti del territorio messinese."
         ],
         highlightsEn: [
             "Large spring festival now in its 11th edition featuring live bands, soloists, and dancers.",
-            "Live painting, creative workshops, and sculpture showcase.",
-            "FantArte: the first art gamification platform in Messina (www.fantarte.it)."
+            "Live painting, creative workshops, and sculpture showcases.",
+            "FantArte: the first art gamification platform in Messina (www.fantarte.it).",
+            "Free promotion and spotlighting of young local talents from Messina."
         ],
         detailsIt: [
-            { label: "Edizione", value: "XI Edizione Primavera", icon: Calendar },
-            { label: "Location", value: "Cortile Centrale e Scalinata Rettorato", icon: MapPin },
-            { label: "Gamification", value: "FantArte (100 Armoni)", icon: Award }
+            { label: "Periodo", value: "Primavera (Maggio/Giugno)", icon: Calendar },
+            { label: "Luogo", value: "Cortile Centrale e Scalinata Rettorato", icon: MapPin },
+            { label: "Destinatari", value: "Studenti, artisti e cittadinanza", icon: Users }
         ],
         detailsEn: [
-            { label: "Edition", value: "11th Spring Edition", icon: Calendar },
-            { label: "Location", value: "Central Courtyard & Rectorate Staircase", icon: MapPin },
-            { label: "Gamification", value: "FantArte (100 Armoni)", icon: Award }
+            { label: "Period", value: "Spring (May/June)", icon: Calendar },
+            { label: "Locations", value: "Central Courtyard & Rectorate Staircase", icon: MapPin },
+            { label: "Target", value: "Students, artists, and citizens", icon: Users }
+        ],
+        gallery: [
+            "/assets/piazza.webp",
+            "/assets/artisti.webp",
+            "/assets/slides/1.webp"
         ]
     },
     "notte-dei-regali": {
@@ -120,22 +141,29 @@ const slugMap: Record<string, InitiativeConfig> = {
         highlightsIt: [
             "Raccolta benefica natalizia di giocattoli, libri e regali coordinata dagli studenti.",
             "Collaborazione con Gli Invisibili Onlus, Leo Club Messina Host, UGL e ACR Messina.",
-            "Centralizzata presso l'hub logistico di Via del Vespro a supporto di case famiglia e pediatrie."
+            "Centralizzata presso l'hub logistico di Via del Vespro per lo smistamento.",
+            "Donazione diretta ai bambini dei reparti di pediatria del Policlinico e case famiglia."
         ],
         highlightsEn: [
             "Charitable Christmas collection of toys, books, and gifts managed by students.",
             "Partnership with Gli Invisibili Onlus, Leo Club Messina Host, UGL, and ACR Messina.",
-            "Centralized at the Via del Vespro logistics hub supporting family shelters and pediatric wards."
+            "Centralized sorting and logistics operations at the Via del Vespro hub.",
+            "Direct donation to children in the Policlinico pediatric wards and local shelters."
         ],
         detailsIt: [
-            { label: "Hub Logistico", value: "Sede Morgana - Via Del Vespro", icon: MapPin },
-            { label: "Beneficiari", value: "Pediatria Policlinico & Case Famiglia", icon: Users },
-            { label: "Partner Sociali", value: "Gli Invisibili, ACR, Leo Club", icon: Heart }
+            { label: "Periodo", value: "Dicembre (Periodo Natalizio)", icon: Calendar },
+            { label: "Luogo", value: "Via del Vespro, reparti pediatrici e case famiglia", icon: MapPin },
+            { label: "Destinatari", value: "Bambini in situazioni di fragilità del territorio", icon: Users }
         ],
         detailsEn: [
-            { label: "Logistics Hub", value: "Morgana HQ - Via Del Vespro", icon: MapPin },
-            { label: "Beneficiaries", value: "Policlinico Pediatric & Shelters", icon: Users },
-            { label: "Social Partners", value: "Gli Invisibili, ACR, Leo Club", icon: Heart }
+            { label: "Period", value: "December (Christmas Season)", icon: Calendar },
+            { label: "Locations", value: "Via del Vespro, pediatric wards, and local shelters", icon: MapPin },
+            { label: "Target", value: "Vulnerable and underprivileged local children", icon: Users }
+        ],
+        gallery: [
+            "/assets/slides/3.webp",
+            "/assets/policlinico.webp",
+            "/assets/morgana.webp"
         ]
     },
     "conferenze": {
@@ -150,22 +178,29 @@ const slugMap: Record<string, InitiativeConfig> = {
         highlightsIt: [
             "Seminari e convegni accreditati per l'ottenimento di CFU accademici.",
             "Focus su legalità e relazioni internazionali, come il dibattito 'Due popoli in due Stati'.",
-            "Winter School annuale in collaborazione con Amnesty International ed il dipartimento Scipog."
+            "Winter School annuale in collaborazione con Amnesty International ed il dipartimento Scipog.",
+            "Incontri con magistrati, storici, giornalisti ed accademici di rilievo nazionale."
         ],
         highlightsEn: [
             "Accredited seminars and conferences for earning university credits (CFU).",
             "Focus on legality and international relations, such as the 'Two Peoples, Two States' debate.",
-            "Annual Winter School in partnership with Amnesty International and the Scipog department."
+            "Annual Winter School in partnership with Amnesty International and the Scipog department.",
+            "Meetings with judges, historians, journalists, and national academics."
         ],
         detailsIt: [
-            { label: "Iniziative Chiave", value: "Winter School Amnesty, Dibattiti Geopolitici", icon: BookOpen },
-            { label: "Crediti Didattici", value: "CFU accademici (0,25 - 1,50 CFU)", icon: Award },
-            { label: "Relatori", value: "Magistrati, storici ed accademici", icon: Users }
+            { label: "Periodo", value: "Ciclico (da Ottobre a Maggio)", icon: Calendar },
+            { label: "Luogo", value: "Aula Magna e aule dipartimentali", icon: MapPin },
+            { label: "Destinatari", value: "Studenti universitari e accademici", icon: Users }
         ],
         detailsEn: [
-            { label: "Key Initiatives", value: "Amnesty Winter School, Geopolitical Debates", icon: BookOpen },
-            { label: "Academic Credits", value: "CFU accreditation (0.25 - 1.50 CFU)", icon: Award },
-            { label: "Speakers", value: "Judges, historians, journalists & academics", icon: Users }
+            { label: "Period", value: "Cyclical (from October to May)", icon: Calendar },
+            { label: "Locations", value: "Aula Magna and department lecture halls", icon: MapPin },
+            { label: "Target", value: "University students and academics", icon: Users }
+        ],
+        gallery: [
+            "/assets/programma.webp",
+            "/assets/unime.webp",
+            "/assets/slides/2.webp"
         ]
     },
     "sport": {
@@ -180,22 +215,29 @@ const slugMap: Record<string, InitiativeConfig> = {
         highlightsIt: [
             "Tornei interdipartimentali di calcio a 5, pallavolo e basket maschile/femminile.",
             "Partenariato ufficiale con SSD Unime e CUS Messina per l'uso delle strutture olimpiche.",
-            "Valenza accademica con rilascio di crediti formativi (0,25 CFU) ai partecipanti dei tornei."
+            "Valenza accademica con rilascio di crediti formativi (0,25 CFU) ai partecipanti dei tornei.",
+            "Promozione del benessere psicofisico e sani valori dello sport tra i poli d'Ateneo."
         ],
         highlightsEn: [
             "Interdepartmental futsal, volleyball, and basketball tournaments (men/women).",
             "Official partnership with SSD Unime and CUS Messina for Olympic facility use.",
-            "Academic value with format credits (0.25 CFU) awarded to tournament participants."
+            "Academic value with format credits (0.25 CFU) awarded to tournament participants.",
+            "Promotion of physical/mental well-being and healthy values across campuses."
         ],
         detailsIt: [
-            { label: "Location", value: "Cittadella Sportiva (Polo Annunziata)", icon: MapPin },
-            { label: "Crediti Sportivi", value: "0,25 CFU accreditati dall'Ateneo", icon: Award },
-            { label: "Collaboratori", value: "SSD Unime & CUS Messina", icon: Users }
+            { label: "Periodo", value: "Sessioni Autunnali e Primaverili", icon: Calendar },
+            { label: "Luogo", value: "Cittadella Sportiva Universitaria (Polo Annunziata)", icon: MapPin },
+            { label: "Destinatari", value: "Studenti atleti e appassionati iscritti a Unime", icon: Users }
         ],
         detailsEn: [
-            { label: "Location", value: "University Sports Citadel (Annunziata)", icon: MapPin },
-            { label: "Sports Credits", value: "0.25 CFU accredited by the Uni", icon: Award },
-            { label: "Collaborators", value: "SSD Unime & CUS Messina", icon: Users }
+            { label: "Period", value: "Fall and Spring Sessions", icon: Calendar },
+            { label: "Locations", value: "University Sports Citadel (Annunziata)", icon: MapPin },
+            { label: "Target", value: "Student athletes and Unime sports enthusiasts", icon: Users }
+        ],
+        gallery: [
+            "/assets/slides/1.webp",
+            "/assets/artisti.webp",
+            "/assets/piazza.webp"
         ]
     },
     "svago": {
@@ -210,22 +252,29 @@ const slugMap: Record<string, InitiativeConfig> = {
         highlightsIt: [
             "Orientamento e tutorato in ingresso per agevolare l'integrazione accademica.",
             "Coordinamento della 'Rete Contatti Unime 2027' per le scuole secondarie provinciali.",
-            "Iniziative ricreative, guide all'immatricolazione e community di supporto digitale."
+            "Iniziative ricreative, guide all'immatricolazione e community di supporto digitale.",
+            "Aperitivi di benvenuto e giornate informative per l'integrazione delle matricole."
         ],
         highlightsEn: [
             "Incoming guidance and tutoring to ease academic integration.",
             "Coordination of the 'Unime Contatti 2027' network for provincial high schools.",
-            "Recreational initiatives, enrollment guides, and digital support communities."
+            "Recreational initiatives, enrollment guides, and digital support communities.",
+            "Welcome gatherings and info days to support freshman integration."
         ],
         detailsIt: [
-            { label: "Rete Scuole", value: "Liceo Caminiti Trimarchi, Pugliatti", icon: BookOpen },
-            { label: "Canali Informativi", value: "Video guide YouTube, WhatsApp e Social", icon: Laptop },
-            { label: "Tutorato Matricole", value: "Simulazioni test, giornate accoglienza", icon: Users }
+            { label: "Periodo", value: "Inizio anno accademico (Settembre/Ottobre)", icon: Calendar },
+            { label: "Luogo", value: "Aree esterne dell'Ateneo, poli didattici e social hub", icon: MapPin },
+            { label: "Destinatari", value: "Nuove matricole e studenti iscritti ad Unime", icon: Users }
         ],
         detailsEn: [
-            { label: "School Network", value: "Caminiti Trimarchi Lyceum, Pugliatti", icon: BookOpen },
-            { label: "Info Channels", value: "YouTube video guides, WhatsApp & Social", icon: Laptop },
-            { label: "Freshman Support", value: "Mock tests, welcome days guidance", icon: Users }
+            { label: "Period", value: "Start of the academic year (September/October)", icon: Calendar },
+            { label: "Locations", value: "University outdoor areas, campuses, and social hubs", icon: MapPin },
+            { label: "Target", value: "New freshmen and enrolled Unime students", icon: Users }
+        ],
+        gallery: [
+            "/assets/artisti.webp",
+            "/assets/matricole.webp",
+            "/assets/slides/3.webp"
         ]
     }
 }
@@ -331,7 +380,7 @@ export default function InitiativeDetailPage() {
                 </div>
 
                 {/* 2-Column Content Layout */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-16">
                     {/* Left Column: Descriptions */}
                     <div className="lg:col-span-8 space-y-8">
                         {/* Main Description */}
@@ -417,6 +466,36 @@ export default function InitiativeDetailPage() {
                         </div>
                     </div>
                 </div>
+
+                {/* Gallery Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 md:p-12 shadow-sm"
+                >
+                    <h3 className="text-2xl font-bold font-serif text-foreground mb-8 flex items-center gap-3">
+                        <Sparkles className="size-6 text-emerald-600" />
+                        {locale === 'it' ? "Momenti dell'Iniziativa" : "Initiative Moments"}
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                        {config.gallery.map((img, index) => (
+                            <div 
+                                key={index} 
+                                className="relative aspect-video rounded-2xl overflow-hidden border border-zinc-100 shadow-sm hover:shadow-xl transition-all duration-300 group"
+                            >
+                                <Image
+                                    src={img}
+                                    alt={`${title} moment ${index + 1}`}
+                                    fill
+                                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </motion.div>
             </div>
         </div>
     )
