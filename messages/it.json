@@ -158,22 +158,7 @@
         "booking_opens": "Apre il {date}",
         "booking_expired": "Prenotazione scaduta",
         "booking_open": "Prenotazione aperta",
-        "registered": "Registrato",
-        "tab_projects": "Le Nostre Iniziative",
-        "projects_title": "I Nostri Progetti & Iniziative",
-        "projects_subtitle": "Tutto quello che abbiamo realizzato e continuiamo a fare per animare l'ateneo e sostenere gli studenti.",
-        "project_piazza_title": "Piazza dell'Arte",
-        "project_piazza_desc": "L'evento socio-culturale più atteso della primavera messinese. Trasformiamo il Cortile Centrale dell'Università di Messina in un palcoscenico a cielo aperto con musica dal vivo, danza, recitazione ed estemporanee d'arte, valorizzando gratuitamente i talenti locali.",
-        "project_regali_title": "La Notte dei Regali",
-        "project_regali_desc": "La nostra storica raccolta di giocattoli e doni natalizi organizzata in sinergia con realtà del territorio e onlus locali. Un'iniziativa di pura solidarietà per portare gioia e regali ai bambini delle case famiglia e dei reparti pediatrici.",
-        "project_sport_title": "Tornei Sportivi Universitari",
-        "project_sport_desc": "Tornei di calcio a 5, basket e pallavolo organizzati presso la Cittadella Sportiva del Polo dell'Annunziata. Un'occasione per unire lo sport, il benessere e lo spirito di community al di fuori delle aule universitarie.",
-        "project_seminari_title": "Seminari e Convegni Culturali",
-        "project_seminari_desc": "Cicli di conferenze, dibattiti storici e geopolitici (come il 'Simposio' e la Giornata del Ricordo) con ospiti nazionali per stimolare lo spirito critico e il dibattito culturale, offrendo anche crediti formativi (CFU).",
-        "project_didattica_title": "Supporto Didattico & Test d'Ingresso",
-        "project_didattica_desc": "Simulazioni gratuite dei test d'ingresso per le future matricole, seminari di orientamento e redazione di guide pratiche per i piani di studio e la burocrazia universitaria.",
-        "project_community_title": "Community WhatsApp e Info Point",
-        "project_community_desc": "Gestione di una rete capillare di gruppi WhatsApp per corsi di laurea e dipartimenti per supportare quotidianamente oltre 12.000 studenti con informazioni in tempo reale e risposte ai loro dubbi."
+        "registered": "Registrato"
     },
     "Network": {
         "back_link": "Torna al sito Morgana & O.R.U.M.",
@@ -363,5 +348,51 @@
         "guidelines_title": "Linee Guida del Brand",
         "guidelines_desc": "Scopri come combinare font, loghi e colori per creare materiali coerenti con l'identità visiva del nostro network.",
         "download_guidelines": "Scarica Guida (.PDF)"
+    },
+    "IniziativePage": {
+        "title": "Le Nostre Iniziative",
+        "subtitle": "Impegno concreto per il futuro accademico.",
+        "description": "Lavoriamo ogni giorno per migliorare la vita studentesca all'interno dell'Ateneo di Messina. Scopri i nostri interventi e le nostre conquiste suddivisi per aree tematiche.",
+        "areas_title": "Aree di Intervento",
+        
+        "didattica_title": "Didattica e Trasparenza",
+        "didattica_desc": "Garantiamo la qualità della didattica e la trasparenza di tutti i processi accademici. Vigilando sulla stesura dei bandi, sulla pubblicazione tempestiva delle date d'esame e sul rispetto delle regole didattiche, tuteliamo il percorso formativo degli studenti.",
+        "didattica_tag": "DIDATTICA",
+
+        "aule_title": "Aule studio e Laboratori",
+        "aule_desc": "Ci adoperiamo per dotare ogni dipartimento di spazi accoglienti, aule studio con orari prolungati e laboratori attrezzati di ultima generazione per promuovere l'apprendimento pratico, lo studio di gruppo e la socializzazione.",
+        "aule_tag": "SPAZI ACCADEMICI",
+
+        "internazionalizzazione_title": "Internazionalizzazione",
+        "internazionalizzazione_desc": "Supportiamo i programmi di mobilità internazionale come l'Erasmus+ e agevoliamo l'integrazione degli studenti stranieri in Ateneo, promuovendo scambi culturali e corsi di laurea in lingua inglese per un'università globale.",
+        "internazionalizzazione_tag": "ERASMUS & ESTERO",
+
+        "trasporti_title": "Trasporti e Parcheggi",
+        "trasporti_desc": "Lottiamo per ottenere tariffe agevolate sui trasporti urbani e sullo Stretto per gli studenti fuori sede, per l'ottimizzazione del servizio navette universitarie tra i vari poli e per la messa in sicurezza dei parcheggi di ateneo.",
+        "trasporti_tag": "MOBILITÀ",
+
+        "digitalizzazione_title": "Digitalizzazione",
+        "digitalizzazione_desc": "Sosteniamo la modernizzazione digitale dei servizi di Ateneo, monitorando il corretto funzionamento di Esse3, promuovendo la dematerializzazione burocratica e spingendo per una copertura Wi-Fi stabile e veloce in tutte le aule.",
+        "digitalizzazione_tag": "TECNOLOGIA",
+
+        "orientamento_title": "Orientamento e Tirocinio",
+        "orientamento_desc": "Accompagniamo gli studenti sin dal primo giorno con simulazioni gratuite dei test d'ingresso, giornate di accoglienza per le matricole e l'organizzazione di Career Day con aziende locali e nazionali per tirocini formativi qualificati.",
+        "orientamento_tag": "FUTURO & LAVORO",
+
+        "diritto_title": "Diritto allo studio e Tasse",
+        "diritto_desc": "Vigiliamo sull'assegnazione e il pagamento delle borse di studio ERSU, sulle riduzioni delle tasse universitarie in base alle fasce ISEE e sull'erogazione di sussidi straordinari, garantendo a tutti pari dignità e opportunità.",
+        "diritto_tag": "TASSE & AGEVOLAZIONI",
+
+        "attivita_title": "Attività e Sport",
+        "attivita_desc": "Crediamo in un'università viva. Organizziamo tornei sportivi interdipartimentali di calcio, basket e pallavolo, manifestazioni ricreative e la celebre 'Piazza dell'Arte', dando spazio al talento, alla creatività e all'aggregazione studentesca.",
+        "attivita_tag": "AGGREGAZIONE",
+
+        "salute_title": "Salute e Benessere",
+        "salute_desc": "Mettiamo al centro il benessere fisico e mentale degli studenti promovendo campagne di sensibilizzazione, lo sportello di ascolto psicologico gratuito, l'inclusione attiva degli studenti con disabilità o DSA e stili di vita sani.",
+        "salute_tag": "BENESSERE & INCLUSIONE",
+        
+        "cta_title": "Vuoi proporre una nuova iniziativa?",
+        "cta_desc": "Se hai un'idea o vuoi segnalare una problematica legata a una di queste aree tematiche, scrivici subito. La voce degli studenti è la nostra guida.",
+        "cta_button": "Contatta i Rappresentanti"
     }
 }

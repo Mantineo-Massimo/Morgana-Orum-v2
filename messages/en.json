@@ -156,22 +156,7 @@
         "booking_opens": "Opens on {date}",
         "booking_expired": "Booking expired",
         "booking_open": "Booking open",
-        "registered": "Registered",
-        "tab_projects": "Our Initiatives",
-        "projects_title": "Our Projects & Initiatives",
-        "projects_subtitle": "Everything we have accomplished and continue to do to animate the university and support the students.",
-        "project_piazza_title": "Piazza dell'Arte",
-        "project_piazza_desc": "The most anticipated socio-cultural event of the spring in Messina. We transform the Central Courtyard of the University of Messina into an open-air stage with live music, dance, acting, and art exhibitions, highlighting local talent for free.",
-        "project_regali_title": "The Night of Gifts",
-        "project_regali_desc": "Our historical Christmas toy drive organized in synergy with local organizations and non-profits. An initiative of pure solidarity to bring joy and gifts to children in family homes and pediatric wards.",
-        "project_sport_title": "University Sports Tournaments",
-        "project_sport_desc": "Futsal, basketball, and volleyball tournaments organized at the Sports Citadel of the Annunziata Campus. An opportunity to combine sport, wellness, and community spirit outside of university classrooms.",
-        "project_seminari_title": "Cultural Seminars & Conferences",
-        "project_seminari_desc": "Conferences, historical and geopolitical debates (such as the 'Symposium' and Remembrance Day) with national guests to stimulate critical thinking and cultural debate, also offering credits (CFU).",
-        "project_didattica_title": "Educational Support & Entrance Exams",
-        "project_didattica_desc": "Free mock admission tests for future freshmen, orientation seminars, and practical guides for study plans and university bureaucracy.",
-        "project_community_title": "WhatsApp Community & Info Points",
-        "project_community_desc": "Management of a widespread network of WhatsApp groups for degree courses and departments to daily support over 12,000 students with real-time information and answers to their questions."
+        "registered": "Registered"
     },
     "Network": {
         "back_link": "Back to Morgana & O.R.U.M. site",
@@ -361,5 +346,51 @@
         "guidelines_title": "Brand Guidelines",
         "guidelines_desc": "Learn how to combine fonts, logos, and colors to create materials consistent with our network's visual identity.",
         "download_guidelines": "Download Guide (.PDF)"
+    },
+    "IniziativePage": {
+        "title": "Our Initiatives",
+        "subtitle": "Concrete commitment to the academic future.",
+        "description": "We work every day to improve student life at the University of Messina. Discover our interventions and achievements divided by thematic areas.",
+        "areas_title": "Thematic Areas",
+        
+        "didattica_title": "Teaching and Transparency",
+        "didattica_desc": "We ensure quality education and transparency in academic processes. By monitoring exam protocols, the timely publication of test dates, and compliance with teaching regulations, we protect students' academic journeys.",
+        "didattica_tag": "EDUCATION",
+
+        "aule_title": "Study Rooms and Laboratories",
+        "aule_desc": "We work to equip every department with welcoming spaces, study rooms with extended opening hours, and state-of-the-art laboratories to promote practical learning, group study, and social interaction.",
+        "aule_tag": "ACADEMIC SPACES",
+
+        "internazionalizzazione_title": "Internationalization",
+        "internazionalizzazione_desc": "We support international mobility programs such as Erasmus+ and facilitate the integration of foreign students, promoting cultural exchanges and degree programs in English for a global university.",
+        "internazionalizzazione_tag": "ERASMUS & ABROAD",
+
+        "trasporti_title": "Transportation and Parking",
+        "trasporti_desc": "We advocate for discounted urban and Strait ferry transport rates for off-campus students, the optimization of campus shuttle services, and the security of university parking lots.",
+        "trasporti_tag": "MOBILITY",
+
+        "digitalizzazione_title": "Digitalization",
+        "digitalizzazione_desc": "We support the digital modernization of university services, monitoring Esse3 platform operations, promoting paperless administration, and pushing for stable and high-speed Wi-Fi in all classrooms.",
+        "digitalizzazione_tag": "TECHNOLOGY",
+
+        "orientamento_title": "Orientation and Internship",
+        "orientamento_desc": "We support students from day one with free mock admission tests, freshman welcome days, and the organization of Career Days with local and national companies for qualified internships.",
+        "orientamento_tag": "FUTURE & CAREER",
+
+        "diritto_title": "Right to Study and Fees",
+        "diritto_desc": "We oversee the distribution of ERSU scholarships, the reduction of tuition fees based on ISEE income brackets, and the provision of extraordinary grants, guaranteeing equal opportunities for everyone.",
+        "diritto_tag": "FEES & BENEFITS",
+
+        "attivita_title": "Activities and Sport",
+        "attivita_desc": "We believe in a vibrant university. We organize interdepartmental sports tournaments in futsal, basketball, and volleyball, recreational events, and the famous 'Piazza dell'Arte', highlighting student talent, creativity, and community.",
+        "attivita_tag": "COMMUNITY",
+
+        "salute_title": "Health and Well-being",
+        "salute_desc": "We prioritize the physical and mental well-being of students by promoting awareness campaigns, a free psychological support helpdesk, the active inclusion of students with disabilities or DSA, and healthy lifestyles.",
+        "salute_tag": "WELLNESS & INCLUSION",
+        
+        "cta_title": "Want to propose a new initiative?",
+        "cta_desc": "If you have an idea or want to report an issue related to one of these thematic areas, write to us immediately. The voice of students is our guide.",
+        "cta_button": "Contact Representatives"
     }
 }

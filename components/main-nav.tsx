@@ -319,7 +319,7 @@ export function MainNav({
                                                 </h4>
                                                 <div className="flex flex-col gap-2">
                                                     <Link 
-                                                        href="/events/projects" 
+                                                        href="/iniziative" 
                                                         onClick={() => setIsServiziOpen(false)}
                                                         className="flex items-start gap-3 p-2 rounded-xl hover:bg-zinc-50 transition-colors"
                                                     >
@@ -563,7 +563,7 @@ export function MainNav({
                                                     <Link href="/gruppi" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Gruppi</Link>
                                                     <Link href="/guide" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Guide</Link>
                                                     <Link href="/faq" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">FAQ</Link>
-                                                    <Link href="/events/projects" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Le Nostre Iniziative</Link>
+                                                    <Link href="/iniziative" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Le Nostre Iniziative</Link>
                                                     <Link href="/convenzioni" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Convenzioni</Link>
                                                     <Link href="/social" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Social</Link>
                                                     <Link href="/media-kit" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Media Kit</Link>
