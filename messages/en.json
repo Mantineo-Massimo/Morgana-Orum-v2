@@ -391,6 +391,21 @@
         
         "cta_title": "Want to propose a new initiative?",
         "cta_desc": "If you have an idea or want to report an issue related to one of these thematic areas, write to us immediately. The voice of students is our guide.",
-        "cta_button": "Contact Representatives"
+        "cta_button": "Contact Representatives",
+
+        "major_title": "Major Initiatives",
+        "major_subtitle": "Our most popular and beloved projects throughout the academic year.",
+        "cineforum_title": "University Cineforum",
+        "cineforum_desc": "Free film screenings inside the University, followed by group discussions on social and highly contemporary issues.",
+        "piazza_title": "Piazza dell'Arte",
+        "piazza_desc": "The large spring festival that transforms the university into an open-air theater with live concerts, dance, live painting, theater, and juggling.",
+        "regali_title": "The Night of Gifts",
+        "regali_desc": "The historic Christmas solidarity drive to collect and donate toys to hospitalized or underprivileged children in the local area.",
+        "conferenze_title": "Conferences & Seminars",
+        "conferenze_desc": "Meetings with experts, judges, historians, and academics to explore topics of legality, geopolitics, and culture, offering academic credits (CFU).",
+        "sport_title": "Sports Tournaments",
+        "sport_desc": "Interdepartmental championships in futsal, basketball, and volleyball organized at the Sports Citadel to promote wellness and community.",
+        "svago_title": "Leisure & Community",
+        "svago_desc": "Recreational events, freshman welcome gatherings, and social meetups designed to encourage integration and student community life."
     }
 }

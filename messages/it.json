@@ -393,6 +393,21 @@
         
         "cta_title": "Vuoi proporre una nuova iniziativa?",
         "cta_desc": "Se hai un'idea o vuoi segnalare una problematica legata a una di queste aree tematiche, scrivici subito. La voce degli studenti è la nostra guida.",
-        "cta_button": "Contatta i Rappresentanti"
+        "cta_button": "Contatta i Rappresentanti",
+
+        "major_title": "Iniziative di Rilievo",
+        "major_subtitle": "I nostri progetti più conosciuti e amati, che animano la vita studentesca durante l'anno.",
+        "cineforum_title": "Cineforum Universitario",
+        "cineforum_desc": "Proiezioni cinematografiche gratuite all'interno dell'Ateneo, seguite da dibattiti e riflessioni collettive su tematiche sociali e di forte attualità.",
+        "piazza_title": "Piazza dell'Arte",
+        "piazza_desc": "Il grande festival primaverile che trasforma l'università in un teatro all'aperto con concerti live, danza, estemporanee di pittura, teatro e giocoleria.",
+        "regali_title": "La Notte dei Regali",
+        "regali_desc": "La storica iniziativa natalizia di solidarietà per raccogliere e donare giocattoli ai bambini ricoverati o in situazioni di marginalità sul territorio.",
+        "conferenze_title": "Conferenze & Seminari",
+        "conferenze_desc": "Incontri con esperti, magistrati, storici e accademici per approfondire temi di legalità, geopolitica e cultura, con rilascio di CFU accademici.",
+        "sport_title": "Tornei Sportivi",
+        "sport_desc": "Campionati interdipartimentali di calcio a 5, basket e pallavolo organizzati presso la Cittadella Sportiva per promuovere benessere e aggregazione.",
+        "svago_title": "Attività di Svago & Aggregazione",
+        "svago_desc": "Eventi ricreativi, aperitivi di benvenuto alle matricole e serate sociali pensate per stimolare l'aggregazione, staccando dallo studio e facendo community."
     }
 }
