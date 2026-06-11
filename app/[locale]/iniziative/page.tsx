@@ -294,9 +294,8 @@ export default function IniziativePage() {
                                     {area.desc}
                                 </p>
                             </div>
-                            <div className="border-t border-zinc-100 pt-4 flex items-center justify-between text-[10px] font-black uppercase tracking-wider text-zinc-400">
+                            <div className="border-t border-zinc-100 pt-4 flex items-center text-[10px] font-black uppercase tracking-wider text-zinc-400">
                                 <span>{area.tag}</span>
-                                <span className={cn("transition-transform duration-300 group-hover:translate-x-1 font-bold", area.iconColor)}>→</span>
                             </div>
                         </motion.div>
                     ))}
