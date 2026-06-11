@@ -356,11 +356,11 @@
         "areas_title": "Aree di Intervento",
         
         "didattica_title": "Didattica e Trasparenza",
-        "didattica_desc": "Garantiamo la trasparenza accademica e vigiliamo sulle Commissioni Paritetiche e sui Corsi di Laurea con i nostri rappresentanti (Maiorana, Finocchio, Bulotta, Isgrò, Lo Presti, Siracusa). Coordiniamo conferenze e seminari accreditati con rilascio di CFU.",
+        "didattica_desc": "Garantiamo la trasparenza accademica e vigiliamo sulle Commissioni Paritetiche e sui Corsi di Laurea con i nostri rappresentanti. Coordiniamo conferenze e seminari accreditati con rilascio di CFU.",
         "didattica_tag": "DIDATTICA",
 
         "aule_title": "Aule studio e Laboratori",
-        "aule_desc": "Gestiamo gli spazi universitari con la 'Digital Signage Suite' su server Docker per monitorare l'occupazione e il wayfinding nei plessi. Evitiamo l'overbooking tramite un server concorrente C per la prenotazione aule ed inviamo alert tramite Telegram.",
+        "aule_desc": "Ci adoperiamo per dotare ogni dipartimento di spazi accoglienti, aule studio con orari prolungati e laboratori attrezzati per promuovere lo studio autonomo e di gruppo, ottimizzando la disponibilità delle aule.",
         "aule_tag": "SPAZI ACCADEMICI",
 
         "internazionalizzazione_title": "Internazionalizzazione",
@@ -376,11 +376,11 @@
         "digitalizzazione_tag": "TECNOLOGIA",
 
         "orientamento_title": "Orientamento e Tirocinio",
-        "orientamento_desc": "Gestiamo la 'Rete Contatti Unime 2027' per intercettare i talenti locali prima della scelta universitaria. Promuoviamo video guide su YouTube, tirocini formativi qualificati ed il riconoscimento accademico dei percorsi di tutorato.",
+        "orientamento_desc": "Accompagniamo gli studenti sin dal primo giorno con guide all'immatricolazione, simulazioni dei test d'ingresso e video guide su YouTube. Promuoviamo tirocini formativi qualificati e tutorati.",
         "orientamento_tag": "FUTURO & LAVORO",
 
         "diritto_title": "Diritto allo studio e Tasse",
-        "diritto_desc": "Tuteliamo gli studenti con manifestazioni in Piazza Pugliatti contro le anomalie ERSU ed i conguagli delle tasse per gli idonei non beneficiari. Esercitiamo pressioni politiche sulla governance regionale per un CdA stabile ed in quota CNSU.",
+        "diritto_desc": "Vigiliamo e tuteliamo gli studenti contro le anomalie ERSU ed i conguagli delle tasse per gli idonei non beneficiari. Esercitiamo pressioni politiche sulla governance regionale per un CdA stabile ed in quota CNSU.",
         "diritto_tag": "TASSE & AGEVOLAZIONI",
 
         "attivita_title": "Attività e Sport",
