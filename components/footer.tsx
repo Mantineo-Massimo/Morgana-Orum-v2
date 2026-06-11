@@ -36,10 +36,6 @@ export async function Footer() {
                                 <Link href="/" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer">
                                     <Image src="/assets/orum.webp" alt="Orum logo" fill className="object-contain" sizes="56px" />
                                 </Link>
-                                {/* Azione Universitaria */}
-                                <a href="https://azioneuniversitaria.it" target="_blank" rel="noopener noreferrer" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer">
-                                    <Image src="/assets/azione.webp" alt="Azione Universitaria logo" fill className="object-contain" sizes="56px" />
-                                </a>
                             </div>
                         </div>
                         <div className="flex flex-col gap-2">
