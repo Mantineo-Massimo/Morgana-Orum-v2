@@ -14,11 +14,23 @@ import {
     Calendar,
     Users,
     MapPin,
+    Laptop,
+    User,
+    Award,
+    Heart,
+    Target,
+    MessageSquare,
     LucideIcon
 } from "lucide-react"
 import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
+
+interface DetailItem {
+    label: string
+    value: string
+    icon: LucideIcon
+}
 
 interface InitiativeConfig {
     prefix: string
@@ -26,12 +38,13 @@ interface InitiativeConfig {
     icon: LucideIcon
     iconColor: string
     iconBg: string
+    themeColor: string
     badgeIt: string
     badgeEn: string
     highlightsIt: string[]
     highlightsEn: string[]
-    detailsIt: { label: string; value: string }[]
-    detailsEn: { label: string; value: string }[]
+    detailsIt: DetailItem[]
+    detailsEn: DetailItem[]
 }
 
 const slugMap: Record<string, InitiativeConfig> = {
@@ -39,8 +52,9 @@ const slugMap: Record<string, InitiativeConfig> = {
         prefix: "cineforum",
         image: "/assets/slides/2.webp",
         icon: Film,
-        iconColor: "text-amber-600",
+        iconColor: "text-amber-500",
         iconBg: "bg-amber-50 border-amber-100",
+        themeColor: "#f59e0b", // Amber
         badgeIt: "CULTURA",
         badgeEn: "CULTURE",
         highlightsIt: [
@@ -54,22 +68,23 @@ const slugMap: Record<string, InitiativeConfig> = {
             "In-depth analysis of contemporary, environmental, and civil rights themes with debate."
         ],
         detailsIt: [
-            { label: "Sviluppo Tecnico", value: "CIAM (Centro Informatico Ateneo)" },
-            { label: "Proposta", value: "Rappr. Senato Accademico (Lavinia Parisi)" },
-            { label: "Sede Storica", value: "Palazzo Mariani / Aule di Ateneo" }
+            { label: "Sviluppo Tecnico", value: "CIAM (Centro Informatico)", icon: Laptop },
+            { label: "Proposta", value: "Rappr. Senato (Lavinia Parisi)", icon: User },
+            { label: "Sede Storica", value: "Palazzo Mariani / Aule Ateneo", icon: MapPin }
         ],
         detailsEn: [
-            { label: "Technical Dev", value: "CIAM (University IT Center)" },
-            { label: "Proponent", value: "Senate Representative (Lavinia Parisi)" },
-            { label: "Historic Venue", value: "Palazzo Mariani / Campus Halls" }
+            { label: "Technical Dev", value: "CIAM (University IT Center)", icon: Laptop },
+            { label: "Proponent", value: "Senate Representative (Lavinia Parisi)", icon: User },
+            { label: "Historic Venue", value: "Palazzo Mariani / Campus Halls", icon: MapPin }
         ]
     },
     "piazza-dell-arte": {
         prefix: "piazza",
         image: "/assets/piazza.webp",
         icon: Sparkles,
-        iconColor: "text-purple-600",
+        iconColor: "text-purple-500",
         iconBg: "bg-purple-50 border-purple-100",
+        themeColor: "#a855f7", // Purple
         badgeIt: "ARTE & MUSICA",
         badgeEn: "ART & MUSIC",
         highlightsIt: [
@@ -83,22 +98,23 @@ const slugMap: Record<string, InitiativeConfig> = {
             "FantArte: the first art gamification platform in Messina (www.fantarte.it)."
         ],
         detailsIt: [
-            { label: "Edizione", value: "XI Edizione Primavera" },
-            { label: "Location", value: "Cortile Centrale Ateneo e Scalinata Rettorato" },
-            { label: "Gamification", value: "FantArte (budget di 100 Armoni)" }
+            { label: "Edizione", value: "XI Edizione Primavera", icon: Calendar },
+            { label: "Location", value: "Cortile Centrale e Scalinata Rettorato", icon: MapPin },
+            { label: "Gamification", value: "FantArte (100 Armoni)", icon: Award }
         ],
         detailsEn: [
-            { label: "Edition", value: "11th Spring Edition" },
-            { label: "Location", value: "Central Courtyard and Rectorate Staircase" },
-            { label: "Gamification", value: "FantArte (100 Armoni budget)" }
+            { label: "Edition", value: "11th Spring Edition", icon: Calendar },
+            { label: "Location", value: "Central Courtyard & Rectorate Staircase", icon: MapPin },
+            { label: "Gamification", value: "FantArte (100 Armoni)", icon: Award }
         ]
     },
     "notte-dei-regali": {
         prefix: "regali",
         image: "/assets/slides/3.webp",
         icon: Gift,
-        iconColor: "text-red-600",
+        iconColor: "text-red-500",
         iconBg: "bg-red-50 border-red-100",
+        themeColor: "#ef4444", // Red
         badgeIt: "SOLIDARIETÀ",
         badgeEn: "SOLIDARITY",
         highlightsIt: [
@@ -112,22 +128,23 @@ const slugMap: Record<string, InitiativeConfig> = {
             "Centralized at the Via del Vespro logistics hub supporting family shelters and pediatric wards."
         ],
         detailsIt: [
-            { label: "Hub Logistico", value: "Sede Morgana - Via Del Vespro" },
-            { label: "Beneficiari", value: "Reparti Pediatria Policlinico e Case Famiglia" },
-            { label: "Partner Sociali", value: "Gli Invisibili Onlus, ACR Messina, Leo Club" }
+            { label: "Hub Logistico", value: "Sede Morgana - Via Del Vespro", icon: MapPin },
+            { label: "Beneficiari", value: "Pediatria Policlinico & Case Famiglia", icon: Users },
+            { label: "Partner Sociali", value: "Gli Invisibili, ACR, Leo Club", icon: Heart }
         ],
         detailsEn: [
-            { label: "Logistics Hub", value: "Morgana HQ - Via Del Vespro" },
-            { label: "Beneficiaries", value: "Policlinico Pediatric Wards & Local Shelters" },
-            { label: "Social Partners", value: "Gli Invisibili Onlus, ACR Messina, Leo Club" }
+            { label: "Logistics Hub", value: "Morgana HQ - Via Del Vespro", icon: MapPin },
+            { label: "Beneficiaries", value: "Policlinico Pediatric & Shelters", icon: Users },
+            { label: "Social Partners", value: "Gli Invisibili, ACR, Leo Club", icon: Heart }
         ]
     },
     "conferenze": {
         prefix: "conferenze",
         image: "/assets/programma.webp",
         icon: BookOpen,
-        iconColor: "text-blue-600",
+        iconColor: "text-blue-500",
         iconBg: "bg-blue-50 border-blue-100",
+        themeColor: "#3b82f6", // Blue
         badgeIt: "FORMAZIONE & CFU",
         badgeEn: "CFU SEMINARS",
         highlightsIt: [
@@ -141,22 +158,23 @@ const slugMap: Record<string, InitiativeConfig> = {
             "Annual Winter School in partnership with Amnesty International and the Scipog department."
         ],
         detailsIt: [
-            { label: "Iniziative Chiave", value: "Winter School Amnesty, Dibattiti Geopolitici" },
-            { label: "Crediti Didattici", value: "Riconoscimento CFU accademici (0,25 - 1,50 CFU)" },
-            { label: "Relatori", value: "Magistrati, storici, giornalisti ed accademici" }
+            { label: "Iniziative Chiave", value: "Winter School Amnesty, Dibattiti Geopolitici", icon: BookOpen },
+            { label: "Crediti Didattici", value: "CFU accademici (0,25 - 1,50 CFU)", icon: Award },
+            { label: "Relatori", value: "Magistrati, storici ed accademici", icon: Users }
         ],
         detailsEn: [
-            { label: "Key Initiatives", value: "Amnesty Winter School, Geopolitical Debates" },
-            { label: "Academic Credits", value: "CFU accreditation (0.25 - 1.50 CFU)" },
-            { label: "Speakers", value: "Judges, historians, journalists, and academics" }
+            { label: "Key Initiatives", value: "Amnesty Winter School, Geopolitical Debates", icon: BookOpen },
+            { label: "Academic Credits", value: "CFU accreditation (0.25 - 1.50 CFU)", icon: Award },
+            { label: "Speakers", value: "Judges, historians, journalists & academics", icon: Users }
         ]
     },
     "sport": {
         prefix: "sport",
         image: "/assets/slides/1.webp",
         icon: Trophy,
-        iconColor: "text-emerald-600",
+        iconColor: "text-emerald-500",
         iconBg: "bg-emerald-50 border-emerald-100",
+        themeColor: "#10b981", // Emerald
         badgeIt: "SPORT & BENESSERE",
         badgeEn: "SPORTS",
         highlightsIt: [
@@ -170,22 +188,23 @@ const slugMap: Record<string, InitiativeConfig> = {
             "Academic value with format credits (0.25 CFU) awarded to tournament participants."
         ],
         detailsIt: [
-            { label: "Location", value: "Cittadella Sportiva Universitaria (Polo Annunziata)" },
-            { label: "Crediti Sportivi", value: "0,25 CFU accreditati dall'Ateneo" },
-            { label: "Collaboratori", value: "SSD Unime & CUS Messina" }
+            { label: "Location", value: "Cittadella Sportiva (Polo Annunziata)", icon: MapPin },
+            { label: "Crediti Sportivi", value: "0,25 CFU accreditati dall'Ateneo", icon: Award },
+            { label: "Collaboratori", value: "SSD Unime & CUS Messina", icon: Users }
         ],
         detailsEn: [
-            { label: "Location", value: "University Sports Citadel (Annunziata Campus)" },
-            { label: "Sports Credits", value: "0.25 CFU accredited by the University" },
-            { label: "Collaborators", value: "SSD Unime & CUS Messina" }
+            { label: "Location", value: "University Sports Citadel (Annunziata)", icon: MapPin },
+            { label: "Sports Credits", value: "0.25 CFU accredited by the Uni", icon: Award },
+            { label: "Collaborators", value: "SSD Unime & CUS Messina", icon: Users }
         ]
     },
     "svago": {
         prefix: "svago",
         image: "/assets/artisti.webp",
         icon: Sparkles,
-        iconColor: "text-rose-600",
+        iconColor: "text-rose-500",
         iconBg: "bg-rose-50 border-rose-100",
+        themeColor: "#f43f5e", // Rose
         badgeIt: "SOCIALITÀ",
         badgeEn: "SOCIAL",
         highlightsIt: [
@@ -199,14 +218,14 @@ const slugMap: Record<string, InitiativeConfig> = {
             "Recreational initiatives, enrollment guides, and digital support communities."
         ],
         detailsIt: [
-            { label: "Rete Scuole", value: "Liceo Caminiti Trimarchi, Pugliatti Furci/Taormina" },
-            { label: "Canali Informativi", value: "Video guide YouTube, Gruppi WhatsApp e Social" },
-            { label: "Supporto Matricole", value: "Simulazioni test, giornate accoglienza, wayfinding" }
+            { label: "Rete Scuole", value: "Liceo Caminiti Trimarchi, Pugliatti", icon: BookOpen },
+            { label: "Canali Informativi", value: "Video guide YouTube, WhatsApp e Social", icon: Laptop },
+            { label: "Tutorato Matricole", value: "Simulazioni test, giornate accoglienza", icon: Users }
         ],
         detailsEn: [
-            { label: "School Network", value: "Caminiti Trimarchi Lyceum, Pugliatti Furci/Taormina" },
-            { label: "Info Channels", value: "YouTube video guides, WhatsApp & Social groups" },
-            { label: "Freshman Support", value: "Mock tests, welcome days, wayfinding assistance" }
+            { label: "School Network", value: "Caminiti Trimarchi Lyceum, Pugliatti", icon: BookOpen },
+            { label: "Info Channels", value: "YouTube video guides, WhatsApp & Social", icon: Laptop },
+            { label: "Freshman Support", value: "Mock tests, welcome days guidance", icon: Users }
         ]
     }
 }
@@ -247,115 +266,157 @@ export default function InitiativeDetailPage() {
     const details = locale === 'it' ? config.detailsIt : config.detailsEn
 
     return (
-        <div className="min-h-screen bg-zinc-50 pt-32 pb-20 animate-in fade-in duration-700">
-            <div className="container mx-auto px-6 max-w-4xl">
+        <div className="min-h-screen bg-zinc-50 pt-28 pb-20 animate-in fade-in duration-700">
+            <div className="container mx-auto px-6 max-w-7xl">
                 {/* Back Button */}
-                <Link
-                    href="/iniziative"
-                    className="group inline-flex items-center gap-2 text-zinc-500 hover:text-foreground transition-colors mb-12"
-                >
-                    <div className="size-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-50 transition-colors">
-                        <ArrowLeft className="size-4" />
-                    </div>
-                    <span className="text-sm font-bold tracking-tight">
-                        {locale === 'it' ? "Torna alle iniziative" : "Back to initiatives"}
+                <div className="mb-8 flex items-center justify-between">
+                    <Link
+                        href="/iniziative"
+                        className="group inline-flex items-center gap-2 text-zinc-500 hover:text-foreground transition-colors"
+                    >
+                        <div className="size-8 rounded-full bg-white border border-zinc-200 flex items-center justify-center group-hover:bg-zinc-50 transition-colors">
+                            <ArrowLeft className="size-4" />
+                        </div>
+                        <span className="text-sm font-bold tracking-tight">
+                            {locale === 'it' ? "Torna alle iniziative" : "Back to initiatives"}
+                        </span>
+                    </Link>
+                    
+                    <span className="text-[10px] font-black uppercase tracking-wider text-zinc-400 block sm:hidden">
+                        {badge}
                     </span>
-                </Link>
+                </div>
 
-                <article>
-                    {/* Header Section */}
-                    <header className="mb-12">
-                        <div className="flex flex-wrap items-center gap-3 mb-6">
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-lg bg-zinc-900 text-white">
-                                {badge}
-                            </span>
-                        </div>
-
-                        <div className="flex items-center gap-4 mb-6">
-                            <div className={cn("size-14 rounded-2xl flex items-center justify-center border shadow-sm", config.iconBg)}>
-                                <config.icon className={cn("size-7", config.iconColor)} />
+                {/* Cinematic Hero Container */}
+                <div className="relative h-[400px] md:h-[550px] w-full rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden mb-16 shadow-2xl border border-zinc-200/50">
+                    <Image
+                        src={config.image}
+                        alt={title}
+                        fill
+                        priority
+                        sizes="(max-width: 1280px) 100vw, 1280px"
+                        className="object-cover"
+                    />
+                    {/* Shadow overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent" />
+                    
+                    {/* Floating Info Card */}
+                    <div className="absolute inset-x-0 bottom-0 p-6 md:p-12 flex flex-col justify-end">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 md:p-8 text-white max-w-3xl shadow-2xl"
+                        >
+                            <div className="flex items-center gap-3 mb-4">
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-full bg-white/20 text-white border border-white/10 shadow-sm">
+                                    {badge}
+                                </span>
                             </div>
-                            <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground leading-[1.1] tracking-tight">
-                                {title}
-                            </h1>
-                        </div>
-
-                        <p className="text-xl md:text-2xl text-zinc-500 font-medium italic border-l-4 border-zinc-200 pl-6 py-2 leading-relaxed">
-                            {desc}
-                        </p>
-                    </header>
-
-                    {/* Hero Image */}
-                    <div className="relative aspect-video w-full rounded-[2rem] overflow-hidden mb-16 shadow-2xl shadow-zinc-200 ring-1 ring-zinc-200">
-                        <Image
-                            src={config.image}
-                            alt={title}
-                            fill
-                            priority
-                            sizes="(max-width: 1024px) 100vw, 896px"
-                            className="object-cover"
-                        />
-                    </div>
-
-                    {/* Detailed Content Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-                        {/* Left Main Content */}
-                        <div className="md:col-span-8 space-y-8">
-                            <div className="bg-white rounded-[2rem] border border-zinc-100 p-8 md:p-12 shadow-sm">
-                                <h3 className="text-xl font-bold font-serif text-foreground mb-6">
-                                    {locale === 'it' ? "Presentazione del Progetto" : "Project Presentation"}
-                                </h3>
-                                <p className="text-zinc-600 leading-relaxed font-medium text-base md:text-lg">
-                                    {content}
-                                </p>
-                            </div>
-
-                            {/* Highlights Card */}
-                            <div className="bg-white rounded-[2rem] border border-zinc-100 p-8 md:p-12 shadow-sm space-y-6">
-                                <h3 className="text-xl font-bold font-serif text-foreground">
-                                    {locale === 'it' ? "Punti Chiave dell'Iniziativa" : "Key Pillars"}
-                                </h3>
-                                <ul className="space-y-4">
-                                    {highlights.map((point, index) => (
-                                        <motion.li 
-                                            key={index} 
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: index * 0.1 }}
-                                            className="flex items-start gap-3"
-                                        >
-                                            <CheckCircle2 className={cn("size-5 mt-1 shrink-0", config.iconColor)} />
-                                            <span className="text-zinc-600 font-medium text-sm md:text-base leading-relaxed">
-                                                {point}
-                                            </span>
-                                        </motion.li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-
-                        {/* Right Sidebar Details */}
-                        <div className="md:col-span-4 space-y-6">
-                            <div className="bg-white rounded-[2rem] border border-zinc-100 p-6 shadow-sm">
-                                <h4 className="text-xs font-black uppercase tracking-wider text-zinc-400 mb-6 pb-2 border-b border-zinc-50">
-                                    {locale === 'it' ? "Dettagli Iniziativa" : "Details"}
-                                </h4>
-                                <div className="space-y-4">
-                                    {details.map((detail, index) => (
-                                        <div key={index} className="space-y-1">
-                                            <span className="text-[10px] font-black uppercase tracking-wider text-zinc-400 block">
-                                                {detail.label}
-                                            </span>
-                                            <span className="text-sm font-bold text-foreground block">
-                                                {detail.value}
-                                            </span>
-                                        </div>
-                                    ))}
+                            <div className="flex flex-col md:flex-row md:items-center gap-5">
+                                <div className="size-16 rounded-2xl flex items-center justify-center bg-white border border-zinc-100 shadow-md shrink-0 transition-transform hover:scale-105 duration-300">
+                                    <config.icon className={cn("size-8", config.iconColor)} />
+                                </div>
+                                <div>
+                                    <h1 className="text-3xl md:text-5xl font-serif font-black uppercase tracking-tight text-white mb-2 leading-none">
+                                        {title}
+                                    </h1>
+                                    <p className="text-white/80 text-sm md:text-base font-medium italic leading-relaxed line-clamp-2">
+                                        {desc}
+                                    </p>
                                 </div>
                             </div>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* 2-Column Content Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    {/* Left Column: Descriptions */}
+                    <div className="lg:col-span-8 space-y-8">
+                        {/* Main Description */}
+                        <div className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 md:p-12 shadow-sm relative overflow-hidden group">
+                            {/* Theme color side accent */}
+                            <div 
+                                className="absolute top-0 left-0 w-2 h-full transition-all duration-300 group-hover:w-3"
+                                style={{ backgroundColor: config.themeColor }}
+                            />
+                            
+                            <h3 className="text-2xl font-bold font-serif text-foreground mb-6 flex items-center gap-3">
+                                <BookOpen className="size-6 text-zinc-900" />
+                                {locale === 'it' ? "Presentazione del Progetto" : "Project Presentation"}
+                            </h3>
+                            <p className="text-zinc-600 leading-relaxed font-medium text-base md:text-lg whitespace-pre-line">
+                                {content}
+                            </p>
+                        </div>
+
+                        {/* Highlights Grid */}
+                        <div className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 md:p-12 shadow-sm">
+                            <h3 className="text-2xl font-bold font-serif text-foreground mb-8 flex items-center gap-3">
+                                <Target className="size-6 text-zinc-900" />
+                                {locale === 'it' ? "Punti Chiave dell'Iniziativa" : "Key Pillars"}
+                            </h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                {highlights.map((point, index) => (
+                                    <motion.div 
+                                        key={index} 
+                                        initial={{ opacity: 0, y: 10 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: index * 0.1 }}
+                                        className="bg-zinc-50 rounded-2xl p-6 border border-zinc-100 flex gap-4 hover:shadow-md hover:border-zinc-200 transition-all duration-300"
+                                    >
+                                        <CheckCircle2 className={cn("size-6 shrink-0", config.iconColor)} />
+                                        <span className="text-zinc-600 font-semibold text-sm leading-relaxed">
+                                            {point}
+                                        </span>
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </article>
+
+                    {/* Right Column: Sticky Sidebar */}
+                    <div className="lg:col-span-4 space-y-6">
+                        <div className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 shadow-sm lg:sticky lg:top-24">
+                            <h4 className="text-xs font-black uppercase tracking-wider text-zinc-400 mb-6 pb-2 border-b border-zinc-100">
+                                {locale === 'it' ? "Scheda Informativa" : "Info Sheet"}
+                            </h4>
+                            <div className="space-y-6">
+                                {details.map((detail, index) => {
+                                    const DetailIcon = detail.icon;
+                                    return (
+                                        <div key={index} className="flex gap-4 items-start">
+                                            <div className="size-10 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 text-zinc-500 shadow-sm">
+                                                <DetailIcon className="size-5" />
+                                            </div>
+                                            <div>
+                                                <span className="text-[10px] font-black uppercase tracking-wider text-zinc-400 block">
+                                                    {detail.label}
+                                                </span>
+                                                <span className="text-sm font-bold text-foreground block mt-0.5 leading-snug">
+                                                    {detail.value}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+
+                            {/* Contact Box Callout */}
+                            <div className="mt-8 pt-6 border-t border-zinc-100">
+                                <Link
+                                    href="/contact"
+                                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-zinc-900 text-white font-black uppercase tracking-widest text-xs shadow-lg hover:bg-zinc-800 hover:scale-[1.02] active:scale-95 transition-all text-center"
+                                >
+                                    <MessageSquare className="size-4" />
+                                    <span>{locale === 'it' ? "Scrivici" : "Write us"}</span>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
