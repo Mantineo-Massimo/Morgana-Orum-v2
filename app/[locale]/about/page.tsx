@@ -85,7 +85,7 @@ export default function AboutPage() {
             </section>
 
             {/* 2. Brand Switcher (Tabs) */}
-            <div className="sticky top-20 z-40 bg-white/80 backdrop-blur-md border-b border-zinc-100 py-4 shadow-sm">
+            <div className="sticky top-24 md:top-28 z-40 bg-white/80 backdrop-blur-md border-b border-zinc-100 py-4 shadow-sm">
                 <div className="container mx-auto flex justify-center gap-4">
                     <button
                         onClick={() => setActiveTab("morgana")}
