@@ -20,6 +20,7 @@ import {
     Heart,
     Target,
     MessageSquare,
+    Ticket,
     LucideIcon
 } from "lucide-react"
 import { Link } from "@/i18n/routing"
@@ -65,26 +66,28 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeIt: "CULTURA",
         badgeEn: "CULTURE",
         highlightsIt: [
-            "Proiezioni ad ingresso totalmente gratuito per tutta la comunità studentesca.",
-            "Dibattiti post-proiezione guidati da esperti del settore cinematografico e sociale.",
-            "Approfondimento di macro-temi di attualità, ambiente e diritti civili.",
-            "Incontri accreditati dall'Ateneo con eventuale riconoscimento di CFU."
+            "Accessibilità totale: L'ingresso alle proiezioni è totalmente gratuito per l'intera comunità studentesca.",
+            "Confronto guidato: Al termine di ogni film, il dibattito in aula è moderato da relatori esperti del settore cinematografico e sociale. È un'opportunità unica per esprimere le proprie opinioni e confrontarsi attivamente.",
+            "Temi di attualità: Le pellicole sono accuratamente selezionate per approfondire argomenti cruciali legati all'attualità, all'ambiente e ai diritti civili.",
+            "Riconoscimento accademico: Gli incontri sono accreditati dall'Ateneo, prevedendo l'eventuale riconoscimento di CFU per gli studenti che vi partecipano."
         ],
         highlightsEn: [
-            "Completely free screenings for the entire university community.",
-            "Post-screening debates led by cinema and social experts.",
-            "In-depth analysis of contemporary, environmental, and civil rights themes.",
-            "Accredited university sessions with potential training credits (CFU)."
+            "Total accessibility: Entry to the screenings is completely free for the entire student community.",
+            "Guided debate: At the end of each film, the classroom debate is moderated by experts from the cinematographic and social sectors. It is a unique opportunity to express opinions and engage actively.",
+            "Current topics: The films are carefully selected to delve into crucial topics related to current affairs, the environment, and civil rights.",
+            "Academic recognition: Meetings are accredited by the University, with potential training credits (CFU) for participating students."
         ],
         detailsIt: [
+            { label: "Destinatari", value: "Tutti gli studenti iscritti ad Unime", icon: Users },
             { label: "Periodo", value: "Ciclico durante l'anno accademico", icon: Calendar },
-            { label: "Luogo", value: "Aule dei plessi universitari", icon: MapPin },
-            { label: "Destinatari", value: "Tutti gli studenti iscritti ad Unime", icon: Users }
+            { label: "Luogo", value: "Cinema Apollo", icon: MapPin },
+            { label: "Costo", value: "4€ una proiezione / 10€ quattro proiezioni", icon: Ticket }
         ],
         detailsEn: [
+            { label: "Target", value: "All enrolled Unime students", icon: Users },
             { label: "Period", value: "Cyclical throughout the academic year", icon: Calendar },
-            { label: "Locations", value: "University campus lecture halls", icon: MapPin },
-            { label: "Target", value: "All enrolled Unime students", icon: Users }
+            { label: "Locations", value: "Cinema Apollo", icon: MapPin },
+            { label: "Admission", value: "Paid (4€ single screening / 10€ four screenings)", icon: Ticket }
         ],
         gallery: [
             "/assets/slides/2.webp",
