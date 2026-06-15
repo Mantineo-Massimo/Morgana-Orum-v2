@@ -251,7 +251,7 @@
         "purposes_title": "4. Finalità e Base Giuridica",
         "purposes_desc": "Il trattamento è finalizzato a: 1) Esecuzione del servizio (Base giuridica: art. 6.1.b GDPR); 2) Marketing Diretto e Comunicazioni (Base giuridica: consenso esplicito e separato per ORUM e Morgana, art. 6.1.a GDPR); 3) Legittimo interesse per analisi statistiche (art. 6.1.f GDPR); 4) Adempimento di obblighi di legge (art. 6.1.c GDPR).",
         "recipients_title": "5. Destinatari e Trasferimento",
-        "recipients_desc": "I dati non saranno mai ceduti a terzi per scopi commerciali. Potranno essere comunicati solo a fornitori di servizi tecnici (hosting, cloud) nominati Responsabili Esterni. Eventuali trasferimenti al di fuori dello Spazio Europeo avvengono nel rispetto del Capo V del GDPR.",
+        "recipients_desc": "I dati personali sono ospitati su server di hosting forniti da Vercel Inc. situati all'interno dello Spazio Economico Europeo (SEE), garantendo la conformità alle normative europee sulla protezione dei dati. I dati non saranno mai ceduti a terzi per scopi commerciali. Potranno essere comunicati solo a fornitori di servizi tecnici nominati Responsabili Esterni. Eventuali trasferimenti al di fuori dello Spazio Europeo avvengono nel rispetto del Capo V del GDPR.",
         "retention_title": "6. Periodo di Conservazione",
         "retention_desc": "I dati di account sono conservati fino a richiesta di cancellazione o dopo 24 mesi di inattività. I dati delle iscrizioni agli eventi sono conservati per 10 anni per fini amministrativi.",
         "rights_title": "7. Diritti dell'Interessato",
@@ -265,7 +265,11 @@
         "consent_orum": "Acconsento al trattamento dei dati da parte di Associazione O.R.U.M. per finalità di marketing e comunicazioni (Opzionale).",
         "consent_morgana": "Acconsento al trattamento dei dati da parte di Associazione Morgana per finalità di marketing e comunicazioni (Opzionale).",
         "legal_version": "Versione Informativa: v1.3 - 29/04/2026",
-        "contact_privacy_notice": "Dichiaro di aver letto e compreso l'Informativa sulla Privacy e acconsento al trattamento dei miei dati per le finalità legate alla mia richiesta.*"
+        "contact_privacy_notice": "Dichiaro di aver letto e compreso l'Informativa sulla Privacy e acconsento al trattamento dei miei dati per le finalità legate alla mia richiesta.*",
+        "download_docs_title": "Documenti Ufficiali",
+        "download_docs_desc": "Scarica i testi ufficiali e integrali approvati dalle Associazioni per la consultazione offline.",
+        "download_privacy_pdf": "Informativa Privacy (PDF)",
+        "download_agreement_pdf": "Accordo Contitolarità (PDF)"
     },
     "Settings": {
         "title": "Impostazioni Account",

@@ -249,7 +249,7 @@
         "purposes_title": "4. Purpose and Legal Basis",
         "purposes_desc": "Processing is aimed at: 1) Execution of the service (Legal basis: art. 6.1.b GDPR); 2) Direct Marketing and Communications (Legal basis: explicit and separate consent for ORUM and Morgana, art. 6.1.a GDPR); 3) Legitimate interest for statistical analysis (art. 6.1.f GDPR); 4) Compliance with legal obligations (art. 6.1.c GDPR).",
         "recipients_title": "5. Recipients and Transfer",
-        "recipients_desc": "Personal data will never be sold to third parties for commercial purposes. It may only be communicated to technical service providers (hosting, cloud) appointed as External Processors. Any transfers outside the EU take place in compliance with Chapter V of the GDPR.",
+        "recipients_desc": "Personal data is hosted on servers provided by Vercel Inc. located within the European Economic Area (EEA), ensuring full compliance with European data protection regulations. Personal data will never be sold to third parties for commercial purposes. It may only be communicated to technical service providers appointed as External Processors. Any transfers outside the EU take place in compliance with Chapter V of the GDPR.",
         "retention_title": "6. Retention Period",
         "retention_desc": "Account data is kept until a deletion request is made or after 24 months of inactivity. Event registration data is kept for 10 years for administrative purposes.",
         "rights_title": "7. Rights of the Data Subject",
@@ -263,7 +263,11 @@
         "consent_orum": "I consent to the processing of data by Associazione O.R.U.M. for marketing and communication purposes (Optional).",
         "consent_morgana": "I consent to the processing of data by Associazione Morgana for marketing and communication purposes (Optional).",
         "legal_version": "Policy Version: v1.2 - 2026/04/21",
-        "contact_privacy_notice": "I declare that I have read and understood the Privacy Policy and I consent to the processing of my data for the purposes related to my request.*"
+        "contact_privacy_notice": "I declare that I have read and understood the Privacy Policy and I consent to the processing of my data for the purposes related to my request.*",
+        "download_docs_title": "Official Documents",
+        "download_docs_desc": "Download the official and full text documents approved by the Associations for offline consultation.",
+        "download_privacy_pdf": "Privacy Policy (PDF)",
+        "download_agreement_pdf": "Joint Controller Agreement (PDF)"
     },
     "Settings": {
         "title": "Account Settings",

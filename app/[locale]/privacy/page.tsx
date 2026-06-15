@@ -73,6 +73,32 @@ export default async function PrivacyPage() {
                     ))}
                 </div>
 
+                {/* Document Downloads */}
+                <div className="mt-16 bg-white border border-zinc-100 rounded-[2.5rem] p-10 shadow-sm flex flex-col md:flex-row items-center justify-between gap-8 animate-in fade-in duration-1000">
+                    <div className="flex-1 text-center md:text-left">
+                        <h3 className="text-xl font-bold mb-2 text-zinc-900">{t("download_docs_title")}</h3>
+                        <p className="text-zinc-500 text-sm leading-relaxed">
+                            {t("download_docs_desc")}
+                        </p>
+                    </div>
+                    <div className="flex flex-wrap gap-4 shrink-0 justify-center">
+                        <a 
+                            href="/assets/Informativa_Privacy_Completa.pdf" 
+                            download 
+                            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-zinc-900 text-white hover:bg-zinc-800 transition-colors font-black uppercase tracking-widest text-xs shadow-md"
+                        >
+                            <FileText className="size-4" /> {t("download_privacy_pdf")}
+                        </a>
+                        <a 
+                            href="/assets/Accordo_Collaborazione_Completo.pdf" 
+                            download 
+                            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-zinc-100 text-zinc-600 hover:bg-zinc-200 transition-colors font-black uppercase tracking-widest text-xs"
+                        >
+                            <FileText className="size-4" /> {t("download_agreement_pdf")}
+                        </a>
+                    </div>
+                </div>
+
                 {/* Footer Note */}
                 <div className="mt-20 text-center animate-in fade-in duration-1000 delay-1000">
                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-4">
