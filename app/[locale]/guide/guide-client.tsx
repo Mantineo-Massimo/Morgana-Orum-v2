@@ -12,7 +12,7 @@ import { SessionsCountdown } from "@/components/sessions-countdown"
 import { GradeSimulator } from "@/components/grade-simulator"
 import { ErsuMeritChecker } from "@/components/ersu-merit-checker"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Calculator, Clock, GraduationCap, ShieldCheck } from "lucide-react"
+import { Calculator, Clock, GraduationCap, ShieldCheck, Home, Heart, Wifi, CreditCard } from "lucide-react"
 
 const InteractiveMap = nextDynamic(
     () => import("@/components/interactive-map"),
@@ -37,7 +37,13 @@ const ICON_MAP: Record<string, any> = {
     BookOpen,
     Bus,
     Info,
-    MapPin
+    MapPin,
+    GraduationCap,
+    ShieldCheck,
+    Home,
+    Heart,
+    Wifi,
+    CreditCard
 }
 
 const TRANSLATIONS: Record<string, Record<string, string>> = {
@@ -93,6 +99,7 @@ const getColorClasses = (color: string) => {
 export function GuideClient({ categories, initialGuides, locale, isLoggedIn = false }: GuideClientProps) {
     const [selectedGuide, setSelectedGuide] = useState<string>("matricole")
     const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | "media" | "ersu" | null>(null)
+    const [activeInfoGuide, setActiveInfoGuide] = useState<any | null>(null)
 
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
 
@@ -143,7 +150,9 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
 
                 {/* Grid of Guide Choices */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                    {guides.map((g) => {
+                    {guides
+                        .filter((g) => ["matricole", "mappa", "servizi", "trasporti"].includes(g.id))
+                        .map((g) => {
                         const Icon = ICON_MAP[g.icon] || BookOpen
                         const isSelected = selectedGuide === g.id
                         const colorClasses = getColorClasses(g.color)
@@ -199,25 +208,59 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                             <div className="space-y-12">
                                 {/* Guide Steps Section */}
                                 <div className="space-y-6">
-                                    {selectedGuide === "matricole" && (
-                                        <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
-                                            <span className="h-6 w-1 rounded-full bg-[#c9041a]" />
-                                            {locale === "en" ? "Guide Chapters" : "I Capitoli della Guida"}
-                                        </h3>
-                                    )}
-                                    <div className="space-y-6">
-                                        {activeGuideData.steps.map((step: any, index: number) => (
-                                            <div key={index} className="flex gap-6 items-start p-5 rounded-2xl border border-zinc-100 hover:border-zinc-200 bg-zinc-50/20 hover:bg-white transition-all">
-                                                <div className={cn("size-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5", activeColorClasses.bg, activeColorClasses.color)}>
-                                                    {index + 1}
-                                                </div>
-                                                <div className="space-y-1">
-                                                    <h4 className="text-lg font-bold text-zinc-900 leading-tight">{step.title}</h4>
-                                                    <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
-                                                </div>
+                                    {selectedGuide === "matricole" ? (
+                                        <>
+                                            <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
+                                                <span className="h-6 w-1 rounded-full bg-[#c9041a]" />
+                                                {locale === "en" ? "Informative Guides" : "Guide Informative"}
+                                            </h3>
+                                            <div className="grid sm:grid-cols-2 gap-6">
+                                                {guides
+                                                    .filter((g) => !g.hasCustomComponent)
+                                                    .map((g) => {
+                                                        const IconComponent = ICON_MAP[g.icon] || BookOpen
+                                                        return (
+                                                            <button
+                                                                key={g.id}
+                                                                onClick={() => setActiveInfoGuide(g)}
+                                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-zinc-50/20 hover:bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                                            >
+                                                                <div>
+                                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                                        <IconComponent className="size-6" />
+                                                                    </div>
+                                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                                        {locale === "en" && g.titleEn ? g.titleEn : g.title}
+                                                                    </h4>
+                                                                    <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
+                                                                        {locale === "en" && g.descriptionEn ? g.descriptionEn : g.description}
+                                                                    </p>
+                                                                </div>
+                                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                                    {locale === "en" ? "Read Guide" : "Leggi la Guida"} &rarr;
+                                                                </div>
+                                                            </button>
+                                                        )
+                                                    })}
                                             </div>
-                                        ))}
-                                    </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <div className="space-y-6">
+                                                {activeGuideData.steps.map((step: any, index: number) => (
+                                                    <div key={index} className="flex gap-6 items-start p-5 rounded-2xl border border-zinc-100 hover:border-zinc-200 bg-zinc-50/20 hover:bg-white transition-all">
+                                                        <div className={cn("size-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5", activeColorClasses.bg, activeColorClasses.color)}>
+                                                            {index + 1}
+                                                        </div>
+                                                        <div className="space-y-1">
+                                                            <h4 className="text-lg font-bold text-zinc-900 leading-tight">{step.title}</h4>
+                                                            <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </>
+                                    )}
                                 </div>
 
                                 {/* Interactive Tools Section */}
@@ -390,6 +433,56 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
             <Dialog open={activeToolModal === "ersu"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
                 <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
                     <ErsuMeritChecker locale={locale} />
+                </DialogContent>
+            </Dialog>
+
+            {/* Modal for Informative Guide Steps */}
+            <Dialog open={activeInfoGuide !== null} onOpenChange={(open) => !open && setActiveInfoGuide(null)}>
+                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-3xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                    {activeInfoGuide && (
+                        <div className="space-y-6 text-zinc-950">
+                            <div className="flex items-center gap-3 pb-4 border-b border-zinc-150">
+                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center shadow-lg shadow-zinc-200">
+                                    {(() => {
+                                        const IconComponent = ICON_MAP[activeInfoGuide.icon] || BookOpen
+                                        return <IconComponent className="size-6" />
+                                    })()}
+                                </div>
+                                <div>
+                                    <h3 className="font-serif font-black text-xl text-zinc-900 uppercase tracking-tight">
+                                        {activeInfoGuide.title}
+                                    </h3>
+                                    <p className="text-xs text-zinc-500 font-medium leading-relaxed">
+                                        {activeInfoGuide.description}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                {activeInfoGuide.steps && activeInfoGuide.steps.length > 0 ? (
+                                    activeInfoGuide.steps.map((step: any, index: number) => (
+                                        <div key={index} className="flex gap-6 items-start p-5 rounded-2xl border border-zinc-100 hover:border-zinc-200 bg-zinc-50/20 hover:bg-white transition-all">
+                                            <div className="size-8 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 shadow-md shadow-zinc-200">
+                                                {index + 1}
+                                            </div>
+                                            <div className="space-y-1">
+                                                <h4 className="text-lg font-bold text-zinc-900 leading-tight">
+                                                    {locale === "en" && step.titleEn ? step.titleEn : step.title}
+                                                </h4>
+                                                <p className="text-sm text-zinc-500 leading-relaxed">
+                                                    {locale === "en" && step.descriptionEn ? step.descriptionEn : (step.description || step.desc)}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="text-center text-zinc-400 italic text-xs py-8">
+                                        {locale === "en" ? "No chapters available for this guide." : "Nessun capitolo disponibile per questa guida."}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
                 </DialogContent>
             </Dialog>
         </div>
