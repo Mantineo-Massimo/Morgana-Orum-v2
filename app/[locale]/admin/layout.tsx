@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { getUserDashboardData } from "@/app/actions/users"
-import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar, Tag, BarChart3, Sparkles } from "lucide-react"
+import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar, Tag, BarChart3, Sparkles, BookOpen } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
 import { getAssociationName } from "@/lib/associations"
@@ -52,6 +52,18 @@ export default async function AdminLayout({
                     label: "Rappresentanti",
                     href: `/admin/representatives`,
                     iconName: "Users",
+                    exact: false
+                },
+                {
+                    label: "Servizi",
+                    href: `/admin/services`,
+                    iconName: "BookOpen",
+                    exact: false
+                },
+                {
+                    label: "Organigramma",
+                    href: `/admin/organigramma`,
+                    iconName: "Shield",
                     exact: false
                 },
                 {
@@ -125,16 +137,18 @@ export default async function AdminLayout({
                             </h2>
                             <div className="space-y-1">
                                 {section.items.map((item) => {
-                                    const IconComponent = ({
-                                        LayoutDashboard: LayoutDashboard,
-                                        BarChart3: BarChart3,
-                                        Users: Users,
-                                        Newspaper: Newspaper,
-                                        Calendar: Calendar,
-                                        Tag: Tag,
-                                        User: User,
-                                        Sparkles: Sparkles
-                                    } as Record<string, any>)[item.iconName] || LayoutDashboard
+                                     const IconComponent = ({
+                                         LayoutDashboard: LayoutDashboard,
+                                         BarChart3: BarChart3,
+                                         Users: Users,
+                                         Newspaper: Newspaper,
+                                         Calendar: Calendar,
+                                         Tag: Tag,
+                                         User: User,
+                                         Sparkles: Sparkles,
+                                         Shield: Shield,
+                                         BookOpen: BookOpen
+                                     } as Record<string, any>)[item.iconName] || LayoutDashboard
 
                                     return (
                                         <Link

@@ -14,225 +14,70 @@ import {
 } from "lucide-react"
 import { Link } from "@/i18n/routing"
 
-const SERVICES = [
-    {
-        id: "accademici",
-        title: "1. Servizi Accademici e Amministrativi",
-        icon: GraduationCap,
-        color: "blue",
-        items: [
-            {
-                name: "Welcome Point",
-                desc: "Accoglienza e supporto per nuovi studenti nazionali e internazionali nelle procedure di immatricolazione.",
-                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/welcome-point"
-            },
-            {
-                name: "Segreterie Studenti",
-                desc: "Assistenza per iscrizioni, tasse, certificati e pergamene per tutti i Corsi di Laurea.",
-                href: "https://www.unime.it/it/studenti/segreterie-studenti"
-            },
-            {
-                name: "Master e Alta Formazione",
-                desc: "Corsi di perfezionamento, master di I e II livello e percorsi di alta formazione professionale.",
-                href: "https://www.unime.it/didattica/post-laurea/master-e-corsi-di-perfezionamento"
-            },
-            {
-                name: "Scuole di Specializzazione",
-                desc: "Accesso e informazioni sulle scuole di specializzazione dell'Ateneo.",
-                href: "https://www.unime.it/didattica/post-laurea/scuole-di-specializzazione"
-            },
-            {
-                name: "Esami di Stato",
-                desc: "Procedure e scadenze per l'abilitazione all'esercizio delle professioni.",
-                href: "https://www.unime.it/it/esami-stato/esami-di-stato"
-            },
-            {
-                name: "Formazione Insegnanti",
-                desc: "Percorsi formativi abilitanti e specializzazione per il sostegno (TFA).",
-                href: "https://www.unime.it/didattica/post-laurea/formazione-insegnanti"
-            },
-            {
-                name: "Orientamento e Placement",
-                desc: "Career Service, AlmaLaurea e supporto nella scelta del corso di studi.",
-                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/orientamento-e-placement"
-            },
-            {
-                name: "URP",
-                desc: "Ufficio Relazioni con il Pubblico: sportello informativo per la trasparenza e l'ascolto.",
-                href: "http://www.unime.it/it/ateneo/ufficio-relazioni-con-il-pubblico"
-            },
-            {
-                name: "Protocollo Generale",
-                desc: "Consegna documenti ufficiali e recapiti PEC dell'Ateneo.",
-                href: "https://www.unime.it/ateneo/amministrazione/protocollo-consegna-documenti"
-            }
-        ]
-    },
-    {
-        id: "ersu",
-        title: "2. Diritto allo Studio e Servizi ERSU",
-        icon: Home,
-        color: "orange",
-        items: [
-            {
-                name: "Agevolazioni Economiche",
-                desc: "Borse di studio, contributi affitto e premi di laurea gestiti dall'ERSU.",
-                href: "https://www.ersumessina.it/borse-di-studio/"
-            },
-            {
-                name: "Servizi Residenziali",
-                desc: "Posti alloggio presso le residenze universitarie (Annunziata, Castelli, Papardo).",
-                href: "https://www.ersumessina.it/servizi-residenziali/"
-            },
-            {
-                name: "Servizio Ristorazione",
-                desc: "Accesso alle mense tramite APP ERSU. Orari e tariffe basate su fascia ISEE.",
-                href: "https://www.ersumessina.it/servizio-mensa/"
-            }
-        ]
-    },
-    {
-        id: "biblioteche",
-        title: "3. Servizi Bibliotecari (SBA)",
-        icon: BookOpen,
-        color: "green",
-        items: [
-            {
-                name: "Portale SBA",
-                desc: "Catalogo unico (OPAC), sale studio e servizi di prestito locale e interbibliotecario.",
-                href: "https://antonello.unime.it"
-            },
-            {
-                name: "Biblioteca Digitale",
-                desc: "Accesso remoto a banche dati, periodici online e risorse scientifiche.",
-                href: "https://antonello.unime.it/sottoscrizioni-attive-2/"
-            }
-        ]
-    },
-    {
-        id: "inclusione",
-        title: "4. Servizi per l'Inclusione",
-        icon: Heart,
-        color: "red",
-        items: [
-            {
-                name: "Disabilità e DSA",
-                desc: "Modulistica, tutorato didattico e misure compensative per lezioni ed esami.",
-                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/servizi-disabilita-e-dsa"
-            },
-            {
-                name: "Valutazione DSA (CeRIP)",
-                desc: "Prenotazione appuntamenti per valutazione DSA tramite il centro specializzato d'Ateneo.",
-                href: "https://www.unime.it/it/centri/cerip/appuntamento-valutazione-dsa"
-            }
-        ]
-    },
-    {
-        id: "servizi-it",
-        title: "5. Servizi IT e Connettività",
-        icon: Wifi,
-        color: "blue",
-        items: [
-            {
-                name: "Account Studenti",
-                desc: "Attivazione e gestione delle credenziali per i servizi online di Ateneo.",
-                href: "https://www.unime.it/ciam/ict/account/studenti"
-            },
-            {
-                name: "Posta Elettronica",
-                desc: "Accesso alla mail istituzionale @studenti.unime.it.",
-                href: "https://www.unime.it/ciam/ict/account/posta"
-            },
-            {
-                name: "Wi-Fi d'Ateneo",
-                desc: "Istruzioni per l'accesso alla rete Wi-Fi nelle sedi universitarie.",
-                href: "https://www.unime.it/ciam/ict/wifi"
-            },
-            {
-                name: "Rete Eduroam",
-                desc: "Accesso alla rete Wi-Fi internazionale per la comunità scientifica.",
-                href: "https://www.unime.it/ciam/ict/eduroam"
-            }
-        ]
-    },
-    {
-        id: "tutela",
-        title: "6. Organi di Tutela e Garanzia",
-        icon: ShieldCheck,
-        color: "purple",
-        items: [
-            {
-                name: "Garante degli Studenti",
-                desc: "Tutela da disfunzioni e abusi. Monitoraggio del rispetto dei diritti degli studenti.",
-                href: "https://www.unime.it/ateneo/organi/garante-degli-studenti"
-            },
-            {
-                name: "Consulente di Fiducia",
-                desc: "Supporto in caso di molestie o discriminazioni all'interno dell'Ateneo.",
-                href: "https://www.unime.it/ateneo/organi/consulente-di-fiducia"
-            },
-            {
-                name: "Comitato Unico di Garanzia (CUG)",
-                desc: "Focalizzato sulla cultura delle pari opportunità e contrasto alle discriminazioni.",
-                href: "https://www.unime.it/cug"
-            }
-        ]
-    },
-    {
-        id: "mobilita",
-        title: "7. Mobilità e Trasporti",
-        icon: Bus,
-        color: "zinc",
-        items: [
-            {
-                name: "Student Mobility Card",
-                desc: "Acquisto online tramite portale Esse3 (sezione Tasse) a tariffa agevolata di 30 euro.",
-                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/trasporti"
-            },
-            {
-                name: "Parcheggi",
-                desc: "Uso gratuito dei parcheggi di interscambio per gli abbonati studenti.",
-                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/trasporti"
-            }
-        ]
-    },
-    {
-        id: "bancari",
-        title: "8. Servizi Bancari Agevolati",
-        icon: CreditCard,
-        color: "emerald",
-        items: [
-            {
-                name: "Genius Card UNIME",
-                desc: "Carta prepagata UniCredit a canone azzerato per pagamenti e incassi universitari.",
-                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/genius-card"
-            }
-        ]
-    }
-]
+const ICON_MAP: Record<string, any> = {
+    BookOpen,
+    Heart,
+    ShieldCheck,
+    Bus,
+    CreditCard,
+    Info,
+    GraduationCap,
+    Home,
+    Wifi
+}
 
-export function ServicesGuide() {
-    const igHandle = "unime.matricole"
+interface ServicesGuideProps {
+    categories: any[]
+    locale: string
+}
+
+const TRANSLATIONS: Record<string, Record<string, string>> = {
+    it: {
+        footerTitle: "Hai dubbi su una procedura?",
+        footerText: "I nostri rappresentanti sono pronti ad assisterti nel dialogo con le segreterie e con gli uffici d'Ateneo. Non esitare a contattarci.",
+        officialSite: "Sito Ufficiale UniMe",
+        contactReps: "Contatta Rappresentanti"
+    },
+    en: {
+        footerTitle: "Have doubts about a procedure?",
+        footerText: "Our representatives are ready to assist you in communicating with secretariats and university offices. Do not hesitate to contact us.",
+        officialSite: "UniMe Official Site",
+        contactReps: "Contact Representatives"
+    }
+}
+
+export function ServicesGuide({ categories, locale }: ServicesGuideProps) {
+    const t = TRANSLATIONS[locale] || TRANSLATIONS.it
+
+    const getCategoryTitle = (c: any) => (locale === "en" && c.titleEn) ? c.titleEn : c.title
+    const getItemName = (item: any) => (locale === "en" && item.nameEn) ? item.nameEn : item.name
+    const getItemDesc = (item: any) => (locale === "en" && item.descriptionEn) ? item.descriptionEn : (item.description || item.desc)
 
     return (
         <div className="space-y-12">
             {/* Quick Navigation */}
             <div className="flex flex-wrap justify-center gap-3 mb-8">
-                {SERVICES.map((s) => (
-                    <a
-                        key={s.id}
-                        href={`#${s.id}`}
-                        className="px-4 py-2 bg-white rounded-full border border-zinc-200 text-xs font-bold text-zinc-500 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-600 transition-all uppercase tracking-widest"
-                    >
-                        {s.title.split('. ')[1]}
-                    </a>
-                ))}
+                {categories.map((s) => {
+                    const titleText = getCategoryTitle(s)
+                    // Extract just the textual part if it has a number prefix like "1. Servizi..."
+                    const navLabel = titleText.includes(". ") ? titleText.split(". ")[1] : titleText
+                    return (
+                        <a
+                            key={s.id}
+                            href={`#${s.id}`}
+                            className="px-4 py-2 bg-white rounded-full border border-zinc-200 text-xs font-bold text-zinc-500 hover:border-orange-200 hover:bg-orange-50 hover:text-orange-600 transition-all uppercase tracking-widest"
+                        >
+                            {navLabel}
+                        </a>
+                    )
+                })}
             </div>
 
             {/* Services Sections */}
             <div className="space-y-12">
-                {SERVICES.map((section) => {
-                    const Icon = section.icon
+                {categories.map((section) => {
+                    const Icon = ICON_MAP[section.icon] || Info
+                    const sectionTitle = getCategoryTitle(section)
                     return (
                         <section key={section.id} id={section.id} className="scroll-mt-32">
                             <div className="bg-white rounded-[40px] border border-zinc-100 shadow-sm overflow-hidden p-8 md:p-12 relative group hover:shadow-xl transition-shadow duration-500">
@@ -244,21 +89,23 @@ export function ServicesGuide() {
                                     </div>
                                     <div className="flex-1">
                                         <h2 className="text-2xl md:text-3xl font-serif font-black text-foreground mb-8 uppercase tracking-tight">
-                                            {section.title}
+                                            {sectionTitle}
                                         </h2>
 
                                         <div className="grid md:grid-cols-2 gap-6">
-                                            {section.items.map((item: any, i) => {
+                                            {section.items?.map((item: any, i: number) => {
+                                                const itemName = getItemName(item)
+                                                const itemDesc = getItemDesc(item)
                                                 const Content = (
                                                     <>
                                                         <div className="flex items-center justify-between mb-2">
                                                             <h4 className="font-black text-foreground text-sm uppercase tracking-tight group-hover/item:text-orange-600 transition-colors">
-                                                                {item.name}
+                                                                {itemName}
                                                             </h4>
                                                             {item.href && <ExternalLink className="size-3 text-zinc-300 group-hover/item:text-orange-400 transition-colors" />}
                                                         </div>
                                                         <p className="text-zinc-500 text-sm leading-relaxed">
-                                                            {item.desc}
+                                                            {itemDesc}
                                                         </p>
                                                     </>
                                                 )
@@ -303,10 +150,10 @@ export function ServicesGuide() {
                     <div className="relative z-10 max-w-2xl mx-auto">
                         <Info className="size-12 text-orange-400 mx-auto mb-6" />
                         <h3 className="text-2xl md:text-4xl font-serif font-black mb-6 uppercase tracking-tight">
-                            Hai dubbi su una procedura?
+                            {t.footerTitle}
                         </h3>
                         <p className="text-zinc-400 text-lg mb-8">
-                            I nostri rappresentanti sono pronti ad assisterti nel dialogo con le segreterie e con gli uffici d&apos;Ateneo. Non esitare a contattarci.
+                            {t.footerText}
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
                             <a
@@ -315,13 +162,13 @@ export function ServicesGuide() {
                                 rel="noopener noreferrer"
                                 className="bg-white text-zinc-900 px-8 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-zinc-100 transition-colors flex items-center gap-2"
                             >
-                                Sito Ufficiale UniMe <ExternalLink className="size-4" />
+                                {t.officialSite} <ExternalLink className="size-4" />
                             </a>
                             <Link
                                 href="/representatives"
                                 className="bg-zinc-800 text-white px-8 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-zinc-700 transition-colors border border-zinc-700"
                             >
-                                Contatta Rappresentanti
+                                {t.contactReps}
                             </Link>
                         </div>
                     </div>

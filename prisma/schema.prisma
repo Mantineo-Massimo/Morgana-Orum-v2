@@ -249,3 +249,43 @@ model PiazzaSponsor {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model OrganigrammaMember {
+  id          String   @id @default(uuid())
+  name        String
+  role        String   // Role title (e.g. "Presidente") or Department name (e.g. "Dipartimento Attività Culturali")
+  roleEn      String?  // Optional English translation
+  email       String?
+  association String   // "MORGANA" or "ORUM"
+  section     String   // "PRESIDENCY", "BOARD", "DEPARTMENT"
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ServiceCategory {
+  id        String        @id // Text ID/slug (e.g., "accademici", "ersu") used for scroll-anchors
+  title     String
+  titleEn   String?
+  icon      String        // Lucide icon name string
+  color     String        // Tailwind/styling color key (e.g., "blue", "orange")
+  order     Int           @default(0)
+  items     ServiceItem[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model ServiceItem {
+  id            String          @id @default(uuid())
+  name          String
+  nameEn        String?
+  description   String
+  descriptionEn String?
+  href          String?
+  order         Int             @default(0)
+  categoryId    String
+  category      ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+

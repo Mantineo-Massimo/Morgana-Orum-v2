@@ -279,12 +279,328 @@ const eventsData = [
     },
 ]
 
+const organigrammaMembers = [
+    // MORGANA
+    { name: "Francesco Salvo", role: "Presidente", roleEn: "President", email: "presidenza.morgana@gmail.com", association: "MORGANA", section: "PRESIDENCY", order: 0 },
+    { name: "Elena Crisafulli", role: "Vice Presidente", roleEn: "Vice President", email: "vicepresidenza.morgana@gmail.com", association: "MORGANA", section: "PRESIDENCY", order: 1 },
+    { name: "Alessandro Trimarchi", role: "Segretario Generale", roleEn: "Secretary General", association: "MORGANA", section: "BOARD", order: 0 },
+    { name: "Sofia D'Amico", role: "Tesoriere", roleEn: "Treasurer", association: "MORGANA", section: "BOARD", order: 1 },
+    { name: "Valerio Puglisi", role: "Coordinatore Rappresentanti", roleEn: "Representatives Coordinator", association: "MORGANA", section: "BOARD", order: 2 },
+    { name: "Giorgio Messina", role: "Dipartimento Attività Culturali", roleEn: "Department of Cultural Activities", association: "MORGANA", section: "DEPARTMENT", order: 0 },
+    { name: "Marta Alibrandi", role: "Dipartimento Comunicazione & Web", roleEn: "Communication & Web Department", association: "MORGANA", section: "DEPARTMENT", order: 1 },
+    { name: "Claudio Vinci", role: "Dipartimento Orientamento Matricole", roleEn: "Freshmen Orientation Department", association: "MORGANA", section: "DEPARTMENT", order: 2 },
+
+    // ORUM
+    { name: "Giuseppe Campolo", role: "Presidente", roleEn: "President", email: "presidenza.orum@gmail.com", association: "ORUM", section: "PRESIDENCY", order: 0 },
+    { name: "Federica Smiroldo", role: "Vice Presidente", roleEn: "Vice President", email: "vicepresidenza.orum@gmail.com", association: "ORUM", section: "PRESIDENCY", order: 1 },
+    { name: "Domenico Barbaro", role: "Segretario", roleEn: "Secretary", association: "ORUM", section: "BOARD", order: 0 },
+    { name: "Chiara Ruggeri", role: "Tesoriere", roleEn: "Treasurer", association: "ORUM", section: "BOARD", order: 1 },
+    { name: "Matteo Pappalardo", role: "Responsabile Organizzativo", roleEn: "Organizational Manager", association: "ORUM", section: "BOARD", order: 2 },
+    { name: "Simona Castorina", role: "Dipartimento Didattica & Diritto allo Studio", roleEn: "Department of Didactics & Right to Study", association: "ORUM", section: "DEPARTMENT", order: 0 },
+    { name: "Luca Arena", role: "Dipartimento Grafica & Social Media", roleEn: "Graphics & Social Media Department", association: "ORUM", section: "DEPARTMENT", order: 1 },
+    { name: "Antonio Bruno", role: "Dipartimento Relazioni Esterne & Convenzioni", roleEn: "External Relations & Conventions Department", association: "ORUM", section: "DEPARTMENT", order: 2 }
+]
+
+const servicesData = [
+    {
+        id: "accademici",
+        title: "1. Servizi Accademici e Amministrativi",
+        titleEn: "1. Academic & Administrative Services",
+        icon: "GraduationCap",
+        color: "blue",
+        order: 0,
+        items: [
+            {
+                name: "Welcome Point",
+                nameEn: "Welcome Point",
+                description: "Accoglienza e supporto per nuovi studenti nazionali e internazionali nelle procedure di immatricolazione.",
+                descriptionEn: "Welcome and support for new national and international students during enrollment.",
+                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/welcome-point",
+                order: 0
+            },
+            {
+                name: "Segreterie Studenti",
+                nameEn: "Student Secretariats",
+                description: "Assistenza per iscrizioni, tasse, certificati e pergamene per tutti i Corsi di Laurea.",
+                descriptionEn: "Assistance for enrollments, fees, certificates, and diplomas for all degree courses.",
+                href: "https://www.unime.it/it/studenti/segreterie-studenti",
+                order: 1
+            },
+            {
+                name: "Master e Alta Formazione",
+                nameEn: "Masters & High Education",
+                description: "Corsi di perfezionamento, master di I e II livello e percorsi di alta formazione professionale.",
+                descriptionEn: "Advanced training courses, 1st and 2nd level masters, and high professional education.",
+                href: "https://www.unime.it/didattica/post-laurea/master-e-corsi-di-perfezionamento",
+                order: 2
+            },
+            {
+                name: "Scuole di Specializzazione",
+                nameEn: "Specialization Schools",
+                description: "Accesso e informazioni sulle scuole di specializzazione dell'Ateneo.",
+                descriptionEn: "Access and information on the university's specialization schools.",
+                href: "https://www.unime.it/didattica/post-laurea/scuole-di-specializzazione",
+                order: 3
+            },
+            {
+                name: "Esami di Stato",
+                nameEn: "State Exams",
+                description: "Procedure e scadenze per l'abilitazione all'esercizio delle professioni.",
+                descriptionEn: "Procedures and deadlines for professional practice qualification.",
+                href: "https://www.unime.it/it/esami-stato/esami-di-stato",
+                order: 4
+            },
+            {
+                name: "Formazione Insegnanti",
+                nameEn: "Teacher Training",
+                description: "Percorsi formativi abilitanti e specializzazione per il sostegno (TFA).",
+                descriptionEn: "Qualifying educational paths and specialization for support teaching (TFA).",
+                href: "https://www.unime.it/didattica/post-laurea/formazione-insegnanti",
+                order: 5
+            },
+            {
+                name: "Orientamento e Placement",
+                nameEn: "Guidance & Placement",
+                description: "Career Service, AlmaLaurea e supporto nella scelta del corso di studi.",
+                descriptionEn: "Career Service, AlmaLaurea, and support in choosing a course of study.",
+                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/orientamento-e-placement",
+                order: 6
+            },
+            {
+                name: "URP",
+                nameEn: "URP",
+                description: "Ufficio Relazioni con il Pubblico: sportello informativo per la trasparenza e l'ascolto.",
+                descriptionEn: "Public Relations Office: information desk for transparency and customer care.",
+                href: "http://www.unime.it/it/ateneo/ufficio-relazioni-con-il-pubblico",
+                order: 7
+            },
+            {
+                name: "Protocollo Generale",
+                nameEn: "General Registry",
+                description: "Consegna documenti ufficiali e recapiti PEC dell'Ateneo.",
+                descriptionEn: "Submission of official documents and contact details for the university's certified email (PEC).",
+                href: "https://www.unime.it/ateneo/amministrazione/protocollo-consegna-documenti",
+                order: 8
+            }
+        ]
+    },
+    {
+        id: "ersu",
+        title: "2. Diritto allo Studio e Servizi ERSU",
+        titleEn: "2. Right to Study & ERSU Services",
+        icon: "Home",
+        color: "orange",
+        order: 1,
+        items: [
+            {
+                name: "Agevolazioni Economiche",
+                nameEn: "Financial Aid",
+                description: "Borse di studio, contributi affitto e premi di laurea gestiti dall'ERSU.",
+                descriptionEn: "Scholarships, rent contributions, and graduation awards managed by ERSU.",
+                href: "https://www.ersumessina.it/borse-di-studio/",
+                order: 0
+            },
+            {
+                name: "Servizi Residenziali",
+                nameEn: "Housing Services",
+                description: "Posti alloggio presso le residenze universitarie (Annunziata, Castelli, Papardo).",
+                descriptionEn: "Accommodations at student residences (Annunziata, Castelli, Papardo).",
+                href: "https://www.ersumessina.it/servizi-residenziali/",
+                order: 1
+            },
+            {
+                name: "Servizio Ristorazione",
+                nameEn: "Dining Services",
+                description: "Accesso alle mense tramite APP ERSU. Orari e tariffe basate su fascia ISEE.",
+                descriptionEn: "Access to canteens via ERSU APP. Hours and rates based on ISEE bracket.",
+                href: "https://www.ersumessina.it/servizio-mensa/",
+                order: 2
+            }
+        ]
+    },
+    {
+        id: "biblioteche",
+        title: "3. Servizi Bibliotecari (SBA)",
+        titleEn: "3. Library Services (SBA)",
+        icon: "BookOpen",
+        color: "green",
+        order: 2,
+        items: [
+            {
+                name: "Portale SBA",
+                nameEn: "SBA Portal",
+                description: "Catalogo unico (OPAC), sale studio e servizi di prestito locale e interbibliotecario.",
+                descriptionEn: "Single catalog (OPAC), study rooms, and local and interlibrary loan services.",
+                href: "https://antonello.unime.it",
+                order: 0
+            },
+            {
+                name: "Biblioteca Digitale",
+                nameEn: "Digital Library",
+                description: "Accesso remoto a banche dati, periodici online e risorse scientifiche.",
+                descriptionEn: "Remote access to databases, online journals, and scientific resources.",
+                href: "https://antonello.unime.it/sottoscrizioni-attive-2/",
+                order: 1
+            }
+        ]
+    },
+    {
+        id: "inclusione",
+        title: "4. Servizi per l'Inclusione",
+        titleEn: "4. Inclusion Services",
+        icon: "Heart",
+        color: "red",
+        order: 3,
+        items: [
+            {
+                name: "Disabilità e DSA",
+                nameEn: "Disabilities & Specific Learning Disabilities (SLD)",
+                description: "Modulistica, tutorato didattico e misure compensative per lezioni ed esami.",
+                descriptionEn: "Forms, academic tutoring, and compensatory measures for lectures and exams.",
+                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/servizi-disabilita-e-dsa",
+                order: 0
+            },
+            {
+                name: "Valutazione DSA (CeRIP)",
+                nameEn: "SLD Evaluation (CeRIP)",
+                description: "Prenotazione appuntamenti per valutazione DSA tramite il centro specializzato d'Ateneo.",
+                descriptionEn: "Book appointments for SLD assessment via the university specialized center.",
+                href: "https://www.unime.it/it/centri/cerip/appuntamento-valutazione-dsa",
+                order: 1
+            }
+        ]
+    },
+    {
+        id: "servizi-it",
+        title: "5. Servizi IT e Connettività",
+        titleEn: "5. IT & Connectivity Services",
+        icon: "Wifi",
+        color: "blue",
+        order: 4,
+        items: [
+            {
+                name: "Account Studenti",
+                nameEn: "Student Accounts",
+                description: "Attivazione e gestione delle credenziali per i servizi online di Ateneo.",
+                descriptionEn: "Activation and management of credentials for university online services.",
+                href: "https://www.unime.it/ciam/ict/account/studenti",
+                order: 0
+            },
+            {
+                name: "Posta Elettronica",
+                nameEn: "E-mail",
+                description: "Accesso alla mail istituzionale @studenti.unime.it.",
+                descriptionEn: "Access to the institutional email @studenti.unime.it.",
+                href: "https://www.unime.it/ciam/ict/account/posta",
+                order: 1
+            },
+            {
+                name: "Wi-Fi d'Ateneo",
+                nameEn: "University Wi-Fi",
+                description: "Istruzioni per l'accesso alla rete Wi-Fi nelle sedi universitarie.",
+                descriptionEn: "Instructions for connecting to the Wi-Fi network at university venues.",
+                href: "https://www.unime.it/ciam/ict/wifi",
+                order: 2
+            },
+            {
+                name: "Rete Eduroam",
+                nameEn: "Eduroam Network",
+                description: "Accesso alla rete Wi-Fi internazionale per la comunità scientifica.",
+                descriptionEn: "Access to the international Wi-Fi network for the scientific community.",
+                href: "https://www.unime.it/ciam/ict/eduroam",
+                order: 3
+            }
+        ]
+    },
+    {
+        id: "tutela",
+        title: "6. Organi di Tutela e Garanzia",
+        titleEn: "6. Protection & Guarantee Organs",
+        icon: "ShieldCheck",
+        color: "purple",
+        order: 5,
+        items: [
+            {
+                name: "Garante degli Studenti",
+                nameEn: "Student Ombudsman",
+                description: "Tutela da disfunzioni e abusi. Monitoraggio del rispetto dei diritti degli studenti.",
+                descriptionEn: "Protection from dysfunctions and abuse. Monitoring compliance with student rights.",
+                href: "https://www.unime.it/ateneo/organi/garante-degli-studenti",
+                order: 0
+            },
+            {
+                name: "Consulente di Fiducia",
+                nameEn: "Confidential Counsellor",
+                description: "Supporto in caso di molestie o discriminazioni all'interno dell'Ateneo.",
+                descriptionEn: "Support in case of harassment or discrimination within the university.",
+                href: "https://www.unime.it/ateneo/organi/consulente-di-fiducia",
+                order: 1
+            },
+            {
+                name: "Comitato Unico di Garanzia (CUG)",
+                nameEn: "Single Guarantee Committee (CUG)",
+                description: "Focalizzato sulla cultura delle pari opportunità e contrasto alle discriminazioni.",
+                descriptionEn: "Focused on the culture of equal opportunities and countering discrimination.",
+                href: "https://www.unime.it/cug",
+                order: 2
+            }
+        ]
+    },
+    {
+        id: "mobilita",
+        title: "7. Mobilità e Trasporti",
+        titleEn: "7. Mobility & Transports",
+        icon: "Bus",
+        color: "zinc",
+        order: 6,
+        items: [
+            {
+                name: "Student Mobility Card",
+                nameEn: "Student Mobility Card",
+                description: "Acquisto online tramite portale Esse3 (sezione Tasse) a tariffa agevolata di 30 euro.",
+                descriptionEn: "Online purchase via the Esse3 portal (Fees section) at a discounted rate of 30 euros.",
+                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/trasporti",
+                order: 0
+            },
+            {
+                name: "Parcheggi",
+                nameEn: "Parking",
+                description: "Uso gratuito dei parcheggi di interscambio per gli abbonati studenti.",
+                descriptionEn: "Free use of interchange parking lots for subscribed students.",
+                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/trasporti",
+                order: 1
+            }
+        ]
+    },
+    {
+        id: "bancari",
+        title: "8. Servizi Bancari Agevolati",
+        titleEn: "8. Partnered Banking Services",
+        icon: "CreditCard",
+        color: "emerald",
+        order: 7,
+        items: [
+            {
+                name: "Genius Card UNIME",
+                nameEn: "Genius Card UNIME",
+                description: "Carta prepagata UniCredit a canone azzerato per pagamenti e incassi universitari.",
+                descriptionEn: "UniCredit prepaid card with no monthly fee for university payments and collections.",
+                href: "https://www.unime.it/didattica/servizi-e-agevolazioni/genius-card",
+                order: 0
+            }
+        ]
+    }
+]
+
 async function main() {
     console.log('⏳ Svuotando il database per evitare duplicati...')
     await prisma.registration.deleteMany({})
     await prisma.event.deleteMany({})
     await prisma.representative.deleteMany({})
     await prisma.news.deleteMany({})
+    await prisma.organigrammaMember.deleteMany({})
+    await prisma.serviceItem.deleteMany({})
+    await prisma.serviceCategory.deleteMany({})
 
     console.log('🚀 Inserimento Rappresentanti in corso...')
     for (const rep of representatives) {
@@ -301,10 +617,32 @@ async function main() {
         await prisma.event.create({ data: item })
     }
 
+    console.log('👥 Inserimento Organigramma in corso...')
+    for (const member of organigrammaMembers) {
+        await prisma.organigrammaMember.create({ data: member })
+    }
+
+    console.log('💼 Inserimento Servizi in corso...')
+    for (const cat of servicesData) {
+        const { items, ...catData } = cat
+        const createdCat = await prisma.serviceCategory.create({ data: catData })
+        for (const item of items) {
+            await prisma.serviceItem.create({
+                data: {
+                    ...item,
+                    categoryId: createdCat.id
+                }
+            })
+        }
+    }
+
     const repsCount = await prisma.representative.count()
     const newsCount = await prisma.news.count()
     const eventsCount = await prisma.event.count()
-    console.log(`✅ Finito! Inseriti ${repsCount} rappresentanti, ${newsCount} news e ${eventsCount} eventi.`)
+    const organigrammaCount = await prisma.organigrammaMember.count()
+    const categoriesCount = await prisma.serviceCategory.count()
+    const itemsCount = await prisma.serviceItem.count()
+    console.log(`✅ Finito! Inseriti ${repsCount} rappresentanti, ${newsCount} news, ${eventsCount} eventi, ${organigrammaCount} membri organigramma, ${categoriesCount} categorie servizi e ${itemsCount} servizi.`)
 }
 
 main()
