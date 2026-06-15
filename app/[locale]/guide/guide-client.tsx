@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 import nextDynamic from "next/dynamic"
 import { ServicesGuide } from "@/components/services-guide"
 import { TransportGuide } from "@/components/transport-guide"
+import { TaxCalculator } from "@/components/tax-calculator"
 
 const InteractiveMap = nextDynamic(
     () => import("@/components/interactive-map"),
@@ -199,6 +200,22 @@ export function GuideClient({ categories, initialGuides, locale }: GuideClientPr
                                         </div>
                                     </div>
                                 ))}
+
+                                {selectedGuide === "matricole" && (
+                                    <div className="pt-10 border-t border-zinc-100 mt-10 space-y-6">
+                                        <div>
+                                            <h3 className="text-2xl font-serif font-black text-zinc-900 mb-2">
+                                                {locale === "en" ? "Interactive Tools" : "Strumenti Interattivi"}
+                                            </h3>
+                                            <p className="text-sm text-zinc-500 leading-relaxed">
+                                                {locale === "en" 
+                                                    ? "Use our simulator to calculate your tuition fees bracket, exemptions, and payment deadlines for the Academic Year 2025/2026."
+                                                    : "Usa il nostro simulatore per calcolare in tempo reale la tua fascia di contribuzione, le agevolazioni ed esoneri a cui hai diritto e le scadenze di pagamento per l'Anno Accademico 2025/2026."}
+                                            </p>
+                                        </div>
+                                        <TaxCalculator locale={locale} />
+                                    </div>
+                                )}
                             </div>
                         )}
 
