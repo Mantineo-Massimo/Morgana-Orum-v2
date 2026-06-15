@@ -79,6 +79,12 @@ export default async function AdminLayout({
                     iconName: "Compass",
                     exact: false
                 },
+                {
+                    label: "Servizi",
+                    href: `/admin/services`,
+                    iconName: "BookOpen",
+                    exact: false
+                },
             ]
         },
     ]
@@ -102,21 +108,18 @@ export default async function AdminLayout({
         )
     }
 
-    if (userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") {
-        adminItems.push({
-            label: "Organigramma",
-            href: `/admin/organigramma`,
-            iconName: "Shield",
-            exact: false
-        })
-    }
+    // Organigramma is visible to all admins under "Amministrazione"
+    adminItems.push({
+        label: "Organigramma",
+        href: `/admin/organigramma`,
+        iconName: "Shield",
+        exact: false
+    })
 
-    if (adminItems.length > 0) {
-        navigation.push({
-            section: "Amministrazione",
-            items: adminItems
-        })
-    }
+    navigation.push({
+        section: "Amministrazione",
+        items: adminItems
+    })
 
     const isMorgana = true; // TODO: Portale Unificato - Tema neutro o in base all'utente
 
