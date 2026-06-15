@@ -60,22 +60,22 @@ const slugMap: Record<string, InitiativeConfig> = {
         prefix: "cineforum",
         image: "/assets/slides/2.webp",
         icon: Film,
-        iconColor: "text-amber-500",
-        iconBg: "bg-amber-50 border-amber-100",
-        themeColor: "#f59e0b", // Amber
+        iconColor: "text-red-600",
+        iconBg: "bg-red-50 border-red-100",
+        themeColor: "#c12830", // Red
         badgeIt: "CULTURA",
         badgeEn: "CULTURE",
         highlightsIt: [
-            "Tariffa agevolata: L'ingresso è a prezzo speciale e ridotto per l'intera comunità studentesca.",
-            "Confronto guidato: Al termine di ogni film, il dibattito in aula è moderato da relatori esperti del settore cinematografico e sociale. È un'opportunità unica per esprimere le proprie opinioni e confrontarsi attivamente.",
-            "Temi di attualità: Le pellicole sono accuratamente selezionate per approfondire argomenti cruciali legati all'attualità, all'ambiente e ai diritti civili.",
-            "Riconoscimento accademico: Gli incontri sono accreditati dall'Ateneo, prevedendo l'eventuale riconoscimento di CFU per gli studenti che vi partecipano."
+            "Tariffa agevolata: Ingresso a prezzo speciale ridotto presso il Cinema Apollo per la comunità studentesca.",
+            "Confronto guidato: Dibattiti post-proiezione in sala moderati da esperti del settore per favorire il confronto attivo.",
+            "Cultura e riflessione: Film d'autore selezionati per diffondere la cultura cinematografica e stimolare idee.",
+            "Riconoscimento CFU: Incontri accreditati dall'Ateneo per il rilascio di crediti formativi universitari."
         ],
         highlightsEn: [
-            "Discounted rate: Entry is at a special reduced price for the entire student community.",
-            "Guided debate: At the end of each film, the classroom debate is moderated by experts from the cinematographic and social sectors. It is a unique opportunity to express opinions and engage actively.",
-            "Current topics: The films are carefully selected to delve into crucial topics related to current affairs, the environment, and civil rights.",
-            "Academic recognition: Meetings are accredited by the University, with potential training credits (CFU) for participating students."
+            "Discounted rate: Special reduced ticket price at Cinema Apollo for the student community.",
+            "Guided debate: Post-screening debates in the theater moderated by experts to encourage active discussion.",
+            "Culture & reflection: Selected quality films to spread cinema passion and stimulate critical thinking.",
+            "Academic credits: University-accredited sessions offering training credits (CFU) for participating students."
         ],
         detailsIt: [
             { label: "Destinatari", value: "Tutti gli studenti iscritti ad Unime", icon: Users },
@@ -99,9 +99,9 @@ const slugMap: Record<string, InitiativeConfig> = {
         prefix: "piazza",
         image: "/assets/piazza.webp",
         icon: Sparkles,
-        iconColor: "text-purple-500",
-        iconBg: "bg-purple-50 border-purple-100",
-        themeColor: "#a855f7", // Purple
+        iconColor: "text-[#f9a620]",
+        iconBg: "bg-amber-50 border-amber-100",
+        themeColor: "linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", // Piazza Colors Gradient
         badgeIt: "ARTE & MUSICA",
         badgeEn: "ART & MUSIC",
         highlightsIt: [
@@ -136,9 +136,9 @@ const slugMap: Record<string, InitiativeConfig> = {
         prefix: "regali",
         image: "/assets/slides/3.webp",
         icon: Gift,
-        iconColor: "text-red-500",
-        iconBg: "bg-red-50 border-red-100",
-        themeColor: "#ef4444", // Red
+        iconColor: "text-amber-500",
+        iconBg: "bg-amber-50 border-amber-100",
+        themeColor: "#eab308", // Yellow
         badgeIt: "SOLIDARIETÀ",
         badgeEn: "SOLIDARITY",
         highlightsIt: [
@@ -247,9 +247,9 @@ const slugMap: Record<string, InitiativeConfig> = {
         prefix: "svago",
         image: "/assets/artisti.webp",
         icon: Sparkles,
-        iconColor: "text-rose-500",
-        iconBg: "bg-rose-50 border-rose-100",
-        themeColor: "#f43f5e", // Rose
+        iconColor: "text-violet-500",
+        iconBg: "bg-violet-50 border-violet-100",
+        themeColor: "#8b5cf6", // Violet
         badgeIt: "SOCIALITÀ",
         badgeEn: "SOCIAL",
         highlightsIt: [
@@ -391,7 +391,7 @@ export default function InitiativeDetailPage() {
                             {/* Theme color side accent */}
                             <div
                                 className="absolute top-0 left-0 w-2 h-full transition-all duration-300 group-hover:w-3"
-                                style={{ backgroundColor: config.themeColor }}
+                                style={{ background: config.themeColor }}
                             />
 
                             <h3 className="text-2xl font-bold font-serif text-foreground mb-6 flex items-center gap-3">

@@ -119,8 +119,8 @@ export default function IniziativePage() {
             desc: t("cineforum_desc"),
             image: "/assets/slides/2.webp",
             icon: Film,
-            iconColor: "text-amber-500",
-            bgClass: "from-amber-500/5 to-orange-500/5 border-amber-100/30",
+            iconColor: "text-red-600",
+            bgClass: "from-red-500/5 to-rose-500/5 border-red-100/30",
             badge: locale === 'it' ? "CULTURA" : "CULTURE"
         },
         {
@@ -129,8 +129,8 @@ export default function IniziativePage() {
             desc: t("piazza_desc"),
             image: "/assets/piazza.webp",
             icon: Sparkles,
-            iconColor: "text-purple-500",
-            bgClass: "from-purple-500/5 to-pink-500/5 border-purple-100/30",
+            iconColor: "text-[#f9a620]",
+            bgClass: "from-[#1fbcd3]/5 via-[#27a85d]/5 to-[#f9a620]/5 border-[#27a85d]/20",
             badge: locale === 'it' ? "ARTE & MUSICA" : "ART & MUSIC"
         },
         {
@@ -139,8 +139,8 @@ export default function IniziativePage() {
             desc: t("regali_desc"),
             image: "/assets/slides/3.webp",
             icon: Gift,
-            iconColor: "text-red-500",
-            bgClass: "from-red-500/5 to-rose-500/5 border-red-100/30",
+            iconColor: "text-amber-500",
+            bgClass: "from-amber-500/5 to-yellow-500/5 border-amber-100/30",
             badge: locale === 'it' ? "SOLIDARIETÀ" : "SOLIDARITY"
         },
         {
@@ -169,8 +169,8 @@ export default function IniziativePage() {
             desc: t("svago_desc"),
             image: "/assets/artisti.webp",
             icon: Sparkles,
-            iconColor: "text-rose-500",
-            bgClass: "from-rose-500/5 to-indigo-500/5 border-rose-100/30",
+            iconColor: "text-violet-500",
+            bgClass: "from-violet-500/5 to-purple-500/5 border-violet-100/30",
             badge: locale === 'it' ? "SOCIALITÀ" : "SOCIAL"
         }
     ]
