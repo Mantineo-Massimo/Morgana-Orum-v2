@@ -12,7 +12,7 @@ async function checkAdminPermission() {
         where: { email: userEmail }
     })
 
-    return user?.role === "SUPER_ADMIN" || user?.role === "ADMIN_MORGANA"
+    return user?.role === "SUPER_ADMIN"
 }
 
 export async function getOrganigrammaMembers() {
