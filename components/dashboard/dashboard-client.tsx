@@ -44,7 +44,7 @@ export function DashboardClient({ userData }: DashboardClientProps) {
             </div>
 
             {/* Quick Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Messages Card */}
                 <div className="bg-white p-6 rounded-[2rem] border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all duration-300 group flex flex-col justify-between min-h-[160px] relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-[#18182e]/5 rounded-bl-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500"></div>
@@ -59,23 +59,6 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                     <div className="relative z-10">
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t("messages")}</p>
                         <p className="text-4xl font-extrabold text-slate-900 mt-1.5 tabular-nums tracking-tight">0</p>
-                    </div>
-                </div>
-
-                {/* Followed Card */}
-                <div className="bg-white p-6 rounded-[2rem] border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all duration-300 group flex flex-col justify-between min-h-[160px] relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#c9041a]/5 rounded-bl-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500"></div>
-                    <div className="flex items-center justify-between mb-4 relative z-10">
-                        <div className="p-3.5 rounded-2xl bg-[#c9041a]/10 text-[#c9041a] border border-[#c9041a]/15 group-hover:scale-110 transition-all duration-300 shadow-sm">
-                            <Ticket className="size-5" />
-                        </div>
-                        <span className="text-[9px] font-black text-[#c9041a] uppercase tracking-widest bg-red-50 border border-red-100/50 px-2.5 py-1 rounded-full">
-                            {t("stats_activity")}
-                        </span>
-                    </div>
-                    <div className="relative z-10">
-                        <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{t("followed")}</p>
-                        <p className="text-4xl font-extrabold text-slate-900 mt-1.5 tabular-nums tracking-tight">{userData.stats.attendedCount}</p>
                     </div>
                 </div>
 

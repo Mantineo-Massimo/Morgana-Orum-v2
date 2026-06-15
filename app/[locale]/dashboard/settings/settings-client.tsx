@@ -338,7 +338,7 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                     onClick={() => setOrumConsent(!orumConsent)}
                                     className={cn(
                                         "relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none shadow-inner",
-                                        orumConsent ? "bg-[#18182e]" : "bg-zinc-200"
+                                        orumConsent ? "bg-[#c9041a]" : "bg-[#18182e]"
                                     )}
                                 >
                                     <span className={cn(
@@ -359,7 +359,7 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                     onClick={() => setMorganaConsent(!morganaConsent)}
                                     className={cn(
                                         "relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none shadow-inner",
-                                        morganaConsent ? "bg-[#c9041a]" : "bg-zinc-200"
+                                        morganaConsent ? "bg-[#c9041a]" : "bg-[#18182e]"
                                     )}
                                 >
                                     <span className={cn(
@@ -433,23 +433,6 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                         </div>
                     </div>
 
-                    <div className="bg-slate-50/50 rounded-[2rem] p-8 border border-slate-100 shadow-sm">
-                        <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-4">{t("info_title")}</h4>
-                        <div className="space-y-3 text-xs text-zinc-500 font-semibold">
-                            <div className="flex justify-between py-2 border-b border-slate-100/80">
-                                <span>{t("info_matricola")}</span>
-                                <span className="font-extrabold text-slate-800">{initialUser.matricola}</span>
-                            </div>
-                            <div className="flex justify-between py-2 border-b border-slate-100/80">
-                                <span>{t("info_member_since")}</span>
-                                <span className="font-extrabold text-slate-800">{initialUser.memberSince}</span>
-                            </div>
-                            <div className="flex justify-between py-2 border-b border-slate-100/80">
-                                <span>{t("info_status")}</span>
-                                <span className="text-green-600 font-extrabold">{t("status_verified")}</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
