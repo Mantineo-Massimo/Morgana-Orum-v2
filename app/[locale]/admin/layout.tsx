@@ -134,7 +134,7 @@ export default async function AdminLayout({
             {/* Desktop Sidebar */}
             <aside className="w-66 shrink-0 bg-[#0d0d12] border-r border-zinc-800/60 text-zinc-300 hidden lg:flex flex-col sticky top-0 h-screen z-40 shadow-[4px_0_24px_rgba(0,0,0,0.15)]">
                 <div className="p-6 border-b border-zinc-800/60 flex items-center gap-3 bg-[#0a0a0f]">
-                    <div className="size-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center shadow-[0_0_12px_rgba(124,58,237,0.25)]">
+                    <div className="size-9 rounded-xl bg-gradient-to-tr from-red-600 to-blue-600 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.25)]">
                         <Shield className="size-5 text-white" />
                     </div>
                     <div>
@@ -201,7 +201,7 @@ export default async function AdminLayout({
 
                 <div className="p-4 border-t border-zinc-800/60 bg-[#07070a]">
                     <div className="flex items-center gap-3 p-3 rounded-xl bg-zinc-900/40 border border-zinc-800/40">
-                        <div className="size-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-[0_0_10px_rgba(99,102,241,0.2)]">
+                        <div className="size-9 rounded-xl bg-gradient-to-tr from-red-600 to-blue-600 flex items-center justify-center text-white text-xs font-bold shadow-[0_0_10px_rgba(239,68,68,0.2)]">
                             {(data?.user?.name || "A").charAt(0)}{(data?.user?.surname || "").charAt(0)}
                         </div>
                         <div className="overflow-hidden flex-1">

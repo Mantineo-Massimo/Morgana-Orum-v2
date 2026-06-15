@@ -88,7 +88,7 @@ export default function DashboardEventsPage() {
                                             event.status === "Partecipato" ? <CheckCircle className="size-6" /> : <Clock className="size-6" />}
                                     </div>
                                     <div>
-                                        <h4 className="font-extrabold text-slate-850 group-hover:text-violet-650 transition-colors tracking-tight text-base sm:text-lg leading-snug">{event.title}</h4>
+                                        <h4 className="font-extrabold text-slate-850 group-hover:text-red-600 transition-colors tracking-tight text-base sm:text-lg leading-snug">{event.title}</h4>
                                         <div className="flex items-center gap-3 mt-1.5">
                                             <span className="text-xs text-zinc-400 flex items-center gap-1.5 font-medium">
                                                 <Calendar className="size-3.5 text-zinc-400" /> {event.date}

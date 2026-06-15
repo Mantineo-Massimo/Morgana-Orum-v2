@@ -11,9 +11,7 @@ export async function sendPublicationNotification(
     item: { 
         id: string | number
         title: string
-        titleEn?: string | null
         description: string | null
-        descriptionEn?: string | null
         associations: Association[] 
     },
     type: NotificationType
@@ -37,9 +35,7 @@ export async function sendPublicationNotification(
         await prisma.notification.create({
             data: {
                 title: `Nuov${type === "Notizia" ? "a" : "o"} ${type}: ${item.title}`,
-                titleEn: `New ${type === "Notizia" ? "News" : "Event"}: ${item.titleEn || item.title}`,
                 message: item.description || "",
-                messageEn: item.descriptionEn || item.description || "",
                 type: type,
                 link: url
             }

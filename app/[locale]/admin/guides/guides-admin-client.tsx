@@ -377,7 +377,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                 <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-4">
                     <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                         <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider flex items-center gap-2">
-                            <span className="p-1 rounded-lg bg-violet-100 text-violet-600"><Compass className="size-4" /></span>
+                            <span className="p-1 rounded-lg bg-red-100 text-red-650"><Compass className="size-4" /></span>
                             Elenco Guide
                         </h3>
                         <button
@@ -499,7 +499,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                     key={step.id}
                                     className="p-6 bg-slate-50/50 rounded-2xl border border-slate-200/60 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center hover:border-slate-300 hover:bg-white transition-all duration-300 shadow-sm relative overflow-hidden group"
                                 >
-                                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     {/* Reorder Arrows on the left of each step */}
                                     <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-slate-200/60 p-1 bg-white rounded-xl shadow-sm">
                                         <button

@@ -16,13 +16,13 @@ export function DashboardClient({ userData }: DashboardClientProps) {
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
             {/* Welcome Banner */}
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-slate-950 via-indigo-950 to-slate-900 p-8 text-white shadow-xl border border-indigo-950/20">
-                <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full -mr-20 -mt-20 blur-3xl animate-pulse"></div>
-                <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-violet-500/10 rounded-full blur-3xl"></div>
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-8 text-white shadow-xl border border-slate-800">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full -mr-20 -mt-20 blur-3xl animate-pulse"></div>
+                <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
                 
                 <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[10px] font-bold text-indigo-200 uppercase tracking-widest mb-3">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-3">
                             {t("overview")}
                         </span>
                         <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight leading-tight mb-2">
@@ -64,12 +64,12 @@ export function DashboardClient({ userData }: DashboardClientProps) {
 
                 {/* Followed Card */}
                 <div className="bg-white p-6 rounded-[2rem] border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all duration-300 group flex flex-col justify-between min-h-[160px] relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-violet-500/5 rounded-bl-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500"></div>
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-bl-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500"></div>
                     <div className="flex items-center justify-between mb-4 relative z-10">
-                        <div className="p-3.5 rounded-2xl bg-violet-500/10 text-violet-600 border border-violet-500/15 group-hover:scale-110 transition-all duration-300 shadow-sm">
+                        <div className="p-3.5 rounded-2xl bg-red-500/10 text-red-650 border border-red-500/15 group-hover:scale-110 transition-all duration-300 shadow-sm">
                             <Ticket className="size-5" />
                         </div>
-                        <span className="text-[9px] font-black text-violet-500 uppercase tracking-widest bg-violet-50 border border-violet-100/50 px-2.5 py-1 rounded-full">
+                        <span className="text-[9px] font-black text-red-650 uppercase tracking-widest bg-red-50 border border-red-100/50 px-2.5 py-1 rounded-full">
                             {t("stats_activity")}
                         </span>
                     </div>
@@ -103,10 +103,10 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                 <div className="space-y-6">
                     <div className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.015)] overflow-hidden flex flex-col h-full min-h-[400px]">
                         {/* Member Header (Card design) */}
-                        <div className="p-8 text-white relative overflow-hidden bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900 border-b border-indigo-950">
+                        <div className="p-8 text-white relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800">
                             {/* Decorative Pattern & Glows */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/15 rounded-full -mr-10 -mt-10 blur-2xl animate-pulse"></div>
-                            <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-violet-500/10 rounded-full blur-xl"></div>
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full -mr-10 -mt-10 blur-2xl animate-pulse"></div>
+                            <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-red-500/5 rounded-full blur-xl"></div>
 
                             <div className="relative z-10">
                                 <div className="flex justify-between items-start mb-12">
@@ -148,7 +148,7 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                         <div className="p-8 flex-1 flex flex-col justify-between border-x border-b border-slate-100/80 rounded-b-[2rem] bg-white">
                             <div className="space-y-3">
                                 <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                                    <span className="p-1.5 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600"><CheckCircle className="size-4" /></span>
+                                    <span className="p-1.5 rounded-xl bg-blue-50 border border-blue-100 text-blue-600"><CheckCircle className="size-4" /></span>
                                     {t("exclusive_benefits")}
                                 </h3>
                                 <p className="text-sm text-zinc-500 leading-relaxed text-justify font-medium">
@@ -168,7 +168,7 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                     {userData.nextEvent ? (
                         <div className="bg-white rounded-[2rem] p-8 border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.015)] relative overflow-hidden h-full flex flex-col justify-between min-h-[400px] hover:shadow-[0_20px_40px_rgba(0,0,0,0.03)] transition-all duration-300 group">
                             {/* Glowing line top */}
-                            <div className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-violet-600 to-indigo-600" />
+                            <div className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-red-600 to-blue-600" />
                             <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-full -mr-10 -mt-10 z-0"></div>
 
                             <div className="relative z-10 flex-1 flex flex-col justify-between">
