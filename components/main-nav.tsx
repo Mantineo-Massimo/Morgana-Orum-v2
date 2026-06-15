@@ -326,7 +326,7 @@ export function MainNav({
                                                         <Calendar className="size-4 mt-1 text-[#f9a620] shrink-0" />
                                                         <div>
                                                             <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Le Nostre Iniziative</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Piazza dell&apos;Arte, seminari e progetti</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Cineforum, Piazza dell&apos;Arte e progetti</span>
                                                         </div>
                                                     </Link>
                                                     <Link 
