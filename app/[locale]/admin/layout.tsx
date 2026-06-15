@@ -134,11 +134,11 @@ export default async function AdminLayout({
             {/* Desktop Sidebar */}
             <aside className="w-66 shrink-0 bg-[#0d0d12] border-r border-zinc-800/60 text-zinc-300 hidden lg:flex flex-col sticky top-0 h-screen z-40 shadow-[4px_0_24px_rgba(0,0,0,0.15)]">
                 <div className="p-6 border-b border-zinc-800/60 flex items-center gap-3 bg-[#0a0a0f]">
-                    <div className="size-9 rounded-xl bg-gradient-to-tr from-red-600 to-blue-600 flex items-center justify-center shadow-[0_0_12px_rgba(239,68,68,0.25)]">
+                    <div className="size-9 rounded-xl bg-gradient-to-tr from-[#c9041a] to-[#18182e] flex items-center justify-center shadow-[0_0_12px_rgba(201,4,26,0.25)]">
                         <Shield className="size-5 text-white" />
                     </div>
                     <div>
-                        <h1 className="font-black text-sm tracking-widest text-white uppercase">Morgana</h1>
+                        <h1 className="font-black text-sm tracking-widest text-white uppercase">Admin Panel</h1>
                         <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Control Panel</p>
                         <SidebarClock />
                     </div>
