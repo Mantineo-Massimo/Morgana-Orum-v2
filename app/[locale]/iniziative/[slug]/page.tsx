@@ -309,8 +309,19 @@ function renderTextWithLinks(text: string, themeColor: string) {
                         href={href} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="hover:underline font-black animate-pulse"
-                        style={{ color: linkColor, textDecoration: "underline" }}
+                        className="hover:underline font-black"
+                        style={isGradient ? {
+                            backgroundImage: "linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            backgroundClip: "text",
+                            color: "transparent",
+                            display: "inline-block",
+                            borderBottom: "1px solid #27a85d"
+                        } : { 
+                            color: themeColor, 
+                            textDecoration: "underline" 
+                        }}
                     >
                         {cleanPart}
                     </a>
@@ -357,8 +368,20 @@ export default function InitiativeDetailPage() {
     const highlights = locale === 'it' ? config.highlightsIt : config.highlightsEn
     const details = locale === 'it' ? config.detailsIt : config.detailsEn
 
+    const isPiazza = slug === "piazza-dell-arte";
+
     return (
         <div className="min-h-screen bg-zinc-50 pt-28 pb-20 animate-in fade-in duration-700">
+            {/* SVG Gradient definition for Piazza dell'Arte */}
+            <svg width="0" height="0" className="absolute" style={{ pointerEvents: "none" }}>
+                <defs>
+                    <linearGradient id="piazza-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#1fbcd3" />
+                        <stop offset="50%" stopColor="#27a85d" />
+                        <stop offset="100%" stopColor="#f9a620" />
+                    </linearGradient>
+                </defs>
+            </svg>
             <div className="container mx-auto px-6 max-w-7xl">
                 {/* Back Button */}
                 <div className="mb-8 flex items-center justify-between">
@@ -406,8 +429,19 @@ export default function InitiativeDetailPage() {
                                 </span>
                             </div>
                             <div className="flex flex-col md:flex-row md:items-center gap-5">
-                                <div className="size-16 rounded-2xl flex items-center justify-center bg-white border border-zinc-100 shadow-md shrink-0 transition-transform hover:scale-105 duration-300">
-                                    <config.icon className={cn("size-8", config.iconColor)} />
+                                <div 
+                                    className="size-16 rounded-2xl flex items-center justify-center bg-white border border-zinc-100 shadow-md shrink-0 transition-transform hover:scale-105 duration-300"
+                                    style={isPiazza ? { 
+                                        border: "2px solid transparent", 
+                                        backgroundImage: "linear-gradient(white, white), linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", 
+                                        backgroundOrigin: "border-box", 
+                                        backgroundClip: "padding-box, border-box" 
+                                    } : undefined}
+                                >
+                                    <config.icon 
+                                        className={cn("size-8", !isPiazza && config.iconColor)} 
+                                        style={isPiazza ? { stroke: "url(#piazza-gradient)" } : undefined}
+                                    />
                                 </div>
                                 <div>
                                     <h1 className="text-3xl md:text-5xl font-serif font-black uppercase tracking-tight text-white mb-2 leading-none">
@@ -459,7 +493,10 @@ export default function InitiativeDetailPage() {
                                         transition={{ delay: index * 0.1 }}
                                         className="bg-zinc-50 rounded-2xl p-6 border border-zinc-100 flex gap-4 hover:shadow-md hover:border-zinc-200 transition-all duration-300"
                                     >
-                                        <CheckCircle2 className={cn("size-6 shrink-0", config.iconColor)} />
+                                        <CheckCircle2 
+                                            className={cn("size-6 shrink-0", !isPiazza && config.iconColor)} 
+                                            style={isPiazza ? { stroke: "url(#piazza-gradient)" } : undefined}
+                                        />
                                         <span className="text-zinc-600 font-semibold text-sm leading-relaxed">
                                             {renderTextWithLinks(point, config.themeColor)}
                                         </span>
@@ -480,8 +517,19 @@ export default function InitiativeDetailPage() {
                                     const DetailIcon = detail.icon;
                                     return (
                                         <div key={index} className="flex gap-4 items-start">
-                                            <div className="size-10 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 text-zinc-500 shadow-sm">
-                                                <DetailIcon className="size-5" />
+                                            <div 
+                                                className="size-10 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 text-zinc-500 shadow-sm"
+                                                style={isPiazza ? { 
+                                                    border: "1.5px solid transparent", 
+                                                    backgroundImage: "linear-gradient(#f9fafb, #f9fafb), linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", 
+                                                    backgroundOrigin: "border-box", 
+                                                    backgroundClip: "padding-box, border-box" 
+                                                } : undefined}
+                                            >
+                                                <DetailIcon 
+                                                    className="size-5" 
+                                                    style={isPiazza ? { stroke: "url(#piazza-gradient)" } : undefined}
+                                                />
                                             </div>
                                             <div>
                                                 <span className="text-[10px] font-black uppercase tracking-wider text-zinc-400 block">
@@ -519,7 +567,10 @@ export default function InitiativeDetailPage() {
                     className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 md:p-12 shadow-sm"
                 >
                     <h3 className="text-2xl font-bold font-serif text-foreground mb-8 flex items-center gap-3">
-                        <Sparkles className="size-6 text-emerald-600" />
+                        <Sparkles 
+                            className={cn("size-6", isPiazza ? "" : "text-emerald-600")}
+                            style={isPiazza ? { stroke: "url(#piazza-gradient)" } : undefined}
+                        />
                         {locale === 'it' ? "Momenti dell'Iniziativa" : "Initiative Moments"}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

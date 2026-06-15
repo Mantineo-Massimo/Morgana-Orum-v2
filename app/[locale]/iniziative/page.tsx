@@ -177,6 +177,16 @@ export default function IniziativePage() {
 
     return (
         <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
+            {/* SVG Gradient definition for Piazza dell'Arte */}
+            <svg width="0" height="0" className="absolute" style={{ pointerEvents: "none" }}>
+                <defs>
+                    <linearGradient id="piazza-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#1fbcd3" />
+                        <stop offset="50%" stopColor="#27a85d" />
+                        <stop offset="100%" stopColor="#f9a620" />
+                    </linearGradient>
+                </defs>
+            </svg>
             <div className="container mx-auto px-6 max-w-7xl">
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-20">
@@ -217,7 +227,16 @@ export default function IniziativePage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                                className="bg-white rounded-[2.5rem] border hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative min-h-[420px] shadow-sm"
+                                className={cn(
+                                    "bg-white rounded-[2.5rem] border hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative min-h-[420px] shadow-sm",
+                                    item.slug === "piazza-dell-arte" ? "border-transparent hover:shadow-[#27a85d]/10" : "border-zinc-200"
+                                )}
+                                style={item.slug === "piazza-dell-arte" ? { 
+                                    border: "1px solid transparent", 
+                                    backgroundImage: "linear-gradient(white, white), linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", 
+                                    backgroundOrigin: "border-box", 
+                                    backgroundClip: "padding-box, border-box" 
+                                } : undefined}
                             >
                                 {/* Image Container */}
                                 <div className="relative h-48 w-full overflow-hidden">
@@ -235,8 +254,19 @@ export default function IniziativePage() {
                                         </span>
                                     </div>
                                     <div className="absolute bottom-4 left-6 flex items-center gap-3">
-                                        <div className="size-10 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center text-foreground font-bold shadow-sm">
-                                            <item.icon className={cn("size-5", item.iconColor)} />
+                                        <div 
+                                            className="size-10 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center text-foreground font-bold shadow-sm border border-zinc-200"
+                                            style={item.slug === "piazza-dell-arte" ? { 
+                                                border: "1.5px solid transparent", 
+                                                backgroundImage: "linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", 
+                                                backgroundOrigin: "border-box", 
+                                                backgroundClip: "padding-box, border-box" 
+                                            } : undefined}
+                                        >
+                                            <item.icon 
+                                                className={cn("size-5", item.slug !== "piazza-dell-arte" && item.iconColor)} 
+                                                style={item.slug === "piazza-dell-arte" ? { stroke: "url(#piazza-gradient)" } : undefined}
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -252,7 +282,18 @@ export default function IniziativePage() {
                                     </div>
                                     <div className="pt-4 flex items-center justify-between text-xs font-bold text-zinc-400 border-t border-zinc-100">
                                         <span>Scopri di più</span>
-                                        <span className={cn("transition-transform duration-300 group-hover:translate-x-1 font-bold", item.iconColor)}>→</span>
+                                        <span 
+                                            className={cn("transition-transform duration-300 group-hover:translate-x-1 font-bold", item.slug !== "piazza-dell-arte" && item.iconColor)}
+                                            style={item.slug === "piazza-dell-arte" ? { 
+                                                backgroundImage: "linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)",
+                                                WebkitBackgroundClip: "text",
+                                                WebkitTextFillColor: "transparent",
+                                                backgroundClip: "text",
+                                                color: "transparent"
+                                            } : undefined}
+                                        >
+                                            →
+                                        </span>
                                     </div>
                                 </div>
                             </motion.div>
