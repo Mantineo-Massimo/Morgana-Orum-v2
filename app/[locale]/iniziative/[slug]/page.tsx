@@ -185,15 +185,15 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeEn: "CFU SEMINARS",
         highlightsIt: [
             "Seminari e convegni accreditati per l'ottenimento di CFU accademici.",
-            "Focus su legalità e relazioni internazionali, come il dibattito 'Due popoli in due Stati'.",
-            "Winter School annuale in collaborazione con Amnesty International ed il dipartimento Scipog.",
-            "Incontri con magistrati, storici, giornalisti ed accademici di rilievo nazionale."
+            "Approfondimenti su temi cruciali di legalità, geopolitica e sviluppo professionale.",
+            "Collaborazione con prestigiosi enti esterni, associazioni nazionali e dipartimenti dell'Ateneo.",
+            "Incontri e tavole rotonde con esperti, magistrati, storici, giornalisti e accademici."
         ],
         highlightsEn: [
             "Accredited seminars and conferences for earning university credits (CFU).",
-            "Focus on legality and international relations, such as the 'Two Peoples, Two States' debate.",
-            "Annual Winter School in partnership with Amnesty International and the Scipog department.",
-            "Meetings with judges, historians, journalists, and national academics."
+            "In-depth analysis of crucial topics such as legality, geopolitics, and career development.",
+            "Partnership with prestigious external entities, national associations, and university departments.",
+            "Meetings and panel discussions with experts, judges, historians, journalists, and academics."
         ],
         detailsIt: [
             { label: "Periodo", value: "Ciclico (da Ottobre a Maggio)", icon: Calendar },
