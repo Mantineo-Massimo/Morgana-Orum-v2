@@ -55,6 +55,9 @@ const AVAILABLE_COLORS = [
     { name: "emerald", label: "Smeraldo", bg: "bg-emerald-500" }
 ]
 
+const PROTECTED_GUIDES = ["trasporti", "servizi", "mappa"]
+
+
 export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClientProps) {
     const router = useRouter()
     const [selectedGuideId, setSelectedGuideId] = useState<string | null>(
@@ -380,6 +383,13 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                             <span className="p-1 rounded-lg bg-red-100 text-red-650"><Compass className="size-4" /></span>
                             Elenco Guide
                         </h3>
+                        <button
+                            onClick={handleOpenAddGuide}
+                            className="p-2 bg-slate-50 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/40 rounded-xl transition-all text-slate-600"
+                            title="Nuova Guida"
+                        >
+                            <FolderPlus className="size-4" />
+                        </button>
                     </div>
 
                     <div className="space-y-2.5">
@@ -409,7 +419,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                         </div>
                                     </div>
 
-                                    {guide.id === "matricole" && (
+                                    {!PROTECTED_GUIDES.includes(guide.id) && (
                                         <div className="flex items-center gap-1 shrink-0 ml-2">
                                             <button
                                                 onClick={(e) => {
@@ -480,7 +490,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                 <h2 className="text-xl font-bold text-slate-800">{activeGuide.title}</h2>
                                 <p className="text-xs text-slate-400 mt-1.5 leading-relaxed max-w-xl font-medium">{activeGuide.description}</p>
                             </div>
-                            {activeGuide.id === "matricole" && (
+                            {!PROTECTED_GUIDES.includes(activeGuide.id) && (
                                 <button
                                     onClick={handleOpenAddStep}
                                     className="flex items-center justify-center gap-2 px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg"
@@ -498,7 +508,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                 >
                                     <div className="absolute top-0 left-0 right-0 h-[2px] bg-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     {/* Reorder Arrows on the left of each step */}
-                                    {activeGuide.id === "matricole" && (
+                                    {!PROTECTED_GUIDES.includes(activeGuide.id) && (
                                         <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-slate-200/60 p-1 bg-white rounded-xl shadow-sm">
                                             <button
                                                 type="button"
@@ -541,7 +551,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                         </div>
                                     </div>
 
-                                    {activeGuide.id === "matricole" && (
+                                    {!PROTECTED_GUIDES.includes(activeGuide.id) && (
                                         <div className="flex items-center gap-1.5 shrink-0">
                                             <button
                                                 onClick={() => handleEditStep(step)}
