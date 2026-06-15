@@ -10,6 +10,8 @@ import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
 import { EventCard } from "@/components/event-card"
 import { cookies } from "next/headers"
 import { Suspense } from "react"
+import { NextDeadlineWidget } from "@/components/next-deadline-widget"
+
 
 export const dynamic = "force-dynamic"
 export default async function BrandHomePage({
@@ -43,6 +45,9 @@ export default async function BrandHomePage({
                     </p>
                 </div>
             </section>
+
+            <NextDeadlineWidget locale={locale} />
+
 
             {/* HIGHLIGHTED EVENTS SECTION */}
             <section className="py-16 md:py-20 bg-white border-b border-border/50">

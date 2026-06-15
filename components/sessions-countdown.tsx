@@ -9,7 +9,7 @@ interface SessionsCountdownProps {
     locale: string
 }
 
-interface CountdownItem {
+export interface CountdownItem {
     id: string
     title: string
     titleEn: string
@@ -20,7 +20,7 @@ interface CountdownItem {
 }
 
 // Target dates set relative to the active simulated time (June 2026)
-const COUNTDOWN_ITEMS: CountdownItem[] = [
+export const COUNTDOWN_ITEMS: CountdownItem[] = [
     {
         id: "ersu",
         title: "Domanda Borsa di Studio ERSU 2026/27",
