@@ -21,6 +21,7 @@ import {
     Target,
     MessageSquare,
     Ticket,
+    Globe,
     LucideIcon
 } from "lucide-react"
 import { Link } from "@/i18n/routing"
@@ -117,11 +118,13 @@ const slugMap: Record<string, InitiativeConfig> = {
             "Free promotion and spotlighting of young local talents from Messina."
         ],
         detailsIt: [
+            { label: "Sito Web", value: "piazzadellarte.morganaorum.it", icon: Globe },
             { label: "Periodo", value: "Primavera (Maggio/Giugno)", icon: Calendar },
             { label: "Luogo", value: "Cortile Centrale e Scalinata Rettorato", icon: MapPin },
             { label: "Destinatari", value: "Studenti, artisti e cittadinanza", icon: Users }
         ],
         detailsEn: [
+            { label: "Website", value: "piazzadellarte.morganaorum.it", icon: Globe },
             { label: "Period", value: "Spring (May/June)", icon: Calendar },
             { label: "Locations", value: "Central Courtyard & Rectorate Staircase", icon: MapPin },
             { label: "Target", value: "Students, artists, and citizens", icon: Users }
@@ -282,6 +285,41 @@ const slugMap: Record<string, InitiativeConfig> = {
     }
 }
 
+function renderTextWithLinks(text: string, themeColor: string) {
+    if (!text) return null
+    
+    const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|piazzadellarte\.morganaorum\.it[^\s]*)/g
+    const parts = text.split(urlRegex)
+    
+    return parts.map((part, index) => {
+        if (part.match(urlRegex)) {
+            const cleanPart = part.replace(/[.,)]+$/, "")
+            const ending = part.slice(cleanPart.length)
+            
+            const href = cleanPart.startsWith("http") ? cleanPart : `https://${cleanPart}`
+            
+            const isGradient = themeColor.includes("gradient")
+            const linkColor = isGradient ? "#1fbcd3" : themeColor
+
+            return (
+                <span key={index}>
+                    <a 
+                        href={href} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="hover:underline font-black animate-pulse"
+                        style={{ color: linkColor, textDecoration: "underline" }}
+                    >
+                        {cleanPart}
+                    </a>
+                    {ending}
+                </span>
+            )
+        }
+        return part
+    })
+}
+
 export default function InitiativeDetailPage() {
     const t = useTranslations("IniziativePage")
     const locale = useLocale()
@@ -399,7 +437,7 @@ export default function InitiativeDetailPage() {
                                 {locale === 'it' ? "Presentazione del Progetto" : "Project Presentation"}
                             </h3>
                             <p className="text-zinc-600 leading-relaxed font-medium text-base md:text-lg whitespace-pre-line">
-                                {content}
+                                {renderTextWithLinks(content, config.themeColor)}
                             </p>
                         </div>
 
@@ -421,7 +459,7 @@ export default function InitiativeDetailPage() {
                                     >
                                         <CheckCircle2 className={cn("size-6 shrink-0", config.iconColor)} />
                                         <span className="text-zinc-600 font-semibold text-sm leading-relaxed">
-                                            {point}
+                                            {renderTextWithLinks(point, config.themeColor)}
                                         </span>
                                     </motion.div>
                                 ))}
@@ -448,7 +486,7 @@ export default function InitiativeDetailPage() {
                                                     {detail.label}
                                                 </span>
                                                 <span className="text-sm font-bold text-foreground block mt-0.5 leading-snug">
-                                                    {detail.value}
+                                                    {renderTextWithLinks(detail.value, config.themeColor)}
                                                 </span>
                                             </div>
                                         </div>
