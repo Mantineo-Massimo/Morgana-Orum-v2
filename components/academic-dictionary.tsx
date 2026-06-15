@@ -518,16 +518,16 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
             </div>
 
             {/* Controls */}
-            <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
-                {/* Search Bar */}
-                <div className="relative flex-1">
+            <div className="space-y-4">
+                {/* Search Bar (Full Width) */}
+                <div className="relative w-full">
                     <Search className="absolute left-4 top-3.5 size-5 text-zinc-400" />
                     <input
                         type="text"
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
                         placeholder={t.searchPlaceholder}
-                        className="w-full pl-12 pr-10 py-3 rounded-2xl border border-zinc-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a] text-sm font-semibold transition-all"
+                        className="w-full pl-12 pr-10 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a] text-sm font-semibold transition-all shadow-sm"
                     />
                     {searchQuery && (
                         <button
@@ -539,12 +539,12 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
                     )}
                 </div>
 
-                {/* Category Selector */}
-                <div className="flex gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-thin">
+                {/* Category Selector (Scrollable Row) */}
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none scroll-smooth">
                     <button
                         onClick={() => setSelectedCategory("all")}
                         className={cn(
-                            "px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border",
+                            "px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border shrink-0",
                             selectedCategory === "all"
                                 ? "bg-zinc-900 border-zinc-900 text-white shadow-sm"
                                 : "bg-white border-zinc-200 text-zinc-600 hover:border-zinc-300"
@@ -557,7 +557,7 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
                             key={cat}
                             onClick={() => setSelectedCategory(cat)}
                             className={cn(
-                                "px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border",
+                                "px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border shrink-0",
                                 selectedCategory === cat
                                     ? "bg-zinc-900 border-zinc-900 text-white shadow-sm"
                                     : "bg-white border-zinc-200 text-zinc-600 hover:border-zinc-300"
@@ -613,7 +613,7 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
                         return (
                             <div
                                 key={index}
-                                className="p-5 rounded-2xl bg-white border border-zinc-200/80 shadow-sm hover:shadow-md hover:border-zinc-300 transition-all flex flex-col justify-between"
+                                className="p-6 rounded-3xl bg-white border border-zinc-200/60 shadow-sm hover:shadow-lg hover:border-zinc-400 transition-all duration-300 flex flex-col justify-between transform hover:-translate-y-0.5"
                             >
                                 <div>
                                     <div className="flex items-center justify-between mb-3">

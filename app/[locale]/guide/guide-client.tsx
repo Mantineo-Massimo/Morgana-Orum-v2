@@ -9,8 +9,9 @@ import { TransportGuide } from "@/components/transport-guide"
 import { TaxCalculator } from "@/components/tax-calculator"
 import { AcademicDictionary } from "@/components/academic-dictionary"
 import { SessionsCountdown } from "@/components/sessions-countdown"
+import { GradeSimulator } from "@/components/grade-simulator"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Calculator, Clock } from "lucide-react"
+import { Calculator, Clock, GraduationCap } from "lucide-react"
 
 const InteractiveMap = nextDynamic(
     () => import("@/components/interactive-map"),
@@ -89,7 +90,7 @@ const getColorClasses = (color: string) => {
 
 export function GuideClient({ categories, initialGuides, locale }: GuideClientProps) {
     const [selectedGuide, setSelectedGuide] = useState<string>("matricole")
-    const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | null>(null)
+    const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | "media" | null>(null)
 
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
 
@@ -230,8 +231,7 @@ export function GuideClient({ categories, initialGuides, locale }: GuideClientPr
                                                     ? "Use our interactive tools designed to help you quickly calculate university taxes or decipher common terms."
                                                     : "Utilizza i nostri strumenti interattivi creati appositamente per calcolare rapidamente le tasse o decifrare i termini universitari più comuni."}
                                             </p>
-                                        </div>
-                                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        </div>                                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                                             {/* Tax Simulator Card */}
                                             <button
                                                 onClick={() => setActiveToolModal("tasse")}
@@ -300,6 +300,29 @@ export function GuideClient({ categories, initialGuides, locale }: GuideClientPr
                                                     {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                                 </div>
                                             </button>
+
+                                            {/* Grade Simulator Card */}
+                                            <button
+                                                onClick={() => setActiveToolModal("media")}
+                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            >
+                                                <div>
+                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                        <GraduationCap className="size-6" />
+                                                    </div>
+                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                        {locale === "en" ? "GPA & Degree Simulator" : "Simulatore Media & Laurea"}
+                                                    </h4>
+                                                    <p className="text-xs text-zinc-500 leading-relaxed">
+                                                        {locale === "en"
+                                                            ? "Simulate your weighted GPA, track ECTS credits progress, and estimate your graduation mark."
+                                                            : "Simula la tua media ponderata, i crediti CFU acquisiti e stima il voto di partenza per la tesi."}
+                                                    </p>
+                                                </div>
+                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                    {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
+                                                </div>
+                                            </button>
                                         </div>
                                     </div>
                                 )}
@@ -318,18 +341,25 @@ export function GuideClient({ categories, initialGuides, locale }: GuideClientPr
             </Dialog>
 
             {/* Modal for Academic Dictionary */}
-                                            <Dialog open={activeToolModal === "dizionario"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
-                                                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
-                                                    <AcademicDictionary locale={locale} />
-                                                </DialogContent>
-                                            </Dialog>
+            <Dialog open={activeToolModal === "dizionario"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
+                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                    <AcademicDictionary locale={locale} />
+                </DialogContent>
+            </Dialog>
 
-                                            {/* Modal for Sessions Countdown */}
-                                            <Dialog open={activeToolModal === "countdown"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
-                                                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
-                                                    <SessionsCountdown locale={locale} />
-                                                </DialogContent>
-                                            </Dialog>
-                                        </div>
+            {/* Modal for Sessions Countdown */}
+            <Dialog open={activeToolModal === "countdown"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
+                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                    <SessionsCountdown locale={locale} />
+                </DialogContent>
+            </Dialog>
+
+            {/* Modal for Grade Simulator */}
+            <Dialog open={activeToolModal === "media"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
+                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                    <GradeSimulator locale={locale} />
+                </DialogContent>
+            </Dialog>
+        </div>
     )
 }
