@@ -418,8 +418,6 @@ export default function InitiativeDetailPage() {
                         sizes="(max-width: 1280px) 100vw, 1280px"
                         className="object-cover"
                     />
-                    {/* Shadow overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent" />
 
                     {/* Floating Info Card */}
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-12 flex flex-col justify-end">
