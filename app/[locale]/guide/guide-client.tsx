@@ -10,8 +10,9 @@ import { TaxCalculator } from "@/components/tax-calculator"
 import { AcademicDictionary } from "@/components/academic-dictionary"
 import { SessionsCountdown } from "@/components/sessions-countdown"
 import { GradeSimulator } from "@/components/grade-simulator"
+import { ErsuMeritChecker } from "@/components/ersu-merit-checker"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Calculator, Clock, GraduationCap } from "lucide-react"
+import { Calculator, Clock, GraduationCap, ShieldCheck } from "lucide-react"
 
 const InteractiveMap = nextDynamic(
     () => import("@/components/interactive-map"),
@@ -91,7 +92,7 @@ const getColorClasses = (color: string) => {
 
 export function GuideClient({ categories, initialGuides, locale, isLoggedIn = false }: GuideClientProps) {
     const [selectedGuide, setSelectedGuide] = useState<string>("matricole")
-    const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | "media" | null>(null)
+    const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | "media" | "ersu" | null>(null)
 
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
 
@@ -324,6 +325,29 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                     {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                                 </div>
                                             </button>
+
+                                            {/* ERSU Merit Checker Card */}
+                                            <button
+                                                onClick={() => setActiveToolModal("ersu")}
+                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            >
+                                                <div>
+                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                        <ShieldCheck className="size-6" />
+                                                    </div>
+                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                        {locale === "en" ? "ERSU Merit Checker" : "Requisiti Borsa ERSU"}
+                                                    </h4>
+                                                    <p className="text-xs text-zinc-500 leading-relaxed">
+                                                        {locale === "en"
+                                                            ? "Check if you meet the CFU and merit requirements for the ERSU Messina scholarship."
+                                                            : "Verifica se sei in linea con i criteri di meritocrazia (CFU) richiesti per mantenere la borsa di studio ERSU."}
+                                                    </p>
+                                                </div>
+                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                    {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
+                                                </div>
+                                            </button>
                                         </div>
                                     </div>
                                 )}
@@ -359,6 +383,13 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
             <Dialog open={activeToolModal === "media"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
                 <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
                     <GradeSimulator locale={locale} isLoggedIn={isLoggedIn} />
+                </DialogContent>
+            </Dialog>
+
+            {/* Modal for ERSU Merit Checker */}
+            <Dialog open={activeToolModal === "ersu"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
+                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                    <ErsuMeritChecker locale={locale} />
                 </DialogContent>
             </Dialog>
         </div>
