@@ -3,14 +3,14 @@
 import { useTranslations, useLocale } from "next-intl"
 import { useParams } from "next/navigation"
 import { motion } from "framer-motion"
-import { 
-    ArrowLeft, 
-    Film, 
-    Gift, 
-    Sparkles, 
-    BookOpen, 
-    Trophy, 
-    CheckCircle2, 
+import {
+    ArrowLeft,
+    Film,
+    Gift,
+    Sparkles,
+    BookOpen,
+    Trophy,
+    CheckCircle2,
     Calendar,
     Users,
     MapPin,
@@ -333,7 +333,7 @@ export default function InitiativeDetailPage() {
                             {locale === 'it' ? "Torna alle iniziative" : "Back to initiatives"}
                         </span>
                     </Link>
-                    
+
                     <span className="text-[10px] font-black uppercase tracking-wider text-zinc-400 block sm:hidden">
                         {badge}
                     </span>
@@ -351,7 +351,7 @@ export default function InitiativeDetailPage() {
                     />
                     {/* Shadow overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-zinc-950/40 to-transparent" />
-                    
+
                     {/* Floating Info Card */}
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-12 flex flex-col justify-end">
                         <motion.div
@@ -389,11 +389,11 @@ export default function InitiativeDetailPage() {
                         {/* Main Description */}
                         <div className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 md:p-12 shadow-sm relative overflow-hidden group">
                             {/* Theme color side accent */}
-                            <div 
+                            <div
                                 className="absolute top-0 left-0 w-2 h-full transition-all duration-300 group-hover:w-3"
                                 style={{ backgroundColor: config.themeColor }}
                             />
-                            
+
                             <h3 className="text-2xl font-bold font-serif text-foreground mb-6 flex items-center gap-3">
                                 <BookOpen className="size-6 text-zinc-900" />
                                 {locale === 'it' ? "Presentazione del Progetto" : "Project Presentation"}
@@ -411,8 +411,8 @@ export default function InitiativeDetailPage() {
                             </h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                 {highlights.map((point, index) => (
-                                    <motion.div 
-                                        key={index} 
+                                    <motion.div
+                                        key={index}
                                         initial={{ opacity: 0, y: 10 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
@@ -484,8 +484,8 @@ export default function InitiativeDetailPage() {
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                         {config.gallery.map((img, index) => (
-                            <div 
-                                key={index} 
+                            <div
+                                key={index}
                                 className="relative aspect-video rounded-2xl overflow-hidden border border-zinc-100 shadow-sm hover:shadow-xl transition-all duration-300 group"
                             >
                                 <Image
