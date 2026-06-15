@@ -73,3 +73,43 @@ export async function getNotifications() {
         return []
     }
 }
+
+export async function registerDeadlineAlert({
+    email,
+    deadlineTitle,
+    deadlineDate,
+    locale
+}: {
+    email: string
+    deadlineTitle: string
+    deadlineDate: string
+    locale: string
+}) {
+    if (!email || !email.includes("@")) {
+        return { success: false, error: locale === "en" ? "Invalid email address." : "Email non valida." }
+    }
+
+    try {
+        const { getDeadlineAlertTemplate } = await import("@/lib/email-templates")
+        const { sendEmail } = await import("@/lib/mail")
+
+        // Send confirmation email
+        const res = await sendEmail({
+            to: email,
+            subject: locale === "en" 
+                ? `UniMe Deadline Alert: ${deadlineTitle}` 
+                : `Promemoria Scadenza UniMe: ${deadlineTitle}`,
+            html: getDeadlineAlertTemplate(deadlineTitle, deadlineDate, locale),
+            brand: "joint"
+        })
+
+        if (!res.success) {
+            return { success: false, error: res.error || (locale === "en" ? "Failed to send email." : "Impossibile inviare l'email.") }
+        }
+
+        return { success: true }
+    } catch (err) {
+        console.error("Failed to register deadline alert:", err)
+        return { success: false, error: err instanceof Error ? err.message : String(err) }
+    }
+}

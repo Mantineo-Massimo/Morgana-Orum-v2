@@ -200,11 +200,38 @@ export function getContactEmailTemplate(name: string, email: string, subject: st
                 <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.5; white-space: pre-line;">${message}</p>
             </div>
             
-            <p style="font-size: 12px; color: #888; text-align: center;">
                 Rispondi direttamente a questa email per ricontattare l'utente.
             </p>
 
             ${getEmailFooter("Servizio di messaggistica automatica Morgana & O.R.U.M.")}
+        </div>
+    </div>
+    `
+}
+
+export function getDeadlineAlertTemplate(deadlineTitle: string, deadlineDate: string, locale: string) {
+    const isEn = locale === "en"
+    const title = isEn ? "Deadline Reminder Registered!" : "Promemoria Scadenza Registrato!"
+    
+    return `
+    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
+        ${getEmailHeader(title, "#f9a620")}
+        <div style="padding: 30px; line-height: 1.6; color: #333;">
+            <p>${isEn ? "Hello," : "Ciao,"}</p>
+            <p>${isEn 
+                ? "This email confirms that you have successfully registered for a reminder alert for the following university deadline:" 
+                : "Questa email conferma che ti sei registrato correttamente per ricevere un promemoria per la seguente scadenza universitaria:"}</p>
+            
+            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e5e7eb;">
+                <h3 style="margin-top: 0; margin-bottom: 10px; color: #111;">${deadlineTitle}</h3>
+                <p style="margin: 0; color: #444;">📅 <strong>${isEn ? "Deadline:" : "Scadenza:"}</strong> ${deadlineDate}</p>
+            </div>
+
+            <p style="color: #555;">${isEn 
+                ? "You will receive automatic email reminders 1 month, 1 week, 5 days, and the day before this deadline to make sure you don't miss it!" 
+                : "Ti invieremo dei promemoria email automatici 1 mese, 1 settimana, 5 giorni e il giorno prima di questa scadenza per assicurarci che tu non la manchi!"}</p>
+            
+            ${getEmailFooter(isEn ? "Always supporting students!" : "Sempre dalla parte dello studente!")}
         </div>
     </div>
     `

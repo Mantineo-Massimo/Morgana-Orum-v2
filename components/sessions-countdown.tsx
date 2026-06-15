@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect, useMemo } from "react"
-import { Calendar, Clock, AlertTriangle, CheckCircle2, ChevronRight } from "lucide-react"
+import { Calendar, Clock, AlertTriangle, CheckCircle2, X } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { registerDeadlineAlert } from "@/app/actions/notifications"
 
 interface SessionsCountdownProps {
     locale: string
@@ -81,7 +82,11 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         expired: "Scaduto",
         dueSoon: "Scade a breve!",
         deadlineLabel: "Scadenza:",
-        noItems: "Nessun evento attivo trovato."
+        noItems: "Nessun evento attivo trovato.",
+        notifyMe: "Avvisami",
+        emailPlaceholder: "Inserisci la tua email...",
+        submit: "Invia",
+        alertActive: "Promemoria impostato! Controlla la tua email."
     },
     en: {
         title: "Deadlines & Countdowns",
@@ -96,7 +101,11 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         expired: "Expired",
         dueSoon: "Due soon!",
         deadlineLabel: "Deadline:",
-        noItems: "No active events found."
+        noItems: "No active events found.",
+        notifyMe: "Notify Me",
+        emailPlaceholder: "Enter your email...",
+        submit: "Submit",
+        alertActive: "Reminder set! Check your email."
     }
 }
 
@@ -104,6 +113,13 @@ export function SessionsCountdown({ locale }: SessionsCountdownProps) {
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
     const [currentTime, setCurrentTime] = useState<number>(Date.now())
     const [selectedCategory, setSelectedCategory] = useState<string>("all")
+
+    // Alert Registration States
+    const [activeFormId, setActiveFormId] = useState<string | null>(null)
+    const [email, setEmail] = useState("")
+    const [loading, setLoading] = useState(false)
+    const [registeredIds, setRegisteredIds] = useState<Set<string>>(new Set())
+    const [error, setError] = useState("")
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -213,19 +229,113 @@ export function SessionsCountdown({ locale }: SessionsCountdownProps) {
                                     <p className="text-xs text-zinc-500 leading-relaxed max-w-xl">
                                         {descText}
                                     </p>
-                                    <div className="flex items-center gap-1.5 text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
-                                        <Calendar className="size-3.5" />
-                                        <span>{t.deadlineLabel}</span>
-                                        <span className="text-zinc-600">
-                                            {item.date.toLocaleDateString("it-IT", {
-                                                day: "2-digit",
-                                                month: "long",
-                                                year: "numeric",
-                                                hour: "2-digit",
-                                                minute: "2-digit"
-                                            })}
-                                        </span>
+                                    <div className="flex flex-wrap items-center gap-3 text-[10px] text-zinc-400 font-bold uppercase tracking-wider">
+                                        <div className="flex items-center gap-1.5">
+                                            <Calendar className="size-3.5" />
+                                            <span>{t.deadlineLabel}</span>
+                                            <span className="text-zinc-600 font-mono">
+                                                {item.date.toLocaleDateString("it-IT", {
+                                                    day: "2-digit",
+                                                    month: "long",
+                                                    year: "numeric",
+                                                    hour: "2-digit",
+                                                    minute: "2-digit"
+                                                })}
+                                            </span>
+                                        </div>
                                     </div>
+
+                                    {/* Alert / Avvisami Button Section */}
+                                    {!isExpired && (
+                                        <div className="pt-3 border-t border-zinc-100/60 mt-3">
+                                            {registeredIds.has(item.id) ? (
+                                                <div className="flex items-center gap-2 text-emerald-600 text-[10px] font-black uppercase tracking-wider bg-emerald-50/80 px-3 py-1.5 rounded-lg w-fit border border-emerald-200">
+                                                    <CheckCircle2 className="size-3.5" />
+                                                    <span>{t.alertActive}</span>
+                                                </div>
+                                            ) : activeFormId === item.id ? (
+                                                <form
+                                                    onSubmit={async (e) => {
+                                                        e.preventDefault()
+                                                        setLoading(true)
+                                                        setError("")
+                                                        try {
+                                                            const res = await registerDeadlineAlert({
+                                                                email,
+                                                                deadlineTitle: titleText,
+                                                                deadlineDate: item.date.toLocaleDateString("it-IT", {
+                                                                    day: "2-digit",
+                                                                    month: "long",
+                                                                    year: "numeric",
+                                                                    hour: "2-digit",
+                                                                    minute: "2-digit"
+                                                                }),
+                                                                locale
+                                                            })
+                                                            if (res.success) {
+                                                                setRegisteredIds(prev => {
+                                                                    const next = new Set(prev)
+                                                                    next.add(item.id)
+                                                                    return next
+                                                                })
+                                                                setActiveFormId(null)
+                                                                setEmail("")
+                                                            } else {
+                                                                setError(res.error || "Errore.")
+                                                            }
+                                                        } catch (err) {
+                                                            setError("Impossibile registrarsi.")
+                                                        } finally {
+                                                            setLoading(false)
+                                                        }
+                                                    }}
+                                                    className="flex flex-col sm:flex-row gap-2 max-w-md items-stretch sm:items-center mt-2"
+                                                >
+                                                    <input
+                                                        type="email"
+                                                        value={email}
+                                                        onChange={e => setEmail(e.target.value)}
+                                                        placeholder={t.emailPlaceholder}
+                                                        required
+                                                        disabled={loading}
+                                                        className="px-3 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a] text-xs font-semibold bg-white flex-1"
+                                                    />
+                                                    <div className="flex gap-2 shrink-0">
+                                                        <button
+                                                            type="submit"
+                                                            disabled={loading}
+                                                            className="px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-bold rounded-xl transition-all disabled:opacity-50"
+                                                        >
+                                                            {loading ? "..." : t.submit}
+                                                        </button>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => {
+                                                                setActiveFormId(null)
+                                                                setError("")
+                                                            }}
+                                                            className="px-3 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-600 text-xs font-bold rounded-xl transition-all"
+                                                        >
+                                                            <X className="size-4" />
+                                                        </button>
+                                                    </div>
+                                                    {error && <p className="text-[10px] text-[#c9041a] font-bold sm:ml-2 mt-1 sm:mt-0">{error}</p>}
+                                                </form>
+                                            ) : (
+                                                <button
+                                                    onClick={() => {
+                                                        setActiveFormId(item.id)
+                                                        setEmail("")
+                                                        setError("")
+                                                    }}
+                                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-600 text-[10px] font-black uppercase tracking-wider rounded-xl transition-all group"
+                                                >
+                                                    <Clock className="size-3.5 text-zinc-400 group-hover:text-zinc-600" />
+                                                    <span>{t.notifyMe}</span>
+                                                </button>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Clock Layout */}
