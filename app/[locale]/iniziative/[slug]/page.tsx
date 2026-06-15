@@ -59,7 +59,7 @@ interface InitiativeConfig {
 const slugMap: Record<string, InitiativeConfig> = {
     "cineforum": {
         prefix: "cineforum",
-        image: "/assets/slides/2.webp",
+        image: "/assets/iniziative/cineforum/cineforum.webp",
         icon: Film,
         iconColor: "text-red-600",
         iconBg: "bg-red-50 border-red-100",
@@ -100,7 +100,7 @@ const slugMap: Record<string, InitiativeConfig> = {
     },
     "piazza-dell-arte": {
         prefix: "piazza",
-        image: "/assets/piazza.webp",
+        image: "/assets/iniziative/pda/pda.webp",
         icon: Sparkles,
         iconColor: "text-[#f9a620]",
         iconBg: "bg-amber-50 border-amber-100",
@@ -144,7 +144,7 @@ const slugMap: Record<string, InitiativeConfig> = {
     },
     "notte-dei-regali": {
         prefix: "regali",
-        image: "/assets/slides/3.webp",
+        image: "/assets/iniziative/natale/natale.webp",
         icon: Gift,
         iconColor: "text-amber-500",
         iconBg: "bg-amber-50 border-amber-100",
@@ -186,7 +186,7 @@ const slugMap: Record<string, InitiativeConfig> = {
     },
     "conferenze": {
         prefix: "conferenze",
-        image: "/assets/programma.webp",
+        image: "/assets/iniziative/conferenze/conferenze.webp",
         icon: BookOpen,
         iconColor: "text-blue-500",
         iconBg: "bg-blue-50 border-blue-100",
@@ -228,7 +228,7 @@ const slugMap: Record<string, InitiativeConfig> = {
     },
     "sport": {
         prefix: "sport",
-        image: "/assets/slides/1.webp",
+        image: "/assets/iniziative/tornei/tornei.webp",
         icon: Trophy,
         iconColor: "text-emerald-500",
         iconBg: "bg-emerald-50 border-emerald-100",
@@ -270,7 +270,7 @@ const slugMap: Record<string, InitiativeConfig> = {
     },
     "svago": {
         prefix: "svago",
-        image: "/assets/artisti.webp",
+        image: "/assets/iniziative/svago/svago.webp",
         icon: Sparkles,
         iconColor: "text-violet-500",
         iconBg: "bg-violet-50 border-violet-100",
