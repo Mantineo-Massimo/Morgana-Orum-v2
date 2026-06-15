@@ -289,3 +289,48 @@ model ServiceItem {
   updatedAt     DateTime        @updatedAt
 }
 
+model WhatsAppGroup {
+  id            String   @id @default(uuid())
+  name          String
+  nameEn        String?
+  link          String
+  category      String   // "ACADEMIC" or "COMMUNITY"
+  department    String?  // For academic groups (e.g., "Economia")
+  description   String?  // For community groups
+  descriptionEn String?
+  icon          String?  // Icon name for community groups
+  theme         String?  // CSS styling / theme for community groups
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Guide {
+  id                 String      @id // Text ID/slug (e.g., "matricole", "trasporti")
+  title              String
+  titleEn            String?
+  description        String
+  descriptionEn      String?
+  icon               String
+  color              String
+  order              Int         @default(0)
+  hasCustomComponent Boolean     @default(false)
+  steps              GuideStep[]
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+}
+
+model GuideStep {
+  id            String   @id @default(uuid())
+  title         String
+  titleEn       String?
+  description   String
+  descriptionEn String?
+  order         Int      @default(0)
+  guideId       String
+  guide         Guide    @relation(fields: [guideId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
