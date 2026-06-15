@@ -67,13 +67,13 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeEn: "CULTURE",
         highlightsIt: [
             "Tariffa agevolata: Ingresso a prezzo speciale ridotto presso il Cinema Apollo per la comunità studentesca.",
-            "Confronto guidato: Dibattiti post-proiezione in sala moderati da esperti del settore per favorire il confronto attivo.",
+            "Dibattito aperto: Uno spazio per scambiare opinioni e condividere riflessioni tra studenti al termine del film.",
             "Cultura e riflessione: Film d'autore selezionati per diffondere la cultura cinematografica e stimolare idee.",
             "Riconoscimento CFU: Incontri accreditati dall'Ateneo per il rilascio di crediti formativi universitari."
         ],
         highlightsEn: [
             "Discounted rate: Special reduced ticket price at Cinema Apollo for the student community.",
-            "Guided debate: Post-screening debates in the theater moderated by experts to encourage active discussion.",
+            "Open discussion: A space to share opinions and thoughts among students at the end of the film.",
             "Culture & reflection: Selected quality films to spread cinema passion and stimulate critical thinking.",
             "Academic credits: University-accredited sessions offering training credits (CFU) for participating students."
         ],
