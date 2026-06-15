@@ -59,25 +59,3 @@ Qualsiasi altro utilizzo del nome o dell'immagine dell'altra associazione per in
 *Letto, approvato e sottoscritto in Messina, lì 29 Aprile 2026*
 
 <br>
-
-<table style="width: 100%; text-align: center; border: none;">
-  <tr>
-    <td style="border: none; padding: 20px;">
-      <strong>Per Associazione ORUM</strong><br>
-      <em>Luigi Grillo (Presidente)</em><br><br>
-      _________________________
-    </td>
-    <td style="border: none; padding: 20px;">
-      <strong>Per Associazione Morgana</strong><br>
-      <em>Giuseppe Di Giorgio (Presidente)</em><br><br>
-      _________________________
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="border: none; padding: 20px;">
-      <strong>Il Responsabile Tecnico</strong><br>
-      <em>Massimo Mantineo</em><br><br>
-      _________________________
-    </td>
-  </tr>
-</table>

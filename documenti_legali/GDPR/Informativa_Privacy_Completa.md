@@ -90,26 +90,3 @@ I dati sono protetti tramite adeguate misure tecniche (tra cui connessioni HTTPS
 *Messina, lì 29 Aprile 2026*
 
 <br>
-
-<table style="width: 100%; text-align: center; border: none;">
-  <tr>
-    <td style="border: none; padding: 20px;">
-      <strong>Associazione ORUM</strong><br>
-      <em>Luigi Grillo (Presidente)</em><br><br>
-      _________________________
-    </td>
-    <td style="border: none; padding: 20px;">
-      <strong>Associazione Morgana</strong><br>
-      <em>Giuseppe Di Giorgio (Presidente)</em><br><br>
-      _________________________
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="border: none; padding: 40px;">
-      <strong>Responsabile Tecnico</strong><br>
-      <em>Massimo Mantineo</em><br>
-      (Firma per presa visione e accettazione dell'incarico)<br><br>
-      _________________________
-    </td>
-  </tr>
-</table>
