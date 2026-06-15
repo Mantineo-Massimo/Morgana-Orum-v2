@@ -52,10 +52,10 @@ const ICON_MAP: Record<string, any> = {
 }
 
 const THEME_PRESETS = [
-    { name: "blue", label: "Blu", classes: "text-blue-500 bg-blue-50 border-blue-100 hover:border-blue-200 hover:bg-blue-50/70" },
-    { name: "purple", label: "Viola", classes: "text-purple-500 bg-purple-50 border-purple-100 hover:border-purple-200 hover:bg-purple-50/70" },
-    { name: "amber", label: "Arancione", classes: "text-amber-500 bg-amber-50 border-amber-100 hover:border-amber-200 hover:bg-amber-50/70" },
-    { name: "green", label: "Verde (WhatsApp)", classes: "text-green-500 bg-green-50 border-green-100 hover:border-green-200 hover:bg-green-50/70" }
+    { name: "blue", label: "Blu", classes: "text-blue-500 bg-blue-500/10 border-blue-500/20 hover:border-blue-500/30 hover:bg-blue-500/15" },
+    { name: "purple", label: "Viola", classes: "text-purple-500 bg-purple-500/10 border-purple-500/20 hover:border-purple-500/30 hover:bg-purple-500/15" },
+    { name: "amber", label: "Arancione", classes: "text-amber-500 bg-amber-500/10 border-amber-500/20 hover:border-amber-500/30 hover:bg-amber-500/15" },
+    { name: "green", label: "Verde (WhatsApp)", classes: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20 hover:border-emerald-500/30 hover:bg-emerald-500/15" }
 ]
 
 export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppGroupsAdminClientProps) {
@@ -213,14 +213,14 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
     return (
         <div className="space-y-8">
             {/* Category Tab Switcher */}
-            <div className="flex flex-wrap gap-2 border-b border-zinc-200 pb-2">
+            <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
                 <button
                     onClick={() => { setSelectedCategory("all"); setSelectedDept("all"); }}
                     className={cn(
-                        "px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all",
+                        "px-6 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
                         selectedCategory === "all"
-                            ? "bg-zinc-900 text-white shadow-lg shadow-zinc-200"
-                            : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+                            ? "bg-slate-900 text-white shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+                            : "text-slate-500 hover:text-slate-800 hover:bg-slate-100"
                     )}
                 >
                     Tutti ({initialGroups.length})
@@ -228,10 +228,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 <button
                     onClick={() => { setSelectedCategory("ACADEMIC"); setSelectedDept("all"); }}
                     className={cn(
-                        "px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all",
+                        "px-6 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
                         selectedCategory === "ACADEMIC"
-                            ? "bg-blue-600 text-white shadow-lg shadow-blue-100"
-                            : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+                            ? "bg-violet-600 text-white shadow-[0_4px_12px_rgba(109,40,217,0.25)]"
+                            : "text-slate-500 hover:text-slate-800 hover:bg-slate-100"
                     )}
                 >
                     Corsi Accademici ({initialGroups.filter(g => g.category === "ACADEMIC").length})
@@ -239,10 +239,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 <button
                     onClick={() => { setSelectedCategory("COMMUNITY"); setSelectedDept("all"); }}
                     className={cn(
-                        "px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all",
+                        "px-6 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
                         selectedCategory === "COMMUNITY"
-                            ? "bg-purple-600 text-white shadow-lg shadow-purple-100"
-                            : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+                            ? "bg-indigo-600 text-white shadow-[0_4px_12px_rgba(79,70,229,0.25)]"
+                            : "text-slate-500 hover:text-slate-800 hover:bg-slate-100"
                     )}
                 >
                     Community ({initialGroups.filter(g => g.category === "COMMUNITY").length})
@@ -250,15 +250,15 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             </div>
 
             {/* Filters Bar */}
-            <div className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div className="relative w-full md:w-80">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
                     <input
                         type="text"
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         placeholder="Cerca per corso o dipartimento..."
-                        className="w-full pl-11 pr-4 py-3 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none focus:ring-2 focus:ring-zinc-900/5 focus:bg-white text-sm font-semibold transition-all"
+                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200/50 rounded-2xl outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 focus:bg-white text-sm font-semibold transition-all"
                     />
                 </div>
 
@@ -267,7 +267,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                         <select
                             value={selectedDept}
                             onChange={e => setSelectedDept(e.target.value)}
-                            className="px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none text-xs font-bold uppercase tracking-wider cursor-pointer max-w-[200px]"
+                            className="px-4 py-3 bg-slate-50 border border-slate-200/50 rounded-2xl outline-none text-xs font-bold uppercase tracking-wider cursor-pointer max-w-[200px]"
                         >
                             <option value="all">Tutti i Dipartimenti</option>
                             {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
@@ -276,7 +276,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
                     <button
                         onClick={handleOpenAdd}
-                        className="grow md:grow-0 flex items-center justify-center gap-2 px-5 py-3 bg-zinc-900 text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg shadow-zinc-200"
+                        className="grow md:grow-0 flex items-center justify-center gap-2 px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg"
                     >
                         <Plus className="size-4" /> Aggiungi Gruppo
                     </button>
@@ -289,46 +289,48 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 {(selectedCategory === "all" || selectedCategory === "COMMUNITY") && communityGroups.length > 0 && (
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
-                            <h3 className="text-xs font-black uppercase tracking-widest text-purple-600 shrink-0">Community & Gruppi Tematici</h3>
-                            <div className="h-px w-full bg-purple-100"></div>
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-indigo-600 shrink-0">Community & Gruppi Tematici</h3>
+                            <div className="h-px w-full bg-slate-200"></div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {communityGroups.map(group => {
                                 const Icon = ICON_MAP[group.icon || "Users"] || Users
                                 return (
-                                    <div key={group.id} className="bg-white border border-zinc-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group relative">
+                                    <div key={group.id} className="bg-white border border-slate-200/60 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
+                                        {/* Glowing line overlay */}
+                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-violet-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         <div>
                                             <div className="flex items-start justify-between gap-4 mb-4">
                                                 <div className={cn(
                                                     "size-10 rounded-2xl flex items-center justify-center border",
-                                                    group.theme ? group.theme.split(" ").slice(0, 3).join(" ") : "text-purple-500 bg-purple-50 border-purple-100"
+                                                    group.theme ? group.theme.split(" ").slice(0, 3).join(" ") : "text-indigo-500 bg-indigo-500/10 border-indigo-500/20"
                                                 )}>
                                                     <Icon className="size-5" />
                                                 </div>
-                                                <span className="text-[8px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border bg-purple-50 border-purple-100 text-purple-700">
+                                                <span className="text-[9px] font-bold tracking-wider uppercase px-3 py-1 rounded-full border bg-indigo-500/10 border-indigo-500/20 text-indigo-600">
                                                     Community
                                                 </span>
                                             </div>
 
-                                            <h4 className="font-bold text-zinc-900 leading-snug font-serif text-lg uppercase tracking-tight">{group.name}</h4>
-                                            {group.nameEn && <p className="text-[10px] text-zinc-400 italic mt-0.5">EN: {group.nameEn}</p>}
-                                            {group.description && <p className="text-xs text-zinc-500 mt-2 line-clamp-3 leading-relaxed font-medium">{group.description}</p>}
-                                            {group.descriptionEn && <p className="text-[11px] text-zinc-400 mt-1 line-clamp-3 leading-relaxed italic">EN: {group.descriptionEn}</p>}
+                                            <h4 className="font-bold text-slate-800 leading-snug text-lg uppercase tracking-tight">{group.name}</h4>
+                                            {group.nameEn && <p className="text-[10px] text-slate-400 italic mt-0.5">EN: {group.nameEn}</p>}
+                                            {group.description && <p className="text-xs text-slate-500 mt-3 line-clamp-3 leading-relaxed font-medium">{group.description}</p>}
+                                            {group.descriptionEn && <p className="text-[11px] text-slate-400 mt-1.5 line-clamp-3 leading-relaxed italic">EN: {group.descriptionEn}</p>}
                                         </div>
 
-                                        <div className="mt-6 pt-4 border-t border-zinc-150/50 flex items-center justify-between gap-4">
-                                            <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-[#25D366] hover:underline">
-                                                <ExternalLink className="size-3.5" /> Entra
+                                        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
+                                            <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline">
+                                                <Phone className="size-3.5" /> Entra nel gruppo
                                             </a>
                                             <div className="flex items-center gap-1">
-                                                <button onClick={() => handleEdit(group)} className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-all" title="Modifica">
+                                                <button onClick={() => handleEdit(group)} className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-xl transition-all" title="Modifica">
                                                     <Edit3 className="size-4" />
                                                 </button>
-                                                <button onClick={() => handleDuplicate(group)} className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-all" title="Duplica">
+                                                <button onClick={() => handleDuplicate(group)} className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-xl transition-all" title="Duplica">
                                                     <Copy className="size-4" />
                                                 </button>
-                                                <button onClick={() => handleDelete(group.id)} className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Elimina">
+                                                <button onClick={() => handleDelete(group.id)} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Elimina">
                                                     <Trash2 className="size-4" />
                                                 </button>
                                             </div>
@@ -347,37 +349,38 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                     return (
                         <div key={dept} className="space-y-4">
                             <div className="flex items-center gap-4">
-                                <h3 className="text-xs font-black uppercase tracking-widest text-blue-600 shrink-0">{dept}</h3>
-                                <div className="h-px w-full bg-blue-100"></div>
-                                <span className="text-[10px] font-bold text-blue-500 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded">{deptGroups.length}</span>
+                                <h3 className="text-xs font-bold uppercase tracking-wider text-violet-600 shrink-0">{dept}</h3>
+                                <div className="h-px w-full bg-slate-200"></div>
+                                <span className="text-[10px] font-bold text-violet-500 bg-violet-50 border border-violet-200/30 px-2 py-0.5 rounded">{deptGroups.length}</span>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {deptGroups.map(group => (
-                                    <div key={group.id} className="bg-white border border-zinc-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group relative">
+                                    <div key={group.id} className="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
+                                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         <div>
-                                            <div className="flex items-start justify-between gap-4 mb-2">
-                                                <span className="text-[8px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border bg-blue-50 border-blue-100 text-blue-700">
+                                            <div className="flex items-start justify-between gap-4 mb-3">
+                                                <span className="text-[9px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full border bg-violet-500/10 border-violet-500/20 text-violet-600">
                                                     Corso
                                                 </span>
-                                                <span className="text-[9px] font-mono text-zinc-400">Ordine: {group.order}</span>
+                                                <span className="text-[10px] font-mono text-slate-400 font-medium">Ordine: {group.order}</span>
                                             </div>
-                                            <h4 className="font-bold text-zinc-900 leading-snug">{group.name}</h4>
-                                            {group.nameEn && <p className="text-[10px] text-zinc-400 italic mt-0.5">EN: {group.nameEn}</p>}
+                                            <h4 className="font-bold text-slate-800 leading-snug">{group.name}</h4>
+                                            {group.nameEn && <p className="text-[10px] text-slate-400 italic mt-0.5">EN: {group.nameEn}</p>}
                                         </div>
 
-                                        <div className="mt-4 pt-3 border-t border-zinc-150/50 flex items-center justify-between gap-4">
-                                            <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-[#25D366] hover:underline">
-                                                <ExternalLink className="size-3.5" /> Entra
+                                        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-4">
+                                            <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline">
+                                                <Phone className="size-3.5" /> Entra
                                             </a>
-                                            <div className="flex items-center gap-1">
-                                                <button onClick={() => handleEdit(group)} className="p-1.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-all" title="Modifica">
+                                            <div className="flex items-center gap-0.5">
+                                                <button onClick={() => handleEdit(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all" title="Modifica">
                                                     <Edit3 className="size-3.5" />
                                                 </button>
-                                                <button onClick={() => handleDuplicate(group)} className="p-1.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-all" title="Duplica">
+                                                <button onClick={() => handleDuplicate(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all" title="Duplica">
                                                     <Copy className="size-3.5" />
                                                 </button>
-                                                <button onClick={() => handleDelete(group.id)} className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Elimina">
+                                                <button onClick={() => handleDelete(group.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Elimina">
                                                     <Trash2 className="size-3.5" />
                                                 </button>
                                             </div>
@@ -390,7 +393,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 })}
 
                 {filteredGroups.length === 0 && (
-                    <div className="text-center py-16 text-zinc-400 italic bg-white rounded-3xl border border-zinc-100 shadow-sm">
+                    <div className="text-center py-16 text-slate-400 italic bg-white rounded-3xl border border-slate-200/60 shadow-sm">
                         Nessun gruppo WhatsApp trovato corrispondente alla ricerca.
                     </div>
                 )}

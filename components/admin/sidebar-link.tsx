@@ -20,13 +20,18 @@ export function SidebarLink({ href, exact, children }: SidebarLinkProps) {
         <Link
             href={href}
             className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all group",
+                "flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 relative group overflow-hidden",
                 isActive
-                    ? "bg-zinc-800 text-white font-bold border-l-4 border-red-500 rounded-l-none pl-3 shadow-inner"
-                    : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                    ? "bg-gradient-to-r from-violet-600/15 to-indigo-600/5 text-white font-semibold shadow-[0_0_20px_rgba(139,92,246,0.1)] border-l-2 border-violet-500 pl-[14px]"
+                    : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/30 pl-4"
             )}
         >
+            {/* Glow effect on hover/active */}
+            {isActive && (
+                <span className="absolute inset-y-0 left-0 w-[2px] bg-gradient-to-b from-violet-400 to-indigo-500" />
+            )}
             {children}
         </Link>
     )
 }
+

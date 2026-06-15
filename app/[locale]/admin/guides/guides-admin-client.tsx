@@ -374,21 +374,22 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
         <div className="grid lg:grid-cols-3 gap-8 items-start">
             {/* Left Pane: Guides List */}
             <div className="lg:col-span-1 space-y-6">
-                <div className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm space-y-4">
-                    <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-zinc-900 uppercase tracking-tight flex items-center gap-2">
-                            <Compass className="size-4 text-zinc-500" /> Guide
+                <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-4">
+                    <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                        <h3 className="font-bold text-slate-800 text-sm uppercase tracking-wider flex items-center gap-2">
+                            <span className="p-1 rounded-lg bg-violet-100 text-violet-600"><Compass className="size-4" /></span>
+                            Elenco Guide
                         </h3>
                         <button
                             onClick={handleOpenAddGuide}
-                            className="p-2 bg-zinc-50 hover:bg-zinc-100 rounded-xl transition-all text-zinc-700"
+                            className="p-2 bg-slate-50 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/40 rounded-xl transition-all text-slate-600"
                             title="Nuova Guida"
                         >
                             <FolderPlus className="size-4" />
                         </button>
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2.5">
                         {initialGuides.map(guide => {
                             const isSelected = guide.id === selectedGuideId
                             return (
@@ -396,22 +397,22 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                     key={guide.id}
                                     onClick={() => setSelectedGuideId(guide.id)}
                                     className={cn(
-                                        "w-full p-4 rounded-2xl border text-left cursor-pointer flex items-center justify-between transition-all group",
+                                        "w-full p-4 rounded-2xl border text-left cursor-pointer flex items-center justify-between transition-all duration-300 group relative overflow-hidden",
                                         isSelected
-                                            ? "bg-zinc-900 border-zinc-900 text-white shadow-lg shadow-zinc-200"
-                                            : "bg-zinc-50/50 border-zinc-100 hover:border-zinc-200 text-zinc-700"
+                                            ? "bg-slate-950 border-slate-950 text-white shadow-md"
+                                            : "bg-slate-50/50 border-slate-200/60 hover:border-slate-300 text-slate-700 hover:bg-white"
                                     )}
                                 >
                                     <div className="flex items-center gap-3 overflow-hidden">
                                         <div className={cn(
                                             "size-9 rounded-xl flex items-center justify-center shrink-0 shadow-sm",
-                                            isSelected ? "bg-zinc-800 text-white" : "bg-white text-zinc-800 border border-zinc-100"
+                                            isSelected ? "bg-zinc-800 text-white" : "bg-white text-slate-800 border border-slate-150"
                                         )}>
                                             {getIconComponent(guide.icon)}
                                         </div>
                                         <div className="overflow-hidden">
                                             <p className="font-bold text-xs truncate">{guide.title}</p>
-                                            <p className="text-[10px] text-zinc-400 font-mono mt-0.5 truncate">#{guide.id}</p>
+                                            <p className={cn("text-[10px] font-mono mt-0.5 truncate", isSelected ? "text-slate-400" : "text-slate-400")}>#{guide.id}</p>
                                         </div>
                                     </div>
 
@@ -423,7 +424,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                             }}
                                             className={cn(
                                                 "p-1.5 rounded-lg hover:bg-zinc-800 transition-all",
-                                                isSelected ? "text-zinc-400 hover:text-white" : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200"
+                                                isSelected ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-900 hover:bg-slate-200"
                                             )}
                                             title="Modifica"
                                         >
@@ -448,7 +449,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                         })}
 
                         {initialGuides.length === 0 && (
-                            <div className="text-center py-8 text-zinc-400 italic text-xs">
+                            <div className="text-center py-8 text-slate-400 italic text-xs">
                                 Nessuna guida definita.
                             </div>
                         )}
@@ -459,34 +460,34 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
             {/* Right Pane: Steps List */}
             <div className="lg:col-span-2 space-y-6">
                 {activeGuide ? (
-                    <div className="bg-white p-8 rounded-3xl border border-zinc-100 shadow-sm space-y-6">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-100">
+                    <div className="bg-white p-8 rounded-3xl border border-slate-200/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-6">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
                             <div>
                                 <div className="flex items-center gap-2 mb-2">
                                     <span className={cn(
-                                        "inline-flex text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border border-zinc-200",
-                                        activeGuide.color === "blue" && "bg-blue-50 text-blue-600",
-                                        activeGuide.color === "orange" && "bg-orange-50 text-[#f9a620] border-orange-100",
-                                        activeGuide.color === "green" && "bg-green-50 text-green-600",
-                                        activeGuide.color === "red" && "bg-red-50 text-red-600",
-                                        activeGuide.color === "purple" && "bg-purple-50 text-purple-600",
-                                        activeGuide.color === "zinc" && "bg-zinc-100 text-zinc-600",
-                                        activeGuide.color === "emerald" && "bg-emerald-50 text-emerald-600"
+                                        "inline-flex text-[9px] font-bold tracking-wider uppercase px-3 py-1 rounded-full border",
+                                        activeGuide.color === "blue" && "bg-blue-500/10 text-blue-600 border-blue-500/20",
+                                        activeGuide.color === "orange" && "bg-amber-500/10 text-amber-600 border-amber-500/20",
+                                        activeGuide.color === "green" && "bg-emerald-500/10 text-emerald-600 border-emerald-500/20",
+                                        activeGuide.color === "red" && "bg-red-500/10 text-red-600 border-red-500/20",
+                                        activeGuide.color === "purple" && "bg-purple-500/10 text-purple-600 border-purple-500/20",
+                                        activeGuide.color === "zinc" && "bg-slate-500/10 text-slate-600 border-slate-500/20",
+                                        activeGuide.color === "emerald" && "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
                                     )}>
                                         Colore: {activeGuide.color}
                                     </span>
                                     {activeGuide.hasCustomComponent && (
-                                        <span className="inline-flex text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border border-zinc-150 bg-amber-50 text-amber-700">
+                                        <span className="inline-flex text-[9px] font-bold tracking-wider uppercase px-3 py-1 rounded-full border border-amber-200 bg-amber-500/10 text-amber-700">
                                             Vista Integrata
                                         </span>
                                     )}
                                 </div>
-                                <h2 className="text-xl font-bold text-zinc-900">{activeGuide.title}</h2>
-                                <p className="text-xs text-zinc-400 mt-1 leading-relaxed max-w-xl">{activeGuide.description}</p>
+                                <h2 className="text-xl font-bold text-slate-800">{activeGuide.title}</h2>
+                                <p className="text-xs text-slate-400 mt-1.5 leading-relaxed max-w-xl font-medium">{activeGuide.description}</p>
                             </div>
                             <button
                                 onClick={handleOpenAddStep}
-                                className="flex items-center justify-center gap-2 px-5 py-3 bg-zinc-900 text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg shadow-zinc-200"
+                                className="flex items-center justify-center gap-2 px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg"
                             >
                                 <Plus className="size-4" /> Aggiungi Step
                             </button>
@@ -496,15 +497,16 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                             {(activeGuide.steps || []).sort((a: any, b: any) => (a.order || 0) - (b.order || 0)).map((step: any, index: number, arr: any[]) => (
                                 <div
                                     key={step.id}
-                                    className="p-6 bg-zinc-50/50 rounded-2xl border border-zinc-100 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center hover:border-zinc-200 hover:bg-white transition-all shadow-sm"
+                                    className="p-6 bg-slate-50/50 rounded-2xl border border-slate-200/60 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center hover:border-slate-300 hover:bg-white transition-all duration-300 shadow-sm relative overflow-hidden group"
                                 >
+                                    <div className="absolute top-0 left-0 right-0 h-[2px] bg-violet-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     {/* Reorder Arrows on the left of each step */}
-                                    <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-zinc-100 p-1 bg-white rounded-xl shadow-inner">
+                                    <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-slate-200/60 p-1 bg-white rounded-xl shadow-sm">
                                         <button
                                             type="button"
                                             disabled={index === 0 || loading}
                                             onClick={() => handleReorderStep(step, "up")}
-                                            className="p-1 hover:bg-zinc-100 disabled:opacity-30 rounded text-zinc-500 transition-colors"
+                                            className="p-1 hover:bg-slate-50 disabled:opacity-30 rounded text-slate-400 hover:text-slate-700 transition-colors"
                                             title="Sposta su"
                                         >
                                             <ArrowUp className="size-4" />
@@ -513,7 +515,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                             type="button"
                                             disabled={index === arr.length - 1 || loading}
                                             onClick={() => handleReorderStep(step, "down")}
-                                            className="p-1 hover:bg-zinc-100 disabled:opacity-30 rounded text-zinc-500 transition-colors"
+                                            className="p-1 hover:bg-slate-50 disabled:opacity-30 rounded text-slate-400 hover:text-slate-700 transition-colors"
                                             title="Sposta giù"
                                         >
                                             <ArrowDown className="size-4" />
@@ -521,43 +523,43 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                     </div>
 
                                     <div className="space-y-1.5 flex-1 min-w-0">
-                                        <h4 className="font-bold text-sm text-zinc-900 uppercase tracking-tight truncate">
+                                        <h4 className="font-bold text-sm text-slate-800 uppercase tracking-tight truncate">
                                             {step.title}
                                         </h4>
                                         {step.titleEn && (
-                                            <p className="text-[10px] text-zinc-400 italic">EN: {step.titleEn}</p>
+                                            <p className="text-[10px] text-slate-400 italic">EN: {step.titleEn}</p>
                                         )}
-                                        <p className="text-xs text-zinc-500 leading-relaxed font-medium">
+                                        <p className="text-xs text-slate-500 leading-relaxed font-medium">
                                             {step.description}
                                         </p>
                                         {step.descriptionEn && (
-                                            <p className="text-[11px] text-zinc-400 leading-relaxed italic">
+                                            <p className="text-[11px] text-slate-400 leading-relaxed italic">
                                                 EN: {step.descriptionEn}
                                             </p>
                                         )}
-                                        <div className="text-[10px] text-zinc-400 font-mono pt-1">
+                                        <div className="text-[10px] text-slate-400 font-mono pt-1">
                                             <span>Ordine: {step.order}</span>
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-1.5 transition-opacity shrink-0">
+                                    <div className="flex items-center gap-1.5 shrink-0">
                                         <button
                                             onClick={() => handleEditStep(step)}
-                                            className="p-2 bg-white hover:bg-zinc-100 border border-zinc-100 hover:border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-900 transition-all shadow-sm"
+                                            className="p-2 bg-white hover:bg-slate-50 border border-slate-200/65 rounded-xl text-slate-500 hover:text-slate-800 transition-all shadow-sm"
                                             title="Modifica"
                                         >
                                             <Edit3 className="size-3.5" />
                                         </button>
                                         <button
                                             onClick={() => handleDuplicateStep(step)}
-                                            className="p-2 bg-white hover:bg-zinc-100 border border-zinc-100 hover:border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-900 transition-all shadow-sm"
+                                            className="p-2 bg-white hover:bg-slate-50 border border-slate-200/65 rounded-xl text-slate-500 hover:text-slate-800 transition-all shadow-sm"
                                             title="Duplica"
                                         >
                                             <Copy className="size-3.5" />
                                         </button>
                                         <button
                                             onClick={() => handleDeleteStep(step.id)}
-                                            className="p-2 bg-white hover:bg-red-50 border border-zinc-100 hover:border-red-100 rounded-xl text-red-500 transition-all shadow-sm"
+                                            className="p-2 bg-white hover:bg-red-50 border border-slate-200/65 hover:border-red-150 rounded-xl text-red-500 transition-all shadow-sm"
                                             title="Elimina"
                                         >
                                             <Trash2 className="size-3.5" />
@@ -567,14 +569,14 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                             ))}
 
                             {(!activeGuide.steps || activeGuide.steps.length === 0) && (
-                                <div className="text-center py-12 text-zinc-400 italic text-sm">
+                                <div className="text-center py-12 text-slate-400 italic text-sm">
                                     Nessuno step definito per questa guida. Aggiungine uno con il pulsante in alto.
                                 </div>
                             )}
                         </div>
                     </div>
                 ) : (
-                    <div className="bg-white p-16 text-center text-zinc-400 rounded-3xl border border-zinc-100 shadow-sm italic">
+                    <div className="bg-white p-16 text-center text-slate-400 rounded-3xl border border-slate-200/60 shadow-sm italic">
                         Seleziona o crea una guida a sinistra per gestirne i passaggi.
                     </div>
                 )}
