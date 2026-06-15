@@ -43,6 +43,41 @@ const FAQ_ITEMS: FaqItem[] = [
         category: "didattica",
         question: "Cosa sono i CFU e come funzionano i seminari?",
         answer: "I CFU (Crediti Formativi Universitari) misurano il carico di lavoro dello studente. Le associazioni Morgana e O.R.U.M. organizzano regolarmente seminari e conferenze accreditate dall'Ateneo che permettono di acquisire CFU a scelta libera o per attività extra."
+    },
+    {
+        category: "didattica",
+        question: "Come funziona il riconoscimento dei crediti formativi (CFU) per i seminari?",
+        answer: "Una volta completato il seminario o l'evento accreditato, l'associazione rilascerà un attestato di partecipazione. Dovrai presentare questo attestato alla segreteria del tuo dipartimento o caricarlo sul portale Esse3 secondo le modalità previste dal tuo corso di studi per registrare i CFU liberi."
+    },
+    {
+        category: "didattica",
+        question: "Cos'è la compilazione dei piani di studio e quando si effettua?",
+        answer: "Il piano di studio elenca tutti gli esami che intendi sostenere. Si compila solitamente online su Esse3 in finestre temporali specifiche (in genere tra ottobre e dicembre). Per ricevere supporto o in caso di anomalie con gli esami a scelta, contatta pure i nostri rappresentanti."
+    },
+    {
+        category: "didattica",
+        question: "Come posso richiedere il prolungamento delle sessioni di esame o appelli straordinari?",
+        answer: "Gli appelli straordinari sono riservati a specifiche categorie (fuoricorso, lavoratori, atleti, part-time, o genitori). I nostri rappresentanti in Consiglio di Dipartimento lavorano costantemente per richiedere finestre straordinarie o facilitare la calendarizzazione degli appelli."
+    },
+    {
+        category: "convenzioni",
+        question: "Quali sono le attività commerciali convenzionate a Messina?",
+        answer: "Abbiamo stipulato convenzioni con numerose attività locali, tra cui librerie, copisterie, bar, pizzerie, palestre e centri medici. Trovi l'elenco completo e costantemente aggiornato nella pagina 'Convenzioni' sul nostro sito."
+    },
+    {
+        category: "generale",
+        question: "Qual è la differenza tra l'Associazione Morgana e l'Associazione O.R.U.M.?",
+        answer: "Morgana e O.R.U.M. sono due associazioni studentesche storiche e indipendenti dell'Università di Messina. Pur mantenendo le proprie identità, collaborano stabilmente in regime di sinergia su progetti di ampio respiro (come Piazza dell'Arte o il Cineforum) e condividono questo portale per semplificare l'erogazione dei servizi agli studenti."
+    },
+    {
+        category: "generale",
+        question: "Dove si trovano le sedi delle associazioni?",
+        answer: "L'hub principale e sede fisica di ritrovo si trova a Messina in Via Sant'Elia 11. Inoltre, i nostri membri e referenti sono presenti quotidianamente all'interno delle aule studio e nei corridoi di tutti i poli dell'Ateneo (Polo Centrale, Papardo, Annunziata, Policlinico)."
+    },
+    {
+        category: "account",
+        question: "Come posso cancellare il mio account dal portale?",
+        answer: "Puoi richiedere la cancellazione definitiva del tuo profilo e di tutti i dati personali associati inviando una semplice richiesta email a orum.unime@gmail.com o associazione.morgana@gmail.com. La richiesta verrà presa in carico entro 48 ore."
     }
 ]
 
