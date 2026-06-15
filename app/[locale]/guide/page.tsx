@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { BookOpen, Bus, Info, MapPin, Download, Check } from "lucide-react"
+import { BookOpen, Bus, Info, MapPin } from "lucide-react"
 import { cn } from "@/lib/utils"
 import nextDynamic from "next/dynamic"
 import { ServicesGuide } from "@/components/services-guide"
@@ -169,14 +169,6 @@ export default function GuidePage() {
                             </div>
                         )}
 
-                        <div className="mt-12 pt-8 border-t border-zinc-100 flex flex-wrap gap-4">
-                            <button className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-zinc-900 text-white hover:bg-zinc-800 transition-colors font-black uppercase tracking-widest text-xs shadow-md">
-                                <Download className="size-4" /> Scarica Guida PDF
-                            </button>
-                            <button className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-zinc-100 text-zinc-600 hover:bg-zinc-200 transition-colors font-black uppercase tracking-widest text-xs">
-                                <Check className="size-4" /> Segnala Aggiornamento
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>
