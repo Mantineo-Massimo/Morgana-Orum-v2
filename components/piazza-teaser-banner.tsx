@@ -3,9 +3,11 @@ import { Link } from "@/i18n/routing"
 import { ArrowRight } from "lucide-react"
 import { CountdownTimer } from "@/components/countdown-timer"
 import { getPiazzaSettings } from "@/app/actions/piazza"
+import { getTranslations } from "next-intl/server"
 
 export async function PiazzaTeaserBanner() {
     const settings = await getPiazzaSettings()
+    const t = await getTranslations("PiazzaTeaser")
 
     if (!settings.countdownVisible) return null
 
@@ -42,12 +44,12 @@ export async function PiazzaTeaserBanner() {
 
                     {/* Text + countdown */}
                     <div className="flex-1 text-center md:text-left">
-                        <p className="text-[#27a85d] font-black text-sm uppercase tracking-widest mb-2">Prossimo evento speciale</p>
+                        <p className="text-[#27a85d] font-black text-sm uppercase tracking-widest mb-2">{t("tag")}</p>
                         <h2 className="text-3xl md:text-4xl font-serif font-black text-white uppercase tracking-tighter mb-3">
                             Piazza dell&apos;Arte {settings.year}
                         </h2>
                         <p className="text-white/60 font-serif mb-6">
-                            L&apos;evento socio-culturale più atteso della primavera messinese. Musica, arte e spettacolo nel cuore dell&apos;università.
+                            {t("desc")}
                         </p>
                         <CountdownTimer targetDate={TARGET_DATE} />
                     </div>
@@ -59,7 +61,7 @@ export async function PiazzaTeaserBanner() {
                             className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl"
                             style={{ backgroundColor: "#f9a620", color: "#18182e" }}
                         >
-                            Scopri di più <ArrowRight className="size-4" />
+                            {t("discover_more")} <ArrowRight className="size-4" />
                         </Link>
                     </div>
                 </div>
@@ -67,3 +69,4 @@ export async function PiazzaTeaserBanner() {
         </section>
     )
 }
+

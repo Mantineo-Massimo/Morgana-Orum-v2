@@ -65,7 +65,25 @@
         "services": "Servizi",
         "conventions": "Convenzioni",
         "social": "Social",
-        "media_kit": "Media Kit"
+        "media_kit": "Media Kit",
+        "associations": "Le Associazioni",
+        "about_desc": "Storia, presentazione e valori",
+        "organigramma": "Organigramma",
+        "organigramma_desc": "I componenti e la struttura",
+        "contact_desc": "Scrivici o vieni a trovarci",
+        "academic_life": "Vita Accademica",
+        "reps_desc": "La squadra eletta nei dipartimenti",
+        "groups": "Gruppi",
+        "groups_desc": "Link diretti alle community WhatsApp",
+        "guides_desc": "Materiale utile e burocrazia",
+        "faq": "FAQ",
+        "faq_desc": "Domande frequenti e risposte rapide",
+        "community_extra": "Community & Extra",
+        "initiatives": "Le Nostre Iniziative",
+        "initiatives_desc": "Cineforum, Piazza dell'Arte e progetti",
+        "conventions_desc": "Sconti e vantaggi per gli studenti",
+        "social_desc": "Collegamenti rapidi alle community",
+        "media_kit_desc": "Loghi e grafiche ufficiali"
     },
     "HomePage": {
         "hero_title": "Sempre dalla parte dello studente!",
@@ -439,5 +457,25 @@
         "modifications_desc": "<p>Ci riserviamo il diritto di modificare in qualsiasi momento i presenti Termini. Le modifiche saranno efficaci non appena pubblicate sul portale.</p>",
         "governing_law_title": "7. Legge Applicabile e Foro Competente",
         "governing_law_desc": "<p>I presenti Termini sono regolati dalla legge italiana. Qualsiasi controversia sarà devoluta alla competenza esclusiva del Foro di Messina.</p>"
+    },
+    "CookieConsent": {
+        "title": "Utilizziamo i Cookie",
+        "desc": "Usiamo i cookie per migliorare la tua esperienza e per analizzare il traffico del sito.",
+        "subdesc": "Aiutaci a crescere!",
+        "close": "Chiudi",
+        "accept_all": "Accetta Tutti",
+        "essentials": "Solo Essenziali",
+        "footer_text": "Consultando il sito accetti la nostra <privacy>Privacy Policy</privacy>, la <cookie>Cookie Policy</cookie> e i <terms>Termini e Condizioni</terms>."
+    },
+    "Countdown": {
+        "days": "Giorni",
+        "hours": "Ore",
+        "minutes": "Minuti",
+        "seconds": "Secondi"
+    },
+    "PiazzaTeaser": {
+        "tag": "Prossimo evento speciale",
+        "desc": "L'evento socio-culturale più atteso della primavera messinese. Musica, arte e spettacolo nel cuore dell'università.",
+        "discover_more": "Scopri di più"
     }
 }

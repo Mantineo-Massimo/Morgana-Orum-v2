@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react"
 import { Cookie, X, Check, ShieldAlert } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/routing"
 
 export function CookieConsent() {
+    const t = useTranslations("CookieConsent")
     const [isVisible, setIsVisible] = useState(false)
 
     useEffect(() => {
@@ -48,15 +51,15 @@ export function CookieConsent() {
                             <Cookie className="size-6" />
                         </div>
                         <div className="flex-1">
-                            <h3 className="text-lg font-black text-zinc-900 tracking-tight">Utilizziamo i Cookie</h3>
+                            <h3 className="text-lg font-black text-zinc-900 tracking-tight">{t("title")}</h3>
                             <p className="text-sm text-zinc-500 font-medium leading-relaxed mt-1">
-                                Usiamo i cookie per migliorare la tua esperienza e per analizzare il traffico del sito.
-                                <span className="block mt-1 text-zinc-500 text-xs italic">Aiutaci a crescere!</span>
+                                {t("desc")}
+                                <span className="block mt-1 text-zinc-500 text-xs italic">{t("subdesc")}</span>
                             </p>
                         </div>
                         <button
                             onClick={() => setIsVisible(false)}
-                            aria-label="Chiudi"
+                            aria-label={t("close")}
                             className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-400 transition-colors"
                         >
                             <X className="size-4" />
@@ -69,22 +72,27 @@ export function CookieConsent() {
                             className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-zinc-900 text-white rounded-2xl text-sm font-bold hover:bg-zinc-800 transition-all active:scale-95 shadow-lg shadow-zinc-200"
                         >
                             <Check className="size-4" />
-                            Accetta Tutti
+                            {t("accept_all")}
                         </button>
                         <button
                             onClick={() => handleConsent("rejected")}
                             className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-white text-zinc-500 border border-zinc-200 rounded-2xl text-sm font-bold hover:bg-zinc-50 transition-all active:scale-95 shadow-sm"
                         >
                             <ShieldAlert className="size-4 opacity-50" />
-                            Solo Essenziali
+                            {t("essentials")}
                         </button>
                     </div>
 
                     <p className="text-[10px] text-zinc-400 text-center mt-4">
-                        Consultando il sito accetti la nostra <a href="/privacy" className="underline hover:text-zinc-600">Privacy Policy</a>, la <a href="/cookie" className="underline hover:text-zinc-600">Cookie Policy</a> e i <a href="/terms" className="underline hover:text-zinc-600">Termini e Condizioni</a>.
+                        {t.rich("footer_text", {
+                            privacy: (chunks) => <Link href="/privacy" className="underline hover:text-zinc-600">{chunks}</Link>,
+                            cookie: (chunks) => <Link href="/cookie" className="underline hover:text-zinc-600">{chunks}</Link>,
+                            terms: (chunks) => <Link href="/terms" className="underline hover:text-zinc-600">{chunks}</Link>
+                        })}
                     </p>
                 </div>
             </div>
         </div>
     )
 }
+

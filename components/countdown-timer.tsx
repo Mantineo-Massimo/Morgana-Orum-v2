@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
 
 interface CountdownTimerProps {
     targetDate: Date;
@@ -9,6 +10,7 @@ interface CountdownTimerProps {
 }
 
 export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
+    const t = useTranslations("Countdown")
     const [timeLeft, setTimeLeft] = useState({
         days: 0,
         hours: 0,
@@ -51,10 +53,10 @@ export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
     }
 
     const timeBlocks = [
-        { label: "Giorni", value: timeLeft.days },
-        { label: "Ore", value: timeLeft.hours },
-        { label: "Minuti", value: timeLeft.minutes },
-        { label: "Secondi", value: timeLeft.seconds }
+        { label: t("days"), value: timeLeft.days },
+        { label: t("hours"), value: timeLeft.hours },
+        { label: t("minutes"), value: timeLeft.minutes },
+        { label: t("seconds"), value: timeLeft.seconds }
     ]
 
     return (
@@ -72,3 +74,4 @@ export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
         </div>
     )
 }
+

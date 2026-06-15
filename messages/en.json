@@ -65,7 +65,25 @@
         "services": "Services",
         "conventions": "Conventions",
         "social": "Social",
-        "media_kit": "Media Kit"
+        "media_kit": "Media Kit",
+        "associations": "Associations",
+        "about_desc": "History, presentation, and values",
+        "organigramma": "Organization Chart",
+        "organigramma_desc": "Members and structure",
+        "contact_desc": "Write to us or visit us",
+        "academic_life": "Academic Life",
+        "reps_desc": "The elected team in departments",
+        "groups": "Groups",
+        "groups_desc": "Direct links to WhatsApp communities",
+        "guides_desc": "Useful material and bureaucracy",
+        "faq": "FAQ",
+        "faq_desc": "Frequently asked questions and quick answers",
+        "community_extra": "Community & Extra",
+        "initiatives": "Our Initiatives",
+        "initiatives_desc": "Cineforum, Piazza dell'Arte, and projects",
+        "conventions_desc": "Discounts and benefits for students",
+        "social_desc": "Quick links to communities",
+        "media_kit_desc": "Official logos and graphics"
     },
     "HomePage": {
         "hero_title": "Always on the student's side!",
@@ -439,5 +457,25 @@
         "modifications_desc": "<p>We reserve the right to modify these Terms at any time. Changes will be effective as soon as they are published on the portal.</p>",
         "governing_law_title": "7. Governing Law and Jurisdiction",
         "governing_law_desc": "<p>These Terms are governed by Italian law. Any dispute will be subject to the exclusive jurisdiction of the Court of Messina.</p>"
+    },
+    "CookieConsent": {
+        "title": "We Use Cookies",
+        "desc": "We use cookies to improve your experience and analyze site traffic.",
+        "subdesc": "Help us grow!",
+        "close": "Close",
+        "accept_all": "Accept All",
+        "essentials": "Essentials Only",
+        "footer_text": "By browsing the site, you accept our <privacy>Privacy Policy</privacy>, <cookie>Cookie Policy</cookie>, and <terms>Terms & Conditions</terms>."
+    },
+    "Countdown": {
+        "days": "Days",
+        "hours": "Hours",
+        "minutes": "Minutes",
+        "seconds": "Seconds"
+    },
+    "PiazzaTeaser": {
+        "tag": "Next special event",
+        "desc": "The most anticipated socio-cultural event of the Messinese spring. Music, art, and entertainment in the heart of the university.",
+        "discover_more": "Discover more"
     }
 }

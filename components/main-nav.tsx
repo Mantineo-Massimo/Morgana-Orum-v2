@@ -167,7 +167,7 @@ export function MainNav({
                                         : `${textColor}`
                                 )}
                             >
-                                Le Associazioni <ChevronDown className="size-4 transition-transform duration-300" style={{ transform: isAssocOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
+                                {nt("associations")} <ChevronDown className="size-4 transition-transform duration-300" style={{ transform: isAssocOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
                             </button>
                             <AnimatePresence>
                                 {isAssocOpen && (
@@ -183,24 +183,24 @@ export function MainNav({
                                             onClick={() => setIsAssocOpen(false)}
                                             className="flex flex-col p-3 rounded-xl hover:bg-zinc-50 transition-colors"
                                         >
-                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">Chi Siamo</span>
-                                            <span className="text-[10px] text-zinc-400 font-medium">Storia, presentazione e valori</span>
+                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">{nt("about")}</span>
+                                            <span className="text-[10px] text-zinc-400 font-medium">{nt("about_desc")}</span>
                                         </Link>
                                         <Link
                                             href="/organigramma"
                                             onClick={() => setIsAssocOpen(false)}
                                             className="flex flex-col p-3 rounded-xl hover:bg-zinc-50 transition-colors"
                                         >
-                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">Organigramma</span>
-                                            <span className="text-[10px] text-zinc-400 font-medium">I componenti e la struttura</span>
+                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">{nt("organigramma")}</span>
+                                            <span className="text-[10px] text-zinc-400 font-medium">{nt("organigramma_desc")}</span>
                                         </Link>
                                         <Link
                                             href="/contact"
                                             onClick={() => setIsAssocOpen(false)}
                                             className="flex flex-col p-3 rounded-xl hover:bg-zinc-50 transition-colors"
                                         >
-                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">Contattaci</span>
-                                            <span className="text-[10px] text-zinc-400 font-medium">Scrivici o vieni a trovarci</span>
+                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">{nt("contact")}</span>
+                                            <span className="text-[10px] text-zinc-400 font-medium">{nt("contact_desc")}</span>
                                         </Link>
                                     </motion.div>
                                 )}
@@ -247,7 +247,7 @@ export function MainNav({
                                         : `${textColor}`
                                     )}
                             >
-                                Servizi <ChevronDown className="size-4 transition-transform duration-300" style={{ transform: isServiziOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
+                                {nt("services")} <ChevronDown className="size-4 transition-transform duration-300" style={{ transform: isServiziOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
                             </button>
                             <AnimatePresence>
                                 {isServiziOpen && (
@@ -262,7 +262,7 @@ export function MainNav({
                                             {/* Column 1: Vita Accademica */}
                                             <div className="space-y-4">
                                                 <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
-                                                    Vita Accademica
+                                                    {nt("academic_life")}
                                                 </h4>
                                                 <div className="flex flex-col gap-2">
                                                     <Link 
@@ -272,8 +272,8 @@ export function MainNav({
                                                     >
                                                         <Users className="size-4 mt-1 text-[#c9041a] shrink-0" />
                                                         <div>
-                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Rappresentanti</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">La squadra eletta nei dipartimenti</span>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("representatives")}</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("reps_desc")}</span>
                                                         </div>
                                                     </Link>
                                                     <Link 
@@ -283,8 +283,8 @@ export function MainNav({
                                                     >
                                                         <Phone className="size-4 mt-1 text-green-500 shrink-0" />
                                                         <div>
-                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Gruppi</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Link diretti alle community WhatsApp</span>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("groups")}</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("groups_desc")}</span>
                                                         </div>
                                                     </Link>
                                                     <Link 
@@ -294,8 +294,8 @@ export function MainNav({
                                                     >
                                                         <BookOpen className="size-4 mt-1 text-blue-500 shrink-0" />
                                                         <div>
-                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Guide</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Materiale utile e burocrazia</span>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("guides")}</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("guides_desc")}</span>
                                                         </div>
                                                     </Link>
                                                     <Link 
@@ -305,8 +305,8 @@ export function MainNav({
                                                     >
                                                         <HelpCircle className="size-4 mt-1 text-purple-500 shrink-0" />
                                                         <div>
-                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">FAQ</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Domande frequenti e risposte rapide</span>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("faq")}</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("faq_desc")}</span>
                                                         </div>
                                                     </Link>
                                                 </div>
@@ -315,7 +315,7 @@ export function MainNav({
                                             {/* Column 2: Community & Extra */}
                                             <div className="space-y-4">
                                                 <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 border-b border-zinc-100 pb-2">
-                                                    Community & Extra
+                                                    {nt("community_extra")}
                                                 </h4>
                                                 <div className="flex flex-col gap-2">
                                                     <Link 
@@ -325,8 +325,8 @@ export function MainNav({
                                                     >
                                                         <Calendar className="size-4 mt-1 text-[#f9a620] shrink-0" />
                                                         <div>
-                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Le Nostre Iniziative</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Cineforum, Piazza dell&apos;Arte e progetti</span>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("initiatives")}</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("initiatives_desc")}</span>
                                                         </div>
                                                     </Link>
                                                     <Link 
@@ -336,8 +336,8 @@ export function MainNav({
                                                     >
                                                         <Tag className="size-4 mt-1 text-rose-500 shrink-0" />
                                                         <div>
-                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Convenzioni</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Sconti e vantaggi per gli studenti</span>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("conventions")}</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("conventions_desc")}</span>
                                                         </div>
                                                     </Link>
                                                     <Link 
@@ -347,8 +347,8 @@ export function MainNav({
                                                     >
                                                         <Share2 className="size-4 mt-1 text-cyan-500 shrink-0" />
                                                         <div>
-                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Social</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Collegamenti rapidi alle community</span>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("social")}</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("social_desc")}</span>
                                                         </div>
                                                     </Link>
                                                     <Link 
@@ -358,8 +358,8 @@ export function MainNav({
                                                     >
                                                         <FileDown className="size-4 mt-1 text-emerald-500 shrink-0" />
                                                         <div>
-                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">Media Kit</span>
-                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">Loghi e grafiche ufficiali</span>
+                                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("media_kit")}</span>
+                                                            <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("media_kit_desc")}</span>
                                                         </div>
                                                     </Link>
                                                 </div>
@@ -493,7 +493,7 @@ export function MainNav({
                                             onClick={() => setIsAssocMobileOpen(!isAssocMobileOpen)}
                                             className="text-2xl font-black uppercase tracking-widest text-zinc-400 flex items-center gap-1 justify-center"
                                         >
-                                            Le Associazioni 
+                                            {nt("associations")} 
                                             <ChevronDown className="size-5 transition-transform duration-300" style={{ transform: isAssocMobileOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
                                         </button>
                                         <AnimatePresence>
@@ -505,14 +505,14 @@ export function MainNav({
                                                     transition={{ duration: 0.2 }}
                                                     className="overflow-hidden flex flex-col gap-3 mt-3 bg-zinc-50 w-full py-4 rounded-2xl border border-zinc-100"
                                                 >
-                                                    <Link href="/about" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Chi Siamo</Link>
-                                                    <Link href="/organigramma" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Organigramma</Link>
-                                                    <Link href="/contact" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Contattaci</Link>
+                                                    <Link href="/about" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("about")}</Link>
+                                                    <Link href="/organigramma" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("organigramma")}</Link>
+                                                    <Link href="/contact" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("contact")}</Link>
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
                                     </div>
-
+ 
                                     {/* Notizie Mobile Link */}
                                     <Link
                                         href={brand ? `/network/${brand}/news` : `/news`}
@@ -526,7 +526,7 @@ export function MainNav({
                                     >
                                         {nt("news")}
                                     </Link>
-
+ 
                                     {/* Eventi Mobile Link */}
                                     <Link
                                         href={brand ? `/network/${brand}/events` : `/events`}
@@ -540,14 +540,14 @@ export function MainNav({
                                     >
                                         {nt("events")}
                                     </Link>
-
+ 
                                     {/* Servizi Mobile Accordion */}
                                     <div className="flex flex-col items-center">
                                         <button
                                             onClick={() => setIsServiziMobileOpen(!isServiziMobileOpen)}
                                             className="text-2xl font-black uppercase tracking-widest text-zinc-400 flex items-center gap-1 justify-center"
                                         >
-                                            Servizi 
+                                            {nt("services")} 
                                             <ChevronDown className="size-5 transition-transform duration-300" style={{ transform: isServiziMobileOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
                                         </button>
                                         <AnimatePresence>
@@ -559,14 +559,14 @@ export function MainNav({
                                                     transition={{ duration: 0.2 }}
                                                     className="overflow-hidden flex flex-col gap-3 mt-3 bg-zinc-50 w-full py-4 rounded-2xl border border-zinc-100 max-h-[300px] overflow-y-auto"
                                                 >
-                                                    <Link href="/representatives" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Rappresentanti</Link>
-                                                    <Link href="/gruppi" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Gruppi</Link>
-                                                    <Link href="/guide" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Guide</Link>
-                                                    <Link href="/faq" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">FAQ</Link>
-                                                    <Link href="/iniziative" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Le Nostre Iniziative</Link>
-                                                    <Link href="/convenzioni" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Convenzioni</Link>
-                                                    <Link href="/social" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Social</Link>
-                                                    <Link href="/media-kit" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">Media Kit</Link>
+                                                    <Link href="/representatives" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("representatives")}</Link>
+                                                    <Link href="/gruppi" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("groups")}</Link>
+                                                    <Link href="/guide" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("guides")}</Link>
+                                                    <Link href="/faq" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("faq")}</Link>
+                                                    <Link href="/iniziative" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("initiatives")}</Link>
+                                                    <Link href="/convenzioni" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("conventions")}</Link>
+                                                    <Link href="/social" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("social")}</Link>
+                                                    <Link href="/media-kit" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("media_kit")}</Link>
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
