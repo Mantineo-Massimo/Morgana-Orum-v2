@@ -47,27 +47,7 @@ export async function createGuide(data: {
         return { success: false, error: "Non hai i permessi per questa operazione." }
     }
 
-    try {
-        const guide = await prisma.guide.create({
-            data: {
-                id: data.id,
-                title: data.title,
-                titleEn: data.titleEn || null,
-                description: data.description,
-                descriptionEn: data.descriptionEn || null,
-                icon: data.icon,
-                color: data.color,
-                order: data.order ?? 0,
-                hasCustomComponent: data.hasCustomComponent ?? false
-            }
-        })
-        revalidatePath("/guide")
-        revalidatePath("/admin/guides")
-        return { success: true, guide }
-    } catch (error) {
-        console.error("Error creating guide:", error)
-        return { success: false, error: "Errore durante la creazione della guida." }
-    }
+    return { success: false, error: "Non è consentito creare nuove guide." }
 }
 
 export async function updateGuide(id: string, data: {
@@ -82,6 +62,10 @@ export async function updateGuide(id: string, data: {
 }) {
     if (!(await checkAdminPermission())) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
+    if (id !== "matricole") {
+        return { success: false, error: "Non puoi modificare questa guida." }
     }
 
     try {
@@ -112,6 +96,10 @@ export async function deleteGuide(id: string) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
     }
 
+    if (id !== "matricole") {
+        return { success: false, error: "Non puoi eliminare questa guida." }
+    }
+
     try {
         await prisma.guide.delete({
             where: { id }
@@ -135,6 +123,10 @@ export async function createGuideStep(data: {
 }) {
     if (!(await checkAdminPermission())) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
+    if (data.guideId !== "matricole") {
+        return { success: false, error: "Non puoi aggiungere step a questa guida." }
     }
 
     try {
@@ -169,6 +161,10 @@ export async function updateGuideStep(id: string, data: {
         return { success: false, error: "Non hai i permessi per questa operazione." }
     }
 
+    if (data.guideId !== "matricole") {
+        return { success: false, error: "Non puoi modificare gli step di questa guida." }
+    }
+
     try {
         const step = await prisma.guideStep.update({
             where: { id },
@@ -196,6 +192,13 @@ export async function deleteGuideStep(id: string) {
     }
 
     try {
+        const step = await prisma.guideStep.findUnique({
+            where: { id }
+        })
+        if (!step || step.guideId !== "matricole") {
+            return { success: false, error: "Non puoi eliminare gli step di questa guida." }
+        }
+
         await prisma.guideStep.delete({
             where: { id }
         })
