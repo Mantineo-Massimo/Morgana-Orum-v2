@@ -148,24 +148,24 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeEn: "SOLIDARITY",
         highlightsIt: [
             "Raccolta benefica natalizia di giocattoli, libri e regali coordinata dagli studenti.",
-            "Collaborazione con Gli Invisibili Onlus, Leo Club Messina Host, UGL e ACR Messina.",
-            "Centralizzata presso l'hub logistico di Via del Vespro per lo smistamento.",
+            "Organizzata dalle associazioni Morgana e O.R.U.M. in collaborazione con le realtà del territorio.",
+            "Punto di raccolta centrale presso l'hub di Via Sant'Elia 11 e nei vari dipartimenti universitari.",
             "Donazione diretta ai bambini dei reparti di pediatria del Policlinico e case famiglia."
         ],
         highlightsEn: [
             "Charitable Christmas collection of toys, books, and gifts managed by students.",
-            "Partnership with Gli Invisibili Onlus, Leo Club Messina Host, UGL, and ACR Messina.",
-            "Centralized sorting and logistics operations at the Via del Vespro hub.",
+            "Organized by the Morgana and O.R.U.M. associations in partnership with local organizations.",
+            "Central collection points at the Via Sant'Elia 11 hub and in various university departments.",
             "Direct donation to children in the Policlinico pediatric wards and local shelters."
         ],
         detailsIt: [
             { label: "Periodo", value: "Dicembre (Periodo Natalizio)", icon: Calendar },
-            { label: "Luogo", value: "Via del Vespro, reparti pediatrici e case famiglia", icon: MapPin },
+            { label: "Luogo", value: "Via Sant'Elia 11, dipartimenti UniMe e reparti pediatrici", icon: MapPin },
             { label: "Destinatari", value: "Bambini in situazioni di fragilità del territorio", icon: Users }
         ],
         detailsEn: [
             { label: "Period", value: "December (Christmas Season)", icon: Calendar },
-            { label: "Locations", value: "Via del Vespro, pediatric wards, and local shelters", icon: MapPin },
+            { label: "Locations", value: "Via Sant'Elia 11, UniMe departments, and pediatric wards", icon: MapPin },
             { label: "Target", value: "Vulnerable and underprivileged local children", icon: Users }
         ],
         gallery: [
