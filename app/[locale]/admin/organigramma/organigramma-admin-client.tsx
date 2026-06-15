@@ -26,8 +26,6 @@ interface OrganigrammaAdminClientProps {
 }
 
 const SECTIONS = [
-    { value: "PRESIDENCY", label: "Presidenza" },
-    { value: "BOARD", label: "Consiglio Direttivo" },
     { value: "COORDINATOR", label: "Coordinatore / Responsabile di Area" },
     { value: "POLO", label: "Responsabile di Polo" },
     { value: "DEPARTMENT", label: "Responsabile di Dipartimento" }
@@ -55,7 +53,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
         roleEn: "",
         email: "",
         association: "MORGANA",
-        section: "PRESIDENCY",
+        section: "COORDINATOR",
         order: 0
     })
 
@@ -67,7 +65,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
             roleEn: "",
             email: "",
             association: selectedAssociation !== "all" ? selectedAssociation : "MORGANA",
-            section: selectedSection !== "all" ? selectedSection : "PRESIDENCY",
+            section: selectedSection !== "all" ? selectedSection : "COORDINATOR",
             order: 0
         })
         setIsOpen(true)
@@ -173,7 +171,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
 
     const handleReorderMember = async (member: any, direction: "up" | "down") => {
         const sectionMembers = [...initialMembers]
-            .filter(m => m.association === member.association && m.section === member.section)
+            .filter(m => m.section === member.section)
             .sort((a, b) => (a.order || 0) - (b.order || 0))
             
         const index = sectionMembers.findIndex(m => m.id === member.id)
@@ -228,9 +226,8 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
     const filteredMembers = initialMembers.filter(m => {
         const matchesSearch = m.name.toLowerCase().includes(search.toLowerCase()) || 
                               m.role.toLowerCase().includes(search.toLowerCase())
-        const matchesAssociation = selectedAssociation === "all" || m.association === selectedAssociation
         const matchesSection = selectedSection === "all" || m.section === selectedSection
-        return matchesSearch && matchesAssociation && matchesSection
+        return matchesSearch && matchesSection
     })
 
     const getSectionBadge = (section: string) => {
@@ -266,14 +263,6 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                 </div>
 
                 <div className="flex flex-wrap w-full md:w-auto gap-3 items-center">
-                    <select
-                        value={selectedAssociation}
-                        onChange={e => setSelectedAssociation(e.target.value)}
-                        className="px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none text-xs font-bold uppercase tracking-wider cursor-pointer"
-                    >
-                        <option value="all">Tutte le Liste</option>
-                        {ASSOCIATIONS.map(a => <option key={a.value} value={a.value}>{a.label}</option>)}
-                    </select>
 
                     <select
                         value={selectedSection}
@@ -300,7 +289,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                         <thead className="bg-zinc-50 border-b border-zinc-100">
                             <tr>
                                 <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Nome</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Associazione / Area</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Area</th>
                                 <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Ruolo / Dipartimento</th>
                                 <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Email</th>
                                 <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Ordine</th>
@@ -310,7 +299,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                         <tbody className="divide-y divide-zinc-100 text-sm">
                             {filteredMembers.map((m: any) => {
                                 const sectionMembers = [...initialMembers]
-                                    .filter(item => item.association === m.association && item.section === m.section)
+                                    .filter(item => item.section === m.section)
                                     .sort((a, b) => (a.order || 0) - (b.order || 0))
                                 const idx = sectionMembers.findIndex(item => item.id === m.id)
                                 const isFirst = idx === 0
@@ -319,16 +308,8 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                 return (
                                     <tr key={m.id} className="hover:bg-zinc-50/50 transition-colors">
                                         <td className="px-6 py-4 font-bold text-zinc-900">{m.name}</td>
-                                        <td className="px-6 py-4 space-y-1">
-                                            <span className={cn(
-                                                "inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border",
-                                                m.association === "MORGANA" 
-                                                    ? "bg-red-50/50 border-red-100 text-red-700" 
-                                                    : "bg-blue-50/50 border-blue-100 text-zinc-800"
-                                            )}>
-                                                {m.association === "MORGANA" ? "Morgana" : "O.R.U.M."}
-                                            </span>
-                                            <div className="mt-1">{getSectionBadge(m.section)}</div>
+                                        <td className="px-6 py-4">
+                                            {getSectionBadge(m.section)}
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="font-semibold text-zinc-800">{m.role}</div>
@@ -418,17 +399,6 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                     className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
                                     placeholder="Es: Giorgio Messina"
                                 />
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Associazione *</label>
-                                <select
-                                    value={form.association}
-                                    onChange={e => setForm({ ...form, association: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold"
-                                >
-                                    {ASSOCIATIONS.map(a => <option key={a.value} value={a.value}>{a.label}</option>)}
-                                </select>
                             </div>
 
                             <div className="space-y-2">
