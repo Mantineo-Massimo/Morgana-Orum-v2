@@ -446,8 +446,7 @@ export default function MediaKitPage() {
                                     {/* Brand Info & Colors Column (Span 7) */}
                                     <div className={`lg:col-span-7 space-y-6 ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                                         <div>
-                                            <div className="flex items-center gap-3 mb-3">
-                                                <span className="h-2 w-8 rounded-full bg-primary shrink-0"></span>
+                                            <div className="mb-3">
                                                 <h2 className="text-2xl md:text-3xl font-black text-zinc-900 uppercase tracking-wide font-serif">
                                                     {t(brand.titleKey)}
                                                 </h2>
