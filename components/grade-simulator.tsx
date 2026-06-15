@@ -1,11 +1,13 @@
 "use client"
 
-import { useState, useMemo } from "react"
-import { Calculator, Plus, Trash2, BookOpen, Sparkles, GraduationCap, Info, HelpCircle } from "lucide-react"
+import { useState, useMemo, useEffect } from "react"
+import { Calculator, Plus, Trash2, BookOpen, Sparkles, GraduationCap, Info, HelpCircle, Save, Cloud, Loader2, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { saveGradeSimulation, getGradeSimulation } from "@/app/actions/simulation"
 
 interface GradeSimulatorProps {
     locale: string
+    isLoggedIn?: boolean
 }
 
 interface Exam {
@@ -42,7 +44,14 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         tableTitle: "Libretto Esami Simulato",
         noExams: "Nessun esame inserito nella simulazione. Aggiungine uno qui sopra per iniziare!",
         lodeNote: "Nota: le idoneità approvate aumentano i CFU ma sono escluse dal calcolo della media.",
-        delete: "Elimina"
+        delete: "Elimina",
+        saveBtn: "Salva nel Cloud",
+        saving: "Salvataggio...",
+        saveSuccess: "Simulazione salvata!",
+        saveError: "Errore durante il salvataggio",
+        loadError: "Impossibile caricare la simulazione",
+        notLoggedInAlert: "Accedi al tuo account per salvare la tua simulazione online!",
+        loggedInAlert: "I tuoi voti sono sincronizzati con il tuo account."
     },
     en: {
         title: "GPA & Graduation Grade Simulator",
@@ -69,11 +78,18 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         tableTitle: "Simulated Transcripts",
         noExams: "No exams added yet. Add one above to start simulating your grades!",
         lodeNote: "Note: Pass/Fail courses count towards ECTS but are excluded from average GPA calculations.",
-        delete: "Delete"
+        delete: "Delete",
+        saveBtn: "Save to Cloud",
+        saving: "Saving...",
+        saveSuccess: "Simulation saved!",
+        saveError: "Failed to save simulation",
+        loadError: "Failed to load simulation",
+        notLoggedInAlert: "Log in to save your grades and GPA online!",
+        loggedInAlert: "Your grades are synced with your account."
     }
 }
 
-export function GradeSimulator({ locale }: GradeSimulatorProps) {
+export function GradeSimulator({ locale, isLoggedIn = false }: GradeSimulatorProps) {
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
 
     // Target presets
@@ -87,11 +103,7 @@ export function GradeSimulator({ locale }: GradeSimulatorProps) {
     }, [targetType, customTarget])
 
     // Exam lists state
-    const [exams, setExams] = useState<Exam[]>([
-        { id: "1", name: "Analisi Matematica I", grade: 27, cfu: 9, isPassedOnly: false },
-        { id: "2", name: "Programmazione I", grade: "30L", cfu: 12, isPassedOnly: false },
-        { id: "3", name: "Lingua Inglese", grade: 24, cfu: 6, isPassedOnly: true }
-    ])
+    const [exams, setExams] = useState<Exam[]>([])
 
     // New Exam Form
     const [name, setName] = useState("")
@@ -102,6 +114,72 @@ export function GradeSimulator({ locale }: GradeSimulatorProps) {
     // Extras
     const [lodeAs31, setLodeAs31] = useState(false)
     const [thesisPoints, setThesisPoints] = useState<number>(5)
+
+    // Loading & Saving state
+    const [isLoadingData, setIsLoadingData] = useState(false)
+    const [isSaving, setIsSaving] = useState(false)
+    const [saveMessage, setSaveMessage] = useState("")
+    const [saveStatus, setSaveStatus] = useState<null | "success" | "error">(null)
+
+    // Load simulation from DB on mount
+    useEffect(() => {
+        if (isLoggedIn) {
+            const loadData = async () => {
+                setIsLoadingData(true)
+                try {
+                    const res = await getGradeSimulation()
+                    if (res.success && res.simulation) {
+                        const sim = res.simulation
+                        setExams(sim.exams || [])
+                        setTargetType(sim.targetType as any || "180")
+                        if (sim.targetType === "custom") {
+                            setCustomTarget(sim.targetCfu || 180)
+                        }
+                        setLodeAs31(sim.lodeAs31 || false)
+                        setThesisPoints(sim.thesisPoints || 5)
+                    }
+                } catch (err) {
+                    console.error("Failed to load simulation data", err)
+                } finally {
+                    setIsLoadingData(false)
+                }
+            }
+            loadData()
+        }
+    }, [isLoggedIn])
+
+    // Save simulation to DB
+    const handleSaveSimulation = async () => {
+        if (!isLoggedIn) return
+        setIsSaving(true)
+        setSaveMessage("")
+        setSaveStatus(null)
+        try {
+            const res = await saveGradeSimulation({
+                exams,
+                targetCfu: targetCfus,
+                targetType,
+                lodeAs31,
+                thesisPoints
+            })
+            if (res.success) {
+                setSaveStatus("success")
+                setSaveMessage(t.saveSuccess)
+                setTimeout(() => {
+                    setSaveMessage("")
+                    setSaveStatus(null)
+                }, 3000)
+            } else {
+                setSaveStatus("error")
+                setSaveMessage(res.error || t.saveError)
+            }
+        } catch (err: any) {
+            setSaveStatus("error")
+            setSaveMessage(err.message || t.saveError)
+        } finally {
+            setIsSaving(false)
+        }
+    }
 
     // Handlers
     const handleAddExam = (e: React.FormEvent) => {
@@ -162,6 +240,15 @@ export function GradeSimulator({ locale }: GradeSimulatorProps) {
         }
     }, [exams, lodeAs31, thesisPoints])
 
+    if (isLoadingData) {
+        return (
+            <div className="bg-zinc-50/50 rounded-[2rem] border border-zinc-200/50 p-12 flex flex-col items-center justify-center space-y-4 text-zinc-500 shadow-inner min-h-[400px]">
+                <Loader2 className="size-8 animate-spin text-zinc-900" />
+                <p className="text-xs font-bold uppercase tracking-wider">{locale === "en" ? "Loading simulated data..." : "Caricamento simulazione..."}</p>
+            </div>
+        )
+    }
+
     return (
         <div className="bg-zinc-50/50 rounded-[2rem] border border-zinc-200/50 p-6 md:p-8 space-y-8 shadow-inner text-zinc-950">
             {/* Header */}
@@ -174,6 +261,40 @@ export function GradeSimulator({ locale }: GradeSimulatorProps) {
                         <h3 className="font-serif font-black text-xl text-zinc-900 uppercase tracking-tight">{t.title}</h3>
                         <p className="text-xs text-zinc-500 font-medium">{t.subtitle}</p>
                     </div>
+                </div>
+
+                {/* Cloud Sync Status / Save Button */}
+                <div className="flex items-center gap-3 self-end md:self-center">
+                    {isLoggedIn ? (
+                        <div className="flex items-center gap-3">
+                            {saveMessage && (
+                                <span className={cn(
+                                    "text-xs font-bold flex items-center gap-1",
+                                    saveStatus === "success" ? "text-emerald-600" : "text-rose-600"
+                                )}>
+                                    {saveStatus === "success" ? <Check className="size-4" /> : <Info className="size-4" />}
+                                    {saveMessage}
+                                </span>
+                            )}
+                            <button
+                                onClick={handleSaveSimulation}
+                                disabled={isSaving}
+                                className="flex items-center gap-2 px-4 py-2.5 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl text-xs font-bold transition-all shadow-md disabled:opacity-75"
+                            >
+                                {isSaving ? (
+                                    <Loader2 className="size-3.5 animate-spin" />
+                                ) : (
+                                    <Cloud className="size-3.5" />
+                                )}
+                                {isSaving ? t.saving : t.saveBtn}
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-1.5 px-3 py-2 bg-amber-50 border border-amber-100 rounded-xl text-[10px] font-bold text-amber-700 max-w-xs md:max-w-sm leading-relaxed shadow-sm">
+                            <Info className="size-3.5 shrink-0" />
+                            <span>{t.notLoggedInAlert}</span>
+                        </div>
+                    )}
                 </div>
             </div>
 

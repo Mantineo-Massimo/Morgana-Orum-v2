@@ -29,6 +29,7 @@ interface GuideClientProps {
     categories: any[]
     initialGuides: any[]
     locale: string
+    isLoggedIn?: boolean
 }
 
 const ICON_MAP: Record<string, any> = {
@@ -88,7 +89,7 @@ const getColorClasses = (color: string) => {
     }
 }
 
-export function GuideClient({ categories, initialGuides, locale }: GuideClientProps) {
+export function GuideClient({ categories, initialGuides, locale, isLoggedIn = false }: GuideClientProps) {
     const [selectedGuide, setSelectedGuide] = useState<string>("matricole")
     const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | "media" | null>(null)
 
@@ -357,7 +358,7 @@ export function GuideClient({ categories, initialGuides, locale }: GuideClientPr
             {/* Modal for Grade Simulator */}
             <Dialog open={activeToolModal === "media"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
                 <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
-                    <GradeSimulator locale={locale} />
+                    <GradeSimulator locale={locale} isLoggedIn={isLoggedIn} />
                 </DialogContent>
             </Dialog>
         </div>
