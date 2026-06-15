@@ -104,7 +104,7 @@ const slugMap: Record<string, InitiativeConfig> = {
         icon: Sparkles,
         iconColor: "text-[#f9a620]",
         iconBg: "bg-amber-50 border-amber-100",
-        themeColor: "linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", // Piazza Colors Gradient
+        themeColor: "linear-gradient(135deg, #1fbcd3, #27a85d, #f9a620)", // Piazza Colors Gradient
         badgeIt: "ARTE & MUSICA",
         badgeEn: "ART & MUSIC",
         highlightsIt: [

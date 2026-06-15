@@ -131,7 +131,7 @@ export default function IniziativePage() {
             image: "/assets/piazza.webp",
             icon: Sparkles,
             iconColor: "text-[#f9a620]",
-            themeColor: "linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)",
+            themeColor: "linear-gradient(135deg, #1fbcd3, #27a85d, #f9a620)",
             bgClass: "from-[#1fbcd3]/5 via-[#27a85d]/5 to-[#f9a620]/5 border-[#27a85d]/20",
             badge: locale === 'it' ? "ARTE & MUSICA" : "ART & MUSIC"
         },
