@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Calendar, Ticket, Bell, MessageSquare, ShieldCheck, CheckCircle } from "lucide-react"
+import { Calendar, Ticket, MessageSquare, ShieldCheck, CheckCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
@@ -31,7 +31,7 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                 )}
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm transition-all hover:shadow-md group">
                     <div className="flex items-center gap-2 sm:gap-3 mb-3">
                         <div className="size-8 sm:size-10 rounded-full bg-red-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -58,15 +58,6 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                         <span className="text-[10px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider">Prenotati</span>
                     </div>
                     <p className="text-2xl sm:text-3xl font-black text-foreground px-1">{userData.stats.eventCount}</p>
-                </div>
-                <div className="bg-white p-4 sm:p-6 rounded-2xl border border-zinc-100 shadow-sm transition-all hover:shadow-md group">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-3">
-                        <div className="size-8 sm:size-10 rounded-full bg-red-50 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-                            <Bell className="size-4 sm:size-5" />
-                        </div>
-                        <span className="text-[10px] sm:text-xs font-bold text-muted-foreground uppercase tracking-wider">Notifiche</span>
-                    </div>
-                    <p className="text-2xl sm:text-3xl font-black text-foreground px-1">1</p>
                 </div>
             </div>
 
