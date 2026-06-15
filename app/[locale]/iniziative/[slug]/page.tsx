@@ -93,9 +93,9 @@ const slugMap: Record<string, InitiativeConfig> = {
             { label: "Admission", value: "Paid (4€ single screening / 10€ four screenings)", icon: Ticket }
         ],
         gallery: [
-            "/assets/slides/2.webp",
-            "/assets/programma.webp",
-            "/assets/unime.webp"
+            "/assets/iniziative/cineforum/1.webp",
+            "/assets/iniziative/cineforum/2.webp",
+            "/assets/iniziative/cineforum/3.webp"
         ]
     },
     "piazza-dell-arte": {
@@ -132,9 +132,14 @@ const slugMap: Record<string, InitiativeConfig> = {
             { label: "Target", value: "Students, artists, and citizens", icon: Users }
         ],
         gallery: [
-            "/assets/piazza.webp",
-            "/assets/artisti.webp",
-            "/assets/slides/1.webp"
+            "/assets/iniziative/pda/1.webp",
+            "/assets/iniziative/pda/2.webp",
+            "/assets/iniziative/pda/3.webp",
+            "/assets/iniziative/pda/4.webp",
+            "/assets/iniziative/pda/5.webp",
+            "/assets/iniziative/pda/6.webp",
+            "/assets/iniziative/pda/7.webp",
+            "/assets/iniziative/pda/8.webp"
         ]
     },
     "notte-dei-regali": {
@@ -169,9 +174,14 @@ const slugMap: Record<string, InitiativeConfig> = {
             { label: "Target", value: "Vulnerable and underprivileged local children", icon: Users }
         ],
         gallery: [
-            "/assets/slides/3.webp",
-            "/assets/policlinico.webp",
-            "/assets/morgana.webp"
+            "/assets/iniziative/natale/1.webp",
+            "/assets/iniziative/natale/2.webp",
+            "/assets/iniziative/natale/3.webp",
+            "/assets/iniziative/natale/4.webp",
+            "/assets/iniziative/natale/5.webp",
+            "/assets/iniziative/natale/6.webp",
+            "/assets/iniziative/natale/7.webp",
+            "/assets/iniziative/natale/8.webp"
         ]
     },
     "conferenze": {
@@ -206,9 +216,14 @@ const slugMap: Record<string, InitiativeConfig> = {
             { label: "Target", value: "University students and academics", icon: Users }
         ],
         gallery: [
-            "/assets/programma.webp",
-            "/assets/unime.webp",
-            "/assets/slides/2.webp"
+            "/assets/iniziative/conferenze/1.webp",
+            "/assets/iniziative/conferenze/2.webp",
+            "/assets/iniziative/conferenze/3.webp",
+            "/assets/iniziative/conferenze/4.webp",
+            "/assets/iniziative/conferenze/5.webp",
+            "/assets/iniziative/conferenze/6.webp",
+            "/assets/iniziative/conferenze/7.webp",
+            "/assets/iniziative/conferenze/8.webp"
         ]
     },
     "sport": {
@@ -243,9 +258,14 @@ const slugMap: Record<string, InitiativeConfig> = {
             { label: "Target", value: "Student athletes and Unime sports enthusiasts", icon: Users }
         ],
         gallery: [
-            "/assets/slides/1.webp",
-            "/assets/artisti.webp",
-            "/assets/piazza.webp"
+            "/assets/iniziative/tornei/1.webp",
+            "/assets/iniziative/tornei/2.webp",
+            "/assets/iniziative/tornei/3.webp",
+            "/assets/iniziative/tornei/4.webp",
+            "/assets/iniziative/tornei/5.webp",
+            "/assets/iniziative/tornei/6.webp",
+            "/assets/iniziative/tornei/7.webp",
+            "/assets/iniziative/tornei/8.webp"
         ]
     },
     "svago": {
@@ -280,32 +300,33 @@ const slugMap: Record<string, InitiativeConfig> = {
             { label: "Target", value: "New freshmen and enrolled Unime students", icon: Users }
         ],
         gallery: [
-            "/assets/artisti.webp",
-            "/assets/matricole.webp",
-            "/assets/slides/3.webp"
+            "/assets/iniziative/svago/1.webp",
+            "/assets/iniziative/svago/2.webp",
+            "/assets/iniziative/svago/3.webp",
+            "/assets/iniziative/svago/4.webp"
         ]
     }
 }
 
 function renderTextWithLinks(text: string) {
     if (!text) return null
-    
+
     const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|piazzadellarte\.morganaorum\.it[^\s]*)/g
     const parts = text.split(urlRegex)
-    
+
     return parts.map((part, index) => {
         if (part.match(urlRegex)) {
             const cleanPart = part.replace(/[.,)]+$/, "")
             const ending = part.slice(cleanPart.length)
-            
+
             const href = cleanPart.startsWith("http") ? cleanPart : `https://${cleanPart}`
-            
+
             return (
                 <span key={index}>
-                    <a 
-                        href={href} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
+                    <a
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="underline font-black hover:opacity-80 text-inherit"
                     >
                         {cleanPart}
@@ -414,17 +435,17 @@ export default function InitiativeDetailPage() {
                                 </span>
                             </div>
                             <div className="flex flex-col md:flex-row md:items-center gap-5">
-                                <div 
+                                <div
                                     className="size-16 rounded-2xl flex items-center justify-center bg-white border border-zinc-100 shadow-md shrink-0 transition-transform hover:scale-105 duration-300"
-                                    style={{ 
-                                        border: "2px solid transparent", 
-                                        backgroundImage: `linear-gradient(white, white), ${config.themeColor.includes("gradient") ? config.themeColor : `linear-gradient(${config.themeColor}, ${config.themeColor})`}`, 
-                                        backgroundOrigin: "border-box", 
-                                        backgroundClip: "padding-box, border-box" 
+                                    style={{
+                                        border: "2px solid transparent",
+                                        backgroundImage: `linear-gradient(white, white), ${config.themeColor.includes("gradient") ? config.themeColor : `linear-gradient(${config.themeColor}, ${config.themeColor})`}`,
+                                        backgroundOrigin: "border-box",
+                                        backgroundClip: "padding-box, border-box"
                                     }}
                                 >
-                                    <config.icon 
-                                        className="size-8" 
+                                    <config.icon
+                                        className="size-8"
                                         style={{ stroke: config.themeColor.includes("gradient") ? "url(#piazza-gradient)" : config.themeColor }}
                                     />
                                 </div>
@@ -478,8 +499,8 @@ export default function InitiativeDetailPage() {
                                         transition={{ delay: index * 0.1 }}
                                         className="bg-zinc-50 rounded-2xl p-6 border border-zinc-100 flex gap-4 hover:shadow-md hover:border-zinc-200 transition-all duration-300"
                                     >
-                                        <CheckCircle2 
-                                            className="size-6 shrink-0" 
+                                        <CheckCircle2
+                                            className="size-6 shrink-0"
                                             style={{ stroke: config.themeColor.includes("gradient") ? "url(#piazza-gradient)" : config.themeColor }}
                                         />
                                         <span className="text-zinc-600 font-semibold text-sm leading-relaxed">
@@ -502,17 +523,17 @@ export default function InitiativeDetailPage() {
                                     const DetailIcon = detail.icon;
                                     return (
                                         <div key={index} className="flex gap-4 items-start">
-                                            <div 
+                                            <div
                                                 className="size-10 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 text-zinc-500 shadow-sm"
-                                                style={{ 
-                                                    border: "1.5px solid transparent", 
-                                                    backgroundImage: `linear-gradient(#f9fafb, #f9fafb), ${config.themeColor.includes("gradient") ? config.themeColor : `linear-gradient(${config.themeColor}, ${config.themeColor})`}`, 
-                                                    backgroundOrigin: "border-box", 
-                                                    backgroundClip: "padding-box, border-box" 
+                                                style={{
+                                                    border: "1.5px solid transparent",
+                                                    backgroundImage: `linear-gradient(#f9fafb, #f9fafb), ${config.themeColor.includes("gradient") ? config.themeColor : `linear-gradient(${config.themeColor}, ${config.themeColor})`}`,
+                                                    backgroundOrigin: "border-box",
+                                                    backgroundClip: "padding-box, border-box"
                                                 }}
                                             >
-                                                <DetailIcon 
-                                                    className="size-5" 
+                                                <DetailIcon
+                                                    className="size-5"
                                                     style={{ stroke: config.themeColor.includes("gradient") ? "url(#piazza-gradient)" : config.themeColor }}
                                                 />
                                             </div>
@@ -552,7 +573,7 @@ export default function InitiativeDetailPage() {
                     className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 md:p-12 shadow-sm"
                 >
                     <h3 className="text-2xl font-bold font-serif text-foreground mb-8 flex items-center gap-3">
-                        <Sparkles 
+                        <Sparkles
                             className="size-6"
                             style={{ stroke: config.themeColor.includes("gradient") ? "url(#piazza-gradient)" : config.themeColor }}
                         />

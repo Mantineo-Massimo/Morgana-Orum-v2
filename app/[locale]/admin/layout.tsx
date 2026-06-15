@@ -50,21 +50,21 @@ export default async function AdminLayout({
             section: "Gestione Contenuti",
             items: [
                 {
+                    label: "Notizie",
+                    href: `/admin/news`,
+                    iconName: "Newspaper",
+                    exact: false
+                },
+                {
+                    label: "Eventi",
+                    href: `/admin/events`,
+                    iconName: "Calendar",
+                    exact: false
+                },
+                {
                     label: "Rappresentanti",
                     href: `/admin/representatives`,
                     iconName: "Users",
-                    exact: false
-                },
-                {
-                    label: "Servizi",
-                    href: `/admin/services`,
-                    iconName: "BookOpen",
-                    exact: false
-                },
-                {
-                    label: "Organigramma",
-                    href: `/admin/organigramma`,
-                    iconName: "Shield",
                     exact: false
                 },
                 {
@@ -79,40 +79,42 @@ export default async function AdminLayout({
                     iconName: "Compass",
                     exact: false
                 },
-                {
-                    label: "Notizie",
-                    href: `/admin/news`,
-                    iconName: "Newspaper",
-                    exact: false
-                },
-                {
-                    label: "Eventi",
-                    href: `/admin/events`,
-                    iconName: "Calendar",
-                    exact: false
-                },
             ]
         },
     ]
 
-    // Only SUPER_ADMIN sees Conventions and User Management
+    const adminItems = []
+
     if (userRole === "SUPER_ADMIN") {
+        adminItems.push(
+            {
+                label: "Utenti",
+                href: `/admin/users`,
+                iconName: "User",
+                exact: false
+            },
+            {
+                label: "Convenzioni",
+                href: `/admin/conventions`,
+                iconName: "Tag",
+                exact: false
+            }
+        )
+    }
+
+    if (userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") {
+        adminItems.push({
+            label: "Organigramma",
+            href: `/admin/organigramma`,
+            iconName: "Shield",
+            exact: false
+        })
+    }
+
+    if (adminItems.length > 0) {
         navigation.push({
             section: "Amministrazione",
-            items: [
-                {
-                    label: "Convenzioni",
-                    href: `/admin/conventions`,
-                    iconName: "Tag",
-                    exact: false
-                },
-                {
-                    label: "Utenti",
-                    href: `/admin/users`,
-                    iconName: "User",
-                    exact: false
-                },
-            ]
+            items: adminItems
         })
     }
 

@@ -2,16 +2,16 @@
 
 import { useTranslations, useLocale } from "next-intl"
 import { motion } from "framer-motion"
-import { 
-    GraduationCap, 
-    BookOpen, 
-    Globe, 
-    Bus, 
-    Laptop, 
-    Compass, 
-    Wallet, 
-    Trophy, 
-    HeartHandshake, 
+import {
+    GraduationCap,
+    BookOpen,
+    Globe,
+    Bus,
+    Laptop,
+    Compass,
+    Wallet,
+    Trophy,
+    HeartHandshake,
     MessageSquare,
     HelpCircle,
     Film,
@@ -117,7 +117,7 @@ export default function IniziativePage() {
             slug: "cineforum",
             title: t("cineforum_title"),
             desc: t("cineforum_desc"),
-            image: "/assets/slides/2.webp",
+            image: "/assets/iniziative/cineforum/cineforum.webp",
             icon: Film,
             iconColor: "text-red-600",
             themeColor: "#dc2626",
@@ -128,7 +128,7 @@ export default function IniziativePage() {
             slug: "piazza-dell-arte",
             title: t("piazza_title"),
             desc: t("piazza_desc"),
-            image: "/assets/piazza.webp",
+            image: "/assets/iniziative/pda/pda.webp",
             icon: Sparkles,
             iconColor: "text-[#f9a620]",
             themeColor: "linear-gradient(135deg, #1fbcd3, #27a85d, #f9a620)",
@@ -139,7 +139,7 @@ export default function IniziativePage() {
             slug: "notte-dei-regali",
             title: t("regali_title"),
             desc: t("regali_desc"),
-            image: "/assets/slides/3.webp",
+            image: "/assets/iniziative/natale/natale.webp",
             icon: Gift,
             iconColor: "text-amber-500",
             themeColor: "#eab308",
@@ -150,7 +150,7 @@ export default function IniziativePage() {
             slug: "conferenze",
             title: t("conferenze_title"),
             desc: t("conferenze_desc"),
-            image: "/assets/programma.webp",
+            image: "/assets/iniziative/conferenze/conferenze.webp",
             icon: BookOpen,
             iconColor: "text-blue-500",
             themeColor: "#3b82f6",
@@ -161,7 +161,7 @@ export default function IniziativePage() {
             slug: "sport",
             title: t("sport_title"),
             desc: t("sport_desc"),
-            image: "/assets/slides/1.webp",
+            image: "/assets/iniziative/tornei/tornei.webp",
             icon: Trophy,
             iconColor: "text-emerald-500",
             themeColor: "#10b981",
@@ -172,7 +172,7 @@ export default function IniziativePage() {
             slug: "svago",
             title: t("svago_title"),
             desc: t("svago_desc"),
-            image: "/assets/artisti.webp",
+            image: "/assets/iniziative/svago/svago.webp",
             icon: Sparkles,
             iconColor: "text-violet-500",
             themeColor: "#8b5cf6",
@@ -234,11 +234,11 @@ export default function IniziativePage() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: idx * 0.05 }}
                                 className="bg-white rounded-[2.5rem] border border-transparent hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative h-[450px] shadow-sm"
-                                style={{ 
-                                    border: "1px solid transparent", 
-                                    backgroundImage: `linear-gradient(white, white), ${item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`}`, 
-                                    backgroundOrigin: "border-box", 
-                                    backgroundClip: "padding-box, border-box" 
+                                style={{
+                                    border: "1px solid transparent",
+                                    backgroundImage: `linear-gradient(white, white), ${item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`}`,
+                                    backgroundOrigin: "border-box",
+                                    backgroundClip: "padding-box, border-box"
                                 }}
                             >
                                 {/* Image Container */}
@@ -257,17 +257,17 @@ export default function IniziativePage() {
                                         </span>
                                     </div>
                                     <div className="absolute bottom-4 left-6 flex items-center gap-3">
-                                        <div 
+                                        <div
                                             className="size-10 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center text-foreground font-bold shadow-sm border border-zinc-200"
-                                            style={{ 
-                                                border: "1.5px solid transparent", 
-                                                backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), ${item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`}`, 
-                                                backgroundOrigin: "border-box", 
-                                                backgroundClip: "padding-box, border-box" 
+                                            style={{
+                                                border: "1.5px solid transparent",
+                                                backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), ${item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`}`,
+                                                backgroundOrigin: "border-box",
+                                                backgroundClip: "padding-box, border-box"
                                             }}
                                         >
-                                            <item.icon 
-                                                className="size-5" 
+                                            <item.icon
+                                                className="size-5"
                                                 style={{ stroke: item.themeColor.includes("gradient") ? "url(#piazza-gradient)" : item.themeColor }}
                                             />
                                         </div>
@@ -285,9 +285,9 @@ export default function IniziativePage() {
                                     </div>
                                     <div className="pt-4 flex items-center justify-between text-xs font-bold text-zinc-400 border-t border-zinc-100">
                                         <span>Scopri di più</span>
-                                        <span 
+                                        <span
                                             className="transition-transform duration-300 group-hover:translate-x-1 font-bold"
-                                            style={{ 
+                                            style={{
                                                 backgroundImage: item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`,
                                                 WebkitBackgroundClip: "text",
                                                 WebkitTextFillColor: "transparent",
@@ -326,7 +326,7 @@ export default function IniziativePage() {
                         >
                             {/* Decorative background glow */}
                             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-current to-transparent opacity-[0.02] rounded-full translate-x-10 -translate-y-10 group-hover:scale-125 transition-transform duration-500" />
-                            
+
                             <div>
                                 <div className={cn("size-14 rounded-2xl flex items-center justify-center mb-6 border font-bold shadow-sm transition-transform duration-500 group-hover:scale-105", area.iconBg)}>
                                     <area.icon className={cn("size-7", area.iconColor)} />
