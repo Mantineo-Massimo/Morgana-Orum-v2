@@ -287,7 +287,7 @@ const slugMap: Record<string, InitiativeConfig> = {
     }
 }
 
-function renderTextWithLinks(text: string, themeColor: string) {
+function renderTextWithLinks(text: string) {
     if (!text) return null
     
     const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+|piazzadellarte\.morganaorum\.it[^\s]*)/g
@@ -300,28 +300,13 @@ function renderTextWithLinks(text: string, themeColor: string) {
             
             const href = cleanPart.startsWith("http") ? cleanPart : `https://${cleanPart}`
             
-            const isGradient = themeColor.includes("gradient")
-            const linkColor = isGradient ? "#1fbcd3" : themeColor
-
             return (
                 <span key={index}>
                     <a 
                         href={href} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="hover:underline font-black"
-                        style={isGradient ? {
-                            backgroundImage: "linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                            backgroundClip: "text",
-                            color: "transparent",
-                            display: "inline-block",
-                            borderBottom: "1px solid #27a85d"
-                        } : { 
-                            color: themeColor, 
-                            textDecoration: "underline" 
-                        }}
+                        className="underline font-black hover:opacity-80 text-inherit"
                     >
                         {cleanPart}
                     </a>
@@ -431,16 +416,16 @@ export default function InitiativeDetailPage() {
                             <div className="flex flex-col md:flex-row md:items-center gap-5">
                                 <div 
                                     className="size-16 rounded-2xl flex items-center justify-center bg-white border border-zinc-100 shadow-md shrink-0 transition-transform hover:scale-105 duration-300"
-                                    style={isPiazza ? { 
+                                    style={{ 
                                         border: "2px solid transparent", 
-                                        backgroundImage: "linear-gradient(white, white), linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", 
+                                        backgroundImage: `linear-gradient(white, white), ${config.themeColor.includes("gradient") ? config.themeColor : `linear-gradient(${config.themeColor}, ${config.themeColor})`}`, 
                                         backgroundOrigin: "border-box", 
                                         backgroundClip: "padding-box, border-box" 
-                                    } : undefined}
+                                    }}
                                 >
                                     <config.icon 
-                                        className={cn("size-8", !isPiazza && config.iconColor)} 
-                                        style={isPiazza ? { stroke: "url(#piazza-gradient)" } : undefined}
+                                        className="size-8" 
+                                        style={{ stroke: config.themeColor.includes("gradient") ? "url(#piazza-gradient)" : config.themeColor }}
                                     />
                                 </div>
                                 <div>
@@ -473,7 +458,7 @@ export default function InitiativeDetailPage() {
                                 {locale === 'it' ? "Presentazione del Progetto" : "Project Presentation"}
                             </h3>
                             <p className="text-zinc-600 leading-relaxed font-medium text-base md:text-lg whitespace-pre-line">
-                                {renderTextWithLinks(content, config.themeColor)}
+                                {renderTextWithLinks(content)}
                             </p>
                         </div>
 
@@ -494,11 +479,11 @@ export default function InitiativeDetailPage() {
                                         className="bg-zinc-50 rounded-2xl p-6 border border-zinc-100 flex gap-4 hover:shadow-md hover:border-zinc-200 transition-all duration-300"
                                     >
                                         <CheckCircle2 
-                                            className={cn("size-6 shrink-0", !isPiazza && config.iconColor)} 
-                                            style={isPiazza ? { stroke: "url(#piazza-gradient)" } : undefined}
+                                            className="size-6 shrink-0" 
+                                            style={{ stroke: config.themeColor.includes("gradient") ? "url(#piazza-gradient)" : config.themeColor }}
                                         />
                                         <span className="text-zinc-600 font-semibold text-sm leading-relaxed">
-                                            {renderTextWithLinks(point, config.themeColor)}
+                                            {renderTextWithLinks(point)}
                                         </span>
                                     </motion.div>
                                 ))}
@@ -519,16 +504,16 @@ export default function InitiativeDetailPage() {
                                         <div key={index} className="flex gap-4 items-start">
                                             <div 
                                                 className="size-10 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 text-zinc-500 shadow-sm"
-                                                style={isPiazza ? { 
+                                                style={{ 
                                                     border: "1.5px solid transparent", 
-                                                    backgroundImage: "linear-gradient(#f9fafb, #f9fafb), linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", 
+                                                    backgroundImage: `linear-gradient(#f9fafb, #f9fafb), ${config.themeColor.includes("gradient") ? config.themeColor : `linear-gradient(${config.themeColor}, ${config.themeColor})`}`, 
                                                     backgroundOrigin: "border-box", 
                                                     backgroundClip: "padding-box, border-box" 
-                                                } : undefined}
+                                                }}
                                             >
                                                 <DetailIcon 
                                                     className="size-5" 
-                                                    style={isPiazza ? { stroke: "url(#piazza-gradient)" } : undefined}
+                                                    style={{ stroke: config.themeColor.includes("gradient") ? "url(#piazza-gradient)" : config.themeColor }}
                                                 />
                                             </div>
                                             <div>
@@ -536,7 +521,7 @@ export default function InitiativeDetailPage() {
                                                     {detail.label}
                                                 </span>
                                                 <span className="text-sm font-bold text-foreground block mt-0.5 leading-snug">
-                                                    {renderTextWithLinks(detail.value, config.themeColor)}
+                                                    {renderTextWithLinks(detail.value)}
                                                 </span>
                                             </div>
                                         </div>
@@ -568,8 +553,8 @@ export default function InitiativeDetailPage() {
                 >
                     <h3 className="text-2xl font-bold font-serif text-foreground mb-8 flex items-center gap-3">
                         <Sparkles 
-                            className={cn("size-6", isPiazza ? "" : "text-emerald-600")}
-                            style={isPiazza ? { stroke: "url(#piazza-gradient)" } : undefined}
+                            className="size-6"
+                            style={{ stroke: config.themeColor.includes("gradient") ? "url(#piazza-gradient)" : config.themeColor }}
                         />
                         {locale === 'it' ? "Momenti dell'Iniziativa" : "Initiative Moments"}
                     </h3>

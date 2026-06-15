@@ -120,6 +120,7 @@ export default function IniziativePage() {
             image: "/assets/slides/2.webp",
             icon: Film,
             iconColor: "text-red-600",
+            themeColor: "#c12830",
             bgClass: "from-red-500/5 to-rose-500/5 border-red-100/30",
             badge: locale === 'it' ? "CULTURA" : "CULTURE"
         },
@@ -130,6 +131,7 @@ export default function IniziativePage() {
             image: "/assets/piazza.webp",
             icon: Sparkles,
             iconColor: "text-[#f9a620]",
+            themeColor: "linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)",
             bgClass: "from-[#1fbcd3]/5 via-[#27a85d]/5 to-[#f9a620]/5 border-[#27a85d]/20",
             badge: locale === 'it' ? "ARTE & MUSICA" : "ART & MUSIC"
         },
@@ -140,6 +142,7 @@ export default function IniziativePage() {
             image: "/assets/slides/3.webp",
             icon: Gift,
             iconColor: "text-amber-500",
+            themeColor: "#eab308",
             bgClass: "from-amber-500/5 to-yellow-500/5 border-amber-100/30",
             badge: locale === 'it' ? "SOLIDARIETÀ" : "SOLIDARITY"
         },
@@ -150,6 +153,7 @@ export default function IniziativePage() {
             image: "/assets/programma.webp",
             icon: BookOpen,
             iconColor: "text-blue-500",
+            themeColor: "#3b82f6",
             bgClass: "from-blue-500/5 to-cyan-500/5 border-blue-100/30",
             badge: locale === 'it' ? "FORMAZIONE & CFU" : "CFU SEMINARS"
         },
@@ -160,6 +164,7 @@ export default function IniziativePage() {
             image: "/assets/slides/1.webp",
             icon: Trophy,
             iconColor: "text-emerald-500",
+            themeColor: "#10b981",
             bgClass: "from-emerald-500/5 to-teal-500/5 border-emerald-100/30",
             badge: locale === 'it' ? "SPORT & BENESSERE" : "SPORTS"
         },
@@ -170,6 +175,7 @@ export default function IniziativePage() {
             image: "/assets/artisti.webp",
             icon: Sparkles,
             iconColor: "text-violet-500",
+            themeColor: "#8b5cf6",
             bgClass: "from-violet-500/5 to-purple-500/5 border-violet-100/30",
             badge: locale === 'it' ? "SOCIALITÀ" : "SOCIAL"
         }
@@ -227,16 +233,13 @@ export default function IniziativePage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                                className={cn(
-                                    "bg-white rounded-[2.5rem] border hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative min-h-[420px] shadow-sm",
-                                    item.slug === "piazza-dell-arte" ? "border-transparent hover:shadow-[#27a85d]/10" : "border-zinc-200"
-                                )}
-                                style={item.slug === "piazza-dell-arte" ? { 
+                                className="bg-white rounded-[2.5rem] border border-transparent hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative min-h-[420px] shadow-sm"
+                                style={{ 
                                     border: "1px solid transparent", 
-                                    backgroundImage: "linear-gradient(white, white), linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", 
+                                    backgroundImage: `linear-gradient(white, white), ${item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`}`, 
                                     backgroundOrigin: "border-box", 
                                     backgroundClip: "padding-box, border-box" 
-                                } : undefined}
+                                }}
                             >
                                 {/* Image Container */}
                                 <div className="relative h-48 w-full overflow-hidden">
@@ -256,16 +259,16 @@ export default function IniziativePage() {
                                     <div className="absolute bottom-4 left-6 flex items-center gap-3">
                                         <div 
                                             className="size-10 rounded-xl bg-white/90 backdrop-blur-sm flex items-center justify-center text-foreground font-bold shadow-sm border border-zinc-200"
-                                            style={item.slug === "piazza-dell-arte" ? { 
+                                            style={{ 
                                                 border: "1.5px solid transparent", 
-                                                backgroundImage: "linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)", 
+                                                backgroundImage: `linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), ${item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`}`, 
                                                 backgroundOrigin: "border-box", 
                                                 backgroundClip: "padding-box, border-box" 
-                                            } : undefined}
+                                            }}
                                         >
                                             <item.icon 
-                                                className={cn("size-5", item.slug !== "piazza-dell-arte" && item.iconColor)} 
-                                                style={item.slug === "piazza-dell-arte" ? { stroke: "url(#piazza-gradient)" } : undefined}
+                                                className="size-5" 
+                                                style={{ stroke: item.themeColor.includes("gradient") ? "url(#piazza-gradient)" : item.themeColor }}
                                             />
                                         </div>
                                     </div>
@@ -283,14 +286,14 @@ export default function IniziativePage() {
                                     <div className="pt-4 flex items-center justify-between text-xs font-bold text-zinc-400 border-t border-zinc-100">
                                         <span>Scopri di più</span>
                                         <span 
-                                            className={cn("transition-transform duration-300 group-hover:translate-x-1 font-bold", item.slug !== "piazza-dell-arte" && item.iconColor)}
-                                            style={item.slug === "piazza-dell-arte" ? { 
-                                                backgroundImage: "linear-gradient(to right, #1fbcd3, #27a85d, #f9a620)",
+                                            className="transition-transform duration-300 group-hover:translate-x-1 font-bold"
+                                            style={{ 
+                                                backgroundImage: item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`,
                                                 WebkitBackgroundClip: "text",
                                                 WebkitTextFillColor: "transparent",
                                                 backgroundClip: "text",
                                                 color: "transparent"
-                                            } : undefined}
+                                            }}
                                         >
                                             →
                                         </span>
