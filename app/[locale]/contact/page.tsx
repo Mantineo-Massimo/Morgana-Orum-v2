@@ -1,11 +1,25 @@
 "use client"
 
 import React from "react"
-import { ArrowLeft, Send, Mail, Phone, MapPin, CheckCircle2, Loader2 } from "lucide-react"
+import { ArrowLeft, Send, Mail, Phone, MapPin, CheckCircle2, Loader2, Facebook, Instagram, Youtube } from "lucide-react"
 import { Link } from "@/i18n/routing"
 import { submitContactForm } from "@/app/actions/contact"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
+
+const TiktokIcon = ({ className }: { className?: string }) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+    >
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+)
 
 export default function ContactPage() {
     const t = useTranslations("Footer")
@@ -111,13 +125,37 @@ export default function ContactPage() {
                         <div className="p-8 bg-zinc-900 rounded-[2rem] text-white shadow-2xl">
                             <h3 className="font-serif font-bold text-xl mb-4">{t("social_title")}</h3>
                             <p className="text-white/60 text-sm mb-6">{t("social_desc")}</p>
-                            <div className="flex gap-4">
-                                <a href="https://instagram.com/associazione.morgana" target="_blank" className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
-                                    <span className="text-xs font-bold">M</span>
-                                </a>
-                                <a href="https://instagram.com/orum_unime" target="_blank" className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
-                                    <span className="text-xs font-bold">O</span>
-                                </a>
+                            
+                            <div className="space-y-4">
+                                <div className="flex flex-col gap-2">
+                                    <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400">Associazione Morgana</span>
+                                    <div className="flex gap-3">
+                                        <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:text-red-500 transition-all" aria-label="Facebook Morgana">
+                                            <Facebook className="size-5" />
+                                        </a>
+                                        <a href="https://instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:text-red-400 transition-all" aria-label="Instagram Morgana">
+                                            <Instagram className="size-5" />
+                                        </a>
+                                        <a href="https://www.tiktok.com/@associazione.morgana" target="_blank" rel="noopener noreferrer" className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:text-zinc-300 transition-all" aria-label="TikTok Morgana">
+                                            <TiktokIcon className="size-5" />
+                                        </a>
+                                        <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:text-red-500 transition-all" aria-label="YouTube Morgana">
+                                            <Youtube className="size-5" />
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex flex-col gap-2">
+                                    <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400">Associazione O.R.U.M.</span>
+                                    <div className="flex gap-3">
+                                        <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:text-blue-500 transition-all" aria-label="Facebook ORUM">
+                                            <Facebook className="size-5" />
+                                        </a>
+                                        <a href="https://instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="size-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:text-blue-400 transition-all" aria-label="Instagram ORUM">
+                                            <Instagram className="size-5" />
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

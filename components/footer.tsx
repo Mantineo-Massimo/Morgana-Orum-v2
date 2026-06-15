@@ -7,6 +7,20 @@ import { Brand } from "@/components/brand-provider"
 import { getTranslations } from "next-intl/server"
 import { NewsletterForm } from "@/components/newsletter-form"
 
+const TiktokIcon = ({ className }: { className?: string }) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+    >
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+)
+
 export async function Footer() {
     const t = await getTranslations("Footer")
     const nt = await getTranslations("Navigation")
@@ -54,6 +68,7 @@ export async function Footer() {
                                 <div className="flex items-center gap-2">
                                     <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-4" /></a>
                                     <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-4" /></a>
+                                    <a href="https://www.tiktok.com/@associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-zinc-300 transition-colors" aria-label="TikTok Associazione Morgana"><TiktokIcon className="size-4" /></a>
                                     <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="p-1 hover:text-red-400 transition-colors" aria-label="YouTube Associazione Morgana"><Youtube className="size-4" /></a>
                                 </div>
                             </div>

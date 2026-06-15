@@ -6,6 +6,20 @@ import { LanguageSwitcher } from "@/components/language-switcher"
 import { headers } from "next/headers"
 import { Brand } from "@/components/brand-provider"
 
+const TiktokIcon = ({ className }: { className?: string }) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+    >
+        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+)
+
 export async function TopBar() {
     const t = await getTranslations("Footer")
     const brandHeader = headers().get("x-brand")
@@ -74,6 +88,7 @@ export async function TopBar() {
                         <span className="hidden sm:inline text-[10px] md:text-xs uppercase font-bold text-zinc-300 mr-1 md:mr-2">Morgana:</span>
                         <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-3.5 md:size-4" /></a>
                         <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-3.5 md:size-4" /></a>
+                        <a href="https://www.tiktok.com/@associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-zinc-300 transition-colors" aria-label="TikTok Associazione Morgana"><TiktokIcon className="size-3.5 md:size-4" /></a>
                         <a href="https://www.youtube.com/@morganaassociazione5592" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-red-500 transition-colors" aria-label="YouTube Associazione Morgana"><Youtube className="size-3.5 md:size-4" /></a>
                     </div>
                     <div className="w-px h-4 md:h-5 bg-zinc-800 mx-1"></div>
