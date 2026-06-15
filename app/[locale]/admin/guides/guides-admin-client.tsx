@@ -380,13 +380,6 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                             <span className="p-1 rounded-lg bg-red-100 text-red-650"><Compass className="size-4" /></span>
                             Elenco Guide
                         </h3>
-                        <button
-                            onClick={handleOpenAddGuide}
-                            className="p-2 bg-slate-50 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/40 rounded-xl transition-all text-slate-600"
-                            title="Nuova Guida"
-                        >
-                            <FolderPlus className="size-4" />
-                        </button>
                     </div>
 
                     <div className="space-y-2.5">
@@ -416,34 +409,36 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-1 shrink-0 ml-2">
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation()
-                                                handleEditGuide(guide)
-                                            }}
-                                            className={cn(
-                                                "p-1.5 rounded-lg hover:bg-zinc-800 transition-all",
-                                                isSelected ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-900 hover:bg-slate-200"
-                                            )}
-                                            title="Modifica"
-                                        >
-                                            <Edit3 className="size-3.5" />
-                                        </button>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation()
-                                                handleDeleteGuide(guide.id)
-                                            }}
-                                            className={cn(
-                                                "p-1.5 rounded-lg hover:bg-red-500/20 transition-all",
-                                                isSelected ? "text-red-400 hover:text-red-300" : "text-red-500 hover:bg-red-50"
-                                            )}
-                                            title="Elimina"
-                                        >
-                                            <Trash2 className="size-3.5" />
-                                        </button>
-                                    </div>
+                                    {guide.id === "matricole" && (
+                                        <div className="flex items-center gap-1 shrink-0 ml-2">
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    handleEditGuide(guide)
+                                                }}
+                                                className={cn(
+                                                    "p-1.5 rounded-lg hover:bg-zinc-800 transition-all",
+                                                    isSelected ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-900 hover:bg-slate-200"
+                                                )}
+                                                title="Modifica"
+                                            >
+                                                <Edit3 className="size-3.5" />
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation()
+                                                    handleDeleteGuide(guide.id)
+                                                }}
+                                                className={cn(
+                                                    "p-1.5 rounded-lg hover:bg-red-500/20 transition-all",
+                                                    isSelected ? "text-red-400 hover:text-red-300" : "text-red-500 hover:bg-red-50"
+                                                )}
+                                                title="Elimina"
+                                            >
+                                                <Trash2 className="size-3.5" />
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             )
                         })}
@@ -485,12 +480,14 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                 <h2 className="text-xl font-bold text-slate-800">{activeGuide.title}</h2>
                                 <p className="text-xs text-slate-400 mt-1.5 leading-relaxed max-w-xl font-medium">{activeGuide.description}</p>
                             </div>
-                            <button
-                                onClick={handleOpenAddStep}
-                                className="flex items-center justify-center gap-2 px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg"
-                            >
-                                <Plus className="size-4" /> Aggiungi Step
-                            </button>
+                            {activeGuide.id === "matricole" && (
+                                <button
+                                    onClick={handleOpenAddStep}
+                                    className="flex items-center justify-center gap-2 px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg"
+                                >
+                                    <Plus className="size-4" /> Aggiungi Step
+                                </button>
+                            )}
                         </div>
 
                         <div className="space-y-4">
@@ -501,26 +498,28 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                 >
                                     <div className="absolute top-0 left-0 right-0 h-[2px] bg-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     {/* Reorder Arrows on the left of each step */}
-                                    <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-slate-200/60 p-1 bg-white rounded-xl shadow-sm">
-                                        <button
-                                            type="button"
-                                            disabled={index === 0 || loading}
-                                            onClick={() => handleReorderStep(step, "up")}
-                                            className="p-1 hover:bg-slate-50 disabled:opacity-30 rounded text-slate-400 hover:text-slate-700 transition-colors"
-                                            title="Sposta su"
-                                        >
-                                            <ArrowUp className="size-4" />
-                                        </button>
-                                        <button
-                                            type="button"
-                                            disabled={index === arr.length - 1 || loading}
-                                            onClick={() => handleReorderStep(step, "down")}
-                                            className="p-1 hover:bg-slate-50 disabled:opacity-30 rounded text-slate-400 hover:text-slate-700 transition-colors"
-                                            title="Sposta giù"
-                                        >
-                                            <ArrowDown className="size-4" />
-                                        </button>
-                                    </div>
+                                    {activeGuide.id === "matricole" && (
+                                        <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-slate-200/60 p-1 bg-white rounded-xl shadow-sm">
+                                            <button
+                                                type="button"
+                                                disabled={index === 0 || loading}
+                                                onClick={() => handleReorderStep(step, "up")}
+                                                className="p-1 hover:bg-slate-50 disabled:opacity-30 rounded text-slate-400 hover:text-slate-700 transition-colors"
+                                                title="Sposta su"
+                                            >
+                                                <ArrowUp className="size-4" />
+                                            </button>
+                                            <button
+                                                type="button"
+                                                disabled={index === arr.length - 1 || loading}
+                                                onClick={() => handleReorderStep(step, "down")}
+                                                className="p-1 hover:bg-slate-50 disabled:opacity-30 rounded text-slate-400 hover:text-slate-700 transition-colors"
+                                                title="Sposta giù"
+                                            >
+                                                <ArrowDown className="size-4" />
+                                            </button>
+                                        </div>
+                                    )}
 
                                     <div className="space-y-1.5 flex-1 min-w-0">
                                         <h4 className="font-bold text-sm text-slate-800 uppercase tracking-tight truncate">
@@ -542,29 +541,31 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-1.5 shrink-0">
-                                        <button
-                                            onClick={() => handleEditStep(step)}
-                                            className="p-2 bg-white hover:bg-slate-50 border border-slate-200/65 rounded-xl text-slate-500 hover:text-slate-800 transition-all shadow-sm"
-                                            title="Modifica"
-                                        >
-                                            <Edit3 className="size-3.5" />
-                                        </button>
-                                        <button
-                                            onClick={() => handleDuplicateStep(step)}
-                                            className="p-2 bg-white hover:bg-slate-50 border border-slate-200/65 rounded-xl text-slate-500 hover:text-slate-800 transition-all shadow-sm"
-                                            title="Duplica"
-                                        >
-                                            <Copy className="size-3.5" />
-                                        </button>
-                                        <button
-                                            onClick={() => handleDeleteStep(step.id)}
-                                            className="p-2 bg-white hover:bg-red-50 border border-slate-200/65 hover:border-red-150 rounded-xl text-red-500 transition-all shadow-sm"
-                                            title="Elimina"
-                                        >
-                                            <Trash2 className="size-3.5" />
-                                        </button>
-                                    </div>
+                                    {activeGuide.id === "matricole" && (
+                                        <div className="flex items-center gap-1.5 shrink-0">
+                                            <button
+                                                onClick={() => handleEditStep(step)}
+                                                className="p-2 bg-white hover:bg-slate-50 border border-slate-200/65 rounded-xl text-slate-500 hover:text-slate-800 transition-all shadow-sm"
+                                                title="Modifica"
+                                            >
+                                                <Edit3 className="size-3.5" />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDuplicateStep(step)}
+                                                className="p-2 bg-white hover:bg-slate-50 border border-slate-200/65 rounded-xl text-slate-500 hover:text-slate-800 transition-all shadow-sm"
+                                                title="Duplica"
+                                            >
+                                                <Copy className="size-3.5" />
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteStep(step.id)}
+                                                className="p-2 bg-white hover:bg-red-50 border border-slate-200/65 hover:border-red-150 rounded-xl text-red-500 transition-all shadow-sm"
+                                                title="Elimina"
+                                            >
+                                                <Trash2 className="size-3.5" />
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             ))}
 
