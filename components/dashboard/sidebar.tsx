@@ -34,12 +34,7 @@ export function DashboardSidebar({ userData }: DashboardSidebarProps) {
             icon: Calendar,
             exact: false
         },
-        {
-            label: t("sidebar_documents"),
-            href: `/dashboard/documents`,
-            icon: FileText,
-            exact: false
-        },
+
         {
             label: t("sidebar_support"),
             href: `/dashboard/support`,
@@ -75,7 +70,7 @@ export function DashboardSidebar({ userData }: DashboardSidebarProps) {
             {/* MOBILE HEADER */}
             <div className="md:hidden bg-[#0d0d12] border-b border-zinc-800/60 p-4 sticky top-0 z-30 flex items-center justify-between text-zinc-100">
                 <div className="flex items-center gap-3">
-                    <div className="size-10 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_10px_rgba(99,102,241,0.25)]">
+                    <div className="size-10 rounded-xl bg-gradient-to-tr from-red-600 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_10px_rgba(239,68,68,0.2)]">
                         {userInitials}
                     </div>
                     <div>
@@ -93,7 +88,7 @@ export function DashboardSidebar({ userData }: DashboardSidebarProps) {
             {/* SIDEBAR NAVIGATION (Desktop) */}
             <aside className="hidden md:flex w-66 bg-[#0d0d12] border-r border-zinc-800/60 flex-shrink-0 h-screen sticky top-0 flex-col z-40 text-zinc-300 shadow-[4px_0_24px_rgba(0,0,0,0.15)]">
                 <div className="p-6 border-b border-zinc-800/60 flex items-center gap-3 bg-[#0a0a0f]">
-                    <div className="size-10 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_12px_rgba(99,102,241,0.25)]">
+                    <div className="size-10 rounded-xl bg-gradient-to-tr from-red-600 to-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-[0_0_12px_rgba(239,68,68,0.25)]">
                         {userInitials}
                     </div>
                     <div>
@@ -115,12 +110,12 @@ export function DashboardSidebar({ userData }: DashboardSidebarProps) {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 relative group overflow-hidden",
                                     isActive
-                                        ? "bg-gradient-to-r from-violet-600/15 to-indigo-600/5 text-white shadow-[0_0_20px_rgba(139,92,246,0.1)] border-l-2 border-violet-500 pl-[14px]"
+                                        ? "bg-gradient-to-r from-red-600/10 to-blue-600/5 text-white shadow-[0_0_20px_rgba(239,68,68,0.05)] border-l-2 border-red-500 pl-[14px]"
                                         : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/30 pl-4"
                                 )}
                             >
                                 {isActive && (
-                                    <span className="absolute inset-y-0 left-0 w-[2px] bg-gradient-to-b from-violet-400 to-indigo-500" />
+                                    <span className="absolute inset-y-0 left-0 w-[2px] bg-gradient-to-b from-red-500 to-blue-600" />
                                 )}
                                 <item.icon className={cn(
                                     "size-5 transition-colors text-inherit"

@@ -37,12 +37,12 @@ export default async function MessagesPage({ params: { locale } }: { params: { l
                             <div
                                 key={notif.id}
                                 className="group bg-white rounded-[1.5rem] border border-slate-100 p-6 shadow-[0_8px_24px_rgb(0,0,0,0.01)] hover:shadow-[0_16px_36px_rgb(0,0,0,0.03)] transition-all duration-300 border-l-4"
-                                style={{ borderLeftColor: isEvent ? "#c12830" : (isNews ? "#18182e" : "#71717a") }}
+                                style={{ borderLeftColor: isEvent ? "#dc2626" : (isNews ? "#1e40af" : "#71717a") }}
                             >
                                 <div className="flex items-start gap-4">
                                     <div className={cn(
                                         "size-10 rounded-xl flex items-center justify-center shrink-0 border",
-                                        isEvent ? "bg-red-50 border-red-100 text-red-650" : (isNews ? "bg-slate-900 border-slate-800 text-white" : "bg-slate-50 border-slate-200 text-zinc-500")
+                                        isEvent ? "bg-red-50 border-red-100 text-red-650" : (isNews ? "bg-blue-50 border-blue-100 text-blue-700" : "bg-slate-50 border-slate-200 text-zinc-500")
                                     )}>
                                         {isEvent ? <Calendar className="size-5" /> : (isNews ? <FileText className="size-5" /> : <Info className="size-5" />)}
                                     </div>
@@ -52,11 +52,11 @@ export default async function MessagesPage({ params: { locale } }: { params: { l
                                                 {isEvent ? t("stats_events") : (isNews ? t("sidebar_messages") : notif.type)} • {new Date(notif.createdAt).toLocaleDateString(locale === 'en' ? 'en-US' : 'it-IT', { day: 'numeric', month: 'long' })}
                                             </p>
                                         </div>
-                                        <h3 className="font-extrabold text-slate-850 text-lg mb-1 group-hover:text-violet-650 transition-colors uppercase tracking-tight leading-snug">
-                                            {notif.title}
+                                        <h3 className="font-extrabold text-slate-850 text-lg mb-1 group-hover:text-red-600 transition-colors uppercase tracking-tight leading-snug">
+                                            {(locale === 'en' && notif.titleEn) ? notif.titleEn : notif.title}
                                         </h3>
                                         <p className="text-zinc-500 text-sm font-medium line-clamp-2 leading-relaxed">
-                                            {notif.message}
+                                            {(locale === 'en' && notif.messageEn) ? notif.messageEn : notif.message}
                                         </p>
                                         {notif.link && (
                                             <Link

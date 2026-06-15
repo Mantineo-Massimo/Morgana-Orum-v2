@@ -51,21 +51,21 @@ export default function OffersClient({ initialData }: { initialData: Convention[
                         <input
                             type="text"
                             placeholder={t("offers_search_placeholder")}
-                            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200/85 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-violet-500/10 focus:border-violet-500 transition-all outline-none text-sm font-semibold text-slate-850"
+                            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200/85 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-slate-900/10 focus:border-slate-900 transition-all outline-none text-sm font-semibold text-slate-850"
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </div>
                     <div className="flex gap-2">
                         <select
-                            className="px-4 py-2.5 rounded-xl border border-slate-200/80 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-violet-500/10 focus:border-violet-500 outline-none text-sm font-semibold text-slate-800 transition-all"
+                            className="px-4 py-2.5 rounded-xl border border-slate-200/80 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-slate-900/10 focus:border-slate-900 outline-none text-sm font-semibold text-slate-800 transition-all"
                             value={selectedLocation}
                             onChange={(e) => setSelectedLocation(e.target.value)}
                         >
                             {locations.map(loc => <option key={loc} value={loc}>{loc === "Tutte" ? t("offers_all") : loc}</option>)}
                         </select>
                         <select
-                            className="px-4 py-2.5 rounded-xl border border-slate-200/80 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-violet-500/10 focus:border-violet-500 outline-none text-sm font-semibold text-slate-800 transition-all"
+                            className="px-4 py-2.5 rounded-xl border border-slate-200/80 bg-slate-50 focus:bg-white focus:ring-4 focus:ring-slate-900/10 focus:border-slate-900 outline-none text-sm font-semibold text-slate-800 transition-all"
                             value={selectedCategory}
                             onChange={(e) => setSelectedCategory(e.target.value)}
                         >
@@ -108,7 +108,7 @@ export default function OffersClient({ initialData }: { initialData: Convention[
                                         )}
                                     </div>
                                     <div className="flex flex-col items-end gap-2">
-                                        <span className="px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700 text-[10px] font-black uppercase tracking-wider">
+                                        <span className="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200/60 text-slate-750 text-[10px] font-black uppercase tracking-wider">
                                             {item.category}
                                         </span>
                                         <span className="flex items-center gap-1 text-[10px] font-black text-zinc-400 uppercase tracking-widest">
@@ -117,7 +117,7 @@ export default function OffersClient({ initialData }: { initialData: Convention[
                                     </div>
                                 </div>
 
-                                <h3 className="text-lg font-extrabold text-slate-850 mb-1 group-hover:text-violet-650 transition-colors tracking-tight leading-snug">{item.name}</h3>
+                                <h3 className="text-lg font-extrabold text-slate-850 mb-1 group-hover:text-red-600 transition-colors tracking-tight leading-snug">{item.name}</h3>
 
                                 {item.discounts.length > 0 && (
                                     <div className="mt-4 space-y-2">
@@ -126,17 +126,17 @@ export default function OffersClient({ initialData }: { initialData: Convention[
                                             className="flex items-center justify-between w-full text-left p-3.5 rounded-2xl bg-slate-50 text-slate-800 border border-slate-200/60 hover:bg-slate-100 hover:border-slate-350 transition-all font-extrabold text-sm"
                                         >
                                             <div className="flex items-center gap-2">
-                                                <Tag className="size-4 text-violet-550" />
+                                                <Tag className="size-4 text-red-600" />
                                                 <span className="font-extrabold text-xs uppercase tracking-wider">{t("offers_view_discounts")}</span>
                                             </div>
                                             {expandedId === item.id ? <ChevronUp className="size-4 text-zinc-450" /> : <ChevronDown className="size-4 text-zinc-450" />}
                                         </button>
 
                                         {expandedId === item.id && (
-                                            <div className="animate-in fade-in slide-in-from-top-2 p-4.5 space-y-2.5 border-l-2 border-violet-500 ml-2.5 bg-slate-50/50 rounded-r-2xl">
+                                            <div className="animate-in fade-in slide-in-from-top-2 p-4.5 space-y-2.5 border-l-2 border-red-500 ml-2.5 bg-slate-50/50 rounded-r-2xl">
                                                 {item.discounts.map((discount, idx) => (
                                                     <div key={idx} className="flex gap-2 items-start text-sm text-slate-700">
-                                                        <div className="size-1.5 rounded-full bg-violet-400 mt-2 shrink-0" />
+                                                        <div className="size-1.5 rounded-full bg-red-500 mt-2 shrink-0" />
                                                         <p className="font-semibold leading-relaxed">{discount}</p>
                                                     </div>
                                                 ))}

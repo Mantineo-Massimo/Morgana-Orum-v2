@@ -9,7 +9,6 @@ const files = [
     'app/[brand]/dashboard/settings/page.tsx',
     'app/[brand]/dashboard/events/page.tsx',
     'app/[brand]/dashboard/support/page.tsx',
-    'app/[brand]/dashboard/documents/page.tsx',
     'app/[brand]/about/page.tsx'
 ];
 
