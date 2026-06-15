@@ -4,7 +4,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import {
     Plus, Trash2, Mail, Shield, Users, Award,
-    Edit3, Copy, Search, Loader2, ArrowUpDown
+    Edit3, Copy, Search, Loader2, ArrowUpDown, ArrowUp, ArrowDown
 } from "lucide-react"
 import {
     createOrganigrammaMember,
@@ -168,6 +168,60 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
         }
     }
 
+    const handleReorderMember = async (member: any, direction: "up" | "down") => {
+        const sectionMembers = [...initialMembers]
+            .filter(m => m.association === member.association && m.section === member.section)
+            .sort((a, b) => (a.order || 0) - (b.order || 0))
+            
+        const index = sectionMembers.findIndex(m => m.id === member.id)
+        if (index === -1) return
+        
+        const targetIndex = direction === "up" ? index - 1 : index + 1
+        if (targetIndex < 0 || targetIndex >= sectionMembers.length) return
+        
+        const otherMember = sectionMembers[targetIndex]
+        
+        setLoading(true)
+        try {
+            const originalOrder = member.order
+            const targetOrder = otherMember.order
+            
+            const newOrderSelf = targetOrder === originalOrder ? (direction === "up" ? originalOrder - 1 : originalOrder + 1) : targetOrder
+            const newOrderOther = originalOrder
+            
+            const res1 = await updateOrganigrammaMember(member.id, {
+                name: member.name,
+                role: member.role,
+                roleEn: member.roleEn || undefined,
+                email: member.email || undefined,
+                association: member.association,
+                section: member.section,
+                order: newOrderSelf
+            })
+            
+            const res2 = await updateOrganigrammaMember(otherMember.id, {
+                name: otherMember.name,
+                role: otherMember.role,
+                roleEn: otherMember.roleEn || undefined,
+                email: otherMember.email || undefined,
+                association: otherMember.association,
+                section: otherMember.section,
+                order: newOrderOther
+            })
+            
+            if (res1.success && res2.success) {
+                router.refresh()
+            } else {
+                alert("Errore nel riordinamento: " + (res1.error || res2.error || ""))
+            }
+        } catch (error) {
+            console.error(error)
+            alert("Errore imprevisto nel riordinamento")
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const filteredMembers = initialMembers.filter(m => {
         const matchesSearch = m.name.toLowerCase().includes(search.toLowerCase()) || 
                               m.role.toLowerCase().includes(search.toLowerCase())
@@ -247,34 +301,66 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-zinc-100 text-sm">
-                            {filteredMembers.map((m: any) => (
-                                <tr key={m.id} className="hover:bg-zinc-50/50 transition-colors">
-                                    <td className="px-6 py-4 font-bold text-zinc-900">{m.name}</td>
-                                    <td className="px-6 py-4 space-y-1">
-                                        <span className={cn(
-                                            "inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border",
-                                            m.association === "MORGANA" 
-                                                ? "bg-red-50/50 border-red-100 text-red-700" 
-                                                : "bg-blue-50/50 border-blue-100 text-zinc-800"
-                                        )}>
-                                            {m.association === "MORGANA" ? "Morgana" : "O.R.U.M."}
-                                        </span>
-                                        <div className="mt-1">{getSectionBadge(m.section)}</div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="font-semibold text-zinc-800">{m.role}</div>
-                                        {m.roleEn && <div className="text-xs text-zinc-400 italic">EN: {m.roleEn}</div>}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {m.email ? (
-                                            <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 flex items-center gap-1">
-                                                <Mail className="size-3.5" /> {m.email}
-                                            </a>
-                                        ) : (
-                                            <span className="text-xs text-zinc-300 italic">Nessuna email</span>
-                                        )}
-                                    </td>
-                                    <td className="px-6 py-4 font-mono text-zinc-500">{m.order}</td>
+                            {filteredMembers.map((m: any) => {
+                                const sectionMembers = [...initialMembers]
+                                    .filter(item => item.association === m.association && item.section === m.section)
+                                    .sort((a, b) => (a.order || 0) - (b.order || 0))
+                                const idx = sectionMembers.findIndex(item => item.id === m.id)
+                                const isFirst = idx === 0
+                                const isLast = idx === sectionMembers.length - 1
+
+                                return (
+                                    <tr key={m.id} className="hover:bg-zinc-50/50 transition-colors">
+                                        <td className="px-6 py-4 font-bold text-zinc-900">{m.name}</td>
+                                        <td className="px-6 py-4 space-y-1">
+                                            <span className={cn(
+                                                "inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border",
+                                                m.association === "MORGANA" 
+                                                    ? "bg-red-50/50 border-red-100 text-red-700" 
+                                                    : "bg-blue-50/50 border-blue-100 text-zinc-800"
+                                            )}>
+                                                {m.association === "MORGANA" ? "Morgana" : "O.R.U.M."}
+                                            </span>
+                                            <div className="mt-1">{getSectionBadge(m.section)}</div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="font-semibold text-zinc-800">{m.role}</div>
+                                            {m.roleEn && <div className="text-xs text-zinc-400 italic">EN: {m.roleEn}</div>}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {m.email ? (
+                                                <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 flex items-center gap-1">
+                                                    <Mail className="size-3.5" /> {m.email}
+                                                </a>
+                                            ) : (
+                                                <span className="text-xs text-zinc-300 italic">Nessuna email</span>
+                                            )}
+                                        </td>
+                                        <td className="px-6 py-4 font-mono text-zinc-500">
+                                            <div className="flex items-center gap-1">
+                                                <span className="w-6 text-right">{m.order}</span>
+                                                <div className="flex gap-0.5 ml-2 border border-zinc-100 p-0.5 bg-zinc-50 rounded-lg shadow-inner">
+                                                    <button
+                                                        type="button"
+                                                        disabled={isFirst || loading}
+                                                        onClick={() => handleReorderMember(m, "up")}
+                                                        className="p-1 hover:bg-white disabled:opacity-30 rounded text-zinc-500 hover:text-zinc-900 transition-colors"
+                                                        title="Sposta su"
+                                                    >
+                                                        <ArrowUp className="size-3" />
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        disabled={isLast || loading}
+                                                        onClick={() => handleReorderMember(m, "down")}
+                                                        className="p-1 hover:bg-white disabled:opacity-30 rounded text-zinc-500 hover:text-zinc-900 transition-colors"
+                                                        title="Sposta giù"
+                                                    >
+                                                        <ArrowDown className="size-3" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex items-center justify-end gap-2">
                                             <button onClick={() => handleEdit(m)} className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-all" title="Modifica">
@@ -289,7 +375,8 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                         </div>
                                     </td>
                                 </tr>
-                            ))}
+                            )
+                        })}
                             {filteredMembers.length === 0 && (
                                 <tr>
                                     <td colSpan={6} className="py-16 text-center text-zinc-400 italic">

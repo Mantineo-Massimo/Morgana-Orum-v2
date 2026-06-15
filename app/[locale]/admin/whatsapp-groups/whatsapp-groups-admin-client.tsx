@@ -3,8 +3,8 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import {
-    Plus, Trash2, Edit3, Copy, Search, Mail, Phone, Users,
-    Film, Home as HomeIcon, Info, ExternalLink, Loader2, ArrowUpDown
+    Plus, Trash2, Edit3, Copy, Search, Phone, Users,
+    Film, Home as HomeIcon, Info, ExternalLink, Loader2
 } from "lucide-react"
 import {
     createWhatsAppGroup,
@@ -207,13 +207,48 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         return matchesSearch && matchesCategory && matchesDept
     })
 
-    const getIconComponent = (iconName: string) => {
-        const Icon = ICON_MAP[iconName] || Users
-        return <Icon className="size-4" />
-    }
+    const academicGroups = filteredGroups.filter(g => g.category === "ACADEMIC")
+    const communityGroups = filteredGroups.filter(g => g.category === "COMMUNITY")
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
+            {/* Category Tab Switcher */}
+            <div className="flex flex-wrap gap-2 border-b border-zinc-200 pb-2">
+                <button
+                    onClick={() => { setSelectedCategory("all"); setSelectedDept("all"); }}
+                    className={cn(
+                        "px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all",
+                        selectedCategory === "all"
+                            ? "bg-zinc-900 text-white shadow-lg shadow-zinc-200"
+                            : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+                    )}
+                >
+                    Tutti ({initialGroups.length})
+                </button>
+                <button
+                    onClick={() => { setSelectedCategory("ACADEMIC"); setSelectedDept("all"); }}
+                    className={cn(
+                        "px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all",
+                        selectedCategory === "ACADEMIC"
+                            ? "bg-blue-600 text-white shadow-lg shadow-blue-100"
+                            : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+                    )}
+                >
+                    Corsi Accademici ({initialGroups.filter(g => g.category === "ACADEMIC").length})
+                </button>
+                <button
+                    onClick={() => { setSelectedCategory("COMMUNITY"); setSelectedDept("all"); }}
+                    className={cn(
+                        "px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all",
+                        selectedCategory === "COMMUNITY"
+                            ? "bg-purple-600 text-white shadow-lg shadow-purple-100"
+                            : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+                    )}
+                >
+                    Community ({initialGroups.filter(g => g.category === "COMMUNITY").length})
+                </button>
+            </div>
+
             {/* Filters Bar */}
             <div className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div className="relative w-full md:w-80">
@@ -228,16 +263,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 </div>
 
                 <div className="flex flex-wrap w-full md:w-auto gap-3 items-center">
-                    <select
-                        value={selectedCategory}
-                        onChange={e => setSelectedCategory(e.target.value)}
-                        className="px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none text-xs font-bold uppercase tracking-wider cursor-pointer"
-                    >
-                        <option value="all">Tutte le Categorie</option>
-                        {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
-                    </select>
-
-                    {selectedCategory !== "COMMUNITY" && (
+                    {selectedCategory === "ACADEMIC" && (
                         <select
                             value={selectedDept}
                             onChange={e => setSelectedDept(e.target.value)}
@@ -257,76 +283,117 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 </div>
             </div>
 
-            {/* List Table */}
-            <div className="bg-white rounded-3xl border border-zinc-100 overflow-hidden shadow-sm">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                        <thead className="bg-zinc-50 border-b border-zinc-100">
-                            <tr>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Gruppo</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Categoria / Sezione</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Link</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Ordine</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400 text-right">Azioni</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-zinc-100 text-sm">
-                            {filteredGroups.map((g: any) => (
-                                <tr key={g.id} className="hover:bg-zinc-50/50 transition-colors">
-                                    <td className="px-6 py-4 max-w-[250px]">
-                                        <div className="font-bold text-zinc-900">{g.name}</div>
-                                        {g.nameEn && <div className="text-[10px] text-zinc-400 italic">EN: {g.nameEn}</div>}
-                                        {g.description && <p className="text-xs text-zinc-500 mt-1 line-clamp-2 leading-relaxed">{g.description}</p>}
-                                    </td>
-                                    <td className="px-6 py-4 space-y-1">
-                                        <span className={cn(
-                                            "inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border",
-                                            g.category === "ACADEMIC" 
-                                                ? "bg-blue-50 border-blue-100 text-blue-700" 
-                                                : "bg-purple-50 border-purple-100 text-purple-700"
-                                        )}>
-                                            {g.category === "ACADEMIC" ? "Corsi" : "Community"}
-                                        </span>
-                                        {g.department && (
-                                            <div className="text-[10px] font-medium text-zinc-400 max-w-[180px] truncate">{g.department}</div>
-                                        )}
-                                        {g.icon && (
-                                            <div className="flex items-center gap-1.5 text-zinc-500 text-[10px]">
-                                                {getIconComponent(g.icon)} <span className="font-mono text-[9px]">Icona: {g.icon}</span>
+            {/* Grids Layout */}
+            <div className="space-y-10">
+                {/* 1. Community Section */}
+                {(selectedCategory === "all" || selectedCategory === "COMMUNITY") && communityGroups.length > 0 && (
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-4">
+                            <h3 className="text-xs font-black uppercase tracking-widest text-purple-600 shrink-0">Community & Gruppi Tematici</h3>
+                            <div className="h-px w-full bg-purple-100"></div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {communityGroups.map(group => {
+                                const Icon = ICON_MAP[group.icon || "Users"] || Users
+                                return (
+                                    <div key={group.id} className="bg-white border border-zinc-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group relative">
+                                        <div>
+                                            <div className="flex items-start justify-between gap-4 mb-4">
+                                                <div className={cn(
+                                                    "size-10 rounded-2xl flex items-center justify-center border",
+                                                    group.theme ? group.theme.split(" ").slice(0, 3).join(" ") : "text-purple-500 bg-purple-50 border-purple-100"
+                                                )}>
+                                                    <Icon className="size-5" />
+                                                </div>
+                                                <span className="text-[8px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border bg-purple-50 border-purple-100 text-purple-700">
+                                                    Community
+                                                </span>
                                             </div>
-                                        )}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <a href={g.link} target="_blank" rel="noopener noreferrer" className="text-xs font-bold text-[#25D366] hover:underline flex items-center gap-1">
-                                            <ExternalLink className="size-3.5" /> WhatsApp Link
-                                        </a>
-                                    </td>
-                                    <td className="px-6 py-4 font-mono text-zinc-500">{g.order}</td>
-                                    <td className="px-6 py-4 text-right">
-                                        <div className="flex items-center justify-end gap-2">
-                                            <button onClick={() => handleEdit(g)} className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-all" title="Modifica">
-                                                <Edit3 className="size-4" />
-                                            </button>
-                                            <button onClick={() => handleDuplicate(g)} className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-all" title="Duplica">
-                                                <Copy className="size-4" />
-                                            </button>
-                                            <button onClick={() => handleDelete(g.id)} className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Elimina">
-                                                <Trash2 className="size-4" />
-                                            </button>
+
+                                            <h4 className="font-bold text-zinc-900 leading-snug font-serif text-lg uppercase tracking-tight">{group.name}</h4>
+                                            {group.nameEn && <p className="text-[10px] text-zinc-400 italic mt-0.5">EN: {group.nameEn}</p>}
+                                            {group.description && <p className="text-xs text-zinc-500 mt-2 line-clamp-3 leading-relaxed font-medium">{group.description}</p>}
+                                            {group.descriptionEn && <p className="text-[11px] text-zinc-400 mt-1 line-clamp-3 leading-relaxed italic">EN: {group.descriptionEn}</p>}
                                         </div>
-                                    </td>
-                                </tr>
-                            ))}
-                            {filteredGroups.length === 0 && (
-                                <tr>
-                                    <td colSpan={5} className="py-16 text-center text-zinc-400 italic">
-                                        Nessun gruppo trovato.
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
+
+                                        <div className="mt-6 pt-4 border-t border-zinc-150/50 flex items-center justify-between gap-4">
+                                            <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-[#25D366] hover:underline">
+                                                <ExternalLink className="size-3.5" /> Entra
+                                            </a>
+                                            <div className="flex items-center gap-1">
+                                                <button onClick={() => handleEdit(group)} className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-all" title="Modifica">
+                                                    <Edit3 className="size-4" />
+                                                </button>
+                                                <button onClick={() => handleDuplicate(group)} className="p-2 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-xl transition-all" title="Duplica">
+                                                    <Copy className="size-4" />
+                                                </button>
+                                                <button onClick={() => handleDelete(group.id)} className="p-2 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Elimina">
+                                                    <Trash2 className="size-4" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {/* 2. Academic Sections by Department */}
+                {(selectedCategory === "all" || selectedCategory === "ACADEMIC") && DEPARTMENTS.map(dept => {
+                    const deptGroups = academicGroups.filter(g => g.department === dept)
+                    if (deptGroups.length === 0) return null
+                    return (
+                        <div key={dept} className="space-y-4">
+                            <div className="flex items-center gap-4">
+                                <h3 className="text-xs font-black uppercase tracking-widest text-blue-600 shrink-0">{dept}</h3>
+                                <div className="h-px w-full bg-blue-100"></div>
+                                <span className="text-[10px] font-bold text-blue-500 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded">{deptGroups.length}</span>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {deptGroups.map(group => (
+                                    <div key={group.id} className="bg-white border border-zinc-100 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-full group relative">
+                                        <div>
+                                            <div className="flex items-start justify-between gap-4 mb-2">
+                                                <span className="text-[8px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border bg-blue-50 border-blue-100 text-blue-700">
+                                                    Corso
+                                                </span>
+                                                <span className="text-[9px] font-mono text-zinc-400">Ordine: {group.order}</span>
+                                            </div>
+                                            <h4 className="font-bold text-zinc-900 leading-snug">{group.name}</h4>
+                                            {group.nameEn && <p className="text-[10px] text-zinc-400 italic mt-0.5">EN: {group.nameEn}</p>}
+                                        </div>
+
+                                        <div className="mt-4 pt-3 border-t border-zinc-150/50 flex items-center justify-between gap-4">
+                                            <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-[#25D366] hover:underline">
+                                                <ExternalLink className="size-3.5" /> Entra
+                                            </a>
+                                            <div className="flex items-center gap-1">
+                                                <button onClick={() => handleEdit(group)} className="p-1.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-all" title="Modifica">
+                                                    <Edit3 className="size-3.5" />
+                                                </button>
+                                                <button onClick={() => handleDuplicate(group)} className="p-1.5 text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 rounded-lg transition-all" title="Duplica">
+                                                    <Copy className="size-3.5" />
+                                                </button>
+                                                <button onClick={() => handleDelete(group.id)} className="p-1.5 text-zinc-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Elimina">
+                                                    <Trash2 className="size-3.5" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )
+                })}
+
+                {filteredGroups.length === 0 && (
+                    <div className="text-center py-16 text-zinc-400 italic bg-white rounded-3xl border border-zinc-100 shadow-sm">
+                        Nessun gruppo WhatsApp trovato corrispondente alla ricerca.
+                    </div>
+                )}
             </div>
 
             {/* Dialog Form */}

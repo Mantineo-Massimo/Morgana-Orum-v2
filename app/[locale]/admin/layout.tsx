@@ -8,6 +8,7 @@ import { getAssociationName } from "@/lib/associations"
 import { SidebarClock } from "@/components/admin/sidebar-clock"
 
 import { MobileNav } from "@/components/admin/mobile-nav"
+import { SidebarLink } from "@/components/admin/sidebar-link"
 
 export const dynamic = 'force-dynamic'
 
@@ -165,17 +166,14 @@ export default async function AdminLayout({
                                      } as Record<string, any>)[item.iconName] || LayoutDashboard
 
                                     return (
-                                        <Link
+                                        <SidebarLink
                                             key={item.href}
                                             href={item.href}
-                                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition-all group"
+                                            exact={item.exact}
                                         >
-                                            <IconComponent className={cn(
-                                                "size-5 group-hover:text-white transition-colors",
-                                                "text-zinc-500"
-                                            )} />
+                                            <IconComponent className="size-5 transition-colors text-inherit" />
                                             <span className="font-medium text-sm">{item.label}</span>
-                                        </Link>
+                                        </SidebarLink>
                                     )
                                 })}
                             </div>

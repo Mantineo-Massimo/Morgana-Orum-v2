@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import {
     Plus, Trash2, Edit3, ExternalLink, Layers, Search, Loader2,
     BookOpen, Heart, ShieldCheck, Bus, CreditCard, Info, GraduationCap, Home, Wifi,
-    FolderPlus, ArrowRight, Settings, Copy
+    FolderPlus, ArrowRight, Settings, Copy, ArrowUp, ArrowDown
 } from "lucide-react"
 import {
     createServiceCategory,
@@ -306,6 +306,58 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
         }
     }
 
+    const handleReorderItem = async (item: any, direction: "up" | "down") => {
+        if (!activeCategory) return
+        const items = [...(activeCategory.items || [])].sort((a, b) => (a.order || 0) - (b.order || 0))
+        const index = items.findIndex(i => i.id === item.id)
+        if (index === -1) return
+        
+        const targetIndex = direction === "up" ? index - 1 : index + 1
+        if (targetIndex < 0 || targetIndex >= items.length) return
+        
+        const otherItem = items[targetIndex]
+        
+        setLoading(true)
+        try {
+            const originalOrder = item.order
+            const targetOrder = otherItem.order
+            
+            const newOrderSelf = targetOrder === originalOrder ? (direction === "up" ? originalOrder - 1 : originalOrder + 1) : targetOrder
+            const newOrderOther = originalOrder
+            
+            const res1 = await updateServiceItem(item.id, {
+                name: item.name,
+                nameEn: item.nameEn || undefined,
+                description: item.description,
+                descriptionEn: item.descriptionEn || undefined,
+                href: item.href || undefined,
+                order: newOrderSelf,
+                categoryId: selectedCatId!
+            })
+            
+            const res2 = await updateServiceItem(otherItem.id, {
+                name: otherItem.name,
+                nameEn: otherItem.nameEn || undefined,
+                description: otherItem.description,
+                descriptionEn: otherItem.descriptionEn || undefined,
+                href: otherItem.href || undefined,
+                order: newOrderOther,
+                categoryId: selectedCatId!
+            })
+            
+            if (res1.success && res2.success) {
+                router.refresh()
+            } else {
+                alert("Errore nel riordinamento: " + (res1.error || res2.error || ""))
+            }
+        } catch (error) {
+            console.error(error)
+            alert("Errore imprevisto nel riordinamento")
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const getIconComponent = (iconName: string) => {
         const Icon = ICON_MAP[iconName] || GraduationCap
         return <Icon className="size-4" />
@@ -356,7 +408,7 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div className="flex items-center gap-1 shrink-0 ml-2">
                                         <button
                                             onClick={(e) => {
                                                 e.stopPropagation()
@@ -366,6 +418,7 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                                 "p-1.5 rounded-lg hover:bg-zinc-800 transition-all",
                                                 isSelected ? "text-zinc-400 hover:text-white" : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-200"
                                             )}
+                                            title="Modifica"
                                         >
                                             <Edit3 className="size-3.5" />
                                         </button>
@@ -378,6 +431,7 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                                 "p-1.5 rounded-lg hover:bg-red-500/20 transition-all",
                                                 isSelected ? "text-red-400 hover:text-red-300" : "text-red-500 hover:bg-red-50"
                                             )}
+                                            title="Elimina"
                                         >
                                             <Trash2 className="size-3.5" />
                                         </button>
@@ -427,11 +481,33 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                         </div>
 
                         <div className="space-y-4">
-                            {activeCategory.items?.map((item: any) => (
+                            {(activeCategory.items || []).sort((a: any, b: any) => (a.order || 0) - (b.order || 0)).map((item: any, index: number, arr: any[]) => (
                                 <div
                                     key={item.id}
-                                    className="p-6 bg-zinc-50/50 rounded-2xl border border-zinc-100 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center group/item hover:border-zinc-200 hover:bg-white transition-all shadow-sm"
+                                    className="p-6 bg-zinc-50/50 rounded-2xl border border-zinc-100 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center hover:border-zinc-200 hover:bg-white transition-all shadow-sm"
                                 >
+                                    {/* Reorder Arrows on the left of each item */}
+                                    <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-zinc-100 p-1 bg-white rounded-xl shadow-inner">
+                                        <button
+                                            type="button"
+                                            disabled={index === 0 || loading}
+                                            onClick={() => handleReorderItem(item, "up")}
+                                            className="p-1 hover:bg-zinc-100 disabled:opacity-30 rounded text-zinc-500 transition-colors"
+                                            title="Sposta su"
+                                        >
+                                            <ArrowUp className="size-4" />
+                                        </button>
+                                        <button
+                                            type="button"
+                                            disabled={index === arr.length - 1 || loading}
+                                            onClick={() => handleReorderItem(item, "down")}
+                                            className="p-1 hover:bg-zinc-100 disabled:opacity-30 rounded text-zinc-500 transition-colors"
+                                            title="Sposta giù"
+                                        >
+                                            <ArrowDown className="size-4" />
+                                        </button>
+                                    </div>
+
                                     <div className="space-y-1.5 flex-1 min-w-0">
                                         <div className="flex items-center gap-2">
                                             <h4 className="font-bold text-sm text-zinc-900 uppercase tracking-tight truncate">
@@ -459,7 +535,7 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center gap-1.5 md:opacity-0 group-hover/item:opacity-100 transition-opacity shrink-0">
+                                    <div className="flex items-center gap-1.5 transition-opacity shrink-0">
                                         <button
                                             onClick={() => handleEditItem(item)}
                                             className="p-2 bg-white hover:bg-zinc-100 border border-zinc-100 hover:border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-900 transition-all shadow-sm"
