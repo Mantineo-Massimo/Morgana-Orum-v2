@@ -79,12 +79,14 @@ const slugMap: Record<string, InitiativeConfig> = {
             "Academic credits: University-accredited sessions offering training credits (CFU) for participating students."
         ],
         detailsIt: [
+            { label: "Edizione", value: "IX Edizione", icon: Award },
             { label: "Destinatari", value: "Tutti gli studenti iscritti ad Unime", icon: Users },
             { label: "Periodo", value: "Ciclico durante l'anno accademico", icon: Calendar },
             { label: "Luogo", value: "Cinema Apollo", icon: MapPin },
             { label: "Costo", value: "4€ una proiezione / 10€ quattro proiezioni", icon: Ticket }
         ],
         detailsEn: [
+            { label: "Edition", value: "9th Edition", icon: Award },
             { label: "Target", value: "All enrolled Unime students", icon: Users },
             { label: "Period", value: "Cyclical throughout the academic year", icon: Calendar },
             { label: "Locations", value: "Cinema Apollo", icon: MapPin },
