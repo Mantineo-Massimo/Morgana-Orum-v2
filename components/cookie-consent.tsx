@@ -80,8 +80,8 @@ export function CookieConsent() {
                         </button>
                     </div>
 
-                    <p className="text-[10px] text-zinc-500 text-center mt-4">
-                        Consultando il sito accetti la nostra <a href="/privacy" className="underline hover:text-zinc-600">Privacy Policy</a>.
+                    <p className="text-[10px] text-zinc-400 text-center mt-4">
+                        Consultando il sito accetti la nostra <a href="/privacy" className="underline hover:text-zinc-600">Privacy Policy</a>, la <a href="/cookie" className="underline hover:text-zinc-600">Cookie Policy</a> e i <a href="/terms" className="underline hover:text-zinc-600">Termini e Condizioni</a>.
                     </p>
                 </div>
             </div>
