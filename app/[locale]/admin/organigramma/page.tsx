@@ -11,6 +11,10 @@ export default async function AdminOrganigrammaPage() {
         where: { email: userEmail }
     })
 
+    if (!user || user.role !== "SUPER_ADMIN") {
+        redirect("/admin")
+    }
+
     const members = await getOrganigrammaMembers()
 
     return (

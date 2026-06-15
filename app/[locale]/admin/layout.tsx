@@ -89,37 +89,31 @@ export default async function AdminLayout({
         },
     ]
 
-    const adminItems = []
-
     if (userRole === "SUPER_ADMIN") {
-        adminItems.push(
-            {
-                label: "Utenti",
-                href: `/admin/users`,
-                iconName: "User",
-                exact: false
-            },
-            {
-                label: "Convenzioni",
-                href: `/admin/conventions`,
-                iconName: "Tag",
-                exact: false
-            }
-        )
+        navigation.push({
+            section: "Amministrazione",
+            items: [
+                {
+                    label: "Utenti",
+                    href: `/admin/users`,
+                    iconName: "User",
+                    exact: false
+                },
+                {
+                    label: "Convenzioni",
+                    href: `/admin/conventions`,
+                    iconName: "Tag",
+                    exact: false
+                },
+                {
+                    label: "Organigramma",
+                    href: `/admin/organigramma`,
+                    iconName: "Shield",
+                    exact: false
+                }
+            ]
+        })
     }
-
-    // Organigramma is visible to all admins under "Amministrazione"
-    adminItems.push({
-        label: "Organigramma",
-        href: `/admin/organigramma`,
-        iconName: "Shield",
-        exact: false
-    })
-
-    navigation.push({
-        section: "Amministrazione",
-        items: adminItems
-    })
 
     const isMorgana = true; // TODO: Portale Unificato - Tema neutro o in base all'utente
 
