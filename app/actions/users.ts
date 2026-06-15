@@ -44,7 +44,12 @@ export async function getUserDashboardData(email?: string) {
             user: {
                 name: user.name,
                 surname: user.surname,
+                email: user.email,
                 matricola: user.matricola,
+                department: user.department,
+                degreeCourse: user.degreeCourse,
+                isFuorisede: user.isFuorisede,
+                birthDate: user.birthDate.toISOString().split('T')[0],
                 association: user.association,
                 qrToken: user.qrToken,
                 role: user.role,
@@ -362,5 +367,65 @@ export async function adminUpdateUser(userId: number, data: any) {
             return { success: false, error: "Email o Matricola già in uso." }
         }
         return { success: false, error: "Aggiornamento fallito" }
+    }
+}
+
+export async function updateOwnProfile(data: {
+    name: string
+    surname: string
+    email: string
+    matricola: string
+    birthDate?: string | Date
+    department?: string
+    degreeCourse?: string
+    isFuorisede?: boolean
+    password?: string
+}) {
+    try {
+        const { cookies } = await import("next/headers")
+        const userEmail = cookies().get("session_email")?.value
+        if (!userEmail) return { success: false, error: "Unauthorized" }
+
+        const updateData: any = {
+            name: data.name,
+            surname: data.surname,
+            email: data.email,
+            matricola: data.matricola,
+            department: data.department,
+            degreeCourse: data.degreeCourse,
+            isFuorisede: data.isFuorisede,
+        }
+
+        if (data.birthDate) {
+            updateData.birthDate = new Date(data.birthDate)
+        }
+
+        if (data.password && data.password.trim() !== "") {
+            updateData.password = await bcrypt.hash(data.password, 10)
+        }
+
+        await prisma.user.update({
+            where: { email: userEmail },
+            data: updateData
+        })
+
+        // If email was changed, update session cookie
+        if (data.email !== userEmail) {
+            cookies().set("session_email", data.email, {
+                path: "/",
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                maxAge: 60 * 60 * 24 * 7 // 1 week
+            })
+        }
+
+        return { success: true }
+    } catch (error: any) {
+        console.error("Error updating own profile:", error)
+        if (error.code === 'P2002') {
+            return { success: false, error: "Email o Matricola già in uso." }
+        }
+        return { success: false, error: "Impossibile aggiornare i dati profilo." }
     }
 }

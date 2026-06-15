@@ -314,7 +314,20 @@
         "info_status": "Privacy Status",
         "status_verified": "Verified",
         "delete_confirm": "WARNING: Are you sure you want to permanently delete your account? This action is irreversible and you will lose all your data, bookings, and credits.",
-        "delete_error": "Error during account deletion."
+        "delete_error": "Error during account deletion.",
+        "profile_title": "Account Details",
+        "profile_desc": "Edit your account's personal information.",
+        "profile_name": "First Name",
+        "profile_surname": "Last Name",
+        "profile_email": "Email",
+        "profile_birthdate": "Birth Date",
+        "profile_department": "Department",
+        "profile_degree": "Degree Course",
+        "profile_fuorisede": "Off-campus Student",
+        "profile_password": "New Password (leave empty to keep current)",
+        "profile_save": "Save Changes",
+        "profile_success": "Profile updated successfully!",
+        "profile_error": "Unable to update profile details."
     },
     "AdminUsers": {
         "mktg_orum": "Mktg ORUM",

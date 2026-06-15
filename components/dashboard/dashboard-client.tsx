@@ -16,9 +16,9 @@ export function DashboardClient({ userData }: DashboardClientProps) {
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
             {/* Welcome Banner */}
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 p-8 text-white shadow-xl border border-slate-800">
-                <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full -mr-20 -mt-20 blur-3xl animate-pulse"></div>
-                <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"></div>
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-[#18182e] via-[#0d0d17] to-[#18182e] p-8 text-white shadow-xl border border-[#c9041a]/30">
+                <div className="absolute top-0 right-0 w-80 h-80 bg-[#18182e]/20 rounded-full -mr-20 -mt-20 blur-3xl animate-pulse"></div>
+                <div className="absolute -left-20 -bottom-20 w-80 h-80 bg-[#c9041a]/20 rounded-full blur-3xl"></div>
                 
                 <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
@@ -35,9 +35,9 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                     {userData.role !== "USER" && (
                         <Link
                             href={`/admin`}
-                            className="px-6 py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white hover:bg-zinc-100 text-slate-955 flex items-center gap-2 shadow-lg hover:shadow-xl active:scale-95 self-start md:self-center shrink-0 border border-white/20"
+                            className="px-6 py-3.5 rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white hover:bg-zinc-100 text-[#18182e] flex items-center gap-2 shadow-lg hover:shadow-xl active:scale-95 self-start md:self-center shrink-0 border border-white/20"
                         >
-                            <ShieldCheck className="size-4 text-slate-900" /> <span className="text-slate-900 font-bold">{t("admin_panel")}</span>
+                            <ShieldCheck className="size-4 text-[#18182e]" /> <span className="text-[#18182e] font-bold">{t("admin_panel")}</span>
                         </Link>
                     )}
                 </div>
@@ -47,12 +47,12 @@ export function DashboardClient({ userData }: DashboardClientProps) {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 {/* Messages Card */}
                 <div className="bg-white p-6 rounded-[2rem] border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all duration-300 group flex flex-col justify-between min-h-[160px] relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-blue-500/5 rounded-bl-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500"></div>
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#18182e]/5 rounded-bl-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500"></div>
                     <div className="flex items-center justify-between mb-4 relative z-10">
-                        <div className="p-3.5 rounded-2xl bg-blue-500/10 text-blue-600 border border-blue-500/15 group-hover:scale-110 transition-all duration-300 shadow-sm">
+                        <div className="p-3.5 rounded-2xl bg-[#18182e]/10 text-[#18182e] border border-[#18182e]/15 group-hover:scale-110 transition-all duration-300 shadow-sm">
                             <MessageSquare className="size-5" />
                         </div>
-                        <span className="text-[9px] font-black text-blue-500 uppercase tracking-widest bg-blue-50 border border-blue-100/50 px-2.5 py-1 rounded-full">
+                        <span className="text-[9px] font-black text-[#18182e] uppercase tracking-widest bg-slate-50 border border-slate-150 px-2.5 py-1 rounded-full">
                             {t("stats_status")}
                         </span>
                     </div>
@@ -64,12 +64,12 @@ export function DashboardClient({ userData }: DashboardClientProps) {
 
                 {/* Followed Card */}
                 <div className="bg-white p-6 rounded-[2rem] border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] hover:border-slate-200 transition-all duration-300 group flex flex-col justify-between min-h-[160px] relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-red-500/5 rounded-bl-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500"></div>
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#c9041a]/5 rounded-bl-full translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500"></div>
                     <div className="flex items-center justify-between mb-4 relative z-10">
-                        <div className="p-3.5 rounded-2xl bg-red-500/10 text-red-650 border border-red-500/15 group-hover:scale-110 transition-all duration-300 shadow-sm">
+                        <div className="p-3.5 rounded-2xl bg-[#c9041a]/10 text-[#c9041a] border border-[#c9041a]/15 group-hover:scale-110 transition-all duration-300 shadow-sm">
                             <Ticket className="size-5" />
                         </div>
-                        <span className="text-[9px] font-black text-red-650 uppercase tracking-widest bg-red-50 border border-red-100/50 px-2.5 py-1 rounded-full">
+                        <span className="text-[9px] font-black text-[#c9041a] uppercase tracking-widest bg-red-50 border border-red-100/50 px-2.5 py-1 rounded-full">
                             {t("stats_activity")}
                         </span>
                     </div>
@@ -103,10 +103,10 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                 <div className="space-y-6">
                     <div className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.015)] overflow-hidden flex flex-col h-full min-h-[400px]">
                         {/* Member Header (Card design) */}
-                        <div className="p-8 text-white relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800">
+                        <div className="p-8 text-white relative overflow-hidden bg-gradient-to-br from-[#18182e] via-[#0d0d17] to-[#18182e] border-b border-[#c9041a]/25">
                             {/* Decorative Pattern & Glows */}
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full -mr-10 -mt-10 blur-2xl animate-pulse"></div>
-                            <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-red-500/5 rounded-full blur-xl"></div>
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-[#18182e]/20 rounded-full -mr-10 -mt-10 blur-2xl animate-pulse"></div>
+                            <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-[#c9041a]/20 rounded-full blur-xl"></div>
 
                             <div className="relative z-10">
                                 <div className="flex justify-between items-start mb-12">
@@ -148,7 +148,7 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                         <div className="p-8 flex-1 flex flex-col justify-between border-x border-b border-slate-100/80 rounded-b-[2rem] bg-white">
                             <div className="space-y-3">
                                 <h3 className="text-lg font-bold text-slate-800 flex items-center gap-2">
-                                    <span className="p-1.5 rounded-xl bg-blue-50 border border-blue-100 text-blue-600"><CheckCircle className="size-4" /></span>
+                                    <span className="p-1.5 rounded-xl bg-blue-50 border border-blue-100 text-[#18182e]"><CheckCircle className="size-4" /></span>
                                     {t("exclusive_benefits")}
                                 </h3>
                                 <p className="text-sm text-zinc-500 leading-relaxed text-justify font-medium">
@@ -168,7 +168,7 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                     {userData.nextEvent ? (
                         <div className="bg-white rounded-[2rem] p-8 border border-slate-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.015)] relative overflow-hidden h-full flex flex-col justify-between min-h-[400px] hover:shadow-[0_20px_40px_rgba(0,0,0,0.03)] transition-all duration-300 group">
                             {/* Glowing line top */}
-                            <div className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-red-600 to-blue-600" />
+                            <div className="absolute top-0 left-0 right-0 h-[4px] bg-gradient-to-r from-[#c9041a] to-[#18182e]" />
                             <div className="absolute top-0 right-0 w-32 h-32 bg-slate-50 rounded-bl-full -mr-10 -mt-10 z-0"></div>
 
                             <div className="relative z-10 flex-1 flex flex-col justify-between">
@@ -190,7 +190,7 @@ export function DashboardClient({ userData }: DashboardClientProps) {
 
                                 <Link
                                     href={`/events/${userData.nextEvent.id}`}
-                                    className="w-full py-4 bg-slate-950 hover:bg-slate-900 text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2"
+                                    className="w-full py-4 bg-gradient-to-r from-[#c9041a] to-[#18182e] hover:from-[#b10317] hover:to-[#121223] text-white rounded-2xl text-xs font-black uppercase tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2"
                                 >
                                     {t("view_details")} <CheckCircle className="size-4" />
                                 </Link>

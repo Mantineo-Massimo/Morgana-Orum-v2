@@ -312,9 +312,20 @@
         "info_matricola": "Matricola",
         "info_member_since": "Iscritto dal",
         "info_status": "Status Privacy",
-        "status_verified": "Verificato",
-        "delete_confirm": "ATTENZIONE: Sei sicuro di voler eliminare definitivamente il tuo account? Questa azione è irreversibile e perderai tutti i tuoi dati, prenotazioni e crediti.",
-        "delete_error": "Errore durante l'eliminazione dell'account."
+        "delete_error": "Errore durante l'eliminazione dell'account.",
+        "profile_title": "Dati Account",
+        "profile_desc": "Modifica le informazioni personali del tuo account.",
+        "profile_name": "Nome",
+        "profile_surname": "Cognome",
+        "profile_email": "Email",
+        "profile_birthdate": "Data di Nascita",
+        "profile_department": "Dipartimento",
+        "profile_degree": "Corso di Laurea",
+        "profile_fuorisede": "Studente Fuorisede",
+        "profile_password": "Nuova Password (lascia vuoto per non cambiare)",
+        "profile_save": "Salva Modifiche",
+        "profile_success": "Profilo aggiornato con successo!",
+        "profile_error": "Impossibile aggiornare i dati profilo."
     },
     "AdminUsers": {
         "mktg_orum": "Mktg ORUM",
