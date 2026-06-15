@@ -63,7 +63,7 @@ const slugMap: Record<string, InitiativeConfig> = {
         icon: Film,
         iconColor: "text-red-600",
         iconBg: "bg-red-50 border-red-100",
-        themeColor: "#c12830", // Red
+        themeColor: "#dc2626", // Red
         badgeIt: "CULTURA",
         badgeEn: "CULTURE",
         highlightsIt: [

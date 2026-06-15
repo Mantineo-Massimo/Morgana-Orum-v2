@@ -120,7 +120,7 @@ export default function IniziativePage() {
             image: "/assets/slides/2.webp",
             icon: Film,
             iconColor: "text-red-600",
-            themeColor: "#c12830",
+            themeColor: "#dc2626",
             bgClass: "from-red-500/5 to-rose-500/5 border-red-100/30",
             badge: locale === 'it' ? "CULTURA" : "CULTURE"
         },

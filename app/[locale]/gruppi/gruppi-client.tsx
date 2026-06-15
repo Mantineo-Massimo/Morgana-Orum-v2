@@ -111,7 +111,64 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                     </div>
                 </div>
 
-                {/* Section 1: Gruppi Corsi Accademici */}
+                {/* Section 1: Gruppi Community Morgana e O.R.U.M. */}
+                {communityGroups.length > 0 && (
+                    <section className="mb-24">
+                        <div className="max-w-3xl mx-auto mb-16 text-center">
+                            <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
+                                {t.communityHeader}
+                            </h2>
+                            <p className="text-zinc-500 text-sm max-w-xl mx-auto">
+                                {t.communitySub}
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {communityGroups.map((group, idx) => {
+                                const Icon = ICON_MAP[group.icon] || Users
+                                const groupName = getGroupName(group)
+                                const groupDesc = getGroupDesc(group)
+                                return (
+                                    <div key={idx} className="group relative bg-white border border-zinc-100 rounded-3xl p-8 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full">
+                                        <div>
+                                            <div className={`size-12 rounded-2xl flex items-center justify-center mb-6 border transition-all ${group.theme || "text-blue-500 bg-blue-50 border-blue-100"}`}>
+                                                <Icon className="size-6" />
+                                            </div>
+                                            <h3 className="text-xl font-bold text-zinc-900 mb-3 group-hover:text-[#25D366] transition-colors uppercase tracking-tight font-serif">
+                                                {groupName}
+                                            </h3>
+                                            <p className="text-zinc-500 text-sm leading-relaxed mb-8">
+                                                {groupDesc}
+                                            </p>
+                                        </div>
+                                        <a
+                                            href={group.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="w-full flex items-center justify-center gap-2 bg-zinc-900 text-white hover:bg-[#25D366] font-bold text-xs uppercase tracking-widest py-4 rounded-xl transition-all duration-300 shadow-md group-hover:shadow-green-500/20"
+                                        >
+                                            {t.joinGroup} <ArrowRight className="size-4" />
+                                        </a>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </section>
+                )}
+
+                {/* Divider */}
+                {academicGroups.length > 0 && communityGroups.length > 0 && (
+                    <div className="relative my-20">
+                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                            <div className="w-full border-t border-zinc-200/80"></div>
+                        </div>
+                        <div className="relative flex justify-center">
+                            <span className="bg-zinc-50 px-4 text-zinc-300 text-sm">✦</span>
+                        </div>
+                    </div>
+                )}
+
+                {/* Section 2: Gruppi Corsi Accademici */}
                 {academicGroups.length > 0 && (
                     <section className="mb-24">
                         <div className="max-w-3xl mx-auto mb-12 text-center">
@@ -183,63 +240,6 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                     </div>
                                 ))
                             )}
-                        </div>
-                    </section>
-                )}
-
-                {/* Divider */}
-                {academicGroups.length > 0 && communityGroups.length > 0 && (
-                    <div className="relative my-20">
-                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div className="w-full border-t border-zinc-200/80"></div>
-                        </div>
-                        <div className="relative flex justify-center">
-                            <span className="bg-zinc-50 px-4 text-zinc-300 text-sm">✦</span>
-                        </div>
-                    </div>
-                )}
-
-                {/* Section 2: Gruppi Community Morgana e O.R.U.M. */}
-                {communityGroups.length > 0 && (
-                    <section className="mb-24">
-                        <div className="max-w-3xl mx-auto mb-16 text-center">
-                            <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
-                                {t.communityHeader}
-                            </h2>
-                            <p className="text-zinc-500 text-sm max-w-xl mx-auto">
-                                {t.communitySub}
-                            </p>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {communityGroups.map((group, idx) => {
-                                const Icon = ICON_MAP[group.icon] || Users
-                                const groupName = getGroupName(group)
-                                const groupDesc = getGroupDesc(group)
-                                return (
-                                    <div key={idx} className="group relative bg-white border border-zinc-100 rounded-3xl p-8 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full">
-                                        <div>
-                                            <div className={`size-12 rounded-2xl flex items-center justify-center mb-6 border transition-all ${group.theme || "text-blue-500 bg-blue-50 border-blue-100"}`}>
-                                                <Icon className="size-6" />
-                                            </div>
-                                            <h3 className="text-xl font-bold text-zinc-900 mb-3 group-hover:text-[#25D366] transition-colors uppercase tracking-tight font-serif">
-                                                {groupName}
-                                            </h3>
-                                            <p className="text-zinc-500 text-sm leading-relaxed mb-8">
-                                                {groupDesc}
-                                            </p>
-                                        </div>
-                                        <a
-                                            href={group.link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="w-full flex items-center justify-center gap-2 bg-zinc-900 text-white hover:bg-[#25D366] font-bold text-xs uppercase tracking-widest py-4 rounded-xl transition-all duration-300 shadow-md group-hover:shadow-green-500/20"
-                                        >
-                                            {t.joinGroup} <ArrowRight className="size-4" />
-                                        </a>
-                                    </div>
-                                )
-                            })}
                         </div>
                     </section>
                 )}
