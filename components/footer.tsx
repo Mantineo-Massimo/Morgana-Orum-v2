@@ -105,6 +105,7 @@ export async function Footer() {
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
                             <li><Link href="#" className={cn("transition-colors", mutedColor)}>{t("join")}</Link></li>
+                            <li><Link href="/terms" className={cn("transition-colors", mutedColor)}>{t("terms")}</Link></li>
                             <li><Link href="/privacy" className={cn("transition-colors", mutedColor)}>{t("privacy")}</Link></li>
                             <li><Link href="/cookie" className={cn("transition-colors", mutedColor)}>{t("cookies")}</Link></li>
                             <li><Link href="/contact" className={cn("transition-colors", mutedColor)}>{t("contact")}</Link></li>

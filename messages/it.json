@@ -20,6 +20,7 @@
         "partnership_info": "Gestione Tecnica a cura di Massimo Mantineo",
         "statute": "Statuto Associazione",
         "join": "Iscriviti",
+        "terms": "Termini e Condizioni",
         "privacy": "Privacy Policy",
         "cookies": "Cookie Policy",
         "contact": "Contattaci",
@@ -415,5 +416,24 @@
         "svago_title": "Attività di Svago & Aggregazione",
         "svago_desc": "Eventi ricreativi, aperitivi di benvenuto alle matricole e serate sociali pensate per stimolare l'aggregazione, staccando dallo studio e facendo community.",
         "svago_content": "Crediamo che l'università non debba essere solo studio, ma anche relazioni e vita di comunità. Per questo motivo, promuoviamo numerose attività ricreative ed eventi di svago, come aperitivi di benvenuto per le nuove matricole, tornei di giochi da tavolo, giornate di orienteering e momenti di socialità. Queste attività aiutano gli studenti a integrarsi, creare nuove amicizie e vivere appieno l'esperienza accademica in un ambiente stimolante e inclusivo."
+    },
+    "Terms": {
+        "title": "Termini e Condizioni",
+        "intro": "I presenti Termini e Condizioni disciplinano l'utilizzo del portale web comune delle Associazioni O.R.U.M. e Morgana e la partecipazione alle nostre attività.",
+        "last_update": "Messina, lì 15 Giugno 2026",
+        "general_title": "1. Condizioni Generali",
+        "general_desc": "<p>L'accesso e l'uso di questo portale implicano l'accettazione incondizionata dei presenti Termini e Condizioni da parte dell'utente. Se non concordi con essi, ti invitiamo a non utilizzare il sito.</p>",
+        "services_title": "2. Servizi Offerti",
+        "services_desc": "<p>Il portale fornisce informazioni sulle attività delle Associazioni, consente la registrazione ad eventi, la consultazione di guide universitarie e l'accesso ad un'area riservata per gli studenti.</p>",
+        "user_rules_title": "3. Regole di Condotta dell'Utente",
+        "user_rules_desc": "<p>L'utente si impegna a fornire informazioni veritiere durante la registrazione e a non utilizzare il portale per scopi illeciti, diffamatori o lesivi dei diritti delle Associazioni o di terzi.</p>",
+        "intellectual_property_title": "4. Proprietà Intellettuale",
+        "intellectual_property_desc": "<p>Tutti i contenuti presenti sul portale (testi, immagini, loghi, marchi, codici sorgente) sono di proprietà esclusiva delle Associazioni O.R.U.M. e Morgana o dei rispettivi licenziatari, protetti dalle leggi sul diritto d'autore.</p>",
+        "liability_title": "5. Limitazione di Responsabilità",
+        "liability_desc": "<p>Le Associazioni non garantiscono il funzionamento ininterrotto del portale e non assumono responsabilità per danni diretti o indiretti derivanti dall'uso o dall'impossibilità di usare il sito.</p>",
+        "modifications_title": "6. Modifiche ai Termini",
+        "modifications_desc": "<p>Ci riserviamo il diritto di modificare in qualsiasi momento i presenti Termini. Le modifiche saranno efficaci non appena pubblicate sul portale.</p>",
+        "governing_law_title": "7. Legge Applicabile e Foro Competente",
+        "governing_law_desc": "<p>I presenti Termini sono regolati dalla legge italiana. Qualsiasi controversia sarà devoluta alla competenza esclusiva del Foro di Messina.</p>"
     }
 }

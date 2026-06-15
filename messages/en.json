@@ -20,6 +20,7 @@
         "partnership_info": "Technical Management by Massimo Mantineo",
         "statute": "Association Statute",
         "join": "Join Us",
+        "terms": "Terms & Conditions",
         "privacy": "Privacy Policy",
         "cookies": "Cookie Policy",
         "contact": "Contact Us",
@@ -413,5 +414,24 @@
         "svago_title": "Leisure & Community",
         "svago_desc": "Recreational events, freshman welcome gatherings, and social meetups designed to encourage integration and student community life.",
         "svago_content": "We believe that university life shouldn't be about studying alone, but also relationships and community life. For this reason, we promote numerous recreational activities and leisure events, such as welcome aperitifs for new freshmen, board game tournaments, orienteering days, and social gatherings. These activities help students integrate, build new friendships, and fully experience academic life in a stimulating and inclusive environment."
+    },
+    "Terms": {
+        "title": "Terms and Conditions",
+        "intro": "These Terms and Conditions govern the use of the common web portal of the O.R.U.M. and Morgana Associations and participation in our activities.",
+        "last_update": "Messina, June 15, 2026",
+        "general_title": "1. General Conditions",
+        "general_desc": "<p>Access to and use of this portal imply unconditional acceptance of these Terms and Conditions by the user. If you do not agree with them, please do not use the site.</p>",
+        "services_title": "2. Services Offered",
+        "services_desc": "<p>The portal provides information on Association activities, allows event registration, consultation of university guides, and access to a reserved student area.</p>",
+        "user_rules_title": "3. User Conduct Rules",
+        "user_rules_desc": "<p>The user agrees to provide truthful information during registration and not to use the portal for illegal, defamatory purposes, or purposes harmful to the Associations or third parties.</p>",
+        "intellectual_property_title": "4. Intellectual Property",
+        "intellectual_property_desc": "<p>All contents on the portal (texts, images, logos, trademarks, source codes) are the exclusive property of the O.R.U.M. and Morgana Associations or their respective licensors, protected by copyright laws.</p>",
+        "liability_title": "5. Limitation of Liability",
+        "liability_desc": "<p>The Associations do not guarantee uninterrupted operation of the portal and assume no responsibility for direct or indirect damages resulting from the use or inability to use the site.</p>",
+        "modifications_title": "6. Modifications to Terms",
+        "modifications_desc": "<p>We reserve the right to modify these Terms at any time. Changes will be effective as soon as they are published on the portal.</p>",
+        "governing_law_title": "7. Governing Law and Jurisdiction",
+        "governing_law_desc": "<p>These Terms are governed by Italian law. Any dispute will be subject to the exclusive jurisdiction of the Court of Messina.</p>"
     }
 }
