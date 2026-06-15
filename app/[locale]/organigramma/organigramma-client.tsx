@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Shield, Users, Award, Mail } from "lucide-react"
+import { Shield, Users, Award, Mail, MapPin, BookOpen } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface OrganigrammaClientProps {
@@ -13,28 +13,30 @@ interface OrganigrammaClientProps {
 const TRANSLATIONS: Record<string, Record<string, string>> = {
     it: {
         title: "Organigramma",
-        subtitle: "I componenti del direttivo, i coordinatori dei dipartimenti e la struttura organizzativa interna delle nostre associazioni.",
+        subtitle: "La struttura organizzativa interna, i coordinatori delle aree e i responsabili d'ateneo delle nostre associazioni.",
         tabAree: "Aree dell'Associazione",
-        tabDipartimenti: "Responsabili di Dipartimento",
+        tabDipartimenti: "Responsabili d'Ateneo",
         presidency: "Presidenza",
         board: "Consiglio Direttivo",
-        departments: "Dipartimenti & Aree",
-        coordinator: "Coordinatore"
+        coordinators: "Coordinatori e Responsabili di Area",
+        poli: "Responsabili di Polo",
+        departments: "Responsabili di Dipartimento"
     },
     en: {
         title: "Organization Chart",
-        subtitle: "The members of the executive board, department coordinators, and internal organizational structure of our associations.",
+        subtitle: "The internal organizational structure, area coordinators, and university managers of our associations.",
         tabAree: "Association Areas",
-        tabDipartimenti: "Department Managers",
+        tabDipartimenti: "University Managers",
         presidency: "Presidency",
         board: "Executive Board",
-        departments: "Departments & Areas",
-        coordinator: "Coordinator"
+        coordinators: "Coordinators & Area Managers",
+        poli: "Campus Managers (Poli)",
+        departments: "Department Managers"
     }
 }
 
 export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClientProps) {
-    const [activeTab, setActiveTab] = useState<"aree" | "dipartimenti">("aree")
+    const [activeTab, setActiveTab] = useState<"aree" | "ateneo">("aree")
     const isAree = activeTab === "aree"
     
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
@@ -42,6 +44,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
     // Helper to extract structure from database members
     const getRole = (m: any) => (locale === "en" && m.roleEn) ? m.roleEn : m.role
 
+    // Filter Aree dell'Associazione (Tab 1)
     const presidency = initialMembers
         .filter(m => m.section === "PRESIDENCY")
         .sort((a, b) => (a.order || 0) - (b.order || 0))
@@ -50,12 +53,20 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
         .filter(m => m.section === "BOARD")
         .sort((a, b) => (a.order || 0) - (b.order || 0))
 
+    const coordinators = initialMembers
+        .filter(m => m.section === "COORDINATOR")
+        .sort((a, b) => (a.order || 0) - (b.order || 0))
+
+    // Filter Responsabili d'Ateneo (Tab 2)
+    const poli = initialMembers
+        .filter(m => m.section === "POLO")
+        .sort((a, b) => (a.order || 0) - (b.order || 0))
+
     const departments = initialMembers
         .filter(m => m.section === "DEPARTMENT")
         .sort((a, b) => (a.order || 0) - (b.order || 0))
 
     const brandColor = "text-[#18182e]"
-    const bgBrandColor = "bg-[#18182e]"
     const shadowColor = "shadow-blue-900/10"
 
     return (
@@ -85,7 +96,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                         {t.tabAree}
                     </button>
                     <button
-                        onClick={() => setActiveTab("dipartimenti")}
+                        onClick={() => setActiveTab("ateneo")}
                         className={cn(
                             "w-full px-8 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all duration-300 border",
                             !isAree
@@ -188,24 +199,22 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                         </div>
                                     </div>
                                 )}
-                            </>
-                        ) : (
-                            /* 3. Departments Section */
-                            departments.length > 0 && (
-                                <div className="space-y-8">
-                                    <div className="flex items-center gap-4 justify-center">
-                                        <Award className={cn("size-6", brandColor)} />
-                                        <h2 className="text-2xl font-serif font-black uppercase tracking-wider text-zinc-800">
-                                            {t.departments}
-                                        </h2>
-                                    </div>
-                                    <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-                                        {departments.map((m) => (
-                                            <div
-                                                key={m.id}
-                                                className="bg-white p-6 rounded-3xl border border-zinc-150/60 shadow-sm hover:shadow-md transition-shadow text-left flex flex-col justify-between"
-                                            >
-                                                <div>
+
+                                {/* 3. Coordinators Section */}
+                                {coordinators.length > 0 && (
+                                    <div className="space-y-8">
+                                        <div className="flex items-center gap-4 justify-center">
+                                            <Award className={cn("size-6", brandColor)} />
+                                            <h2 className="text-2xl font-serif font-black uppercase tracking-wider text-zinc-800">
+                                                {t.coordinators}
+                                            </h2>
+                                        </div>
+                                        <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                                            {coordinators.map((m) => (
+                                                <div
+                                                    key={m.id}
+                                                    className="bg-white p-6 rounded-3xl border border-zinc-150/60 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
+                                                >
                                                     {m.association === "MORGANA" ? (
                                                         <span className="inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 bg-red-50 text-[#c9041a] rounded-full border border-red-100/55 mb-4">
                                                             Morgana
@@ -215,20 +224,107 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                             O.R.U.M.
                                                         </span>
                                                     )}
-                                                    <span className="text-[10px] font-black uppercase tracking-wider text-zinc-400 block mb-2">{getRole(m)}</span>
-                                                    <h3 className="text-lg font-bold text-zinc-900 mb-1">{t.coordinator}</h3>
-                                                    <p className="text-sm font-semibold text-zinc-650">{m.name}</p>
+
+                                                    <div className="size-12 rounded-xl bg-zinc-50 text-zinc-650 flex items-center justify-center mb-4 font-serif text-lg font-black border border-zinc-100">
+                                                        {m.name.charAt(0)}
+                                                    </div>
+                                                    <h3 className="font-bold text-zinc-900 mb-1">{m.name}</h3>
+                                                    <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-3">{getRole(m)}</p>
+                                                    {m.email && (
+                                                        <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors flex items-center gap-1.5 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100 w-fit">
+                                                            <Mail className="size-3.5" /> {m.email}
+                                                        </a>
+                                                    )}
                                                 </div>
-                                                {m.email && (
-                                                    <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 mt-4 transition-colors flex items-center gap-1.5 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100 w-fit">
-                                                        <Mail className="size-3.5" /> {m.email}
-                                                    </a>
-                                                )}
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
-                            )
+                                )}
+                            </>
+                        ) : (
+                            <>
+                                {/* 4. Poli Section */}
+                                {poli.length > 0 && (
+                                    <div className="space-y-8">
+                                        <div className="flex items-center gap-4 justify-center">
+                                            <MapPin className={cn("size-6", brandColor)} />
+                                            <h2 className="text-2xl font-serif font-black uppercase tracking-wider text-zinc-800">
+                                                {t.poli}
+                                            </h2>
+                                        </div>
+                                        <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                                            {poli.map((m) => (
+                                                <div
+                                                    key={m.id}
+                                                    className="bg-white p-6 rounded-3xl border border-zinc-150/60 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
+                                                >
+                                                    {m.association === "MORGANA" ? (
+                                                        <span className="inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 bg-red-50 text-[#c9041a] rounded-full border border-red-100/55 mb-4">
+                                                            Morgana
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 bg-blue-50 text-[#18182e] rounded-full border border-blue-100/55 mb-4">
+                                                            O.R.U.M.
+                                                        </span>
+                                                    )}
+
+                                                    <div className="size-12 rounded-xl bg-zinc-50 text-zinc-650 flex items-center justify-center mb-4 font-serif text-lg font-black border border-zinc-100">
+                                                        {m.name.charAt(0)}
+                                                    </div>
+                                                    <h3 className="font-bold text-zinc-900 mb-1">{m.name}</h3>
+                                                    <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-3">{getRole(m)}</p>
+                                                    {m.email && (
+                                                        <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors flex items-center gap-1.5 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100 w-fit">
+                                                            <Mail className="size-3.5" /> {m.email}
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* 5. Departments Section */}
+                                {departments.length > 0 && (
+                                    <div className="space-y-8">
+                                        <div className="flex items-center gap-4 justify-center">
+                                            <BookOpen className={cn("size-6", brandColor)} />
+                                            <h2 className="text-2xl font-serif font-black uppercase tracking-wider text-zinc-800">
+                                                {t.departments}
+                                            </h2>
+                                        </div>
+                                        <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                                            {departments.map((m) => (
+                                                <div
+                                                    key={m.id}
+                                                    className="bg-white p-6 rounded-3xl border border-zinc-150/60 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
+                                                >
+                                                    {m.association === "MORGANA" ? (
+                                                        <span className="inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 bg-red-50 text-[#c9041a] rounded-full border border-red-100/55 mb-4">
+                                                            Morgana
+                                                        </span>
+                                                    ) : (
+                                                        <span className="inline-block text-[9px] font-black tracking-widest uppercase px-2 py-0.5 bg-blue-50 text-[#18182e] rounded-full border border-blue-100/55 mb-4">
+                                                            O.R.U.M.
+                                                        </span>
+                                                    )}
+
+                                                    <div className="size-12 rounded-xl bg-zinc-50 text-zinc-650 flex items-center justify-center mb-4 font-serif text-lg font-black border border-zinc-100">
+                                                        {m.name.charAt(0)}
+                                                    </div>
+                                                    <h3 className="font-bold text-zinc-900 mb-1">{m.name}</h3>
+                                                    <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-3">{getRole(m)}</p>
+                                                    {m.email && (
+                                                        <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors flex items-center gap-1.5 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100 w-fit">
+                                                            <Mail className="size-3.5" /> {m.email}
+                                                        </a>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </>
                         )}
                     </motion.div>
                 </AnimatePresence>

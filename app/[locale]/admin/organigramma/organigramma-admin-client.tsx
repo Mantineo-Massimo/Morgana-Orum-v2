@@ -4,7 +4,8 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import {
     Plus, Trash2, Mail, Shield, Users, Award,
-    Edit3, Copy, Search, Loader2, ArrowUpDown, ArrowUp, ArrowDown
+    Edit3, Copy, Search, Loader2, ArrowUpDown, ArrowUp, ArrowDown,
+    MapPin, BookOpen
 } from "lucide-react"
 import {
     createOrganigrammaMember,
@@ -27,7 +28,9 @@ interface OrganigrammaAdminClientProps {
 const SECTIONS = [
     { value: "PRESIDENCY", label: "Presidenza" },
     { value: "BOARD", label: "Consiglio Direttivo" },
-    { value: "DEPARTMENT", label: "Dipartimento & Aree" }
+    { value: "COORDINATOR", label: "Coordinatore / Responsabile di Area" },
+    { value: "POLO", label: "Responsabile di Polo" },
+    { value: "DEPARTMENT", label: "Responsabile di Dipartimento" }
 ]
 
 const ASSOCIATIONS = [
@@ -236,8 +239,12 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                 return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-red-50 text-red-600 rounded-full border border-red-100"><Shield className="size-3" /> Presidenza</span>
             case "BOARD":
                 return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full border border-blue-100"><Users className="size-3" /> Direttivo</span>
+            case "COORDINATOR":
+                return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-amber-50 text-amber-600 rounded-full border border-amber-100"><Award className="size-3" /> Area / Coord.</span>
+            case "POLO":
+                return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100"><MapPin className="size-3" /> Polo</span>
             case "DEPARTMENT":
-                return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-purple-50 text-purple-600 rounded-full border border-purple-100"><Award className="size-3" /> Dipartimento</span>
+                return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-purple-50 text-purple-600 rounded-full border border-purple-100"><BookOpen className="size-3" /> Dipartimento</span>
             default:
                 return null
         }
