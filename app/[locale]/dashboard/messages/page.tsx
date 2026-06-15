@@ -2,27 +2,29 @@ import { getNotifications } from "@/app/actions/notifications"
 import { Bell, Calendar, FileText, ChevronRight, Info } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { getTranslations } from "next-intl/server"
 
 export const dynamic = "force-dynamic"
 
-export default async function MessagesPage() {
+export default async function MessagesPage({ params: { locale } }: { params: { locale: string } }) {
     const notifications = await getNotifications()
+    const t = await getTranslations("Dashboard")
 
     return (
-        <div className="space-y-8 pb-12">
+        <div className="space-y-8 pb-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-                <h1 className="text-3xl font-bold text-foreground">I tuoi Messaggi</h1>
-                <p className="text-zinc-500 mt-2">Rimani aggiornato su tutte le ultime novità e gli eventi pubblicati.</p>
+                <h1 className="text-3xl font-extrabold text-foreground tracking-tight mb-1.5">{t("messages_title")}</h1>
+                <p className="text-sm font-medium text-zinc-500 leading-relaxed">{t("messages_desc")}</p>
             </div>
 
             {notifications.length === 0 ? (
-                <div className="bg-white rounded-2xl border border-zinc-100 p-12 text-center shadow-sm">
-                    <div className="size-16 bg-zinc-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <Bell className="size-8 text-zinc-300" />
+                <div className="bg-white rounded-[2rem] border border-slate-100 p-12 text-center shadow-[0_8px_30px_rgb(0,0,0,0.015)]">
+                    <div className="size-16 bg-slate-50 rounded-full border border-slate-100 flex items-center justify-center mx-auto mb-4">
+                        <Bell className="size-8 text-zinc-350" />
                     </div>
-                    <h3 className="text-lg font-bold text-foreground">Nessun messaggio</h3>
-                    <p className="text-zinc-500 max-w-sm mx-auto mt-2">
-                        Non hai ancora ricevuto notifiche. Ti avviseremo qui quando pubblicheremo nuovi contenuti.
+                    <h3 className="text-lg font-bold text-foreground mb-1">{t("no_messages")}</h3>
+                    <p className="text-zinc-500 max-w-xs mx-auto text-sm leading-relaxed">
+                        {t("no_messages_desc")}
                     </p>
                 </div>
             ) : (
@@ -34,35 +36,35 @@ export default async function MessagesPage() {
                         return (
                             <div
                                 key={notif.id}
-                                className="group bg-white rounded-2xl border border-zinc-100 p-5 shadow-sm hover:shadow-md transition-all border-l-4"
+                                className="group bg-white rounded-[1.5rem] border border-slate-100 p-6 shadow-[0_8px_24px_rgb(0,0,0,0.01)] hover:shadow-[0_16px_36px_rgb(0,0,0,0.03)] transition-all duration-300 border-l-4"
                                 style={{ borderLeftColor: isEvent ? "#c12830" : (isNews ? "#18182e" : "#71717a") }}
                             >
                                 <div className="flex items-start gap-4">
                                     <div className={cn(
-                                        "size-10 rounded-xl flex items-center justify-center shrink-0",
-                                        isEvent ? "bg-red-50 text-red-600" : (isNews ? "bg-blue-50 text-blue-900" : "bg-zinc-50 text-zinc-600")
+                                        "size-10 rounded-xl flex items-center justify-center shrink-0 border",
+                                        isEvent ? "bg-red-50 border-red-100 text-red-650" : (isNews ? "bg-slate-900 border-slate-800 text-white" : "bg-slate-50 border-slate-200 text-zinc-500")
                                     )}>
                                         {isEvent ? <Calendar className="size-5" /> : (isNews ? <FileText className="size-5" /> : <Info className="size-5" />)}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <div className="flex items-center justify-between mb-1">
-                                            <p className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-                                                {notif.type} • {new Date(notif.createdAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}
+                                        <div className="flex items-center justify-between mb-1.5">
+                                            <p className="text-[10px] font-black uppercase tracking-wider text-zinc-400">
+                                                {isEvent ? t("stats_events") : (isNews ? t("sidebar_messages") : notif.type)} • {new Date(notif.createdAt).toLocaleDateString(locale === 'en' ? 'en-US' : 'it-IT', { day: 'numeric', month: 'long' })}
                                             </p>
                                         </div>
-                                        <h3 className="font-bold text-foreground text-lg mb-1 group-hover:text-red-600 transition-colors uppercase tracking-tight">
+                                        <h3 className="font-extrabold text-slate-850 text-lg mb-1 group-hover:text-violet-650 transition-colors uppercase tracking-tight leading-snug">
                                             {notif.title}
                                         </h3>
-                                        <p className="text-zinc-500 text-sm line-clamp-2 leading-relaxed">
+                                        <p className="text-zinc-500 text-sm font-medium line-clamp-2 leading-relaxed">
                                             {notif.message}
                                         </p>
                                         {notif.link && (
                                             <Link
                                                 href={notif.link}
-                                                className="inline-flex items-center gap-1 text-xs font-bold text-zinc-900 mt-4 hover:gap-2 transition-all group/link"
+                                                className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-900 mt-4 hover:gap-2.5 transition-all group/link"
                                             >
-                                                SCOPRI DI PIÙ
-                                                <ChevronRight className="size-3" />
+                                                {t("discover_more")}
+                                                <ChevronRight className="size-3.5" />
                                             </Link>
                                         )}
                                     </div>

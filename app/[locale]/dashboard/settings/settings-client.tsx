@@ -42,12 +42,12 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
     }
 
     const handleDeleteAccount = async () => {
-        if (confirm("ATTENZIONE: Sei sicuro di voler eliminare definitivamente il tuo account? Questa azione è irreversibile e perderai tutti i tuoi dati, prenotazioni e crediti.")) {
+        if (confirm(t("delete_confirm"))) {
             const res = await deleteOwnAccount()
             if (res.success) {
                 window.location.href = "/"
             } else {
-                alert("Errore durante l'eliminazione dell'account.")
+                alert(t("delete_error"))
             }
         }
     }
@@ -56,47 +56,47 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-black text-foreground">{t("title")}</h1>
-                <p className="text-zinc-500 mt-2">{t("desc")}</p>
+                <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-1.5">{t("title")}</h1>
+                <p className="text-sm font-medium text-zinc-500 leading-relaxed">{t("desc")}</p>
             </div>
 
             {message && (
                 <div className={cn(
-                    "p-4 rounded-2xl border flex items-center gap-3 animate-in fade-in slide-in-from-top-2",
-                    message.type === 'success' ? "bg-green-50 border-green-100 text-green-700" : "bg-red-50 border-red-100 text-red-700"
+                    "p-4.5 rounded-2xl border flex items-center gap-3 animate-in fade-in slide-in-from-top-2 shadow-sm font-bold text-sm",
+                    message.type === 'success' ? "bg-green-50 border-green-200/50 text-green-700" : "bg-red-50 border-red-200/50 text-red-700"
                 )}>
-                    {message.type === 'success' && <CheckCircle2 className="size-5" />}
-                    <span className="text-sm font-bold">{message.text}</span>
+                    {message.type === 'success' && <CheckCircle2 className="size-5 shrink-0" />}
+                    <span>{message.text}</span>
                 </div>
             )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Privacy & Marketing */}
                 <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-white rounded-[2.5rem] border border-zinc-100 p-8 md:p-10 shadow-sm">
+                    <div className="bg-white rounded-[2rem] border border-slate-100 p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.015)]">
                         <div className="flex items-center gap-4 mb-8">
-                            <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center">
+                            <div className="size-12 rounded-2xl bg-slate-950 text-white flex items-center justify-center border border-slate-900 shadow-md">
                                 <Shield className="size-6" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-black text-foreground">{t("privacy_title")}</h2>
-                                <p className="text-xs text-zinc-400 font-medium tracking-wider uppercase">{t("gdpr_badge")}</p>
+                                <h2 className="text-xl font-extrabold text-foreground tracking-tight">{t("privacy_title")}</h2>
+                                <p className="text-[10px] text-zinc-400 font-bold tracking-widest uppercase mt-0.5">{t("gdpr_badge")}</p>
                             </div>
                         </div>
 
                         <div className="space-y-6">
-                            <div className="flex items-center justify-between p-6 bg-zinc-50 rounded-3xl border border-zinc-100 group hover:bg-white hover:shadow-md transition-all">
+                            <div className="flex items-center justify-between p-6 bg-slate-50 rounded-[1.5rem] border border-slate-150 group hover:bg-white hover:shadow-md transition-all duration-300">
                                 <div className="space-y-1">
-                                    <h3 className="font-bold text-zinc-900 text-lg">{t("orum_mktg")}</h3>
-                                    <p className="text-xs text-zinc-500 max-w-sm">
+                                    <h3 className="font-extrabold text-zinc-850 text-base sm:text-lg tracking-tight">{t("orum_mktg")}</h3>
+                                    <p className="text-xs text-zinc-500 max-w-sm font-medium">
                                         {t("orum_mktg_desc")}
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setOrumConsent(!orumConsent)}
                                     className={cn(
-                                        "relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
-                                        orumConsent ? "bg-zinc-900" : "bg-zinc-200"
+                                        "relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none shadow-inner",
+                                        orumConsent ? "bg-slate-950" : "bg-zinc-250 bg-zinc-200"
                                     )}
                                 >
                                     <span className={cn(
@@ -106,18 +106,18 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                 </button>
                             </div>
 
-                            <div className="flex items-center justify-between p-6 bg-zinc-50 rounded-3xl border border-zinc-100 group hover:bg-white hover:shadow-md transition-all">
+                            <div className="flex items-center justify-between p-6 bg-slate-50 rounded-[1.5rem] border border-slate-150 group hover:bg-white hover:shadow-md transition-all duration-300">
                                 <div className="space-y-1">
-                                    <h3 className="font-bold text-zinc-900 text-lg">{t("morgana_mktg")}</h3>
-                                    <p className="text-xs text-zinc-500 max-w-sm">
+                                    <h3 className="font-extrabold text-zinc-850 text-base sm:text-lg tracking-tight">{t("morgana_mktg")}</h3>
+                                    <p className="text-xs text-zinc-500 max-w-sm font-medium">
                                         {t("morgana_mktg_desc")}
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setMorganaConsent(!morganaConsent)}
                                     className={cn(
-                                        "relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none",
-                                        morganaConsent ? "bg-zinc-900" : "bg-zinc-200"
+                                        "relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none shadow-inner",
+                                        morganaConsent ? "bg-slate-950" : "bg-zinc-250 bg-zinc-200"
                                     )}
                                 >
                                     <span className={cn(
@@ -131,7 +131,7 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                 <button
                                     onClick={handleUpdateConsents}
                                     disabled={isPending}
-                                    className="w-full md:w-auto px-10 py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-black transition-all flex items-center justify-center gap-2"
+                                    className="w-full md:w-auto px-10 py-4 bg-slate-950 text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-black transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-95"
                                 >
                                     {isPending ? <Loader2 className="size-4 animate-spin" /> : t("save_prefs")}
                                 </button>
@@ -140,7 +140,7 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                     </div>
 
                     {/* Personal Data Info */}
-                    <div className="bg-zinc-900 rounded-[2.5rem] p-8 md:p-10 text-white shadow-2xl relative overflow-hidden group">
+                    <div className="bg-slate-950 rounded-[2rem] p-8 md:p-10 text-white shadow-xl relative overflow-hidden group border border-slate-900">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl group-hover:scale-110 transition-transform duration-700" />
                         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
                             <div className="space-y-3 text-center md:text-left">
@@ -151,10 +151,10 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                             </div>
                             <button
                                 onClick={handleExport}
-                                className="px-8 py-4 bg-white text-zinc-900 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-zinc-100 transition-all flex items-center gap-3 shrink-0"
+                                className="px-8 py-4 bg-white text-slate-950 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-zinc-50 transition-all flex items-center gap-3 shrink-0 shadow-lg hover:shadow-xl active:scale-95 border border-white/10"
                             >
-                                <Download className="size-4" />
-                                {t("export_button")}
+                                <Download className="size-4 text-slate-950" />
+                                <span className="text-slate-955 font-bold">{t("export_button")}</span>
                             </button>
                         </div>
                     </div>
@@ -162,19 +162,19 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
 
                 {/* Account Actions */}
                 <div className="space-y-6">
-                    <div className="bg-white rounded-[2.5rem] border border-red-100 p-8 shadow-sm">
+                    <div className="bg-white rounded-[2rem] border border-red-100 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.015)]">
                         <div className="flex items-center gap-4 mb-8">
-                            <div className="size-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center">
+                            <div className="size-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center border border-red-100 shadow-sm">
                                 <Trash2 className="size-6" />
                             </div>
                             <div>
-                                <h2 className="text-xl font-black text-foreground">{t("danger_zone")}</h2>
-                                <p className="text-xs text-red-400 font-bold tracking-wider uppercase">{t("danger_desc")}</p>
+                                <h2 className="text-xl font-extrabold text-foreground tracking-tight">{t("danger_zone")}</h2>
+                                <p className="text-[10px] text-red-500 font-bold tracking-widest uppercase mt-0.5">{t("danger_desc")}</p>
                             </div>
                         </div>
 
                         <div className="space-y-6">
-                            <div className="p-6 bg-red-50/50 rounded-3xl border border-red-50">
+                            <div className="p-6 bg-red-50/40 rounded-2xl border border-red-100">
                                 <div className="flex items-start gap-3 text-red-700 mb-6">
                                     <AlertTriangle className="size-5 shrink-0 mt-0.5" />
                                     <p className="text-xs font-bold leading-relaxed">
@@ -183,7 +183,7 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                                 </div>
                                 <button
                                     onClick={handleDeleteAccount}
-                                    className="w-full py-4 bg-white text-red-600 border border-red-100 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-red-600 hover:text-white transition-all"
+                                    className="w-full py-4 bg-white text-red-600 border border-red-105 border-red-100/80 hover:border-red-200 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-red-600 hover:text-white transition-all shadow-sm active:scale-95"
                                 >
                                     {t("delete_button")}
                                 </button>
@@ -191,20 +191,20 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
                         </div>
                     </div>
 
-                    <div className="bg-zinc-50 rounded-[2.5rem] p-8 border border-zinc-100">
-                        <h4 className="text-xs font-black uppercase tracking-widest text-zinc-400 mb-4">{t("info_title")}</h4>
-                        <div className="space-y-3 text-xs text-zinc-500 font-medium">
-                            <div className="flex justify-between py-2 border-b border-zinc-100">
+                    <div className="bg-slate-50/50 rounded-[2rem] p-8 border border-slate-100 shadow-sm">
+                        <h4 className="text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-4">{t("info_title")}</h4>
+                        <div className="space-y-3 text-xs text-zinc-500 font-semibold">
+                            <div className="flex justify-between py-2 border-b border-slate-100/80">
                                 <span>{t("info_matricola")}</span>
-                                <span className="font-bold text-zinc-900">{initialUser.matricola}</span>
+                                <span className="font-extrabold text-slate-800">{initialUser.matricola}</span>
                             </div>
-                            <div className="flex justify-between py-2 border-b border-zinc-100">
+                            <div className="flex justify-between py-2 border-b border-slate-100/80">
                                 <span>{t("info_member_since")}</span>
-                                <span className="font-bold text-zinc-900">{initialUser.memberSince}</span>
+                                <span className="font-extrabold text-slate-800">{initialUser.memberSince}</span>
                             </div>
-                            <div className="flex justify-between py-2 border-b border-zinc-100">
+                            <div className="flex justify-between py-2 border-b border-slate-100/80">
                                 <span>{t("info_status")}</span>
-                                <span className="text-green-600 font-bold">{t("status_verified")}</span>
+                                <span className="text-green-600 font-extrabold">{t("status_verified")}</span>
                             </div>
                         </div>
                     </div>
