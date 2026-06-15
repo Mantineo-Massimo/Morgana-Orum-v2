@@ -66,13 +66,13 @@ const slugMap: Record<string, InitiativeConfig> = {
         badgeIt: "CULTURA",
         badgeEn: "CULTURE",
         highlightsIt: [
-            "Accessibilità totale: L'ingresso alle proiezioni è totalmente gratuito per l'intera comunità studentesca.",
+            "Tariffa agevolata: L'ingresso è a prezzo speciale e ridotto per l'intera comunità studentesca.",
             "Confronto guidato: Al termine di ogni film, il dibattito in aula è moderato da relatori esperti del settore cinematografico e sociale. È un'opportunità unica per esprimere le proprie opinioni e confrontarsi attivamente.",
             "Temi di attualità: Le pellicole sono accuratamente selezionate per approfondire argomenti cruciali legati all'attualità, all'ambiente e ai diritti civili.",
             "Riconoscimento accademico: Gli incontri sono accreditati dall'Ateneo, prevedendo l'eventuale riconoscimento di CFU per gli studenti che vi partecipano."
         ],
         highlightsEn: [
-            "Total accessibility: Entry to the screenings is completely free for the entire student community.",
+            "Discounted rate: Entry is at a special reduced price for the entire student community.",
             "Guided debate: At the end of each film, the classroom debate is moderated by experts from the cinematographic and social sectors. It is a unique opportunity to express opinions and engage actively.",
             "Current topics: The films are carefully selected to delve into crucial topics related to current affairs, the environment, and civil rights.",
             "Academic recognition: Meetings are accredited by the University, with potential training credits (CFU) for participating students."
