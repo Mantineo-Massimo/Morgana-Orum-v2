@@ -53,10 +53,10 @@ export default async function MessagesPage({ params: { locale } }: { params: { l
                                             </p>
                                         </div>
                                         <h3 className="font-extrabold text-slate-850 text-lg mb-1 group-hover:text-red-600 transition-colors uppercase tracking-tight leading-snug">
-                                            {notif.title}
+                                            {(locale === 'en' && notif.titleEn) ? notif.titleEn : notif.title}
                                         </h3>
                                         <p className="text-zinc-500 text-sm font-medium line-clamp-2 leading-relaxed">
-                                            {notif.message}
+                                            {(locale === 'en' && notif.messageEn) ? notif.messageEn : notif.message}
                                         </p>
                                         {notif.link && (
                                             <Link

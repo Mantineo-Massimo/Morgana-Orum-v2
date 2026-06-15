@@ -144,7 +144,9 @@ model EventCategory {
 model Notification {
   id        String   @id @default(uuid())
   title     String
+  titleEn   String?
   message   String
+  messageEn String?
   type      String
   link      String?
   createdAt DateTime @default(now())
