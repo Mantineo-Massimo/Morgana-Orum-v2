@@ -8,8 +8,9 @@ import { ServicesGuide } from "@/components/services-guide"
 import { TransportGuide } from "@/components/transport-guide"
 import { TaxCalculator } from "@/components/tax-calculator"
 import { AcademicDictionary } from "@/components/academic-dictionary"
+import { SessionsCountdown } from "@/components/sessions-countdown"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Calculator } from "lucide-react"
+import { Calculator, Clock } from "lucide-react"
 
 const InteractiveMap = nextDynamic(
     () => import("@/components/interactive-map"),
@@ -88,7 +89,7 @@ const getColorClasses = (color: string) => {
 
 export function GuideClient({ categories, initialGuides, locale }: GuideClientProps) {
     const [selectedGuide, setSelectedGuide] = useState<string>("matricole")
-    const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | null>(null)
+    const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | null>(null)
 
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
 
@@ -230,7 +231,7 @@ export function GuideClient({ categories, initialGuides, locale }: GuideClientPr
                                                     : "Utilizza i nostri strumenti interattivi creati appositamente per calcolare rapidamente le tasse o decifrare i termini universitari più comuni."}
                                             </p>
                                         </div>
-                                        <div className="grid md:grid-cols-2 gap-6">
+                                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                                             {/* Tax Simulator Card */}
                                             <button
                                                 onClick={() => setActiveToolModal("tasse")}
@@ -276,6 +277,29 @@ export function GuideClient({ categories, initialGuides, locale }: GuideClientPr
                                                     {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                                 </div>
                                             </button>
+
+                                            {/* Sessions Countdown Card */}
+                                            <button
+                                                onClick={() => setActiveToolModal("countdown")}
+                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            >
+                                                <div>
+                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#f9a620] transition-all">
+                                                        <Clock className="size-6" />
+                                                    </div>
+                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                        {locale === "en" ? "Deadlines & Countdowns" : "Countdown Sessioni"}
+                                                    </h4>
+                                                    <p className="text-xs text-zinc-500 leading-relaxed">
+                                                        {locale === "en"
+                                                            ? "Track the remaining days for official exam sessions and important UniMe deadlines."
+                                                            : "Visualizza i giorni mancanti all'inizio delle sessioni d'esame e alle scadenze burocratiche."}
+                                                    </p>
+                                                </div>
+                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                    {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
+                                                </div>
+                                            </button>
                                         </div>
                                     </div>
                                 )}
@@ -294,11 +318,18 @@ export function GuideClient({ categories, initialGuides, locale }: GuideClientPr
             </Dialog>
 
             {/* Modal for Academic Dictionary */}
-            <Dialog open={activeToolModal === "dizionario"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
-                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
-                    <AcademicDictionary locale={locale} />
-                </DialogContent>
-            </Dialog>
-        </div>
+                                            <Dialog open={activeToolModal === "dizionario"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
+                                                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                                                    <AcademicDictionary locale={locale} />
+                                                </DialogContent>
+                                            </Dialog>
+
+                                            {/* Modal for Sessions Countdown */}
+                                            <Dialog open={activeToolModal === "countdown"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
+                                                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                                                    <SessionsCountdown locale={locale} />
+                                                </DialogContent>
+                                            </Dialog>
+                                        </div>
     )
 }
