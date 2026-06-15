@@ -233,7 +233,7 @@ export default function IniziativePage() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: idx * 0.05 }}
-                                className="bg-white rounded-[2.5rem] border border-transparent hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative min-h-[420px] shadow-sm"
+                                className="bg-white rounded-[2.5rem] border border-transparent hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden relative h-[450px] shadow-sm"
                                 style={{ 
                                     border: "1px solid transparent", 
                                     backgroundImage: `linear-gradient(white, white), ${item.themeColor.includes("gradient") ? item.themeColor : `linear-gradient(${item.themeColor}, ${item.themeColor})`}`, 
