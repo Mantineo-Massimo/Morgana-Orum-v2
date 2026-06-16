@@ -241,3 +241,48 @@ export async function verifyEmailAction(token: string, locale: string = "it") {
     }
 }
 
+export async function resendVerificationEmailAction(email: string, locale: string = "it") {
+    if (!email) {
+        return { success: false, error: "Email mancante." }
+    }
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { email }
+        })
+
+        if (!user) {
+            // Per sicurezza, non sveliamo se l'utente esiste o no
+            return { success: true }
+        }
+
+        if (user.emailVerified) {
+            return { success: false, error: locale === "en" ? "Account already verified." : "L'account è già stato verificato." }
+        }
+
+        // Genera un nuovo token
+        const token = randomUUID()
+        await prisma.user.update({
+            where: { id: user.id },
+            data: { verificationToken: token }
+        })
+
+        const brand = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
+        const isEn = locale === "en"
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.morganaorum.it"
+        const verificationLink = `${baseUrl}/${locale}/verify-email?token=${token}`
+
+        await sendEmail({
+            to: email,
+            subject: isEn ? "Verify your email address" : "Verifica il tuo indirizzo email",
+            html: getEmailVerificationTemplate(user.name, verificationLink, brand, locale),
+            brand: brand as "morgana" | "orum"
+        })
+
+        return { success: true }
+    } catch (error) {
+        console.error("resendVerificationEmailAction error:", error)
+        return { success: false, error: "Errore durante l'invio dell'email." }
+    }
+}
+

@@ -627,6 +627,9 @@
         "email_verified_success": "Email verified successfully! Welcome aboard.",
         "email_verification_failed": "The verification link is invalid or has expired.",
         "verifying_email": "Verifying email...",
-        "go_to_dashboard": "Go to Dashboard"
+        "go_to_dashboard": "Go to Dashboard",
+        "resend_verification_btn": "Resend verification email",
+        "resend_verification_success": "Verification email resent successfully! Please check your inbox.",
+        "resending_verification": "Resending..."
     }
 }

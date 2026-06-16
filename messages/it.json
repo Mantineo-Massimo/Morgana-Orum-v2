@@ -625,6 +625,9 @@
         "email_verified_success": "Email verificata con successo! Benvenuto a bordo.",
         "email_verification_failed": "Il link di verifica non è valido o è scaduto.",
         "verifying_email": "Verifica dell'email in corso...",
-        "go_to_dashboard": "Entra nella Dashboard"
+        "go_to_dashboard": "Entra nella Dashboard",
+        "resend_verification_btn": "Reinvia email di verifica",
+        "resend_verification_success": "Email di verifica reinviata con successo! Controlla la posta.",
+        "resending_verification": "Invio in corso..."
     }
 }

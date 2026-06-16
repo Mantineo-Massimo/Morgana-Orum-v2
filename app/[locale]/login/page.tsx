@@ -2,22 +2,31 @@
 
 import { useState } from "react"
 import { Link, useRouter } from "@/i18n/routing"
-import { loginAction } from "@/app/actions/auth"
+import { loginAction, resendVerificationEmailAction } from "@/app/actions/auth"
 import { Loader2, LogIn } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useParams } from "next/navigation"
 
 export const dynamic = "force-dynamic"
 
 export default function Page() {
     const t = useTranslations("Auth")
     const router = useRouter()
+    const params = useParams()
+    const locale = (params?.locale as string) || "it"
+
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState("")
+    const [showResend, setShowResend] = useState(false)
+    const [unverifiedEmail, setUnverifiedEmail] = useState("")
+    const [resendLoading, setResendLoading] = useState(false)
+    const [resendSuccess, setResendSuccess] = useState("")
 
     async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setIsLoading(true)
         setError("")
+        setResendSuccess("")
 
         const formData = new FormData(event.currentTarget)
         const email = formData.get("email") as string
@@ -30,12 +39,36 @@ export default function Page() {
         } else {
             if (result.error === "VERIFICATION_REQUIRED") {
                 setError(t("verification_required"))
+                setUnverifiedEmail(email)
+                setShowResend(true)
             } else {
                 setError(result.error || t("login_failed"))
+                setShowResend(false)
             }
             setIsLoading(false)
         }
     }
+
+    async function handleResendEmail() {
+        setResendLoading(true)
+        setError("")
+        setResendSuccess("")
+        try {
+            const result = await resendVerificationEmailAction(unverifiedEmail, locale)
+            if (result.success) {
+                setResendSuccess(t("resend_verification_success"))
+                setShowResend(false)
+            } else {
+                setError(result.error || t("something_wrong"))
+            }
+        } catch (err) {
+            console.error("Resend error:", err)
+            setError(t("something_wrong"))
+        } finally {
+            setResendLoading(false)
+        }
+    }
+
 
     return (
         <div className="min-h-screen grid items-center justify-center bg-zinc-50 p-6">
@@ -76,6 +109,29 @@ export default function Page() {
                     </div>
 
                     {error && <p className="text-sm text-red-500 font-bold text-center">{error}</p>}
+
+                    {showResend && (
+                        <div className="text-center pt-1">
+                            <button
+                                type="button"
+                                onClick={handleResendEmail}
+                                disabled={resendLoading}
+                                className="text-xs font-bold text-[#18182e] hover:text-black hover:underline disabled:opacity-50 flex items-center justify-center gap-1 mx-auto"
+                            >
+                                {resendLoading ? (
+                                    <Loader2 className="animate-spin size-3" />
+                                ) : (
+                                    t("resend_verification_btn")
+                                )}
+                            </button>
+                        </div>
+                    )}
+
+                    {resendSuccess && (
+                        <p className="text-xs text-green-600 font-bold text-center mt-1 animate-in fade-in">
+                            {resendSuccess}
+                        </p>
+                    )}
 
                     <button
                         type="submit"
