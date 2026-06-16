@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy, Plus, CalendarRange } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -16,6 +16,7 @@ interface Representative {
     id: string
     name: string
     term: string
+    mandateYears?: number
     listName: string
     category: string
     department?: string | null
@@ -46,7 +47,23 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
     const [bienniumError, setBienniumError] = useState<string | null>(null)
     const [bienniumSuccess, setBienniumSuccess] = useState<string | null>(null)
 
-    const existingTerms = Array.from(new Set(reps.map(r => r.term))).sort().reverse()
+    const existingTerms = useMemo(() => {
+        const startYears = reps.map(r => parseInt(r.term.split("-")[0])).filter(y => !isNaN(y))
+        if (startYears.length === 0) return []
+        const minYear = Math.min(...startYears)
+        const maxActiveStartYears = reps.map(r => {
+            const sy = parseInt(r.term.split("-")[0])
+            if (isNaN(sy)) return 2025
+            const extraYears = Math.floor(((r.mandateYears || 2) - 1) / 2) * 2
+            return sy + extraYears
+        })
+        const maxYear = Math.max(...maxActiveStartYears)
+        const terms = []
+        for (let y = minYear; y <= maxYear; y += 2) {
+            terms.push(`${y}-${y+2}`)
+        }
+        return terms.sort().reverse()
+    }, [reps])
     const [selectedBiennium, setSelectedBiennium] = useState<string | null>(null)
     const [sourceTerm, setSourceTerm] = useState(existingTerms[0] || "2025-2027")
     const [targetTerm, setTargetTerm] = useState("")
@@ -82,7 +99,15 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
         const matchesList = listFilter === "all" || rep.listName === listFilter
         const matchesCategory = categoryFilter === "all" || rep.category === categoryFilter
-        const matchesTerm = !selectedBiennium || rep.term === selectedBiennium
+        const matchesTerm = !selectedBiennium || (() => {
+            const startYear = parseInt(rep.term.split("-")[0])
+            const selectedStartYear = parseInt(selectedBiennium.split("-")[0])
+            if (!isNaN(startYear) && !isNaN(selectedStartYear)) {
+                const endYear = startYear + (rep.mandateYears || 2)
+                return startYear <= selectedStartYear && endYear > selectedStartYear
+            }
+            return rep.term === selectedBiennium
+        })()
 
         return matchesSearch && matchesList && matchesCategory && matchesTerm
     })

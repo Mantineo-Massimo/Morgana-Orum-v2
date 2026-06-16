@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Building2, Landmark, User, Users, ChevronLeft, ChevronRight } from "lucide-react"
 import { getRoleIcon, CentralSectionIcon, DepartmentSectionIcon } from "@/lib/role-icons"
 import { cn } from "@/lib/utils"
@@ -60,8 +60,25 @@ export default function RepresentativesClient({
     const [selectedRep, setSelectedRep] = useState<any>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    // Calculate unique terms sorted chronologically ascending (older left, newer right)
-    const existingTerms = Array.from(new Set(allReps.map(r => r.term))).sort()
+    // Calculate unique terms dynamically based on the active bienniums of representatives
+    const existingTerms = useMemo(() => {
+        const startYears = allReps.map(r => parseInt(r.term.split("-")[0])).filter(y => !isNaN(y))
+        if (startYears.length === 0) return []
+        const minYear = Math.min(...startYears)
+        const maxActiveStartYears = allReps.map(r => {
+            const sy = parseInt(r.term.split("-")[0])
+            if (isNaN(sy)) return 2025
+            const extraYears = Math.floor(((r.mandateYears || 2) - 1) / 2) * 2
+            return sy + extraYears
+        })
+        const maxYear = Math.max(...maxActiveStartYears)
+        const terms = []
+        for (let y = minYear; y <= maxYear; y += 2) {
+            terms.push(`${y}-${y+2}`)
+        }
+        return terms.sort()
+    }, [allReps])
+
     const [selectedTerm, setSelectedTerm] = useState(existingTerms[existingTerms.length - 1] || "2025-2027")
     const [windowStartIdx, setWindowStartIdx] = useState(Math.max(0, existingTerms.length - 3))
 
@@ -84,8 +101,18 @@ export default function RepresentativesClient({
         setIsModalOpen(true)
     }
 
-    // Filter representatives by selected biennium
-    const filteredReps = allReps.filter((r: any) => r.term === selectedTerm)
+    // Filter representatives by selected biennium (overlap check)
+    const filteredReps = useMemo(() => {
+        return allReps.filter((r: any) => {
+            const startYear = parseInt(r.term.split("-")[0])
+            const selectedStartYear = parseInt(selectedTerm.split("-")[0])
+            if (!isNaN(startYear) && !isNaN(selectedStartYear)) {
+                const endYear = startYear + (r.mandateYears || 2)
+                return startYear <= selectedStartYear && endYear > selectedStartYear
+            }
+            return r.term === selectedTerm
+        })
+    }, [allReps, selectedTerm])
 
     // 1. Central Bodies
     const centralReps = filteredReps.filter((r: any) => r.category === "CENTRAL")
