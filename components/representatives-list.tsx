@@ -109,7 +109,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                             </div>
 
                                             {/* Badge List */}
-                                            <div className="absolute top-3 right-3 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
                                                     src={

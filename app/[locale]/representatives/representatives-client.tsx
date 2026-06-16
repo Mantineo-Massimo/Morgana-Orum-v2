@@ -310,7 +310,7 @@ export default function RepresentativesClient({
                                                     </div>
 
                                                     {/* Logo */}
-                                                    <div className="absolute top-3 right-3 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                                         <img
                                                             src={
@@ -349,88 +349,79 @@ export default function RepresentativesClient({
                             const row2Bodies = centralBodies.filter(b => b.name.startsWith("CUG"))
                             const row3Bodies = centralBodies.filter(b => b.name.startsWith("CdS") || b.name.startsWith("SIR"))
 
-                            const renderBodyRow = (bodies: any[], rowGap: string = "gap-8 md:gap-12") => (
-                                <div className={cn("flex flex-wrap justify-center mb-12", rowGap)}>
-                                    {bodies.map((body, idx) => (
-                                        <div key={idx} className={cn(
-                                            "relative flex flex-col w-full",
-                                            bodies.length === 1 ? "max-w-7xl" :
-                                                body.name.startsWith("CdS") || body.name.startsWith("SIR") ? "max-w-7xl" :
-                                                    bodies.length === 2 ? "md:w-[calc(50%-2rem)] max-w-2xl" :
-                                                        "md:w-[calc(50%-2rem)] lg:w-[calc(33.333%-2.5rem)] xl:w-[calc(25%-3rem)]"
-                                        )}>
-                                            <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full hover:shadow-md transition-shadow">
-                                                <h3 className="text-base md:text-lg font-bold text-foreground mb-4 flex items-center gap-2 border-b border-zinc-50 pb-3">
-                                                    {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
-                                                    <span className="leading-tight uppercase tracking-wide">{body.name}</span>
-                                                </h3>
-                                                <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5 flex-grow w-full py-2">
-                                                    {body.groups.flatMap((group: any) =>
-                                                        group.members.map((member: any, memIdx: number) => (
-                                                            <motion.button
-                                                                key={`${group.listName}-${memIdx}`}
-                                                                onClick={() => handleRepClick(member)}
-                                                                whileHover={{ scale: 1.02 }}
-                                                                whileTap={{ scale: 0.98 }}
-                                                                className={cn(
-                                                                    "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative",
-                                                                    body.name.startsWith("CdS") ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)]" :
-                                                                        body.name.startsWith("SIR") || bodies.length === 1 ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]" :
-                                                                            "w-full",
-                                                                    bodies.length === 2 && !body.name.startsWith("CdS") && !body.name.startsWith("SIR") ? "max-w-sm" : ""
-                                                                )}
-                                                            >
-                                                                <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
-                                                                    {member.image ? (
-                                                                        // eslint-disable-next-line @next/next/no-img-element
-                                                                        <img src={member.image} alt={member.name} className="size-full object-cover" />
-                                                                    ) : (
-                                                                        <User className="size-8 text-zinc-300" />
-                                                                    )}
-                                                                </div>
-                                                                <div className="flex-1 min-w-0 flex flex-col justify-center pr-8 md:pr-10">
-                                                                    <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
-                                                                        {member.name.split(' ').map((part: string, i: number) => (
-                                                                            <span key={i} className="block">{part}</span>
-                                                                        ))}
-                                                                    </h4>
-                                                                    <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
-                                                                        {group.listName === "AZIONE UNIVERITARIA" || group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
-                                                                    </p>
-                                                                </div>
-                                                                <div className="absolute top-3 right-3 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
-                                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                                    <img
-                                                                        src={
-                                                                            group.listName === "MORGANA" ? "/assets/morgana.webp" :
-                                                                                group.listName === "O.R.U.M." ? "/assets/orum.webp" :
-                                                                                    "/assets/azione.webp"
-                                                                        }
-                                                                        alt={group.listName}
-                                                                        className="size-full object-contain"
-                                                                    />
-                                                                </div>
-                                                            </motion.button>
-                                                        ))
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )
-
-                            return (
-                                <div className="space-y-12">
-                                    {row1Bodies.length > 0 && renderBodyRow(row1Bodies)}
-                                    {row2Bodies.length > 0 && (
-                                        <div className="flex justify-center">
-                                            {renderBodyRow(row2Bodies)}
-                                        </div>
-                                    )}
-                                    {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "gap-8 md:gap-16")}
-                                </div>
-                            )
+                             const renderBodyRow = (bodies: any[], columnsClass: string) => (
+                                 <div className={cn("grid gap-8 mb-12 w-full", columnsClass)}>
+                                     {bodies.map((body, idx) => (
+                                         <div key={idx} className="relative flex flex-col w-full min-w-0">
+                                             <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+                                                 <h3 className="text-base md:text-lg font-bold text-foreground mb-4 flex items-center gap-2 border-b border-zinc-50 pb-3">
+                                                     {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
+                                                     <span className="leading-tight uppercase tracking-wide truncate">{body.name}</span>
+                                                 </h3>
+                                                 <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5 flex-grow w-full py-2">
+                                                     {body.groups.flatMap((group: any) =>
+                                                         group.members.map((member: any, memIdx: number) => (
+                                                             <motion.button
+                                                                 key={`${group.listName}-${memIdx}`}
+                                                                 onClick={() => handleRepClick(member)}
+                                                                 whileHover={{ scale: 1.02 }}
+                                                                 whileTap={{ scale: 0.98 }}
+                                                                 className={cn(
+                                                                     "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative w-full",
+                                                                     (body.name.startsWith("CdS") || body.name.startsWith("SIR")) ? "md:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] xl:max-w-[calc(25%-1.5rem)]" : ""
+                                                                 )}
+                                                             >
+                                                                 <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                                     {member.image ? (
+                                                                         // eslint-disable-next-line @next/next/no-img-element
+                                                                         <img src={member.image} alt={member.name} className="size-full object-cover" />
+                                                                     ) : (
+                                                                         <User className="size-8 text-zinc-300" />
+                                                                     )}
+                                                                 </div>
+                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center pr-8 md:pr-10">
+                                                                     <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
+                                                                         {member.name.split(' ').map((part: string, i: number) => (
+                                                                             <span key={i} className="block">{part}</span>
+                                                                         ))}
+                                                                     </h4>
+                                                                     <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
+                                                                         {group.listName === "AZIONE UNIVERITARIA" || group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
+                                                                     </p>
+                                                                 </div>
+                                                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                                     <img
+                                                                         src={
+                                                                             group.listName === "MORGANA" ? "/assets/morgana.webp" :
+                                                                                 group.listName === "O.R.U.M." ? "/assets/orum.webp" :
+                                                                                     "/assets/azione.webp"
+                                                                         }
+                                                                         alt={group.listName}
+                                                                         className="size-full object-contain"
+                                                                     />
+                                                                 </div>
+                                                             </motion.button>
+                                                         ))
+                                                     )}
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     ))}
+                                 </div>
+                             )
+ 
+                             return (
+                                 <div className="space-y-12">
+                                     {row1Bodies.length > 0 && renderBodyRow(row1Bodies, "grid-cols-1 lg:grid-cols-3")}
+                                     {row2Bodies.length > 0 && (
+                                         <div className="flex justify-center w-full">
+                                             {renderBodyRow(row2Bodies, "grid-cols-1 max-w-2xl w-full")}
+                                         </div>
+                                     )}
+                                     {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "grid-cols-1 lg:grid-cols-2")}
+                                 </div>
+                             )
                         })()}
                     </section>
                 )}
