@@ -144,10 +144,9 @@ export async function requestPasswordReset(email: string) {
 
         // In production, should use the real domain
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.morganaorum.it"
-        const resetLink = `${baseUrl}/reset-password?token=${token}`
-
         const referer = headers().get("referer")
         const locale = (referer?.includes("/en/") || referer?.endsWith("/en")) ? "en" : "it"
+        const resetLink = `${baseUrl}/${locale}/reset-password?token=${token}`
 
         const brandToUse = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
         await sendEmail({

@@ -26,12 +26,17 @@ export async function sendPublicationNotification(
 
         if (subscribers.length === 0) return
 
+        const { headers } = await import("next/headers")
+        const referer = headers().get("referer")
+        const locale = (referer?.includes("/en/") || referer?.endsWith("/en")) ? "en" : "it"
+        const isEn = locale === "en"
+
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.morganaorum.it"
         const primaryAssoc = item.associations[0] || Association.MORGANA_ORUM
         const brand = (primaryAssoc === Association.MORGANA_ORUM) ? "morgana" : "orum"
 
         const path = type === "Notizia" ? "news" : "events"
-        const url = `${baseUrl}/network/${brand}/${path}/${item.id}`
+        const url = `${baseUrl}/${locale}/${path}/${item.id}`
 
         // Save to DB (Dashboard Messages)
         await prisma.notification.create({
@@ -46,11 +51,6 @@ export async function sendPublicationNotification(
         })
 
         console.log(`Sending ${type} notifications to ${subscribers.length} subscribers...`)
-
-        const { headers } = await import("next/headers")
-        const referer = headers().get("referer")
-        const locale = (referer?.includes("/en/") || referer?.endsWith("/en")) ? "en" : "it"
-        const isEn = locale === "en"
 
         const subject = isEn 
             ? `New ${type === "Notizia" ? "News" : "Event"}: ${item.titleEn || item.title}` 
