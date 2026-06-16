@@ -329,10 +329,15 @@ export default function RepresentativeForm({
                         <div>
                             <label className="block text-sm font-bold text-zinc-700 mb-1">Mandato / Annata</label>
                             <input
+                                type="text"
+                                disabled
+                                value={initialData?.term || "2025-2027"}
+                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-500 font-mono text-sm cursor-not-allowed select-none"
+                            />
+                            <input
+                                type="hidden"
                                 name="term"
-                                defaultValue={initialData?.term || "2025-2027"}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all font-mono text-sm"
-                                placeholder="Es. 2025-2027"
+                                value={initialData?.term || "2025-2027"}
                             />
                         </div>
                         <div>
