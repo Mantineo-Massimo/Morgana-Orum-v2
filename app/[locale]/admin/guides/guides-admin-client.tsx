@@ -595,7 +595,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
 
             {/* Dialog Form for Guide */}
             <Dialog open={isGuideModalOpen} onOpenChange={setIsGuideModalOpen}>
-                <DialogContent className="max-w-xl p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
+                <DialogContent className="max-w-xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-3xl shadow-2xl">
                     <form onSubmit={handleSaveGuide} className="bg-white p-8 space-y-6">
                         <DialogHeader>
                             <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
@@ -740,7 +740,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
 
             {/* Dialog Form for Step */}
             <Dialog open={isStepModalOpen} onOpenChange={setIsStepModalOpen}>
-                <DialogContent className="max-w-xl p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
+                <DialogContent className="max-w-xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-3xl shadow-2xl">
                     <form onSubmit={handleSaveStep} className="bg-white p-8 space-y-6">
                         <DialogHeader>
                             <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
