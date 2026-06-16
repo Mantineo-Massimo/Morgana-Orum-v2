@@ -3,9 +3,11 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, Save, Loader2, X, Plus, Trash2 } from "lucide-react"
+import { ArrowLeft, Save, Loader2, X, Plus, Trash2, Image as ImageIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createConvention, updateConvention } from "@/app/actions/conventions"
+import { MediaSelector } from "@/components/admin/media-selector"
+
 
 type ConventionFormProps = {
     initialData?: {
@@ -38,6 +40,7 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
     // Logo state
     const [logoFile, setLogoFile] = useState<File | null>(null)
     const [logoPreview, setLogoPreview] = useState<string | null>(initialData?.logo || null)
+    const [isMediaOpen, setIsMediaOpen] = useState(false)
 
     async function uploadFile(file: File, folder: string) {
         const formData = new FormData()
@@ -153,7 +156,7 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                                 </button>
                             </div>
                         )}
-                        <div className="flex-1">
+                        <div className="flex-1 flex flex-col gap-2">
                             <input
                                 type="file"
                                 accept="image/jpeg,image/png,image/webp"
@@ -166,7 +169,15 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                                 }}
                                 className={cn(inputClass, "pt-2")}
                             />
-                            <p className="text-xs text-zinc-500 mt-2">Logo dell&apos;attività. Max 5MB (PNG/JPG consigliato).</p>
+                            <button
+                                type="button"
+                                onClick={() => setIsMediaOpen(true)}
+                                className="w-full py-2 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-xs font-bold text-zinc-700 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                            >
+                                <ImageIcon className="size-3.5 text-zinc-500" />
+                                Oppure scegli dalla Libreria Media
+                            </button>
+                            <p className="text-xs text-zinc-500 mt-1">Logo dell&apos;attività. Max 5MB (PNG/JPG consigliato).</p>
                         </div>
                     </div>
                 </div>
@@ -256,6 +267,15 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                     {isPending ? <><Loader2 className="size-4 animate-spin" /> Salvataggio in corso...</> : <><Save className="size-4" /> {initialData ? "Aggiorna Convenzione" : "Crea Convenzione"}</>}
                 </button>
             </form>
+
+            <MediaSelector
+                isOpen={isMediaOpen}
+                onClose={() => setIsMediaOpen(false)}
+                onSelect={(url) => {
+                    setLogoPreview(url)
+                    setLogoFile(null)
+                }}
+            />
         </div>
     )
 }

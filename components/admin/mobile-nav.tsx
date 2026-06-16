@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Shield, LogOut, ChevronRight, LayoutDashboard, BarChart3, Users, Newspaper, Calendar, Tag, User } from "lucide-react"
+import { Menu, X, Shield, LogOut, ChevronRight, LayoutDashboard, BarChart3, Users, Newspaper, Calendar, Tag, User, Image as LucideImage } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SidebarClock } from "./sidebar-clock"
 
@@ -40,7 +40,8 @@ export function MobileNav({ navigation, user, logoutAction }: MobileNavProps) {
         Newspaper,
         Calendar,
         Tag,
-        User
+        User,
+        Image: LucideImage
     }
 
     // Close menu on navigation

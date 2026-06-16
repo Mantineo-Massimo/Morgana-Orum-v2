@@ -3,13 +3,15 @@
 import { useState, useRef, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, Save, Loader2, X, File, Upload, Sparkles } from "lucide-react"
+import { ArrowLeft, Save, Loader2, X, File, Upload, Sparkles, Image as ImageIcon } from "lucide-react"
 import { translateText } from "@/app/actions/translate"
 import { cn } from "@/lib/utils"
 import { createEvent, updateEvent } from "@/app/actions/events"
 import { departmentsData } from "@/lib/departments"
 import { Association } from "@prisma/client"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
+import { MediaSelector } from "@/components/admin/media-selector"
+
 
 type EventFormProps = {
     initialData?: {
@@ -124,6 +126,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
 
     const [imageFile, setImageFile] = useState<File | null>(null)
     const [imagePreview, setImagePreview] = useState<string | null>(initialData?.image || null)
+    const [isMediaOpen, setIsMediaOpen] = useState(false)
     type AttachmentItem = { name: string; url: string }
     const [newAttachments, setNewAttachments] = useState<{ file: File; name: string }[]>([])
     const [existingAttachments, setExistingAttachments] = useState<AttachmentItem[]>(() => {
@@ -280,7 +283,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                                 </button>
                             </div>
                         )}
-                        <div className="flex-1">
+                        <div className="flex-1 flex flex-col gap-2">
                             <input
                                 type="file"
                                 accept="image/jpeg,image/png,image/webp,image/gif"
@@ -294,7 +297,15 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                                 className={cn(inputClass, "pt-2")}
                                 title="Carica una copertina"
                             />
-                            <p className="text-xs text-zinc-500 mt-2">JPG, PNG, WebP o GIF. Max 10MB.</p>
+                            <button
+                                type="button"
+                                onClick={() => setIsMediaOpen(true)}
+                                className="w-full py-2 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-xs font-bold text-zinc-700 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                            >
+                                <ImageIcon className="size-3.5 text-zinc-500" />
+                                Oppure scegli dalla Libreria Media
+                            </button>
+                            <p className="text-xs text-zinc-500 mt-1">JPG, PNG, WebP o GIF. Max 10MB.</p>
                         </div>
                     </div>
                 </div>
@@ -668,6 +679,15 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                     {isPending ? <><Loader2 className="size-4 animate-spin" /> Salvataggio in corso...</> : <><Save className="size-4" /> {initialData ? "Aggiorna Evento" : "Crea Evento"}</>}
                 </button>
             </form >
+
+            <MediaSelector
+                isOpen={isMediaOpen}
+                onClose={() => setIsMediaOpen(false)}
+                onSelect={(url) => {
+                    setImagePreview(url)
+                    setImageFile(null)
+                }}
+            />
         </div >
     )
 }

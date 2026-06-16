@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { getUserDashboardData } from "@/app/actions/users"
-import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar, Tag, BarChart3, Sparkles, BookOpen, Phone, Compass } from "lucide-react"
+import { LayoutDashboard, Users, User, LogOut, Settings, Shield, Newspaper, Calendar, Tag, BarChart3, Sparkles, BookOpen, Phone, Compass, Image as ImageIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { logoutAction } from "@/app/actions/auth"
 import { getAssociationName } from "@/lib/associations"
@@ -85,6 +85,12 @@ export default async function AdminLayout({
                     iconName: "BookOpen",
                     exact: false
                 },
+                {
+                    label: "Libreria Media",
+                    href: `/admin/media`,
+                    iconName: "Image",
+                    exact: false
+                },
             ]
         },
     ]
@@ -163,7 +169,8 @@ export default async function AdminLayout({
                                          Shield: Shield,
                                          BookOpen: BookOpen,
                                          Phone: Phone,
-                                         Compass: Compass
+                                         Compass: Compass,
+                                         Image: ImageIcon
                                      } as Record<string, any>)[item.iconName] || LayoutDashboard
 
                                     return (

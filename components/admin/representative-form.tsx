@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils"
 import { ASSOCIATIONS } from "@/lib/associations"
 import { Association } from "@prisma/client"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
+import { MediaSelector } from "@/components/admin/media-selector"
+
 
 // Mapping for Department dropdown
 const departmentsList = [
@@ -59,6 +61,7 @@ export default function RepresentativeForm({
     const [error, setError] = useState<string | null>(null)
     const [imageUrl, setImageUrl] = useState<string | null>(initialData?.image || null)
     const [isUploading, setIsUploading] = useState(false)
+    const [isMediaOpen, setIsMediaOpen] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const isEditing = !!initialData
 
@@ -185,38 +188,48 @@ export default function RepresentativeForm({
                                 )}
                             </div>
                             {/* Upload Area */}
-                            <div
-                                onClick={() => fileInputRef.current?.click()}
-                                onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
-                                onDrop={(e) => {
-                                    e.preventDefault(); e.stopPropagation()
-                                    const file = e.dataTransfer.files[0]
-                                    if (file) handleImageUpload(file)
-                                }}
-                                className="flex-1 border-2 border-dashed border-zinc-300 rounded-xl p-4 text-center cursor-pointer hover:border-zinc-400 hover:bg-zinc-50 transition-all"
-                            >
-                                {isUploading ? (
-                                    <div className="flex items-center justify-center gap-2 text-zinc-500">
-                                        <Loader2 className="size-5 animate-spin" />
-                                        <span className="text-sm">Caricamento...</span>
-                                    </div>
-                                ) : (
-                                    <div className="flex flex-col items-center gap-1">
-                                        <Upload className="size-5 text-zinc-400" />
-                                        <span className="text-sm text-zinc-500">Clicca o trascina un&apos;immagine</span>
-                                        <span className="text-xs text-zinc-400">JPG, PNG, WebP — max 5MB</span>
-                                    </div>
-                                )}
-                                <input
-                                    ref={fileInputRef}
-                                    type="file"
-                                    accept="image/jpeg,image/png,image/webp,image/gif"
-                                    className="hidden"
-                                    onChange={(e) => {
-                                        const file = e.target.files?.[0]
+                            <div className="flex-1 flex flex-col gap-2">
+                                <div
+                                    onClick={() => fileInputRef.current?.click()}
+                                    onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
+                                    onDrop={(e) => {
+                                        e.preventDefault(); e.stopPropagation()
+                                        const file = e.dataTransfer.files[0]
                                         if (file) handleImageUpload(file)
                                     }}
-                                />
+                                    className="border-2 border-dashed border-zinc-300 rounded-xl p-4 text-center cursor-pointer hover:border-zinc-400 hover:bg-zinc-50 transition-all"
+                                >
+                                    {isUploading ? (
+                                        <div className="flex items-center justify-center gap-2 text-zinc-500">
+                                            <Loader2 className="size-5 animate-spin" />
+                                            <span className="text-sm">Caricamento...</span>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col items-center gap-1">
+                                            <Upload className="size-5 text-zinc-400" />
+                                            <span className="text-sm text-zinc-500">Clicca o trascina un&apos;immagine</span>
+                                            <span className="text-xs text-zinc-400">JPG, PNG, WebP — max 5MB</span>
+                                        </div>
+                                    )}
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/jpeg,image/png,image/webp,image/gif"
+                                        className="hidden"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0]
+                                            if (file) handleImageUpload(file)
+                                        }}
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setIsMediaOpen(true)}
+                                    className="w-full py-2 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-xs font-bold text-zinc-700 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                                >
+                                    <ImageIcon className="size-3.5 text-zinc-500" />
+                                    Oppure scegli dalla Libreria Media
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -437,6 +450,12 @@ export default function RepresentativeForm({
                     </button>
                 </div>
             </form>
+
+            <MediaSelector
+                isOpen={isMediaOpen}
+                onClose={() => setIsMediaOpen(false)}
+                onSelect={(url) => setImageUrl(url)}
+            />
         </div>
     )
 }
