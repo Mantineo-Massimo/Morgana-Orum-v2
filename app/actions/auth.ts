@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { Association } from "@prisma/client"
-import { cookies } from "next/headers"
+import { cookies, headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { sendEmail } from "@/lib/mail"
 import { getWelcomeEmailTemplate, getPasswordResetTemplate } from "@/lib/email-templates"
@@ -98,10 +98,14 @@ export async function registerUser(formData: FormData) {
 
         // Send Welcome Email (Non-blocking)
         const brand = (association === Association.MORGANA_ORUM) ? "morgana" : "orum" // Simple fallback
+        const referer = headers().get("referer")
+        const locale = (referer?.includes("/en/") || referer?.endsWith("/en")) ? "en" : "it"
+        const isEn = locale === "en"
+        
         sendEmail({
             to: email,
-            subject: `Benvenuto in ${brand === "orum" ? "O.R.U.M." : "Morgana"}!`,
-            html: getWelcomeEmailTemplate(name, brand as "morgana" | "orum"),
+            subject: isEn ? `Welcome to ${brand === "orum" ? "O.R.U.M." : "Morgana"}!` : `Benvenuto in ${brand === "orum" ? "O.R.U.M." : "Morgana"}!`,
+            html: getWelcomeEmailTemplate(name, brand as "morgana" | "orum", locale),
             brand: brand as "morgana" | "orum"
         }).catch(err => console.error("Async welcome email error:", err))
 
@@ -141,11 +145,14 @@ export async function requestPasswordReset(email: string) {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.morganaorum.it"
         const resetLink = `${baseUrl}/reset-password?token=${token}`
 
+        const referer = headers().get("referer")
+        const locale = (referer?.includes("/en/") || referer?.endsWith("/en")) ? "en" : "it"
+
         const brandToUse = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
         await sendEmail({
             to: email,
-            subject: "Recupero Password",
-            html: getPasswordResetTemplate(user.name, resetLink, brandToUse),
+            subject: locale === "en" ? "Password Recovery" : "Recupero Password",
+            html: getPasswordResetTemplate(user.name, resetLink, brandToUse, locale),
             brand: brandToUse
         })
 

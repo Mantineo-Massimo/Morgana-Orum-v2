@@ -47,12 +47,24 @@ export async function sendPublicationNotification(
 
         console.log(`Sending ${type} notifications to ${subscribers.length} subscribers...`)
 
+        const { headers } = await import("next/headers")
+        const referer = headers().get("referer")
+        const locale = (referer?.includes("/en/") || referer?.endsWith("/en")) ? "en" : "it"
+        const isEn = locale === "en"
+
+        const subject = isEn 
+            ? `New ${type === "Notizia" ? "News" : "Event"}: ${item.titleEn || item.title}` 
+            : `Nuov${type === "Notizia" ? "a" : "o"} ${type}: ${item.title}`
+
+        const displayTitle = isEn ? (item.titleEn || item.title) : item.title
+        const displayDesc = isEn ? (item.descriptionEn || item.description || "") : (item.description || "")
+
         // Send emails asynchronously (non-blocking)
         Promise.allSettled(subscribers.map(sub =>
             sendEmail({
                 to: sub.email,
-                subject: `Nuov${type === "Notizia" ? "a" : "o"} ${type}: ${item.title}`,
-                html: getNewsletterTemplate(sub.name, item.title, item.description || "", url, type, brand),
+                subject: subject,
+                html: getNewsletterTemplate(sub.name, displayTitle, displayDesc, url, type, brand, locale),
                 brand: brand as "morgana" | "orum"
             })
         )).catch(err => console.error(`Async newsletter error (${type}):`, err))

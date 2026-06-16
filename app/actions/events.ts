@@ -234,19 +234,31 @@ export async function registerForEvent(userEmail: string, eventId: number) {
         })
 
         // Send Confirmation Email (Non-blocking)
-        // Detect brand from associations logic or use a default/context
-        // For simplicity, we use the user's association or the context of the event
         const brand = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
+
+        const { headers } = await import("next/headers")
+        const referer = headers().get("referer")
+        const locale = (referer?.includes("/en/") || referer?.endsWith("/en")) ? "en" : "it"
+        const isEn = locale === "en"
+
+        const dateStr = event.date.toLocaleDateString(isEn ? 'en-GB' : 'it-IT', { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        })
 
         sendEmail({
             to: userEmail,
-            subject: `Conferma Prenotazione: ${event.title}`,
+            subject: isEn ? `Booking Confirmation: ${event.title}` : `Conferma Prenotazione: ${event.title}`,
             html: getEventBookingTemplate(
                 user.name,
                 event.title,
-                event.date.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                dateStr,
                 event.location,
-                brand as "morgana" | "orum"
+                brand as "morgana" | "orum",
+                locale
             ),
             brand: brand as "morgana" | "orum"
         }).catch(err => console.error("Async booking email error:", err))
