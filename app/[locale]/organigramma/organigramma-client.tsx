@@ -92,11 +92,11 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
         <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
             <div className="container mx-auto px-6 max-w-6xl">
                 {/* Header */}
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h1 className="text-4xl md:text-6xl font-serif font-black text-zinc-900 mb-6 uppercase tracking-tight bg-gradient-to-r from-[#c9041a] to-[#18182e] bg-clip-text text-transparent">
+                <div className="text-center max-w-4xl mx-auto mb-16">
+                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         {t.title}
                     </h1>
-                    <p className="text-lg text-zinc-600 leading-relaxed font-medium">
+                    <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
                         {t.subtitle}
                     </p>
                 </div>
@@ -108,7 +108,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                         className={cn(
                             "w-full px-8 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all duration-300 border",
                             isAree
-                                ? "bg-gradient-to-r from-[#c9041a] to-[#18182e] text-white shadow-lg shadow-red-500/20 scale-105 border-transparent"
+                                ? "bg-gradient-to-r from-[#c12830] to-[#18182e] text-white shadow-lg shadow-red-500/20 scale-105 border-transparent"
                                 : "bg-white text-zinc-400 border-zinc-200 hover:bg-zinc-50"
                         )}
                     >
@@ -119,7 +119,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                         className={cn(
                             "w-full px-8 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest transition-all duration-300 border",
                             !isAree
-                                ? "bg-gradient-to-r from-[#c9041a] to-[#18182e] text-white shadow-lg shadow-red-500/20 scale-105 border-transparent"
+                                ? "bg-gradient-to-r from-[#c12830] to-[#18182e] text-white shadow-lg shadow-red-500/20 scale-105 border-transparent"
                                 : "bg-white text-zinc-400 border-zinc-200 hover:bg-zinc-50"
                         )}
                     >
@@ -168,7 +168,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                     </div>
 
                                                     {/* Info */}
-                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
+                                                    <div className="flex-1 min-w-0 flex flex-col justify-center">
                                                         <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                             {m.name.split(' ').map((part: string, i: number) => (
                                                                 <span key={i} className="block">{part}</span>
@@ -177,18 +177,6 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                         <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest leading-normal">
                                                             {getRole(m)}
                                                         </p>
-                                                    </div>
-
-                                                    {/* Logo */}
-                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-45 group-hover:opacity-100 transition-opacity">
-                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                        <img
-                                                            src={
-                                                                m.association === "MORGANA" ? "/assets/morgana.webp" : "/assets/orum.webp"
-                                                            }
-                                                            alt={m.association}
-                                                            className="size-full object-contain"
-                                                        />
                                                     </div>
                                                 </motion.button>
                                             ))}
@@ -225,7 +213,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                     </div>
 
                                                     {/* Info */}
-                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
+                                                    <div className="flex-1 min-w-0 flex flex-col justify-center">
                                                         <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                             {m.name.split(' ').map((part: string, i: number) => (
                                                                 <span key={i} className="block">{part}</span>
@@ -236,17 +224,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                         </p>
                                                     </div>
 
-                                                    {/* Logo */}
-                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-45 group-hover:opacity-100 transition-opacity">
-                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                        <img
-                                                            src={
-                                                                m.association === "MORGANA" ? "/assets/morgana.webp" : "/assets/orum.webp"
-                                                            }
-                                                            alt={m.association}
-                                                            className="size-full object-contain"
-                                                        />
-                                                    </div>
+
                                                 </motion.button>
                                             ))}
                                         </div>
@@ -299,7 +277,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                     </div>
 
                                                     {/* Info */}
-                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
+                                                    <div className="flex-1 min-w-0 flex flex-col justify-center">
                                                         <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                             {m.name.split(' ').map((part: string, i: number) => (
                                                                 <span key={i} className="block">{part}</span>
@@ -310,17 +288,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                         </p>
                                                     </div>
 
-                                                    {/* Logo */}
-                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-45 group-hover:opacity-100 transition-opacity">
-                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                        <img
-                                                            src={
-                                                                m.association === "MORGANA" ? "/assets/morgana.webp" : "/assets/orum.webp"
-                                                            }
-                                                            alt={m.association}
-                                                            className="size-full object-contain"
-                                                        />
-                                                    </div>
+
                                                 </motion.button>
                                             ))}
                                         </div>

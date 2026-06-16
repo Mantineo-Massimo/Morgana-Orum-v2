@@ -57,7 +57,7 @@ export function NextDeadlineWidget({ locale }: { locale: string }) {
                 
                 {/* Info block */}
                 <div className="flex gap-4 items-start flex-1">
-                    <div className="size-10 rounded-xl bg-[#c9041a] text-white flex items-center justify-center shrink-0 shadow-lg shadow-[#c9041a]/25 animate-pulse mt-1">
+                    <div className="size-10 rounded-xl bg-[#c12830] text-white flex items-center justify-center shrink-0 shadow-lg shadow-[#c12830]/25 animate-pulse mt-1">
                         <Bell className="size-5" />
                     </div>
                     <div className="space-y-1">
@@ -89,7 +89,7 @@ export function NextDeadlineWidget({ locale }: { locale: string }) {
                                 { label: isEn ? "sec" : "sec", val: timeLeft.s }
                             ].map((time, idx) => (
                                 <div key={idx} className="flex flex-col items-center min-w-[50px] p-2 bg-zinc-900 border border-zinc-850 rounded-xl shadow-inner">
-                                    <span className="text-lg font-black font-mono tracking-tight text-[#c9041a] tabular-nums">
+                                    <span className="text-lg font-black font-mono tracking-tight text-[#c12830] tabular-nums">
                                         {time.val.toString().padStart(2, "0")}
                                     </span>
                                     <span className="text-[8px] font-black uppercase tracking-wider text-zinc-500">
@@ -106,7 +106,7 @@ export function NextDeadlineWidget({ locale }: { locale: string }) {
 
                     <Link
                         href="/guide"
-                        className="px-4 py-3 bg-[#c9041a] hover:bg-[#c9041a]/90 text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 shadow-md shadow-[#c9041a]/20 group"
+                        className="px-4 py-3 bg-[#c12830] hover:bg-[#c12830]/90 text-white rounded-xl text-xs font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 shadow-md shadow-[#c12830]/20 group"
                     >
                         {isEn ? "View Guides" : "Vedi Guide"} 
                         <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />

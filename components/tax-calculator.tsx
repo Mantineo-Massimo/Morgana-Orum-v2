@@ -312,7 +312,7 @@ export function TaxCalculator({ locale }: TaxCalculatorProps) {
                             key={idx}
                             className={cn(
                                 "h-2 rounded-full transition-all duration-300",
-                                step === idx ? "w-8 bg-[#c9041a]" : "w-2 bg-zinc-200"
+                                step === idx ? "w-8 bg-[#c12830]" : "w-2 bg-zinc-200"
                             )}
                         />
                     ))}
@@ -493,7 +493,7 @@ export function TaxCalculator({ locale }: TaxCalculatorProps) {
                                     )}
                                 >
                                     {item.hasPromo && (
-                                        <span className="absolute top-0 right-0 bg-[#c9041a] text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl flex items-center gap-1 shadow-sm">
+                                        <span className="absolute top-0 right-0 bg-[#c12830] text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl flex items-center gap-1 shadow-sm">
                                             <Sparkles className="size-2.5" /> -20% Sconto
                                         </span>
                                     )}
@@ -532,7 +532,7 @@ export function TaxCalculator({ locale }: TaxCalculatorProps) {
                         {/* Simulation Results Card */}
                         <div className="lg:col-span-6 bg-white p-6 md:p-8 rounded-3xl border border-zinc-200 shadow-xl space-y-6">
                             <div>
-                                <h4 className="text-xs font-black uppercase tracking-widest text-[#c9041a]">{t.resultTitle}</h4>
+                                <h4 className="text-xs font-black uppercase tracking-widest text-[#c12830]">{t.resultTitle}</h4>
                                 <h2 className="text-3xl font-serif font-black text-zinc-950 mt-1">
                                     € {res.total.toLocaleString("it-IT", { minimumFractionDigits: 2 })}
                                 </h2>
@@ -582,7 +582,7 @@ export function TaxCalculator({ locale }: TaxCalculatorProps) {
 
                                 <div className="flex justify-between pt-3 text-sm font-bold text-zinc-900">
                                     <span>{t.totalToPay}</span>
-                                    <span className="text-lg font-mono text-[#c9041a]">€ {res.total.toFixed(2)}</span>
+                                    <span className="text-lg font-mono text-[#c12830]">€ {res.total.toFixed(2)}</span>
                                 </div>
                             </div>
                         </div>
@@ -612,12 +612,12 @@ export function TaxCalculator({ locale }: TaxCalculatorProps) {
                                         </div>
 
                                         <div className="relative">
-                                            <div className="absolute -left-[31px] top-1 bg-[#c9041a] text-white rounded-full p-1.5 shadow-sm">
+                                            <div className="absolute -left-[31px] top-1 bg-[#c12830] text-white rounded-full p-1.5 shadow-sm">
                                                 <Euro className="size-3.5" />
                                             </div>
                                             <div>
                                                 <h5 className="font-bold text-zinc-900 text-xs uppercase tracking-wider">Pagamento Rata Unica</h5>
-                                                <p className="text-[10px] text-[#c9041a] font-bold mt-0.5">30 GENNAIO 2026</p>
+                                                <p className="text-[10px] text-[#c12830] font-bold mt-0.5">30 GENNAIO 2026</p>
                                                 <p className="text-xs text-zinc-900 font-bold mt-1">
                                                     Importo: € {res.total.toFixed(2)}
                                                 </p>

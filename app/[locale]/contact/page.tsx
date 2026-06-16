@@ -90,10 +90,10 @@ export default function ContactPage() {
                     {/* Left: Info */}
                     <div className="lg:col-span-5 space-y-12">
                         <div>
-                            <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-6 leading-tight">
+                            <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                                 {t("contact")}
                             </h1>
-                            <p className="text-lg text-zinc-500 font-medium leading-relaxed italic border-l-4 border-zinc-200 pl-6">
+                            <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
                                 {t("contact_desc")}
                             </p>
                         </div>

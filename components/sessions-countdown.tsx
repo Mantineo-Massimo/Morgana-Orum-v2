@@ -206,7 +206,7 @@ export function SessionsCountdown({ locale }: SessionsCountdownProps) {
                                     <div className="flex flex-wrap items-center gap-2">
                                         <span className={cn(
                                             "px-2.5 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider",
-                                            item.category === "burocrazia" ? "bg-[#18182e]/5 text-[#18182e]" : "bg-[#c9041a]/5 text-[#c9041a]"
+                                            item.category === "burocrazia" ? "bg-[#18182e]/5 text-[#18182e]" : "bg-[#c12830]/5 text-[#c12830]"
                                         )}>
                                             {t[`cat_${item.category}`]}
                                         </span>
@@ -298,7 +298,7 @@ export function SessionsCountdown({ locale }: SessionsCountdownProps) {
                                                         placeholder={t.emailPlaceholder}
                                                         required
                                                         disabled={loading}
-                                                        className="px-3 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a] text-xs font-semibold bg-white flex-1"
+                                                        className="px-3 py-2 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-[#c12830]/10 focus:border-[#c12830] text-xs font-semibold bg-white flex-1"
                                                     />
                                                     <div className="flex gap-2 shrink-0">
                                                         <button
@@ -319,7 +319,7 @@ export function SessionsCountdown({ locale }: SessionsCountdownProps) {
                                                             <X className="size-4" />
                                                         </button>
                                                     </div>
-                                                    {error && <p className="text-[10px] text-[#c9041a] font-bold sm:ml-2 mt-1 sm:mt-0">{error}</p>}
+                                                    {error && <p className="text-[10px] text-[#c12830] font-bold sm:ml-2 mt-1 sm:mt-0">{error}</p>}
                                                 </form>
                                             ) : (
                                                 <button
@@ -362,7 +362,7 @@ export function SessionsCountdown({ locale }: SessionsCountdownProps) {
                                             </span>
                                             <span className={cn(
                                                 "text-[8px] font-black uppercase tracking-wider mt-0.5",
-                                                isExpired ? "text-zinc-300" : isClose ? "text-amber-600" : "text-[#c9041a]"
+                                                isExpired ? "text-zinc-300" : isClose ? "text-amber-600" : "text-[#c12830]"
                                             )}>
                                                 {blk.label}
                                             </span>

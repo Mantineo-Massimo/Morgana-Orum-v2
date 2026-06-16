@@ -122,44 +122,42 @@ export default function EventsClient({
     return (
         <div className="min-h-screen bg-zinc-50 py-20">
             {/* Header */}
-            <div className="container mx-auto px-6 mb-12">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                    <div>
-                        <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
-                            {t("agenda")}
-                        </span>
-                        <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-4">
-                            {mode === 'upcoming' ? t("upcoming") : t("past")}
-                        </h1>
-                        <p className="text-xl text-zinc-600 font-medium italic">
-                            {t("motto")}
-                        </p>
-                    </div>
+            <div className="container mx-auto px-6 mb-12 text-center max-w-4xl space-y-6">
+                <div>
+                    <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
+                        {t("agenda")}
+                    </span>
+                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
+                        {mode === 'upcoming' ? t("upcoming") : t("past")}
+                    </h1>
+                    <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
+                        {t("motto")}
+                    </p>
+                </div>
 
-                    <div className="flex gap-2">
-                        <Link
-                            href="/events"
-                            className={cn(
-                                "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
-                                mode === 'upcoming'
-                                    ? "bg-[#18182e] text-white border-[#18182e] shadow-lg shadow-blue-200"
-                                    : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
-                            )}
-                        >
-                            {t("tab_upcoming")}
-                        </Link>
-                        <Link
-                            href="/events/past"
-                            className={cn(
-                                "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
-                                mode === 'past'
-                                    ? "bg-[#18182e] text-white border-[#18182e] shadow-lg shadow-zinc-200"
-                                    : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
-                            )}
-                        >
-                            {t("tab_past")}
-                        </Link>
-                    </div>
+                <div className="flex justify-center gap-3 mt-4">
+                    <Link
+                        href="/events"
+                        className={cn(
+                            "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
+                            mode === 'upcoming'
+                                ? "bg-[#18182e] text-white border-[#18182e] shadow-lg shadow-blue-200"
+                                : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
+                        )}
+                    >
+                        {t("tab_upcoming")}
+                    </Link>
+                    <Link
+                        href="/events/past"
+                        className={cn(
+                            "px-6 py-3 rounded-2xl text-sm font-bold transition-all border",
+                            mode === 'past'
+                                ? "bg-[#18182e] text-white border-[#18182e] shadow-lg shadow-zinc-200"
+                                : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
+                        )}
+                    >
+                        {t("tab_past")}
+                    </Link>
                 </div>
             </div>
 

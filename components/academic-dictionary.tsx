@@ -527,7 +527,7 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
                         value={searchQuery}
                         onChange={e => setSearchQuery(e.target.value)}
                         placeholder={t.searchPlaceholder}
-                        className="w-full pl-12 pr-10 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a] text-sm font-semibold transition-all shadow-sm"
+                        className="w-full pl-12 pr-10 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#c12830]/10 focus:border-[#c12830] text-sm font-semibold transition-all shadow-sm"
                     />
                     {searchQuery && (
                         <button
@@ -576,7 +576,7 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
                     className={cn(
                         "size-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all border",
                         selectedLetter === "all"
-                            ? "bg-[#c9041a] border-[#c9041a] text-white shadow-sm"
+                            ? "bg-[#c12830] border-[#c12830] text-white shadow-sm"
                             : "bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-100"
                     )}
                 >
@@ -589,7 +589,7 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
                         className={cn(
                             "size-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all border",
                             selectedLetter === letter
-                                ? "bg-[#c9041a] border-[#c9041a] text-white shadow-sm"
+                                ? "bg-[#c12830] border-[#c12830] text-white shadow-sm"
                                 : "bg-white border-zinc-200 text-zinc-500 hover:bg-zinc-100"
                         )}
                     >
@@ -623,13 +623,13 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
                                             item.category === "esami" && "bg-emerald-50 text-emerald-600",
                                             item.category === "tasse" && "bg-amber-50 text-amber-600",
                                             item.category === "organizzazione" && "bg-purple-50 text-purple-600",
-                                            item.category === "internazionale" && "bg-rose-50 text-[#c9041a]"
+                                            item.category === "internazionale" && "bg-rose-50 text-[#c12830]"
                                         )}>
                                             {t[`cat_${item.category}`]}
                                         </span>
                                     </div>
                                     <h4 className="font-serif font-black text-base text-zinc-900 tracking-tight flex items-center gap-1.5">
-                                        <ChevronRight className="size-4 text-[#c9041a] shrink-0" />
+                                        <ChevronRight className="size-4 text-[#c12830] shrink-0" />
                                         {termName}
                                     </h4>
                                     <p className="text-xs text-zinc-500 mt-2 leading-relaxed">
@@ -645,7 +645,7 @@ export function AcademicDictionary({ locale }: AcademicDictionaryProps) {
                     <HelpCircle className="size-12 text-zinc-300" />
                     <div>
                         <p className="text-sm font-bold text-zinc-800">
-                            {t.noResults} <span className="text-[#c9041a] font-mono">&ldquo;{searchQuery || selectedLetter}&rdquo;</span>
+                            {t.noResults} <span className="text-[#c12830] font-mono">&ldquo;{searchQuery || selectedLetter}&rdquo;</span>
                         </p>
                         <p className="text-xs text-zinc-400 mt-1">
                             Prova a cercare un&apos;altra parola o azzera i filtri di ricerca.

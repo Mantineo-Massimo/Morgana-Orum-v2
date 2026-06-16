@@ -195,14 +195,14 @@ export default function IniziativePage() {
             </svg>
             <div className="container mx-auto px-6 max-w-7xl">
                 {/* Header */}
-                <div className="text-center max-w-3xl mx-auto mb-20">
+                <div className="text-center max-w-4xl mx-auto mb-20">
                     <div className="size-20 bg-zinc-900/5 text-zinc-900 rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3 border border-zinc-900/10">
                         <HelpCircle className="size-10" />
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-6 uppercase tracking-tight">
+                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         {t("title")}
                     </h1>
-                    <p className="text-lg md:text-xl font-medium text-zinc-500 italic mb-6">
+                    <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
                         {t("subtitle")}
                     </p>
                     <p className="text-zinc-600 leading-relaxed max-w-2xl mx-auto">

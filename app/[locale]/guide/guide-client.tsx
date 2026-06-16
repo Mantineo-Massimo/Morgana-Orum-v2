@@ -139,13 +139,15 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
         <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
             <div className="container mx-auto px-6 max-w-6xl">
                 {/* Header */}
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h1 className="text-4xl md:text-6xl font-serif font-black text-zinc-900 mb-6 uppercase tracking-tight">
+                <div className="text-center max-w-4xl mx-auto mb-16">
+                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         {t.title}
                     </h1>
-                    <p className="text-lg text-zinc-600 leading-relaxed font-medium">
-                        {t.subtitle}
-                    </p>
+                    {t.subtitle && (
+                        <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
+                            {t.subtitle}
+                        </p>
+                    )}
                 </div>
 
                 {/* Grid of Guide Choices */}
@@ -211,7 +213,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                     {selectedGuide === "matricole" ? (
                                         <>
                                             <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
-                                                <span className="h-6 w-1 rounded-full bg-[#c9041a]" />
+                                                <span className="h-6 w-1 rounded-full bg-[#c12830]" />
                                                 {locale === "en" ? "Informative Guides" : "Guide Informative"}
                                             </h3>
                                             <div className="grid sm:grid-cols-2 gap-6">
@@ -236,7 +238,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                                         {locale === "en" && g.descriptionEn ? g.descriptionEn : g.description}
                                                                     </p>
                                                                 </div>
-                                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                                                     {locale === "en" ? "Read Guide" : "Leggi la Guida"} &rarr;
                                                                 </div>
                                                             </button>
@@ -268,7 +270,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                     <div className="pt-10 border-t border-zinc-100 mt-10 space-y-6">
                                         <div>
                                             <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
-                                                <span className="h-6 w-1 rounded-full bg-[#c9041a]" />
+                                                <span className="h-6 w-1 rounded-full bg-[#c12830]" />
                                                 {locale === "en" ? "Interactive Tools" : "Strumenti Utili"}
                                             </h3>
                                             <p className="text-sm text-zinc-500 leading-relaxed mt-2">
@@ -283,7 +285,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                 className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
                                             >
                                                 <div>
-                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#c9041a] transition-all">
+                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#c12830] transition-all">
                                                         <Calculator className="size-6" />
                                                     </div>
                                                     <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
@@ -295,7 +297,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                             : "Simula la tua fascia di tasse, gli esoneri, le agevolazioni e lo scadenziario dei pagamenti."}
                                                     </p>
                                                 </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                                     {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                                 </div>
                                             </button>
@@ -318,7 +320,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                             : "Non conosci i termini come CFU, Appello, Esse3 o Verbalizzazione? Cercali velocemente qui."}
                                                     </p>
                                                 </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                                     {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                                 </div>
                                             </button>
@@ -341,7 +343,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                             : "Visualizza i giorni mancanti all'inizio delle sessioni d'esame e alle scadenze burocratiche."}
                                                     </p>
                                                 </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                                     {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                                 </div>
                                             </button>
@@ -364,7 +366,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                             : "Simula la tua media ponderata, i crediti CFU acquisiti e stima il voto di partenza per la tesi."}
                                                     </p>
                                                 </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                                     {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                                 </div>
                                             </button>
@@ -387,7 +389,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                             : "Verifica se sei in linea con i criteri di meritocrazia (CFU) richiesti per mantenere la borsa di studio ERSU."}
                                                     </p>
                                                 </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c9041a] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                                     {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                                 </div>
                                             </button>

@@ -24,15 +24,15 @@ export default async function TermsPage() {
 
             <div className="container relative z-10 max-w-5xl">
                 {/* Header */}
-                <div className="text-center mb-20 animate-in fade-in slide-in-from-bottom-10 duration-700">
+                <div className="text-center max-w-4xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom-10 duration-700">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 text-white text-[10px] font-black uppercase tracking-[0.2em] mb-6">
                         <Scale className="size-3" />
                         <span>{t("title")}</span>
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-serif font-black italic tracking-tighter mb-8 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-500 bg-clip-text text-transparent">
+                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         {t("title")}
                     </h1>
-                    <p className="text-zinc-500 font-medium max-w-2xl mx-auto leading-relaxed italic">
+                    <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
                         {t("intro")}
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-4 text-xs font-bold text-zinc-400 uppercase tracking-widest">

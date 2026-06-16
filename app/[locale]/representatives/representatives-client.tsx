@@ -306,8 +306,10 @@ export default function RepresentativesClient({
                         )}
                     </div>
                     <div>
-                        <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-6 uppercase tracking-tight">{t("title")}</h1>
-                        <p className="text-lg text-zinc-600 leading-relaxed mt-4">
+                        <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
+                            {t("title")}
+                        </h1>
+                        <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
                             {t("subtitle")}
                         </p>
                     </div>

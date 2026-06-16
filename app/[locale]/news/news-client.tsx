@@ -35,14 +35,14 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
     return (
         <div className="min-h-screen bg-zinc-50 py-20 animate-in fade-in duration-500">
             {/* Header */}
-            <div className="container mx-auto px-6 mb-12">
+            <div className="container mx-auto px-6 mb-12 text-center max-w-4xl">
                 <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
                     Blog & {ts("news_label")}
                 </span>
-                <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-4">
+                <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                     {t("news_title")}
                 </h1>
-                <p className="text-xl text-zinc-600 font-medium italic">
+                <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
                     {t("hero_title")}
                 </p>
             </div>

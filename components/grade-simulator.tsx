@@ -347,7 +347,7 @@ export function GradeSimulator({ locale, isLoggedIn = false }: GradeSimulatorPro
                     </div>
                     <div className="h-3 w-full bg-zinc-100 rounded-full overflow-hidden border border-zinc-200/40 relative">
                         <div
-                            className="h-full bg-gradient-to-r from-[#18182e] to-[#c9041a] rounded-full transition-all duration-500"
+                            className="h-full bg-gradient-to-r from-[#18182e] to-[#c12830] rounded-full transition-all duration-500"
                             style={{ width: `${Math.min(100, (calculations.totalCfuAcquired / targetCfus) * 100)}%` }}
                         />
                     </div>
@@ -360,7 +360,7 @@ export function GradeSimulator({ locale, isLoggedIn = false }: GradeSimulatorPro
                     { label: t.weightedAvg, val: calculations.weightedAvg.toFixed(2), icon: BookOpen, color: "text-blue-600 bg-blue-50 border-blue-100" },
                     { label: t.arithmeticAvg, val: calculations.arithmeticAvg.toFixed(2), icon: Calculator, color: "text-emerald-600 bg-emerald-50 border-emerald-100" },
                     { label: t.startingMarkLabel, val: `${calculations.startingMark.toFixed(2)}/110`, icon: GraduationCap, color: "text-[#18182e] bg-[#18182e]/5 border-[#18182e]/10" },
-                    { label: t.projectedMarkLabel, val: `${calculations.finalMark.toFixed(2)}/110`, icon: Sparkles, color: "text-[#c9041a] bg-[#c9041a]/5 border-[#c9041a]/10" }
+                    { label: t.projectedMarkLabel, val: `${calculations.finalMark.toFixed(2)}/110`, icon: Sparkles, color: "text-[#c12830] bg-[#c12830]/5 border-[#c12830]/10" }
                 ].map((stat, idx) => {
                     const Icon = stat.icon
                     return (
@@ -456,7 +456,7 @@ export function GradeSimulator({ locale, isLoggedIn = false }: GradeSimulatorPro
                                 type="checkbox"
                                 checked={lodeAs31}
                                 onChange={e => setLodeAs31(e.target.checked)}
-                                className="rounded text-[#c9041a] focus:ring-[#c9041a] border-zinc-300"
+                                className="rounded text-[#c12830] focus:ring-[#c12830] border-zinc-300"
                             />
                             <span className="text-xs font-bold text-zinc-700">{t.lodeBonusLabel}</span>
                         </label>
@@ -511,7 +511,7 @@ export function GradeSimulator({ locale, isLoggedIn = false }: GradeSimulatorPro
                                                 <td className="px-5 py-3.5 text-right">
                                                     <button
                                                         onClick={() => handleDeleteExam(ex.id)}
-                                                        className="p-1 rounded text-zinc-400 hover:text-[#c9041a] hover:bg-rose-50 transition-all"
+                                                        className="p-1 rounded text-zinc-400 hover:text-[#c12830] hover:bg-rose-50 transition-all"
                                                         title={t.delete}
                                                     >
                                                         <Trash2 className="size-4" />
