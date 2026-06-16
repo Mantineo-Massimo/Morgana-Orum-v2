@@ -139,172 +139,174 @@ export default function EventsClient({
                 </div>
             </div>
 
-            {/* Search + Filters */}
-            <div className="container mx-auto px-6 mb-12 space-y-8">
-                {/* Search Bar + Period Switcher */}
-                <div className="flex flex-col md:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
+            {/* Search + Filters + Grid */}
+            <div className="container mx-auto px-6 grid lg:grid-cols-4 gap-12">
+                {/* Left Sidebar: Filters & Calendar */}
+                <div className="lg:col-span-1 space-y-8">
                     {/* Period Switcher (Futuri / Archivio) */}
-                    <div className="flex gap-2 shrink-0">
-                        <Link
-                            href="/events"
-                            className={cn(
-                                "px-5 py-2.5 rounded-xl text-sm font-bold transition-all border",
-                                mode === 'upcoming'
-                                    ? "bg-[#18182e] text-white border-[#18182e] shadow-md shadow-blue-200/20"
-                                    : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
-                            )}
-                        >
-                            {t("tab_upcoming")}
-                        </Link>
-                        <Link
-                            href="/events/past"
-                            className={cn(
-                                "px-5 py-2.5 rounded-xl text-sm font-bold transition-all border",
-                                mode === 'past'
-                                    ? "bg-[#18182e] text-white border-[#18182e] shadow-md shadow-zinc-200/20"
-                                    : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
-                            )}
-                        >
-                            {t("tab_past")}
-                        </Link>
-                    </div>
-
-                    {/* Search Bar */}
-                    <div className="relative w-full max-w-md">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
-                        <input
-                            type="text"
-                            placeholder={t("search_placeholder")}
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-11 pr-10 py-2.5 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm bg-white text-center"
-                        />
-                        {searchQuery && (
-                            <button
-                                onClick={() => setSearchQuery("")}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600"
+                    <div className="space-y-3">
+                        <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">{locale === 'it' ? "Periodo" : "Timeframe"}</h3>
+                        <div className="flex flex-col gap-2">
+                            <Link
+                                href="/events"
+                                className={cn(
+                                    "w-full text-center px-4 py-2.5 rounded-xl text-sm font-bold transition-all border",
+                                    mode === 'upcoming'
+                                        ? "bg-[#18182e] text-white border-[#18182e] shadow-md shadow-blue-200/20"
+                                        : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
+                                )}
                             >
-                                <X className="size-4" />
-                            </button>
-                        )}
-                    </div>
-                </div>
-
-                {/* Category Filters */}
-                <div className="flex flex-wrap items-center justify-center gap-3">
-                    {allCategories.map((cat) => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveCategory(cat)}
-                            className={cn(
-                                "px-5 py-2 rounded-full text-sm font-bold transition-all whitespace-nowrap",
-                                activeCategory === cat
-                                    ? "bg-[#18182e] text-white shadow-md shadow-blue-200/10"
-                                    : "bg-white text-muted-foreground hover:bg-zinc-100 border border-zinc-200"
-                            )}
-                        >
-                            {cat}
-                        </button>
-                    ))}
-                </div>
-
-                {/* Calendar */}
-                <div className="flex flex-col items-center space-y-2">
-                    <div className="flex items-center justify-between w-full max-w-xs px-2">
-                        <h4 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{t("calendar_title")}</h4>
-                        {selectedDate && (
-                            <button onClick={() => setSelectedDate(null)} className="text-xs text-red-500 hover:text-red-600 font-bold flex items-center">
-                                <X className="size-3 mr-1" /> Reset
-                            </button>
-                        )}
-                    </div>
-                    <div className="w-full max-w-xs bg-white p-4 rounded-2xl border border-zinc-100 shadow-sm">
-                        <div className="flex items-center justify-between mb-4">
-                            <button onClick={prevMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronLeft className="size-4" /></button>
-                            <span className="font-bold text-sm text-foreground">{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
-                            <button onClick={nextMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronRight className="size-4" /></button>
-                        </div>
-                        <div className="grid grid-cols-7 gap-1 text-center mb-2">
-                            {locale === 'it'
-                                ? ['L', 'M', 'M', 'G', 'V', 'S', 'D'].map((d, i) => (
-                                    <div key={i} className="text-[10px] font-bold text-zinc-400">{d}</div>
-                                ))
-                                : ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
-                                    <div key={i} className="text-[10px] font-bold text-zinc-400">{d}</div>
-                                ))
-                            }
-                        </div>
-                        <div className="grid grid-cols-7 gap-1">
-                            {days.map((d, i) => {
-                                if (!d) return <div key={`empty-${i}`} />
-                                const dateObj = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d)
-                                const isSelected = selectedDate?.toDateString() === dateObj.toDateString()
-                                const isToday = new Date().toDateString() === dateObj.toDateString()
-                                const hasEvent = events.some(e => new Date(e.date).toDateString() === dateObj.toDateString())
-
-                                return (
-                                    <button
-                                        key={i}
-                                        onClick={() => setSelectedDate(dateObj)}
-                                        className={cn(
-                                            "h-8 rounded-lg text-xs font-bold transition-colors flex flex-col items-center justify-center relative",
-                                            isSelected
-                                                ? "bg-[#18182e] text-white shadow-md"
-                                                : isToday
-                                                    ? "bg-red-50 text-red-600 border border-red-100"
-                                                    : "hover:bg-zinc-100 text-zinc-700",
-                                            !isSelected && !isToday && hasEvent && "text-foreground bg-zinc-50"
-                                        )}
-                                    >
-                                        {d}
-                                        {!isSelected && hasEvent && <span className="absolute bottom-1 size-1 rounded-full bg-red-600" />}
-                                    </button>
-                                )
-                            })}
+                                {t("tab_upcoming")}
+                            </Link>
+                            <Link
+                                href="/events/past"
+                                className={cn(
+                                    "w-full text-center px-4 py-2.5 rounded-xl text-sm font-bold transition-all border",
+                                    mode === 'past'
+                                        ? "bg-[#18182e] text-white border-[#18182e] shadow-md shadow-zinc-200/20"
+                                        : "bg-white text-zinc-500 border-zinc-200 hover:border-zinc-300"
+                                )}
+                            >
+                                {t("tab_past")}
+                            </Link>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            {/* Results count */}
-            {(searchQuery || activeCategory !== t("all_categories") || selectedDate) && (
-                <div className="container mx-auto px-6 mb-8 text-center">
-                    <p className="text-sm text-zinc-500">
-                        {filteredEvents.length} {filteredEvents.length === 1 ? (locale === 'it' ? "evento trovato" : "event found") : (locale === 'it' ? "eventi trovati" : "events found")}
-                        {searchQuery && <> {locale === 'it' ? "per" : "for"} &ldquo;<span className="font-bold text-zinc-700">{searchQuery}</span>&rdquo;</>}
-                        {activeCategory !== t("all_categories") && <> {locale === 'it' ? "in" : "in"} <span className="font-bold text-zinc-700">{activeCategory}</span></>}
-                        {selectedDate && <> {locale === 'it' ? "il" : "on"} <span className="font-bold text-zinc-700">{formatDate(selectedDate, locale)}</span></>}
-                    </p>
-                </div>
-            )}
-
-            {/* Main Content: Event Grid */}
-            <div className="container mx-auto px-6 pb-20">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <AnimatePresence mode="popLayout">
-                        {filteredEvents.map((item) => (
-                            <EventCard
-                                key={item.id}
-                                item={item}
+                    {/* Search */}
+                    <div className="space-y-3">
+                        <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">{t("search_title")}</h3>
+                        <div className="relative">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                            <input
+                                type="text"
+                                placeholder={t("search_placeholder")}
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm bg-white"
                             />
-                        ))}
-                    </AnimatePresence>
+                        </div>
+                    </div>
+
+                    {/* Calendar */}
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                            <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">{t("calendar_title")}</h3>
+                            {selectedDate && (
+                                <button onClick={() => setSelectedDate(null)} className="text-xs text-red-500 hover:text-red-600 font-bold flex items-center">
+                                    <X className="size-3 mr-1" /> Reset
+                                </button>
+                            )}
+                        </div>
+                        <div className="bg-white p-4 rounded-2xl border border-zinc-100 shadow-sm">
+                            <div className="flex items-center justify-between mb-4">
+                                <button onClick={prevMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronLeft className="size-4" /></button>
+                                <span className="font-bold text-sm text-foreground">{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</span>
+                                <button onClick={nextMonth} className="p-1 hover:bg-zinc-100 rounded-lg text-zinc-500"><ChevronRight className="size-4" /></button>
+                            </div>
+                            <div className="grid grid-cols-7 gap-1 text-center mb-2">
+                                {locale === 'it'
+                                    ? ['L', 'M', 'M', 'G', 'V', 'S', 'D'].map((d, i) => (
+                                        <div key={i} className="text-[10px] font-bold text-zinc-400">{d}</div>
+                                    ))
+                                    : ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
+                                        <div key={i} className="text-[10px] font-bold text-zinc-400">{d}</div>
+                                    ))
+                                }
+                            </div>
+                            <div className="grid grid-cols-7 gap-1">
+                                {days.map((d, i) => {
+                                    if (!d) return <div key={`empty-${i}`} />
+                                    const dateObj = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), d)
+                                    const isSelected = selectedDate?.toDateString() === dateObj.toDateString()
+                                    const isToday = new Date().toDateString() === dateObj.toDateString()
+                                    const hasEvent = events.some(e => new Date(e.date).toDateString() === dateObj.toDateString())
+
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => setSelectedDate(dateObj)}
+                                            className={cn(
+                                                "h-8 rounded-lg text-xs font-bold transition-colors flex flex-col items-center justify-center relative",
+                                                isSelected
+                                                    ? "bg-[#18182e] text-white shadow-md"
+                                                    : isToday
+                                                        ? "bg-red-50 text-red-600 border border-red-100"
+                                                        : "hover:bg-zinc-100 text-zinc-700",
+                                                !isSelected && !isToday && hasEvent && "text-foreground bg-zinc-50"
+                                            )}
+                                        >
+                                            {d}
+                                            {!isSelected && hasEvent && <span className="absolute bottom-1 size-1 rounded-full bg-red-600" />}
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Categories */}
+                    <div className="space-y-3">
+                        <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">{t("categories_title")}</h3>
+                        <div className="space-y-1">
+                            {allCategories.map((cat) => (
+                                <button
+                                    key={cat}
+                                    onClick={() => setActiveCategory(cat)}
+                                    className={cn(
+                                        "w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center justify-between group",
+                                        activeCategory === cat
+                                            ? "bg-white text-foreground shadow-sm border border-zinc-200"
+                                            : "text-zinc-500 hover:bg-zinc-100 hover:text-foreground border border-transparent"
+                                    )}
+                                >
+                                    {cat}
+                                    {activeCategory === cat && <CheckCircle className="size-4 text-green-500" />}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
-                {filteredEvents.length === 0 && (
-                    <div className="text-center py-20 text-zinc-400 bg-white rounded-2xl border border-zinc-100 max-w-xl mx-auto shadow-sm">
-                        <CalendarIcon className="size-12 mx-auto mb-4 opacity-30 text-zinc-500" />
-                        <p className="text-lg font-medium text-zinc-500">{t("no_events")}</p>
-                        {(searchQuery || activeCategory !== t("all_categories") || selectedDate) && (
-                            <button
-                                onClick={() => { setSearchQuery(""); setActiveCategory(t("all_categories")); setSelectedDate(null) }}
-                                className="mt-3 text-sm font-bold text-[#18182e] hover:underline transition-colors"
-                            >
-                                {locale === 'it' ? "Resetta filtri" : "Reset filters"}
-                            </button>
-                        )}
+                {/* Main Content: Event Grid */}
+                <div className="lg:col-span-3 space-y-8">
+                    {/* Results count */}
+                    {(searchQuery || activeCategory !== t("all_categories") || selectedDate) && (
+                        <div className="mb-4">
+                            <p className="text-sm text-zinc-500">
+                                {filteredEvents.length} {filteredEvents.length === 1 ? (locale === 'it' ? "evento trovato" : "event found") : (locale === 'it' ? "eventi trovati" : "events found")}
+                                {searchQuery && <> {locale === 'it' ? "per" : "for"} &ldquo;<span className="font-bold text-zinc-700">{searchQuery}</span>&rdquo;</>}
+                                {activeCategory !== t("all_categories") && <> {locale === 'it' ? "in" : "in"} <span className="font-bold text-zinc-700">{activeCategory}</span></>}
+                                {selectedDate && <> {locale === 'it' ? "il" : "on"} <span className="font-bold text-zinc-700">{formatDate(selectedDate, locale)}</span></>}
+                            </p>
+                        </div>
+                    )}
+
+                    <div className="grid md:grid-cols-2 gap-6">
+                        <AnimatePresence mode="popLayout">
+                            {filteredEvents.map((item) => (
+                                <EventCard
+                                    key={item.id}
+                                    item={item}
+                                />
+                            ))}
+                        </AnimatePresence>
                     </div>
-                )}
+
+                    {filteredEvents.length === 0 && (
+                        <div className="text-center py-20 text-zinc-400 bg-white rounded-2xl border border-zinc-100 shadow-sm">
+                            <CalendarIcon className="size-12 mx-auto mb-4 opacity-30 text-zinc-500" />
+                            <p className="text-lg font-medium text-zinc-500">{t("no_events")}</p>
+                            {(searchQuery || activeCategory !== t("all_categories") || selectedDate) && (
+                                <button
+                                    onClick={() => { setSearchQuery(""); setActiveCategory(t("all_categories")); setSelectedDate(null) }}
+                                    className="mt-3 text-sm font-bold text-[#18182e] hover:underline transition-colors"
+                                >
+                                    {locale === 'it' ? "Resetta filtri" : "Reset filters"}
+                                </button>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     )
