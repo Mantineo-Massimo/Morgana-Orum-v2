@@ -101,6 +101,7 @@ export default function RepresentativeForm({
             department: formData.get("department") as string || undefined,
             role: formData.get("role") as string || undefined,
             term: formData.get("term") as string || "2025-2027",
+            mandateYears: Number(formData.get("mandateYears")) || 2,
             image: imageUrl || null,
             email: formData.get("email") as string || null,
             phone: formData.get("phone") as string || null,
@@ -323,15 +324,29 @@ export default function RepresentativeForm({
                         </div>
                     )}
 
-                    {/* Term */}
-                    <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Mandato / Annata</label>
-                        <input
-                            name="term"
-                            defaultValue={initialData?.term || "2025-2027"}
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all font-mono text-sm"
-                            placeholder="Es. 2025-2027"
-                        />
+                    {/* Term and Mandate Years */}
+                    <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label className="block text-sm font-bold text-zinc-700 mb-1">Mandato / Annata</label>
+                            <input
+                                name="term"
+                                defaultValue={initialData?.term || "2025-2027"}
+                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all font-mono text-sm"
+                                placeholder="Es. 2025-2027"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-bold text-zinc-700 mb-1">Durata Mandato (Anni)</label>
+                            <select
+                                name="mandateYears"
+                                defaultValue={initialData?.mandateYears ?? 2}
+                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                            >
+                                <option value={2}>2 Anni (Standard)</option>
+                                <option value={3}>3 Anni</option>
+                                <option value={4}>4 Anni</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-4">

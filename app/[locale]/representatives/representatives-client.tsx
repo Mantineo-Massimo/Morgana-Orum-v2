@@ -44,18 +44,14 @@ function AnimatedCounter({ value, suffix, prefix }: { value: number, suffix?: st
 
 // Define types for props
 interface RepresentativesClientProps {
-    nationalBodies: any[]
-    centralBodies: any[]
-    departments: any[]
+    allReps: any[]
     isSubSite?: boolean
     brandColor?: string
     votesCount?: number
 }
 
 export default function RepresentativesClient({
-    nationalBodies,
-    centralBodies,
-    departments,
+    allReps = [],
     isSubSite,
     brandColor = "red",
     votesCount
@@ -64,10 +60,89 @@ export default function RepresentativesClient({
     const [selectedRep, setSelectedRep] = useState<any>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
+    // Calculate unique terms sorted chronologically descending
+    const existingTerms = Array.from(new Set(allReps.map(r => r.term))).sort().reverse()
+    const [selectedTerm, setSelectedTerm] = useState(existingTerms[0] || "2025-2027")
+
     const handleRepClick = (rep: any) => {
         setSelectedRep(rep)
         setIsModalOpen(true)
     }
+
+    // Filter representatives by selected biennium
+    const filteredReps = allReps.filter((r: any) => r.term === selectedTerm)
+
+    // 1. Central Bodies
+    const centralReps = filteredReps.filter((r: any) => r.category === "CENTRAL")
+    const centralBodiesMap = new Map<string, any[]>()
+    centralReps.forEach((rep: any) => {
+        const role = rep.role || "Altro"
+        if (!centralBodiesMap.has(role)) {
+            centralBodiesMap.set(role, [])
+        }
+        centralBodiesMap.get(role)?.push(rep)
+    })
+
+    const centralBodies = Array.from(centralBodiesMap.entries()).map(([name, members]) => {
+        const morganaMembers = members.filter(m => m.listName === "MORGANA")
+        const orumMembers = members.filter(m => m.listName === "O.R.U.M.")
+        const azioneMembers = members.filter(m => m.listName === "AZIONE UNIVERITARIA")
+
+        const groups = []
+        if (morganaMembers.length > 0) groups.push({ listName: "MORGANA", members: morganaMembers })
+        if (orumMembers.length > 0) groups.push({ listName: "O.R.U.M.", members: orumMembers })
+        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE UNIVERITARIA", members: azioneMembers })
+
+        return { name, groups }
+    }).sort((a, b) => a.name.localeCompare(b.name))
+
+    // 2. National Bodies
+    const nationalReps = filteredReps.filter((r: any) => r.category === "NATIONAL")
+    const nationalBodiesMap = new Map<string, any[]>()
+    nationalReps.forEach((rep: any) => {
+        const role = rep.role || "Altro"
+        if (!nationalBodiesMap.has(role)) {
+            nationalBodiesMap.set(role, [])
+        }
+        nationalBodiesMap.get(role)?.push(rep)
+    })
+
+    const nationalBodies = Array.from(nationalBodiesMap.entries()).map(([name, members]) => {
+        const morganaMembers = members.filter(m => m.listName === "MORGANA")
+        const orumMembers = members.filter(m => m.listName === "O.R.U.M.")
+        const azioneMembers = members.filter(m => m.listName === "AZIONE UNIVERITARIA")
+
+        const groups = []
+        if (morganaMembers.length > 0) groups.push({ listName: "MORGANA", members: morganaMembers })
+        if (orumMembers.length > 0) groups.push({ listName: "O.R.U.M.", members: orumMembers })
+        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE UNIVERITARIA", members: azioneMembers })
+
+        return { name, groups }
+    }).sort((a, b) => a.name.localeCompare(b.name))
+
+    // 3. Departments
+    const deptReps = filteredReps.filter((r: any) => r.category === "DEPARTMENT")
+    const departmentsMap = new Map<string, any[]>()
+    deptReps.forEach((rep: any) => {
+        const dept = rep.department || "Altro"
+        if (!departmentsMap.has(dept)) {
+            departmentsMap.set(dept, [])
+        }
+        departmentsMap.get(dept)?.push(rep)
+    })
+
+    const departments = Array.from(departmentsMap.entries()).map(([name, members]) => {
+        const morganaMembers = members.filter(m => m.listName === "MORGANA")
+        const orumMembers = members.filter(m => m.listName === "O.R.U.M.")
+        const azioneMembers = members.filter(m => m.listName === "AZIONE UNIVERITARIA")
+
+        const groups = []
+        if (morganaMembers.length > 0) groups.push({ listName: "MORGANA", members: morganaMembers })
+        if (orumMembers.length > 0) groups.push({ listName: "O.R.U.M.", members: orumMembers })
+        if (azioneMembers.length > 0) groups.push({ listName: "AZIONE UNIVERITARIA", members: azioneMembers })
+
+        return { name, groups }
+    }).sort((a, b) => a.name.localeCompare(b.name))
 
     // Calcolo dei totali
     const countMembers = (bodies: any[]) => {
@@ -94,9 +169,27 @@ export default function RepresentativesClient({
             <div className="container mx-auto px-6">
 
                 {/* Header */}
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <span className="inline-block py-1 px-3 rounded-full bg-zinc-100 text-zinc-600 text-xs font-bold uppercase tracking-widest mb-4">{t("biennium")}</span>
-                    <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 font-serif">{t("title")}</h1>
+                <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <div className="inline-block">
+                        {existingTerms.length > 1 ? (
+                            <select
+                                value={selectedTerm}
+                                onChange={(e) => setSelectedTerm(e.target.value)}
+                                className="py-1.5 px-4 rounded-full bg-white text-zinc-700 text-xs font-bold uppercase tracking-wider border border-zinc-200 focus:outline-none cursor-pointer hover:bg-zinc-50 transition-colors shadow-sm font-sans"
+                            >
+                                {existingTerms.map((term) => (
+                                    <option key={term} value={term} className="bg-white text-zinc-800 normal-case">
+                                        {t("biennium", { term })}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : (
+                            <span className="inline-block py-1 px-3 rounded-full bg-zinc-100 text-zinc-600 text-xs font-bold uppercase tracking-widest">
+                                {t("biennium", { term: selectedTerm })}
+                            </span>
+                        )}
+                    </div>
+                    <h1 className="text-4xl md:text-5xl font-bold text-foreground font-serif">{t("title")}</h1>
                     <p className="text-lg text-zinc-600 leading-relaxed">
                         {t("subtitle")}
                     </p>

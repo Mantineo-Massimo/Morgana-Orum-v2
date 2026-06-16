@@ -133,7 +133,7 @@
         "join_team_orum": "If you want to influence institutional decisions and concretely support the right to study, join Orum."
     },
     "Representatives": {
-        "biennium": "Biennium 2025-2027",
+        "biennium": "Biennium {term}",
         "title": "Our Representatives",
         "subtitle": "Get to know the elected students who work every day in the collegiate bodies to defend your rights and improve the university.",
         "stat_votes": "Votes Achieved",

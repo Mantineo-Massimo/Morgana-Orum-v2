@@ -50,6 +50,7 @@ const representativeSchema = z.object({
     department: z.string().optional(),
     role: z.string().optional(),
     term: z.string().default("2025-2027"),
+    mandateYears: z.coerce.number().int().min(1).max(10).default(2),
     image: z.string().optional().nullable(),
     email: z.string().email().optional().nullable().or(z.literal("")),
     phone: z.string().optional().nullable().or(z.literal("")),
@@ -161,6 +162,55 @@ export async function duplicateRepresentative(id: string) {
     } catch (error) {
         console.error("Duplicate representative error:", error)
         return { success: false, error: "Errore durante la duplicazione" }
+    }
+}
+
+export async function createNewBienniumAction(sourceTerm: string, targetTerm: string) {
+    try {
+        const permission = await checkContentPermission()
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa operazione." }
+
+        // Parse the start years of both sourceTerm and targetTerm (e.g. "2025-2027" -> 2025)
+        const sourceStartYear = parseInt(sourceTerm.split("-")[0])
+        const targetStartYear = parseInt(targetTerm.split("-")[0])
+
+        if (isNaN(sourceStartYear) || isNaN(targetStartYear)) {
+            return { success: false, error: "Formato biennio non valido. Esempio corretto: 2025-2027" }
+        }
+
+        // Get representatives of the source term
+        const sourceReps = await prisma.representative.findMany({
+            where: { term: sourceTerm }
+        })
+
+        let carriedOverCount = 0
+
+        // Filter and copy representatives
+        for (const rep of sourceReps) {
+            const endYear = sourceStartYear + rep.mandateYears
+            if (endYear > targetStartYear) {
+                // Duplicate into the target term
+                const { id: _, createdAt: __, updatedAt: ___, ...repData } = rep
+                await prisma.representative.create({
+                    data: {
+                        ...repData,
+                        name: rep.name, // keep original name without "(Copia)"
+                        term: targetTerm,
+                    }
+                })
+                carriedOverCount++
+            }
+        }
+
+        revalidatePath("/representatives", "page")
+        revalidatePath("/admin/representatives", "page")
+        revalidatePath("/", "layout")
+        revalidateTag('representatives')
+
+        return { success: true, carriedOverCount }
+    } catch (error) {
+        console.error("Create new biennium error:", error)
+        return { success: false, error: "Errore durante la creazione del biennio" }
     }
 }
 

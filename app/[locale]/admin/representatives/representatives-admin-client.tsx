@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy, Plus } from "lucide-react"
+import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy, Plus, CalendarRange } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { deleteRepresentative, duplicateRepresentative } from "@/app/actions/representatives"
+import { deleteRepresentative, duplicateRepresentative, createNewBienniumAction } from "@/app/actions/representatives"
 import { useRouter } from "next/navigation"
 import RepresentativeForm from "@/components/admin/representative-form"
 
@@ -39,6 +39,41 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
     const [sortConfig, setSortConfig] = useState<{ key: keyof Representative, direction: 'asc' | 'desc' | null } | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [editingRep, setEditingRep] = useState<Representative | null>(null)
+
+    // Biennium Rollover state
+    const [isBienniumModalOpen, setIsBienniumModalOpen] = useState(false)
+    const [bienniumLoading, setBienniumLoading] = useState(false)
+    const [bienniumError, setBienniumError] = useState<string | null>(null)
+    const [bienniumSuccess, setBienniumSuccess] = useState<string | null>(null)
+
+    const existingTerms = Array.from(new Set(reps.map(r => r.term))).sort().reverse()
+    const [sourceTerm, setSourceTerm] = useState(existingTerms[0] || "2025-2027")
+    const [targetTerm, setTargetTerm] = useState(() => {
+        const initialSource = existingTerms[0] || "2025-2027"
+        const parts = initialSource.split("-")
+        if (parts.length === 2) {
+            const start = parseInt(parts[0])
+            const end = parseInt(parts[1])
+            if (!isNaN(start) && !isNaN(end)) {
+                const diff = end - start
+                return `${end}-${end + diff}`
+            }
+        }
+        return "2027-2029"
+    })
+
+    const handleSourceTermChange = (val: string) => {
+        setSourceTerm(val)
+        const parts = val.split("-")
+        if (parts.length === 2) {
+            const start = parseInt(parts[0])
+            const end = parseInt(parts[1])
+            if (!isNaN(start) && !isNaN(end)) {
+                const diff = end - start
+                setTargetTerm(`${end}-${end + diff}`)
+            }
+        }
+    }
 
     const openModal = (rep?: Representative) => {
         setEditingRep(rep || null)
@@ -138,12 +173,23 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                     </select>
                 </div>
 
-                <button
-                    onClick={() => openModal()}
-                    className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 whitespace-nowrap"
-                >
-                    <Plus className="size-4" /> Aggiungi Nuovo
-                </button>
+                <div className="flex gap-2">
+                    {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (
+                        <button
+                            onClick={() => setIsBienniumModalOpen(true)}
+                            className="bg-white text-zinc-950 border border-zinc-200 px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 whitespace-nowrap shadow-sm"
+                        >
+                            <CalendarRange className="size-4 text-zinc-600" /> Nuovo Biennio
+                        </button>
+                    )}
+
+                    <button
+                        onClick={() => openModal()}
+                        className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 whitespace-nowrap"
+                    >
+                        <Plus className="size-4" /> Aggiungi Nuovo
+                    </button>
+                </div>
             </div>
 
             <div className="bg-white border border-zinc-100 rounded-xl overflow-hidden shadow-sm">
@@ -322,6 +368,120 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                 }}
                                 onCancel={closeModal}
                             />
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* New Biennium Modal */}
+            {isBienniumModalOpen && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200">
+                        <button
+                            onClick={() => {
+                                setIsBienniumModalOpen(false)
+                                setBienniumError(null)
+                                setBienniumSuccess(null)
+                            }}
+                            className="absolute right-6 top-6 p-2 hover:bg-zinc-100 rounded-full transition-colors z-10"
+                        >
+                            <X className="size-5 text-zinc-400" />
+                        </button>
+
+                        <div className="p-8">
+                            <h2 className="text-2xl font-black text-zinc-900 mb-2 flex items-center gap-2">
+                                <CalendarRange className="size-6 text-zinc-800" /> Nuovo Biennio
+                            </h2>
+                            <p className="text-zinc-500 text-sm mb-6">
+                                Crea un nuovo biennio e copia automaticamente tutti i rappresentanti del biennio sorgente con un mandato pluriennale (3 o 4 anni) attivo.
+                            </p>
+
+                            {bienniumError && (
+                                <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm font-medium border border-red-100 mb-4 animate-in fade-in">
+                                    {bienniumError}
+                                </div>
+                            )}
+
+                            {bienniumSuccess && (
+                                <div className="bg-green-50 text-green-700 p-4 rounded-xl text-sm font-medium border border-green-100 mb-4 animate-in fade-in font-semibold">
+                                    {bienniumSuccess}
+                                </div>
+                            )}
+
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="block text-sm font-bold text-zinc-700 mb-1">Biennio Sorgente</label>
+                                    <select
+                                        value={sourceTerm}
+                                        onChange={(e) => handleSourceTermChange(e.target.value)}
+                                        className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                    >
+                                        {existingTerms.map(t => (
+                                            <option key={t} value={t}>{t}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-bold text-zinc-700 mb-1">Nuovo Biennio</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Es. 2027-2029"
+                                        value={targetTerm}
+                                        onChange={(e) => setTargetTerm(e.target.value)}
+                                        className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all font-mono text-sm"
+                                    />
+                                    <p className="text-[10px] text-zinc-400 mt-1">
+                                        Formato richiesto: YYYY-YYYY (es. 2027-2029)
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="pt-6 flex justify-end gap-3">
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setIsBienniumModalOpen(false)
+                                        setBienniumError(null)
+                                        setBienniumSuccess(null)
+                                    }}
+                                    className="px-4 py-2 text-sm font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
+                                >
+                                    Annulla
+                                </button>
+                                <button
+                                    type="button"
+                                    disabled={bienniumLoading}
+                                    onClick={async () => {
+                                        setBienniumLoading(true)
+                                        setBienniumError(null)
+                                        setBienniumSuccess(null)
+
+                                        const res = await createNewBienniumAction(sourceTerm, targetTerm)
+                                        if (res.success) {
+                                            setBienniumSuccess(`Biennio creato con successo! ${res.carriedOverCount} rappresentanti sono stati importati nel nuovo biennio ${targetTerm}.`)
+                                            setTimeout(() => {
+                                                setIsBienniumModalOpen(false)
+                                                setBienniumSuccess(null)
+                                                router.refresh()
+                                            }, 3000)
+                                        } else {
+                                            setBienniumError(res.error || "Errore durante la creazione del biennio")
+                                        }
+                                        setBienniumLoading(false)
+                                    }}
+                                    className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-all flex items-center gap-2 disabled:opacity-50"
+                                >
+                                    {bienniumLoading ? (
+                                        <>
+                                            <span className="size-4 rounded-full border-2 border-white/20 border-t-white animate-spin" />
+                                            <span>Elaborazione...</span>
+                                        </>
+                                    ) : (
+                                        <span>Crea e Copia</span>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

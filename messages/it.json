@@ -133,7 +133,7 @@
         "join_team_orum": "Se vuoi incidere sulle decisioni istituzionali e supportare concretamente il diritto allo studio, unisciti ad Orum."
     },
     "Representatives": {
-        "biennium": "Biennio 2025-2027",
+        "biennium": "Biennio {term}",
         "title": "I Nostri Rappresentanti",
         "subtitle": "Conosci gli studenti eletti che lavorano ogni giorno negli organi collegiali per difendere i tuoi diritti e migliorare l'ateneo.",
         "stat_votes": "Voti Raggiunti",

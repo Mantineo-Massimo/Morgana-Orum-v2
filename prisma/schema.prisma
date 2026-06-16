@@ -86,6 +86,7 @@ model Representative {
   department      String?
   role            String?
   term            String      @default("2025-2027")
+  mandateYears    Int         @default(2)
   image           String?
   email           String?
   phone           String?
