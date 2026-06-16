@@ -147,7 +147,7 @@
         "rep_label": "Representative"
     },
     "Search": {
-        "placeholder": "Search news, events, representatives...",
+        "placeholder": "Search news...",
         "loading": "Searching...",
         "empty_start": "Start typing to search the portal.",
         "too_short": "Enter at least two characters.",

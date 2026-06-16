@@ -147,7 +147,7 @@
         "rep_label": "Rappresentante"
     },
     "Search": {
-        "placeholder": "Cerca notizie, eventi, rappresentanti...",
+        "placeholder": "Cerca notizie...",
         "loading": "Ricerca in corso...",
         "empty_start": "Inizia a scrivere per cercare nel portale.",
         "too_short": "Inserisci almeno due caratteri.",

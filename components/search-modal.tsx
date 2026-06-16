@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "@/i18n/routing"
-import { Search, X, Newspaper, Calendar, User, ArrowRight, Loader2 } from "lucide-react"
+import { Search, X, Newspaper, Calendar, User, ArrowRight, Loader2, Globe } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { globalSearch } from "@/app/actions/search"
 import { useClickAway } from "react-use"
@@ -74,7 +74,12 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         onClose()
     }
 
-    const hasResults = results && (results.news?.length > 0 || results.events?.length > 0 || results.representatives?.length > 0)
+    const hasResults = results && (
+        results.news?.length > 0 ||
+        results.events?.length > 0 ||
+        results.representatives?.length > 0 ||
+        results.pages?.length > 0
+    )
 
     return (
         <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4 backdrop-blur-sm bg-black/60 animate-in fade-in duration-200">
@@ -196,6 +201,30 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                                                 <div className="flex-1 min-w-0">
                                                     <p className="font-bold text-foreground line-clamp-1">{item.name}</p>
                                                     <p className="text-xs text-zinc-400 line-clamp-1">{item.role} • {item.department}</p>
+                                                </div>
+                                                <ArrowRight className="size-4 text-zinc-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all ml-4 shrink-0" />
+                                            </button>
+                                        ))}
+                                    </div>
+                                </section>
+                            )}
+
+                            {/* Pages Section */}
+                            {results.pages?.length > 0 && (
+                                <section>
+                                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 mb-3 px-2 flex items-center gap-2">
+                                        <Globe className="size-3" /> {locale === 'it' ? "Pagine del Sito" : "Site Pages"}
+                                    </h3>
+                                    <div className="space-y-1">
+                                        {results.pages.map((item: any) => (
+                                            <button
+                                                key={item.id}
+                                                onClick={() => handleSelect(item.url)}
+                                                className="w-full text-left p-3 rounded-xl hover:bg-zinc-50 flex items-center justify-between group transition-all"
+                                            >
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="font-bold text-foreground line-clamp-1">{locale === 'it' ? item.titleIt : item.titleEn}</p>
+                                                    <p className="text-xs text-zinc-400 line-clamp-1">{locale === 'it' ? item.descIt : item.descEn}</p>
                                                 </div>
                                                 <ArrowRight className="size-4 text-zinc-300 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all ml-4 shrink-0" />
                                             </button>
