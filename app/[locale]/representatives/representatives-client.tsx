@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Building2, Landmark, User, Users } from "lucide-react"
+import { Building2, Landmark, User, Users, ChevronLeft, ChevronRight } from "lucide-react"
 import { getRoleIcon, CentralSectionIcon, DepartmentSectionIcon } from "@/lib/role-icons"
 import { cn } from "@/lib/utils"
 import { RepresentativesList } from "@/components/representatives-list"
@@ -63,6 +63,21 @@ export default function RepresentativesClient({
     // Calculate unique terms sorted chronologically descending
     const existingTerms = Array.from(new Set(allReps.map(r => r.term))).sort().reverse()
     const [selectedTerm, setSelectedTerm] = useState(existingTerms[0] || "2025-2027")
+    const [windowStartIdx, setWindowStartIdx] = useState(0)
+
+    // Ensure selectedTerm is always inside the visible window of 3 items
+    useEffect(() => {
+        const termIndex = existingTerms.indexOf(selectedTerm)
+        if (termIndex !== -1) {
+            if (termIndex < windowStartIdx || termIndex >= windowStartIdx + 3) {
+                const newStart = Math.min(
+                    Math.max(0, termIndex - 1),
+                    Math.max(0, existingTerms.length - 3)
+                )
+                setWindowStartIdx(newStart)
+            }
+        }
+    }, [selectedTerm, existingTerms, windowStartIdx])
 
     const handleRepClick = (rep: any) => {
         setSelectedRep(rep)
@@ -171,33 +186,81 @@ export default function RepresentativesClient({
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16 space-y-6">
                     <div className="flex justify-center">
-                        <div className="flex items-center gap-1 bg-zinc-100 p-1.5 rounded-full border border-zinc-200/50 shadow-sm max-w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative">
-                            {existingTerms.map((term) => {
-                                const isActive = term === selectedTerm;
-                                return (
-                                    <button
-                                        key={term}
-                                        onClick={() => setSelectedTerm(term)}
-                                        className={cn(
-                                            "relative px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 focus:outline-none whitespace-nowrap",
-                                            isActive
-                                                ? "text-white"
-                                                : "text-zinc-500 hover:text-zinc-800"
-                                        )}
-                                    >
-                                        {isActive && (
-                                            <motion.div
-                                                layoutId="activeBienniumPill"
-                                                className="absolute inset-0 bg-red-600 rounded-full"
-                                                transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                                                style={{ zIndex: 0 }}
-                                            />
-                                        )}
-                                        <span className="relative z-10">{t("biennium", { term })}</span>
-                                    </button>
-                                );
-                            })}
-                        </div>
+                        {existingTerms.length > 3 ? (
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={() => setWindowStartIdx(prev => Math.max(0, prev - 1))}
+                                    disabled={windowStartIdx === 0}
+                                    className="size-8 rounded-full border border-zinc-200/80 bg-white flex items-center justify-center text-zinc-500 hover:text-zinc-800 disabled:opacity-40 disabled:hover:text-zinc-500 hover:shadow-sm transition-all shrink-0"
+                                >
+                                    <ChevronLeft className="size-4" />
+                                </button>
+
+                                <div className="flex items-center gap-1 bg-zinc-100 p-1.5 rounded-full border border-zinc-200/50 shadow-sm max-w-full overflow-hidden relative">
+                                    {existingTerms.slice(windowStartIdx, windowStartIdx + 3).map((term) => {
+                                        const isActive = term === selectedTerm;
+                                        return (
+                                            <button
+                                                key={term}
+                                                onClick={() => setSelectedTerm(term)}
+                                                className={cn(
+                                                    "relative px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 focus:outline-none whitespace-nowrap",
+                                                    isActive
+                                                        ? "text-white"
+                                                        : "text-zinc-500 hover:text-zinc-800"
+                                                )}
+                                            >
+                                                {isActive && (
+                                                    <motion.div
+                                                        layoutId="activeBienniumPill"
+                                                        className="absolute inset-0 bg-red-600 rounded-full"
+                                                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                                        style={{ zIndex: 0 }}
+                                                    />
+                                                )}
+                                                <span className="relative z-10">{t("biennium", { term })}</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                <button
+                                    onClick={() => setWindowStartIdx(prev => Math.min(existingTerms.length - 3, prev + 1))}
+                                    disabled={windowStartIdx >= existingTerms.length - 3}
+                                    className="size-8 rounded-full border border-zinc-200/80 bg-white flex items-center justify-center text-zinc-500 hover:text-zinc-800 disabled:opacity-40 disabled:hover:text-zinc-500 hover:shadow-sm transition-all shrink-0"
+                                >
+                                    <ChevronRight className="size-4" />
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-1 bg-zinc-100 p-1.5 rounded-full border border-zinc-200/50 shadow-sm max-w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative">
+                                {existingTerms.map((term) => {
+                                    const isActive = term === selectedTerm;
+                                    return (
+                                        <button
+                                            key={term}
+                                            onClick={() => setSelectedTerm(term)}
+                                            className={cn(
+                                                "relative px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 focus:outline-none whitespace-nowrap",
+                                                isActive
+                                                    ? "text-white"
+                                                    : "text-zinc-500 hover:text-zinc-800"
+                                            )}
+                                        >
+                                            {isActive && (
+                                                <motion.div
+                                                    layoutId="activeBienniumPill"
+                                                    className="absolute inset-0 bg-red-600 rounded-full"
+                                                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                                    style={{ zIndex: 0 }}
+                                                />
+                                            )}
+                                            <span className="relative z-10">{t("biennium", { term })}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
                     <div>
                         <h1 className="text-4xl md:text-6xl font-serif font-black text-foreground mb-6 uppercase tracking-tight">{t("title")}</h1>
