@@ -84,7 +84,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                             onClick={() => onMemberClick?.(member)}
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
-                                            className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group w-full max-w-[400px]"
+                                            className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group w-full max-w-[400px] relative"
                                         >
                                             {/* Photo */}
                                             <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
@@ -97,7 +97,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                             </div>
 
                                             {/* Info */}
-                                            <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                            <div className="flex-1 min-w-0 flex flex-col justify-center pr-8 md:pr-10">
                                                 <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                     {member.name.split(' ').map((part: string, i: number) => (
                                                         <span key={i} className="block">{part}</span>
@@ -109,7 +109,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                             </div>
 
                                             {/* Badge List */}
-                                            <div className="shrink-0 size-8 relative opacity-40 group-hover:opacity-100 transition-opacity">
+                                            <div className="absolute top-3 right-3 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
                                                     src={

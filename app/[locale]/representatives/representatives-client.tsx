@@ -180,7 +180,7 @@ export default function RepresentativesClient({
                                                     onClick={() => handleRepClick(member)}
                                                     whileHover={{ scale: 1.02 }}
                                                     whileTap={{ scale: 0.98 }}
-                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-sm lg:max-w-none lg:w-[calc(50%-0.5rem)] text-left group shadow-sm"
+                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-sm lg:max-w-none lg:w-[calc(50%-0.5rem)] text-left group shadow-sm relative"
                                                 >
                                                     {/* Photo */}
                                                     <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
@@ -193,7 +193,7 @@ export default function RepresentativesClient({
                                                     </div>
 
                                                     {/* Info */}
-                                                    <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-8 md:pr-10">
                                                         <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                             {member.name.split(' ').map((part: string, i: number) => (
                                                                 <span key={i} className="block">{part}</span>
@@ -205,7 +205,7 @@ export default function RepresentativesClient({
                                                     </div>
 
                                                     {/* Logo */}
-                                                    <div className="shrink-0 size-8 md:size-10 relative opacity-40 group-hover:opacity-100 transition-opacity">
+                                                    <div className="absolute top-3 right-3 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                                         <img
                                                             src={
@@ -268,7 +268,7 @@ export default function RepresentativesClient({
                                                                 whileHover={{ scale: 1.02 }}
                                                                 whileTap={{ scale: 0.98 }}
                                                                 className={cn(
-                                                                    "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm",
+                                                                    "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative",
                                                                     body.name.startsWith("CdS") ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)]" :
                                                                         body.name.startsWith("SIR") || bodies.length === 1 ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)]" :
                                                                             "w-full",
@@ -283,7 +283,7 @@ export default function RepresentativesClient({
                                                                         <User className="size-8 text-zinc-300" />
                                                                     )}
                                                                 </div>
-                                                                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                                                <div className="flex-1 min-w-0 flex flex-col justify-center pr-8 md:pr-10">
                                                                     <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                                         {member.name.split(' ').map((part: string, i: number) => (
                                                                             <span key={i} className="block">{part}</span>
@@ -293,7 +293,7 @@ export default function RepresentativesClient({
                                                                         {group.listName === "AZIONE UNIVERITARIA" || group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
                                                                     </p>
                                                                 </div>
-                                                                <div className="shrink-0 size-8 md:size-10 relative opacity-40 group-hover:opacity-100 transition-opacity">
+                                                                <div className="absolute top-3 right-3 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
                                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                     <img
                                                                         src={
