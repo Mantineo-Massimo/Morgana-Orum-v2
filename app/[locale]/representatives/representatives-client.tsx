@@ -298,7 +298,7 @@ export default function RepresentativesClient({
                                                     </div>
 
                                                     {/* Info */}
-                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-8 md:pr-10">
+                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
                                                         <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                             {member.name.split(' ').map((part: string, i: number) => (
                                                                 <span key={i} className="block">{part}</span>
@@ -310,7 +310,7 @@ export default function RepresentativesClient({
                                                     </div>
 
                                                     {/* Logo */}
-                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-40 group-hover:opacity-100 transition-opacity">
                                                         {/* eslint-disable-next-line @next/next/no-img-element */}
                                                         <img
                                                             src={
@@ -367,8 +367,8 @@ export default function RepresentativesClient({
                                                                  whileHover={{ scale: 1.02 }}
                                                                  whileTap={{ scale: 0.98 }}
                                                                  className={cn(
-                                                                     "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative w-full",
-                                                                     (body.name.startsWith("CdS") || body.name.startsWith("SIR")) ? "md:max-w-[calc(50%-1rem)] lg:max-w-[calc(33.333%-1.5rem)] xl:max-w-[calc(25%-1.5rem)]" : ""
+                                                                     "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative",
+                                                                     (body.name.startsWith("CdS") || body.name.startsWith("SIR")) ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)]" : "w-full"
                                                                  )}
                                                              >
                                                                  <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
@@ -379,7 +379,7 @@ export default function RepresentativesClient({
                                                                          <User className="size-8 text-zinc-300" />
                                                                      )}
                                                                  </div>
-                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center pr-8 md:pr-10">
+                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
                                                                      <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                                          {member.name.split(' ').map((part: string, i: number) => (
                                                                              <span key={i} className="block">{part}</span>
@@ -389,7 +389,7 @@ export default function RepresentativesClient({
                                                                          {group.listName === "AZIONE UNIVERITARIA" || group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
                                                                      </p>
                                                                  </div>
-                                                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-40 group-hover:opacity-100 transition-opacity">
                                                                      {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                      <img
                                                                          src={

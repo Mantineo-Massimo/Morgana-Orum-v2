@@ -97,7 +97,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                             </div>
 
                                             {/* Info */}
-                                            <div className="flex-1 min-w-0 flex flex-col justify-center pr-8 md:pr-10">
+                                            <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
                                                 <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
                                                     {member.name.split(' ').map((part: string, i: number) => (
                                                         <span key={i} className="block">{part}</span>
@@ -109,7 +109,7 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                             </div>
 
                                             {/* Badge List */}
-                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 size-6 md:size-7 opacity-40 group-hover:opacity-100 transition-opacity">
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-40 group-hover:opacity-100 transition-opacity">
                                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                                 <img
                                                     src={
