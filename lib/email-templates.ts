@@ -45,9 +45,13 @@ export const BRANDS: Record<string, BrandConfig> = {
 const getEmailHeader = (title: string, brandColor: string) => `
         <div style="border-top: 4px solid ${brandColor}; padding: 30px 30px 20px 30px; text-align: center; background-color: #ffffff;">
             <div style="margin-bottom: 20px;">
-                <img src="https://www.morganaorum.it/assets/loghi/morgana/Morgana.png" alt="Morgana" style="height: 60px; width: auto; vertical-align: middle; margin-right: 12px;" />
+                <a href="https://www.instagram.com/associazione.morgana" target="_blank" style="text-decoration: none;">
+                    <img src="https://www.morganaorum.it/assets/loghi/morgana/Morgana.png" alt="Morgana" style="height: 60px; width: auto; vertical-align: middle; margin-right: 12px; border: 0;" />
+                </a>
                 <span style="font-size: 24px; color: #e5e7eb; vertical-align: middle;">|</span>
-                <img src="https://www.morganaorum.it/assets/loghi/orum/ORUM.png" alt="O.R.U.M." style="height: 60px; width: auto; vertical-align: middle; margin-left: 12px;" />
+                <a href="https://www.instagram.com/orum_unime" target="_blank" style="text-decoration: none;">
+                    <img src="https://www.morganaorum.it/assets/loghi/orum/ORUM.png" alt="O.R.U.M." style="height: 60px; width: auto; vertical-align: middle; margin-left: 12px; border: 0;" />
+                </a>
             </div>
             <h1 style="color: #111827; margin: 0; font-size: 22px; font-weight: 800; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">${title}</h1>
         </div>
@@ -60,11 +64,21 @@ const getEmailFooter = (disclaimer: string) => `
             <div style="text-align: center; margin-bottom: 20px;">
                 <p style="font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 12px 0; font-weight: 700; font-family: system-ui, -apple-system, sans-serif;">Il Nostro Network</p>
                 <div style="display: inline-block;">
-                    <img src="https://www.morganaorum.it/assets/loghi/unimhealth/HEALTH.png" alt="Unimhealth" style="height: 30px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://www.morganaorum.it/assets/loghi/studentieconomia/Economia.png" alt="Economia" style="height: 30px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://www.morganaorum.it/assets/loghi/matricole/Matricole.png" alt="Matricole" style="height: 30px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://www.morganaorum.it/assets/loghi/studentiscipog/SCIPOG.png" alt="Scipog" style="height: 30px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://www.morganaorum.it/assets/loghi/insidedicam/DICAM.png" alt="Dicam" style="height: 30px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <a href="https://www.instagram.com/unimhealth" target="_blank" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                        <img src="https://www.morganaorum.it/assets/loghi/unimhealth/HEALTH.png" alt="Unimhealth" style="height: 30px; width: auto; vertical-align: middle; opacity: 0.8; border: 0;" />
+                    </a>
+                    <a href="https://www.instagram.com/studentieconomia" target="_blank" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                        <img src="https://www.morganaorum.it/assets/loghi/studentieconomia/Economia.png" alt="Economia" style="height: 30px; width: auto; vertical-align: middle; opacity: 0.8; border: 0;" />
+                    </a>
+                    <a href="https://www.instagram.com/unime.matricole" target="_blank" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                        <img src="https://www.morganaorum.it/assets/loghi/matricole/Matricole.png" alt="Matricole" style="height: 30px; width: auto; vertical-align: middle; opacity: 0.8; border: 0;" />
+                    </a>
+                    <a href="https://www.instagram.com/studentiscipog" target="_blank" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                        <img src="https://www.morganaorum.it/assets/loghi/studentiscipog/SCIPOG.png" alt="Scipog" style="height: 30px; width: auto; vertical-align: middle; opacity: 0.8; border: 0;" />
+                    </a>
+                    <a href="https://www.instagram.com/inside_dicam" target="_blank" style="text-decoration: none; margin: 0 8px; display: inline-block;">
+                        <img src="https://www.morganaorum.it/assets/loghi/insidedicam/DICAM.png" alt="Dicam" style="height: 30px; width: auto; vertical-align: middle; opacity: 0.8; border: 0;" />
+                    </a>
                 </div>
             </div>
 
