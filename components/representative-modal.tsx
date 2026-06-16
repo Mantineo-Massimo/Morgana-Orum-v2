@@ -82,9 +82,11 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                                     const term = representative.term || ''
                                     const parts = term.split('-')
                                     if (parts.length === 2) {
-                                        const years = parseInt(parts[1]) - parseInt(parts[0])
-                                        const label = years === 2 ? 'Biennio' : years === 3 ? 'Triennio' : years === 4 ? 'Quadriennio' : 'Mandato'
-                                        return `${label} ${term}`
+                                        const startYear = parseInt(parts[0])
+                                        const mandateYears = representative.mandateYears ?? 2
+                                        const endYear = startYear + mandateYears
+                                        const label = mandateYears === 2 ? 'Biennio' : mandateYears === 3 ? 'Triennio' : mandateYears === 4 ? 'Quadriennio' : 'Mandato'
+                                        return `${label} ${startYear}-${endYear}`
                                     }
                                     return term
                                 })()}
