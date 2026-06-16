@@ -72,6 +72,9 @@ export default function AboutPage() {
             {/* 1. Common Hero Section */}
             <section className="relative pt-32 pb-20 px-6 bg-zinc-50 overflow-hidden">
                 <div className="container mx-auto text-center max-w-4xl relative z-10">
+                    <div className="size-20 bg-amber-500/10 text-amber-600 rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
+                        <Users className="size-10" />
+                    </div>
                     <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         {t("title")}
                     </h1>

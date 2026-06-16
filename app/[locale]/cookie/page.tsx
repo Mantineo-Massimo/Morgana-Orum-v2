@@ -21,9 +21,8 @@ export default async function CookiePage() {
             <div className="container relative z-10 max-w-5xl">
                 {/* Header */}
                 <div className="text-center max-w-4xl mx-auto mb-20 animate-in fade-in slide-in-from-bottom-10 duration-700">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-100 text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em] mb-6 border border-zinc-200">
-                        <Cookie className="size-3" />
-                        <span>{t("title")}</span>
+                    <div className="size-20 bg-amber-500/10 text-amber-600 rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
+                        <Cookie className="size-10" />
                     </div>
                     <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         Cookie Policy

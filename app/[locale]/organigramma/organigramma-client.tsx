@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Award, Mail, MapPin, BookOpen, Phone, Instagram, User } from "lucide-react"
+import { Award, Mail, MapPin, BookOpen, Phone, Instagram, User, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import { getRoleIcon } from "@/lib/role-icons"
@@ -93,6 +93,9 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
             <div className="container mx-auto px-6 max-w-6xl">
                 {/* Header */}
                 <div className="text-center max-w-4xl mx-auto mb-16">
+                    <div className="size-20 bg-indigo-500/10 text-indigo-600 rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
+                        <Users className="size-10" />
+                    </div>
                     <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         {t.title}
                     </h1>

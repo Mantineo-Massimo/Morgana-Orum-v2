@@ -36,6 +36,9 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
         <div className="min-h-screen bg-zinc-50 py-20 animate-in fade-in duration-500">
             {/* Header */}
             <div className="container mx-auto px-6 mb-12 text-center max-w-4xl">
+                <div className="size-20 bg-[#c12830]/10 text-[#c12830] rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
+                    <Newspaper className="size-10" />
+                </div>
                 <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
                     Blog & {ts("news_label")}
                 </span>

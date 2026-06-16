@@ -90,6 +90,9 @@ export default function ContactPage() {
                     {/* Left: Info */}
                     <div className="lg:col-span-5 space-y-12">
                         <div>
+                            <div className="size-20 bg-emerald-500/10 text-emerald-600 rounded-3xl flex items-center justify-center mb-8 rotate-3">
+                                <Mail className="size-10" />
+                            </div>
                             <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                                 {t("contact")}
                             </h1>

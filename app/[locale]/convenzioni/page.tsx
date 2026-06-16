@@ -1,5 +1,6 @@
 import { getConventions } from "@/app/actions/conventions"
 import OffersClient from "@/app/[locale]/dashboard/offers/offers-client"
+import { Ticket } from "lucide-react"
 
 export const dynamic = "force-dynamic"
 
@@ -11,6 +12,9 @@ export default async function ConvenzioniPage() {
             <div className="container mx-auto px-6 max-w-6xl">
                 {/* Header */}
                 <div className="text-center max-w-4xl mx-auto mb-16">
+                    <div className="size-20 bg-[#f9a620]/10 text-[#d97706] rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
+                        <Ticket className="size-10" />
+                    </div>
                     <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                         Convenzioni Studentesche
                     </h1>

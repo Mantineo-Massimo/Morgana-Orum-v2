@@ -124,6 +124,9 @@ export default function EventsClient({
             {/* Header */}
             <div className="container mx-auto px-6 mb-12 text-center max-w-4xl space-y-6">
                 <div>
+                    <div className="size-20 bg-[#18182e]/10 text-[#18182e] rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
+                        <CalendarIcon className="size-10" />
+                    </div>
                     <span className="text-sm font-bold uppercase tracking-widest text-zinc-500 mb-2 block">
                         {t("agenda")}
                     </span>

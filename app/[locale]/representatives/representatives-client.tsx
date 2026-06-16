@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Building2, Landmark, User, Users, ChevronLeft, ChevronRight } from "lucide-react"
+import { Building2, Landmark, User, Users, ChevronLeft, ChevronRight, Award } from "lucide-react"
 import { getRoleIcon, CentralSectionIcon, DepartmentSectionIcon } from "@/lib/role-icons"
 import { cn } from "@/lib/utils"
 import { RepresentativesList } from "@/components/representatives-list"
@@ -306,6 +306,9 @@ export default function RepresentativesClient({
                         )}
                     </div>
                     <div>
+                        <div className="size-20 bg-amber-500/10 text-amber-600 rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
+                            <Award className="size-10" />
+                        </div>
                         <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
                             {t("title")}
                         </h1>
