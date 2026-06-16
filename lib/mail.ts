@@ -34,9 +34,13 @@ export async function sendEmail({ to, subject, html, brand = "joint" }: SendEmai
 
     const resend = new Resend(process.env.RESEND_API_KEY)
 
+    const fromAddress = senderEmail.includes("<") && senderEmail.includes(">")
+        ? senderEmail
+        : `"${senderName}" <${senderEmail}>`
+
     try {
         const data = await resend.emails.send({
-            from: `"${senderName}" <${senderEmail}>`,
+            from: fromAddress,
             to,
             subject,
             html,
