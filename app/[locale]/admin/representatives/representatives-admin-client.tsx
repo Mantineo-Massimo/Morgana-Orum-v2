@@ -48,31 +48,10 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
     const existingTerms = Array.from(new Set(reps.map(r => r.term))).sort().reverse()
     const [sourceTerm, setSourceTerm] = useState(existingTerms[0] || "2025-2027")
-    const [targetTerm, setTargetTerm] = useState(() => {
-        const initialSource = existingTerms[0] || "2025-2027"
-        const parts = initialSource.split("-")
-        if (parts.length === 2) {
-            const start = parseInt(parts[0])
-            const end = parseInt(parts[1])
-            if (!isNaN(start) && !isNaN(end)) {
-                const diff = end - start
-                return `${end}-${end + diff}`
-            }
-        }
-        return "2027-2029"
-    })
+    const [targetTerm, setTargetTerm] = useState("")
 
     const handleSourceTermChange = (val: string) => {
         setSourceTerm(val)
-        const parts = val.split("-")
-        if (parts.length === 2) {
-            const start = parseInt(parts[0])
-            const end = parseInt(parts[1])
-            if (!isNaN(start) && !isNaN(end)) {
-                const diff = end - start
-                setTargetTerm(`${end}-${end + diff}`)
-            }
-        }
     }
 
     const openModal = (rep?: Representative) => {

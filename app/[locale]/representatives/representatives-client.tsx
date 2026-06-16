@@ -169,30 +169,42 @@ export default function RepresentativesClient({
             <div className="container mx-auto px-6">
 
                 {/* Header */}
-                <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                    <div className="inline-block">
-                        {existingTerms.length > 1 ? (
-                            <select
-                                value={selectedTerm}
-                                onChange={(e) => setSelectedTerm(e.target.value)}
-                                className="py-1.5 px-4 rounded-full bg-white text-zinc-700 text-xs font-bold uppercase tracking-wider border border-zinc-200 focus:outline-none cursor-pointer hover:bg-zinc-50 transition-colors shadow-sm font-sans"
-                            >
-                                {existingTerms.map((term) => (
-                                    <option key={term} value={term} className="bg-white text-zinc-800 normal-case">
-                                        {t("biennium", { term })}
-                                    </option>
-                                ))}
-                            </select>
-                        ) : (
-                            <span className="inline-block py-1 px-3 rounded-full bg-zinc-100 text-zinc-600 text-xs font-bold uppercase tracking-widest">
-                                {t("biennium", { term: selectedTerm })}
-                            </span>
-                        )}
+                <div className="text-center max-w-3xl mx-auto mb-16 space-y-6">
+                    <div className="flex justify-center">
+                        <div className="flex items-center gap-1 bg-zinc-100 p-1.5 rounded-full border border-zinc-200/50 shadow-sm max-w-full overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] relative">
+                            {existingTerms.map((term) => {
+                                const isActive = term === selectedTerm;
+                                return (
+                                    <button
+                                        key={term}
+                                        onClick={() => setSelectedTerm(term)}
+                                        className={cn(
+                                            "relative px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all duration-300 focus:outline-none whitespace-nowrap",
+                                            isActive
+                                                ? "text-white"
+                                                : "text-zinc-500 hover:text-zinc-800"
+                                        )}
+                                    >
+                                        {isActive && (
+                                            <motion.div
+                                                layoutId="activeBienniumPill"
+                                                className="absolute inset-0 bg-red-600 rounded-full"
+                                                transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                                style={{ zIndex: 0 }}
+                                            />
+                                        )}
+                                        <span className="relative z-10">{t("biennium", { term })}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
-                    <h1 className="text-4xl md:text-5xl font-bold text-foreground font-serif">{t("title")}</h1>
-                    <p className="text-lg text-zinc-600 leading-relaxed">
-                        {t("subtitle")}
-                    </p>
+                    <div>
+                        <h1 className="text-4xl md:text-5xl font-bold text-foreground font-serif">{t("title")}</h1>
+                        <p className="text-lg text-zinc-600 leading-relaxed mt-4">
+                            {t("subtitle")}
+                        </p>
+                    </div>
                 </div>
 
                 {/* Dashboard / Resoconto Numerico (Animato) */}
