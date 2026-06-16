@@ -20,31 +20,31 @@ export async function getUploadedMedia(): Promise<MediaItem[]> {
             piazzaSponsors
         ] = await Promise.all([
             prisma.news.findMany({
-                where: { image: { not: null, not: "" } },
+                where: { AND: [{ image: { not: null } }, { image: { not: "" } }] },
                 select: { image: true, title: true }
             }),
             prisma.event.findMany({
-                where: { image: { not: null, not: "" } },
+                where: { AND: [{ image: { not: null } }, { image: { not: "" } }] },
                 select: { image: true, title: true }
             }),
             prisma.representative.findMany({
-                where: { image: { not: null, not: "" } },
+                where: { AND: [{ image: { not: null } }, { image: { not: "" } }] },
                 select: { image: true, name: true }
             }),
             prisma.organigrammaMember.findMany({
-                where: { image: { not: null, not: "" } },
+                where: { AND: [{ image: { not: null } }, { image: { not: "" } }] },
                 select: { image: true, name: true }
             }),
             prisma.convention.findMany({
-                where: { logo: { not: null, not: "" } },
+                where: { AND: [{ logo: { not: null } }, { logo: { not: "" } }] },
                 select: { logo: true, name: true }
             }),
             prisma.piazzaArtist.findMany({
-                where: { image: { not: null, not: "" } },
+                where: { AND: [{ image: { not: null } }, { image: { not: "" } }] },
                 select: { image: true, name: true }
             }),
             prisma.piazzaSponsor.findMany({
-                where: { logo: { not: null, not: "" } },
+                where: { AND: [{ logo: { not: null } }, { logo: { not: "" } }] },
                 select: { logo: true, name: true }
             })
         ])
