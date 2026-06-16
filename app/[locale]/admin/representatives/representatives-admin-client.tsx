@@ -47,6 +47,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
     const [bienniumSuccess, setBienniumSuccess] = useState<string | null>(null)
 
     const existingTerms = Array.from(new Set(reps.map(r => r.term))).sort().reverse()
+    const [selectedBiennium, setSelectedBiennium] = useState<string | null>(null)
     const [sourceTerm, setSourceTerm] = useState(existingTerms[0] || "2025-2027")
     const [targetTerm, setTargetTerm] = useState("")
 
@@ -81,8 +82,9 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
         const matchesList = listFilter === "all" || rep.listName === listFilter
         const matchesCategory = categoryFilter === "all" || rep.category === categoryFilter
+        const matchesTerm = !selectedBiennium || rep.term === selectedBiennium
 
-        return matchesSearch && matchesList && matchesCategory
+        return matchesSearch && matchesList && matchesCategory && matchesTerm
     })
 
     const sortedReps = (Array.isArray(filteredReps) ? [...filteredReps] : []).sort((a, b) => {
@@ -106,70 +108,130 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
     return (
         <div className="space-y-6">
-            <div className="flex flex-col md:flex-row gap-4 p-4 bg-zinc-50 rounded-xl border border-zinc-100 items-center">
-                {/* Search Bar */}
-                <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
-                    <input
-                        type="text"
-                        placeholder="Cerca per nome o ruolo..."
-                        className="w-full pl-10 pr-10 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                    {searchTerm && (
+            {!selectedBiennium ? (
+                <div className="space-y-8 animate-in fade-in duration-300">
+                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h1 className="text-3xl font-black text-zinc-900">Gestione Rappresentanti</h1>
+                            <p className="text-zinc-500 text-sm">Seleziona il biennio dei rappresentanti che desideri modificare, o aggiungine uno nuovo.</p>
+                        </div>
+                        {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (
+                            <button
+                                onClick={() => setIsBienniumModalOpen(true)}
+                                className="bg-white text-zinc-950 border border-zinc-200 px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 whitespace-nowrap shadow-sm"
+                            >
+                                <CalendarRange className="size-4 text-zinc-600" /> Nuovo Biennio / Rollover
+                            </button>
+                        )}
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {existingTerms.map((term) => {
+                            const count = reps.filter(r => r.term === term).length
+                            return (
+                                <div
+                                    key={term}
+                                    onClick={() => setSelectedBiennium(term)}
+                                    className="bg-white border border-zinc-100 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-zinc-200 transition-all flex flex-col justify-between cursor-pointer group"
+                                >
+                                    <div>
+                                        <div className="size-12 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center text-zinc-500 mb-4 group-hover:scale-110 transition-transform">
+                                            <CalendarRange className="size-6 text-zinc-400" />
+                                        </div>
+                                        <h3 className="text-lg font-bold text-zinc-950 group-hover:text-red-600 transition-colors">
+                                            Biennio {term}
+                                        </h3>
+                                        <p className="text-sm text-zinc-500 mt-1">
+                                            {count} {count === 1 ? 'eletto' : 'eletti'}
+                                        </p>
+                                    </div>
+                                    <button
+                                        className="mt-6 bg-zinc-900 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-zinc-800 transition-colors w-full text-center"
+                                    >
+                                        Gestisci Rappresentanti
+                                    </button>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+            ) : (
+                <div className="space-y-6 animate-in fade-in duration-300">
+                    <div className="mb-6">
                         <button
-                            onClick={() => setSearchTerm('')}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-foreground"
+                            onClick={() => setSelectedBiennium(null)}
+                            className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-2"
                         >
-                            <X className="size-4" />
+                            &larr; Torna alla selezione bienni
                         </button>
-                    )}
-                </div>
+                        <h1 className="text-3xl font-black text-zinc-900">Gestione Rappresentanti</h1>
+                        <p className="text-zinc-500 text-sm">Visualizza e modifica i rappresentanti per il <strong>Biennio {selectedBiennium}</strong>.</p>
+                    </div>
 
-                {/* Filters */}
-                <div className="flex gap-2">
-                    <select
-                        className="px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white text-sm"
-                        value={listFilter}
-                        onChange={(e) => setListFilter(e.target.value)}
-                    >
-                        <option value="all">Tutte le Liste</option>
-                        <option value="MORGANA">Morgana</option>
-                        <option value="O.R.U.M.">O.R.U.M.</option>
-                        <option value="AZIONE UNIVERITARIA">Azione Universitaria</option>
-                    </select>
+                    <div className="flex flex-col md:flex-row gap-4 p-4 bg-zinc-50 rounded-xl border border-zinc-100 items-center">
+                        {/* Search Bar */}
+                        <div className="relative flex-1">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                            <input
+                                type="text"
+                                placeholder="Cerca per nome o ruolo..."
+                                className="w-full pl-10 pr-10 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            {searchTerm && (
+                                <button
+                                    onClick={() => setSearchTerm('')}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-foreground"
+                                >
+                                    <X className="size-4" />
+                                </button>
+                            )}
+                        </div>
 
-                    <select
-                        className="px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white text-sm"
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value)}
-                    >
-                        <option value="all">Tutte le Categorie</option>
-                        <option value="DEPARTMENT">Dipartimenti</option>
-                        <option value="CENTRAL">Organi Centrali</option>
-                        <option value="NATIONAL">Organi Nazionali</option>
-                    </select>
-                </div>
+                        {/* Filters */}
+                        <div className="flex gap-2">
+                            <select
+                                className="px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white text-sm"
+                                value={listFilter}
+                                onChange={(e) => setListFilter(e.target.value)}
+                            >
+                                <option value="all">Tutte le Liste</option>
+                                <option value="MORGANA">Morgana</option>
+                                <option value="O.R.U.M.">O.R.U.M.</option>
+                                <option value="AZIONE UNIVERITARIA">Azione Universitaria</option>
+                            </select>
 
-                <div className="flex gap-2">
-                    {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (
-                        <button
-                            onClick={() => setIsBienniumModalOpen(true)}
-                            className="bg-white text-zinc-950 border border-zinc-200 px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 whitespace-nowrap shadow-sm"
-                        >
-                            <CalendarRange className="size-4 text-zinc-600" /> Nuovo Biennio
-                        </button>
-                    )}
+                            <select
+                                className="px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white text-sm"
+                                value={categoryFilter}
+                                onChange={(e) => setCategoryFilter(e.target.value)}
+                            >
+                                <option value="all">Tutte le Categorie</option>
+                                <option value="DEPARTMENT">Dipartimenti</option>
+                                <option value="CENTRAL">Organi Centrali</option>
+                                <option value="NATIONAL">Organi Nazionali</option>
+                            </select>
+                        </div>
 
-                    <button
-                        onClick={() => openModal()}
-                        className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 whitespace-nowrap"
-                    >
-                        <Plus className="size-4" /> Aggiungi Nuovo
-                    </button>
-                </div>
-            </div>
+                        <div className="flex gap-2">
+                            {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (
+                                <button
+                                    onClick={() => setIsBienniumModalOpen(true)}
+                                    className="bg-white text-zinc-950 border border-zinc-200 px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 whitespace-nowrap shadow-sm"
+                                >
+                                    <CalendarRange className="size-4 text-zinc-600" /> Nuovo Biennio
+                                </button>
+                            )}
+
+                            <button
+                                onClick={() => openModal()}
+                                className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 whitespace-nowrap"
+                            >
+                                <Plus className="size-4" /> Aggiungi Nuovo
+                            </button>
+                        </div>
+                    </div>
 
             <div className="bg-white border border-zinc-100 rounded-xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
@@ -320,6 +382,8 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                     </table>
                 </div>
             </div>
+            </div>
+            )}
 
             {/* Representative Modal */}
             {isModalOpen && (
@@ -338,7 +402,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                             </h2>
 
                             <RepresentativeForm
-                                initialData={editingRep}
+                                initialData={editingRep || (selectedBiennium ? { term: selectedBiennium } : undefined)}
                                 userRole={userRole}
                                 userAssociation={userAssociation}
                                 onSuccess={() => {
