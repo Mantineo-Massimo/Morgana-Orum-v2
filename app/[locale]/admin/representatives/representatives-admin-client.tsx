@@ -162,17 +162,9 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                 <div className="space-y-8 animate-in fade-in duration-300">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
-                            <h1 className="text-3xl font-black text-zinc-900">Gestione Rappresentanti</h1>
-                            <p className="text-zinc-500 text-sm">Seleziona il biennio dei rappresentanti che desideri modificare, o aggiungine uno nuovo.</p>
+                            <h1 className="text-3xl font-black text-zinc-900">Gestione Bienni</h1>
+                            <p className="text-zinc-500 text-sm">Seleziona il biennio dei rappresentanti che desideri modificare.</p>
                         </div>
-                        {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (
-                            <button
-                                onClick={() => setIsBienniumModalOpen(true)}
-                                className="bg-white text-zinc-950 border border-zinc-200 px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 whitespace-nowrap shadow-sm"
-                            >
-                                <CalendarRange className="size-4 text-zinc-600" /> Nuovo Biennio / Rollover
-                            </button>
-                        )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -235,7 +227,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                         >
                             &larr; Torna alla selezione bienni
                         </button>
-                        <h1 className="text-3xl font-black text-zinc-900">Gestione Rappresentanti</h1>
+                        <h1 className="text-3xl font-black text-zinc-900">Gestione Eletti</h1>
                         <p className="text-zinc-500 text-sm">Visualizza e modifica i rappresentanti per il <strong>Biennio {selectedBiennium}</strong>.</p>
                     </div>
 
@@ -286,15 +278,6 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                         </div>
 
                         <div className="flex gap-2">
-                            {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (
-                                <button
-                                    onClick={() => setIsBienniumModalOpen(true)}
-                                    className="bg-white text-zinc-950 border border-zinc-200 px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-50 transition-colors flex items-center gap-2 whitespace-nowrap shadow-sm"
-                                >
-                                    <CalendarRange className="size-4 text-zinc-600" /> Nuovo Biennio
-                                </button>
-                            )}
-
                             <button
                                 onClick={() => openModal()}
                                 className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 whitespace-nowrap"
