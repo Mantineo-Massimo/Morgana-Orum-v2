@@ -142,12 +142,13 @@ async function NewsList({ locale }: { locale: string }) {
                             className="object-cover group-hover:scale-110 transition-transform duration-700"
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                        <div className="absolute bottom-4 left-4 right-4 text-white">
-                            <div className="text-[10px] font-bold uppercase tracking-widest bg-primary px-2 py-1 inline-block mb-2">
-                                {news.category}
+                        {news.category && (
+                            <div className="absolute top-4 right-4 z-20 flex flex-col gap-1 items-end">
+                                <span className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-primary/95 text-white shadow-sm border border-red-400/30">
+                                    {news.category}
+                                </span>
                             </div>
-                        </div>
+                        )}
                     </div>
                     <div className="px-2">
                         <div className="text-xs font-bold text-muted-foreground mb-2 flex items-center gap-2">

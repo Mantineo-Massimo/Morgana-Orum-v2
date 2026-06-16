@@ -62,9 +62,6 @@ export function EventCard({ event, locale, href, variant = "default", primaryCol
                         {event.date.toLocaleDateString(locale, { day: '2-digit' })}
                     </span>
                 </div>
-
-                {/* Optional: Subtle gradient on image for badge visibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-60"></div>
             </div>
 
             {/* Content Container */}

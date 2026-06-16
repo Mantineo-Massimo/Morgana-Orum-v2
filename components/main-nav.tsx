@@ -6,7 +6,8 @@ import { useState, useEffect } from "react"
 import { logoutAction } from "@/app/actions/auth"
 import { 
     LogOut, User, Menu, X, Mail, Search, Calendar, ChevronDown, 
-    BookOpen, Users, Phone, Tag, Share2, FileDown, HelpCircle 
+    BookOpen, Users, Phone, Tag, Share2, FileDown, HelpCircle,
+    Info, Network
 } from "lucide-react"
 import { useBrand } from "@/components/brand-provider"
 import { SearchModal } from "./search-modal"
@@ -181,26 +182,35 @@ export function MainNav({
                                         <Link
                                             href="/about"
                                             onClick={() => setIsAssocOpen(false)}
-                                            className="flex flex-col p-3 rounded-xl hover:bg-zinc-50 transition-colors"
+                                            className="flex items-start gap-3 p-3 rounded-xl hover:bg-zinc-50 transition-colors"
                                         >
-                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">{nt("about")}</span>
-                                            <span className="text-[10px] text-zinc-400 font-medium">{nt("about_desc")}</span>
+                                            <Info className="size-4 mt-1 text-[#c9041a] shrink-0" />
+                                            <div>
+                                                <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("about")}</span>
+                                                <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("about_desc")}</span>
+                                            </div>
                                         </Link>
                                         <Link
                                             href="/organigramma"
                                             onClick={() => setIsAssocOpen(false)}
-                                            className="flex flex-col p-3 rounded-xl hover:bg-zinc-50 transition-colors"
+                                            className="flex items-start gap-3 p-3 rounded-xl hover:bg-zinc-50 transition-colors"
                                         >
-                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">{nt("organigramma")}</span>
-                                            <span className="text-[10px] text-zinc-400 font-medium">{nt("organigramma_desc")}</span>
+                                            <Network className="size-4 mt-1 text-indigo-500 shrink-0" />
+                                            <div>
+                                                <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("organigramma")}</span>
+                                                <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("organigramma_desc")}</span>
+                                            </div>
                                         </Link>
                                         <Link
                                             href="/contact"
                                             onClick={() => setIsAssocOpen(false)}
-                                            className="flex flex-col p-3 rounded-xl hover:bg-zinc-50 transition-colors"
+                                            className="flex items-start gap-3 p-3 rounded-xl hover:bg-zinc-50 transition-colors"
                                         >
-                                            <span className="text-xs font-black uppercase tracking-wider text-zinc-800">{nt("contact")}</span>
-                                            <span className="text-[10px] text-zinc-400 font-medium">{nt("contact_desc")}</span>
+                                            <Mail className="size-4 mt-1 text-emerald-500 shrink-0" />
+                                            <div>
+                                                <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("contact")}</span>
+                                                <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("contact_desc")}</span>
+                                            </div>
                                         </Link>
                                     </motion.div>
                                 )}

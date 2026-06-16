@@ -140,7 +140,6 @@ function NewsCard({ item }: { item: any }) {
         year: "numeric"
     })
 
-    // Tema neutro per tutto il portale unificato
     const assocBadge = (
         <div className="absolute top-4 right-4 z-20 flex flex-col gap-1 items-end">
             {item.category ? item.category.split(",").map((cat: string) => (
@@ -155,7 +154,6 @@ function NewsCard({ item }: { item: any }) {
         </div>
     );
     const themeColorText = "text-primary hover:text-red-700";
-    const themeGradient = "from-primary";
 
 
     return (
@@ -174,14 +172,13 @@ function NewsCard({ item }: { item: any }) {
                         src={item.image}
                         alt={item.title}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                 ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
                         <Newspaper className="size-16 text-zinc-200" />
                     </div>
                 )}
-                <div className={cn("absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity bg-gradient-to-t", themeGradient)} />
                 {assocBadge}
             </Link>
 
