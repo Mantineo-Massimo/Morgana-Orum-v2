@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
             allow: '/',
             disallow: '/admin/',
         },
-        sitemap: 'https://morganaorum.vercel.app/sitemap.xml',
+        sitemap: 'https://www.morganaorum.it/sitemap.xml',
     }
 }

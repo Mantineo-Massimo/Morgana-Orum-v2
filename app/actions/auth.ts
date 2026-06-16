@@ -138,7 +138,7 @@ export async function requestPasswordReset(email: string) {
         })
 
         // In production, should use the real domain
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.morganaorum.it"
         const resetLink = `${baseUrl}/reset-password?token=${token}`
 
         const brandToUse = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"

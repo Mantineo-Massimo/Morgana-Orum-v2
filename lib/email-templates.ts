@@ -8,46 +8,46 @@ export const BRANDS: Record<string, BrandConfig> = {
     morgana: {
         name: "Associazione Morgana",
         color: "#c12830",
-        logo: "https://morganaorum.vercel.app/assets/morgana.webp"
+        logo: "https://www.morganaorum.it/assets/morgana.webp"
     },
     orum: {
         name: "Associazione O.R.U.M.",
         color: "#18182e",
-        logo: "https://morganaorum.vercel.app/assets/orum.webp"
+        logo: "https://www.morganaorum.it/assets/orum.webp"
     },
     unimhealth: {
         name: "Unimhealth",
         color: "#c12830",
-        logo: "https://morganaorum.vercel.app/assets/unimhealth.webp"
+        logo: "https://www.morganaorum.it/assets/unimhealth.webp"
     },
     economia: {
         name: "Studenti Economia",
         color: "#18224b",
-        logo: "https://morganaorum.vercel.app/assets/studentieconomia.webp"
+        logo: "https://www.morganaorum.it/assets/studentieconomia.webp"
     },
     matricole: {
         name: "Unime Matricole",
         color: "#004b87",
-        logo: "https://morganaorum.vercel.app/assets/unimematricole.webp"
+        logo: "https://www.morganaorum.it/assets/unimematricole.webp"
     },
     scipog: {
         name: "Studenti Scipog",
         color: "#f4b43b",
-        logo: "https://morganaorum.vercel.app/assets/studentiscipog.webp"
+        logo: "https://www.morganaorum.it/assets/studentiscipog.webp"
     },
     dicam: {
         name: "Inside Dicam",
         color: "#00b4d8",
-        logo: "https://morganaorum.vercel.app/assets/insidedicam.webp"
+        logo: "https://www.morganaorum.it/assets/insidedicam.webp"
     }
 }
 
 const getEmailHeader = (title: string, brandColor: string) => `
         <div style="border-top: 4px solid ${brandColor}; padding: 30px 30px 20px 30px; text-align: center; background-color: #ffffff;">
             <div style="margin-bottom: 20px;">
-                <img src="https://morganaorum.vercel.app/assets/morgana.webp" alt="Morgana" style="height: 45px; width: auto; vertical-align: middle; margin-right: 12px;" />
+                <img src="https://www.morganaorum.it/assets/morgana.webp" alt="Morgana" style="height: 45px; width: auto; vertical-align: middle; margin-right: 12px;" />
                 <span style="font-size: 24px; color: #e5e7eb; vertical-align: middle;">|</span>
-                <img src="https://morganaorum.vercel.app/assets/orum.webp" alt="O.R.U.M." style="height: 45px; width: auto; vertical-align: middle; margin-left: 12px;" />
+                <img src="https://www.morganaorum.it/assets/orum.webp" alt="O.R.U.M." style="height: 45px; width: auto; vertical-align: middle; margin-left: 12px;" />
             </div>
             <h1 style="color: #111827; margin: 0; font-size: 22px; font-weight: 800; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">${title}</h1>
         </div>
@@ -60,11 +60,11 @@ const getEmailFooter = (disclaimer: string) => `
             <div style="text-align: center; margin-bottom: 20px;">
                 <p style="font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 12px 0; font-weight: 700; font-family: system-ui, -apple-system, sans-serif;">Il Nostro Network</p>
                 <div style="display: inline-block;">
-                    <img src="https://morganaorum.vercel.app/assets/unimhealth.webp" alt="Unimhealth" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/studentieconomia.webp" alt="Economia" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/unimematricole.webp" alt="Matricole" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/studentiscipog.webp" alt="Scipog" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/insidedicam.webp" alt="Dicam" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://www.morganaorum.it/assets/unimhealth.webp" alt="Unimhealth" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://www.morganaorum.it/assets/studentieconomia.webp" alt="Economia" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://www.morganaorum.it/assets/unimematricole.webp" alt="Matricole" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://www.morganaorum.it/assets/studentiscipog.webp" alt="Scipog" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://www.morganaorum.it/assets/insidedicam.webp" alt="Dicam" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
                 </div>
             </div>
 
@@ -92,7 +92,7 @@ export function getWelcomeEmailTemplate(userName: string, brand: string = "morga
                     <li style="margin-bottom: 8px;">Chiedere informazioni tramite la sezione assistenza</li>
                 </ul>
                 <div style="text-align: center; margin: 30px 0;">
-                    <a href="https://morganaorum.vercel.app/${brand}/login" 
+                    <a href="https://www.morganaorum.it/${brand}/login" 
                        style="background-color: #111827; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-block; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(17,24,39,0.2);">
                        Accedi alla Dashboard
                     </a>
@@ -124,7 +124,7 @@ export function getEventBookingTemplate(userName: string, eventTitle: string, ev
                 <p style="color: #4b5563; font-size: 14px;">Ti ricordiamo che potrai consultare i dettagli della tua prenotazione e scaricare eventuali allegati direttamente dalla tua dashboard.</p>
                 
                 <div style="text-align: center; margin: 30px 0;">
-                    <a href="https://morganaorum.vercel.app/dashboard/events" 
+                    <a href="https://www.morganaorum.it/dashboard/events" 
                        style="background-color: #111827; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-block; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(17,24,39,0.2);">
                        I Miei Eventi
                     </a>

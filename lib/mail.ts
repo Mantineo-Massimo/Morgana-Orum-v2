@@ -5,28 +5,10 @@ interface SendEmailOptions {
     subject: string
     html: string
     brand?: "morgana" | "orum" | "joint"
+    noreply?: boolean
 }
 
-export async function sendEmail({ to, subject, html, brand = "joint" }: SendEmailOptions) {
-    let senderName: string
-    let senderEmail: string
-
-    switch (brand) {
-        case "orum":
-            senderName = "Associazione O.R.U.M."
-            senderEmail = process.env.RESEND_SENDER_ORUM || "orum.unime@gmail.com"
-            break
-        case "morgana":
-            senderName = "Associazione Morgana"
-            senderEmail = process.env.RESEND_SENDER_MORGANA || "associazione.morgana@gmail.com"
-            break
-        case "joint":
-        default:
-            senderName = "Morgana & ORUM News"
-            senderEmail = process.env.RESEND_SENDER_JOINT || process.env.SMTP_SENDER || "orum.unime@gmail.com"
-            break
-    }
-
+export async function sendEmail({ to, subject, html }: SendEmailOptions) {
     if (!process.env.RESEND_API_KEY) {
         console.error("❌ Resend API Key missing. Please set RESEND_API_KEY.")
         return { success: false, error: "Resend API Key missing. Please set RESEND_API_KEY." }
@@ -34,9 +16,12 @@ export async function sendEmail({ to, subject, html, brand = "joint" }: SendEmai
 
     const resend = new Resend(process.env.RESEND_API_KEY)
 
-    const fromAddress = senderEmail.includes("<") && senderEmail.includes(">")
-        ? senderEmail
-        : `"${senderName}" <${senderEmail}>`
+    const defaultSenderName = "Morgana & O.R.U.M."
+    const sender = process.env.RESEND_SENDER_NOREPLY || "noreply@morganaorum.it"
+
+    const fromAddress = sender.includes("<") && sender.includes(">")
+        ? sender
+        : `"${defaultSenderName}" <${sender}>`
 
     try {
         const data = await resend.emails.send({

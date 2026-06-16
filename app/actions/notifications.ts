@@ -26,7 +26,7 @@ export async function sendPublicationNotification(
 
         if (subscribers.length === 0) return
 
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://morganaorum.vercel.app"
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.morganaorum.it"
         const primaryAssoc = item.associations[0] || Association.MORGANA_ORUM
         const brand = (primaryAssoc === Association.MORGANA_ORUM) ? "morgana" : "orum"
 
