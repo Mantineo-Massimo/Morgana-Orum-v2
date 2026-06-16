@@ -7,92 +7,96 @@ type BrandConfig = {
 export const BRANDS: Record<string, BrandConfig> = {
     morgana: {
         name: "Associazione Morgana",
-        color: "#18182b",
+        color: "#c12830",
         logo: "https://morganaorum.vercel.app/assets/morgana.webp"
     },
     orum: {
         name: "Associazione O.R.U.M.",
-        color: "#18182b",
+        color: "#18182e",
         logo: "https://morganaorum.vercel.app/assets/orum.webp"
     },
     unimhealth: {
         name: "Unimhealth",
-        color: "#c9041a",
+        color: "#c12830",
         logo: "https://morganaorum.vercel.app/assets/unimhealth.webp"
     },
     economia: {
         name: "Studenti Economia",
-        color: "#202549",
+        color: "#18224b",
         logo: "https://morganaorum.vercel.app/assets/studentieconomia.webp"
     },
     matricole: {
         name: "Unime Matricole",
-        color: "#0d6cab",
+        color: "#004b87",
         logo: "https://morganaorum.vercel.app/assets/unimematricole.webp"
     },
     scipog: {
         name: "Studenti Scipog",
-        color: "#fbc363",
+        color: "#f4b43b",
         logo: "https://morganaorum.vercel.app/assets/studentiscipog.webp"
     },
     dicam: {
         name: "Inside Dicam",
-        color: "#f34ab4",
+        color: "#00b4d8",
         logo: "https://morganaorum.vercel.app/assets/insidedicam.webp"
     }
 }
 
-const getEmailHeader = (title: string, bgColor: string) => `
-        <div style="background-color: ${bgColor}; padding: 30px; text-align: center;">
-            <div style="display: inline-block;">
-                <img src="https://morganaorum.vercel.app/assets/morgana.webp" alt="Morgana" style="height: 55px; width: auto; vertical-align: middle; margin-right: 15px;" />
-                <span style="font-size: 30px; color: rgba(255,255,255,0.2); vertical-align: middle;">|</span>
-                <img src="https://morganaorum.vercel.app/assets/orum.webp" alt="O.R.U.M." style="height: 55px; width: auto; vertical-align: middle; margin-left: 15px;" />
+const getEmailHeader = (title: string, brandColor: string) => `
+        <div style="border-top: 4px solid ${brandColor}; padding: 30px 30px 20px 30px; text-align: center; background-color: #ffffff;">
+            <div style="margin-bottom: 20px;">
+                <img src="https://morganaorum.vercel.app/assets/morgana.webp" alt="Morgana" style="height: 45px; width: auto; vertical-align: middle; margin-right: 12px;" />
+                <span style="font-size: 24px; color: #e5e7eb; vertical-align: middle;">|</span>
+                <img src="https://morganaorum.vercel.app/assets/orum.webp" alt="O.R.U.M." style="height: 45px; width: auto; vertical-align: middle; margin-left: 12px;" />
             </div>
-            <h1 style="color: white; margin-top: 25px; font-size: 24px; font-weight: 600;">${title}</h1>
+            <h1 style="color: #111827; margin: 0; font-size: 22px; font-weight: 800; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-transform: uppercase; letter-spacing: 0.5px;">${title}</h1>
         </div>
 `
 
 const getEmailFooter = (disclaimer: string) => `
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;" />
+        <div style="padding: 0 30px 30px 30px; background-color: #ffffff;">
+            <hr style="border: 0; border-top: 1px solid #f3f4f6; margin: 24px 0;" />
             
-            <div style="text-align: center; margin-bottom: 25px;">
-                <p style="font-size: 10px; color: #999; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 15px; font-weight: bold;">Scopri il Nostro Network</p>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <p style="font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 1.5px; margin: 0 0 12px 0; font-weight: 700; font-family: system-ui, -apple-system, sans-serif;">Il Nostro Network</p>
                 <div style="display: inline-block;">
-                    <img src="https://morganaorum.vercel.app/assets/unimhealth.webp" alt="Unimhealth" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/studentieconomia.webp" alt="Economia" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/unimematricole.webp" alt="Matricole" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/studentiscipog.webp" alt="Scipog" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
-                    <img src="https://morganaorum.vercel.app/assets/insidedicam.webp" alt="Dicam" style="height: 28px; width: auto; margin: 0 8px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/unimhealth.webp" alt="Unimhealth" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/studentieconomia.webp" alt="Economia" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/unimematricole.webp" alt="Matricole" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/studentiscipog.webp" alt="Scipog" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
+                    <img src="https://morganaorum.vercel.app/assets/insidedicam.webp" alt="Dicam" style="height: 24px; width: auto; margin: 0 6px; vertical-align: middle; opacity: 0.8;" />
                 </div>
             </div>
 
-            <p style="font-size: 11px; color: #888; text-align: center; line-height: 1.6;">
+            <p style="font-size: 11px; color: #6b7280; text-align: center; line-height: 1.6; margin: 0; font-family: system-ui, -apple-system, sans-serif;">
                 ${disclaimer}<br />
-                © ${new Date().getFullYear()} Morgana & O.R.U.M. Associazioni Universitarie
+                <span style="color: #9ca3af; font-size: 10px; display: inline-block; margin-top: 6px;">© ${new Date().getFullYear()} Morgana & O.R.U.M. Associazioni Universitarie</span>
             </p>
+        </div>
 `
 
 export function getWelcomeEmailTemplate(userName: string, brand: string = "morgana") {
     const config = BRANDS[brand] || BRANDS.morgana
 
     return `
-    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        ${getEmailHeader("Benvenuto nel nostro portale!", config.color)}
-        <div style="padding: 30px; line-height: 1.6; color: #333;">
-            <p>Ciao <strong>${userName}</strong>,</p>
-            <p>Siamo felici di averti tra noi. La tua registrazione alla piattaforma è avvenuta con successo.</p>
-            <p>Ora puoi accedere alla tua area personale per:</p>
-            <ul style="color: #555;">
-                <li>Gestire le tue prenotazioni</li>
-                <li>Scoprire le convenzioni esclusive e gli sconti</li>
-                <li>Chiedere informazioni tramite la sezione assistenza</li>
-            </ul>
-            <div style="text-align: center; margin: 35px 0;">
-                <a href="https://morganaorum.vercel.app/${brand}/login" 
-                   style="background-color: #18181b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                   Accedi alla Dashboard
-                </a>
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader("Benvenuto nel nostro portale!", config.color)}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 16px; color: #111827;">Ciao <strong>${userName}</strong>,</p>
+                <p style="font-size: 15px;">Siamo felici di averti tra noi. La tua registrazione alla piattaforma è avvenuta con successo.</p>
+                <p style="font-size: 15px;">Ora puoi accedere alla tua area personale per:</p>
+                <ul style="color: #4b5563; font-size: 14px; padding-left: 20px; margin-bottom: 24px;">
+                    <li style="margin-bottom: 8px;">Gestire le tue prenotazioni agli eventi</li>
+                    <li style="margin-bottom: 8px;">Scoprire le convenzioni esclusive e gli sconti</li>
+                    <li style="margin-bottom: 8px;">Chiedere informazioni tramite la sezione assistenza</li>
+                </ul>
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://morganaorum.vercel.app/${brand}/login" 
+                       style="background-color: #111827; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-block; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(17,24,39,0.2);">
+                       Accedi alla Dashboard
+                    </a>
+                </div>
             </div>
             ${getEmailFooter("Sempre dalla parte dello studente!")}
         </div>
@@ -104,28 +108,29 @@ export function getEventBookingTemplate(userName: string, eventTitle: string, ev
     const config = BRANDS[brand] || BRANDS.morgana
 
     return `
-    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        ${getEmailHeader("Prenotazione Confermata!", config.color)}
-        <div style="padding: 30px; line-height: 1.6; color: #333;">
-            <p>Ciao <strong>${userName}</strong>,</p>
-            <p>La tua prenotazione per l'evento è stata registrata correttamente.</p>
-            
-            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e5e7eb;">
-                <h3 style="margin-top: 0; margin-bottom: 15px; color: #111;">${eventTitle}</h3>
-                <p style="margin-bottom: 8px; color: #444;">📅 <strong>Data:</strong> ${eventDate}</p>
-                <p style="margin: 0; color: #444;">📍 <strong>Luogo:</strong> ${eventLocation}</p>
-            </div>
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader("Prenotazione Confermata!", config.color)}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 16px; color: #111827;">Ciao <strong>${userName}</strong>,</p>
+                <p style="font-size: 15px;">La tua prenotazione per l'evento è stata registrata correttamente.</p>
+                
+                <div style="background-color: #f8fafc; padding: 20px; border-radius: 12px; margin: 24px 0; border: 1px solid #e2e8f0;">
+                    <h3 style="margin-top: 0; margin-bottom: 12px; color: #0f172a; font-size: 16px; font-weight: 700;">${eventTitle}</h3>
+                    <p style="margin: 0 0 8px 0; color: #475569; font-size: 14px;">📅 <strong>Data:</strong> ${eventDate}</p>
+                    <p style="margin: 0; color: #475569; font-size: 14px;">📍 <strong>Luogo:</strong> ${eventLocation}</p>
+                </div>
 
-            <p style="color: #555;">Ti ricordiamo che potrai consultare i dettagli della tua prenotazione e scaricare eventuali allegati direttamente dalla tua dashboard.</p>
-            
-            <div style="text-align: center; margin: 35px 0;">
-                <a href="https://morganaorum.vercel.app/dashboard/events" 
-                   style="background-color: #18181b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                   I Miei Eventi
-                </a>
+                <p style="color: #4b5563; font-size: 14px;">Ti ricordiamo che potrai consultare i dettagli della tua prenotazione e scaricare eventuali allegati direttamente dalla tua dashboard.</p>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://morganaorum.vercel.app/dashboard/events" 
+                       style="background-color: #111827; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-block; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(17,24,39,0.2);">
+                       I Miei Eventi
+                    </a>
+                </div>
             </div>
-
-            ${getEmailFooter("Non mancare! Se dovessi avere problemi a partecipare, per favore cancella la prenotazione dalla dashboard per liberare il posto.")}
+            ${getEmailFooter("Se dovessi avere problemi a partecipare, cancella la prenotazione dalla dashboard per liberare il posto.")}
         </div>
     </div>
     `
@@ -135,23 +140,24 @@ export function getPasswordResetTemplate(userName: string, resetLink: string, br
     const config = BRANDS[brand] || BRANDS.morgana
 
     return `
-    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        ${getEmailHeader("Recupero Password", config.color)}
-        <div style="padding: 30px; line-height: 1.6; color: #333;">
-            <p>Ciao <strong>${userName}</strong>,</p>
-            <p>Abbiamo ricevuto una richiesta di ripristino della password per il tuo account nel portale delle associazioni.</p>
-            <p>Puoi procedere alla creazione di una nuova password cliccando sul pulsante qui sotto:</p>
-            
-            <div style="text-align: center; margin: 35px 0;">
-                <a href="${resetLink}" 
-                   style="background-color: #18182b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                   Ripristina Password
-                </a>
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader("Recupero Password", config.color)}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 16px; color: #111827;">Ciao <strong>${userName}</strong>,</p>
+                <p style="font-size: 15px;">Abbiamo ricevuto una richiesta di ripristino della password per il tuo account nel portale delle associazioni.</p>
+                <p style="font-size: 15px;">Puoi procedere alla creazione di una nuova password cliccando sul pulsante qui sotto:</p>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="${resetLink}" 
+                       style="background-color: ${config.color}; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-block; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(17,24,39,0.2);">
+                       Ripristina Password
+                    </a>
+                </div>
+
+                <p style="font-size: 13px; color: #6b7280; margin-bottom: 5px;">Questo link scadrà tra 1 ora per motivi di segurança.</p>
+                <p style="font-size: 13px; color: #6b7280; margin-top: 0;">Se non hai richiesto tu il ripristino, puoi ignorare questa email in tutta sicurezza.</p>
             </div>
-
-            <p style="font-size: 13px; color: #666; margin-bottom: 5px;">Questo link scadrà tra 1 ora per motivi di sicurezza.</p>
-            <p style="font-size: 13px; color: #666; margin-top: 0;">Se non hai richiesto tu il ripristino, puoi ignorare questa email in tutta sicurezza.</p>
-
             ${getEmailFooter("Se hai problemi ad accedere, contatta i tuoi rappresentanti per assistenza.")}
         </div>
     </div>
@@ -162,25 +168,26 @@ export function getNewsletterTemplate(userName: string, title: string, descripti
     const config = BRANDS[brand] || BRANDS.morgana
 
     return `
-    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        ${getEmailHeader(`Nuov${type === "Evento" ? "o" : "a"} ${type}!`, config.color)}
-        <div style="padding: 30px; line-height: 1.6; color: #333;">
-            <p>Ciao <strong>${userName}</strong>,</p>
-            <p>Abbiamo appena pubblicato un${type === "Evento" ? "o nuovo" : "a nuova"} <strong>${type.toLowerCase()}</strong> che potrebbe interessarti.</p>
-            
-            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e5e7eb;">
-                <h3 style="margin-top: 0; margin-bottom: 10px; color: #111;">${title}</h3>
-                <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.5;">${description}</p>
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader(`Nuov${type === "Evento" ? "o" : "a"} ${type}!`, config.color)}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 16px; color: #111827;">Ciao <strong>${userName}</strong>,</p>
+                <p style="font-size: 15px;">Abbiamo appena pubblicato un${type === "Evento" ? "o nuovo" : "a nuova"} <strong>${type.toLowerCase()}</strong> che potrebbe interessarti.</p>
+                
+                <div style="background-color: #f8fafc; padding: 20px; border-radius: 12px; margin: 24px 0; border: 1px solid #e2e8f0;">
+                    <h3 style="margin-top: 0; margin-bottom: 10px; color: #0f172a; font-size: 16px; font-weight: 700;">${title}</h3>
+                    <p style="margin: 0; color: #475569; font-size: 14px; line-height: 1.5;">${description}</p>
+                </div>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="${linkUrl}" 
+                       style="background-color: #111827; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-block; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(17,24,39,0.2);">
+                       Scopri di più
+                    </a>
+                </div>
             </div>
-            
-            <div style="text-align: center; margin: 35px 0;">
-                <a href="${linkUrl}" 
-                   style="background-color: #18181b; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block;">
-                   Scopri di più
-                </a>
-            </div>
-
-            ${getEmailFooter("Ricevi questa email perché hai scelto di iscriverti alla nostra Newsletter automatica in fase di registrazione.")}
+            ${getEmailFooter("Ricevi questa email perché hai scelto di iscriverti alla nostra Newsletter automatica.")}
         </div>
     </div>
     `
@@ -188,21 +195,23 @@ export function getNewsletterTemplate(userName: string, title: string, descripti
 
 export function getContactEmailTemplate(name: string, email: string, subject: string, message: string) {
     return `
-    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        ${getEmailHeader("Nuovo Messaggio dal Portale", "#18182b")}
-        <div style="padding: 30px; line-height: 1.6; color: #333;">
-            <p>Hai ricevuto un nuovo messaggio tramite il modulo di contatto del sito.</p>
-            
-            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e5e7eb;">
-                <p style="margin-bottom: 8px; color: #444;"><strong>Da:</strong> ${name} (<a href="mailto:${email}">${email}</a>)</p>
-                <p style="margin-bottom: 8px; color: #444;"><strong>Oggetto:</strong> ${subject}</p>
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;" />
-                <p style="margin: 0; color: #555; font-size: 14px; line-height: 1.5; white-space: pre-line;">${message}</p>
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader("Nuovo Messaggio dal Portale", "#111827")}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 15px;">Hai ricevuto un nuovo messaggio tramite il modulo di contatto del sito.</p>
+                
+                <div style="background-color: #f8fafc; padding: 20px; border-radius: 12px; margin: 24px 0; border: 1px solid #e2e8f0;">
+                    <p style="margin: 0 0 8px 0; color: #475569; font-size: 14px;"><strong>Da:</strong> ${name} (<a href="mailto:${email}" style="color: #2563eb; text-decoration: underline;">${email}</a>)</p>
+                    <p style="margin: 0 0 12px 0; color: #475569; font-size: 14px;"><strong>Oggetto:</strong> ${subject}</p>
+                    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 12px 0;" />
+                    <p style="margin: 0; color: #1e293b; font-size: 14px; line-height: 1.6; white-space: pre-line;">${message}</p>
+                </div>
+                
+                <p style="font-size: 13px; color: #6b7280; margin: 0; text-align: center; font-style: italic;">
+                    Rispondi direttamente a questa email per ricontattare l'utente.
+                </p>
             </div>
-            
-                Rispondi direttamente a questa email per ricontattare l'utente.
-            </p>
-
             ${getEmailFooter("Servizio di messaggistica automatica Morgana & O.R.U.M.")}
         </div>
     </div>
@@ -214,23 +223,24 @@ export function getDeadlineAlertTemplate(deadlineTitle: string, deadlineDate: st
     const title = isEn ? "Deadline Reminder Registered!" : "Promemoria Scadenza Registrato!"
     
     return `
-    <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; border-radius: 12px; overflow: hidden;">
-        ${getEmailHeader(title, "#f9a620")}
-        <div style="padding: 30px; line-height: 1.6; color: #333;">
-            <p>${isEn ? "Hello," : "Ciao,"}</p>
-            <p>${isEn 
-                ? "This email confirms that you have successfully registered for a reminder alert for the following university deadline:" 
-                : "Questa email conferma che ti sei registrato correttamente per ricevere un promemoria per la seguente scadenza universitaria:"}</p>
-            
-            <div style="background-color: #f9fafb; padding: 20px; border-radius: 8px; margin: 25px 0; border: 1px solid #e5e7eb;">
-                <h3 style="margin-top: 0; margin-bottom: 10px; color: #111;">${deadlineTitle}</h3>
-                <p style="margin: 0; color: #444;">📅 <strong>${isEn ? "Deadline:" : "Scadenza:"}</strong> ${deadlineDate}</p>
-            </div>
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader(title, "#f9a620")}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 16px; color: #111827;">${isEn ? "Hello," : "Ciao,"}</p>
+                <p style="font-size: 15px;">${isEn 
+                    ? "This email confirms that you have successfully registered for a reminder alert for the following university deadline:" 
+                    : "Questa email conferma che ti sei registrato correttamente per ricevere un promemoria per la seguente scadenza universitaria:"}</p>
+                
+                <div style="background-color: #f8fafc; padding: 20px; border-radius: 12px; margin: 24px 0; border: 1px solid #e2e8f0;">
+                    <h3 style="margin-top: 0; margin-bottom: 10px; color: #0f172a; font-size: 16px; font-weight: 700;">${deadlineTitle}</h3>
+                    <p style="margin: 0; color: #475569; font-size: 14px;">📅 <strong>${isEn ? "Deadline:" : "Scadenza:"}</strong> ${deadlineDate}</p>
+                </div>
 
-            <p style="color: #555;">${isEn 
-                ? "You will receive automatic email reminders 1 month, 1 week, 5 days, and the day before this deadline to make sure you don't miss it!" 
-                : "Ti invieremo dei promemoria email automatici 1 mese, 1 settimana, 5 giorni e il giorno prima di questa scadenza per assicurarci che tu non la manchi!"}</p>
-            
+                <p style="color: #4b5563; font-size: 14px;">${isEn 
+                    ? "You will receive automatic email reminders 1 month, 1 week, 5 days, and the day before this deadline to make sure you don't miss it!" 
+                    : "Ti invieremo dei promemoria email automatici 1 mese, 1 settimana, 5 giorni e il giorno prima di questa scadenza per assicurarci che tu non la manchi!"}</p>
+            </div>
             ${getEmailFooter(isEn ? "Always supporting students!" : "Sempre dalla parte dello studente!")}
         </div>
     </div>
