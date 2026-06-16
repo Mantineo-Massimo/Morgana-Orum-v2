@@ -622,6 +622,7 @@
         "magistrali": "--- MASTER ---",
         "altri": "--- OTHERS (Single Cycle / Master) ---",
         "verification_required": "Please verify your email before logging in.",
+        "register_success_title": "Registration Submitted",
         "register_success_verify": "Registration successful! We have sent you a verification email. Please check your inbox to activate your account before logging in.",
         "email_verified_success": "Email verified successfully! Welcome aboard.",
         "email_verification_failed": "The verification link is invalid or has expired.",

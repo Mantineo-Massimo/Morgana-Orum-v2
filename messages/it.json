@@ -620,6 +620,7 @@
         "magistrali": "--- MAGISTRALI ---",
         "altri": "--- ALTRI (Ciclo Unico / Master) ---",
         "verification_required": "Verifica la tua email prima di effettuare l'accesso.",
+        "register_success_title": "Registrazione Inviata",
         "register_success_verify": "Registrazione avvenuta con successo! Ti abbiamo inviato un'email di verifica. Controlla la tua casella di posta per attivare l'account prima di accedere.",
         "email_verified_success": "Email verificata con successo! Benvenuto a bordo.",
         "email_verification_failed": "Il link di verifica non è valido o è scaduto.",

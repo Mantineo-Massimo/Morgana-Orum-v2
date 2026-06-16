@@ -60,7 +60,7 @@ export default function Page() {
                             </svg>
                         </div>
                         <div className="space-y-2">
-                            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Registrazione Inviata</h1>
+                            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">{tAuth("register_success_title")}</h1>
                             <p className="text-sm text-zinc-500 leading-relaxed">
                                 {tAuth("register_success_verify")}
                             </p>
