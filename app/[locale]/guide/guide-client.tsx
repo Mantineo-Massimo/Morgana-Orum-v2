@@ -158,30 +158,30 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                     {guides
                         .filter((g) => ["matricole", "mappa", "servizi", "trasporti"].includes(g.id))
                         .map((g) => {
-                        const Icon = ICON_MAP[g.icon] || BookOpen
-                        const isSelected = selectedGuide === g.id
-                        const colorClasses = getColorClasses(g.color)
-                        return (
-                            <button
-                                key={g.id}
-                                onClick={() => setSelectedGuide(g.id)}
-                                className={cn(
-                                    "p-6 rounded-3xl border text-left flex flex-col justify-between transition-all duration-300",
-                                    isSelected 
-                                        ? "bg-white border-zinc-900 shadow-xl -translate-y-1 scale-[1.02]" 
-                                        : "bg-white border-zinc-100 hover:border-zinc-300 hover:shadow-md"
-                                )}
-                            >
-                                <div className={cn("size-12 rounded-2xl flex items-center justify-center mb-6", colorClasses.bg, colorClasses.color)}>
-                                    <Icon className="size-6" />
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-bold text-zinc-900 mb-2">{g.title}</h3>
-                                    <p className="text-xs text-zinc-500 line-clamp-2 leading-relaxed">{g.description}</p>
-                                </div>
-                            </button>
-                        )
-                    })}
+                            const Icon = ICON_MAP[g.icon] || BookOpen
+                            const isSelected = selectedGuide === g.id
+                            const colorClasses = getColorClasses(g.color)
+                            return (
+                                <button
+                                    key={g.id}
+                                    onClick={() => setSelectedGuide(g.id)}
+                                    className={cn(
+                                        "p-6 rounded-3xl border text-left flex flex-col justify-between transition-all duration-300",
+                                        isSelected
+                                            ? "bg-white border-zinc-900 shadow-xl -translate-y-1 scale-[1.02]"
+                                            : "bg-white border-zinc-100 hover:border-zinc-300 hover:shadow-md"
+                                    )}
+                                >
+                                    <div className={cn("size-12 rounded-2xl flex items-center justify-center mb-6", colorClasses.bg, colorClasses.color)}>
+                                        <Icon className="size-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-bold text-zinc-900 mb-2">{g.title}</h3>
+                                        <p className="text-xs text-zinc-500 line-clamp-2 leading-relaxed">{g.description}</p>
+                                    </div>
+                                </button>
+                            )
+                        })}
                 </div>
 
                 {/* Expanded Details Section */}
@@ -277,7 +277,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                 {locale === "en" ? "Interactive Tools" : "Strumenti Utili"}
                                             </h3>
                                             <p className="text-sm text-zinc-500 leading-relaxed mt-2">
-                                                {locale === "en" 
+                                                {locale === "en"
                                                     ? "Use our interactive tools designed to help you quickly calculate university taxes or decipher common terms."
                                                     : "Utilizza i nostri strumenti interattivi creati appositamente per calcolare rapidamente le tasse o decifrare i termini universitari più comuni."}
                                             </p>
@@ -315,7 +315,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                         <BookOpen className="size-6" />
                                                     </div>
                                                     <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                        {locale === "en" ? "Academic Dictionary" : "Dizionario Accademico"}
+                                                        {locale === "en" ? "Freshman Dictionary" : "Dizionario della Matricola"}
                                                     </h4>
                                                     <p className="text-xs text-zinc-500 leading-relaxed">
                                                         {locale === "en"
@@ -338,7 +338,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                         <Clock className="size-6" />
                                                     </div>
                                                     <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                        {locale === "en" ? "Deadlines & Countdowns" : "Countdown Sessioni"}
+                                                        {locale === "en" ? "Deadlines & Countdowns" : "Countdown Accademico"}
                                                     </h4>
                                                     <p className="text-xs text-zinc-500 leading-relaxed">
                                                         {locale === "en"
