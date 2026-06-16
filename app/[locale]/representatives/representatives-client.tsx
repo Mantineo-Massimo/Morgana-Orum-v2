@@ -277,7 +277,7 @@ export default function RepresentativesClient({
                                         {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400" /> })()}
                                         {body.name}
                                     </h3>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow py-4 w-full">
+                                    <div className="flex flex-wrap justify-center gap-4 flex-grow py-4 w-full">
                                         {body.groups.flatMap((group: any) =>
                                             group.members.map((member: any, memIdx: number) => (
                                                 <motion.button
@@ -285,7 +285,7 @@ export default function RepresentativesClient({
                                                     onClick={() => handleRepClick(member)}
                                                     whileHover={{ scale: 1.02 }}
                                                     whileTap={{ scale: 0.98 }}
-                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full text-left group shadow-sm relative"
+                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-[400px] text-left group shadow-sm relative"
                                                 >
                                                     {/* Photo */}
                                                     <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
@@ -359,10 +359,10 @@ export default function RepresentativesClient({
                                                      <span className="leading-tight uppercase tracking-wide truncate">{body.name}</span>
                                                  </h3>
                                                  <div className={cn(
-                                                     "grid gap-4 md:gap-5 w-full py-2",
+                                                     "w-full py-2",
                                                      (body.name.startsWith("CdS") || body.name.startsWith("SIR"))
-                                                         ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
-                                                         : "grid-cols-1"
+                                                         ? "grid gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+                                                         : "flex flex-wrap justify-center gap-4 md:gap-5"
                                                  )}>
                                                      {body.groups.flatMap((group: any) =>
                                                          group.members.map((member: any, memIdx: number) => (
@@ -371,7 +371,10 @@ export default function RepresentativesClient({
                                                                  onClick={() => handleRepClick(member)}
                                                                  whileHover={{ scale: 1.02 }}
                                                                  whileTap={{ scale: 0.98 }}
-                                                                 className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative w-full"
+                                                                 className={cn(
+                                                                     "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative",
+                                                                     (body.name.startsWith("CdS") || body.name.startsWith("SIR")) ? "w-full" : "w-full max-w-[400px]"
+                                                                 )}
                                                              >
                                                                  <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
                                                                      {member.image ? (
