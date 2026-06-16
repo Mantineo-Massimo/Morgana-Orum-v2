@@ -277,7 +277,7 @@ export default function RepresentativesClient({
                                         {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400" /> })()}
                                         {body.name}
                                     </h3>
-                                    <div className="flex flex-wrap items-center justify-center gap-4 flex-grow py-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 flex-grow py-4 w-full">
                                         {body.groups.flatMap((group: any) =>
                                             group.members.map((member: any, memIdx: number) => (
                                                 <motion.button
@@ -285,7 +285,7 @@ export default function RepresentativesClient({
                                                     onClick={() => handleRepClick(member)}
                                                     whileHover={{ scale: 1.02 }}
                                                     whileTap={{ scale: 0.98 }}
-                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-sm lg:max-w-none lg:w-[calc(50%-0.5rem)] text-left group shadow-sm relative"
+                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full text-left group shadow-sm relative"
                                                 >
                                                     {/* Photo */}
                                                     <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
@@ -358,7 +358,12 @@ export default function RepresentativesClient({
                                                      {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
                                                      <span className="leading-tight uppercase tracking-wide truncate">{body.name}</span>
                                                  </h3>
-                                                 <div className="flex flex-wrap items-center justify-center gap-4 md:gap-5 flex-grow w-full py-2">
+                                                 <div className={cn(
+                                                     "grid gap-4 md:gap-5 w-full py-2",
+                                                     (body.name.startsWith("CdS") || body.name.startsWith("SIR"))
+                                                         ? "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
+                                                         : "grid-cols-1"
+                                                 )}>
                                                      {body.groups.flatMap((group: any) =>
                                                          group.members.map((member: any, memIdx: number) => (
                                                              <motion.button
@@ -366,10 +371,7 @@ export default function RepresentativesClient({
                                                                  onClick={() => handleRepClick(member)}
                                                                  whileHover={{ scale: 1.02 }}
                                                                  whileTap={{ scale: 0.98 }}
-                                                                 className={cn(
-                                                                     "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative",
-                                                                     (body.name.startsWith("CdS") || body.name.startsWith("SIR")) ? "w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.5rem)] xl:w-[calc(25%-1.5rem)]" : "w-full"
-                                                                 )}
+                                                                 className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative w-full"
                                                              >
                                                                  <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
                                                                      {member.image ? (
@@ -419,7 +421,7 @@ export default function RepresentativesClient({
                                              {renderBodyRow(row2Bodies, "grid-cols-1 max-w-2xl w-full")}
                                          </div>
                                      )}
-                                     {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "grid-cols-1 lg:grid-cols-2")}
+                                     {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "grid-cols-1")}
                                  </div>
                              )
                         })()}
