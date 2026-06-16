@@ -26,14 +26,29 @@ interface OrganigrammaAdminClientProps {
 }
 
 const SECTIONS = [
-    { value: "COORDINATOR", label: "Coordinatore / Responsabile di Area" },
-    { value: "POLO", label: "Responsabile di Polo" },
+    { value: "COORDINATOR", label: "Coordinatore" },
+    { value: "RESPONSIBLE", label: "Responsabile" },
     { value: "DEPARTMENT", label: "Responsabile di Dipartimento" }
 ]
 
 const ASSOCIATIONS = [
     { value: "MORGANA", label: "Associazione Morgana" },
     { value: "ORUM", label: "O.R.U.M." }
+]
+
+const DEPARTMENTS = [
+    "Dipartimento Civiltà Antiche e Moderne (DICAM)",
+    "Dipartimento di Economia",
+    "Dipartimento di Giurisprudenza",
+    "Dipartimento di Ingegneria",
+    "Dipartimento Medicina Clinica e Sperimentale (DIMED)",
+    "Dipartimento Patologia Umana dell'Adulto e dell'Età Evolutiva",
+    "Dipartimento Scienze Biomediche, Odontoiatriche e delle Immagini (BIOMORF)",
+    "Dipartimento Scienze Chimiche, Biologiche, Farmaceutiche e Ambientali (CHIBIOFARAM)",
+    "Dipartimento Scienze Cognitive, Psicologiche, Pedagogiche e Studi Culturali (COSPECS)",
+    "Dipartimento Scienze Matematiche e Informatiche, Scienze Fisiche e Scienze della Terra (MIFT)",
+    "Dipartimento Scienze Politiche e Giuridiche (SCIPOG)",
+    "Dipartimento Scienze Veterinarie (VET)"
 ]
 
 export function OrganigrammaAdminClient({ initialMembers, userRole }: OrganigrammaAdminClientProps) {
@@ -237,9 +252,9 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
             case "BOARD":
                 return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full border border-blue-100"><Users className="size-3" /> Direttivo</span>
             case "COORDINATOR":
-                return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-amber-50 text-amber-600 rounded-full border border-amber-100"><Award className="size-3" /> Area / Coord.</span>
-            case "POLO":
-                return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100"><MapPin className="size-3" /> Polo</span>
+                return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-amber-50 text-amber-600 rounded-full border border-amber-100"><Award className="size-3" /> Coordinatore</span>
+            case "RESPONSIBLE":
+                return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100"><Users className="size-3" /> Responsabile</span>
             case "DEPARTMENT":
                 return <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-purple-50 text-purple-600 rounded-full border border-purple-100"><BookOpen className="size-3" /> Dipartimento</span>
             default:
@@ -412,28 +427,46 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                 </select>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ruolo / Dipartimento (IT) *</label>
-                                <input
-                                    type="text"
-                                    required
-                                    value={form.role}
-                                    onChange={e => setForm({ ...form, role: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-semibold"
-                                    placeholder="Es: Presidente, Segretario, Dipartimento..."
-                                />
-                            </div>
+                            {form.section === "DEPARTMENT" ? (
+                                <div className="space-y-2 md:col-span-2">
+                                    <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Dipartimento *</label>
+                                    <select
+                                        value={form.role}
+                                        onChange={e => setForm({ ...form, role: e.target.value, roleEn: e.target.value })}
+                                        className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-semibold"
+                                    >
+                                        <option value="">Seleziona Dipartimento</option>
+                                        {DEPARTMENTS.map(d => (
+                                            <option key={d} value={d}>{d}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ruolo (IT) *</label>
+                                        <input
+                                            type="text"
+                                            required={form.section !== "DEPARTMENT"}
+                                            value={form.role}
+                                            onChange={e => setForm({ ...form, role: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-semibold"
+                                            placeholder="Es: Coordinatore Logistica, Responsabile, ..."
+                                        />
+                                    </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ruolo / Dipartimento (EN)</label>
-                                <input
-                                    type="text"
-                                    value={form.roleEn}
-                                    onChange={e => setForm({ ...form, roleEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-semibold"
-                                    placeholder="Es: President, Secretary, Department..."
-                                />
-                            </div>
+                                    <div className="space-y-2">
+                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ruolo (EN)</label>
+                                        <input
+                                            type="text"
+                                            value={form.roleEn}
+                                            onChange={e => setForm({ ...form, roleEn: e.target.value })}
+                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-semibold"
+                                            placeholder="Es: Logistics Coordinator, Manager, ..."
+                                        />
+                                    </div>
+                                </>
+                            )}
 
                             <div className="space-y-2">
                                 <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Email Contatto</label>

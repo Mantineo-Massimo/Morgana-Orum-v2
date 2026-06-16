@@ -18,78 +18,92 @@ type BrandAsset = {
     logoUrl: string
     filename: string
     colors: BrandColor[]
+    svgUrl?: string
+    pngUrl?: string
+    webpUrl?: string
 }
 
 const BRANDS: BrandAsset[] = [
     {
         titleKey: "morgana_title",
-        logoUrl: "/assets/morgana.webp",
+        logoUrl: "/assets/loghi/morgana/Morgana.png",
         filename: "associazione_morgana",
         colors: [
             { name: "Morgana Red", hex: "#c12830", desc: "Rosso istituzionale primario" },
             { name: "Charcoal Black", hex: "#000000", desc: "Nero istituzionale dei testi" },
             { name: "Pure White", hex: "#ffffff", desc: "Bianco per sfondi e contrasto" }
-        ]
+        ],
+        pngUrl: "/assets/loghi/morgana/Morgana.png",
+        svgUrl: "/assets/loghi/morgana/Morgana.svg"
     },
     {
         titleKey: "orum_title",
-        logoUrl: "/assets/orum.webp",
+        logoUrl: "/assets/loghi/orum/ORUM.png",
         filename: "associazione_orum",
         colors: [
             { name: "Orum Navy", hex: "#18182e", desc: "Blu primario istituzionale" },
             { name: "Pure White", hex: "#ffffff", desc: "Bianco istituzionale" },
             { name: "Italian Green", hex: "#009246", desc: "Tricolore bandiera (Verde)" },
             { name: "Italian Red", hex: "#ce2b37", desc: "Tricolore bandiera (Rosso)" }
-        ]
+        ],
+        pngUrl: "/assets/loghi/orum/ORUM.png",
+        svgUrl: "/assets/loghi/orum/ORUM.svg"
     },
     {
         titleKey: "matricole_title",
-        logoUrl: "/assets/unimematricole.webp",
+        logoUrl: "/assets/loghi/matricole/Matricole.png",
         filename: "unime_matricole",
         colors: [
             { name: "Matricole Blue", hex: "#004b87", desc: "Blu scuro principale" },
             { name: "Matricole Light Blue", hex: "#0096da", desc: "Bordo circolare (Azzurrino)" },
             { name: "Matricole Yellow", hex: "#f9a620", desc: "Giallo dei testi e nastro" },
             { name: "Matricole Gray", hex: "#f1f5f9", desc: "Grigetto chiaro dello sfondo" }
-        ]
+        ],
+        pngUrl: "/assets/loghi/matricole/Matricole.png",
+        svgUrl: "/assets/loghi/matricole/Matricole.svg"
     },
     {
         titleKey: "unimhealth_title",
-        logoUrl: "/assets/unimhealth.webp",
+        logoUrl: "/assets/loghi/unimhealth/HEALTH.png",
         filename: "unimhealth",
         colors: [
             { name: "Unimhealth Red", hex: "#c12830", desc: "Rosso primario del cerchio" },
             { name: "Pure White", hex: "#ffffff", desc: "Bianco dell'elemento interno" }
-        ]
+        ],
+        pngUrl: "/assets/loghi/unimhealth/HEALTH.png"
     },
     {
         titleKey: "economia_title",
-        logoUrl: "/assets/studentieconomia.webp",
+        logoUrl: "/assets/loghi/studentieconomia/Economia.png",
         filename: "studenti_economia",
         colors: [
             { name: "Economia Navy", hex: "#18224b", desc: "Blu scuro del cerchio esterno" },
             { name: "Pure White", hex: "#ffffff", desc: "Bianco per icona e testi" }
-        ]
+        ],
+        pngUrl: "/assets/loghi/studentieconomia/Economia.png",
+        svgUrl: "/assets/loghi/studentieconomia/Economia.svg"
     },
     {
         titleKey: "scipog_title",
-        logoUrl: "/assets/studentiscipog.webp",
+        logoUrl: "/assets/loghi/studentiscipog/SCIPOG.png",
         filename: "studenti_scipog",
         colors: [
             { name: "Scipog Gold", hex: "#f4b43b", desc: "Giallo primario del cerchio" },
             { name: "Dark Charcoal", hex: "#212529", desc: "Nero scuro dei testi" },
             { name: "Pure White", hex: "#ffffff", desc: "Dettagli chiari del tocco" }
-        ]
+        ],
+        pngUrl: "/assets/loghi/studentiscipog/SCIPOG.png"
     },
     {
         titleKey: "dicam_title",
-        logoUrl: "/assets/insidedicam.webp",
+        logoUrl: "/assets/loghi/insidedicam/DICAM.png",
         filename: "inside_dicam",
         colors: [
             { name: "Dicam Cyan", hex: "#00b4d8", desc: "Azzurrino del cerchio esterno" },
             { name: "Dicam Pink", hex: "#d81b60", desc: "Fucsia del cerchio interno" },
             { name: "Pure White", hex: "#ffffff", desc: "Bianco di sfondo" }
-        ]
+        ],
+        pngUrl: "/assets/loghi/insidedicam/DICAM.png"
     },
     {
         titleKey: "piazza_title",
@@ -100,7 +114,8 @@ const BRANDS: BrandAsset[] = [
             { name: "Piazza Green", hex: "#27a85d", desc: "Verde secondario creativo" },
             { name: "Piazza Cyan", hex: "#1fbcd3", desc: "Ciano vivace di accento" },
             { name: "Pure White", hex: "#ffffff", desc: "Bianco per contrasti e sfondi" }
-        ]
+        ],
+        webpUrl: "/assets/piazzadellarte.webp"
     }
 ]
 
@@ -176,69 +191,13 @@ export default function MediaKitPage() {
         }
     }
 
-    const downloadAsWebp = (url: string, filename: string) => {
+    const downloadFile = (url: string, filename: string, extension: string) => {
         const a = document.createElement("a")
         a.href = url
-        a.download = `${filename}.webp`
+        a.download = `${filename}.${extension}`
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
-    }
-
-    const downloadAsPng = async (url: string, filename: string) => {
-        try {
-            const response = await fetch(url)
-            const blob = await response.blob()
-            const objectUrl = URL.createObjectURL(blob)
-
-            const img = new window.Image()
-            img.onload = () => {
-                const canvas = document.createElement("canvas")
-                canvas.width = img.naturalWidth || img.width || 512
-                canvas.height = img.naturalHeight || img.height || 512
-                const ctx = canvas.getContext("2d")
-                if (ctx) {
-                    ctx.drawImage(img, 0, 0)
-                    const dataUrl = canvas.toDataURL("image/png")
-                    const a = document.createElement("a")
-                    a.href = dataUrl
-                    a.download = `${filename}.png`
-                    document.body.appendChild(a)
-                    a.click()
-                    document.body.removeChild(a)
-                }
-                URL.revokeObjectURL(objectUrl)
-            }
-            img.src = objectUrl
-        } catch (err) {
-            console.error("Failed to download PNG", err)
-        }
-    }
-
-    const downloadAsSvg = async (url: string, filename: string) => {
-        try {
-            const response = await fetch(url)
-            const blob = await response.blob()
-            const base64 = await new Promise<string>((resolve) => {
-                const reader = new FileReader()
-                reader.onloadend = () => resolve(reader.result as string)
-                reader.readAsDataURL(blob)
-            })
-            const svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <image href="${base64}" width="512" height="512" />
-</svg>`
-            const svgBlob = new Blob([svgContent], { type: "image/svg+xml" })
-            const objectUrl = URL.createObjectURL(svgBlob)
-            const a = document.createElement("a")
-            a.href = objectUrl
-            a.download = `${filename}.svg`
-            document.body.appendChild(a)
-            a.click()
-            document.body.removeChild(a)
-            URL.revokeObjectURL(objectUrl)
-        } catch (err) {
-            console.error("Failed to download SVG", err)
-        }
     }
 
     const fetchImageAsPngBase64 = async (url: string): Promise<string> => {
@@ -503,57 +462,63 @@ export default function MediaKitPage() {
                                                 {t("download_assets_label")}
                                             </h4>
                                             <div className="flex flex-wrap gap-2">
-                                                <button 
-                                                    onClick={() => handleDownload(`${brand.filename}_svg`, () => downloadAsSvg(brand.logoUrl, brand.filename))}
-                                                    disabled={downloading[`${brand.filename}_svg`]}
-                                                    className="py-2.5 px-5 bg-zinc-900 text-white hover:bg-zinc-800 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                                                >
-                                                    {downloading[`${brand.filename}_svg`] ? (
-                                                        <>
-                                                            <Check className="size-3 text-emerald-400" />
-                                                            <span>{t("download_done")} SVG</span>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <FileDown className="size-3.5" />
-                                                            <span>{t("download_svg")}</span>
-                                                        </>
-                                                    )}
-                                                </button>
-                                                <button 
-                                                    onClick={() => handleDownload(`${brand.filename}_png`, () => downloadAsPng(brand.logoUrl, brand.filename))}
-                                                    disabled={downloading[`${brand.filename}_png`]}
-                                                    className="py-2.5 px-5 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                                                >
-                                                    {downloading[`${brand.filename}_png`] ? (
-                                                        <>
-                                                            <Check className="size-3 text-emerald-600" />
-                                                            <span>{t("download_done")} PNG</span>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <FileDown className="size-3.5" />
-                                                            <span>{t("download_png")}</span>
-                                                        </>
-                                                    )}
-                                                </button>
-                                                <button 
-                                                    onClick={() => handleDownload(`${brand.filename}_webp`, () => downloadAsWebp(brand.logoUrl, brand.filename))}
-                                                    disabled={downloading[`${brand.filename}_webp`]}
-                                                    className="py-2.5 px-5 bg-zinc-50 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 border border-zinc-200/50 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                                                >
-                                                    {downloading[`${brand.filename}_webp`] ? (
-                                                        <>
-                                                            <Check className="size-3 text-emerald-600" />
-                                                            <span>{t("download_done")} WebP</span>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <FileDown className="size-3.5" />
-                                                            <span>{t("download_webp")}</span>
-                                                        </>
-                                                    )}
-                                                </button>
+                                                {brand.svgUrl && (
+                                                    <button 
+                                                        onClick={() => handleDownload(`${brand.filename}_svg`, () => downloadFile(brand.svgUrl!, brand.filename, "svg"))}
+                                                        disabled={downloading[`${brand.filename}_svg`]}
+                                                        className="py-2.5 px-5 bg-zinc-900 text-white hover:bg-zinc-800 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                                                    >
+                                                        {downloading[`${brand.filename}_svg`] ? (
+                                                            <>
+                                                                <Check className="size-3 text-emerald-400" />
+                                                                <span>{t("download_done")} SVG</span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <FileDown className="size-3.5" />
+                                                                <span>{t("download_svg")}</span>
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                )}
+                                                {brand.pngUrl && (
+                                                    <button 
+                                                        onClick={() => handleDownload(`${brand.filename}_png`, () => downloadFile(brand.pngUrl!, brand.filename, "png"))}
+                                                        disabled={downloading[`${brand.filename}_png`]}
+                                                        className="py-2.5 px-5 bg-zinc-100 text-zinc-700 hover:bg-zinc-200 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                                                    >
+                                                        {downloading[`${brand.filename}_png`] ? (
+                                                            <>
+                                                                <Check className="size-3 text-emerald-600" />
+                                                                <span>{t("download_done")} PNG</span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <FileDown className="size-3.5" />
+                                                                <span>{t("download_png")}</span>
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                )}
+                                                {brand.webpUrl && (
+                                                    <button 
+                                                        onClick={() => handleDownload(`${brand.filename}_webp`, () => downloadFile(brand.webpUrl!, brand.filename, "webp"))}
+                                                        disabled={downloading[`${brand.filename}_webp`]}
+                                                        className="py-2.5 px-5 bg-zinc-50 text-zinc-500 hover:bg-zinc-100 hover:text-zinc-700 border border-zinc-200/50 disabled:opacity-75 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                                                    >
+                                                        {downloading[`${brand.filename}_webp`] ? (
+                                                            <>
+                                                                <Check className="size-3 text-emerald-600" />
+                                                                <span>{t("download_done")} WebP</span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <FileDown className="size-3.5" />
+                                                                <span>{t("download_webp")}</span>
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                )}
                                                 {/* Guidelines PDF for this specific brand */}
                                                 <button 
                                                     onClick={() => handleDownload(`${brand.filename}_pdf`, () => downloadSingleBrandPdf(brand))}
