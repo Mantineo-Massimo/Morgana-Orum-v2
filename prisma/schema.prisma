@@ -29,6 +29,8 @@ model User {
   accettazione_termini_condivisi Boolean        @default(false)
   role                           Role           @default(USER)
   association                    Association    @default(MORGANA_ORUM)
+  emailVerified                  Boolean        @default(false)
+  verificationToken              String?        @unique
   registrations                  Registration[]
   gradeSimulation                GradeSimulation?
 }

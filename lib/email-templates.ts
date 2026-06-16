@@ -121,6 +121,38 @@ export function getWelcomeEmailTemplate(userName: string, brand: string = "morga
     `
 }
 
+export function getEmailVerificationTemplate(userName: string, verificationLink: string, brand: string = "morgana", locale: string = "it") {
+    const config = BRANDS[brand] || BRANDS.morgana
+    const isEn = locale === "en"
+
+    return `
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader(isEn ? "Verify your email" : "Verifica la tua email", config.color)}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 16px; color: #111827;">${isEn ? "Hello" : "Ciao"} <strong>${userName}</strong>,</p>
+                <p style="font-size: 15px;">${isEn 
+                    ? "Thank you for registering on our platform. Before you can log in, you must verify your email address by clicking the button below:" 
+                    : "Grazie per esserti registrato sul nostro portale. Prima di poter accedere, devi verificare il tuo indirizzo email cliccando sul pulsante qui sotto:"}</p>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="${verificationLink}" 
+                       style="background-color: ${config.color}; color: #ffffff; padding: 14px 32px; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-block; font-size: 15px; box-shadow: 0 4px 6px -1px rgba(17,24,39,0.2);">
+                       ${isEn ? "Verify Email" : "Verifica Email"}
+                    </a>
+                </div>
+
+                <p style="font-size: 13px; color: #6b7280; margin-top: 20px;">${isEn 
+                    ? "If you did not create this account, you can safely ignore this email." 
+                    : "Se non hai creato tu questo account, puoi ignorare questa email in tutta sicurezza."}</p>
+            </div>
+            ${getEmailFooter(isEn ? "Always supporting students!" : "Sempre dalla parte dello studente!")}
+        </div>
+    </div>
+    `
+}
+
+
 export function getEventBookingTemplate(userName: string, eventTitle: string, eventDate: string, eventLocation: string, brand: string = "morgana", locale: string = "it") {
     const config = BRANDS[brand] || BRANDS.morgana
     const isEn = locale === "en"
