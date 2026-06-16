@@ -31,6 +31,7 @@ interface GuideClientProps {
     initialGuides: any[]
     locale: string
     isLoggedIn?: boolean
+    countdownItems?: any[]
 }
 
 const ICON_MAP: Record<string, any> = {
@@ -96,7 +97,7 @@ const getColorClasses = (color: string) => {
     }
 }
 
-export function GuideClient({ categories, initialGuides, locale, isLoggedIn = false }: GuideClientProps) {
+export function GuideClient({ categories, initialGuides, locale, isLoggedIn = false, countdownItems = [] }: GuideClientProps) {
     const [selectedGuide, setSelectedGuide] = useState<string>("matricole")
     const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | "media" | "ersu" | null>(null)
     const [activeInfoGuide, setActiveInfoGuide] = useState<any | null>(null)
@@ -423,7 +424,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
             {/* Modal for Sessions Countdown */}
             <Dialog open={activeToolModal === "countdown"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
                 <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
-                    <SessionsCountdown locale={locale} />
+                    <SessionsCountdown locale={locale} initialItems={countdownItems} />
                 </DialogContent>
             </Dialog>
 

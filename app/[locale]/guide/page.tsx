@@ -1,5 +1,6 @@
 import { getServicesData } from "@/app/actions/services"
 import { getGuidesData } from "@/app/actions/guides"
+import { getVisibleCountdowns } from "@/app/actions/countdowns"
 import { GuideClient } from "./guide-client"
 import { cookies } from "next/headers"
 
@@ -12,6 +13,7 @@ export default async function GuidePage({
 }) {
     const categories = await getServicesData()
     const guides = await getGuidesData()
+    const countdowns = await getVisibleCountdowns()
     const isLoggedIn = !!cookies().get("session_email")?.value
 
     return (
@@ -19,7 +21,8 @@ export default async function GuidePage({
             categories={categories} 
             initialGuides={guides} 
             locale={locale} 
-            isLoggedIn={isLoggedIn} 
+            isLoggedIn={isLoggedIn}
+            countdownItems={countdowns}
         />
     )
 }

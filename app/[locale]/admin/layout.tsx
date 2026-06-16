@@ -91,6 +91,12 @@ export default async function AdminLayout({
                     iconName: "Image",
                     exact: false
                 },
+                {
+                    label: "Countdown & Scadenze",
+                    href: `/admin/countdowns`,
+                    iconName: "Clock",
+                    exact: false
+                },
             ]
         },
     ]
@@ -144,7 +150,6 @@ export default async function AdminLayout({
                     </div>
                     <div>
                         <h1 className="font-black text-sm tracking-widest text-white uppercase">Admin Panel</h1>
-                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">Control Panel</p>
                         <SidebarClock />
                     </div>
                 </div>
@@ -157,21 +162,21 @@ export default async function AdminLayout({
                             </h2>
                             <div className="space-y-1">
                                 {section.items.map((item) => {
-                                     const IconComponent = ({
-                                         LayoutDashboard: LayoutDashboard,
-                                         BarChart3: BarChart3,
-                                         Users: Users,
-                                         Newspaper: Newspaper,
-                                         Calendar: Calendar,
-                                         Tag: Tag,
-                                         User: User,
-                                         Sparkles: Sparkles,
-                                         Shield: Shield,
-                                         BookOpen: BookOpen,
-                                         Phone: Phone,
-                                         Compass: Compass,
-                                         Image: ImageIcon
-                                     } as Record<string, any>)[item.iconName] || LayoutDashboard
+                                    const IconComponent = ({
+                                        LayoutDashboard: LayoutDashboard,
+                                        BarChart3: BarChart3,
+                                        Users: Users,
+                                        Newspaper: Newspaper,
+                                        Calendar: Calendar,
+                                        Tag: Tag,
+                                        User: User,
+                                        Sparkles: Sparkles,
+                                        Shield: Shield,
+                                        BookOpen: BookOpen,
+                                        Phone: Phone,
+                                        Compass: Compass,
+                                        Image: ImageIcon
+                                    } as Record<string, any>)[item.iconName] || LayoutDashboard
 
                                     return (
                                         <SidebarLink
@@ -214,7 +219,7 @@ export default async function AdminLayout({
                             <p className="text-xs font-bold text-zinc-200 truncate">{data?.user?.name || "Admin"} {data?.user?.surname || ""}</p>
                             <p className="text-[9px] text-zinc-500 font-semibold uppercase tracking-wider mt-0.5">
                                 {userRole === "SUPER_ADMIN" ? "Super Admin" :
-                                 userRole === "ADMIN_NETWORK" ? "Admin Network" : "Admin Morgana/Orum"}
+                                    userRole === "ADMIN_NETWORK" ? "Admin Network" : "Admin Morgana/Orum"}
                             </p>
                         </div>
                     </div>

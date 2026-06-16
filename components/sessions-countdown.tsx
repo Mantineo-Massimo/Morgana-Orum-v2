@@ -7,6 +7,16 @@ import { registerDeadlineAlert } from "@/app/actions/notifications"
 
 interface SessionsCountdownProps {
     locale: string
+    initialItems?: Array<{
+        id: string
+        title: string
+        titleEn: string | null
+        category: string
+        date: Date
+        description: string
+        descriptionEn: string | null
+        visible?: boolean
+    }>
 }
 
 export interface CountdownItem {
@@ -109,8 +119,20 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     }
 }
 
-export function SessionsCountdown({ locale }: SessionsCountdownProps) {
+export function SessionsCountdown({ locale, initialItems }: SessionsCountdownProps) {
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
+    // Use DB-sourced items if provided; otherwise fall back to hardcoded defaults
+    const sourceItems = initialItems && initialItems.length > 0
+        ? initialItems.map(item => ({
+            id: item.id,
+            title: item.title,
+            titleEn: item.titleEn || item.title,
+            category: item.category as "burocrazia" | "sessione",
+            date: new Date(item.date),
+            description: item.description,
+            descriptionEn: item.descriptionEn || item.description
+        }))
+        : COUNTDOWN_ITEMS
     const [currentTime, setCurrentTime] = useState<number>(Date.now())
     const [selectedCategory, setSelectedCategory] = useState<string>("all")
 
@@ -129,10 +151,10 @@ export function SessionsCountdown({ locale }: SessionsCountdownProps) {
     }, [])
 
     const filteredItems = useMemo(() => {
-        return COUNTDOWN_ITEMS.filter(item => {
+        return sourceItems.filter(item => {
             return selectedCategory === "all" || item.category === selectedCategory
         }).sort((a, b) => a.date.getTime() - b.date.getTime())
-    }, [selectedCategory])
+    }, [selectedCategory, sourceItems])
 
     return (
         <div className="bg-zinc-50/50 rounded-[2rem] border border-zinc-200/50 p-6 md:p-8 space-y-6 shadow-inner">
