@@ -1,11 +1,17 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { del } from "@vercel/blob"
 
 export type MediaItem = {
     url: string
     source: string
     title: string
+    // For standalone library items
+    libraryId?: string
+    sizeBytes?: number | null
+    mimeType?: string | null
+    createdAt?: Date
 }
 
 export async function getUploadedMedia(): Promise<MediaItem[]> {
@@ -17,7 +23,8 @@ export async function getUploadedMedia(): Promise<MediaItem[]> {
             organigramma,
             conventions,
             piazzaArtists,
-            piazzaSponsors
+            piazzaSponsors,
+            libraryItems
         ] = await Promise.all([
             prisma.news.findMany({
                 where: { AND: [{ image: { not: null } }, { image: { not: "" } }] },
@@ -46,26 +53,37 @@ export async function getUploadedMedia(): Promise<MediaItem[]> {
             prisma.piazzaSponsor.findMany({
                 where: { AND: [{ logo: { not: null } }, { logo: { not: "" } }] },
                 select: { logo: true, name: true }
+            }),
+            prisma.mediaLibraryItem.findMany({
+                orderBy: { createdAt: "desc" }
             })
         ])
 
         const mediaMap = new Map<string, MediaItem>()
 
         // Helper to add unique media items
-        const addMedia = (url: string | null, source: string, title: string) => {
+        const addMedia = (url: string | null, source: string, title: string, extra?: Partial<MediaItem>) => {
             if (!url) return
-            // Normalize URLs to avoid duplicates
             const cleanUrl = url.trim()
             if (!mediaMap.has(cleanUrl)) {
                 mediaMap.set(cleanUrl, {
                     url: cleanUrl,
                     source,
-                    title
+                    title,
+                    ...extra
                 })
             }
         }
 
-        // Gather all media
+        // Add standalone library items first (they take priority over record-linked)
+        libraryItems.forEach(item => addMedia(item.url, "Libreria", item.name, {
+            libraryId: item.id,
+            sizeBytes: item.sizeBytes,
+            mimeType: item.mimeType,
+            createdAt: item.createdAt
+        }))
+
+        // Add record-linked images
         news.forEach(item => addMedia(item.image, "Notizia", item.title))
         events.forEach(item => addMedia(item.image, "Evento", item.title))
         representatives.forEach(item => addMedia(item.image, "Rappresentante", item.name))
@@ -74,10 +92,56 @@ export async function getUploadedMedia(): Promise<MediaItem[]> {
         piazzaArtists.forEach(item => addMedia(item.image, "Piazza - Artista", item.name))
         piazzaSponsors.forEach(item => addMedia(item.logo, "Piazza - Sponsor", item.name))
 
-        // Return array of media items sorted alphabetically by title/source
-        return Array.from(mediaMap.values()).sort((a, b) => a.source.localeCompare(b.source))
+        return Array.from(mediaMap.values()).sort((a, b) => {
+            // Libreria items first, then by source name
+            if (a.source === "Libreria" && b.source !== "Libreria") return -1
+            if (a.source !== "Libreria" && b.source === "Libreria") return 1
+            return a.source.localeCompare(b.source)
+        })
     } catch (error) {
         console.error("Error fetching uploaded media:", error)
         return []
+    }
+}
+
+export async function addToMediaLibrary(url: string, name: string, mimeType?: string, sizeBytes?: number): Promise<{ success: boolean; error?: string }> {
+    try {
+        await prisma.mediaLibraryItem.create({
+            data: {
+                url,
+                name,
+                mimeType: mimeType || null,
+                sizeBytes: sizeBytes || null
+            }
+        })
+        return { success: true }
+    } catch (error) {
+        console.error("Error adding to media library:", error)
+        return { success: false, error: "Errore durante il salvataggio in libreria" }
+    }
+}
+
+export async function deleteMediaLibraryItem(id: string): Promise<{ success: boolean; error?: string }> {
+    try {
+        const item = await prisma.mediaLibraryItem.findUnique({ where: { id } })
+        if (!item) {
+            return { success: false, error: "Elemento non trovato" }
+        }
+
+        // Delete from Vercel Blob
+        try {
+            await del(item.url)
+        } catch (blobError) {
+            // Log but don't fail — blob might already be deleted or not a blob URL
+            console.warn("Could not delete from Vercel Blob:", blobError)
+        }
+
+        // Delete from DB
+        await prisma.mediaLibraryItem.delete({ where: { id } })
+
+        return { success: true }
+    } catch (error) {
+        console.error("Error deleting media library item:", error)
+        return { success: false, error: "Errore durante l'eliminazione" }
     }
 }

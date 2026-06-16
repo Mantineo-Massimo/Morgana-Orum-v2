@@ -1,8 +1,11 @@
 "use client"
 
-import { useState } from "react"
-import { MediaItem } from "@/app/actions/media"
-import { Search, Image as ImageIcon, Copy, Check, ExternalLink, RefreshCw } from "lucide-react"
+import { useState, useRef } from "react"
+import { MediaItem, addToMediaLibrary, deleteMediaLibraryItem } from "@/app/actions/media"
+import {
+    Search, Image as ImageIcon, Copy, Check, ExternalLink,
+    RefreshCw, Upload, Trash2, AlertTriangle, X, Loader2, Info
+} from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface MediaAdminClientProps {
@@ -15,9 +18,13 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
     const [selectedSource, setSelectedSource] = useState("Tutti")
     const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
     const [refreshing, setRefreshing] = useState(false)
+    const [uploading, setUploading] = useState(false)
+    const [deleteConfirm, setDeleteConfirm] = useState<MediaItem | null>(null)
+    const [deleting, setDeleting] = useState(false)
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     // Extract unique sources for filtering
-    const sources = ["Tutti", ...Array.from(new Set(initialMedia.map(m => m.source)))]
+    const sources = ["Tutti", "Libreria", ...Array.from(new Set(initialMedia.filter(m => m.source !== "Libreria").map(m => m.source)))]
 
     // Filter media items
     const filteredMedia = media.filter(item => {
@@ -37,7 +44,6 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
     const handleRefresh = async () => {
         setRefreshing(true)
         try {
-            // Import and run server action client-side
             const { getUploadedMedia } = await import("@/app/actions/media")
             const updated = await getUploadedMedia()
             setMedia(updated)
@@ -48,8 +54,65 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
         }
     }
 
+    const handleUpload = async (file: File) => {
+        setUploading(true)
+        try {
+            // Upload to Vercel Blob via the upload API
+            const formData = new FormData()
+            formData.append("file", file)
+            formData.append("folder", "library")
+            const res = await fetch("/api/upload", { method: "POST", body: formData })
+            const data = await res.json()
+            if (!res.ok) {
+                alert(data.error || "Errore nel caricamento")
+                return
+            }
+
+            // Save to MediaLibraryItem
+            const result = await addToMediaLibrary(
+                data.url,
+                file.name.replace(/\.[^/.]+$/, ""), // name without extension
+                file.type,
+                file.size
+            )
+
+            if (!result.success) {
+                alert(result.error || "Errore nel salvataggio in libreria")
+                return
+            }
+
+            // Refresh media list
+            await handleRefresh()
+        } catch (e) {
+            console.error(e)
+            alert("Errore durante il caricamento")
+        } finally {
+            setUploading(false)
+        }
+    }
+
+    const handleDeleteConfirm = async () => {
+        if (!deleteConfirm?.libraryId) return
+        setDeleting(true)
+        try {
+            const result = await deleteMediaLibraryItem(deleteConfirm.libraryId)
+            if (result.success) {
+                setMedia(prev => prev.filter(m => m.url !== deleteConfirm.url))
+            } else {
+                alert(result.error || "Errore durante l'eliminazione")
+            }
+        } catch (e) {
+            console.error(e)
+        } finally {
+            setDeleting(false)
+            setDeleteConfirm(null)
+        }
+    }
+
     const getSourceBadgeColor = (source: string) => {
         switch (source) {
+            case "Libreria":
+                return "bg-indigo-50 text-indigo-600 border-indigo-200"
             case "Notizia":
                 return "bg-red-50 text-[#c12830] border-red-100"
             case "Evento":
@@ -57,12 +120,19 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
             case "Rappresentante":
                 return "bg-amber-50 text-amber-600 border-amber-100"
             case "Organigramma":
-                return "bg-indigo-50 text-indigo-600 border-indigo-100"
+                return "bg-purple-50 text-purple-600 border-purple-100"
             case "Convenzione":
                 return "bg-teal-50 text-teal-600 border-teal-100"
             default:
                 return "bg-slate-50 text-slate-600 border-slate-100"
         }
+    }
+
+    const formatBytes = (bytes?: number | null) => {
+        if (!bytes) return null
+        if (bytes < 1024) return `${bytes} B`
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
     }
 
     return (
@@ -77,17 +147,78 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                         Libreria Media
                     </h1>
                     <p className="text-sm text-slate-500 mt-1 font-medium">
-                        Visualizza e copia le immagini già caricate nel database per riutilizzarle senza duplicati.
+                        Gestisci tutte le immagini: carica nuovi file, copia URL, elimina quelli non più necessari.
                     </p>
                 </div>
-                <button
-                    onClick={handleRefresh}
-                    disabled={refreshing}
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-bold text-zinc-700 hover:bg-zinc-50 hover:shadow-sm transition-all disabled:opacity-50 shrink-0"
-                >
-                    <RefreshCw className={cn("size-4 text-zinc-500", refreshing && "animate-spin")} />
-                    Aggiorna
-                </button>
+                <div className="flex items-center gap-2 shrink-0">
+                    <button
+                        onClick={handleRefresh}
+                        disabled={refreshing}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-bold text-zinc-700 hover:bg-zinc-50 hover:shadow-sm transition-all disabled:opacity-50"
+                    >
+                        <RefreshCw className={cn("size-4 text-zinc-500", refreshing && "animate-spin")} />
+                        Aggiorna
+                    </button>
+                    <button
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={uploading}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-bold hover:bg-indigo-700 transition-all disabled:opacity-50 shadow-sm"
+                    >
+                        {uploading ? (
+                            <Loader2 className="size-4 animate-spin" />
+                        ) : (
+                            <Upload className="size-4" />
+                        )}
+                        Carica Immagine
+                    </button>
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,image/gif"
+                        className="hidden"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0]
+                            if (file) {
+                                handleUpload(file)
+                                e.target.value = ""
+                            }
+                        }}
+                    />
+                </div>
+            </div>
+
+            {/* Drop Zone */}
+            <div
+                onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
+                onDrop={(e) => {
+                    e.preventDefault(); e.stopPropagation()
+                    const file = e.dataTransfer.files[0]
+                    if (file?.type.startsWith("image/")) handleUpload(file)
+                }}
+                className="border-2 border-dashed border-indigo-200 rounded-2xl p-6 text-center bg-indigo-50/30 hover:bg-indigo-50/50 transition-all cursor-pointer"
+                onClick={() => fileInputRef.current?.click()}
+            >
+                {uploading ? (
+                    <div className="flex flex-col items-center gap-2 text-indigo-600">
+                        <Loader2 className="size-8 animate-spin" />
+                        <span className="text-sm font-bold">Caricamento in corso...</span>
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center gap-2 text-indigo-500">
+                        <Upload className="size-8" />
+                        <p className="text-sm font-bold">Trascina qui un&apos;immagine o clicca per caricare</p>
+                        <p className="text-xs text-indigo-400">JPG, PNG, WebP, GIF — max 10MB</p>
+                    </div>
+                )}
+            </div>
+
+            {/* Info banner */}
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-50 border border-amber-100 text-sm text-amber-700">
+                <Info className="size-4 shrink-0 mt-0.5" />
+                <div>
+                    <span className="font-bold">Nota: </span>
+                    Le immagini con badge <span className="font-bold text-indigo-600">Libreria</span> sono caricate direttamente qui e possono essere eliminate. Le altre provengono da record del sito (Notizie, Eventi, ecc.) e devono essere gestite dal rispettivo form.
+                </div>
             </div>
 
             {/* Filter controls */}
@@ -118,9 +249,20 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                             )}
                         >
                             {source}
+                            {source !== "Tutti" && (
+                                <span className="ml-1.5 opacity-60 text-[10px]">
+                                    ({media.filter(m => m.source === source).length})
+                                </span>
+                            )}
                         </button>
                     ))}
                 </div>
+            </div>
+
+            {/* Stats row */}
+            <div className="text-xs text-zinc-400 font-medium">
+                {filteredMedia.length} immagini trovate {selectedSource !== "Tutti" && `in "${selectedSource}"`}
+                {searchQuery && ` per "${searchQuery}"`}
             </div>
 
             {/* Grid */}
@@ -140,6 +282,16 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                     loading="lazy"
                                 />
+                                {/* Delete button — only for library items */}
+                                {item.libraryId && (
+                                    <button
+                                        onClick={() => setDeleteConfirm(item)}
+                                        className="absolute top-2 right-2 p-1.5 bg-white/90 backdrop-blur-sm rounded-lg border border-red-100 text-red-500 hover:bg-red-50 hover:border-red-200 opacity-0 group-hover:opacity-100 transition-all shadow-sm"
+                                        title="Elimina dalla libreria"
+                                    >
+                                        <Trash2 className="size-3.5" />
+                                    </button>
+                                )}
                             </div>
 
                             {/* Details */}
@@ -152,6 +304,11 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                                         )}>
                                             {item.source}
                                         </span>
+                                        {item.sizeBytes && (
+                                            <span className="text-[10px] text-zinc-400 font-mono">
+                                                {formatBytes(item.sizeBytes)}
+                                            </span>
+                                        )}
                                     </div>
                                     <h3 className="font-bold text-zinc-900 text-sm line-clamp-1 leading-snug" title={item.title}>
                                         {item.title}
@@ -192,6 +349,15 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                                     >
                                         <ExternalLink className="size-3.5" />
                                     </a>
+                                    {item.libraryId && (
+                                        <button
+                                            onClick={() => setDeleteConfirm(item)}
+                                            className="p-2 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200 text-red-500 hover:text-red-700 transition-all"
+                                            title="Elimina dalla libreria"
+                                        >
+                                            <Trash2 className="size-3.5" />
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -206,6 +372,65 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                             ? "Prova a modificare i filtri o la query di ricerca."
                             : "Non ci sono ancora immagini salvate nel database."}
                     </p>
+                </div>
+            )}
+
+            {/* Delete Confirm Modal */}
+            {deleteConfirm && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-5 animate-in zoom-in-95 duration-200">
+                        <div className="flex items-start gap-4">
+                            <div className="p-3 rounded-xl bg-red-50 text-red-500 shrink-0">
+                                <AlertTriangle className="size-6" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <h3 className="font-black text-zinc-900 text-lg">Elimina immagine</h3>
+                                <p className="text-sm text-zinc-500 mt-1">
+                                    Questa azione è irreversibile. L&apos;immagine verrà eliminata dalla libreria e da Vercel Blob.
+                                </p>
+                            </div>
+                            <button
+                                onClick={() => setDeleteConfirm(null)}
+                                className="p-1.5 rounded-lg hover:bg-zinc-100 text-zinc-400 transition-colors shrink-0"
+                            >
+                                <X className="size-4" />
+                            </button>
+                        </div>
+
+                        {/* Preview */}
+                        <div className="flex items-center gap-3 p-3 rounded-xl bg-zinc-50 border border-zinc-200">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={deleteConfirm.url}
+                                alt={deleteConfirm.title}
+                                className="size-14 rounded-lg object-cover border border-zinc-200 shrink-0"
+                            />
+                            <div className="min-w-0">
+                                <p className="font-bold text-zinc-900 text-sm truncate">{deleteConfirm.title}</p>
+                                <p className="text-[10px] text-zinc-400 font-mono truncate">{deleteConfirm.url}</p>
+                            </div>
+                        </div>
+
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => setDeleteConfirm(null)}
+                                className="flex-1 py-3 rounded-xl border border-zinc-200 text-zinc-700 font-bold text-sm hover:bg-zinc-50 transition-all"
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                onClick={handleDeleteConfirm}
+                                disabled={deleting}
+                                className="flex-1 py-3 rounded-xl bg-red-600 text-white font-bold text-sm hover:bg-red-700 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                            >
+                                {deleting ? (
+                                    <><Loader2 className="size-4 animate-spin" /> Eliminazione...</>
+                                ) : (
+                                    <><Trash2 className="size-4" /> Elimina definitivamente</>
+                                )}
+                            </button>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

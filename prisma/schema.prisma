@@ -363,5 +363,13 @@ model BienniumConfig {
   updatedAt DateTime @updatedAt
 }
 
+model MediaLibraryItem {
+  id        String   @id @default(uuid())
+  url       String   @unique
+  name      String
+  mimeType  String?
+  sizeBytes Int?
+  createdAt DateTime @default(now())
+}
 
 
