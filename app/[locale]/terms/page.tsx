@@ -44,7 +44,7 @@ export default async function TermsPage() {
                 {/* Content Sections */}
                 <div className="space-y-8">
                     {sections.map((section, idx) => (
-                        <section 
+                        <section
                             key={section.id}
                             className="bg-white/80 backdrop-blur-xl border border-white rounded-[2.5rem] p-8 md:p-12 shadow-sm hover:shadow-xl transition-all duration-500 group animate-in fade-in slide-in-from-bottom-10"
                             style={{ animationDelay: `${idx * 100}ms` }}
@@ -69,14 +69,6 @@ export default async function TermsPage() {
                             </div>
                         </section>
                     ))}
-                </div>
-
-                {/* Footer Note */}
-                <div className="mt-20 text-center animate-in fade-in duration-1000 delay-1000">
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-4">
-                        Morgana & O.R.U.M. Portal
-                    </p>
-                    <div className="inline-block h-1 w-20 bg-gradient-to-r from-red-500 to-blue-500 rounded-full" />
                 </div>
             </div>
         </main>
