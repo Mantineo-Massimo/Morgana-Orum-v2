@@ -1,12 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { v2 as cloudinary } from "cloudinary"
-
-// Configuration
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-})
+import { put } from "@vercel/blob"
 
 export async function POST(request: NextRequest) {
     try {
@@ -40,25 +33,18 @@ export async function POST(request: NextRequest) {
         const arrayBuffer = await file.arrayBuffer()
         const buffer = Buffer.from(arrayBuffer)
 
-        // Upload to Cloudinary using a Promise to handle the stream
-        const uploadResult = await new Promise((resolve, reject) => {
-            const uploadStream = cloudinary.uploader.upload_stream(
-                {
-                    folder: `morgana-orum/${folder}`,
-                    resource_type: "auto",
-                    format: file.type.startsWith("image/") ? "webp" : undefined,
-                },
-                (error, result) => {
-                    if (error) reject(error)
-                    else resolve(result)
-                }
-            )
-            uploadStream.end(buffer)
-        }) as any
+        // Upload to Vercel Blob
+        const cleanOriginalName = file.name.replace(/[^a-zA-Z0-9.-]/g, "_")
+        const filename = `morgana-orum/${folder}/${Date.now()}_${cleanOriginalName}`
 
-        return NextResponse.json({ url: uploadResult.secure_url })
+        const blob = await put(filename, buffer, {
+            access: "public",
+            contentType: file.type,
+        })
+
+        return NextResponse.json({ url: blob.url })
     } catch (error) {
         console.error("Upload error:", error)
-        return NextResponse.json({ error: "Errore durante il caricamento su Cloudinary" }, { status: 500 })
+        return NextResponse.json({ error: "Errore durante il caricamento su Vercel Blob" }, { status: 500 })
     }
 }

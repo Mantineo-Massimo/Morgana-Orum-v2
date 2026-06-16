@@ -1,5 +1,4 @@
-import nodemailer from "nodemailer"
-import * as aws from "@aws-sdk/client-sesv2"
+import { Resend } from "resend"
 
 interface SendEmailOptions {
     to: string
@@ -15,48 +14,43 @@ export async function sendEmail({ to, subject, html, brand = "joint" }: SendEmai
     switch (brand) {
         case "orum":
             senderName = "Associazione O.R.U.M."
-            senderEmail = "orum.unime@gmail.com"
+            senderEmail = process.env.RESEND_SENDER_ORUM || "orum.unime@gmail.com"
             break
         case "morgana":
             senderName = "Associazione Morgana"
-            senderEmail = "associazione.morgana@gmail.com"
+            senderEmail = process.env.RESEND_SENDER_MORGANA || "associazione.morgana@gmail.com"
             break
         case "joint":
         default:
             senderName = "Morgana & ORUM News"
-            senderEmail = process.env.SMTP_SENDER || "orum.unime@gmail.com"
+            senderEmail = process.env.RESEND_SENDER_JOINT || process.env.SMTP_SENDER || "orum.unime@gmail.com"
             break
     }
 
-    // Create transporter based on AWS configuration
-    if (!process.env.AWS_ACCESS_KEY_ID || !process.env.AWS_SECRET_ACCESS_KEY) {
-        throw new Error("AWS SES Credentials missing. Please set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.")
+    if (!process.env.RESEND_API_KEY) {
+        console.error("❌ Resend API Key missing. Please set RESEND_API_KEY.")
+        return { success: false, error: "Resend API Key missing. Please set RESEND_API_KEY." }
     }
 
-    const ses = new aws.SESv2Client({
-        region: process.env.AWS_REGION || "eu-west-1",
-        credentials: {
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-        },
-    })
-
-    const transporter = nodemailer.createTransport({
-        SES: { sesClient: ses, SendEmailCommand: aws.SendEmailCommand },
-    } as any)
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     try {
-        const info = await transporter.sendMail({
+        const data = await resend.emails.send({
             from: `"${senderName}" <${senderEmail}>`,
             to,
             subject,
             html,
         })
 
-        console.log(`✅ Email inviata con successo a ${to}. ID: ${info.messageId}`)
-        return { success: true, messageId: info.messageId }
+        if (data.error) {
+            console.error("❌ Resend error:", data.error)
+            return { success: false, error: data.error.message }
+        }
+
+        console.log(`✅ Email inviata con successo a ${to}. ID: ${data.data?.id}`)
+        return { success: true, messageId: data.data?.id }
     } catch (error) {
-        console.error("Error sending email:", error)
+        console.error("Error sending email via Resend:", error)
         return { success: false, error: error instanceof Error ? error.message : String(error) }
     }
 }
