@@ -413,11 +413,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                                     key={cat}
                                     type="button"
                                     onClick={() => {
-                                        setSelectedCategories(prev =>
-                                            isSelected
-                                                ? prev.filter(c => c !== cat)
-                                                : [...prev, cat]
-                                        )
+                                        setSelectedCategories(isSelected ? [] : [cat])
                                     }}
                                     className={cn(
                                         "px-4 py-2 rounded-full text-[10px] font-bold border transition-all uppercase tracking-wider",

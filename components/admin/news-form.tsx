@@ -353,11 +353,7 @@ export default function NewsForm({
                                         key={cat}
                                         type="button"
                                         onClick={() => {
-                                            setSelectedCategories(prev =>
-                                                isSelected
-                                                    ? (Array.isArray(prev) ? prev.filter(c => c !== cat) : [])
-                                                    : [...(Array.isArray(prev) ? prev : []), cat]
-                                            )
+                                            setSelectedCategories(isSelected ? [] : [cat])
                                         }}
                                         className={cn(
                                             "px-4 py-2 rounded-full text-sm font-medium border transition-all",
