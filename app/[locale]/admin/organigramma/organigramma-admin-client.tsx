@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import {
     Plus, Trash2, Mail, Shield, Users, Award,
     Edit3, Copy, Search, Loader2, ArrowUpDown, ArrowUp, ArrowDown,
-    MapPin, BookOpen
+    MapPin, BookOpen, ImageIcon, Upload, X
 } from "lucide-react"
 import {
     createOrganigrammaMember,
@@ -19,6 +20,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import { RichTextEditor } from "@/components/ui/rich-text-editor"
 
 interface OrganigrammaAdminClientProps {
     initialMembers: any[]
@@ -62,6 +64,28 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
     const [isOpen, setIsOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const [editingId, setEditingId] = useState<string | null>(null)
+    const fileInputRef = useRef<HTMLInputElement>(null)
+    const [isUploading, setIsUploading] = useState(false)
+
+    const handleImageUpload = async (file: File) => {
+        setIsUploading(true)
+        try {
+            const formData = new FormData()
+            formData.append("file", file)
+            const res = await fetch("/api/upload", { method: "POST", body: formData })
+            const data = await res.json()
+            if (res.ok) {
+                setForm(prev => ({ ...prev, image: data.url }))
+            } else {
+                alert(data.error || "Errore nel caricamento dell'immagine")
+            }
+        } catch {
+            alert("Errore nel caricamento dell'immagine")
+        } finally {
+            setIsUploading(false)
+        }
+    }
+
     const [form, setForm] = useState({
         name: "",
         role: "",
@@ -69,7 +93,11 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
         email: "",
         association: "MORGANA",
         section: "COORDINATOR",
-        order: 0
+        order: 0,
+        image: "",
+        phone: "",
+        instagram: "",
+        description: ""
     })
 
     const handleOpenAdd = () => {
@@ -81,7 +109,11 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
             email: "",
             association: selectedAssociation !== "all" ? selectedAssociation : "MORGANA",
             section: selectedSection !== "all" ? selectedSection : "COORDINATOR",
-            order: 0
+            order: 0,
+            image: "",
+            phone: "",
+            instagram: "",
+            description: ""
         })
         setIsOpen(true)
     }
@@ -95,7 +127,11 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
             email: m.email || "",
             association: m.association,
             section: m.section,
-            order: m.order || 0
+            order: m.order || 0,
+            image: m.image || "",
+            phone: m.phone || "",
+            instagram: m.instagram || "",
+            description: m.description || ""
         })
         setIsOpen(true)
     }
@@ -111,7 +147,11 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                 email: m.email || undefined,
                 association: m.association,
                 section: m.section,
-                order: (m.order || 0) + 1
+                order: (m.order || 0) + 1,
+                image: m.image || undefined,
+                phone: m.phone || undefined,
+                instagram: m.instagram || undefined,
+                description: m.description || undefined
             })
             if (res.success) {
                 router.refresh()
@@ -160,7 +200,11 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                 email: form.email || undefined,
                 association: form.association,
                 section: form.section,
-                order: Number(form.order) || 0
+                order: Number(form.order) || 0,
+                image: form.image || undefined,
+                phone: form.phone || undefined,
+                instagram: form.instagram || undefined,
+                description: form.description || undefined
             }
 
             let res
@@ -212,7 +256,11 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                 email: member.email || undefined,
                 association: member.association,
                 section: member.section,
-                order: newOrderSelf
+                order: newOrderSelf,
+                image: member.image || undefined,
+                phone: member.phone || undefined,
+                instagram: member.instagram || undefined,
+                description: member.description || undefined
             })
             
             const res2 = await updateOrganigrammaMember(otherMember.id, {
@@ -222,7 +270,11 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                 email: otherMember.email || undefined,
                 association: otherMember.association,
                 section: otherMember.section,
-                order: newOrderOther
+                order: newOrderOther,
+                image: otherMember.image || undefined,
+                phone: otherMember.phone || undefined,
+                instagram: otherMember.instagram || undefined,
+                description: otherMember.description || undefined
             })
             
             if (res1.success && res2.success) {
@@ -394,7 +446,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
 
             {/* Dialog Form */}
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent className="max-w-xl p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
+                <DialogContent className="max-w-2xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-3xl shadow-2xl">
                     <form onSubmit={handleSave} className="bg-white p-8 space-y-6">
                         <DialogHeader>
                             <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
@@ -404,6 +456,64 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                         </DialogHeader>
 
                         <div className="grid md:grid-cols-2 gap-6">
+                            {/* Image Upload */}
+                            <div className="md:col-span-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 block mb-2">Foto (Opzionale)</label>
+                                <div className="flex items-start gap-6">
+                                    {/* Preview */}
+                                    <div className="relative size-24 rounded-full bg-zinc-50 border-2 border-dashed border-zinc-200 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                        {form.image ? (
+                                            <>
+                                                <Image src={form.image} alt="Preview" fill className="object-cover" />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setForm(prev => ({ ...prev, image: "" }))}
+                                                    className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-0.5 hover:bg-red-600 transition-colors z-10"
+                                                >
+                                                    <X className="size-3" />
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <ImageIcon className="size-8 text-zinc-350" />
+                                        )}
+                                    </div>
+                                    {/* Upload Area */}
+                                    <div
+                                        onClick={() => fileInputRef.current?.click()}
+                                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation() }}
+                                        onDrop={(e) => {
+                                            e.preventDefault(); e.stopPropagation()
+                                            const file = e.dataTransfer.files[0]
+                                            if (file) handleImageUpload(file)
+                                        }}
+                                        className="flex-1 border-2 border-dashed border-zinc-200 rounded-2xl p-4 text-center cursor-pointer hover:border-zinc-300 hover:bg-zinc-50/50 transition-all"
+                                    >
+                                        {isUploading ? (
+                                            <div className="flex items-center justify-center gap-2 text-zinc-500">
+                                                <Loader2 className="size-5 animate-spin" />
+                                                <span className="text-sm">Caricamento...</span>
+                                            </div>
+                                        ) : (
+                                            <div className="flex flex-col items-center gap-1">
+                                                <Upload className="size-5 text-zinc-400" />
+                                                <span className="text-xs text-zinc-500">Clicca o trascina un&apos;immagine</span>
+                                                <span className="text-[10px] text-zinc-400">JPG, PNG, WebP — max 5MB</span>
+                                            </div>
+                                        )}
+                                        <input
+                                            ref={fileInputRef}
+                                            type="file"
+                                            accept="image/jpeg,image/png,image/webp,image/gif"
+                                            className="hidden"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0]
+                                                if (file) handleImageUpload(file)
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="md:col-span-2 space-y-2">
                                 <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Nome e Cognome *</label>
                                 <input
@@ -414,6 +524,17 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                     className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
                                     placeholder="Es: Giorgio Messina"
                                 />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Associazione *</label>
+                                <select
+                                    value={form.association}
+                                    onChange={e => setForm({ ...form, association: e.target.value })}
+                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold"
+                                >
+                                    {ASSOCIATIONS.map(a => <option key={a.value} value={a.value}>{a.label}</option>)}
+                                </select>
                             </div>
 
                             <div className="space-y-2">
@@ -480,12 +601,43 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                             </div>
 
                             <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Telefono</label>
+                                <input
+                                    type="text"
+                                    value={form.phone}
+                                    onChange={e => setForm({ ...form, phone: e.target.value })}
+                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-medium"
+                                    placeholder="+39 123 456 7890"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Instagram</label>
+                                <input
+                                    type="text"
+                                    value={form.instagram}
+                                    onChange={e => setForm({ ...form, instagram: e.target.value })}
+                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-medium"
+                                    placeholder="@username"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
                                 <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine di Visualizzazione</label>
                                 <input
                                     type="number"
                                     value={form.order}
                                     onChange={e => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
                                     className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                />
+                            </div>
+
+                            <div className="md:col-span-2 space-y-2">
+                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione Ruolo / Chi Sono (Rich Text)</label>
+                                <RichTextEditor
+                                    value={form.description}
+                                    onChange={val => setForm({ ...form, description: val })}
+                                    placeholder="Scrivi una breve descrizione per questo componente..."
                                 />
                             </div>
 

@@ -265,6 +265,10 @@ model OrganigrammaMember {
   association String   // "MORGANA" or "ORUM"
   section     String   // "PRESIDENCY", "BOARD", "DEPARTMENT"
   order       Int      @default(0)
+  image       String?
+  phone       String?
+  instagram   String?
+  description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

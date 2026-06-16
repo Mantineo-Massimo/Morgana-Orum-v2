@@ -39,6 +39,10 @@ export async function createOrganigrammaMember(data: {
     association: string
     section: string
     order?: number
+    image?: string
+    phone?: string
+    instagram?: string
+    description?: string
 }) {
     if (!(await checkAdminPermission())) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
@@ -53,7 +57,11 @@ export async function createOrganigrammaMember(data: {
                 email: data.email || null,
                 association: data.association,
                 section: data.section,
-                order: data.order ?? 0
+                order: data.order ?? 0,
+                image: data.image || null,
+                phone: data.phone || null,
+                instagram: data.instagram || null,
+                description: data.description || null
             }
         })
         revalidatePath("/organigramma")
@@ -73,6 +81,10 @@ export async function updateOrganigrammaMember(id: string, data: {
     association: string
     section: string
     order?: number
+    image?: string
+    phone?: string
+    instagram?: string
+    description?: string
 }) {
     if (!(await checkAdminPermission())) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
@@ -88,7 +100,11 @@ export async function updateOrganigrammaMember(id: string, data: {
                 email: data.email || null,
                 association: data.association,
                 section: data.section,
-                order: data.order ?? 0
+                order: data.order ?? 0,
+                image: data.image || null,
+                phone: data.phone || null,
+                instagram: data.instagram || null,
+                description: data.description || null
             }
         })
         revalidatePath("/organigramma")

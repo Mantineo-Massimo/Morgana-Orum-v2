@@ -2,8 +2,10 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Award, Mail, MapPin, BookOpen } from "lucide-react"
+import { Award, Mail, MapPin, BookOpen, Phone, Instagram, User } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
+import { getRoleIcon } from "@/lib/role-icons"
 
 interface OrganigrammaClientProps {
     initialMembers: any[]
@@ -56,12 +58,19 @@ const DEPARTMENTS = [
 export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClientProps) {
     const [activeTab, setActiveTab] = useState<"aree" | "ateneo">("aree")
     const [selectedDept, setSelectedDept] = useState<string>("all")
+    const [selectedMember, setSelectedMember] = useState<any>(null)
+    const [isModalOpen, setIsModalOpen] = useState(false)
     const isAree = activeTab === "aree"
     
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
 
     // Helper to extract structure from database members
     const getRole = (m: any) => (locale === "en" && m.roleEn) ? m.roleEn : m.role
+
+    const handleMemberClick = (member: any) => {
+        setSelectedMember(member)
+        setIsModalOpen(true)
+    }
 
     // Filter Aree dell'Associazione (Tab 1)
     const coordinators = initialMembers
@@ -139,23 +148,49 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                 {t.coordinators}
                                             </h2>
                                         </div>
-                                        <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto py-4 justify-items-center">
                                             {coordinators.map((m) => (
-                                                <div
+                                                <motion.button
                                                     key={m.id}
-                                                    className="bg-white p-6 rounded-3xl border border-zinc-150/60 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
+                                                    onClick={() => handleMemberClick(m)}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                    className="flex items-center gap-4 bg-white rounded-2xl p-4 border border-zinc-150/60 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-[400px] text-left group shadow-sm relative"
                                                 >
-                                                    <div className="size-12 rounded-xl bg-zinc-50 text-zinc-650 flex items-center justify-center mb-4 font-serif text-lg font-black border border-zinc-100">
-                                                        {m.name.charAt(0)}
+                                                    {/* Photo */}
+                                                    <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                        {m.image ? (
+                                                            // eslint-disable-next-line @next/next/no-img-element
+                                                            <img src={m.image} alt={m.name} className="size-full object-cover" />
+                                                        ) : (
+                                                            <User className="size-8 text-zinc-300" />
+                                                        )}
                                                     </div>
-                                                    <h3 className="font-bold text-zinc-900 mb-1">{m.name}</h3>
-                                                    <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-3">{getRole(m)}</p>
-                                                    {m.email && (
-                                                        <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors flex items-center gap-1.5 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100 w-fit">
-                                                            <Mail className="size-3.5" /> {m.email}
-                                                        </a>
-                                                    )}
-                                                </div>
+
+                                                    {/* Info */}
+                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
+                                                        <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
+                                                            {m.name.split(' ').map((part: string, i: number) => (
+                                                                <span key={i} className="block">{part}</span>
+                                                            ))}
+                                                        </h4>
+                                                        <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest leading-normal">
+                                                            {getRole(m)}
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Logo */}
+                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-45 group-hover:opacity-100 transition-opacity">
+                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                        <img
+                                                            src={
+                                                                m.association === "MORGANA" ? "/assets/morgana.webp" : "/assets/orum.webp"
+                                                            }
+                                                            alt={m.association}
+                                                            className="size-full object-contain"
+                                                        />
+                                                    </div>
+                                                </motion.button>
                                             ))}
                                         </div>
                                     </div>
@@ -170,23 +205,49 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                                 {t.responsibles}
                                             </h2>
                                         </div>
-                                        <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto py-4 justify-items-center">
                                             {responsibles.map((m) => (
-                                                <div
+                                                <motion.button
                                                     key={m.id}
-                                                    className="bg-white p-6 rounded-3xl border border-zinc-150/60 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
+                                                    onClick={() => handleMemberClick(m)}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                    className="flex items-center gap-4 bg-white rounded-2xl p-4 border border-zinc-150/60 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-[400px] text-left group shadow-sm relative"
                                                 >
-                                                    <div className="size-12 rounded-xl bg-zinc-50 text-zinc-650 flex items-center justify-center mb-4 font-serif text-lg font-black border border-zinc-100">
-                                                        {m.name.charAt(0)}
+                                                    {/* Photo */}
+                                                    <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                        {m.image ? (
+                                                            // eslint-disable-next-line @next/next/no-img-element
+                                                            <img src={m.image} alt={m.name} className="size-full object-cover" />
+                                                        ) : (
+                                                            <User className="size-8 text-zinc-300" />
+                                                        )}
                                                     </div>
-                                                    <h3 className="font-bold text-zinc-900 mb-1">{m.name}</h3>
-                                                    <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-3">{getRole(m)}</p>
-                                                    {m.email && (
-                                                        <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors flex items-center gap-1.5 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100 w-fit">
-                                                            <Mail className="size-3.5" /> {m.email}
-                                                        </a>
-                                                    )}
-                                                </div>
+
+                                                    {/* Info */}
+                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
+                                                        <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
+                                                            {m.name.split(' ').map((part: string, i: number) => (
+                                                                <span key={i} className="block">{part}</span>
+                                                            ))}
+                                                        </h4>
+                                                        <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest leading-normal">
+                                                            {getRole(m)}
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Logo */}
+                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-45 group-hover:opacity-100 transition-opacity">
+                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                        <img
+                                                            src={
+                                                                m.association === "MORGANA" ? "/assets/morgana.webp" : "/assets/orum.webp"
+                                                            }
+                                                            alt={m.association}
+                                                            className="size-full object-contain"
+                                                        />
+                                                    </div>
+                                                </motion.button>
                                             ))}
                                         </div>
                                     </div>
@@ -218,23 +279,49 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                         </h2>
                                     </div>
                                     {departments.length > 0 ? (
-                                        <div className="grid sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                                        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto py-4 justify-items-center">
                                             {departments.map((m) => (
-                                                <div
+                                                <motion.button
                                                     key={m.id}
-                                                    className="bg-white p-6 rounded-3xl border border-zinc-150/60 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center"
+                                                    onClick={() => handleMemberClick(m)}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                    className="flex items-center gap-4 bg-white rounded-2xl p-4 border border-zinc-150/60 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-[400px] text-left group shadow-sm relative"
                                                 >
-                                                    <div className="size-12 rounded-xl bg-zinc-50 text-zinc-650 flex items-center justify-center mb-4 font-serif text-lg font-black border border-zinc-100">
-                                                        {m.name.charAt(0)}
+                                                    {/* Photo */}
+                                                    <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                        {m.image ? (
+                                                            // eslint-disable-next-line @next/next/no-img-element
+                                                            <img src={m.image} alt={m.name} className="size-full object-cover" />
+                                                        ) : (
+                                                            <User className="size-8 text-zinc-300" />
+                                                        )}
                                                     </div>
-                                                    <h3 className="font-bold text-zinc-900 mb-1">{m.name}</h3>
-                                                    <p className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-3">{getRole(m)}</p>
-                                                    {m.email && (
-                                                        <a href={`mailto:${m.email}`} className="text-xs font-bold text-zinc-500 hover:text-zinc-900 transition-colors flex items-center gap-1.5 bg-zinc-50 px-3 py-1.5 rounded-full border border-zinc-100 w-fit">
-                                                            <Mail className="size-3.5" /> {m.email}
-                                                        </a>
-                                                    )}
-                                                </div>
+
+                                                    {/* Info */}
+                                                    <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
+                                                        <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
+                                                            {m.name.split(' ').map((part: string, i: number) => (
+                                                                <span key={i} className="block">{part}</span>
+                                                            ))}
+                                                        </h4>
+                                                        <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest leading-normal">
+                                                            {getRole(m)}
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Logo */}
+                                                    <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-45 group-hover:opacity-100 transition-opacity">
+                                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                        <img
+                                                            src={
+                                                                m.association === "MORGANA" ? "/assets/morgana.webp" : "/assets/orum.webp"
+                                                            }
+                                                            alt={m.association}
+                                                            className="size-full object-contain"
+                                                        />
+                                                    </div>
+                                                </motion.button>
                                             ))}
                                         </div>
                                     ) : (
@@ -248,6 +335,99 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                     </motion.div>
                 </AnimatePresence>
             </div>
+
+            {/* Modal Detail Dialog */}
+            <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-4xl bg-white p-0 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-2xl">
+                    {selectedMember && (
+                        <div className="flex flex-col md:flex-row">
+                            {/* Left Side - Image & Basic Info */}
+                            <div className="w-full md:w-2/5 bg-zinc-50 p-6 md:p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-zinc-100 relative">
+                                {/* Logo in background opacity */}
+                                <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={
+                                            selectedMember.association === "MORGANA" ? "/assets/morgana.webp" : "/assets/orum.webp"
+                                        }
+                                        alt={selectedMember.association}
+                                        className="w-4/5 object-contain grayscale"
+                                    />
+                                </div>
+
+                                <div className="size-32 md:size-48 rounded-full bg-white border-4 border-white shadow-lg overflow-hidden mb-4 md:mb-6 relative z-10">
+                                    {selectedMember.image ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
+                                        <img src={selectedMember.image} alt={selectedMember.name} className="size-full object-cover" />
+                                    ) : (
+                                        <User className="size-16 md:size-20 text-zinc-300 m-auto mt-8 md:mt-12" />
+                                    )}
+                                </div>
+
+                                <h2 className="text-xl md:text-2xl font-bold text-center text-foreground leading-tight mb-2 relative z-10">{selectedMember.name}</h2>
+                                <span className="inline-block px-3 md:px-4 py-1 md:py-1.5 bg-zinc-200 rounded-full text-[10px] md:text-xs font-bold text-zinc-600 mb-4 md:mb-6 relative z-10">
+                                    {selectedMember.association === "MORGANA" ? "Associazione Morgana" : "O.R.U.M."}
+                                </span>
+
+                                {/* Contact Info - full text */}
+                                <div className="flex flex-col gap-2 w-full relative z-10">
+                                    {selectedMember.email && (
+                                        <div className="flex items-center gap-3 px-4 py-2.5 bg-blue-50 rounded-lg border border-blue-100 text-blue-700 w-full">
+                                            <Mail className="size-4 shrink-0" />
+                                            <span className="text-sm break-all">{selectedMember.email}</span>
+                                        </div>
+                                    )}
+                                    {selectedMember.phone && (
+                                        <div className="flex items-center gap-3 px-4 py-2.5 bg-green-50 rounded-lg border border-green-100 text-green-700 w-full">
+                                            <Phone className="size-4 shrink-0" />
+                                            <span className="text-sm">{selectedMember.phone}</span>
+                                        </div>
+                                    )}
+                                    {selectedMember.instagram && (
+                                        <div className="flex items-center gap-3 px-4 py-2.5 bg-pink-50 rounded-lg border border-pink-100 text-pink-700 w-full">
+                                            <Instagram className="size-4 shrink-0" />
+                                            <span className="text-sm break-all">{selectedMember.instagram}</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Right Side - Details */}
+                            <div className="w-full md:w-3/5 p-6 md:p-8">
+                                <DialogHeader className="mb-4 md:mb-6 text-left">
+                                    <h3 className="text-base md:text-lg font-bold text-foreground flex items-center gap-2">
+                                        {(() => { const Icon = getRoleIcon(selectedMember.role || ""); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
+                                        <span className="line-clamp-2 md:line-clamp-none leading-tight">{getRole(selectedMember)}</span>
+                                    </h3>
+                                    <p className="text-sm text-zinc-500">
+                                        {selectedMember.section === "COORDINATOR" ? "Coordinatore Area" :
+                                         selectedMember.section === "RESPONSIBLE" ? "Responsabile Area" :
+                                         "Responsabile di Dipartimento"}
+                                    </p>
+                                </DialogHeader>
+
+                                <div className="space-y-6">
+                                    {selectedMember.description && (
+                                        <div>
+                                            <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Chi Sono / Ruolo</h4>
+                                            <div
+                                                className="prose prose-zinc prose-sm max-w-none text-zinc-600 leading-relaxed"
+                                                dangerouslySetInnerHTML={{ __html: selectedMember.description }}
+                                            />
+                                        </div>
+                                    )}
+
+                                    {!selectedMember.description && (
+                                        <div className="p-4 bg-zinc-50 rounded-lg border border-zinc-100 text-center text-zinc-500 text-sm italic">
+                                            Nessuna descrizione aggiuntiva disponibile.
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }
