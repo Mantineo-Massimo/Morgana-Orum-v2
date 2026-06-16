@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import {
     Plus, Trash2, Edit3, Compass, Info, Loader2,
@@ -60,8 +60,13 @@ const PROTECTED_GUIDES = ["trasporti", "servizi", "mappa"]
 
 export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClientProps) {
     const router = useRouter()
+    
+    const filteredGuides = useMemo(() => {
+        return initialGuides.filter(g => !PROTECTED_GUIDES.includes(g.id))
+    }, [initialGuides])
+
     const [selectedGuideId, setSelectedGuideId] = useState<string | null>(
-        initialGuides.length > 0 ? initialGuides[0].id : null
+        filteredGuides.length > 0 ? filteredGuides[0].id : null
     )
 
     // Modals visibility state
@@ -93,7 +98,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
         order: 0
     })
 
-    const activeGuide = initialGuides.find(g => g.id === selectedGuideId)
+    const activeGuide = filteredGuides.find(g => g.id === selectedGuideId)
 
     // --- GUIDE ACTIONS ---
     const handleOpenAddGuide = () => {
@@ -106,7 +111,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
             descriptionEn: "",
             icon: "BookOpen",
             color: "blue",
-            order: initialGuides.length,
+            order: filteredGuides.length,
             hasCustomComponent: false
         })
         setIsGuideModalOpen(true)
@@ -134,7 +139,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
         try {
             const res = await deleteGuide(id)
             if (res.success) {
-                const remaining = initialGuides.filter(g => g.id !== id)
+                const remaining = filteredGuides.filter(g => g.id !== id)
                 if (remaining.length > 0) {
                     setSelectedGuideId(remaining[0].id)
                 } else {
@@ -393,7 +398,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                     </div>
 
                     <div className="space-y-2.5">
-                        {initialGuides.map(guide => {
+                        {filteredGuides.map(guide => {
                             const isSelected = guide.id === selectedGuideId
                             return (
                                 <div
@@ -453,7 +458,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                             )
                         })}
 
-                        {initialGuides.length === 0 && (
+                        {filteredGuides.length === 0 && (
                             <div className="text-center py-8 text-slate-400 italic text-xs">
                                 Nessuna guida definita.
                             </div>
