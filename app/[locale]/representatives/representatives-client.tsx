@@ -60,10 +60,10 @@ export default function RepresentativesClient({
     const [selectedRep, setSelectedRep] = useState<any>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
-    // Calculate unique terms sorted chronologically descending
-    const existingTerms = Array.from(new Set(allReps.map(r => r.term))).sort().reverse()
-    const [selectedTerm, setSelectedTerm] = useState(existingTerms[0] || "2025-2027")
-    const [windowStartIdx, setWindowStartIdx] = useState(0)
+    // Calculate unique terms sorted chronologically ascending (older left, newer right)
+    const existingTerms = Array.from(new Set(allReps.map(r => r.term))).sort()
+    const [selectedTerm, setSelectedTerm] = useState(existingTerms[existingTerms.length - 1] || "2025-2027")
+    const [windowStartIdx, setWindowStartIdx] = useState(Math.max(0, existingTerms.length - 3))
 
     // Ensure selectedTerm is always inside the visible window of 3 items
     useEffect(() => {
