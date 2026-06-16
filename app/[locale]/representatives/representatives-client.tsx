@@ -48,13 +48,15 @@ interface RepresentativesClientProps {
     isSubSite?: boolean
     brandColor?: string
     votesCount?: number
+    bienniumConfigs?: { term: string, visible: boolean }[]
 }
 
 export default function RepresentativesClient({
     allReps = [],
     isSubSite,
     brandColor = "red",
-    votesCount
+    votesCount,
+    bienniumConfigs = []
 }: RepresentativesClientProps) {
     const t = useTranslations("Representatives")
     const [selectedRep, setSelectedRep] = useState<any>(null)
@@ -76,11 +78,25 @@ export default function RepresentativesClient({
         for (let y = minYear; y <= maxYear; y += 2) {
             terms.push(`${y}-${y+2}`)
         }
-        return terms.sort()
-    }, [allReps])
+        
+        // Filter out terms marked as hidden in configs
+        return terms
+            .filter(term => {
+                const config = bienniumConfigs.find(c => c.term === term)
+                return config ? config.visible : true
+            })
+            .sort()
+    }, [allReps, bienniumConfigs])
 
     const [selectedTerm, setSelectedTerm] = useState(existingTerms[existingTerms.length - 1] || "2025-2027")
     const [windowStartIdx, setWindowStartIdx] = useState(Math.max(0, existingTerms.length - 3))
+
+    // Ensure selectedTerm is always a valid term in existingTerms
+    useEffect(() => {
+        if (existingTerms.length > 0 && !existingTerms.includes(selectedTerm)) {
+            setSelectedTerm(existingTerms[existingTerms.length - 1])
+        }
+    }, [existingTerms, selectedTerm])
 
     // Ensure selectedTerm is always inside the visible window of 3 items
     useEffect(() => {

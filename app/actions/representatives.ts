@@ -300,3 +300,34 @@ export const getRepresentatives = async (filters?: {
     // Temporarily bypass cache to debug Vercel issue
     return getRepresentativesInternal(filters)
 }
+
+export async function getBienniumConfigs() {
+    try {
+        return await prisma.bienniumConfig.findMany()
+    } catch (error) {
+        console.error("Error fetching biennium configs:", error)
+        return []
+    }
+}
+
+export async function toggleBienniumVisibilityAction(term: string, visible: boolean) {
+    try {
+        const permission = await checkContentPermission()
+        if (!permission.allowed) return { success: false, error: "Non hai i permessi per questa operazione." }
+
+        await prisma.bienniumConfig.upsert({
+            where: { term },
+            update: { visible },
+            create: { term, visible }
+        })
+
+        revalidatePath("/representatives", "page")
+        revalidatePath("/admin/representatives", "page")
+        revalidatePath("/", "layout")
+        revalidateTag('representatives')
+        return { success: true }
+    } catch (error) {
+        console.error("Error toggling biennium visibility:", error)
+        return { success: false, error: "Errore durante il salvataggio delle impostazioni" }
+    }
+}

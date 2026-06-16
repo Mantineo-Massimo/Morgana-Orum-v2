@@ -352,5 +352,12 @@ model GradeSimulation {
   updatedAt    DateTime @updatedAt
 }
 
+model BienniumConfig {
+  term      String   @id
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 
 

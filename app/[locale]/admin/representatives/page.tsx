@@ -1,4 +1,4 @@
-import { getRepresentatives } from "@/app/actions/representatives"
+import { getRepresentatives, getBienniumConfigs } from "@/app/actions/representatives"
 import { Plus } from "lucide-react"
 import Link from "next/link"
 import { RepresentativesAdminClient } from "./representatives-admin-client"
@@ -13,10 +13,13 @@ export default async function AdminRepresentativesPage() {
         where: { email: userEmail }
     })
 
-    const reps = await getRepresentatives({
-        userRole: user?.role,
-        userAssociation: user?.association
-    })
+    const [reps, configs] = await Promise.all([
+        getRepresentatives({
+            userRole: user?.role,
+            userAssociation: user?.association
+        }),
+        getBienniumConfigs()
+    ])
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
@@ -31,6 +34,7 @@ export default async function AdminRepresentativesPage() {
                 initialReps={reps as any}
                 userRole={user?.role}
                 userAssociation={user?.association}
+                initialConfigs={configs as any}
             />
         </div>
     )

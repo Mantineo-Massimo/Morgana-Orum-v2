@@ -1,11 +1,11 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy, Plus, CalendarRange } from "lucide-react"
+import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy, Plus, CalendarRange, Eye, EyeOff } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
-import { deleteRepresentative, duplicateRepresentative, createNewBienniumAction } from "@/app/actions/representatives"
+import { deleteRepresentative, duplicateRepresentative, createNewBienniumAction, toggleBienniumVisibilityAction } from "@/app/actions/representatives"
 import { useRouter } from "next/navigation"
 import RepresentativeForm from "@/components/admin/representative-form"
 
@@ -29,11 +29,36 @@ interface RepresentativesAdminClientProps {
     initialReps: Representative[]
     userRole?: string
     userAssociation?: Association
+    initialConfigs?: { term: string, visible: boolean }[]
 }
 
-export function RepresentativesAdminClient({ initialReps, userRole, userAssociation }: RepresentativesAdminClientProps) {
+export function RepresentativesAdminClient({ initialReps, userRole, userAssociation, initialConfigs }: RepresentativesAdminClientProps) {
     const router = useRouter()
     const [reps, setReps] = useState(initialReps)
+    const [configs, setConfigs] = useState<{ term: string, visible: boolean }[]>(initialConfigs || [])
+
+    const handleToggleVisibility = async (e: React.MouseEvent, term: string) => {
+        e.stopPropagation()
+        const currentVal = configs.find(c => c.term === term)?.visible ?? true
+        const newVal = !currentVal
+
+        setConfigs(prev => {
+            const existing = prev.find(c => c.term === term)
+            if (existing) {
+                return prev.map(c => c.term === term ? { ...c, visible: newVal } : c)
+            } else {
+                return [...prev, { term, visible: newVal }]
+            }
+        })
+
+        const res = await toggleBienniumVisibilityAction(term, newVal)
+        if (!res.success) {
+            alert(res.error || "Errore durante il salvataggio delle modifiche.")
+            setConfigs(prev => prev.map(c => c.term === term ? { ...c, visible: currentVal } : c))
+        } else {
+            router.refresh()
+        }
+    }
     const [searchTerm, setSearchTerm] = useState("")
     const [listFilter, setListFilter] = useState("all")
     const [categoryFilter, setCategoryFilter] = useState("all")
@@ -160,8 +185,29 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                     className="bg-white border border-zinc-100 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-zinc-200 transition-all flex flex-col justify-between cursor-pointer group"
                                 >
                                     <div>
-                                        <div className="size-12 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center text-zinc-500 mb-4 group-hover:scale-110 transition-transform">
-                                            <CalendarRange className="size-6 text-zinc-400" />
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="size-12 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center text-zinc-500 group-hover:scale-110 transition-transform">
+                                                <CalendarRange className="size-6 text-zinc-400" />
+                                            </div>
+                                            {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (() => {
+                                                const isVisible = configs.find(c => c.term === term)?.visible ?? true
+                                                return (
+                                                    <button
+                                                        type="button"
+                                                        onClick={(e) => handleToggleVisibility(e, term)}
+                                                        className={cn(
+                                                            "p-2 rounded-xl border flex items-center gap-1.5 transition-all text-xs font-bold shadow-sm",
+                                                            isVisible 
+                                                                ? "bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100" 
+                                                                : "bg-zinc-50 text-zinc-400 border-zinc-200 hover:bg-zinc-100"
+                                                        )}
+                                                        title={isVisible ? "Visibile (Clicca per nascondere)" : "Nascosto (Clicca per mostrare)"}
+                                                    >
+                                                        {isVisible ? <Eye className="size-4 shrink-0" /> : <EyeOff className="size-4 shrink-0" />}
+                                                        <span>{isVisible ? "Visibile" : "Nascosto"}</span>
+                                                    </button>
+                                                )
+                                            })()}
                                         </div>
                                         <h3 className="text-lg font-bold text-zinc-950 group-hover:text-red-600 transition-colors">
                                             Biennio {term}
@@ -328,8 +374,8 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                             rep.listName === "MORGANA"
                                                 ? "bg-red-50 text-red-700 border-red-100"
                                                 : rep.listName === "O.R.U.M."
-                                                    ? "bg-blue-50 text-blue-700 border-blue-100"
-                                                    : "bg-purple-50 text-purple-700 border-purple-100"
+                                                    ? "bg-[#18182e] text-white border-[#18182e]"
+                                                    : "bg-sky-50 text-sky-700 border-sky-100"
                                         )}>
                                             {rep.listName}
                                         </span>
