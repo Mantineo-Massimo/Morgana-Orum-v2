@@ -48,16 +48,16 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
             </div>
 
             {/* Search + Filters */}
-            <div className="container mx-auto px-6 mb-12 space-y-4">
+            <div className="container mx-auto px-6 mb-12 space-y-6">
                 {/* Search Bar */}
-                <div className="relative max-w-md">
+                <div className="relative max-w-md mx-auto">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
                     <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder={ts("placeholder")}
-                        className="w-full pl-11 pr-10 py-3 rounded-xl border border-zinc-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                        className="w-full pl-11 pr-10 py-3 rounded-xl border border-zinc-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all text-center"
                     />
                     {searchQuery && (
                         <button
@@ -70,7 +70,7 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
                 </div>
 
                 {/* Category Filters */}
-                <div className="flex items-center gap-3 overflow-x-auto pb-2">
+                <div className="flex flex-wrap items-center justify-center gap-3 pb-2">
                     <Filter className="size-5 text-zinc-400 mr-1 shrink-0" />
                     {allCategories.map((cat) => (
                         <button
@@ -91,7 +91,7 @@ export default function NewsClient({ initialNews, categories }: NewsClientProps)
 
             {/* Results count */}
             {(searchQuery || activeCategory !== "Tutte") && (
-                <div className="container mx-auto px-6 mb-4">
+                <div className="container mx-auto px-6 mb-4 text-center">
                     <p className="text-sm text-zinc-500">
                         {filteredNews.length} {filteredNews.length === 1 ? tn("result_one") : tn("result_many")}
                         {searchQuery && <> {tn("search_for")} &ldquo;<span className="font-bold text-zinc-700">{searchQuery}</span>&rdquo;</>}
