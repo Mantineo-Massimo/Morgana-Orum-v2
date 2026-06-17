@@ -105,22 +105,27 @@ export async function Footer() {
                         <ul className="flex flex-col gap-2 text-sm">
                             <li><Link href="/representatives" className={cn("transition-colors", mutedColor)}>{nt("representatives")}</Link></li>
                             <li><Link href="/gruppi" className={cn("transition-colors", mutedColor)}>{nt("whatsapp")}</Link></li>
+                            <li><Link href="/iniziative" className={cn("transition-colors", mutedColor)}>Iniziative</Link></li>
                             <li><Link href="/faq" className={cn("transition-colors", mutedColor)}>{nt("faq")}</Link></li>
                             <li><Link href="/convenzioni" className={cn("transition-colors", mutedColor)}>{nt("conventions")}</Link></li>
+                            <li><Link href="/organigramma" className={cn("transition-colors", mutedColor)}>{nt("organigramma")}</Link></li>
                             <li><Link href="/social" className={cn("transition-colors", mutedColor)}>{nt("social")}</Link></li>
                             <li><Link href="/media-kit" className={cn("transition-colors", mutedColor)}>{nt("media_kit")}</Link></li>
                         </ul>
                     </div>
 
-                    {/* Column 4: Guide */}
+                    {/* Column 4: Guide & Strumenti */}
                     <div className="flex flex-col gap-4">
                         <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
                             {nt("guides")}
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
                             <li><Link href="/guide" className={cn("transition-colors font-bold", mutedColor)}>{nt("guides")}</Link></li>
-                            <li><Link href="/iniziative" className={cn("transition-colors", mutedColor)}>Iniziative</Link></li>
-                            <li><Link href="/organigramma" className={cn("transition-colors", mutedColor)}>{nt("organigramma")}</Link></li>
+                            <li><Link href="/guide#tasse" className={cn("transition-colors", mutedColor)}>Calcolatore Tasse &amp; COA</Link></li>
+                            <li><Link href="/guide#dizionario" className={cn("transition-colors", mutedColor)}>Dizionario Matricola</Link></li>
+                            <li><Link href="/guide#countdown" className={cn("transition-colors", mutedColor)}>Countdown Accademico</Link></li>
+                            <li><Link href="/guide#media" className={cn("transition-colors", mutedColor)}>Simulatore Media &amp; Laurea</Link></li>
+                            <li><Link href="/guide#ersu" className={cn("transition-colors", mutedColor)}>Requisiti Borsa ERSU</Link></li>
                         </ul>
                     </div>
 
@@ -165,13 +170,13 @@ export async function Footer() {
                     </div>
                 </div>
 
-                {/* Newsletter Box */}
-                <div className="mb-16 bg-white/5 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                {/* Newsletter Box — min-h avoids CLS when NewsletterForm hydrates client-side */}
+                <div className="mb-16 bg-white/5 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-8 min-h-[140px]">
                     <div className="flex-1 text-center lg:text-left">
                         <h3 className="text-xl md:text-2xl font-serif font-black mb-2">{t("newsletter_title")}</h3>
                         <p className="text-white/60 font-medium text-sm md:text-base">{t("newsletter_desc")}</p>
                     </div>
-                    <div className="w-full lg:w-auto">
+                    <div className="w-full lg:w-auto min-h-[56px] flex items-center">
                         <NewsletterForm />
                     </div>
                 </div>
