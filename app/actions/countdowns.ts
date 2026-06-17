@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma"
 import { toUtcFromRome } from "@/lib/date"
+import { revalidatePath } from "next/cache"
 
 export type DeadlineCountdownData = {
     id: string
@@ -64,6 +65,7 @@ export async function createCountdown(data: {
                 order: data.order ?? 0
             }
         })
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (e) {
         console.error("createCountdown error:", e)
@@ -89,6 +91,7 @@ export async function updateCountdown(
             where: { id },
             data
         })
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (e) {
         console.error("updateCountdown error:", e)
@@ -99,6 +102,7 @@ export async function updateCountdown(
 export async function deleteCountdown(id: string): Promise<{ success: boolean; error?: string }> {
     try {
         await prisma.deadlineCountdown.delete({ where: { id } })
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (e) {
         console.error("deleteCountdown error:", e)
@@ -112,6 +116,7 @@ export async function toggleCountdownVisibility(
 ): Promise<{ success: boolean; error?: string }> {
     try {
         await prisma.deadlineCountdown.update({ where: { id }, data: { visible } })
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (e) {
         console.error("toggleCountdownVisibility error:", e)
@@ -140,6 +145,7 @@ export async function seedDefaultCountdowns(): Promise<void> {
                     visible: false
                 }
             })
+            revalidatePath("/", "layout")
             return
         }
 
@@ -204,6 +210,7 @@ export async function seedDefaultCountdowns(): Promise<void> {
                 visible: false
             }
         })
+        revalidatePath("/", "layout")
     } catch (e) {
         console.error("seedDefaultCountdowns error:", e)
     }
