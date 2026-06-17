@@ -382,7 +382,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                         <span className={cn(
                                             "px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest border",
                                             rep.listName === "MORGANA"
-                                                ? "bg-red-50 text-red-700 border-red-100"
+                                                ? "bg-[#c9041a] text-white border-[#c9041a]"
                                                 : rep.listName === "O.R.U.M."
                                                     ? "bg-[#18182e] text-white border-[#18182e]"
                                                     : "bg-sky-50 text-sky-700 border-sky-100"
