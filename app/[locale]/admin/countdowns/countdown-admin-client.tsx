@@ -11,10 +11,11 @@ import {
 import {
     Clock, Plus, Trash2, Pencil, X, Loader2, Eye, EyeOff,
     AlertTriangle, CheckCircle2, Calendar, GraduationCap, FileText,
-    ChevronDown, ChevronUp, Save
+    ChevronDown, ChevronUp, Save, Sparkles
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { toUtcFromRome, toRomeDateInputString, getRomeParts } from "@/lib/date"
+import { translateText } from "@/app/actions/translate"
 
 
 const CATEGORY_OPTIONS = [
@@ -86,17 +87,37 @@ export function CountdownAdminClient({ initialItems }: Props) {
     const [deleting, setDeleting] = useState(false)
     const [toggling, setToggling] = useState<string | null>(null)
 
+    // Italian date & time input states
+    const [dateDay, setDateDay] = useState("")
+    const [dateMonth, setDateMonth] = useState("")
+    const [dateYear, setDateYear] = useState("")
+    const [dateHour, setDateHour] = useState("23")
+    const [dateMinute, setDateMinute] = useState("59")
+    const [isTranslating, setIsTranslating] = useState(false)
+
     const formTitle = editingId ? "Modifica Countdown" : "Nuovo Countdown"
 
     const openCreate = () => {
         setEditingId(null)
         setForm(emptyForm())
+        const parts = getRomeParts(new Date())
+        setDateDay(String(parts.day).padStart(2, "0"))
+        setDateMonth(String(parts.month).padStart(2, "0"))
+        setDateYear(String(parts.year))
+        setDateHour("23")
+        setDateMinute("59")
         setShowForm(true)
     }
 
     const openEdit = (item: DeadlineCountdownData) => {
         setEditingId(item.id)
         setForm(itemToForm(item))
+        const parts = getRomeParts(new Date(item.date))
+        setDateDay(String(parts.day).padStart(2, "0"))
+        setDateMonth(String(parts.month).padStart(2, "0"))
+        setDateYear(String(parts.year))
+        setDateHour(String(parts.hour).padStart(2, "0"))
+        setDateMinute(String(parts.minute).padStart(2, "0"))
         setShowForm(true)
     }
 
@@ -105,11 +126,44 @@ export function CountdownAdminClient({ initialItems }: Props) {
         setEditingId(null)
     }
 
+    const handleTranslate = async () => {
+        const itTitle = form.title || ""
+        const itDesc = form.description || ""
+
+        if (!itTitle && !itDesc) {
+            alert("Inserisci almeno un testo in italiano (Titolo o Descrizione) da tradurre.")
+            return
+        }
+
+        setIsTranslating(true)
+        try {
+            const results = await Promise.all([
+                itTitle ? translateText(itTitle) : Promise.resolve({ success: true, translation: "" }),
+                itDesc ? translateText(itDesc) : Promise.resolve({ success: true, translation: "" })
+            ])
+
+            setForm(prev => ({
+                ...prev,
+                titleEn: results[0].success ? (results[0].translation || prev.titleEn) : prev.titleEn,
+                descriptionEn: results[1].success ? (results[1].translation || prev.descriptionEn) : prev.descriptionEn
+            }))
+
+            if (results.some(r => !r.success)) {
+                alert("La traduzione automatica ha avuto qualche problema, ma abbiamo tradotto il possibile.")
+            }
+        } catch (err) {
+            alert("Errore durante la traduzione automatica.")
+        } finally {
+            setIsTranslating(false)
+        }
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setSaving(true)
         try {
-            const dateObj = toUtcFromRome(`${form.date}T${form.time}:00`)
+            const combinedDateStr = `${dateYear.padStart(4, "0")}-${dateMonth.padStart(2, "0")}-${dateDay.padStart(2, "0")}T${dateHour.padStart(2, "0")}:${dateMinute.padStart(2, "0")}:00`
+            const dateObj = toUtcFromRome(combinedDateStr)
             const payload = {
                 title: form.title,
                 titleEn: form.titleEn || undefined,
@@ -389,6 +443,24 @@ export function CountdownAdminClient({ initialItems }: Props) {
                                 </div>
                             </div>
 
+                            {/* Translation action */}
+                            <div className="flex items-center justify-between pb-3 border-b border-zinc-150">
+                                <h3 className="text-xs font-black text-zinc-400 uppercase tracking-widest">Contenuto e Traduzioni</h3>
+                                <button
+                                    type="button"
+                                    onClick={handleTranslate}
+                                    disabled={isTranslating}
+                                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-600 border border-blue-100 text-xs font-bold hover:bg-blue-100 transition-all disabled:opacity-50"
+                                >
+                                    {isTranslating ? (
+                                        <Loader2 className="size-3.5 animate-spin" />
+                                    ) : (
+                                        <Sparkles className="size-3.5" />
+                                    )}
+                                    Traduci in automatico (IT → EN)
+                                </button>
+                            </div>
+
                             {/* Titles */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
@@ -414,28 +486,70 @@ export function CountdownAdminClient({ initialItems }: Props) {
                                 </div>
                             </div>
 
-                            {/* Date & Time */}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-xs font-black uppercase tracking-wider text-zinc-600 mb-1.5">Data *</label>
-                                    <input
-                                        type="date"
-                                        required
-                                        value={form.date}
-                                        onChange={e => setForm({ ...form, date: e.target.value })}
-                                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 bg-zinc-50 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition-all"
-                                    />
+                            {/* Date & Time (Italian format) */}
+                            <div>
+                                <label className="block text-xs font-black uppercase tracking-wider text-zinc-600 mb-1.5">Data e Ora Scadenza *</label>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    <div className="flex items-center gap-1">
+                                        <input
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={2}
+                                            required
+                                            value={dateDay}
+                                            onChange={(e) => setDateDay(e.target.value.replace(/\D/g, '').slice(0, 2))}
+                                            placeholder="GG"
+                                            className="w-12 px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 text-center text-sm font-bold transition-all"
+                                        />
+                                        <span className="text-zinc-400 font-bold">/</span>
+                                        <input
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={2}
+                                            required
+                                            value={dateMonth}
+                                            onChange={(e) => setDateMonth(e.target.value.replace(/\D/g, '').slice(0, 2))}
+                                            placeholder="MM"
+                                            className="w-12 px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 text-center text-sm font-bold transition-all"
+                                        />
+                                        <span className="text-zinc-400 font-bold">/</span>
+                                        <input
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={4}
+                                            required
+                                            value={dateYear}
+                                            onChange={(e) => setDateYear(e.target.value.replace(/\D/g, '').slice(0, 4))}
+                                            placeholder="AAAA"
+                                            className="w-18 px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 text-center text-sm font-bold transition-all"
+                                        />
+                                    </div>
+                                    <span className="text-zinc-400 font-bold">—</span>
+                                    <div className="flex items-center gap-1">
+                                        <input
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={2}
+                                            required
+                                            value={dateHour}
+                                            onChange={(e) => setDateHour(e.target.value.replace(/\D/g, '').slice(0, 2))}
+                                            placeholder="HH"
+                                            className="w-12 px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 text-center text-sm font-bold transition-all"
+                                        />
+                                        <span className="text-zinc-400 font-bold">:</span>
+                                        <input
+                                            type="text"
+                                            inputMode="numeric"
+                                            maxLength={2}
+                                            required
+                                            value={dateMinute}
+                                            onChange={(e) => setDateMinute(e.target.value.replace(/\D/g, '').slice(0, 2))}
+                                            placeholder="MM"
+                                            className="w-12 px-3 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 text-center text-sm font-bold transition-all"
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-black uppercase tracking-wider text-zinc-600 mb-1.5">Ora *</label>
-                                    <input
-                                        type="time"
-                                        required
-                                        value={form.time}
-                                        onChange={e => setForm({ ...form, time: e.target.value })}
-                                        className="w-full px-3.5 py-2.5 rounded-xl border border-zinc-200 bg-zinc-50 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-400 transition-all"
-                                    />
-                                </div>
+                                <p className="text-[10px] text-zinc-400 mt-1 italic">GG/MM/AAAA — HH:MM (formato 24h italiana Europe/Rome)</p>
                             </div>
 
                             {/* Descriptions */}
