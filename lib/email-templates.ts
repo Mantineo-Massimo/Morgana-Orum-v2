@@ -342,8 +342,8 @@ export function getDeadlineReminderEmailTemplate(deadlineTitle: string, deadline
             <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
                 <p style="margin-top: 0; font-size: 16px; color: #111827;">${isEn ? "Hello," : "Ciao,"}</p>
                 <p style="font-size: 15px;">${isEn
-            ? `This is an automatic reminder that the following university deadline is scheduled for **${intervalLabel}**:`
-            : `Questo è un promemoria automatico per ricordarti che la seguente scadenza universitaria scade **${intervalLabel}**:`}</p>
+            ? `This is an automatic reminder that the following university deadline is scheduled for <strong>${intervalLabel}</strong>:`
+            : `Questo è un promemoria automatico per ricordarti che la seguente scadenza universitaria scade <strong>${intervalLabel}</strong>:`}</p>
                 
                 <div style="background-color: #fffbeb; padding: 20px; border-radius: 12px; margin: 24px 0; border: 1px solid #fef3c7;">
                     <h3 style="margin-top: 0; margin-bottom: 10px; color: #92400e; font-size: 16px; font-weight: 700;">${deadlineTitle}</h3>
