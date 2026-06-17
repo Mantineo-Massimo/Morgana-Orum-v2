@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp, ArrowDown, Copy } from "lucide-react"
+import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp, ArrowDown, Copy, Plus, Tag } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { deleteConvention, duplicateConvention } from "@/app/actions/conventions"
@@ -62,23 +62,48 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
     }
 
     return (
-        <div className="space-y-4">
-            <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
-                <input
-                    type="text"
-                    placeholder="Cerca per nome o categoria..."
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-100 bg-white focus:ring-2 focus:ring-zinc-900/5 outline-none text-sm transition-all"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+        <div className="space-y-8 animate-in fade-in duration-500">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-yellow-50 text-yellow-600 rounded-xl">
+                            <Tag className="size-6" />
+                        </div>
+                        Gestione Convenzioni
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium">
+                        Aggiungi, modifica o rimuovi le attività convenzionate per gli studenti.
+                    </p>
+                </div>
+                <Link
+                    href={`/admin/conventions/new`}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-br from-[#c12830] to-[#18182e] text-white text-sm font-bold hover:opacity-90 transition-all shadow-sm shrink-0"
+                >
+                    <Plus className="size-4" />
+                    Nuova Convenzione
+                </Link>
             </div>
 
-            <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden shadow-sm">
+            {/* Filter / Search Bar */}
+            <div className="flex flex-col md:flex-row gap-4 p-4 bg-slate-50/50 rounded-2xl border border-slate-100 items-center">
+                <div className="relative flex-1 w-full">
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                    <input
+                        type="text"
+                        placeholder="Cerca per nome o categoria..."
+                        className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </div>
+            </div>
+
+            <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm border-collapse min-w-[700px]">
                         <thead>
-                            <tr className="bg-zinc-50 border-bottom border-zinc-100 uppercase tracking-wider text-[10px] font-bold text-zinc-500">
+                            <tr className="bg-slate-50 border-b border-slate-100 uppercase tracking-wider text-[10px] font-bold text-slate-500">
                                 <th
                                     className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
                                     onClick={() => requestSort('name')}

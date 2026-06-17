@@ -171,6 +171,9 @@ export default function NewsForm({
         return `${y}-${m}-${d}T${h}:${min}:00`
     }, [dateDay, dateMonth, dateYear, dateHour, dateMinute])
 
+    const inputClass = "w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
+    const labelClass = "block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5"
+
     return (
         <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="mb-8">
@@ -204,7 +207,7 @@ export default function NewsForm({
                 <div className="space-y-4">
                     {/* Image Upload */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-2">Immagine di Copertina</label>
+                        <label className={labelClass}>Immagine di Copertina</label>
                         <div className="flex items-start gap-6">
                             <div className="relative w-24 h-16 rounded-lg bg-zinc-100 border-2 border-dashed border-zinc-300 flex items-center justify-center overflow-hidden flex-shrink-0">
                                 {imageUrl ? (
@@ -270,34 +273,34 @@ export default function NewsForm({
 
                     {/* Title */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Titolo</label>
+                        <label className={labelClass}>Titolo</label>
                         <input
                             ref={titleRef}
                             name="title"
                             defaultValue={initialData?.title}
                             required
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                            className={inputClass}
                             placeholder="Titolo della notizia..."
                         />
                     </div>
 
                     {/* Description */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Breve</label>
+                        <label className={labelClass}>Descrizione Breve</label>
                         <textarea
                             ref={descriptionRef}
                             name="description"
                             defaultValue={initialData?.description}
                             required
                             rows={2}
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
+                            className={cn(inputClass, "resize-y")}
                             placeholder="Breve riassunto che appare nella card..."
                         />
                     </div>
 
                     {/* Content */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (Rich Text)</label>
+                        <label className={labelClass}>Contenuto Completo (Rich Text)</label>
                         <RichTextEditor
                             value={content}
                             onChange={setContent}
@@ -325,29 +328,29 @@ export default function NewsForm({
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-bold text-zinc-700 mb-1">Titolo (EN)</label>
+                                <label className={labelClass}>Titolo (EN)</label>
                                 <input
                                     name="titleEn"
                                     value={titleEn}
                                     onChange={(e) => setTitleEn(e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                                    className={inputClass}
                                     placeholder="English title..."
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Breve (EN)</label>
+                                <label className={labelClass}>Descrizione Breve (EN)</label>
                                 <textarea
                                     name="descriptionEn"
                                     value={descriptionEn}
                                     onChange={(e) => setDescriptionEn(e.target.value)}
                                     rows={2}
-                                    className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all resize-y"
+                                    className={cn(inputClass, "resize-y")}
                                     placeholder="Short English description..."
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-bold text-zinc-700 mb-1">Contenuto Completo (EN - Rich Text)</label>
+                                <label className={labelClass}>Contenuto Completo (EN - Rich Text)</label>
                                 <RichTextEditor
                                     value={contentEn}
                                     onChange={setContentEn}
@@ -359,7 +362,7 @@ export default function NewsForm({
 
                     {/* Categorie (multi) */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-2">Categorie</label>
+                        <label className={labelClass}>Categorie</label>
                         <input type="hidden" name="category" value={selectedCategories.join(", ")} />
                         <div className="flex flex-wrap gap-2">
                             {categories.map(cat => {
@@ -392,7 +395,7 @@ export default function NewsForm({
 
                     {/* Date - Italian format */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Data di Pubblicazione</label>
+                        <label className={labelClass}>Data di Pubblicazione</label>
                         <input type="hidden" name="date" value={combinedDate} />
                         <div className="flex items-center gap-2 flex-wrap">
                             <div className="flex items-center gap-1">
@@ -403,7 +406,7 @@ export default function NewsForm({
                                     value={dateDay}
                                     onChange={(e) => setDateDay(e.target.value.replace(/\D/g, '').slice(0, 2))}
                                     placeholder="GG"
-                                    className="w-12 px-2 py-2 rounded-lg border border-zinc-200 text-center text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                                    className="w-12 px-2 py-2 bg-slate-50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-center text-sm font-semibold transition-all"
                                 />
                                 <span className="text-zinc-400 font-bold">/</span>
                                 <input
@@ -413,7 +416,7 @@ export default function NewsForm({
                                     value={dateMonth}
                                     onChange={(e) => setDateMonth(e.target.value.replace(/\D/g, '').slice(0, 2))}
                                     placeholder="MM"
-                                    className="w-12 px-2 py-2 rounded-lg border border-zinc-200 text-center text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                                    className="w-12 px-2 py-2 bg-slate-50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-center text-sm font-semibold transition-all"
                                 />
                                 <span className="text-zinc-400 font-bold">/</span>
                                 <input
@@ -423,7 +426,7 @@ export default function NewsForm({
                                     value={dateYear}
                                     onChange={(e) => setDateYear(e.target.value.replace(/\D/g, '').slice(0, 4))}
                                     placeholder="AAAA"
-                                    className="w-16 px-2 py-2 rounded-lg border border-zinc-200 text-center text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                                    className="w-16 px-2 py-2 bg-slate-50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-center text-sm font-semibold transition-all"
                                 />
                             </div>
                             <span className="text-zinc-400 font-bold">—</span>
@@ -435,7 +438,7 @@ export default function NewsForm({
                                     value={dateHour}
                                     onChange={(e) => setDateHour(e.target.value.replace(/\D/g, '').slice(0, 2))}
                                     placeholder="HH"
-                                    className="w-12 px-2 py-2 rounded-lg border border-zinc-200 text-center text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                                    className="w-12 px-2 py-2 bg-slate-50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-center text-sm font-semibold transition-all"
                                 />
                                 <span className="text-zinc-400 font-bold">:</span>
                                 <input
@@ -445,7 +448,7 @@ export default function NewsForm({
                                     value={dateMinute}
                                     onChange={(e) => setDateMinute(e.target.value.replace(/\D/g, '').slice(0, 2))}
                                     placeholder="MM"
-                                    className="w-12 px-2 py-2 rounded-lg border border-zinc-200 text-center text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                                    className="w-12 px-2 py-2 bg-slate-50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-center text-sm font-semibold transition-all"
                                 />
                             </div>
                         </div>
@@ -455,11 +458,11 @@ export default function NewsForm({
 
                     {/* Tags */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Tags (separati da virgola)</label>
+                        <label className={labelClass}>Tags (separati da virgola)</label>
                         <input
                             name="tags"
                             defaultValue={initialData?.tags ?? ""}
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                            className={inputClass}
                             placeholder="#Solidarietà, #UniMe, #Natale2025"
                         />
                     </div>
@@ -470,9 +473,9 @@ export default function NewsForm({
                             name="published"
                             type="checkbox"
                             defaultChecked={initialData?.published ?? true}
-                            className="size-4 rounded border-zinc-300"
+                            className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/50 focus:ring-offset-0"
                         />
-                        <label className="text-sm font-bold text-zinc-700">Pubblica immediatamente</label>
+                        <label className="text-sm font-bold text-slate-700">Pubblica immediatamente</label>
                     </div>
                 </div>
 
@@ -480,7 +483,7 @@ export default function NewsForm({
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="bg-zinc-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-zinc-800 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-gradient-to-br from-[#c12830] to-[#18182e] text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                     >
                         {isLoading ? (
                             <>

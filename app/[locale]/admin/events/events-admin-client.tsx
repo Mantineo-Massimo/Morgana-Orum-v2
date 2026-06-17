@@ -265,18 +265,26 @@ export default function EventsAdminClient({
     })
 
     return (
-        <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+        <div className="space-y-8 animate-in fade-in duration-500">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-black text-foreground tracking-tight">Eventi</h1>
-                    <p className="text-zinc-500 text-sm mt-1 font-medium italic">Gestione completa delle prenotazioni e partecipazione.</p>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-red-50 text-red-600 rounded-xl">
+                            <Calendar className="size-6" />
+                        </div>
+                        Eventi
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium">
+                        Gestione completa delle prenotazioni e partecipazione.
+                    </p>
                 </div>
                 <button
                     onClick={() => {
                         setEditingEvent(null)
                         setIsFormModalOpen(true)
                     }}
-                    className="flex items-center gap-2 bg-zinc-900 text-white px-6 py-3 rounded-2xl text-sm font-bold hover:bg-zinc-800 transition-all hover:shadow-lg hover:shadow-zinc-900/10 active:scale-95 whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-br from-[#c12830] to-[#18182e] text-white text-sm font-bold hover:opacity-90 transition-all shadow-sm shrink-0"
                 >
                     <Plus className="size-4" /> Nuovo Evento
                 </button>
@@ -310,12 +318,12 @@ export default function EventsAdminClient({
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
                         placeholder="Nuova categoria evento..."
-                        className="flex-1 px-4 py-2 rounded-xl border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                        className="flex-1 px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                     />
                     <button
                         type="submit"
                         disabled={isPending || !newCategory.trim()}
-                        className="bg-zinc-900 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-zinc-800 transition-colors flex items-center gap-1 disabled:opacity-50"
+                        className="bg-gradient-to-br from-[#c12830] to-[#18182e] text-white px-4 py-2.5 rounded-xl text-sm font-bold hover:opacity-90 transition-all flex items-center gap-1 disabled:opacity-50 shadow-sm"
                     >
                         <Plus className="size-4" /> Aggiungi
                     </button>
@@ -323,23 +331,23 @@ export default function EventsAdminClient({
             </div>
 
             {/* Filtri */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 bg-white p-4 rounded-2xl border border-zinc-100 shadow-sm">
+            <div className="flex flex-col md:flex-row gap-4 p-4 bg-slate-50/50 rounded-2xl border border-slate-100 items-center">
                 <div className="relative flex-1 w-full">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
                     <input
                         type="search"
                         placeholder="Cerca evento..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 bg-zinc-50 border-none rounded-xl text-sm focus:ring-2 focus:ring-zinc-900/10"
+                        className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                     />
                 </div>
                 <div className="relative shrink-0 w-full sm:w-auto">
-                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400 animate-pulse" />
                     <select
                         value={statusFilter}
                         onChange={(e) => setStatusFilter(e.target.value)}
-                        className="w-full sm:w-auto pl-10 pr-8 py-2 bg-zinc-50 border-none rounded-xl text-sm font-medium text-zinc-700 focus:ring-2 focus:ring-zinc-900/10 appearance-none cursor-pointer"
+                        className="w-full sm:w-auto pl-11 pr-8 py-3 bg-white border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all appearance-none cursor-pointer"
                     >
                         <option value="all">Tutti gli stati</option>
                         <option value="published">Pubblicati</option>
@@ -348,11 +356,11 @@ export default function EventsAdminClient({
                 </div>
 
                 <div className="relative shrink-0 w-full sm:w-auto">
-                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400 animate-pulse" />
                     <select
                         value={filterCategory}
                         onChange={(e) => setFilterCategory(e.target.value)}
-                        className="w-full sm:w-auto pl-10 pr-8 py-2 bg-zinc-50 border-none rounded-xl text-sm font-medium text-zinc-700 focus:ring-2 focus:ring-zinc-900/10 appearance-none cursor-pointer"
+                        className="w-full sm:w-auto pl-11 pr-8 py-3 bg-white border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all appearance-none cursor-pointer"
                     >
                         <option value="">Tutte le categorie</option>
                         {categories.map(cat => (
@@ -362,11 +370,11 @@ export default function EventsAdminClient({
                 </div>
 
                 <div className="relative shrink-0 w-full sm:w-auto">
-                    <Filter className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <Filter className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400 animate-pulse" />
                     <select
                         value={associationFilter}
                         onChange={(e) => setAssociationFilter(e.target.value as any)}
-                        className="w-full sm:w-auto pl-10 pr-8 py-2 bg-zinc-50 border-none rounded-xl text-sm font-medium text-zinc-700 focus:ring-2 focus:ring-zinc-900/10 appearance-none cursor-pointer"
+                        className="w-full sm:w-auto pl-11 pr-8 py-3 bg-white border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all appearance-none cursor-pointer"
                     >
                         <option value="">Tutte le zone</option>
                         {ASSOCIATIONS.map(assoc => (
@@ -599,29 +607,28 @@ export default function EventsAdminClient({
 
             {/* Form Modal */}
             {isFormModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                    <div
-                        className="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm animate-in fade-in duration-300"
-                        onClick={() => setIsFormModalOpen(false)}
-                    />
-                    <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 custom-scrollbar">
-                        <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-zinc-100">
+                <div className="fixed inset-0 z-[100] flex items-start justify-center p-4 pt-10 bg-black/60 backdrop-blur-sm overflow-y-auto animate-in fade-in duration-200">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 space-y-6 my-auto animate-in zoom-in-95 duration-200">
+                        <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                             <div>
-                                <h2 className="text-xl font-bold text-foreground">
+                                <h2 className="font-black text-xl text-slate-900 flex items-center gap-2.5">
+                                    <div className="p-2 bg-red-50 text-red-600 rounded-xl">
+                                        <Calendar className="size-5" />
+                                    </div>
                                     {editingEvent ? "Modifica Evento" : "Nuovo Evento"}
                                 </h2>
-                                <p className="text-sm text-zinc-500">
+                                <p className="text-xs text-slate-500 mt-1">
                                     {editingEvent ? "Aggiorna i dettagli dell'evento" : "Crea un nuovo evento e apri le prenotazioni"}
                                 </p>
                             </div>
                             <button
                                 onClick={() => setIsFormModalOpen(false)}
-                                className="p-2 rounded-xl hover:bg-zinc-100 text-zinc-400 hover:text-foreground transition-all"
+                                className="p-2 rounded-xl hover:bg-slate-50 text-slate-400 hover:text-slate-700 transition-all"
                             >
                                 <X className="size-5" />
                             </button>
                         </div>
-                        <div className="p-6">
+                        <div>
                             <EventForm
                                 initialData={editingEvent}
                                 categories={categories}

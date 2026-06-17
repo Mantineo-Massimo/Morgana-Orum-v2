@@ -141,12 +141,12 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-                        <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                        <div className="p-2.5 bg-pink-50 text-pink-600 rounded-xl">
                             <ImageIcon className="size-6" />
                         </div>
                         Libreria Media
                     </h1>
-                    <p className="text-sm text-slate-500 mt-1 font-medium">
+                    <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
                         Gestisci tutte le immagini: carica nuovi file, copia URL, elimina quelli non più necessari.
                     </p>
                 </div>
@@ -154,15 +154,15 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                     <button
                         onClick={handleRefresh}
                         disabled={refreshing}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm font-bold text-zinc-700 hover:bg-zinc-50 hover:shadow-sm transition-all disabled:opacity-50"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 hover:bg-slate-50 hover:shadow-sm transition-all disabled:opacity-50"
                     >
-                        <RefreshCw className={cn("size-4 text-zinc-500", refreshing && "animate-spin")} />
+                        <RefreshCw className={cn("size-4 text-slate-500", refreshing && "animate-spin")} />
                         Aggiorna
                     </button>
                     <button
                         onClick={() => fileInputRef.current?.click()}
                         disabled={uploading}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-bold hover:bg-indigo-700 transition-all disabled:opacity-50 shadow-sm"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-br from-[#c12830] to-[#18182e] text-white text-sm font-bold hover:opacity-90 transition-all disabled:opacity-50 shadow-sm"
                     >
                         {uploading ? (
                             <Loader2 className="size-4 animate-spin" />
@@ -195,19 +195,19 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                     const file = e.dataTransfer.files[0]
                     if (file?.type.startsWith("image/")) handleUpload(file)
                 }}
-                className="border-2 border-dashed border-indigo-200 rounded-2xl p-6 text-center bg-indigo-50/30 hover:bg-indigo-50/50 transition-all cursor-pointer"
+                className="border-2 border-dashed border-pink-200 rounded-2xl p-6 text-center bg-pink-50/30 hover:bg-pink-50/50 transition-all cursor-pointer"
                 onClick={() => fileInputRef.current?.click()}
             >
                 {uploading ? (
-                    <div className="flex flex-col items-center gap-2 text-indigo-600">
+                    <div className="flex flex-col items-center gap-2 text-pink-600">
                         <Loader2 className="size-8 animate-spin" />
                         <span className="text-sm font-bold">Caricamento in corso...</span>
                     </div>
                 ) : (
-                    <div className="flex flex-col items-center gap-2 text-indigo-500">
-                        <Upload className="size-8" />
+                    <div className="flex flex-col items-center gap-2 text-pink-550">
+                        <Upload className="size-8 text-pink-500" />
                         <p className="text-sm font-bold">Trascina qui un&apos;immagine o clicca per caricare</p>
-                        <p className="text-xs text-indigo-400">JPG, PNG, WebP, GIF — max 10MB</p>
+                        <p className="text-xs text-pink-400">JPG, PNG, WebP, GIF — max 10MB</p>
                     </div>
                 )}
             </div>
@@ -215,9 +215,9 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
             {/* Info banner */}
             <div className="flex items-start gap-3 p-4 rounded-xl bg-amber-50 border border-amber-100 text-sm text-amber-700">
                 <Info className="size-4 shrink-0 mt-0.5" />
-                <div>
+                <div className="font-medium font-sans">
                     <span className="font-bold">Nota: </span>
-                    Le immagini con badge <span className="font-bold text-indigo-600">Libreria</span> sono caricate direttamente qui e possono essere eliminate. Le altre provengono da record del sito (Notizie, Eventi, ecc.) e devono essere gestite dal rispettivo form.
+                    Le immagini con badge <span className="font-bold text-pink-600">Libreria</span> sono caricate direttamente qui e possono essere eliminate. Le altre provengono da record del sito (Notizie, Eventi, ecc.) e devono essere gestite dal rispettivo form.
                 </div>
             </div>
 
@@ -225,13 +225,13 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
             <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center">
                 {/* Search */}
                 <div className="relative max-w-md w-full">
-                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
                     <input
                         type="text"
                         placeholder="Cerca per titolo o URL dell'immagine..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-zinc-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all font-medium"
+                        className="w-full pl-11 pr-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                     />
                 </div>
 
@@ -244,8 +244,8 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
                             className={cn(
                                 "px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border",
                                 selectedSource === source
-                                    ? "bg-zinc-950 text-white border-zinc-950 shadow-sm"
-                                    : "bg-white text-zinc-500 border-zinc-200 hover:bg-zinc-50"
+                                    ? "bg-gradient-to-br from-[#c12830] to-[#18182e] border-transparent text-white shadow-sm"
+                                    : "bg-white text-slate-500 border-slate-200/60 hover:bg-slate-50"
                             )}
                         >
                             {source}
@@ -378,55 +378,55 @@ export function MediaAdminClient({ initialMedia }: MediaAdminClientProps) {
             {/* Delete Confirm Modal */}
             {deleteConfirm && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-5 animate-in zoom-in-95 duration-200">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 space-y-6 my-auto animate-in zoom-in-95 duration-200">
                         <div className="flex items-start gap-4">
                             <div className="p-3 rounded-xl bg-red-50 text-red-500 shrink-0">
                                 <AlertTriangle className="size-6" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <h3 className="font-black text-zinc-900 text-lg">Elimina immagine</h3>
-                                <p className="text-sm text-zinc-500 mt-1">
+                                <h3 className="font-black text-slate-900 text-lg">Elimina immagine</h3>
+                                <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
                                     Questa azione è irreversibile. L&apos;immagine verrà eliminata dalla libreria e da Vercel Blob.
                                 </p>
                             </div>
                             <button
                                 onClick={() => setDeleteConfirm(null)}
-                                className="p-1.5 rounded-lg hover:bg-zinc-100 text-zinc-400 transition-colors shrink-0"
+                                className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 transition-colors shrink-0"
                             >
                                 <X className="size-4" />
                             </button>
                         </div>
 
                         {/* Preview */}
-                        <div className="flex items-center gap-3 p-3 rounded-xl bg-zinc-50 border border-zinc-200">
+                        <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-50/50 border border-slate-200/60">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                                 src={deleteConfirm.url}
                                 alt={deleteConfirm.title}
-                                className="size-14 rounded-lg object-cover border border-zinc-200 shrink-0"
+                                className="size-14 rounded-lg object-cover border border-slate-200/60 shrink-0"
                             />
                             <div className="min-w-0">
-                                <p className="font-bold text-zinc-900 text-sm truncate">{deleteConfirm.title}</p>
-                                <p className="text-[10px] text-zinc-400 font-mono truncate">{deleteConfirm.url}</p>
+                                <p className="font-bold text-slate-900 text-sm truncate">{deleteConfirm.title}</p>
+                                <p className="text-[10px] text-slate-400 font-mono truncate">{deleteConfirm.url}</p>
                             </div>
                         </div>
 
                         <div className="flex gap-3">
                             <button
                                 onClick={() => setDeleteConfirm(null)}
-                                className="flex-1 py-3 rounded-xl border border-zinc-200 text-zinc-700 font-bold text-sm hover:bg-zinc-50 transition-all"
+                                className="flex-1 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all"
                             >
                                 Annulla
                             </button>
                             <button
                                 onClick={handleDeleteConfirm}
                                 disabled={deleting}
-                                className="flex-1 py-3 rounded-xl bg-red-600 text-white font-bold text-sm hover:bg-red-700 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                                className="flex-1 py-3 rounded-xl bg-red-650 text-white font-bold text-sm hover:bg-red-700 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
                             >
                                 {deleting ? (
                                     <><Loader2 className="size-4 animate-spin" /> Eliminazione...</>
                                 ) : (
-                                    <><Trash2 className="size-4" /> Elimina definitivamente</>
+                                    <><Trash2 className="size-4" /> Elimina</>
                                 )}
                             </button>
                         </div>

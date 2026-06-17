@@ -49,8 +49,15 @@ export default async function AnalyticsPage() {
         <div className="space-y-10 animate-in fade-in duration-500 pb-12">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-black text-foreground tracking-tight">Analytics Sito</h1>
-                    <p className="text-zinc-500 text-sm mt-1 font-medium italic">Panoramica completa delle performance e dei contenuti della piattaforma.</p>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl">
+                            <BarChart3 className="size-6" />
+                        </div>
+                        Analytics Sito
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium">
+                        Panoramica completa delle performance e dei contenuti della piattaforma.
+                    </p>
                 </div>
                 <div className="flex flex-col items-end gap-2">
                     <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-blue-600 bg-blue-50 px-4 py-2 rounded-xl border border-blue-100 shadow-sm">

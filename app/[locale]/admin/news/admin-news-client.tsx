@@ -137,33 +137,38 @@ export default function AdminNewsClient({
         <div className="space-y-8 animate-in fade-in duration-500">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-foreground">Gestione Notizie</h1>
-                    <p className="text-zinc-500">Crea, modifica ed elimina notizie e articoli.</p>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-orange-50 text-orange-600 rounded-xl">
+                            <Newspaper className="size-6" />
+                        </div>
+                        Gestione Notizie
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium font-sans">Crea, modifica ed elimina notizie e articoli.</p>
                 </div>
                 <button
                     onClick={() => {
                         setEditingNews(null)
                         setIsFormModalOpen(true)
                     }}
-                    className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 self-start md:self-auto"
+                    className="flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-sm hover:opacity-90 self-start md:self-auto"
                 >
                     <Plus className="size-4" /> Nuova Notizia
                 </button>
             </div>
 
             {/* Category Management */}
-            <div className="bg-white border border-zinc-100 rounded-xl p-6 shadow-sm">
-                <h2 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                    <Tag className="size-4 text-zinc-400" /> Categorie
+            <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
+                <h2 className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-3 flex items-center gap-2">
+                    <Tag className="size-4 text-slate-400" /> Categorie
                 </h2>
                 <div className="flex flex-wrap gap-2 mb-4">
                     {categoriesWithIds.map((cat: any) => (
-                        <div key={cat.id} className="flex items-center gap-1 bg-zinc-100 rounded-full pl-4 pr-1 py-1.5">
-                            <span className="text-sm font-medium text-zinc-700">{cat.name}</span>
+                        <div key={cat.id} className="flex items-center gap-1 bg-slate-50 border border-slate-200/60 rounded-full pl-4 pr-1 py-1.5">
+                            <span className="text-sm font-medium text-slate-700">{cat.name}</span>
                             <button
                                 onClick={() => handleDeleteCategory(cat.id)}
                                 disabled={isPending}
-                                className="p-1 rounded-full text-zinc-400 hover:text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+                                className="p-1 rounded-full text-slate-400 hover:text-red-650 hover:bg-red-50 transition-colors disabled:opacity-50"
                                 title="Elimina categoria"
                             >
                                 <X className="size-3" />
@@ -171,7 +176,7 @@ export default function AdminNewsClient({
                         </div>
                     ))}
                     {categoriesWithIds.length === 0 && (
-                        <p className="text-sm text-zinc-400 italic">Nessuna categoria. Creane una!</p>
+                        <p className="text-sm text-slate-400 italic">Nessuna categoria. Creane una!</p>
                     )}
                 </div>
                 <form onSubmit={handleCreateCategory} className="flex gap-2">
@@ -179,12 +184,12 @@ export default function AdminNewsClient({
                         value={newCategory}
                         onChange={(e) => setNewCategory(e.target.value)}
                         placeholder="Nuova categoria..."
-                        className="flex-1 px-4 py-2 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                        className="flex-1 px-4 py-2 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                     />
                     <button
                         type="submit"
                         disabled={isPending || !newCategory.trim()}
-                        className="bg-zinc-900 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-zinc-800 transition-colors flex items-center gap-1 disabled:opacity-50"
+                        className="bg-gradient-to-br from-[#c12830] to-[#18182e] text-white px-4 py-2 rounded-xl text-sm font-bold hover:opacity-90 transition-all flex items-center gap-1 disabled:opacity-50"
                     >
                         <Plus className="size-4" /> Aggiungi
                     </button>
@@ -192,11 +197,11 @@ export default function AdminNewsClient({
             </div>
 
             {/* Filters */}
-            <div className="bg-white border border-zinc-100 rounded-xl p-6 shadow-sm">
-                <h2 className="text-sm font-bold text-foreground uppercase tracking-wider mb-4 flex items-center gap-2">
-                    <Filter className="size-4 text-zinc-400" /> Filtri
+            <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
+                <h2 className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-3 flex items-center gap-2">
+                    <Filter className="size-4 text-slate-400" /> Filtri
                     {activeFilters > 0 && (
-                        <span className="ml-2 bg-zinc-900 text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center">
+                        <span className="ml-2 bg-[#c9041a] text-white text-[10px] font-bold rounded-full size-5 flex items-center justify-center">
                             {activeFilters}
                         </span>
                     )}
@@ -204,16 +209,16 @@ export default function AdminNewsClient({
                 <div className="grid md:grid-cols-5 gap-4">
                     {/* Search */}
                     <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                        <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
                         <input
                             type="text"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Cerca..."
-                            className="w-full pl-10 pr-8 py-2 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10"
+                            className="w-full pl-11 pr-8 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                         />
                         {searchQuery && (
-                            <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600">
+                            <button onClick={() => setSearchQuery("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-450 hover:text-slate-700">
                                 <X className="size-3" />
                             </button>
                         )}
@@ -223,7 +228,7 @@ export default function AdminNewsClient({
                     <select
                         value={filterCategory}
                         onChange={(e) => setFilterCategory(e.target.value)}
-                        className="px-4 py-2 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                        className="px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                     >
                         <option value="">Tutte le categorie</option>
                         {categories.map(cat => (
@@ -235,7 +240,7 @@ export default function AdminNewsClient({
                     <select
                         value={filterStatus}
                         onChange={(e) => setFilterStatus(e.target.value)}
-                        className="px-4 py-2 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                        className="px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                     >
                         <option value="">Tutti gli stati</option>
                         <option value="published">✅ Pubblicata</option>
@@ -247,7 +252,7 @@ export default function AdminNewsClient({
                     <select
                         value={filterYear}
                         onChange={(e) => setFilterYear(e.target.value)}
-                        className="px-4 py-2 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                        className="px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                     >
                         <option value="">Tutte le annate</option>
                         {years.map(y => (
@@ -259,7 +264,7 @@ export default function AdminNewsClient({
                     <select
                         value={filterAssociation}
                         onChange={(e) => setFilterAssociation(e.target.value as any)}
-                        className="px-4 py-2 rounded-lg border border-zinc-200 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                        className="px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                     >
                         <option value="">Tutte le zone</option>
                         {ASSOCIATIONS.map(assoc => (
@@ -271,7 +276,7 @@ export default function AdminNewsClient({
                 {activeFilters > 0 && (
                     <button
                         onClick={() => { setSearchQuery(""); setFilterCategory(""); setFilterStatus(""); setFilterYear(""); setFilterAssociation("") }}
-                        className="mt-3 text-xs font-bold text-zinc-500 hover:text-foreground transition-colors"
+                        className="mt-3 text-xs font-bold text-slate-500 hover:text-[#c9041a] transition-colors"
                     >
                         ✕ Resetta filtri
                     </button>
@@ -286,61 +291,61 @@ export default function AdminNewsClient({
             {/* Year Groups */}
             {sortedYears.map(year => (
                 <div key={year}>
-                    <h2 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
-                        <Calendar className="size-4 text-zinc-400" />
+                    <h2 className="text-lg font-bold text-slate-800 mb-3 flex items-center gap-2">
+                        <Calendar className="size-4 text-slate-400" />
                         {year}
-                        <span className="text-xs font-medium text-zinc-400 bg-zinc-100 px-2 py-0.5 rounded-full">
+                        <span className="text-xs font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">
                             {groupedByYear[year].length}
                         </span>
                     </h2>
-                    <div className="bg-white border border-zinc-100 rounded-xl overflow-hidden shadow-sm mb-6">
+                    <div className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm mb-6">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left text-sm min-w-[800px]">
-                                <thead className="bg-zinc-50 border-b border-zinc-100 text-zinc-500 font-medium uppercase tracking-wider text-xs">
+                                <thead className="bg-slate-50 border-b border-slate-200/60 text-slate-500 font-bold uppercase tracking-wider text-xs">
                                     <tr>
                                         <th
-                                            className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                            className="px-6 py-3 cursor-pointer hover:text-slate-900 transition-colors group"
                                             onClick={() => requestSort('title')}
                                         >
                                             <div className="flex items-center gap-2">
                                                 Titolo {sortConfig?.key === 'title' ? (
-                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-[#c9041a]" /> : <ArrowDown className="size-3 text-[#18182e]" />
                                                 ) : (
                                                     <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                                 )}
                                             </div>
                                         </th>
                                         <th
-                                            className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                            className="px-6 py-3 cursor-pointer hover:text-slate-900 transition-colors group"
                                             onClick={() => requestSort('category')}
                                         >
                                             <div className="flex items-center gap-2">
                                                 Categoria {sortConfig?.key === 'category' ? (
-                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-[#c9041a]" /> : <ArrowDown className="size-3 text-[#18182e]" />
                                                 ) : (
                                                     <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                                 )}
                                             </div>
                                         </th>
                                         <th
-                                            className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                            className="px-6 py-3 cursor-pointer hover:text-slate-900 transition-colors group"
                                             onClick={() => requestSort('date')}
                                         >
                                             <div className="flex items-center gap-2">
                                                 Data {sortConfig?.key === 'date' ? (
-                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-[#c9041a]" /> : <ArrowDown className="size-3 text-[#18182e]" />
                                                 ) : (
                                                     <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                                 )}
                                             </div>
                                         </th>
                                         <th
-                                            className="px-6 py-3 cursor-pointer hover:text-foreground transition-colors group"
+                                            className="px-6 py-3 cursor-pointer hover:text-slate-900 transition-colors group"
                                             onClick={() => requestSort('status')}
                                         >
                                             <div className="flex items-center gap-2">
                                                 Stato {sortConfig?.key === 'status' ? (
-                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                                    sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-[#c9041a]" /> : <ArrowDown className="size-3 text-[#18182e]" />
                                                 ) : (
                                                     <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                                 )}
@@ -475,24 +480,23 @@ export default function AdminNewsClient({
             {/* Form Modal */}
             {
                 isFormModalOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-                        <div
-                            className="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm animate-in fade-in duration-300"
-                            onClick={() => setIsFormModalOpen(false)}
-                        />
-                        <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 custom-scrollbar">
-                            <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-zinc-100">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                        <div className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200 custom-scrollbar">
+                            <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-slate-150">
                                 <div>
-                                    <h2 className="text-xl font-bold text-foreground">
+                                    <h2 className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-2">
+                                        <div className="p-2 bg-orange-50 text-orange-600 rounded-xl">
+                                            <Newspaper className="size-5" />
+                                        </div>
                                         {editingNews ? "Modifica Notizia" : "Nuova Notizia"}
                                     </h2>
-                                    <p className="text-sm text-zinc-500">
+                                    <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
                                         {editingNews ? "Aggiorna i dettagli della notizia" : "Crea una nuova notizia nel portale"}
                                     </p>
                                 </div>
                                 <button
                                     onClick={() => setIsFormModalOpen(false)}
-                                    className="p-2 rounded-xl hover:bg-zinc-100 text-zinc-400 hover:text-foreground transition-all"
+                                    className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-foreground transition-all"
                                 >
                                     <X className="size-5" />
                                 </button>

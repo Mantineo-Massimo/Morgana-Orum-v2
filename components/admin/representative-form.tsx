@@ -134,6 +134,9 @@ export default function RepresentativeForm({
     // Determine default/initial state for conditional fields
     const [category, setCategory] = useState<"CENTRAL" | "DEPARTMENT" | "NATIONAL">(initialData?.category || "DEPARTMENT")
 
+    const inputClass = "w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
+    const labelClass = "block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5"
+
     return (
         <div className={cn(
             !onSuccess && "max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500"
@@ -236,25 +239,25 @@ export default function RepresentativeForm({
 
                     {/* Name */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Nome e Cognome</label>
+                        <label className={labelClass}>Nome e Cognome</label>
                         <input
                             name="name"
                             defaultValue={initialData?.name}
                             required
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                            className={inputClass}
                             placeholder="Es. Mario Rossi"
                         />
                     </div>
 
                     {/* Association Selection */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Associazione di Appartenenza</label>
+                        <label className={labelClass}>Associazione di Appartenenza</label>
                         <select
                             name="association"
                             defaultValue={initialData?.association || userAssociation || "MORGANA_ORUM"}
                             disabled={isNetworkAdmin}
                             required
-                            className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white disabled:bg-zinc-50 disabled:text-zinc-500"
+                            className={cn(inputClass, "bg-white disabled:bg-zinc-50 disabled:text-zinc-500")}
                         >
                             {availableAssociations.map(assoc => (
                                 <option key={assoc.id} value={assoc.id}>{assoc.name}</option>
@@ -271,11 +274,11 @@ export default function RepresentativeForm({
                     <div className="grid md:grid-cols-2 gap-4">
                         {/* List Name */}
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Lista</label>
+                            <label className={labelClass}>Lista</label>
                             <select
                                 name="listName"
                                 defaultValue={initialData?.listName || "MORGANA"}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                className={cn(inputClass, "bg-white")}
                             >
                                 <option value="MORGANA">MORGANA</option>
                                 <option value="O.R.U.M.">O.R.U.M.</option>
@@ -285,12 +288,12 @@ export default function RepresentativeForm({
 
                         {/* Category */}
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Categoria</label>
+                            <label className={labelClass}>Categoria</label>
                             <select
                                 name="category"
                                 value={category}
                                 onChange={(e) => setCategory(e.target.value as any)}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                className={cn(inputClass, "bg-white")}
                             >
                                 <option value="DEPARTMENT">Dipartimento</option>
                                 <option value="CENTRAL">Organo Centrale</option>
@@ -302,12 +305,12 @@ export default function RepresentativeForm({
                     {/* Conditional Fields */}
                     {category === "DEPARTMENT" ? (
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Dipartimento</label>
+                            <label className={labelClass}>Dipartimento</label>
                             <select
                                 name="department"
                                 defaultValue={initialData?.department || ""}
                                 required={category === "DEPARTMENT"}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                className={cn(inputClass, "bg-white")}
                             >
                                 <option value="" disabled>Seleziona un dipartimento</option>
                                 {departmentsList.map(dept => (
@@ -317,12 +320,12 @@ export default function RepresentativeForm({
                         </div>
                     ) : (
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Ruolo / Organo</label>
+                            <label className={labelClass}>Ruolo / Organo</label>
                             <select
                                 name="role"
                                 defaultValue={initialData?.role || ""}
                                 required={category === "CENTRAL" || category === "NATIONAL"}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                className={cn(inputClass, "bg-white")}
                             >
                                 <option value="" disabled>Seleziona un organo</option>
                                 {category === "CENTRAL"
@@ -340,12 +343,12 @@ export default function RepresentativeForm({
                     {/* Term and Mandate Years */}
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Mandato / Annata</label>
+                            <label className={labelClass}>Mandato / Annata</label>
                             <input
                                 type="text"
                                 disabled
                                 value={initialData?.term || "2025-2027"}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 bg-zinc-50 text-zinc-500 font-mono text-sm cursor-not-allowed select-none"
+                                className={cn(inputClass, "bg-zinc-50 text-zinc-500 font-mono text-sm cursor-not-allowed select-none")}
                             />
                             <input
                                 type="hidden"
@@ -354,11 +357,11 @@ export default function RepresentativeForm({
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Durata Mandato (Anni)</label>
+                            <label className={labelClass}>Durata Mandato (Anni)</label>
                             <select
                                 name="mandateYears"
                                 defaultValue={initialData?.mandateYears ?? 2}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                className={cn(inputClass, "bg-white")}
                             >
                                 <option value={2}>2 Anni (Standard)</option>
                                 <option value={3}>3 Anni</option>
@@ -369,31 +372,31 @@ export default function RepresentativeForm({
 
                     <div className="grid md:grid-cols-3 gap-4">
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Email (Opzionale)</label>
+                            <label className={labelClass}>Email (Opzionale)</label>
                             <input
                                 name="email"
                                 type="email"
                                 defaultValue={initialData?.email}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                                className={inputClass}
                                 placeholder="email@studenti.unime.it"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Telefono (Opzionale)</label>
+                            <label className={labelClass}>Telefono (Opzionale)</label>
                             <input
                                 name="phone"
                                 type="tel"
                                 defaultValue={initialData?.phone}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                                className={inputClass}
                                 placeholder="+39 123 456 7890"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-bold text-zinc-700 mb-1">Instagram (Opzionale)</label>
+                            <label className={labelClass}>Instagram (Opzionale)</label>
                             <input
                                 name="instagram"
                                 defaultValue={initialData?.instagram}
-                                className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all"
+                                className={inputClass}
                                 placeholder="@username"
                             />
                         </div>
@@ -401,7 +404,7 @@ export default function RepresentativeForm({
 
                     {/* Description */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Persona (Rich Text)</label>
+                        <label className={labelClass}>Descrizione Persona (Rich Text)</label>
                         <RichTextEditor
                             value={description}
                             onChange={setDescription}
@@ -411,7 +414,7 @@ export default function RepresentativeForm({
 
                     {/* Role Description */}
                     <div>
-                        <label className="block text-sm font-bold text-zinc-700 mb-1">Descrizione Ruolo (Rich Text)</label>
+                        <label className={labelClass}>Descrizione Ruolo (Rich Text)</label>
                         <RichTextEditor
                             value={roleDescription}
                             onChange={setRoleDescription}
@@ -426,7 +429,7 @@ export default function RepresentativeForm({
                         <button
                             type="button"
                             onClick={onCancel}
-                            className="px-6 py-3 font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
+                            className="px-6 py-3 font-bold text-slate-500 hover:text-slate-900 border border-slate-200 bg-white rounded-xl transition-all"
                         >
                             Annulla
                         </button>
@@ -434,7 +437,7 @@ export default function RepresentativeForm({
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="bg-zinc-900 text-white px-6 py-3 rounded-xl font-bold hover:bg-zinc-800 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="bg-gradient-to-br from-[#c12830] to-[#18182e] text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
                     >
                         {isLoading ? (
                             <>

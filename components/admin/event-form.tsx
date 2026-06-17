@@ -233,8 +233,8 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
         }
     }
 
-    const inputClass = "w-full px-4 py-3 rounded-xl border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 text-sm"
-    const labelClass = "block text-sm font-bold text-zinc-700 mb-2"
+    const inputClass = "w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
+    const labelClass = "block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5"
 
     return (
         <div className="max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -667,7 +667,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 <button
                     type="submit"
                     disabled={isPending}
-                    className="w-full bg-zinc-900 text-white py-3 rounded-xl font-bold text-sm hover:bg-zinc-800 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="w-full bg-gradient-to-br from-[#c12830] to-[#18182e] text-white py-3 rounded-xl font-bold text-sm hover:opacity-90 transition-all disabled:opacity-50 flex items-center justify-center gap-2 shadow-sm"
                 >
                     {isPending ? <><Loader2 className="size-4 animate-spin" /> Salvataggio in corso...</> : <><Save className="size-4" /> {initialData ? "Aggiorna Evento" : "Crea Evento"}</>}
                 </button>

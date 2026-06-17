@@ -379,7 +379,22 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
     }
 
     return (
-        <div className="grid lg:grid-cols-3 gap-8 items-start">
+        <div className="space-y-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-teal-50 text-teal-600 rounded-xl">
+                            <Compass className="size-6" />
+                        </div>
+                        Gestione Guide
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
+                        Crea, modifica e organizza le guide per gli studenti e i vari step.
+                    </p>
+                </div>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
             {/* Left Pane: Guides List */}
             <div className="lg:col-span-1 space-y-6">
                 <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-4">
@@ -498,7 +513,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                             {!PROTECTED_GUIDES.includes(activeGuide.id) && (
                                 <button
                                     onClick={handleOpenAddStep}
-                                    className="flex items-center justify-center gap-2 px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg"
+                                    className="flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-sm hover:opacity-90"
                                 >
                                     <Plus className="size-4" /> Aggiungi Step
                                 </button>
@@ -600,11 +615,13 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
 
             {/* Dialog Form for Guide */}
             <Dialog open={isGuideModalOpen} onOpenChange={setIsGuideModalOpen}>
-                <DialogContent className="max-w-xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-3xl shadow-2xl">
-                    <form onSubmit={handleSaveGuide} className="bg-white p-8 space-y-6">
+                <DialogContent className="max-w-2xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-2xl shadow-2xl">
+                    <form onSubmit={handleSaveGuide} className="bg-white p-6 space-y-6">
                         <DialogHeader>
-                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
-                                <Compass className="size-6 text-zinc-900" />
+                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2 text-slate-900">
+                                <div className="p-2 bg-teal-50 text-teal-600 rounded-xl">
+                                    <Compass className="size-5" />
+                                </div>
                                 {editingGuideId ? "Modifica Guida" : "Nuova Guida"}
                             </DialogTitle>
                         </DialogHeader>
@@ -612,99 +629,99 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                         <div className="grid md:grid-cols-2 gap-6">
                             {!editingGuideId && (
                                 <div className="md:col-span-2 space-y-2">
-                                    <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">ID / Slug Guida *</label>
+                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">ID / Slug Guida *</label>
                                     <input
                                         type="text"
                                         required
                                         value={guideForm.id}
                                         onChange={e => setGuideForm({ ...guideForm, id: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-mono text-sm"
+                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all font-mono"
                                         placeholder="Es: matricole, trasporti (usato per link di ancoraggio)"
                                     />
                                 </div>
                             )}
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Titolo Guida (IT) *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Titolo Guida (IT) *</label>
                                 <input
                                     type="text"
                                     required
                                     value={guideForm.title}
                                     onChange={e => setGuideForm({ ...guideForm, title: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: Guida Matricole"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Titolo Guida (EN)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Titolo Guida (EN)</label>
                                 <input
                                     type="text"
                                     value={guideForm.titleEn}
                                     onChange={e => setGuideForm({ ...guideForm, titleEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: Freshmen Guide"
                                 />
                             </div>
 
                             <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione Guida (IT) *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione Guida (IT) *</label>
                                 <textarea
                                     required
                                     value={guideForm.description}
                                     onChange={e => setGuideForm({ ...guideForm, description: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none h-16 resize-none font-medium text-sm"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all h-20 resize-none"
                                     placeholder="Breve descrizione generale della guida..."
                                 />
                             </div>
 
                             <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione Guida (EN)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione Guida (EN)</label>
                                 <textarea
                                     value={guideForm.descriptionEn}
                                     onChange={e => setGuideForm({ ...guideForm, descriptionEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none h-16 resize-none font-medium text-sm"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all h-20 resize-none"
                                     placeholder="Brief guide description in English..."
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Colore Estetico *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Colore Estetico *</label>
                                 <select
                                     value={guideForm.color}
                                     onChange={e => setGuideForm({ ...guideForm, color: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                                 >
                                     {AVAILABLE_COLORS.map(col => <option key={col.name} value={col.name}>{col.label}</option>)}
                                 </select>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ordine</label>
                                 <input
                                     type="number"
                                     value={guideForm.order}
                                     onChange={e => setGuideForm({ ...guideForm, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                 />
                             </div>
 
-                            <div className="md:col-span-2 flex items-center gap-3 py-2 bg-zinc-50/50 p-4 rounded-2xl border border-zinc-100">
+                            <div className="md:col-span-2 flex items-center gap-3 py-2 bg-slate-50/50 p-4 rounded-xl border border-slate-200/60">
                                 <input
                                     type="checkbox"
                                     id="hasCustomComponent"
                                     checked={guideForm.hasCustomComponent}
                                     onChange={e => setGuideForm({ ...guideForm, hasCustomComponent: e.target.checked })}
-                                    className="size-4 rounded border-zinc-200 text-zinc-900 focus:ring-zinc-900/10"
+                                    className="size-4 rounded border-slate-350 text-[#c9041a] focus:ring-[#c9041a]/10"
                                 />
                                 <div className="space-y-0.5">
-                                    <label htmlFor="hasCustomComponent" className="text-xs font-bold uppercase tracking-widest text-zinc-800 cursor-pointer">Rendering Vista Integrata</label>
-                                    <p className="text-[10px] text-zinc-400 font-medium leading-tight">Se attivo, renderizzerà un componente dedicato (es. Mappa Interattiva, Servizi ERSU) anziché solo la lista di step.</p>
+                                    <label htmlFor="hasCustomComponent" className="text-xs font-bold uppercase tracking-widest text-slate-800 cursor-pointer">Rendering Vista Integrata</label>
+                                    <p className="text-[10px] text-slate-400 font-medium leading-tight">Se attivo, renderizzerà un componente dedicato (es. Mappa Interattiva, Servizi ERSU) anziché solo la lista di step.</p>
                                 </div>
                             </div>
 
                             <div className="md:col-span-2 space-y-3">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Icona *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Icona *</label>
                                 <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
                                     {AVAILABLE_ICONS.map(item => (
                                         <button
@@ -712,10 +729,10 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                             type="button"
                                             onClick={() => setGuideForm({ ...guideForm, icon: item.name })}
                                             className={cn(
-                                                "flex items-center justify-center p-3 rounded-xl border transition-all hover:bg-zinc-50",
+                                                "flex items-center justify-center p-3 rounded-xl border transition-all",
                                                 guideForm.icon === item.name
-                                                    ? "border-zinc-900 bg-zinc-900 text-white shadow-sm"
-                                                    : "border-zinc-100 text-zinc-500"
+                                                    ? "border-[#c9041a] bg-gradient-to-br from-[#c12830] to-[#18182e] text-white shadow-sm"
+                                                    : "border-slate-200/60 text-slate-500 hover:bg-slate-50"
                                             )}
                                             title={item.name}
                                         >
@@ -729,7 +746,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-800 disabled:opacity-50 transition-all shadow-lg shadow-zinc-150 flex items-center justify-center gap-2"
+                                    className="w-full py-3.5 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl font-bold text-sm hover:opacity-90 disabled:opacity-50 transition-all shadow-md flex items-center justify-center gap-2"
                                 >
                                     {loading ? (
                                         <><Loader2 className="size-4 animate-spin" /> Salvataggio...</>
@@ -745,67 +762,69 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
 
             {/* Dialog Form for Step */}
             <Dialog open={isStepModalOpen} onOpenChange={setIsStepModalOpen}>
-                <DialogContent className="max-w-xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-3xl shadow-2xl">
-                    <form onSubmit={handleSaveStep} className="bg-white p-8 space-y-6">
+                <DialogContent className="max-w-2xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-2xl shadow-2xl">
+                    <form onSubmit={handleSaveStep} className="bg-white p-6 space-y-6">
                         <DialogHeader>
-                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
-                                <Settings className="size-6 text-zinc-900" />
+                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2 text-slate-900">
+                                <div className="p-2 bg-teal-50 text-teal-600 rounded-xl">
+                                    <Settings className="size-5" />
+                                </div>
                                 {editingStepId ? "Modifica Step" : "Nuovo Step"}
                             </DialogTitle>
                         </DialogHeader>
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Titolo Step (IT) *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Titolo Step (IT) *</label>
                                 <input
                                     type="text"
                                     required
                                     value={stepForm.title}
                                     onChange={e => setStepForm({ ...stepForm, title: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: Registrazione su Esse3"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Titolo Step (EN)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Titolo Step (EN)</label>
                                 <input
                                     type="text"
                                     value={stepForm.titleEn}
                                     onChange={e => setStepForm({ ...stepForm, titleEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: Esse3 Registration"
                                 />
                             </div>
 
                             <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione Step (IT) *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione Step (IT) *</label>
                                 <textarea
                                     required
                                     value={stepForm.description}
                                     onChange={e => setStepForm({ ...stepForm, description: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none h-24 resize-none font-medium text-sm leading-relaxed"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all h-24 resize-none leading-relaxed"
                                     placeholder="Cosa fare in questo step..."
                                 />
                             </div>
 
                             <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione Step (EN)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione Step (EN)</label>
                                 <textarea
                                     value={stepForm.descriptionEn}
                                     onChange={e => setStepForm({ ...stepForm, descriptionEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none h-24 resize-none font-medium text-sm leading-relaxed"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all h-24 resize-none leading-relaxed"
                                     placeholder="Step description in English..."
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ordine</label>
                                 <input
                                     type="number"
                                     value={stepForm.order}
                                     onChange={e => setStepForm({ ...stepForm, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                 />
                             </div>
 
@@ -813,7 +832,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-800 disabled:opacity-50 transition-all shadow-lg shadow-zinc-150 flex items-center justify-center gap-2"
+                                    className="w-full py-3.5 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl font-bold text-sm hover:opacity-90 disabled:opacity-50 transition-all shadow-md flex items-center justify-center gap-2"
                                 >
                                     {loading ? (
                                         <><Loader2 className="size-4 animate-spin" /> Salvataggio...</>
@@ -826,6 +845,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                     </form>
                 </DialogContent>
             </Dialog>
+        </div>
         </div>
     )
 }
