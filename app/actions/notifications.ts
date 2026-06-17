@@ -88,13 +88,11 @@ export async function getNotifications() {
 
 export async function registerDeadlineAlert({
     email,
-    deadlineTitle,
-    deadlineDate,
+    deadlineId,
     locale
 }: {
     email: string
-    deadlineTitle: string
-    deadlineDate: string
+    deadlineId: string
     locale: string
 }) {
     if (!email || !email.includes("@")) {
@@ -102,8 +100,50 @@ export async function registerDeadlineAlert({
     }
 
     try {
+        const countdown = await prisma.deadlineCountdown.findUnique({
+            where: { id: deadlineId }
+        })
+
+        if (!countdown) {
+            return { success: false, error: locale === "en" ? "Deadline not found." : "Scadenza non trovata." }
+        }
+
+        // Check if alert already exists
+        const existingAlert = await prisma.deadlineAlert.findUnique({
+            where: {
+                email_countdownId: {
+                    email,
+                    countdownId: deadlineId
+                }
+            }
+        })
+
+        if (existingAlert) {
+            return { success: false, error: locale === "en" ? "Alert already registered for this deadline." : "Ti sei già registrato per questa scadenza." }
+        }
+
+        // Register alert in DB
+        await prisma.deadlineAlert.create({
+            data: {
+                email,
+                countdownId: deadlineId,
+                locale
+            }
+        })
+
         const { getDeadlineAlertTemplate } = await import("@/lib/email-templates")
         const { sendEmail } = await import("@/lib/mail")
+
+        const formattedDate = countdown.date.toLocaleDateString(locale === "en" ? "en-US" : "it-IT", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            timeZone: "Europe/Rome"
+        })
+
+        const deadlineTitle = locale === "en" ? (countdown.titleEn || countdown.title) : countdown.title
 
         // Send confirmation email
         const res = await sendEmail({
@@ -111,7 +151,7 @@ export async function registerDeadlineAlert({
             subject: locale === "en" 
                 ? `UniMe Deadline Alert: ${deadlineTitle}` 
                 : `Promemoria Scadenza UniMe: ${deadlineTitle}`,
-            html: getDeadlineAlertTemplate(deadlineTitle, deadlineDate, locale),
+            html: getDeadlineAlertTemplate(deadlineTitle, formattedDate, locale),
             brand: "joint"
         })
 

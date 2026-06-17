@@ -373,17 +373,33 @@ model MediaLibraryItem {
 }
 
 model DeadlineCountdown {
-  id            String   @id @default(uuid())
+  id            String          @id @default(uuid())
   title         String
   titleEn       String?
-  category      String   // "burocrazia" | "sessione"
+  category      String          // "burocrazia" | "sessione"
   date          DateTime
   description   String
   descriptionEn String?
-  visible       Boolean  @default(true)
-  order         Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  visible       Boolean         @default(true)
+  order         Int             @default(0)
+  alerts        DeadlineAlert[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model DeadlineAlert {
+  id            String            @id @default(uuid())
+  email         String
+  countdownId   String
+  countdown     DeadlineCountdown @relation(fields: [countdownId], references: [id], onDelete: Cascade)
+  sentOneMonth  Boolean           @default(false)
+  sentOneWeek   Boolean           @default(false)
+  sentFiveDays  Boolean           @default(false)
+  sentOneDay    Boolean           @default(false)
+  locale        String            @default("it")
+  createdAt     DateTime          @default(now())
+
+  @@unique([email, countdownId])
 }
 
 

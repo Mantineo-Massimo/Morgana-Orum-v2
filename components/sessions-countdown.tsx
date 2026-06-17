@@ -286,15 +286,7 @@ export function SessionsCountdown({ locale, initialItems, sessionEmail }: Sessio
                                                         try {
                                                             const res = await registerDeadlineAlert({
                                                                 email,
-                                                                deadlineTitle: titleText,
-                                                                deadlineDate: item.date.toLocaleDateString("it-IT", {
-                                                                    day: "2-digit",
-                                                                    month: "long",
-                                                                    year: "numeric",
-                                                                    hour: "2-digit",
-                                                                    minute: "2-digit",
-                                                                    timeZone: "Europe/Rome"
-                                                                }),
+                                                                deadlineId: item.id,
                                                                 locale
                                                             })
                                                             if (res.success) {
@@ -355,15 +347,7 @@ export function SessionsCountdown({ locale, initialItems, sessionEmail }: Sessio
                                                             try {
                                                                 const res = await registerDeadlineAlert({
                                                                     email: sessionEmail,
-                                                                    deadlineTitle: titleText,
-                                                                    deadlineDate: item.date.toLocaleDateString("it-IT", {
-                                                                        day: "2-digit",
-                                                                        month: "long",
-                                                                        year: "numeric",
-                                                                        hour: "2-digit",
-                                                                        minute: "2-digit",
-                                                                        timeZone: "Europe/Rome"
-                                                                    }),
+                                                                    deadlineId: item.id,
                                                                     locale
                                                                 })
                                                                 if (res.success) {

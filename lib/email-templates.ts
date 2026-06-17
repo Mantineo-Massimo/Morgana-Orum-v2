@@ -320,10 +320,39 @@ export function getDeadlineAlertTemplate(deadlineTitle: string, deadlineDate: st
                     <h3 style="margin-top: 0; margin-bottom: 10px; color: #0f172a; font-size: 16px; font-weight: 700;">${deadlineTitle}</h3>
                     <p style="margin: 0; color: #475569; font-size: 14px;">📅 <strong>${isEn ? "Deadline:" : "Scadenza:"}</strong> ${deadlineDate}</p>
                 </div>
- 
+  
                 <p style="color: #4b5563; font-size: 14px;">${isEn
             ? "You will receive automatic email reminders 1 month, 1 week, 5 days, and the day before this deadline to make sure you don't miss it!"
             : "Ti invieremo dei promemoria email automatici 1 mese, 1 settimana, 5 giorni e il giorno prima di questa scadenza per assicurarci che tu non la manchi!"}</p>
+            </div>
+            ${getEmailFooter(isEn ? "Always supporting students!" : "Sempre dalla parte dello studente!")}
+        </div>
+    </div>
+    `
+}
+
+export function getDeadlineReminderEmailTemplate(deadlineTitle: string, deadlineDate: string, intervalLabel: string, locale: string) {
+    const isEn = locale === "en"
+    const title = isEn ? "Upcoming Deadline Alert!" : "Avviso Scadenza Imminente!"
+
+    return `
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader(title, "#c12830")}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 16px; color: #111827;">${isEn ? "Hello," : "Ciao,"}</p>
+                <p style="font-size: 15px;">${isEn
+            ? `This is an automatic reminder that the following university deadline is scheduled for **${intervalLabel}**:`
+            : `Questo è un promemoria automatico per ricordarti che la seguente scadenza universitaria scade **${intervalLabel}**:`}</p>
+                
+                <div style="background-color: #fffbeb; padding: 20px; border-radius: 12px; margin: 24px 0; border: 1px solid #fef3c7;">
+                    <h3 style="margin-top: 0; margin-bottom: 10px; color: #92400e; font-size: 16px; font-weight: 700;">${deadlineTitle}</h3>
+                    <p style="margin: 0; color: #b45309; font-size: 14px;">📅 <strong>${isEn ? "Deadline Date:" : "Data Scadenza:"}</strong> ${deadlineDate}</p>
+                </div>
+ 
+                <p style="color: #4b5563; font-size: 14px;">${isEn
+            ? "Make sure you complete all necessary steps before the expiration date."
+            : "Assicurati di completare tutti i passaggi necessari prima della data di scadenza."}</p>
             </div>
             ${getEmailFooter(isEn ? "Always supporting students!" : "Sempre dalla parte dello studente!")}
         </div>
