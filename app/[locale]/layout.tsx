@@ -28,55 +28,71 @@ const outfit = Outfit({
     preload: true,
 })
 
-export const metadata: Metadata = {
-    metadataBase: new URL("https://www.morganaorum.it"),
-    alternates: {
-        canonical: "https://www.morganaorum.it",
-    },
-    title: {
-        default: "Morgana & O.R.U.M. - Associazioni Universitarie",
-        template: "%s | Morgana & O.R.U.M."
-    },
-    description: "Associazioni Universitarie Morgana & O.R.U.M. - Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
-    keywords: ["Associazione Morgana", "Associazione ORUM", "Unime", "Università di Messina", "Rappresentanza Studentesca", "Eventi Universitari", "Messina"],
-    authors: [{ name: "Massimo Mantineo" }],
-    creator: "Massimo Mantineo",
-    publisher: "Morgana & O.R.U.M.",
-    robots: {
-        index: true,
-        follow: true,
-    },
-    openGraph: {
-        type: "website",
-        locale: "it_IT",
-        url: "https://morganaorum.it",
-        siteName: "Morgana & O.R.U.M.",
-        title: "Morgana & O.R.U.M. - Associazioni Universitarie",
-        description: "Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
-        images: [
-            {
-                url: "/assets/morganaorum/og-image.webp",
-                width: 1200,
-                height: 630,
-                alt: "Morgana & O.R.U.M. Associazioni Universitarie",
-            }
-        ],
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Morgana & O.R.U.M. - Associazioni Universitarie",
-        description: "Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
-        images: ["/assets/morganaorum/og-image.webp"],
-    },
-    icons: {
-        icon: [
-            { url: "/assets/morganaorum/favicon.ico" },
-            { url: "/assets/morganaorum/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-            { url: "/assets/morganaorum/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-        ],
-        apple: [
-            { url: "/assets/morganaorum/apple-touch-icon.png" },
-        ],
+const BASE_URL = "https://www.morganaorum.it"
+
+export async function generateMetadata({
+    params: { locale }
+}: {
+    params: { locale: string }
+}): Promise<Metadata> {
+    const canonicalUrl = `${BASE_URL}/${locale}`
+
+    return {
+        metadataBase: new URL(BASE_URL),
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                "it": `${BASE_URL}/it`,
+                "en": `${BASE_URL}/en`,
+                "x-default": `${BASE_URL}/it`,
+            },
+        },
+        title: {
+            default: "Morgana & O.R.U.M. - Associazioni Universitarie",
+            template: "%s | Morgana & O.R.U.M."
+        },
+        description: "Associazioni Universitarie Morgana & O.R.U.M. - Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
+        keywords: ["Associazione Morgana", "Associazione ORUM", "Unime", "Università di Messina", "Rappresentanza Studentesca", "Eventi Universitari", "Messina"],
+        authors: [{ name: "Massimo Mantineo" }],
+        creator: "Massimo Mantineo",
+        publisher: "Morgana & O.R.U.M.",
+        robots: {
+            index: true,
+            follow: true,
+        },
+        openGraph: {
+            type: "website",
+            locale: locale === "en" ? "en_US" : "it_IT",
+            alternateLocale: locale === "en" ? "it_IT" : "en_US",
+            url: canonicalUrl,
+            siteName: "Morgana & O.R.U.M.",
+            title: "Morgana & O.R.U.M. - Associazioni Universitarie",
+            description: "Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
+            images: [
+                {
+                    url: "/assets/morganaorum/og-image.webp",
+                    width: 1200,
+                    height: 630,
+                    alt: "Morgana & O.R.U.M. Associazioni Universitarie",
+                }
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: "Morgana & O.R.U.M. - Associazioni Universitarie",
+            description: "Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
+            images: ["/assets/morganaorum/og-image.webp"],
+        },
+        icons: {
+            icon: [
+                { url: "/assets/morganaorum/favicon.ico" },
+                { url: "/assets/morganaorum/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+                { url: "/assets/morganaorum/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+            ],
+            apple: [
+                { url: "/assets/morganaorum/apple-touch-icon.png" },
+            ],
+        }
     }
 }
 
