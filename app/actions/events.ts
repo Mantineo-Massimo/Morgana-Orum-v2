@@ -6,6 +6,8 @@ import { revalidatePath, unstable_cache, revalidateTag } from "next/cache"
 import { sendEmail } from "@/lib/mail"
 import { getEventBookingTemplate, getNewsletterTemplate } from "@/lib/email-templates"
 import { sendPublicationNotification } from "./notifications"
+import { toUtcFromRome } from "@/lib/date"
+
 
 async function checkContentPermission(itemAssociations?: Association[]) {
     const { cookies } = await import("next/headers")
@@ -206,7 +208,7 @@ export async function registerForEvent(userEmail: string, eventId: number) {
 
         const now = new Date()
         if (event.bookingStart && now < event.bookingStart) {
-            return { success: false, message: `Le prenotazioni aprono il ${event.bookingStart.toLocaleDateString('it-IT')}.` }
+            return { success: false, message: `Le prenotazioni aprono il ${event.bookingStart.toLocaleDateString('it-IT', { timeZone: 'Europe/Rome' })}.` }
         }
         if (event.bookingEnd && now > event.bookingEnd) {
             return { success: false, message: "Le prenotazioni per questo evento sono chiuse." }
@@ -246,7 +248,8 @@ export async function registerForEvent(userEmail: string, eventId: number) {
             month: 'long', 
             year: 'numeric', 
             hour: '2-digit', 
-            minute: '2-digit' 
+            minute: '2-digit',
+            timeZone: 'Europe/Rome'
         })
 
         sendEmail({
@@ -401,8 +404,8 @@ export async function createEvent(data: {
                 descriptionEn: (data as any).descriptionEn || null,
                 details: data.details || null,
                 detailsEn: (data as any).detailsEn || null,
-                date: new Date(data.date),
-                endDate: data.endDate ? new Date(data.endDate) : null,
+                date: toUtcFromRome(data.date),
+                endDate: data.endDate ? toUtcFromRome(data.endDate) : null,
                 location: data.location,
                 cfuValue: data.cfuValue || null,
                 cfuType: data.cfuType || null,
@@ -410,8 +413,8 @@ export async function createEvent(data: {
                 image: data.image || null,
                 category: data.category,
                 bookingOpen: data.bookingOpen,
-                bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
-                bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
+                bookingStart: data.bookingStart ? toUtcFromRome(data.bookingStart) : null,
+                bookingEnd: data.bookingEnd ? toUtcFromRome(data.bookingEnd) : null,
                 attachments: data.attachments || null,
                 associations: data.associations || [Association.MORGANA_ORUM],
                 published: data.published,
@@ -480,8 +483,8 @@ export async function updateEvent(id: number, data: {
             descriptionEn: (data as any).descriptionEn || null,
             details: data.details || null,
             detailsEn: (data as any).detailsEn || null,
-            date: new Date(data.date),
-            endDate: data.endDate ? new Date(data.endDate) : null,
+            date: toUtcFromRome(data.date),
+            endDate: data.endDate ? toUtcFromRome(data.endDate) : null,
             location: data.location,
             cfuValue: data.cfuValue || null,
             cfuType: data.cfuType || null,
@@ -489,8 +492,8 @@ export async function updateEvent(id: number, data: {
             image: data.image || null,
             category: data.category,
             bookingOpen: data.bookingOpen,
-            bookingStart: data.bookingStart ? new Date(data.bookingStart) : null,
-            bookingEnd: data.bookingEnd ? new Date(data.bookingEnd) : null,
+            bookingStart: data.bookingStart ? toUtcFromRome(data.bookingStart) : null,
+            bookingEnd: data.bookingEnd ? toUtcFromRome(data.bookingEnd) : null,
             attachments: data.attachments || null,
             associations: { set: data.associations || [Association.MORGANA_ORUM] },
             published: data.published,

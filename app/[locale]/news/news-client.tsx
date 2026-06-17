@@ -140,7 +140,8 @@ function NewsCard({ item }: { item: any }) {
     const formattedDate = new Date(item.date).toLocaleDateString(locale, {
         day: "numeric",
         month: "short",
-        year: "numeric"
+        year: "numeric",
+        timeZone: "Europe/Rome"
     })
 
     const assocBadge = (

@@ -14,6 +14,8 @@ import {
     ChevronDown, ChevronUp, Save
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { toUtcFromRome, toRomeDateInputString, getRomeParts } from "@/lib/date"
+
 
 const CATEGORY_OPTIONS = [
     { value: "burocrazia", label: "Scadenza Burocratica", icon: FileText, color: "bg-[#18182e]/5 text-[#18182e] border-[#18182e]/10" },
@@ -45,9 +47,9 @@ const emptyForm = (): FormData => ({
 })
 
 const itemToForm = (item: DeadlineCountdownData): FormData => {
-    const d = new Date(item.date)
-    const dateStr = d.toISOString().slice(0, 10)
-    const timeStr = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`
+    const parts = getRomeParts(new Date(item.date))
+    const dateStr = toRomeDateInputString(item.date)
+    const timeStr = `${String(parts.hour).padStart(2, "0")}:${String(parts.minute).padStart(2, "0")}`
     return {
         title: item.title,
         titleEn: item.titleEn || "",
@@ -107,7 +109,7 @@ export function CountdownAdminClient({ initialItems }: Props) {
         e.preventDefault()
         setSaving(true)
         try {
-            const dateObj = new Date(`${form.date}T${form.time}:00`)
+            const dateObj = toUtcFromRome(`${form.date}T${form.time}:00`)
             const payload = {
                 title: form.title,
                 titleEn: form.titleEn || undefined,
@@ -288,7 +290,7 @@ export function CountdownAdminClient({ initialItems }: Props) {
                                     <p className="text-xs text-zinc-500 line-clamp-2 leading-relaxed">{item.description}</p>
                                     <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 font-bold">
                                         <Calendar className="size-3.5" />
-                                        {new Date(item.date).toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                                        {new Date(item.date).toLocaleDateString("it-IT", { day: "2-digit", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit", timeZone: "Europe/Rome" })}
                                     </div>
                                 </div>
 

@@ -30,10 +30,10 @@ type EventData = {
 }
 
 function formatDate(date: Date) {
-    return new Date(date).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })
+    return new Date(date).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Europe/Rome' })
 }
 function formatTime(date: Date) {
-    return new Date(date).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })
+    return new Date(date).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' })
 }
 
 function isBookingActive(event: EventData): { canBook: boolean; message: string } {

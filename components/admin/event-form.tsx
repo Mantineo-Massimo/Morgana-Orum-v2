@@ -11,6 +11,8 @@ import { departmentsData } from "@/lib/departments"
 import { Association } from "@prisma/client"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { MediaSelector } from "@/components/admin/media-selector"
+import { toRomeInputString, toUtcFromRome } from "@/lib/date"
+
 
 
 type EventFormProps = {
@@ -46,16 +48,7 @@ type EventFormProps = {
 // Extract list of department names for checklists
 const DEPARTMENTS_LIST = Object.keys(departmentsData)
 
-function dateToInputValue(d: Date | null | undefined): string {
-    if (!d) return ''
-    const dt = new Date(d)
-    const y = dt.getFullYear()
-    const m = String(dt.getMonth() + 1).padStart(2, '0')
-    const day = String(dt.getDate()).padStart(2, '0')
-    const h = String(dt.getHours()).padStart(2, '0')
-    const min = String(dt.getMinutes()).padStart(2, '0')
-    return `${y}-${m}-${day}T${h}:${min}`
-}
+// dateToInputValue replaced by toRomeInputString from @/lib/date
 
 export default function EventForm({ initialData, categories, userRole, userAssociation,
     isModal = false,
@@ -191,7 +184,7 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
 
             const toISO = (val: string | null | undefined) => {
                 if (!val) return undefined
-                const d = new Date(val)
+                const d = toUtcFromRome(val)
                 return isNaN(d.getTime()) ? undefined : d.toISOString()
             }
 
@@ -389,12 +382,12 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label className={labelClass}>Data e Ora Inizio *</label>
-                        <input type="datetime-local" name="date" defaultValue={dateToInputValue(initialData?.date)} required className={inputClass} />
+                        <input type="datetime-local" name="date" defaultValue={toRomeInputString(initialData?.date)} required className={inputClass} />
                         <p className="text-[10px] text-zinc-400 mt-1 italic">Formato: gg/mm/aaaa, 24h</p>
                     </div>
                     <div>
                         <label className={labelClass}>Data e Ora Fine</label>
-                        <input type="datetime-local" name="endDate" defaultValue={dateToInputValue(initialData?.endDate)} className={inputClass} />
+                        <input type="datetime-local" name="endDate" defaultValue={toRomeInputString(initialData?.endDate)} className={inputClass} />
                         <p className="text-[10px] text-zinc-400 mt-1 italic">Solo per eventi multi-giorno (gg/mm/aaaa, 24h)</p>
                     </div>
                 </div>
@@ -537,11 +530,11 @@ export default function EventForm({ initialData, categories, userRole, userAssoc
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <label className={labelClass}>Apertura prenotazione</label>
-                                <input type="datetime-local" name="bookingStart" defaultValue={dateToInputValue(initialData?.bookingStart)} className={inputClass} />
+                                <input type="datetime-local" name="bookingStart" defaultValue={toRomeInputString(initialData?.bookingStart)} className={inputClass} />
                             </div>
                             <div>
                                 <label className={labelClass}>Chiusura prenotazione</label>
-                                <input type="datetime-local" name="bookingEnd" defaultValue={dateToInputValue(initialData?.bookingEnd)} className={inputClass} />
+                                <input type="datetime-local" name="bookingEnd" defaultValue={toRomeInputString(initialData?.bookingEnd)} className={inputClass} />
                             </div>
                         </div>
                     )}

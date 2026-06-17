@@ -261,7 +261,8 @@ export function SessionsCountdown({ locale, initialItems }: SessionsCountdownPro
                                                     month: "long",
                                                     year: "numeric",
                                                     hour: "2-digit",
-                                                    minute: "2-digit"
+                                                    minute: "2-digit",
+                                                    timeZone: "Europe/Rome"
                                                 })}
                                             </span>
                                         </div>
@@ -290,7 +291,8 @@ export function SessionsCountdown({ locale, initialItems }: SessionsCountdownPro
                                                                     month: "long",
                                                                     year: "numeric",
                                                                     hour: "2-digit",
-                                                                    minute: "2-digit"
+                                                                    minute: "2-digit",
+                                                                    timeZone: "Europe/Rome"
                                                                 }),
                                                                 locale
                                                             })

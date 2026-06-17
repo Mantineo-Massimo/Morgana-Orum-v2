@@ -48,7 +48,8 @@ export default async function NewsDetailPage({ params: { id, locale } }: { param
     const formattedDate = new Date(article.date).toLocaleDateString("it-IT", {
         day: "numeric",
         month: "long",
-        year: "numeric"
+        year: "numeric",
+        timeZone: "Europe/Rome"
     })
 
     return (

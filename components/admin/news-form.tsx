@@ -11,6 +11,8 @@ import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { RichTextEditor } from "@/components/ui/rich-text-editor"
 import { MediaSelector } from "@/components/admin/media-selector"
+import { getRomeParts, toUtcFromRome } from "@/lib/date"
+
 
 
 
@@ -114,7 +116,7 @@ export default function NewsForm({
 
         const toISO = (val: string | null | undefined) => {
             if (!val) return undefined
-            const d = new Date(val)
+            const d = toUtcFromRome(val)
             return isNaN(d.getTime()) ? undefined : d.toISOString()
         }
 
@@ -151,11 +153,12 @@ export default function NewsForm({
     }
 
     const initDate = initialData?.date ? new Date(initialData.date) : new Date()
-    const [dateDay, setDateDay] = useState(String(initDate.getDate()).padStart(2, '0'))
-    const [dateMonth, setDateMonth] = useState(String(initDate.getMonth() + 1).padStart(2, '0'))
-    const [dateYear, setDateYear] = useState(String(initDate.getFullYear()))
-    const [dateHour, setDateHour] = useState(String(initDate.getHours()).padStart(2, '0'))
-    const [dateMinute, setDateMinute] = useState(String(initDate.getMinutes()).padStart(2, '0'))
+    const parts = getRomeParts(initDate)
+    const [dateDay, setDateDay] = useState(String(parts.day).padStart(2, '0'))
+    const [dateMonth, setDateMonth] = useState(String(parts.month).padStart(2, '0'))
+    const [dateYear, setDateYear] = useState(String(parts.year))
+    const [dateHour, setDateHour] = useState(String(parts.hour).padStart(2, '0'))
+    const [dateMinute, setDateMinute] = useState(String(parts.minute).padStart(2, '0'))
 
     // Combine into a date string WITHOUT UTC conversion
     // Format: YYYY-MM-DDTHH:mm (parsed by server as local time)

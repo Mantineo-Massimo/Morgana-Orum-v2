@@ -6,18 +6,20 @@ import { Link } from "@/i18n/routing"
 import { ArrowRight, Bell, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-export function NextDeadlineWidget({ locale }: { locale: string }) {
+export function NextDeadlineWidget({ locale, initialItems }: { locale: string, initialItems?: any[] }) {
     const isEn = locale === "en"
     const [timeLeft, setTimeLeft] = useState<{ d: number; h: number; m: number; s: number } | null>(null)
+
+    const items = initialItems && initialItems.length > 0 ? initialItems : COUNTDOWN_ITEMS;
 
     // Find first upcoming deadline
     const nextItem = useMemo(() => {
         const now = new Date().getTime()
-        const upcoming = COUNTDOWN_ITEMS
+        const upcoming = items
             .filter(item => new Date(item.date).getTime() > now)
             .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
         return upcoming[0] || null
-    }, [])
+    }, [items])
 
     useEffect(() => {
         if (!nextItem) return
@@ -66,7 +68,7 @@ export function NextDeadlineWidget({ locale }: { locale: string }) {
                                 {isEn ? "Next Deadline" : "Prossima Scadenza"}
                             </span>
                             <span className="text-[10px] text-zinc-400 font-bold font-mono">
-                                📅 {new Date(nextItem.date).toLocaleDateString(locale === "en" ? "en-US" : "it-IT", { day: "numeric", month: "long" })}
+                                📅 {new Date(nextItem.date).toLocaleDateString(locale === "en" ? "en-US" : "it-IT", { day: "numeric", month: "long", timeZone: "Europe/Rome" })}
                             </span>
                         </div>
                         <h4 className="text-base font-serif font-black tracking-tight text-white uppercase leading-snug">

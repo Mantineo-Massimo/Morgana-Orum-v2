@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Settings, Save, Calendar, Eye, EyeOff } from "lucide-react"
 import { updatePiazzaSettings } from "@/app/actions/piazza"
 import { cn } from "@/lib/utils"
+import { toRomeInputString, toUtcFromRome } from "@/lib/date"
 
 interface SettingsManagerProps {
     settings: {
@@ -17,7 +18,7 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
     const [loading, setLoading] = useState(false)
     const [form, setForm] = useState({
         year: initialSettings.year,
-        eventDate: initialSettings.eventDate ? new Date(initialSettings.eventDate).toISOString().slice(0, 16) : '',
+        eventDate: initialSettings.eventDate ? toRomeInputString(initialSettings.eventDate) : '',
         countdownVisible: initialSettings.countdownVisible
     })
 
@@ -27,7 +28,7 @@ export function SettingsManager({ settings: initialSettings }: SettingsManagerPr
         try {
             const result = await updatePiazzaSettings({
                 year: form.year,
-                eventDate: form.eventDate ? new Date(form.eventDate) : undefined,
+                eventDate: form.eventDate ? toUtcFromRome(form.eventDate) : undefined,
                 countdownVisible: form.countdownVisible
             })
             if (result.success) {

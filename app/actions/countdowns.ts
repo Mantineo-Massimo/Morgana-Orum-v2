@@ -1,6 +1,7 @@
 "use server"
 
 import prisma from "@/lib/prisma"
+import { toUtcFromRome } from "@/lib/date"
 
 export type DeadlineCountdownData = {
     id: string
@@ -128,7 +129,7 @@ export async function seedDefaultCountdowns(): Promise<void> {
                 title: "Domanda Borsa di Studio ERSU 2026/27",
                 titleEn: "ERSU Scholarship Application 2026/27",
                 category: "burocrazia",
-                date: new Date("2026-08-31T23:59:59"),
+                date: toUtcFromRome("2026-08-31T23:59:59"),
                 description: "Scadenza ultima per la presentazione della domanda di borsa di studio ed esonero tasse ERSU sul portale dedicato.",
                 descriptionEn: "Final deadline to submit the ERSU scholarship and tuition fee waiver application on the official portal.",
                 order: 1
@@ -137,7 +138,7 @@ export async function seedDefaultCountdowns(): Promise<void> {
                 title: "Sessione d'Esami Autunnale",
                 titleEn: "Autumn Exam Session",
                 category: "sessione",
-                date: new Date("2026-09-01T09:00:00"),
+                date: toUtcFromRome("2026-09-01T09:00:00"),
                 description: "Inizio ufficiale degli appelli d'esame per la sessione autunnale dell'A.A. 2025/26.",
                 descriptionEn: "Official start of exam calls for the Autumn session of the Academic Year 2025/26.",
                 order: 2
@@ -146,7 +147,7 @@ export async function seedDefaultCountdowns(): Promise<void> {
                 title: "Compilazione Piano di Studi 2026/27",
                 titleEn: "Study Plan Submission 2026/27",
                 category: "burocrazia",
-                date: new Date("2026-11-15T23:59:59"),
+                date: toUtcFromRome("2026-11-15T23:59:59"),
                 description: "Finestra per la compilazione e modifica online del piano di studi per l'A.A. 2026/27 su Esse3.",
                 descriptionEn: "Timeline for submitting and editing your online study plan for A.Y. 2026/27 on the Esse3 portal.",
                 order: 3
@@ -155,7 +156,7 @@ export async function seedDefaultCountdowns(): Promise<void> {
                 title: "Scadenza Immatricolazioni & Iscrizioni 2026/27",
                 titleEn: "Enrollment & Registration Deadline 2026/27",
                 category: "burocrazia",
-                date: new Date("2026-12-31T23:59:59"),
+                date: toUtcFromRome("2026-12-31T23:59:59"),
                 description: "Termine ultimo per completare l'immatricolazione o l'iscrizione ad anni successivi senza mora.",
                 descriptionEn: "Deadline to complete enrollment or re-enrollment for subsequent years without incurring late fees.",
                 order: 4
@@ -164,7 +165,7 @@ export async function seedDefaultCountdowns(): Promise<void> {
                 title: "Sessione d'Esami Invernale 2026/27",
                 titleEn: "Winter Exam Session 2026/27",
                 category: "sessione",
-                date: new Date("2027-01-15T09:00:00"),
+                date: toUtcFromRome("2027-01-15T09:00:00"),
                 description: "Inizio ufficiale della sessione d'esami ordinaria invernale per l'A.A. 2026/27.",
                 descriptionEn: "Official start of the winter ordinary exam session for the Academic Year 2026/27.",
                 order: 5

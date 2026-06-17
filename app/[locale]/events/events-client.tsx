@@ -33,13 +33,13 @@ type EventItem = {
 
 // --- Helper: format date/time ---
 function formatDate(date: Date, locale: string) {
-    return new Date(date).toLocaleDateString(locale, { day: '2-digit', month: 'long', year: 'numeric' })
+    return new Date(date).toLocaleDateString(locale, { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Europe/Rome' })
 }
 function formatShortDate(date: Date, locale: string) {
-    return new Date(date).toLocaleDateString(locale, { day: '2-digit', month: 'short' })
+    return new Date(date).toLocaleDateString(locale, { day: '2-digit', month: 'short', timeZone: 'Europe/Rome' })
 }
 function formatTime(date: Date, locale: string) {
-    return new Date(date).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })
+    return new Date(date).toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' })
 }
 
 function getBookingLabel(event: EventItem, t: any, locale: string): { label: string; color: string; icon: typeof Ticket } {

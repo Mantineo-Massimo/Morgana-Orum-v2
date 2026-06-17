@@ -11,6 +11,8 @@ import { EventCard } from "@/components/event-card"
 import { cookies } from "next/headers"
 import { Suspense } from "react"
 import { NextDeadlineWidget } from "@/components/next-deadline-widget"
+import { getVisibleCountdowns } from "@/app/actions/countdowns"
+
 
 
 export const dynamic = "force-dynamic"
@@ -26,6 +28,8 @@ export default async function BrandHomePage({
     const content = {
         gradient: "from-[#c12830]/80 to-[#18182e]/90",
     }
+
+    const countdownItems = await getVisibleCountdowns()
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -46,7 +50,7 @@ export default async function BrandHomePage({
                 </div>
             </section>
 
-            <NextDeadlineWidget locale={locale} />
+            <NextDeadlineWidget locale={locale} initialItems={countdownItems} />
 
 
             {/* HIGHLIGHTED EVENTS SECTION */}

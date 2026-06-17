@@ -12,7 +12,7 @@ export async function generateMetadata({ params: { id, locale } }: { params: { i
 
     return {
         title: event.title,
-        description: event.description || `Evento ${event.title} organizzato da Morgana & O.R.U.M. il ${new Date(event.date).toLocaleDateString("it-IT")}`,
+        description: event.description || `Evento ${event.title} organizzato da Morgana & O.R.U.M. il ${new Date(event.date).toLocaleDateString("it-IT", { timeZone: "Europe/Rome" })}`,
         openGraph: {
             title: event.title,
             description: event.description || `Evento ${event.title} organized by Morgana & O.R.U.M.`,
