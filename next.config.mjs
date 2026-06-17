@@ -63,6 +63,27 @@ const nextConfig = {
             },
         ]
     },
+    async headers() {
+        return [
+            {
+                source: '/(.*)',
+                headers: [
+                    // Clickjacking protection
+                    { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+                    // Prevent MIME type sniffing
+                    { key: 'X-Content-Type-Options', value: 'nosniff' },
+                    // Referrer privacy
+                    { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+                    // HSTS — force HTTPS for 1 year, include subdomains
+                    { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+                    // Restrict browser features
+                    { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+                    // Cross-origin isolation for popups
+                    { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
+                ],
+            },
+        ]
+    },
 };
 
 export default withNextIntl(nextConfig);

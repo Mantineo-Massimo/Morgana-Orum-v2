@@ -48,7 +48,17 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
         return () => clearInterval(interval)
     }, [nextItem])
 
-    if (!nextItem) return null
+    // ⚠️ CLS FIX: never return null — always render the section wrapper at full height
+    // so the page layout doesn't shift when the client component hydrates.
+    if (!nextItem) {
+        return (
+            <section
+                className="w-full bg-[#18182e] border-b border-zinc-800"
+                aria-hidden="true"
+                style={{ minHeight: "100px" }}
+            />
+        )
+    }
 
     const title = isEn ? nextItem.titleEn : nextItem.title
     const desc = isEn ? nextItem.descriptionEn : nextItem.description
@@ -71,16 +81,17 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
                                 📅 {new Date(nextItem.date).toLocaleDateString(locale === "en" ? "en-US" : "it-IT", { day: "numeric", month: "long", timeZone: "Europe/Rome" })}
                             </span>
                         </div>
-                        <h4 className="text-base font-serif font-black tracking-tight text-white uppercase leading-snug">
+                        {/* p instead of h4 to avoid heading order CLS/accessibility warning */}
+                        <p className="text-base font-serif font-black tracking-tight text-white uppercase leading-snug">
                             {title}
-                        </h4>
+                        </p>
                         <p className="text-xs text-zinc-400 leading-normal max-w-xl">
                             {desc}
                         </p>
                     </div>
                 </div>
 
-                {/* Countdown display */}
+                {/* Countdown display — fixed dimensions prevent CLS while timer loads */}
                 <div className="flex items-center gap-4 shrink-0 flex-wrap justify-center">
                     {timeLeft ? (
                         <div className="flex gap-2">
@@ -90,7 +101,7 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
                                 { label: isEn ? "min" : "min", val: timeLeft.m },
                                 { label: isEn ? "sec" : "sec", val: timeLeft.s }
                             ].map((time, idx) => (
-                                <div key={idx} className="flex flex-col items-center min-w-[50px] p-2 bg-zinc-900 border border-zinc-850 rounded-xl shadow-inner">
+                                <div key={idx} className="flex flex-col items-center min-w-[50px] p-2 bg-zinc-900 border border-zinc-800 rounded-xl shadow-inner">
                                     <span className="text-lg font-black font-mono tracking-tight text-[#c12830] tabular-nums">
                                         {time.val.toString().padStart(2, "0")}
                                     </span>
@@ -101,7 +112,8 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
                             ))}
                         </div>
                     ) : (
-                        <div className="flex gap-2 min-h-[50px] items-center justify-center min-w-[220px]">
+                        /* Fixed size placeholder matching the 4-box countdown dimensions */
+                        <div className="flex gap-2 h-[58px] w-[228px] items-center justify-center">
                             <Loader2 className="size-5 animate-spin text-zinc-500" />
                         </div>
                     )}

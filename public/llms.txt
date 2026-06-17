@@ -1,0 +1,32 @@
+# Morgana & O.R.U.M. — Portale delle Associazioni Universitarie
+
+Sito ufficiale di Morgana e O.R.U.M. (Organizzazione Rappresentanza Universitaria Messinese), due associazioni studentesche universitarie dell'Università di Messina (Unime).
+
+## Sezioni principali
+
+- [Home](https://www.morganaorum.it/it): Presentazione del portale e ultime novità
+- [Notizie](https://www.morganaorum.it/it/news): Comunicati, aggiornamenti e novità accademiche
+- [Eventi](https://www.morganaorum.it/it/events): Calendario eventi universitari e culturali
+- [Guide](https://www.morganaorum.it/it/guide): Guide accademiche e strumenti interattivi per gli studenti
+- [Rappresentanti](https://www.morganaorum.it/it/representatives): Elenco dei rappresentanti degli studenti
+- [FAQ](https://www.morganaorum.it/it/faq): Domande frequenti sulla vita universitaria
+- [Iniziative](https://www.morganaorum.it/it/iniziative): Progetti e iniziative delle associazioni
+- [Convenzioni](https://www.morganaorum.it/it/convenzioni): Sconti e vantaggi per gli studenti
+- [Organigramma](https://www.morganaorum.it/it/organigramma): Struttura e componenti delle associazioni
+- [Social](https://www.morganaorum.it/it/social): Canali social ufficiali
+- [Media Kit](https://www.morganaorum.it/it/media-kit): Loghi e grafiche ufficiali
+- [Privacy Policy](https://www.morganaorum.it/it/privacy): Informativa sulla privacy
+- [Termini e Condizioni](https://www.morganaorum.it/it/terms): Termini di utilizzo del portale
+
+## Strumenti disponibili sulla pagina Guide
+
+- Calcolatore Tasse & COA: simula fasce di tasse, esoneri e scadenziario pagamenti Unime
+- Dizionario della Matricola: glossario dei termini universitari (CFU, Appello, Verbalizzazione, ecc.)
+- Countdown Accademico: countdown alle scadenze universitarie e agli appelli
+- Simulatore Media & Laurea: calcola media ponderata, CFU e stima voto di laurea
+- Requisiti Borsa ERSU: verifica i requisiti di merito per le borse di studio ERSU
+
+## Contatti
+
+- Morgana: associazione.morgana@gmail.com — Via Del Vespro n°57, 98123 Messina
+- O.R.U.M.: orum.unime@gmail.com — Contrada Petraro, Ganzirri, 98165 Messina
