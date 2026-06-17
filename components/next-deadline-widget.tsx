@@ -10,7 +10,7 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
     const isEn = locale === "en"
     const [timeLeft, setTimeLeft] = useState<{ d: number; h: number; m: number; s: number } | null>(null)
 
-    const items = initialItems && initialItems.length > 0 ? initialItems : COUNTDOWN_ITEMS;
+    const items = initialItems !== undefined && initialItems !== null ? initialItems : COUNTDOWN_ITEMS;
 
     // Find first upcoming deadline
     const nextItem = useMemo(() => {

@@ -121,8 +121,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
 
 export function SessionsCountdown({ locale, initialItems }: SessionsCountdownProps) {
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
-    // Use DB-sourced items if provided; otherwise fall back to hardcoded defaults
-    const sourceItems = initialItems && initialItems.length > 0
+    const sourceItems = initialItems !== undefined && initialItems !== null
         ? initialItems.map(item => ({
             id: item.id,
             title: item.title,
