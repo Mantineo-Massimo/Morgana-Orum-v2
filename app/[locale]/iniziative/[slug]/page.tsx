@@ -422,8 +422,8 @@ export default function InitiativeDetailPage() {
                     {/* Floating Info Card */}
                     <div className="absolute inset-x-0 bottom-0 p-6 md:p-12 flex flex-col justify-end">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
                             transition={{ duration: 0.5, delay: 0.1 }}
                             className="bg-white/10 backdrop-blur-md border border-white/20 rounded-[2rem] p-6 md:p-8 text-white max-w-3xl shadow-2xl"
                         >

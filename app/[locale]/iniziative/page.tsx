@@ -316,7 +316,8 @@ export default function IniziativePage() {
                         <motion.div
                             key={idx}
                             initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.4, delay: idx * 0.05 }}
                             className={cn(
                                 "bg-white rounded-[2rem] p-8 border border-zinc-100 shadow-sm hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden",

@@ -336,9 +336,9 @@ const EventCard = forwardRef<HTMLDivElement, { item: EventItem }>(
         return (
             <motion.div
                 ref={ref}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                layout="position"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
             >
                 <Link
