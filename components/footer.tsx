@@ -122,7 +122,7 @@ export async function Footer() {
                         <ul className="flex flex-col gap-2 text-sm">
                             <li><Link href="/guide" className={cn("transition-colors font-bold", mutedColor)}>{nt("guides")}</Link></li>
                             <li><Link href="/guide#tasse" className={cn("transition-colors", mutedColor)}>Calcolatore Tasse &amp; COA</Link></li>
-                            <li><Link href="/guide#dizionario" className={cn("transition-colors", mutedColor)}>Dizionario Matricola</Link></li>
+                            <li><Link href="/guide#dizionario" className={cn("transition-colors", mutedColor)}>Dizionario della Matricola</Link></li>
                             <li><Link href="/guide#countdown" className={cn("transition-colors", mutedColor)}>Countdown Accademico</Link></li>
                             <li><Link href="/guide#media" className={cn("transition-colors", mutedColor)}>Simulatore Media &amp; Laurea</Link></li>
                             <li><Link href="/guide#ersu" className={cn("transition-colors", mutedColor)}>Requisiti Borsa ERSU</Link></li>
