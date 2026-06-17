@@ -31,14 +31,13 @@ export function HeroCarousel() {
                     <div className="absolute inset-0 bg-slate-950" />
 
                     <Image
-                        src={`/assets/slides/${slides[currentSlide]}.webp`} // Optimized format
-
+                        src={`/assets/slides/${slides[currentSlide]}.webp`}
                         alt={`Slide ${currentSlide + 1}`}
                         fill
                         className="object-cover opacity-60"
                         priority={currentSlide === 0}
-                        sizes="100vw"
-                        {...(currentSlide === 0 ? { fetchPriority: "high" } : {})}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1336px) 1336px, 1920px"
+                        {...(currentSlide === 0 ? { fetchPriority: "high" } : { loading: "lazy" })}
                     />
 
                 </motion.div>

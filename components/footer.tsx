@@ -40,15 +40,15 @@ export async function Footer() {
                     {/* Column 1: Brand Info */}
                     <div className="flex flex-col gap-4 sm:col-span-2 lg:col-span-1">
                         <div className="flex flex-col gap-4 mb-2">
-                            {/* Logos Row */}
+                            {/* Logos Row — explicit width/height to prevent CLS */}
                             <div className="flex items-center gap-3">
                                 {/* Morgana */}
-                                <Link href="/" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer">
-                                    <Image src="/assets/morgana.webp" alt="Morgana logo" fill className="object-contain" sizes="56px" />
+                                <Link href="/" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer shrink-0">
+                                    <Image src="/assets/morgana.webp" alt="Morgana logo" fill className="object-contain" sizes="56px" priority />
                                 </Link>
                                 {/* Orum */}
-                                <Link href="/" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer">
-                                    <Image src="/assets/orum.webp" alt="Orum logo" fill className="object-contain" sizes="56px" />
+                                <Link href="/" className="relative h-12 w-12 md:h-14 md:w-14 hover:scale-110 transition-transform cursor-pointer shrink-0">
+                                    <Image src="/assets/orum.webp" alt="Orum logo" fill className="object-contain" sizes="56px" priority />
                                 </Link>
                             </div>
                         </div>
@@ -138,8 +138,8 @@ export async function Footer() {
                         <ul className="flex flex-col gap-2 text-sm">
                             <li><Link href="#" className={cn("transition-colors", mutedColor)}>{t("join")}</Link></li>
                             <li><Link href="/terms" className={cn("transition-colors", mutedColor)}>{t("terms")}</Link></li>
-                            <li><Link href="/privacy" className={cn("transition-colors", mutedColor)}>{t("privacy")}</Link></li>
-                            <li><Link href="/cookie" className={cn("transition-colors", mutedColor)}>{t("cookies")}</Link></li>
+                            <li><Link href={`/privacy`} className={cn("transition-colors", mutedColor)}>{t("privacy")}</Link></li>
+                            <li><Link href={`/cookie`} className={cn("transition-colors", mutedColor)}>{t("cookies")}</Link></li>
                             <li><Link href="/contact" className={cn("transition-colors", mutedColor)}>{t("contact")}</Link></li>
                         </ul>
                     </div>
@@ -170,13 +170,13 @@ export async function Footer() {
                     </div>
                 </div>
 
-                {/* Newsletter Box — min-h avoids CLS when NewsletterForm hydrates client-side */}
-                <div className="mb-16 bg-white/5 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-8 min-h-[140px]">
+                {/* Newsletter Box — fixed min-h avoids CLS when NewsletterForm hydrates client-side */}
+                <div className="mb-16 bg-white/5 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-12 border border-white/10 flex flex-col lg:flex-row items-center justify-between gap-8" style={{ minHeight: "160px" }}>
                     <div className="flex-1 text-center lg:text-left">
                         <h3 className="text-xl md:text-2xl font-serif font-black mb-2">{t("newsletter_title")}</h3>
                         <p className="text-white/60 font-medium text-sm md:text-base">{t("newsletter_desc")}</p>
                     </div>
-                    <div className="w-full lg:w-auto min-h-[56px] flex items-center">
+                    <div className="w-full lg:w-auto flex items-center" style={{ minHeight: "56px" }}>
                         <NewsletterForm />
                     </div>
                 </div>
@@ -191,7 +191,7 @@ export async function Footer() {
                     <div className="w-full md:w-auto border-t border-white/10 md:border-0 pt-4 md:pt-0 text-center md:text-right flex flex-col gap-1">
                         <p className="font-bold">{t("partnership_info")}</p>
                         <p>Massimo Mantineo (C.F. MNTMSM03S10F158Y)</p>
-                        <p className="italic uppercase tracking-widest text-[9px] opacity-70">Technical & Privacy Manager</p>
+                        <p className="italic uppercase tracking-widest text-[9px] opacity-90">Technical &amp; Privacy Manager</p>
                     </div>
                 </div>
             </div>

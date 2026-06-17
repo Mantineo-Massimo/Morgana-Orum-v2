@@ -13,8 +13,20 @@ import { getMessages } from "next-intl/server"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import "../globals.css"
 
-const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500", "700", "900"], variable: "--font-sans" })
-const outfit = Outfit({ subsets: ["latin"], weight: ["300", "400", "500", "700", "900"], variable: "--font-serif" })
+const inter = Inter({
+    subsets: ["latin"],
+    weight: ["300", "400", "500", "700", "900"],
+    variable: "--font-sans",
+    display: "swap",
+    preload: true,
+})
+const outfit = Outfit({
+    subsets: ["latin"],
+    weight: ["300", "400", "500", "700", "900"],
+    variable: "--font-serif",
+    display: "swap",
+    preload: true,
+})
 
 export const metadata: Metadata = {
     metadataBase: new URL("https://www.morganaorum.it"),
@@ -86,7 +98,7 @@ export default async function RootLayout({
 
     return (
         <html lang={locale} suppressHydrationWarning data-brand={brand || undefined}>
-            <body className={`${inter.className} ${outfit.className} antialiased`}>
+            <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <BrandProvider defaultBrand={brand}>
                         <SpeedInsights />

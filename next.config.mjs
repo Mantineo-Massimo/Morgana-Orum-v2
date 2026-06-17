@@ -74,12 +74,31 @@ const nextConfig = {
                     { key: 'X-Content-Type-Options', value: 'nosniff' },
                     // Referrer privacy
                     { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-                    // HSTS — force HTTPS for 1 year, include subdomains
-                    { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' },
+                    // HSTS — force HTTPS for 1 year, include subdomains + preload list
+                    { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
                     // Restrict browser features
                     { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
                     // Cross-origin isolation for popups
                     { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
+                    // Content Security Policy — permissive policy compatible with Next.js, GA, Vercel, Cloudinary
+                    {
+                        key: 'Content-Security-Policy',
+                        value: [
+                            "default-src 'self'",
+                            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com https://vercel.live",
+                            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+                            "font-src 'self' https://fonts.gstatic.com data:",
+                            "img-src 'self' data: blob: https://res.cloudinary.com https://storage.googleapis.com https://*.public.blob.vercel-storage.com https://www.google-analytics.com",
+                            "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://*.vercel-storage.com https://*.supabase.co https://api.vercel.com",
+                            "frame-src 'self' https://www.youtube.com https://www.google.com",
+                            "media-src 'self' blob: https://res.cloudinary.com https://storage.googleapis.com",
+                            "worker-src 'self' blob:",
+                            "manifest-src 'self'",
+                            "base-uri 'self'",
+                            "form-action 'self'",
+                            "upgrade-insecure-requests",
+                        ].join('; '),
+                    },
                 ],
             },
         ]

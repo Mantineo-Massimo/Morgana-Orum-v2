@@ -83,11 +83,11 @@ export function CookieConsent() {
                         </button>
                     </div>
 
-                    <p className="text-[10px] text-zinc-400 text-center mt-4">
+                    <p className="text-[10px] text-zinc-500 text-center mt-4">
                         {t.rich("footer_text", {
-                            privacy: (chunks) => <Link href="/privacy" className="underline hover:text-zinc-600">{chunks}</Link>,
-                            cookie: (chunks) => <Link href="/cookie" className="underline hover:text-zinc-600">{chunks}</Link>,
-                            terms: (chunks) => <Link href="/terms" className="underline hover:text-zinc-600">{chunks}</Link>
+                            privacy: (chunks) => <Link href="/privacy" className="underline hover:text-zinc-900">{chunks}</Link>,
+                            cookie: (chunks) => <Link href="/cookie" className="underline hover:text-zinc-900">{chunks}</Link>,
+                            terms: (chunks) => <Link href="/terms" className="underline hover:text-zinc-900">{chunks}</Link>
                         })}
                     </p>
                 </div>

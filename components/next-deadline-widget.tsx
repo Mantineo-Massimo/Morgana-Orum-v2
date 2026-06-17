@@ -55,7 +55,7 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
             <section
                 className="w-full bg-[#18182e] border-b border-zinc-800"
                 aria-hidden="true"
-                style={{ minHeight: "100px" }}
+                style={{ minHeight: "106px" }}
             />
         )
     }
@@ -105,7 +105,7 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
                                     <span className="text-lg font-black font-mono tracking-tight text-[#c12830] tabular-nums">
                                         {time.val.toString().padStart(2, "0")}
                                     </span>
-                                    <span className="text-[8px] font-black uppercase tracking-wider text-zinc-500">
+                                    <span className="text-[8px] font-black uppercase tracking-wider text-zinc-400">
                                         {time.label}
                                     </span>
                                 </div>
@@ -113,8 +113,8 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
                         </div>
                     ) : (
                         /* Fixed size placeholder matching the 4-box countdown dimensions */
-                        <div className="flex gap-2 h-[58px] w-[228px] items-center justify-center">
-                            <Loader2 className="size-5 animate-spin text-zinc-500" />
+                        <div className="flex gap-2 items-center justify-center" style={{ height: "58px", width: "228px" }}>
+                            <Loader2 className="size-5 animate-spin text-zinc-400" />
                         </div>
                     )}
 

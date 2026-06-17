@@ -74,8 +74,8 @@ export function NewsletterForm() {
                 )}
             </button>
             <div className="absolute -bottom-10 left-2">
-                <p className="text-[10px] text-white/40 font-medium">
-                    Iscrivendoti accetti la nostra <a href="/privacy" className="underline hover:text-white/60">Privacy Policy</a>.
+                <p className="text-[10px] text-white/70 font-medium">
+                    Iscrivendoti accetti la nostra <a href="/privacy" className="underline hover:text-white">Privacy Policy</a>.
                 </p>
             </div>
         </form>
