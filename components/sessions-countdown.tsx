@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useMemo } from "react"
-import { Calendar, Clock, AlertTriangle, CheckCircle2, X } from "lucide-react"
+import { Calendar, Clock, AlertTriangle, CheckCircle2, X, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { registerDeadlineAlert } from "@/app/actions/notifications"
 
@@ -17,6 +17,7 @@ interface SessionsCountdownProps {
         descriptionEn: string | null
         visible?: boolean
     }>
+    sessionEmail?: string | null
 }
 
 export interface CountdownItem {
@@ -119,7 +120,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     }
 }
 
-export function SessionsCountdown({ locale, initialItems }: SessionsCountdownProps) {
+export function SessionsCountdown({ locale, initialItems, sessionEmail }: SessionsCountdownProps) {
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
     const sourceItems = initialItems !== undefined && initialItems !== null
         ? initialItems.map(item => ({
@@ -139,6 +140,7 @@ export function SessionsCountdown({ locale, initialItems }: SessionsCountdownPro
     const [activeFormId, setActiveFormId] = useState<string | null>(null)
     const [email, setEmail] = useState("")
     const [loading, setLoading] = useState(false)
+    const [loadingItemId, setLoadingItemId] = useState<string | null>(null)
     const [registeredIds, setRegisteredIds] = useState<Set<string>>(new Set())
     const [error, setError] = useState("")
 
@@ -346,14 +348,52 @@ export function SessionsCountdown({ locale, initialItems }: SessionsCountdownPro
                                                 </form>
                                             ) : (
                                                 <button
-                                                    onClick={() => {
-                                                        setActiveFormId(item.id)
-                                                        setEmail("")
-                                                        setError("")
+                                                    onClick={async () => {
+                                                        if (sessionEmail) {
+                                                            setLoadingItemId(item.id)
+                                                            setError("")
+                                                            try {
+                                                                const res = await registerDeadlineAlert({
+                                                                    email: sessionEmail,
+                                                                    deadlineTitle: titleText,
+                                                                    deadlineDate: item.date.toLocaleDateString("it-IT", {
+                                                                        day: "2-digit",
+                                                                        month: "long",
+                                                                        year: "numeric",
+                                                                        hour: "2-digit",
+                                                                        minute: "2-digit",
+                                                                        timeZone: "Europe/Rome"
+                                                                    }),
+                                                                    locale
+                                                                })
+                                                                if (res.success) {
+                                                                    setRegisteredIds(prev => {
+                                                                        const next = new Set(prev)
+                                                                        next.add(item.id)
+                                                                        return next
+                                                                    })
+                                                                } else {
+                                                                    alert(res.error || "Errore.")
+                                                                }
+                                                            } catch (err) {
+                                                                alert("Impossibile registrarsi.")
+                                                            } finally {
+                                                                setLoadingItemId(null)
+                                                            }
+                                                        } else {
+                                                            setActiveFormId(item.id)
+                                                            setEmail("")
+                                                            setError("")
+                                                        }
                                                     }}
-                                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-600 text-[10px] font-black uppercase tracking-wider rounded-xl transition-all group"
+                                                    disabled={loadingItemId !== null}
+                                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-zinc-200 bg-zinc-50 hover:bg-zinc-100 text-zinc-600 text-[10px] font-black uppercase tracking-wider rounded-xl transition-all group disabled:opacity-50"
                                                 >
-                                                    <Clock className="size-3.5 text-zinc-400 group-hover:text-zinc-600" />
+                                                    {loadingItemId === item.id ? (
+                                                        <Loader2 className="size-3.5 animate-spin text-zinc-500" />
+                                                    ) : (
+                                                        <Clock className="size-3.5 text-zinc-400 group-hover:text-zinc-600" />
+                                                    )}
                                                     <span>{t.notifyMe}</span>
                                                 </button>
                                             )}

@@ -14,7 +14,8 @@ export default async function GuidePage({
     const categories = await getServicesData()
     const guides = await getGuidesData()
     const countdowns = await getVisibleCountdowns()
-    const isLoggedIn = !!cookies().get("session_email")?.value
+    const sessionEmail = cookies().get("session_email")?.value || null
+    const isLoggedIn = !!sessionEmail
 
     return (
         <GuideClient 
@@ -22,6 +23,7 @@ export default async function GuidePage({
             initialGuides={guides} 
             locale={locale} 
             isLoggedIn={isLoggedIn}
+            sessionEmail={sessionEmail}
             countdownItems={countdowns}
         />
     )
