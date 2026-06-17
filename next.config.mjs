@@ -25,6 +25,44 @@ const nextConfig = {
             }
         ],
     },
+    async redirects() {
+        return [
+            // Locale-prefixed old network news paths → new news paths
+            {
+                source: '/:locale/network/:brand/news/:id',
+                destination: '/:locale/news/:id',
+                permanent: true,
+            },
+            // Locale-prefixed old network events paths → new events paths
+            {
+                source: '/:locale/network/:brand/events/:id',
+                destination: '/:locale/events/:id',
+                permanent: true,
+            },
+            // Locale-prefixed list pages
+            {
+                source: '/:locale/network/:brand/news',
+                destination: '/:locale/news',
+                permanent: true,
+            },
+            {
+                source: '/:locale/network/:brand/events',
+                destination: '/:locale/events',
+                permanent: true,
+            },
+            // Non-locale variants
+            {
+                source: '/network/:brand/news/:id',
+                destination: '/news/:id',
+                permanent: true,
+            },
+            {
+                source: '/network/:brand/events/:id',
+                destination: '/events/:id',
+                permanent: true,
+            },
+        ]
+    },
 };
 
 export default withNextIntl(nextConfig);
