@@ -8,21 +8,20 @@ import { Association } from "@prisma/client"
 import { getTranslations } from "next-intl/server"
 import { PiazzaTeaserBanner } from "@/components/piazza-teaser-banner"
 import { EventCard } from "@/components/event-card"
-import { cookies } from "next/headers"
 import { Suspense } from "react"
 import { NextDeadlineWidget } from "@/components/next-deadline-widget"
 import { getVisibleCountdowns } from "@/app/actions/countdowns"
 
 
 
-export const dynamic = "force-dynamic"
+// ISR: serve dalla cache Vercel Edge (TTFB < 50ms), rigenera in background ogni 60s
+export const revalidate = 60
 export default async function BrandHomePage({
     params: { locale }
 }: {
     params: { locale: string }
 }) {
     const t = await getTranslations("HomePage")
-    const sessionEmail = cookies().get("session_email")?.value || null
 
     // Content Configuration Unificata
     const content = {
@@ -108,8 +107,8 @@ export default async function BrandHomePage({
 
 async function EventsList({ locale }: { locale: string }) {
     const t = await getTranslations("HomePage")
-    const sessionEmail = cookies().get("session_email")?.value || null
-    const prossimiEventi = await getAllEvents(sessionEmail, Association.MORGANA_ORUM, 'upcoming', locale).then(events => events.slice(0, 3))
+    // Pass null for sessionEmail — homepage is public; ISR-compatible
+    const prossimiEventi = await getAllEvents(null, Association.MORGANA_ORUM, 'upcoming', locale).then(events => events.slice(0, 3))
 
     return (
         <div className="grid md:grid-cols-3 gap-6">
