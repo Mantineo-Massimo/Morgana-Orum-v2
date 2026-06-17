@@ -97,7 +97,22 @@ export async function Footer() {
                         </ul>
                     </div>
 
-                    {/* Column 3: Guide & Strumenti */}
+                    {/* Column 3: Servizi */}
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
+                            {nt("services")}
+                        </h3>
+                        <ul className="flex flex-col gap-2 text-sm">
+                            <li><Link href="/representatives" className={cn("transition-colors", mutedColor)}>{nt("representatives")}</Link></li>
+                            <li><Link href="/gruppi" className={cn("transition-colors", mutedColor)}>{nt("whatsapp")}</Link></li>
+                            <li><Link href="/faq" className={cn("transition-colors", mutedColor)}>{nt("faq")}</Link></li>
+                            <li><Link href="/convenzioni" className={cn("transition-colors", mutedColor)}>{nt("conventions")}</Link></li>
+                            <li><Link href="/social" className={cn("transition-colors", mutedColor)}>{nt("social")}</Link></li>
+                            <li><Link href="/media-kit" className={cn("transition-colors", mutedColor)}>{nt("media_kit")}</Link></li>
+                        </ul>
+                    </div>
+
+                    {/* Column 4: Guide */}
                     <div className="flex flex-col gap-4">
                         <h3 className="text-base md:text-lg font-bold font-serif uppercase tracking-widest mb-2 border-b border-white/20 pb-2 w-fit">
                             {nt("guides")}
@@ -105,12 +120,7 @@ export async function Footer() {
                         <ul className="flex flex-col gap-2 text-sm">
                             <li><Link href="/guide" className={cn("transition-colors font-bold", mutedColor)}>{nt("guides")}</Link></li>
                             <li><Link href="/iniziative" className={cn("transition-colors", mutedColor)}>Iniziative</Link></li>
-                            <li><Link href="/faq" className={cn("transition-colors", mutedColor)}>{nt("faq")}</Link></li>
-                            <li><Link href="/gruppi" className={cn("transition-colors", mutedColor)}>{nt("whatsapp")}</Link></li>
-                            <li><Link href="/convenzioni" className={cn("transition-colors", mutedColor)}>{nt("conventions")}</Link></li>
                             <li><Link href="/organigramma" className={cn("transition-colors", mutedColor)}>{nt("organigramma")}</Link></li>
-                            <li><Link href="/social" className={cn("transition-colors", mutedColor)}>{nt("social")}</Link></li>
-                            <li><Link href="/media-kit" className={cn("transition-colors", mutedColor)}>{nt("media_kit")}</Link></li>
                         </ul>
                     </div>
 
