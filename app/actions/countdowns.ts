@@ -20,6 +20,7 @@ export type DeadlineCountdownData = {
 export async function getCountdowns(): Promise<DeadlineCountdownData[]> {
     try {
         return await prisma.deadlineCountdown.findMany({
+            where: { id: { not: "system-init" } },
             orderBy: [{ order: "asc" }, { date: "asc" }]
         })
     } catch (e) {
@@ -31,7 +32,7 @@ export async function getCountdowns(): Promise<DeadlineCountdownData[]> {
 export async function getVisibleCountdowns(): Promise<DeadlineCountdownData[]> {
     try {
         return await prisma.deadlineCountdown.findMany({
-            where: { visible: true },
+            where: { visible: true, id: { not: "system-init" } },
             orderBy: [{ order: "asc" }, { date: "asc" }]
         })
     } catch (e) {
@@ -121,8 +122,26 @@ export async function toggleCountdownVisibility(
 // Seed default items into DB if empty
 export async function seedDefaultCountdowns(): Promise<void> {
     try {
+        const initRecord = await prisma.deadlineCountdown.findUnique({
+            where: { id: "system-init" }
+        })
+        if (initRecord) return
+
         const count = await prisma.deadlineCountdown.count()
-        if (count > 0) return
+        if (count > 0) {
+            // If the DB already has items but no system-init flag, create the flag and return
+            await prisma.deadlineCountdown.create({
+                data: {
+                    id: "system-init",
+                    title: "System Init",
+                    category: "system",
+                    date: new Date(),
+                    description: "Do not delete. Keeps default countdowns from re-seeding.",
+                    visible: false
+                }
+            })
+            return
+        }
 
         const defaults = [
             {
@@ -173,6 +192,18 @@ export async function seedDefaultCountdowns(): Promise<void> {
         ]
 
         await prisma.deadlineCountdown.createMany({ data: defaults })
+
+        // Create the hidden initialization record
+        await prisma.deadlineCountdown.create({
+            data: {
+                id: "system-init",
+                title: "System Init",
+                category: "system",
+                date: new Date(),
+                description: "Do not delete. Keeps default countdowns from re-seeding.",
+                visible: false
+            }
+        })
     } catch (e) {
         console.error("seedDefaultCountdowns error:", e)
     }
