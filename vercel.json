@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "morganaorum.vercel.app"
+        }
+      ],
+      "destination": "https://www.morganaorum.it/$1",
+      "permanent": true
+    }
+  ]
+}
