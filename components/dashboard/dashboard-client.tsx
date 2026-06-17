@@ -87,9 +87,7 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                     <div className="bg-white rounded-[2rem] border border-slate-100/80 p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.015)] flex flex-col h-full justify-between min-h-[400px]">
                         {/* Member Header (Credit Card Style Badge) */}
                         {(() => {
-                            const rawMat = String(userData.matricola || "000000");
-                            const paddedMat = rawMat.padEnd(12, "0");
-                            const formattedMatricola = paddedMat.replace(/(\d{4})/g, '$1 ').trim();
+                            const formattedMatricola = String(userData.matricola || "");
 
                             return (
                                 <div className="relative w-full aspect-[1.586/1] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden text-white shadow-2xl border border-white/10 bg-gradient-to-br from-[#18182e] via-[#0d0d17] to-[#c9041a]/95 p-6 md:p-8 flex flex-col justify-between group select-none">
@@ -100,13 +98,13 @@ export function DashboardClient({ userData }: DashboardClientProps) {
 
                                     {/* Top Row: Logos & Status */}
                                     <div className="relative z-10 flex justify-between items-center">
-                                        <div className="bg-white/10 backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/10 shadow-sm flex items-center gap-1.5 shrink-0">
-                                            <div className="relative size-6 md:size-7">
-                                                <Image src="/assets/morgana.webp" alt="Morgana" fill className="object-contain filter brightness-110" sizes="28px" />
+                                        <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 shadow-sm flex items-center gap-2 shrink-0">
+                                            <div className="relative size-8 md:size-9">
+                                                <Image src="/assets/morgana.webp" alt="Morgana" fill className="object-contain filter brightness-110" sizes="36px" />
                                             </div>
-                                            <div className="w-px h-5 bg-white/20"></div>
-                                            <div className="relative size-6 md:size-7">
-                                                <Image src="/assets/orum.webp" alt="O.R.U.M." fill className="object-contain filter brightness-110" sizes="28px" />
+                                            <div className="w-px h-6 bg-white/20"></div>
+                                            <div className="relative size-8 md:size-9">
+                                                <Image src="/assets/orum.webp" alt="O.R.U.M." fill className="object-contain filter brightness-110" sizes="36px" />
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 shadow-sm shrink-0">
@@ -118,35 +116,15 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                                         </div>
                                     </div>
 
-                                    {/* Middle Row: Smart Chip & Contactless */}
-                                    <div className="relative z-10 flex items-center justify-between mt-2 md:mt-4">
-                                        {/* Metallic Chip */}
-                                        <div className="w-11 h-8 rounded-md bg-gradient-to-br from-[#ffe082] via-[#ffd54f] to-[#ffb300] border border-[#ffca28]/60 relative p-1 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4)] opacity-95 flex flex-col justify-between shrink-0">
-                                            <div className="w-full h-px bg-black/10" />
-                                            <div className="w-full h-px bg-black/10" />
-                                            <div className="w-full h-px bg-black/10" />
-                                            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-black/15" />
-                                            <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-black/15" />
-                                            <div className="absolute inset-2 border border-black/10 rounded-sm" />
-                                        </div>
-                                        
-                                        {/* Contactless Wave Icon */}
-                                        <div className="text-white/30 mr-2">
-                                            <svg className="size-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" d="M12 18a6 6 0 0 0 0-12m3 14a8 8 0 0 0 0-16m3 18a10 10 0 0 0 0-20" />
-                                            </svg>
-                                        </div>
-                                    </div>
-
-                                    {/* Matricola (Large card number format) */}
-                                    <div className="relative z-10 mt-auto pt-2">
-                                        <p className="font-mono tracking-[0.25em] text-lg sm:text-xl md:text-2xl font-black text-white/90 drop-shadow-sm select-all">
+                                    {/* Matricola (Large card number format, centered) */}
+                                    <div className="relative z-10 my-auto py-2">
+                                        <p className="font-mono tracking-[0.25em] text-xl sm:text-2xl md:text-3xl font-black text-white/95 drop-shadow-sm select-all">
                                             {formattedMatricola}
                                         </p>
                                     </div>
 
                                     {/* Bottom Row: Cardholder & Date */}
-                                    <div className="relative z-10 flex justify-between items-end mt-2">
+                                    <div className="relative z-10 flex justify-between items-end">
                                         <div className="space-y-0.5">
                                             <span className="text-[7px] sm:text-[8px] font-extrabold uppercase tracking-widest text-white/40 block leading-none">CARDHOLDER</span>
                                             <span className="font-black text-xs sm:text-sm uppercase tracking-wide truncate max-w-[180px] block leading-none">{userData.name} {userData.surname}</span>
