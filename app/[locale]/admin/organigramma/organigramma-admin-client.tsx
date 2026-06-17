@@ -317,17 +317,31 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-cyan-50 text-cyan-600 rounded-xl">
+                            <Shield className="size-6" />
+                        </div>
+                        Gestione Organigramma
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
+                        Gestisci i componenti dei direttivi, presidenze e dipartimenti delle associazioni.
+                    </p>
+                </div>
+            </div>
+
             {/* Filters Bar */}
-            <div className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div className="relative w-full md:w-80">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
                     <input
                         type="text"
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         placeholder="Cerca per nome o ruolo..."
-                        className="w-full pl-11 pr-4 py-3 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none focus:ring-2 focus:ring-zinc-900/5 focus:bg-white text-sm font-semibold transition-all"
+                        className="w-full pl-11 pr-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                     />
                 </div>
 
@@ -336,7 +350,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                     <select
                         value={selectedSection}
                         onChange={e => setSelectedSection(e.target.value)}
-                        className="px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-2xl outline-none text-xs font-bold uppercase tracking-wider cursor-pointer"
+                        className="px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-xs font-bold uppercase tracking-wider bg-white cursor-pointer"
                     >
                         <option value="all">Tutte le Aree</option>
                         {SECTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
@@ -344,7 +358,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
 
                     <button
                         onClick={handleOpenAdd}
-                        className="grow md:grow-0 flex items-center justify-center gap-2 px-5 py-3 bg-zinc-900 text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg shadow-zinc-200"
+                        className="grow md:grow-0 flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all shadow-sm"
                     >
                         <Plus className="size-4" /> Aggiungi Componente
                     </button>
@@ -352,17 +366,17 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
             </div>
 
             {/* List Table */}
-            <div className="bg-white rounded-3xl border border-zinc-100 overflow-hidden shadow-sm">
+            <div className="bg-white rounded-2xl border border-slate-200/60 overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
-                        <thead className="bg-zinc-50 border-b border-zinc-100">
+                        <thead className="bg-slate-50 border-b border-slate-200/60">
                             <tr>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Nome</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Area</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Ruolo / Dipartimento</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Email</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400">Ordine</th>
-                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-zinc-400 text-right">Azioni</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Nome</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Area</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Ruolo / Dipartimento</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Email</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500">Ordine</th>
+                                <th className="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-slate-500 text-right">Azioni</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-zinc-100 text-sm">
@@ -448,11 +462,13 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
 
             {/* Dialog Form */}
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent className="max-w-2xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-3xl shadow-2xl">
-                    <form onSubmit={handleSave} className="bg-white p-8 space-y-6">
+                <DialogContent className="max-w-2xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-2xl shadow-2xl">
+                    <form onSubmit={handleSave} className="bg-white p-6 space-y-6">
                         <DialogHeader>
-                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
-                                <Shield className="size-6 text-zinc-900" />
+                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2 text-slate-900">
+                                <div className="p-2 bg-cyan-50 text-cyan-600 rounded-xl">
+                                    <Shield className="size-5" />
+                                </div>
                                 {editingId ? "Modifica Componente" : "Nuovo Componente"}
                             </DialogTitle>
                         </DialogHeader>
@@ -460,10 +476,10 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                         <div className="grid md:grid-cols-2 gap-6">
                             {/* Image Upload */}
                             <div className="md:col-span-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500 block mb-2">Foto (Opzionale)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Foto (Opzionale)</label>
                                 <div className="flex items-start gap-6">
                                     {/* Preview */}
-                                    <div className="relative size-24 rounded-full bg-zinc-50 border-2 border-dashed border-zinc-200 flex items-center justify-center overflow-hidden flex-shrink-0">
+                                    <div className="relative size-24 rounded-full bg-slate-50 border border-slate-200/60 flex items-center justify-center overflow-hidden flex-shrink-0 shadow-inner">
                                         {form.image ? (
                                             <>
                                                 <Image src={form.image} alt="Preview" fill className="object-cover" />
@@ -476,7 +492,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                                 </button>
                                             </>
                                         ) : (
-                                            <ImageIcon className="size-8 text-zinc-350" />
+                                            <ImageIcon className="size-8 text-slate-350" />
                                         )}
                                     </div>
                                     {/* Upload Area */}
@@ -489,18 +505,18 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                                 const file = e.dataTransfer.files[0]
                                                 if (file) handleImageUpload(file)
                                             }}
-                                            className="border-2 border-dashed border-zinc-200 rounded-2xl p-4 text-center cursor-pointer hover:border-zinc-300 hover:bg-zinc-50/50 transition-all"
+                                            className="border border-dashed border-slate-200/60 rounded-xl p-4 text-center cursor-pointer hover:bg-slate-50/50 transition-all bg-slate-50/30"
                                         >
                                             {isUploading ? (
-                                                <div className="flex items-center justify-center gap-2 text-zinc-500">
+                                                <div className="flex items-center justify-center gap-2 text-slate-550">
                                                     <Loader2 className="size-5 animate-spin" />
-                                                    <span className="text-sm">Caricamento...</span>
+                                                    <span className="text-sm font-semibold">Caricamento...</span>
                                                 </div>
                                             ) : (
                                                 <div className="flex flex-col items-center gap-1">
-                                                    <Upload className="size-5 text-zinc-400" />
-                                                    <span className="text-xs text-zinc-500">Clicca o trascina un&apos;immagine</span>
-                                                    <span className="text-[10px] text-zinc-400">JPG, PNG, WebP — max 5MB</span>
+                                                    <Upload className="size-5 text-slate-400" />
+                                                    <span className="text-xs text-slate-500 font-semibold">Clicca o trascina un&apos;immagine</span>
+                                                    <span className="text-[10px] text-slate-400 font-medium">JPG, PNG, WebP — max 5MB</span>
                                                 </div>
                                             )}
                                             <input
@@ -517,9 +533,9 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                         <button
                                             type="button"
                                             onClick={() => setIsMediaOpen(true)}
-                                            className="w-full py-2 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-xs font-bold text-zinc-700 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                                            className="w-full py-2.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700 transition-all flex items-center justify-center gap-1.5 shadow-sm"
                                         >
-                                            <ImageIcon className="size-3.5 text-zinc-500" />
+                                            <ImageIcon className="size-3.5 text-slate-500" />
                                             Oppure scegli dalla Libreria Media
                                         </button>
                                     </div>
@@ -527,34 +543,34 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                             </div>
 
                             <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Nome e Cognome *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Nome e Cognome *</label>
                                 <input
                                     type="text"
                                     required
                                     value={form.name}
                                     onChange={e => setForm({ ...form, name: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: Giorgio Messina"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Associazione *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Associazione *</label>
                                 <select
                                     value={form.association}
                                     onChange={e => setForm({ ...form, association: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                                 >
                                     {ASSOCIATIONS.map(a => <option key={a.value} value={a.value}>{a.label}</option>)}
                                 </select>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Area / Sezione *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Area / Sezione *</label>
                                 <select
                                     value={form.section}
                                     onChange={e => setForm({ ...form, section: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                                 >
                                     {SECTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
                                 </select>
@@ -562,11 +578,11 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
 
                             {form.section === "DEPARTMENT" ? (
                                 <div className="space-y-2 md:col-span-2">
-                                    <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Dipartimento *</label>
+                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento *</label>
                                     <select
                                         value={form.role}
                                         onChange={e => setForm({ ...form, role: e.target.value, roleEn: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-semibold"
+                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                                     >
                                         <option value="">Seleziona Dipartimento</option>
                                         {DEPARTMENTS.map(d => (
@@ -577,24 +593,24 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                             ) : (
                                 <>
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ruolo (IT) *</label>
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ruolo (IT) *</label>
                                         <input
                                             type="text"
                                             required={form.section !== "DEPARTMENT"}
                                             value={form.role}
                                             onChange={e => setForm({ ...form, role: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-semibold"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                             placeholder="Es: Coordinatore Logistica, Responsabile, ..."
                                         />
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ruolo (EN)</label>
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ruolo (EN)</label>
                                         <input
                                             type="text"
                                             value={form.roleEn}
                                             onChange={e => setForm({ ...form, roleEn: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-semibold"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                             placeholder="Es: Logistics Coordinator, Manager, ..."
                                         />
                                     </div>
@@ -602,50 +618,50 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                             )}
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Email Contatto</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Email Contatto</label>
                                 <input
                                     type="email"
                                     value={form.email}
                                     onChange={e => setForm({ ...form, email: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-medium"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all font-sans"
                                     placeholder="presidenza.morgana@gmail.com"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Telefono</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Telefono</label>
                                 <input
                                     type="text"
                                     value={form.phone}
                                     onChange={e => setForm({ ...form, phone: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-medium"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="+39 123 456 7890"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Instagram</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Instagram</label>
                                 <input
                                     type="text"
                                     value={form.instagram}
                                     onChange={e => setForm({ ...form, instagram: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-medium"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="@username"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine di Visualizzazione</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ordine di Visualizzazione</label>
                                 <input
                                     type="number"
                                     value={form.order}
                                     onChange={e => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                 />
                             </div>
 
                             <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione Ruolo / Chi Sono (Rich Text)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione Ruolo / Chi Sono (Rich Text)</label>
                                 <RichTextEditor
                                     value={form.description}
                                     onChange={val => setForm({ ...form, description: val })}
@@ -657,7 +673,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-800 disabled:opacity-50 transition-all shadow-lg shadow-zinc-150 flex items-center justify-center gap-2"
+                                    className="w-full py-3.5 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl font-bold text-sm hover:opacity-90 disabled:opacity-50 transition-all shadow-md flex items-center justify-center gap-2"
                                 >
                                     {loading ? (
                                         <><Loader2 className="size-4 animate-spin" /> Salvataggio...</>

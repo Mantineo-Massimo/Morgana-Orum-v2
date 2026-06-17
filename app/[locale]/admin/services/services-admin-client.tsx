@@ -364,17 +364,32 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
     }
 
     return (
-        <div className="grid lg:grid-cols-3 gap-8 items-start">
+        <div className="space-y-8">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl">
+                            <BookOpen className="size-6" />
+                        </div>
+                        Gestione Servizi
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
+                        Gestisci la guida ai servizi d&apos;Ateneo per gli studenti.
+                    </p>
+                </div>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
             {/* Left Pane: Categories List */}
             <div className="lg:col-span-1 space-y-6">
-                <div className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm space-y-4">
+                <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm space-y-4">
                     <div className="flex items-center justify-between">
-                        <h3 className="font-bold text-zinc-900 uppercase tracking-tight flex items-center gap-2">
-                            <Layers className="size-4 text-zinc-500" /> Categorie
+                        <h3 className="font-bold text-slate-900 uppercase tracking-tight flex items-center gap-2">
+                            <Layers className="size-4 text-slate-500" /> Categorie
                         </h3>
                         <button
                             onClick={handleOpenAddCat}
-                            className="p-2 bg-zinc-50 hover:bg-zinc-100 rounded-xl transition-all text-zinc-700"
+                            className="p-2 bg-slate-50 hover:bg-slate-100 hover:text-slate-900 border border-slate-200/40 rounded-xl transition-all text-slate-600"
                             title="Nuova Categoria"
                         >
                             <FolderPlus className="size-4" />
@@ -391,8 +406,8 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                     className={cn(
                                         "w-full p-4 rounded-2xl border text-left cursor-pointer flex items-center justify-between transition-all group",
                                         isSelected
-                                            ? "bg-zinc-900 border-zinc-900 text-white shadow-lg shadow-zinc-200"
-                                            : "bg-zinc-50/50 border-zinc-100 hover:border-zinc-200 text-zinc-700"
+                                            ? "bg-slate-950 border-slate-950 text-white shadow-md"
+                                            : "bg-slate-50/50 border-slate-200/60 hover:border-slate-300 text-slate-700 hover:bg-white"
                                     )}
                                 >
                                     <div className="flex items-center gap-3 overflow-hidden">
@@ -452,29 +467,29 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
             {/* Right Pane: Services List (Category Detail) */}
             <div className="lg:col-span-2 space-y-6">
                 {activeCategory ? (
-                    <div className="bg-white p-8 rounded-3xl border border-zinc-100 shadow-sm space-y-6">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-100">
+                    <div className="bg-white p-8 rounded-3xl border border-slate-200/60 shadow-sm space-y-6">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-150">
                             <div>
                                 <span className={cn(
-                                    "inline-flex text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border border-zinc-200 mb-2",
+                                    "inline-flex text-[9px] font-black tracking-widest uppercase px-2 py-0.5 rounded-full border border-slate-200 mb-2",
                                     activeCategory.color === "blue" && "bg-blue-50 text-blue-600",
                                     activeCategory.color === "orange" && "bg-orange-50 text-orange-600",
                                     activeCategory.color === "green" && "bg-green-50 text-green-600",
                                     activeCategory.color === "red" && "bg-red-50 text-red-600",
                                     activeCategory.color === "purple" && "bg-purple-50 text-purple-600",
-                                    activeCategory.color === "zinc" && "bg-zinc-100 text-zinc-600",
+                                    activeCategory.color === "zinc" && "bg-slate-100 text-slate-655",
                                     activeCategory.color === "emerald" && "bg-emerald-50 text-emerald-600"
                                 )}>
                                     Tag: {activeCategory.color}
                                 </span>
-                                <h2 className="text-xl font-bold text-zinc-900">{activeCategory.title}</h2>
+                                <h2 className="text-xl font-bold text-slate-900">{activeCategory.title}</h2>
                                 {activeCategory.titleEn && (
-                                    <p className="text-xs text-zinc-400 italic mt-0.5">EN: {activeCategory.titleEn}</p>
+                                    <p className="text-xs text-slate-400 italic mt-0.5">EN: {activeCategory.titleEn}</p>
                                 )}
                             </div>
                             <button
                                 onClick={handleOpenAddItem}
-                                className="flex items-center justify-center gap-2 px-5 py-3 bg-zinc-900 text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors shadow-lg shadow-zinc-200"
+                                className="flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-colors shadow-sm"
                             >
                                 <Plus className="size-4" /> Aggiungi Servizio
                             </button>
@@ -484,15 +499,15 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                             {(activeCategory.items || []).sort((a: any, b: any) => (a.order || 0) - (b.order || 0)).map((item: any, index: number, arr: any[]) => (
                                 <div
                                     key={item.id}
-                                    className="p-6 bg-zinc-50/50 rounded-2xl border border-zinc-100 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center hover:border-zinc-200 hover:bg-white transition-all shadow-sm"
+                                    className="p-6 bg-slate-50/50 rounded-2xl border border-slate-200/60 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center hover:border-slate-300 hover:bg-white transition-all shadow-sm"
                                 >
                                     {/* Reorder Arrows on the left of each item */}
-                                    <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-zinc-100 p-1 bg-white rounded-xl shadow-inner">
+                                    <div className="flex md:flex-col gap-1 shrink-0 mr-2 border border-slate-200/60 p-1 bg-white rounded-xl shadow-sm">
                                         <button
                                             type="button"
                                             disabled={index === 0 || loading}
                                             onClick={() => handleReorderItem(item, "up")}
-                                            className="p-1 hover:bg-zinc-100 disabled:opacity-30 rounded text-zinc-500 transition-colors"
+                                            className="p-1 hover:bg-slate-50 disabled:opacity-30 rounded text-slate-500 transition-colors"
                                             title="Sposta su"
                                         >
                                             <ArrowUp className="size-4" />
@@ -501,7 +516,7 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                             type="button"
                                             disabled={index === arr.length - 1 || loading}
                                             onClick={() => handleReorderItem(item, "down")}
-                                            className="p-1 hover:bg-zinc-100 disabled:opacity-30 rounded text-zinc-500 transition-colors"
+                                            className="p-1 hover:bg-slate-50 disabled:opacity-30 rounded text-slate-500 transition-colors"
                                             title="Sposta giù"
                                         >
                                             <ArrowDown className="size-4" />
@@ -510,27 +525,27 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
 
                                     <div className="space-y-1.5 flex-1 min-w-0">
                                         <div className="flex items-center gap-2">
-                                            <h4 className="font-bold text-sm text-zinc-900 uppercase tracking-tight truncate">
+                                            <h4 className="font-bold text-sm text-slate-900 uppercase tracking-tight truncate">
                                                 {item.name}
                                             </h4>
                                             {item.href && (
-                                                <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-zinc-400 hover:text-zinc-600">
+                                                <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-slate-655">
                                                     <ExternalLink className="size-3.5" />
                                                 </a>
                                             )}
                                         </div>
                                         {item.nameEn && (
-                                            <p className="text-[10px] text-zinc-400 italic">EN: {item.nameEn}</p>
+                                            <p className="text-[10px] text-slate-400 italic">EN: {item.nameEn}</p>
                                         )}
-                                        <p className="text-xs text-zinc-500 leading-relaxed font-medium">
+                                        <p className="text-xs text-slate-500 leading-relaxed font-medium">
                                             {item.description}
                                         </p>
                                         {item.descriptionEn && (
-                                            <p className="text-[11px] text-zinc-400 leading-relaxed italic">
+                                            <p className="text-[11px] text-slate-400 leading-relaxed italic">
                                                 EN: {item.descriptionEn}
                                             </p>
                                         )}
-                                        <div className="flex gap-2 text-[10px] text-zinc-400 font-mono pt-1">
+                                        <div className="flex gap-2 text-[10px] text-slate-400 font-mono pt-1">
                                             <span>Ordine: {item.order}</span>
                                         </div>
                                     </div>
@@ -538,21 +553,21 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                     <div className="flex items-center gap-1.5 transition-opacity shrink-0">
                                         <button
                                             onClick={() => handleEditItem(item)}
-                                            className="p-2 bg-white hover:bg-zinc-100 border border-zinc-100 hover:border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-900 transition-all shadow-sm"
+                                            className="p-2 bg-white hover:bg-slate-50 border border-slate-200/60 rounded-xl text-slate-550 hover:text-slate-900 transition-all shadow-sm"
                                             title="Modifica"
                                         >
                                             <Edit3 className="size-3.5" />
                                         </button>
                                         <button
                                             onClick={() => handleDuplicateItem(item)}
-                                            className="p-2 bg-white hover:bg-zinc-100 border border-zinc-100 hover:border-zinc-200 rounded-xl text-zinc-500 hover:text-zinc-900 transition-all shadow-sm"
+                                            className="p-2 bg-white hover:bg-slate-50 border border-slate-200/60 rounded-xl text-slate-550 hover:text-slate-900 transition-all shadow-sm"
                                             title="Duplica"
                                         >
                                             <Copy className="size-3.5" />
                                         </button>
                                         <button
                                             onClick={() => handleDeleteItem(item.id)}
-                                            className="p-2 bg-white hover:bg-red-50 border border-zinc-100 hover:border-red-100 rounded-xl text-red-500 transition-all shadow-sm"
+                                            className="p-2 bg-white hover:bg-red-50 border border-slate-200/60 hover:border-red-100 rounded-xl text-red-500 transition-all shadow-sm"
                                             title="Elimina"
                                         >
                                             <Trash2 className="size-3.5" />
@@ -562,26 +577,29 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                             ))}
 
                             {(!activeCategory.items || activeCategory.items.length === 0) && (
-                                <div className="text-center py-12 text-zinc-400 italic text-sm">
+                                <div className="text-center py-12 text-slate-400 italic text-sm">
                                     Nessun servizio in questa categoria. Aggiungine uno con il pulsante in alto.
                                 </div>
                             )}
                         </div>
                     </div>
                 ) : (
-                    <div className="bg-white p-16 text-center text-zinc-400 rounded-3xl border border-zinc-100 shadow-sm italic">
+                    <div className="bg-white p-16 text-center text-slate-400 rounded-3xl border border-slate-200/60 shadow-sm italic">
                         Seleziona o crea una categoria a sinistra per gestirne i servizi.
                     </div>
                 )}
             </div>
+        </div>
 
-            {/* Dialog Form for Category */}
-            <Dialog open={isCatModalOpen} onOpenChange={setIsCatModalOpen}>
-                <DialogContent className="max-w-xl p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
-                    <form onSubmit={handleSaveCat} className="bg-white p-8 space-y-6">
+        {/* Dialog Form for Category */}
+        <Dialog open={isCatModalOpen} onOpenChange={setIsCatModalOpen}>
+                <DialogContent className="max-w-2xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-2xl shadow-2xl">
+                    <form onSubmit={handleSaveCat} className="bg-white p-6 space-y-6">
                         <DialogHeader>
-                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
-                                <Layers className="size-6 text-zinc-900" />
+                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2 text-slate-900">
+                                <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                                    <Layers className="size-5" />
+                                </div>
                                 {editingCatId ? "Modifica Categoria" : "Nuova Categoria"}
                             </DialogTitle>
                         </DialogHeader>
@@ -589,64 +607,64 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                         <div className="grid md:grid-cols-2 gap-6">
                             {!editingCatId && (
                                 <div className="md:col-span-2 space-y-2">
-                                    <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">ID / Slug Categoria *</label>
+                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">ID / Slug Categoria *</label>
                                     <input
                                         type="text"
                                         required
                                         value={catForm.id}
                                         onChange={e => setCatForm({ ...catForm, id: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-mono text-sm"
+                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all font-mono"
                                         placeholder="Es: accademici, ersu (usato per link di ancoraggio)"
                                     />
                                 </div>
                             )}
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Titolo Categoria (IT) *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Titolo Categoria (IT) *</label>
                                 <input
                                     type="text"
                                     required
                                     value={catForm.title}
                                     onChange={e => setCatForm({ ...catForm, title: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: 1. Servizi Accademici"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Titolo Categoria (EN)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Titolo Categoria (EN)</label>
                                 <input
                                     type="text"
                                     value={catForm.titleEn}
                                     onChange={e => setCatForm({ ...catForm, titleEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: 1. Academic Services"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Colore Estetico *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Colore Estetico *</label>
                                 <select
                                     value={catForm.color}
                                     onChange={e => setCatForm({ ...catForm, color: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white font-bold"
                                 >
                                     {AVAILABLE_COLORS.map(col => <option key={col.name} value={col.name}>{col.label}</option>)}
                                 </select>
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ordine</label>
                                 <input
                                     type="number"
                                     value={catForm.order}
                                     onChange={e => setCatForm({ ...catForm, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all font-bold"
                                 />
                             </div>
 
                             <div className="md:col-span-2 space-y-3">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Icona Categoria *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Icona Categoria *</label>
                                 <div className="grid grid-cols-5 md:grid-cols-9 gap-2">
                                     {AVAILABLE_ICONS.map(item => (
                                         <button
@@ -654,10 +672,10 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                             type="button"
                                             onClick={() => setCatForm({ ...catForm, icon: item.name })}
                                             className={cn(
-                                                "flex items-center justify-center p-3 rounded-xl border transition-all hover:bg-zinc-50",
+                                                "flex items-center justify-center p-3 rounded-xl border transition-all",
                                                 catForm.icon === item.name
-                                                    ? "border-zinc-900 bg-zinc-900 text-white shadow-sm"
-                                                    : "border-zinc-100 text-zinc-500"
+                                                    ? "border-[#c9041a] bg-gradient-to-br from-[#c12830] to-[#18182e] text-white shadow-sm"
+                                                    : "border-slate-200/60 text-slate-500 hover:bg-slate-50"
                                             )}
                                             title={item.name}
                                         >
@@ -671,7 +689,7 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-800 disabled:opacity-50 transition-all shadow-lg shadow-zinc-150 flex items-center justify-center gap-2"
+                                    className="w-full py-3.5 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl font-bold text-sm hover:opacity-90 disabled:opacity-50 transition-all shadow-md flex items-center justify-center gap-2"
                                 >
                                     {loading ? (
                                         <><Loader2 className="size-4 animate-spin" /> Salvataggio...</>
@@ -687,78 +705,80 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
 
             {/* Dialog Form for Item */}
             <Dialog open={isItemModalOpen} onOpenChange={setIsItemModalOpen}>
-                <DialogContent className="max-w-xl p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
-                    <form onSubmit={handleSaveItem} className="bg-white p-8 space-y-6">
+                <DialogContent className="max-w-2xl p-0 overflow-y-auto max-h-[90vh] border-none rounded-2xl shadow-2xl">
+                    <form onSubmit={handleSaveItem} className="bg-white p-6 space-y-6">
                         <DialogHeader>
-                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
-                                <Settings className="size-6 text-zinc-900" />
+                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2 text-slate-900">
+                                <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
+                                    <Settings className="size-5" />
+                                </div>
                                 {editingItemId ? "Modifica Servizio" : "Nuovo Servizio"}
                             </DialogTitle>
                         </DialogHeader>
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Nome Servizio (IT) *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Nome Servizio (IT) *</label>
                                 <input
                                     type="text"
                                     required
                                     value={itemForm.name}
                                     onChange={e => setItemForm({ ...itemForm, name: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: Welcome Point"
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Nome Servizio (EN)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Nome Servizio (EN)</label>
                                 <input
                                     type="text"
                                     value={itemForm.nameEn}
                                     onChange={e => setItemForm({ ...itemForm, nameEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                     placeholder="Es: Welcome Point"
                                 />
                             </div>
 
                             <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione Servizio (IT) *</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione Servizio (IT) *</label>
                                 <textarea
                                     required
                                     value={itemForm.description}
                                     onChange={e => setItemForm({ ...itemForm, description: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none h-24 resize-none font-medium text-sm"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all h-24 resize-none"
                                     placeholder="Descrivi brevemente il servizio fornito..."
                                 />
                             </div>
 
                             <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione Servizio (EN)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione Servizio (EN)</label>
                                 <textarea
                                     value={itemForm.descriptionEn}
                                     onChange={e => setItemForm({ ...itemForm, descriptionEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none h-24 resize-none font-medium text-sm"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all h-24 resize-none font-medium text-sm"
                                     placeholder="Describe the service in English..."
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Link di Riferimento (URL)</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Link di Riferimento (URL)</label>
                                 <input
                                     type="url"
                                     value={itemForm.href}
                                     onChange={e => setItemForm({ ...itemForm, href: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-medium text-sm"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all font-medium text-sm"
                                     placeholder="https://www.unime.it/..."
                                 />
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine</label>
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ordine</label>
                                 <input
                                     type="number"
                                     value={itemForm.order}
                                     onChange={e => setItemForm({ ...itemForm, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                 />
                             </div>
 
@@ -766,7 +786,7 @@ export function ServicesAdminClient({ initialServices, userRole }: ServicesAdmin
                                 <button
                                     type="submit"
                                     disabled={loading}
-                                    className="w-full py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-800 disabled:opacity-50 transition-all shadow-lg shadow-zinc-150 flex items-center justify-center gap-2"
+                                    className="w-full py-3.5 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white rounded-xl font-bold text-sm hover:opacity-90 disabled:opacity-50 transition-all shadow-md flex items-center justify-center gap-2"
                                 >
                                     {loading ? (
                                         <><Loader2 className="size-4 animate-spin" /> Salvataggio...</>

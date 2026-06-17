@@ -13,11 +13,6 @@ export default async function UsersAdminPage() {
 
     return (
         <div className="space-y-8">
-            <div>
-                <h1 className="text-3xl font-bold text-foreground">Gestione Utenti</h1>
-                <p className="text-zinc-500 mt-2">Amministra i permessi e i ruoli di tutti gli utenti registrati.</p>
-            </div>
-
             <UsersAdminClient initialUsers={users} />
         </div>
     )

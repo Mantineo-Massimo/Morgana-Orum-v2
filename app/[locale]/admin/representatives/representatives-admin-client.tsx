@@ -157,14 +157,32 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
     }
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-8">
             {!selectedBiennium ? (
                 <div className="space-y-8 animate-in fade-in duration-300">
-                    <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                         <div>
-                            <h1 className="text-3xl font-black text-zinc-900">Gestione Bienni</h1>
-                            <p className="text-zinc-500 text-sm">Seleziona il biennio dei rappresentanti che desideri modificare.</p>
+                            <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                                <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
+                                    <CalendarRange className="size-6" />
+                                </div>
+                                Gestione Eletti per Biennio
+                            </h1>
+                            <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
+                                Seleziona il biennio dei rappresentanti che desideri gestire o crea un nuovo mandato.
+                            </p>
                         </div>
+                        {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (
+                            <button
+                                onClick={() => {
+                                    setTargetTerm("")
+                                    setIsBienniumModalOpen(true)
+                                }}
+                                className="flex items-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white text-sm font-bold hover:opacity-90 transition-all rounded-xl shadow-sm"
+                            >
+                                <Plus className="size-4" /> Nuovo Biennio
+                            </button>
+                        )}
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -174,12 +192,12 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                 <div
                                     key={term}
                                     onClick={() => setSelectedBiennium(term)}
-                                    className="bg-white border border-zinc-100 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-zinc-200 transition-all flex flex-col justify-between cursor-pointer group"
+                                    className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-slate-355 transition-all flex flex-col justify-between cursor-pointer group"
                                 >
                                     <div>
                                         <div className="flex items-center justify-between mb-4">
-                                            <div className="size-12 rounded-xl bg-zinc-50 border border-zinc-100 flex items-center justify-center text-zinc-500 group-hover:scale-110 transition-transform">
-                                                <CalendarRange className="size-6 text-zinc-400" />
+                                            <div className="size-12 rounded-xl bg-slate-50 border border-slate-200/60 flex items-center justify-center text-slate-500 group-hover:scale-105 transition-transform">
+                                                <CalendarRange className="size-6 text-slate-400" />
                                             </div>
                                             {(userRole === "SUPER_ADMIN" || userRole === "ADMIN_MORGANA") && (() => {
                                                 const isVisible = configs.find(c => c.term === term)?.visible ?? true
@@ -191,7 +209,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                                             "p-2 rounded-xl border flex items-center gap-1.5 transition-all text-xs font-bold shadow-sm",
                                                             isVisible 
                                                                 ? "bg-emerald-50 text-emerald-700 border-emerald-100 hover:bg-emerald-100" 
-                                                                : "bg-zinc-50 text-zinc-400 border-zinc-200 hover:bg-zinc-100"
+                                                                : "bg-slate-50 text-slate-400 border-slate-200 hover:bg-slate-100"
                                                         )}
                                                         title={isVisible ? "Visibile (Clicca per nascondere)" : "Nascosto (Clicca per mostrare)"}
                                                     >
@@ -201,15 +219,15 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                                 )
                                             })()}
                                         </div>
-                                        <h3 className="text-lg font-bold text-zinc-950 group-hover:text-red-600 transition-colors">
+                                        <h3 className="text-lg font-bold text-slate-950 group-hover:text-[#c9041a] transition-colors">
                                             Biennio {term}
                                         </h3>
-                                        <p className="text-sm text-zinc-500 mt-1">
+                                        <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
                                             {count} {count === 1 ? 'eletto' : 'eletti'}
                                         </p>
                                     </div>
                                     <button
-                                        className="mt-6 bg-zinc-900 text-white px-4 py-2 rounded-xl font-bold text-xs hover:bg-zinc-800 transition-colors w-full text-center"
+                                        className="mt-6 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white px-4 py-2.5 rounded-xl font-bold text-xs hover:opacity-90 transition-all w-full text-center"
                                     >
                                         Gestisci Rappresentanti
                                     </button>
@@ -220,32 +238,41 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                 </div>
             ) : (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                    <div className="mb-6">
-                        <button
-                            onClick={() => setSelectedBiennium(null)}
-                            className="text-zinc-500 hover:text-foreground flex items-center gap-2 text-sm font-medium mb-2"
-                        >
-                            &larr; Torna alla selezione bienni
-                        </button>
-                        <h1 className="text-3xl font-black text-zinc-900">Gestione Eletti</h1>
-                        <p className="text-zinc-500 text-sm">Visualizza e modifica i rappresentanti per il <strong>Biennio {selectedBiennium}</strong>.</p>
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <button
+                                onClick={() => setSelectedBiennium(null)}
+                                className="text-slate-500 hover:text-slate-900 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider mb-2 transition-colors"
+                            >
+                                &larr; Seleziona Bienni
+                            </button>
+                            <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                                <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl">
+                                    <User className="size-6" />
+                                </div>
+                                Eletti Biennio {selectedBiennium}
+                            </h1>
+                            <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
+                                Gestisci i rappresentanti eletti per il mandato {selectedBiennium}.
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="flex flex-col md:flex-row gap-4 p-4 bg-zinc-50 rounded-xl border border-zinc-100 items-center">
+                    <div className="flex flex-col md:flex-row gap-4 p-4 bg-white rounded-2xl border border-slate-200/60 items-center shadow-sm">
                         {/* Search Bar */}
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
+                        <div className="relative flex-1 w-full">
+                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
                             <input
                                 type="text"
                                 placeholder="Cerca per nome o ruolo..."
-                                className="w-full pl-10 pr-10 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                className="w-full pl-11 pr-10 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
                             {searchTerm && (
                                 <button
                                     onClick={() => setSearchTerm('')}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-foreground"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-450 hover:text-slate-700"
                                 >
                                     <X className="size-4" />
                                 </button>
@@ -255,7 +282,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                         {/* Filters */}
                         <div className="flex gap-2">
                             <select
-                                className="px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white text-sm"
+                                className="px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-xs font-bold uppercase tracking-wider bg-white cursor-pointer"
                                 value={listFilter}
                                 onChange={(e) => setListFilter(e.target.value)}
                             >
@@ -266,7 +293,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                             </select>
 
                             <select
-                                className="px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white text-sm"
+                                className="px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-xs font-bold uppercase tracking-wider bg-white cursor-pointer"
                                 value={categoryFilter}
                                 onChange={(e) => setCategoryFilter(e.target.value)}
                             >
@@ -280,20 +307,20 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                         <div className="flex gap-2">
                             <button
                                 onClick={() => openModal()}
-                                className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-colors flex items-center gap-2 whitespace-nowrap"
+                                className="bg-gradient-to-br from-[#c12830] to-[#18182e] text-white px-5 py-2.5 rounded-xl font-bold text-xs hover:opacity-90 transition-all flex items-center gap-2 whitespace-nowrap grow md:grow-0 justify-center shadow-sm"
                             >
                                 <Plus className="size-4" /> Aggiungi Nuovo
                             </button>
                         </div>
                     </div>
 
-            <div className="bg-white border border-zinc-100 rounded-xl overflow-hidden shadow-sm">
+            <div className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm min-w-[900px]">
-                        <thead className="bg-zinc-50 border-b border-zinc-100 text-zinc-500 font-medium uppercase tracking-wider text-xs">
+                        <thead className="bg-slate-50 border-b border-slate-200/60 text-slate-500 font-bold uppercase tracking-wider text-xs">
                             <tr>
                                 <th
-                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                    className="px-6 py-4 cursor-pointer hover:text-slate-900 transition-colors group"
                                     onClick={() => requestSort('name')}
                                 >
                                     <div className="flex items-center gap-2">
@@ -301,7 +328,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                     </div>
                                 </th>
                                 <th
-                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                    className="px-6 py-4 cursor-pointer hover:text-slate-900 transition-colors group"
                                     onClick={() => requestSort('term')}
                                 >
                                     <div className="flex items-center gap-2">
@@ -309,7 +336,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                     </div>
                                 </th>
                                 <th
-                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                    className="px-6 py-4 cursor-pointer hover:text-slate-900 transition-colors group"
                                     onClick={() => requestSort('listName')}
                                 >
                                     <div className="flex items-center gap-2">
@@ -317,7 +344,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                     </div>
                                 </th>
                                 <th
-                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                    className="px-6 py-4 cursor-pointer hover:text-slate-900 transition-colors group"
                                     onClick={() => requestSort('category')}
                                 >
                                     <div className="flex items-center gap-2">
@@ -325,7 +352,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                     </div>
                                 </th>
                                 <th
-                                    className="px-6 py-4 cursor-pointer hover:text-foreground transition-colors group"
+                                    className="px-6 py-4 cursor-pointer hover:text-slate-900 transition-colors group"
                                     onClick={() => requestSort('department')}
                                 >
                                     <div className="flex items-center gap-2">
@@ -441,17 +468,20 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
             {/* Representative Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in fade-in zoom-in duration-200">
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in zoom-in-95 duration-200 custom-scrollbar">
                         <button
                             onClick={closeModal}
-                            className="absolute right-6 top-6 p-2 hover:bg-zinc-100 rounded-full transition-colors z-10"
+                            className="absolute right-6 top-6 p-1.5 hover:bg-slate-100 rounded-lg transition-colors z-10"
                         >
-                            <X className="size-5 text-zinc-400" />
+                            <X className="size-4 text-slate-400" />
                         </button>
 
-                        <div className="p-8">
-                            <h2 className="text-2xl font-black text-zinc-900 mb-6">
+                        <div className="p-6">
+                            <h2 className="text-2xl font-black text-slate-900 mb-6 flex items-center gap-2">
+                                <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                                    <User className="size-5" />
+                                </div>
                                 {editingRep ? "Modifica Rappresentante" : "Nuovo Rappresentante"}
                             </h2>
 
@@ -472,46 +502,49 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
 
             {/* New Biennium Modal */}
             {isBienniumModalOpen && (
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl relative animate-in fade-in zoom-in duration-200">
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative animate-in zoom-in-95 duration-200">
                         <button
                             onClick={() => {
                                 setIsBienniumModalOpen(false)
                                 setBienniumError(null)
                                 setBienniumSuccess(null)
                             }}
-                            className="absolute right-6 top-6 p-2 hover:bg-zinc-100 rounded-full transition-colors z-10"
+                            className="absolute right-6 top-6 p-1.5 hover:bg-slate-100 rounded-lg transition-colors z-10"
                         >
-                            <X className="size-5 text-zinc-400" />
+                            <X className="size-4 text-slate-400" />
                         </button>
 
-                        <div className="p-8">
-                            <h2 className="text-2xl font-black text-zinc-900 mb-2 flex items-center gap-2">
-                                <CalendarRange className="size-6 text-zinc-800" /> Nuovo Biennio
+                        <div className="p-6 space-y-6">
+                            <h2 className="text-2xl font-black text-slate-900 flex items-center gap-2">
+                                <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                                    <CalendarRange className="size-5" />
+                                </div>
+                                Nuovo Biennio
                             </h2>
-                            <p className="text-zinc-500 text-sm mb-6">
+                            <p className="text-slate-500 text-sm font-medium font-sans">
                                 Crea un nuovo biennio e copia automaticamente tutti i rappresentanti del biennio sorgente con un mandato pluriennale (3 o 4 anni) attivo.
                             </p>
 
                             {bienniumError && (
-                                <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm font-medium border border-red-100 mb-4 animate-in fade-in">
+                                <div className="bg-red-50 text-red-650 p-4 rounded-xl text-sm font-medium border border-red-100 animate-in fade-in">
                                     {bienniumError}
                                 </div>
                             )}
 
                             {bienniumSuccess && (
-                                <div className="bg-green-50 text-green-700 p-4 rounded-xl text-sm font-medium border border-green-100 mb-4 animate-in fade-in font-semibold">
+                                <div className="bg-green-50 text-green-700 p-4 rounded-xl text-sm font-medium border border-green-100 animate-in fade-in font-semibold">
                                     {bienniumSuccess}
                                 </div>
                             )}
 
                             <div className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-bold text-zinc-700 mb-1">Biennio Sorgente</label>
+                                <div className="space-y-2">
+                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Biennio Sorgente</label>
                                     <select
                                         value={sourceTerm}
                                         onChange={(e) => handleSourceTermChange(e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 bg-white"
+                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all bg-white"
                                     >
                                         {existingTerms.map(t => (
                                             <option key={t} value={t}>{t}</option>
@@ -519,22 +552,22 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                     </select>
                                 </div>
 
-                                <div>
-                                    <label className="block text-sm font-bold text-zinc-700 mb-1">Nuovo Biennio</label>
+                                <div className="space-y-2">
+                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Nuovo Biennio</label>
                                     <input
                                         type="text"
                                         placeholder="Es. 2027-2029"
                                         value={targetTerm}
                                         onChange={(e) => setTargetTerm(e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-zinc-200 focus:outline-none focus:ring-2 focus:ring-zinc-900/10 transition-all font-mono text-sm"
+                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all font-mono"
                                     />
-                                    <p className="text-[10px] text-zinc-400 mt-1">
+                                    <p className="text-[10px] text-slate-400 font-medium">
                                         Formato richiesto: YYYY-YYYY (es. 2027-2029)
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="pt-6 flex justify-end gap-3">
+                            <div className="pt-4 flex justify-end gap-3">
                                 <button
                                     type="button"
                                     onClick={() => {
@@ -542,7 +575,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                         setBienniumError(null)
                                         setBienniumSuccess(null)
                                     }}
-                                    className="px-4 py-2 text-sm font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
+                                    className="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-sm hover:bg-slate-50 transition-all"
                                 >
                                     Annulla
                                 </button>
@@ -567,7 +600,7 @@ export function RepresentativesAdminClient({ initialReps, userRole, userAssociat
                                         }
                                         setBienniumLoading(false)
                                     }}
-                                    className="bg-zinc-900 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-zinc-800 transition-all flex items-center gap-2 disabled:opacity-50"
+                                    className="bg-gradient-to-br from-[#c12830] to-[#18182e] text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:opacity-90 transition-all flex items-center gap-2 disabled:opacity-50"
                                 >
                                     {bienniumLoading ? (
                                         <>

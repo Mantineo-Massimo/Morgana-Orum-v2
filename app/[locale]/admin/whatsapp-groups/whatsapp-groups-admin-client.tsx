@@ -212,15 +212,37 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
     return (
         <div className="space-y-8">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-green-50 text-green-600 rounded-xl">
+                            <Phone className="size-6" />
+                        </div>
+                        Gestione Gruppi WhatsApp
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
+                        Gestisci i link e le descrizioni dei gruppi WhatsApp ufficiali delle community e dei corsi di laurea.
+                    </p>
+                </div>
+                <button
+                    onClick={handleOpenAdd}
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white text-sm font-bold hover:opacity-90 transition-all rounded-xl shadow-sm group"
+                >
+                    <Plus className="size-4 group-hover:rotate-90 transition-transform" />
+                    Aggiungi Gruppo
+                </button>
+            </div>
+
             {/* Category Tab Switcher */}
-            <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-3">
+            <div className="flex flex-wrap gap-2 border-b border-slate-100 pb-4">
                 <button
                     onClick={() => { setSelectedCategory("all"); setSelectedDept("all"); }}
                     className={cn(
-                        "px-6 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
+                        "px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm border",
                         selectedCategory === "all"
-                            ? "bg-slate-900 text-white shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
-                            : "text-slate-500 hover:text-slate-800 hover:bg-slate-100"
+                            ? "bg-slate-900 text-white border-slate-900 shadow-sm"
+                            : "bg-white border-slate-200/60 text-slate-500 hover:bg-slate-50 hover:text-slate-900"
                     )}
                 >
                     Tutti ({initialGroups.length})
@@ -228,10 +250,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 <button
                     onClick={() => { setSelectedCategory("ACADEMIC"); setSelectedDept("all"); }}
                     className={cn(
-                        "px-6 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
+                        "px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm border",
                         selectedCategory === "ACADEMIC"
-                            ? "bg-red-600 text-white shadow-[0_4px_12px_rgba(220,38,38,0.2)]"
-                            : "text-slate-500 hover:text-slate-800 hover:bg-slate-100"
+                            ? "bg-[#c9041a] text-white border-[#c9041a] shadow-sm"
+                            : "bg-white border-slate-200/60 text-slate-500 hover:bg-slate-50 hover:text-slate-950"
                     )}
                 >
                     Corsi Accademici ({initialGroups.filter(g => g.category === "ACADEMIC").length})
@@ -239,10 +261,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 <button
                     onClick={() => { setSelectedCategory("COMMUNITY"); setSelectedDept("all"); }}
                     className={cn(
-                        "px-6 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-300",
+                        "px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm border",
                         selectedCategory === "COMMUNITY"
-                            ? "bg-blue-650 text-white shadow-[0_4px_12px_rgba(30,64,175,0.2)]"
-                            : "text-slate-500 hover:text-slate-800 hover:bg-slate-100"
+                            ? "bg-blue-600 text-white border-blue-600 shadow-sm"
+                            : "bg-white border-slate-200/60 text-slate-500 hover:bg-slate-50 hover:text-slate-950"
                     )}
                 >
                     Community ({initialGroups.filter(g => g.category === "COMMUNITY").length})
@@ -250,7 +272,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             </div>
 
             {/* Filters Bar */}
-            <div className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center">
                 <div className="relative w-full md:w-80">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
                     <input
@@ -258,28 +280,30 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         placeholder="Cerca per corso o dipartimento..."
-                        className="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200/50 rounded-2xl outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 focus:bg-white text-sm font-semibold transition-all"
+                        className="w-full pl-11 pr-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
                     />
                 </div>
 
-                <div className="flex flex-wrap w-full md:w-auto gap-3 items-center">
+                <div className="flex flex-wrap w-full md:w-auto gap-3 items-center justify-end">
                     {selectedCategory === "ACADEMIC" && (
                         <select
                             value={selectedDept}
                             onChange={e => setSelectedDept(e.target.value)}
-                            className="px-4 py-3 bg-slate-50 border border-slate-200/50 rounded-2xl outline-none text-xs font-bold uppercase tracking-wider cursor-pointer max-w-[200px]"
+                            className="px-4 py-2 bg-slate-50/50 border border-slate-200/60 rounded-xl text-sm focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 outline-none transition-all cursor-pointer font-semibold text-slate-700 min-w-[200px]"
                         >
                             <option value="all">Tutti i Dipartimenti</option>
                             {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
                         </select>
                     )}
 
-                    <button
-                        onClick={handleOpenAdd}
-                        className="grow md:grow-0 flex items-center justify-center gap-2 px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 shadow-md hover:shadow-lg"
-                    >
-                        <Plus className="size-4" /> Aggiungi Gruppo
-                    </button>
+                    {(selectedDept !== "all" || search !== "") && (
+                        <button
+                            onClick={() => { setSelectedDept("all"); setSearch(""); }}
+                            className="text-xs font-black text-red-600 hover:text-red-700 transition-colors uppercase tracking-widest"
+                        >
+                            Resetta
+                        </button>
+                    )}
                 </div>
             </div>
 
@@ -289,26 +313,25 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 {(selectedCategory === "all" || selectedCategory === "COMMUNITY") && communityGroups.length > 0 && (
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
-                            <h3 className="text-xs font-bold uppercase tracking-wider text-blue-600 shrink-0">Community & Gruppi Tematici</h3>
-                            <div className="h-px w-full bg-slate-200"></div>
+                            <h3 className="text-xs font-black uppercase tracking-wider text-blue-600 shrink-0">Community & Gruppi Tematici</h3>
+                            <div className="h-px w-full bg-slate-100"></div>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {communityGroups.map(group => {
                                 const Icon = ICON_MAP[group.icon || "Users"] || Users
                                 return (
-                                    <div key={group.id} className="bg-white border border-slate-200/60 rounded-3xl p-6 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
+                                    <div key={group.id} className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
                                         {/* Glowing line overlay */}
-                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-red-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-blue-500 to-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         <div>
                                             <div className="flex items-start justify-between gap-4 mb-4">
                                                 <div className={cn(
-                                                    "size-10 rounded-2xl flex items-center justify-center border",
-                                                    group.theme ? group.theme.split(" ").slice(0, 3).join(" ") : "text-blue-500 bg-blue-500/10 border-blue-500/20"
+                                                    "size-10 rounded-xl flex items-center justify-center border text-blue-500 bg-blue-500/5 border-blue-500/10"
                                                 )}>
                                                     <Icon className="size-5" />
                                                 </div>
-                                                <span className="text-[9px] font-bold tracking-wider uppercase px-3 py-1 rounded-full border bg-blue-500/10 border-blue-500/20 text-blue-600">
+                                                <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full border border-blue-100">
                                                     Community
                                                 </span>
                                             </div>
@@ -324,13 +347,13 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                                 <Phone className="size-3.5" /> Entra nel gruppo
                                             </a>
                                             <div className="flex items-center gap-1">
-                                                <button onClick={() => handleEdit(group)} className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-xl transition-all" title="Modifica">
+                                                <button onClick={() => handleEdit(group)} className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-xl transition-all border border-transparent hover:border-slate-200" title="Modifica">
                                                     <Edit3 className="size-4" />
                                                 </button>
-                                                <button onClick={() => handleDuplicate(group)} className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-xl transition-all" title="Duplica">
+                                                <button onClick={() => handleDuplicate(group)} className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-xl transition-all border border-transparent hover:border-slate-200" title="Duplica">
                                                     <Copy className="size-4" />
                                                 </button>
-                                                <button onClick={() => handleDelete(group.id)} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Elimina">
+                                                <button onClick={() => handleDelete(group.id)} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-slate-200" title="Elimina">
                                                     <Trash2 className="size-4" />
                                                 </button>
                                             </div>
@@ -349,21 +372,21 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                     return (
                         <div key={dept} className="space-y-4">
                             <div className="flex items-center gap-4">
-                                <h3 className="text-xs font-bold uppercase tracking-wider text-red-650 shrink-0">{dept}</h3>
-                                <div className="h-px w-full bg-slate-200"></div>
-                                <span className="text-[10px] font-bold text-red-600 bg-red-50 border border-red-200/30 px-2 py-0.5 rounded">{deptGroups.length}</span>
+                                <h3 className="text-xs font-black uppercase tracking-wider text-[#c9041a] shrink-0">{dept}</h3>
+                                <div className="h-px w-full bg-slate-100"></div>
+                                <span className="text-[10px] font-black text-red-655 bg-red-50 border border-red-200/30 px-2 py-0.5 rounded">{deptGroups.length}</span>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {deptGroups.map(group => (
                                     <div key={group.id} className="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
-                                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-red-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#c12830] to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         <div>
                                             <div className="flex items-start justify-between gap-4 mb-3">
-                                                <span className="text-[9px] font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-full border bg-red-500/10 border-red-500/20 text-red-650">
+                                                <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-red-50 text-red-600 rounded-full border border-red-100">
                                                     Corso
                                                 </span>
-                                                <span className="text-[10px] font-mono text-slate-400 font-medium">Ordine: {group.order}</span>
+                                                <span className="text-xs font-mono text-slate-400 font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-200/30">Ordine: {group.order}</span>
                                             </div>
                                             <h4 className="font-bold text-slate-800 leading-snug">{group.name}</h4>
                                             {group.nameEn && <p className="text-[10px] text-slate-400 italic mt-0.5">EN: {group.nameEn}</p>}
@@ -374,13 +397,13 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                                 <Phone className="size-3.5" /> Entra
                                             </a>
                                             <div className="flex items-center gap-0.5">
-                                                <button onClick={() => handleEdit(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all" title="Modifica">
+                                                <button onClick={() => handleEdit(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Modifica">
                                                     <Edit3 className="size-3.5" />
                                                 </button>
-                                                <button onClick={() => handleDuplicate(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all" title="Duplica">
+                                                <button onClick={() => handleDuplicate(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Duplica">
                                                     <Copy className="size-3.5" />
                                                 </button>
-                                                <button onClick={() => handleDelete(group.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all" title="Elimina">
+                                                <button onClick={() => handleDelete(group.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Elimina">
                                                     <Trash2 className="size-3.5" />
                                                 </button>
                                             </div>
@@ -393,7 +416,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 })}
 
                 {filteredGroups.length === 0 && (
-                    <div className="text-center py-16 text-slate-400 italic bg-white rounded-3xl border border-slate-200/60 shadow-sm">
+                    <div className="text-center py-16 text-slate-400 italic bg-white rounded-2xl border border-slate-200/60 shadow-sm">
                         Nessun gruppo WhatsApp trovato corrispondente alla ricerca.
                     </div>
                 )}
@@ -401,119 +424,121 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
             {/* Dialog Form */}
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                <DialogContent className="max-w-xl p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
-                    <form onSubmit={handleSave} className="bg-white p-8 space-y-6">
+                <DialogContent className="max-w-2xl p-0 overflow-hidden border-none rounded-2xl shadow-2xl bg-white animate-in zoom-in-95 duration-200">
+                    <form onSubmit={handleSave} className="space-y-6 p-6">
                         <DialogHeader>
-                            <DialogTitle className="text-2xl font-black uppercase tracking-tight flex items-center gap-2">
-                                <Phone className="size-6 text-zinc-900" />
+                            <DialogTitle className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+                                <div className="p-2 bg-green-50 text-green-600 rounded-xl">
+                                    <Phone className="size-5" />
+                                </div>
                                 {editingId ? "Modifica Gruppo WhatsApp" : "Nuovo Gruppo WhatsApp"}
                             </DialogTitle>
                         </DialogHeader>
 
                         <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Nome Gruppo (IT) *</label>
+                            <div className="space-y-1.5">
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Nome Gruppo (IT) *</label>
                                 <input
                                     type="text"
                                     required
                                     value={form.name}
                                     onChange={e => setForm({ ...form, name: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                     placeholder="Es: L18 Economia aziendale"
                                 />
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Nome Gruppo (EN)</label>
+                            <div className="space-y-1.5">
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Nome Gruppo (EN)</label>
                                 <input
                                     type="text"
                                     value={form.nameEn}
                                     onChange={e => setForm({ ...form, nameEn: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                     placeholder="Es: General Group"
                                 />
                             </div>
 
-                            <div className="md:col-span-2 space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Link WhatsApp (URL) *</label>
+                            <div className="md:col-span-2 space-y-1.5">
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Link WhatsApp (URL) *</label>
                                 <input
                                     type="url"
                                     required
                                     value={form.link}
                                     onChange={e => setForm({ ...form, link: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-semibold text-sm"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                     placeholder="https://chat.whatsapp.com/..."
                                 />
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Categoria *</label>
+                            <div className="space-y-1.5">
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Categoria *</label>
                                 <select
                                     value={form.category}
                                     onChange={e => setForm({ ...form, category: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
                                 >
                                     {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
                                 </select>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Ordine</label>
+                            <div className="space-y-1.5">
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ordine</label>
                                 <input
                                     type="number"
                                     value={form.order}
                                     onChange={e => setForm({ ...form, order: parseInt(e.target.value) || 0 })}
-                                    className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none font-bold"
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                 />
                             </div>
 
                             {form.category === "ACADEMIC" ? (
-                                <div className="md:col-span-2 space-y-2">
-                                    <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Dipartimento *</label>
+                                <div className="md:col-span-2 space-y-1.5">
+                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento *</label>
                                     <select
                                         value={form.department}
                                         onChange={e => setForm({ ...form, department: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold"
+                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
                                     >
                                         {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
                                     </select>
                                 </div>
                             ) : (
                                 <>
-                                    <div className="md:col-span-2 space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione (IT) *</label>
+                                    <div className="md:col-span-2 space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione (IT) *</label>
                                         <textarea
                                             required={form.category === "COMMUNITY"}
                                             value={form.description}
                                             onChange={e => setForm({ ...form, description: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none h-20 resize-none font-medium text-sm"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 h-24 resize-none"
                                             placeholder="Descrizione del gruppo..."
                                         />
                                     </div>
 
-                                    <div className="md:col-span-2 space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Descrizione (EN)</label>
+                                    <div className="md:col-span-2 space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione (EN)</label>
                                         <textarea
                                             value={form.descriptionEn}
                                             onChange={e => setForm({ ...form, descriptionEn: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none h-20 resize-none font-medium text-sm"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 h-24 resize-none"
                                             placeholder="Group description in English..."
                                         />
                                     </div>
 
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Tema Colore Preset</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Tema Colore Preset</label>
                                         <select
                                             value={form.theme}
                                             onChange={e => setForm({ ...form, theme: e.target.value })}
-                                            className="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-zinc-900/10 outline-none bg-white font-bold text-xs"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-xs font-black uppercase tracking-wider text-slate-800 cursor-pointer"
                                         >
                                             {THEME_PRESETS.map(t => <option key={t.name} value={t.classes}>{t.label}</option>)}
                                         </select>
                                     </div>
 
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold uppercase tracking-widest text-zinc-500">Seleziona Icona</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Seleziona Icona</label>
                                         <div className="flex gap-2 h-11 items-center">
                                             {AVAILABLE_ICONS.map(item => (
                                                 <button
@@ -521,10 +546,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                                     type="button"
                                                     onClick={() => setForm({ ...form, icon: item.name })}
                                                     className={cn(
-                                                        "flex items-center justify-center size-9 rounded-xl border transition-all hover:bg-zinc-50",
+                                                        "flex items-center justify-center size-9 rounded-xl border transition-all hover:bg-slate-50",
                                                         form.icon === item.name
-                                                            ? "border-zinc-900 bg-zinc-900 text-white shadow-sm"
-                                                            : "border-zinc-100 text-zinc-500"
+                                                            ? "border-slate-900 bg-zinc-900 text-white shadow-sm"
+                                                            : "border-slate-200 text-slate-500 bg-white"
                                                     )}
                                                     title={item.name}
                                                 >
@@ -535,20 +560,27 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                     </div>
                                 </>
                             )}
+                        </div>
 
-                            <div className="md:col-span-2 pt-4">
-                                <button
-                                    type="submit"
-                                    disabled={loading}
-                                    className="w-full py-4 bg-zinc-900 text-white rounded-2xl font-black uppercase tracking-widest hover:bg-zinc-800 disabled:opacity-50 transition-all shadow-lg shadow-zinc-150 flex items-center justify-center gap-2"
-                                >
-                                    {loading ? (
-                                        <><Loader2 className="size-4 animate-spin" /> Salvataggio...</>
-                                    ) : (
-                                        editingId ? "Aggiorna Gruppo" : "Salva Gruppo"
-                                    )}
-                                </button>
-                            </div>
+                        <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
+                            <button
+                                type="button"
+                                onClick={() => setIsOpen(false)}
+                                className="px-6 py-3 font-bold text-slate-500 hover:text-slate-900 transition-colors text-sm"
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="px-8 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white font-bold rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center gap-2 text-sm shadow-sm"
+                            >
+                                {loading ? (
+                                    <><Loader2 className="size-4 animate-spin" /> Salvataggio...</>
+                                ) : (
+                                    editingId ? "Salva Modifiche" : "Crea Gruppo"
+                                )}
+                            </button>
                         </div>
                     </form>
                 </DialogContent>

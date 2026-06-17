@@ -205,161 +205,176 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
     }
 
     const rolesList = [
-        { id: "USER", label: "Utente", icon: User, color: "bg-zinc-100 text-zinc-600" },
-        { id: "ADMIN_NETWORK", label: "Admin Network", icon: Globe, color: "bg-blue-100 text-blue-600" },
-        { id: "ADMIN_MORGANA", label: "Admin Morgana/Orum", icon: Crown, color: "bg-red-100 text-red-600" },
-        { id: "SUPER_ADMIN", label: "Super Admin", icon: Shield, color: "bg-purple-100 text-purple-600" },
+        { id: "USER", label: "Utente", icon: User, color: "bg-slate-100 text-slate-600 border border-slate-200/40" },
+        { id: "ADMIN_NETWORK", label: "Admin Network", icon: Globe, color: "bg-blue-50 text-blue-600 border border-blue-100" },
+        { id: "ADMIN_MORGANA", label: "Admin Morgana/Orum", icon: Crown, color: "bg-red-50 text-red-600 border border-red-100" },
+        { id: "SUPER_ADMIN", label: "Super Admin", icon: Shield, color: "bg-purple-50 text-purple-600 border border-purple-100" },
     ]
 
     return (
-        <div className="space-y-4">
-            {/* Header with Search and Add button */}
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-                <div className="relative w-full max-w-md">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-zinc-400" />
-                    <input
-                        type="text"
-                        placeholder="Cerca per email, nome o matricola..."
-                        className="w-full pl-11 pr-4 py-3 bg-white border border-zinc-200 rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                    />
+        <div className="space-y-8">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+                        <div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl">
+                            <User className="size-6" />
+                        </div>
+                        Gestione Utenti
+                    </h1>
+                    <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
+                        Visualizza e gestisci tutti gli utenti iscritti, i loro ruoli e le loro associazioni di appartenenza.
+                    </p>
                 </div>
                 <button
                     onClick={() => openModal()}
-                    className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-zinc-900 text-white rounded-2xl hover:bg-zinc-800 transition-all font-bold group shadow-lg shadow-zinc-200"
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white text-sm font-bold hover:opacity-90 transition-all rounded-xl shadow-sm group"
                 >
                     <Plus className="size-4 group-hover:rotate-90 transition-transform" />
                     Nuovo Utente
                 </button>
             </div>
 
-            {/* Filters Row */}
-            <div className="flex flex-wrap gap-3 items-center p-4 bg-zinc-50/50 rounded-2xl border border-zinc-100">
-                <div className="flex items-center gap-2 text-zinc-500 mr-2">
-                    <Filter className="size-4" />
-                    <span className="text-sm font-bold">Filtri:</span>
+            {/* Filters Bar */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm flex flex-col md:flex-row gap-4 items-center justify-between">
+                <div className="relative w-full md:w-80">
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                    <input
+                        type="text"
+                        placeholder="Cerca per email, nome o matricola..."
+                        className="w-full pl-11 pr-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
                 </div>
 
-                <select
-                    className="px-4 py-2 bg-white border border-zinc-200 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer min-w-[140px]"
-                    value={roleFilter}
-                    onChange={(e) => setRoleFilter(e.target.value)}
-                >
-                    <option value="all">Tutti i Ruoli</option>
-                    {rolesList.map(r => (
-                        <option key={r.id} value={r.id}>{r.label}</option>
-                    ))}
-                </select>
+                <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                    <div className="flex items-center gap-2 text-slate-400 mr-2 text-xs font-black uppercase tracking-wider">
+                        <Filter className="size-4" />
+                        <span>Filtri:</span>
+                    </div>
 
-                <select
-                    className="px-4 py-2 bg-white border border-zinc-200 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer min-w-[160px]"
-                    value={assocFilter}
-                    onChange={(e) => setAssocFilter(e.target.value)}
-                >
-                    <option value="all">Tutte le Associazioni</option>
-                    {ASSOCIATIONS.map(assoc => (
-                        <option key={assoc.id} value={assoc.id}>{assoc.name}</option>
-                    ))}
-                </select>
-
-                <select
-                    className="px-4 py-2 bg-white border border-zinc-200 rounded-xl text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all cursor-pointer max-w-[200px]"
-                    value={deptFilter}
-                    onChange={(e) => setDeptFilter(e.target.value)}
-                >
-                    <option value="all">Tutti i Dipartimenti</option>
-                    {Object.keys(departmentsData).map(dept => (
-                        <option key={dept} value={dept}>{dept}</option>
-                    ))}
-                </select>
-
-                {(roleFilter !== "all" || assocFilter !== "all" || deptFilter !== "all" || search !== "") && (
-                    <button
-                        onClick={() => {
-                            setSearch("")
-                            setRoleFilter("all")
-                            setAssocFilter("all")
-                            setDeptFilter("all")
-                        }}
-                        className="text-xs font-bold text-red-600 hover:text-red-700 transition-colors ml-auto"
+                    <select
+                        className="px-4 py-2 bg-slate-50/50 border border-slate-200/60 rounded-xl text-sm focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 outline-none transition-all cursor-pointer min-w-[140px] font-semibold text-slate-700"
+                        value={roleFilter}
+                        onChange={(e) => setRoleFilter(e.target.value)}
                     >
-                        Resetta filtri
-                    </button>
-                )}
+                        <option value="all">Tutti i Ruoli</option>
+                        {rolesList.map(r => (
+                            <option key={r.id} value={r.id}>{r.label}</option>
+                        ))}
+                    </select>
+
+                    <select
+                        className="px-4 py-2 bg-slate-50/50 border border-slate-200/60 rounded-xl text-sm focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 outline-none transition-all cursor-pointer min-w-[160px] font-semibold text-slate-700"
+                        value={assocFilter}
+                        onChange={(e) => setAssocFilter(e.target.value)}
+                    >
+                        <option value="all">Tutte le Associazioni</option>
+                        {ASSOCIATIONS.map(assoc => (
+                            <option key={assoc.id} value={assoc.id}>{assoc.name}</option>
+                        ))}
+                    </select>
+
+                    <select
+                        className="px-4 py-2 bg-slate-50/50 border border-slate-200/60 rounded-xl text-sm focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 outline-none transition-all cursor-pointer max-w-[200px] font-semibold text-slate-700"
+                        value={deptFilter}
+                        onChange={(e) => setDeptFilter(e.target.value)}
+                    >
+                        <option value="all">Tutti i Dipartimenti</option>
+                        {Object.keys(departmentsData).map(dept => (
+                            <option key={dept} value={dept}>{dept}</option>
+                        ))}
+                    </select>
+
+                    {(roleFilter !== "all" || assocFilter !== "all" || deptFilter !== "all" || search !== "") && (
+                        <button
+                            onClick={() => {
+                                setSearch("")
+                                setRoleFilter("all")
+                                setAssocFilter("all")
+                                setDeptFilter("all")
+                            }}
+                            className="text-xs font-black text-red-600 hover:text-red-700 transition-colors uppercase tracking-widest ml-auto"
+                        >
+                            Resetta
+                        </button>
+                    )}
+                </div>
             </div>
 
-            <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden">
+            {/* Table Card */}
+            <div className="bg-white rounded-2xl border border-slate-200/60 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full border-collapse min-w-[1000px]">
                         <thead>
-                            <tr className="bg-zinc-50/50 border-b border-zinc-100">
+                            <tr className="bg-slate-50/50 border-b border-slate-200/60">
                                 <th
-                                    className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest cursor-pointer hover:text-zinc-600 transition-colors group"
+                                    className="px-6 py-4 text-left text-xs font-black text-slate-400 uppercase tracking-widest cursor-pointer hover:text-slate-600 transition-colors group"
                                     onClick={() => handleSort('name')}
                                 >
                                     <div className="flex items-center gap-1">
                                         Utente
                                         {sortConfig?.key === 'name' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-[#c9041a]" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}
                                     </div>
                                 </th>
                                 <th
-                                    className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest cursor-pointer hover:text-zinc-600 transition-colors group"
+                                    className="px-6 py-4 text-left text-xs font-black text-slate-400 uppercase tracking-widest cursor-pointer hover:text-slate-600 transition-colors group"
                                     onClick={() => handleSort('matricola')}
                                 >
                                     <div className="flex items-center gap-1">
                                         Matricola
                                         {sortConfig?.key === 'matricola' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-[#c9041a]" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}
                                     </div>
                                 </th>
                                 <th
-                                    className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest cursor-pointer hover:text-zinc-600 transition-colors group"
+                                    className="px-6 py-4 text-left text-xs font-black text-slate-400 uppercase tracking-widest cursor-pointer hover:text-slate-600 transition-colors group"
                                     onClick={() => handleSort('role')}
                                 >
                                     <div className="flex items-center gap-1">
                                         Ruolo
                                         {sortConfig?.key === 'role' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-[#c9041a]" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}
                                     </div>
                                 </th>
                                 <th
-                                    className="px-6 py-4 text-left text-xs font-bold text-zinc-400 uppercase tracking-widest cursor-pointer hover:text-zinc-600 transition-colors group"
+                                    className="px-6 py-4 text-left text-xs font-black text-slate-400 uppercase tracking-widest cursor-pointer hover:text-slate-600 transition-colors group"
                                     onClick={() => handleSort('association')}
                                 >
                                     <div className="flex items-center gap-1">
                                         Associazione
                                         {sortConfig?.key === 'association' ? (
-                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-red-600" /> : <ArrowDown className="size-3 text-blue-600" />
+                                            sortConfig.direction === 'asc' ? <ArrowUp className="size-3 text-[#c9041a]" /> : <ArrowDown className="size-3 text-blue-600" />
                                         ) : (
                                             <ArrowUpDown className="size-3 opacity-0 group-hover:opacity-50 transition-opacity" />
                                         )}
                                     </div>
                                 </th>
-                                <th className="px-6 py-4 text-right text-xs font-bold text-zinc-400 uppercase tracking-widest">Azioni</th>
+                                <th className="px-6 py-4 text-right text-xs font-black text-slate-400 uppercase tracking-widest">Azioni</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-50">
+                        <tbody className="divide-y divide-slate-100">
                             {filteredUsers.map((user) => (
-                                <tr key={user.id} className="hover:bg-zinc-50/30 transition-colors">
+                                <tr key={user.id} className="hover:bg-slate-50/30 transition-colors">
                                     <td className="px-6 py-4">
                                         <div>
-                                            <p className="font-bold text-foreground capitalize">{user.name} {user.surname}</p>
-                                            <p className="text-xs text-zinc-500">{user.email}</p>
+                                            <p className="font-bold text-slate-900 capitalize">{user.name} {user.surname}</p>
+                                            <p className="text-xs text-slate-500 font-medium font-sans">{user.email}</p>
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <code className="text-xs font-mono px-2 py-1 bg-zinc-100 rounded text-zinc-600">
+                                        <code className="text-xs font-mono font-bold px-2 py-1 bg-slate-100 rounded-lg text-slate-600 border border-slate-200/40">
                                             {user.matricola}
                                         </code>
                                     </td>
@@ -367,7 +382,7 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                         <div className="flex items-center gap-2">
                                             <select
                                                 className={cn(
-                                                    "text-xs font-bold px-3 py-1.5 rounded-full border-0 focus:ring-2 focus:ring-primary/20 cursor-pointer appearance-none text-center min-w-[140px]",
+                                                    "text-[10px] font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border-0 focus:ring-2 focus:ring-[#c9041a]/10 cursor-pointer appearance-none text-center min-w-[140px] shadow-sm transition-all",
                                                     rolesList.find(r => r.id === user.role)?.color
                                                 )}
                                                 value={user.role}
@@ -375,16 +390,16 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                                 disabled={loadingId === user.id}
                                             >
                                                 {rolesList.map(r => (
-                                                    <option key={r.id} value={r.id}>{r.label}</option>
+                                                    <option key={r.id} value={r.id} className="text-sm font-semibold normal-case tracking-normal text-slate-800 bg-white">{r.label}</option>
                                                 ))}
                                             </select>
-                                            {loadingId === user.id && <Loader2 className="size-3 animate-spin text-zinc-400" />}
+                                            {loadingId === user.id && <Loader2 className="size-3 animate-spin text-slate-400" />}
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-2">
                                             <select
-                                                className="text-sm bg-zinc-50 border border-zinc-100 rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
+                                                className="text-xs font-semibold bg-slate-50/50 border border-slate-200/60 rounded-lg px-2.5 py-1.5 outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 disabled:opacity-50 text-slate-700 cursor-pointer"
                                                 value={user.association}
                                                 onChange={(e) => handleAssociationChange(user.id, e.target.value)}
                                                 disabled={loadingId === user.id || user.role !== "ADMIN_NETWORK"}
@@ -404,14 +419,14 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                         <div className="flex items-center justify-end gap-1">
                                             <button
                                                 onClick={() => openModal(user)}
-                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"
+                                                className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-50 transition-all"
                                                 title="Modifica"
                                             >
                                                 <Edit2 className="size-4" />
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(user.id)}
-                                                className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+                                                className="p-2 rounded-xl border border-slate-200 text-slate-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                                 disabled={loadingId === user.id}
                                                 title="Elimina"
                                             >
@@ -428,54 +443,54 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
 
             {/* User Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <div className="bg-white rounded-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl relative animate-in fade-in zoom-in duration-200">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl p-6 space-y-6 my-auto animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto relative">
                         <button
                             onClick={() => setIsModalOpen(false)}
-                            className="absolute right-6 top-6 p-2 hover:bg-zinc-100 rounded-full transition-colors z-10"
+                            className="absolute right-6 top-6 p-2 hover:bg-slate-100 rounded-full transition-colors z-10 text-slate-400 hover:text-slate-600"
                         >
-                            <X className="size-5 text-zinc-400" />
+                            <X className="size-5" />
                         </button>
 
-                        <div className="p-8">
-                            <h2 className="text-2xl font-black text-zinc-900 mb-6">
+                        <div>
+                            <h2 className="text-2xl font-black text-slate-900 mb-6">
                                 {editingUser ? "Modifica Utente" : "Crea Nuovo Utente"}
                             </h2>
 
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Nome</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Nome</label>
                                         <input
                                             type="text"
                                             required
                                             value={formData.name}
                                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Cognome</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Cognome</label>
                                         <input
                                             type="text"
                                             required
                                             value={formData.surname}
                                             onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Email</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Email</label>
                                         <input
                                             type="email"
                                             required
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">
                                             Password {editingUser && "(lascia vuoto per non cambiare)"}
                                         </label>
                                         <input
@@ -484,36 +499,36 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             placeholder={editingUser ? "••••••••" : ""}
                                             value={formData.password}
                                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Matricola</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Matricola</label>
                                         <input
                                             type="text"
                                             required
                                             value={formData.matricola}
                                             onChange={(e) => setFormData({ ...formData, matricola: e.target.value })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Data di Nascita</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Data di Nascita</label>
                                         <input
                                             type="date"
                                             required
                                             value={formData.birthDate}
                                             onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Dipartimento</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento</label>
                                         <select
                                             required
                                             value={formData.department}
                                             onChange={(e) => setFormData({ ...formData, department: e.target.value, degreeCourse: "" })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
                                         >
                                             <option value="" disabled>Seleziona Dipartimento...</option>
                                             {Object.keys(departmentsData).map(dept => (
@@ -521,13 +536,13 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             ))}
                                         </select>
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Corso di Laurea</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Corso di Laurea</label>
                                         <select
                                             required
                                             value={formData.degreeCourse}
                                             onChange={(e) => setFormData({ ...formData, degreeCourse: e.target.value })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all disabled:opacity-50"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 disabled:opacity-50 cursor-pointer"
                                             disabled={!formData.department}
                                         >
                                             <option value="" disabled>Seleziona Corso...</option>
@@ -565,24 +580,24 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                             })()}
                                         </select>
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Ruolo</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Ruolo</label>
                                         <select
                                             value={formData.role}
                                             onChange={(e) => setFormData({ ...formData, role: e.target.value as Role })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
                                         >
                                             {rolesList.map(r => (
                                                 <option key={r.id} value={r.id}>{r.label}</option>
                                             ))}
                                         </select>
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Associazione</label>
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Associazione</label>
                                         <select
                                             value={formData.association}
                                             onChange={(e) => setFormData({ ...formData, association: e.target.value as Association })}
-                                            className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
                                         >
                                             {ASSOCIATIONS.map(a => (
                                                 <option key={a.id} value={a.id}>{a.name}</option>
@@ -591,66 +606,66 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     </div>
                                 </div>
 
-                                <div className="flex flex-wrap gap-4 pt-4 border-t border-zinc-50">
+                                <div className="flex flex-wrap gap-4 pt-4 border-t border-slate-100">
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
                                             type="checkbox"
                                             checked={formData.isFuorisede}
                                             onChange={(e) => setFormData({ ...formData, isFuorisede: e.target.checked })}
-                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                            className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/10 focus:ring-offset-0 transition-colors cursor-pointer"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">Studente Fuorisede</span>
+                                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors select-none">Studente Fuorisede</span>
                                     </label>
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
                                             type="checkbox"
                                             checked={formData.newsletter}
                                             onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
-                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                            className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/10 focus:ring-offset-0 transition-colors cursor-pointer"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">{tAdmin("newsletter")}</span>
+                                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors select-none">{tAdmin("newsletter")}</span>
                                     </label>
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
                                             type="checkbox"
                                             checked={formData.consenso_marketing_orum}
                                             onChange={(e) => setFormData({ ...formData, consenso_marketing_orum: e.target.checked })}
-                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                            className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/10 focus:ring-offset-0 transition-colors cursor-pointer"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">{tAdmin("mktg_orum")}</span>
+                                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors select-none">{tAdmin("mktg_orum")}</span>
                                     </label>
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
                                             type="checkbox"
                                             checked={formData.consenso_marketing_morgana}
                                             onChange={(e) => setFormData({ ...formData, consenso_marketing_morgana: e.target.checked })}
-                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                            className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/10 focus:ring-offset-0 transition-colors cursor-pointer"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">{tAdmin("mktg_morgana")}</span>
+                                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors select-none">{tAdmin("mktg_morgana")}</span>
                                     </label>
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
                                             type="checkbox"
                                             checked={formData.accettazione_termini_condivisi}
                                             onChange={(e) => setFormData({ ...formData, accettazione_termini_condivisi: e.target.checked })}
-                                            className="size-4 rounded border-zinc-300 text-primary focus:ring-primary/20"
+                                            className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/10 focus:ring-offset-0 transition-colors cursor-pointer"
                                         />
-                                        <span className="text-sm font-medium text-zinc-600 group-hover:text-zinc-900">{tAdmin("privacy_ok")}</span>
+                                        <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors select-none">{tAdmin("privacy_ok")}</span>
                                     </label>
                                 </div>
 
-                                <div className="flex justify-end gap-3 pt-6">
+                                <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
                                     <button
                                         type="button"
                                         onClick={() => setIsModalOpen(false)}
-                                        className="px-6 py-3 font-bold text-zinc-500 hover:text-zinc-900 transition-colors"
+                                        className="px-6 py-3 font-bold text-slate-500 hover:text-slate-900 transition-colors text-sm"
                                     >
                                         Annulla
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={isPending}
-                                        className="px-8 py-3 bg-zinc-900 text-white font-bold rounded-2xl hover:bg-zinc-800 transition-all disabled:opacity-50 flex items-center gap-2"
+                                        className="px-8 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white font-bold rounded-xl hover:opacity-90 transition-all disabled:opacity-50 flex items-center gap-2 text-sm shadow-sm"
                                     >
                                         {isPending ? (
                                             <>
