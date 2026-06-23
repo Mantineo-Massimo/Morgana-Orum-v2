@@ -99,7 +99,7 @@ const getColorClasses = (color: string) => {
 }
 
 export function GuideClient({ categories, initialGuides, locale, isLoggedIn = false, sessionEmail = null, countdownItems = [] }: GuideClientProps) {
-    const [selectedGuide, setSelectedGuide] = useState<string>(initialGuides && initialGuides.length > 0 ? initialGuides[0].id : "matricole")
+    const [selectedGuide, setSelectedGuide] = useState<string>("matricole")
     const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | "media" | "ersu" | null>(null)
     const [activeInfoGuide, setActiveInfoGuide] = useState<any | null>(null)
 
