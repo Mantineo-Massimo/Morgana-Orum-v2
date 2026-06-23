@@ -48,16 +48,8 @@ export function NextDeadlineWidget({ locale, initialItems }: { locale: string, i
         return () => clearInterval(interval)
     }, [nextItem])
 
-    // ⚠️ CLS FIX: never return null — always render the section wrapper at full height
-    // so the page layout doesn't shift when the client component hydrates.
     if (!nextItem) {
-        return (
-            <section
-                className="w-full bg-[#18182e] border-b border-zinc-800"
-                aria-hidden="true"
-                style={{ minHeight: "106px" }}
-            />
-        )
+        return null
     }
 
     const title = isEn ? nextItem.titleEn : nextItem.title
