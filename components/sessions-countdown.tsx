@@ -158,7 +158,7 @@ export function SessionsCountdown({ locale, initialItems, sessionEmail }: Sessio
     }, [selectedCategory, sourceItems])
 
     return (
-        <div className="bg-zinc-50/50 rounded-[2rem] border border-zinc-200/50 p-6 md:p-8 space-y-6 shadow-inner">
+        <div className="bg-zinc-50/50 rounded-[2rem] border border-zinc-200/50 p-4 md:p-8 space-y-6 shadow-inner">
             {/* Header */}
             <div className="flex items-center gap-3 pb-6 border-b border-zinc-200/60">
                 <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center shadow-lg shadow-zinc-200">

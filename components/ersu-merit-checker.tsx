@@ -207,7 +207,7 @@ export function ErsuMeritChecker({ locale }: ErsuMeritCheckerProps) {
     }, [courseType, year, cfu, isDisability, prevBonusUsed])
 
     return (
-        <div className="bg-zinc-50/50 rounded-[2rem] border border-zinc-200/50 p-6 md:p-8 space-y-8 shadow-inner text-zinc-950">
+        <div className="bg-zinc-50/50 rounded-[2rem] border border-zinc-200/50 p-4 md:p-8 space-y-8 shadow-inner text-zinc-950">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/60">
                 <div className="flex items-center gap-3">

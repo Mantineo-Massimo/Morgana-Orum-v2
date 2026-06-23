@@ -486,42 +486,42 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
 
             {/* Modal for Tuition Calculator */}
             <Dialog open={activeToolModal === "tasse"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
-                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                <DialogContent className="!w-[95vw] md:!w-full !max-w-[95vw] md:!max-w-5xl bg-white p-4 md:p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
                     <TaxCalculator locale={locale} />
                 </DialogContent>
             </Dialog>
 
             {/* Modal for Academic Dictionary */}
             <Dialog open={activeToolModal === "dizionario"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
-                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                <DialogContent className="!w-[95vw] md:!w-full !max-w-[95vw] md:!max-w-5xl bg-white p-4 md:p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
                     <AcademicDictionary locale={locale} />
                 </DialogContent>
             </Dialog>
 
             {/* Modal for Sessions Countdown */}
             <Dialog open={activeToolModal === "countdown"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
-                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                <DialogContent className="!w-[95vw] md:!w-full !max-w-[95vw] md:!max-w-5xl bg-white p-4 md:p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
                     <SessionsCountdown locale={locale} initialItems={countdownItems} sessionEmail={sessionEmail} />
                 </DialogContent>
             </Dialog>
 
             {/* Modal for Grade Simulator */}
             <Dialog open={activeToolModal === "media"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
-                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                <DialogContent className="!w-[95vw] md:!w-full !max-w-[95vw] md:!max-w-5xl bg-white p-4 md:p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
                     <GradeSimulator locale={locale} isLoggedIn={isLoggedIn} />
                 </DialogContent>
             </Dialog>
 
             {/* Modal for ERSU Merit Checker */}
             <Dialog open={activeToolModal === "ersu"} onOpenChange={(open) => !open && setActiveToolModal(null)}>
-                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-5xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                <DialogContent className="!w-[95vw] md:!w-full !max-w-[95vw] md:!max-w-5xl bg-white p-4 md:p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
                     <ErsuMeritChecker locale={locale} />
                 </DialogContent>
             </Dialog>
 
             {/* Modal for Informative Guide Steps */}
             <Dialog open={activeInfoGuide !== null} onOpenChange={(open) => !open && setActiveInfoGuide(null)}>
-                <DialogContent className="w-[95vw] md:w-full max-w-[95vw] md:max-w-3xl bg-white p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
+                <DialogContent className="!w-[95vw] md:!w-full !max-w-[95vw] md:!max-w-3xl bg-white p-4 md:p-6 border-0 max-h-[90vh] overflow-x-hidden overflow-y-auto rounded-3xl shadow-2xl">
                     {activeInfoGuide && (
                         <div className="space-y-6 text-zinc-950">
                             <div className="flex items-center gap-3 pb-4 border-b border-zinc-150">
