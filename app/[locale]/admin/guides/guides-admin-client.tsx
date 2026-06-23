@@ -55,7 +55,7 @@ const AVAILABLE_COLORS = [
     { name: "emerald", label: "Smeraldo", bg: "bg-emerald-500" }
 ]
 
-const PROTECTED_GUIDES = ["trasporti", "servizi", "mappa"]
+const PROTECTED_GUIDES = ["matricole", "trasporti", "servizi", "mappa"]
 
 
 export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClientProps) {

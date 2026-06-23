@@ -237,7 +237,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                 </h3>
                                 <div className="grid sm:grid-cols-2 gap-6">
                                     {guides
-                                        .filter((g) => !g.hasCustomComponent)
+                                        .filter((g) => !g.hasCustomComponent && g.id !== "matricole")
                                         .map((g) => {
                                             const IconComponent = ICON_MAP[g.icon] || BookOpen
                                             return (

@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import prisma from "@/lib/prisma"
 
-const PROTECTED_GUIDE_IDS = ["trasporti", "servizi", "mappa"]
+const PROTECTED_GUIDE_IDS = ["matricole", "trasporti", "servizi", "mappa"]
 
 async function checkAdminPermission() {
     const { cookies } = await import("next/headers")
