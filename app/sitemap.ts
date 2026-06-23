@@ -5,6 +5,16 @@ const BASE_URL = "https://www.morganaorum.it"
 const LOCALES = ["it", "en"]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    let showOrganigramma = true
+    try {
+        const config = await prisma.organigrammaConfig.findUnique({
+            where: { id: "config" }
+        })
+        if (config && !config.visible) {
+            showOrganigramma = false
+        }
+    } catch { /* DB unavailable during build */ }
+
     // Static pages
     const staticRoutes = [
         "",           // Home
@@ -18,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         "/faq",
         "/convenzioni",
         "/gruppi",
-        "/organigramma",
+        ...(showOrganigramma ? ["/organigramma"] : []),
         "/social",
         "/media-kit",
         "/contact",

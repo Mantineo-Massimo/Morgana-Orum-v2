@@ -133,3 +133,41 @@ export async function deleteOrganigrammaMember(id: string) {
         return { success: false, error: "Errore durante l'eliminazione del membro dell'organigramma." }
     }
 }
+
+export async function getOrganigrammaConfig() {
+    try {
+        let config = await prisma.organigrammaConfig.findUnique({
+            where: { id: "config" }
+        })
+        if (!config) {
+            config = await prisma.organigrammaConfig.create({
+                data: { id: "config", visible: true }
+            })
+        }
+        return config
+    } catch (error) {
+        console.error("Error fetching organigramma config:", error)
+        return { id: "config", visible: true }
+    }
+}
+
+export async function toggleOrganigrammaVisibility(visible: boolean) {
+    if (!(await checkAdminPermission())) {
+        return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
+    try {
+        await prisma.organigrammaConfig.upsert({
+            where: { id: "config" },
+            update: { visible },
+            create: { id: "config", visible }
+        })
+        revalidatePath("/organigramma")
+        revalidatePath("/admin/organigramma")
+        revalidatePath("/", "layout")
+        return { success: true }
+    } catch (error) {
+        console.error("Error toggling organigramma visibility:", error)
+        return { success: false, error: "Errore durante l'aggiornamento della visibilità." }
+    }
+}

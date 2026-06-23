@@ -8,7 +8,13 @@ import { cn } from "@/lib/utils"
 import { useBrand } from "@/components/brand-provider"
 import { useTranslations } from "next-intl"
 
-export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
+export function StickyHeader({ 
+    isLoggedIn = false,
+    showOrganigramma = true 
+}: { 
+    isLoggedIn?: boolean
+    showOrganigramma?: boolean 
+}) {
     const t = useTranslations("Footer")
     const [isScrolled, setIsScrolled] = useState(false)
 
@@ -168,6 +174,7 @@ export function StickyHeader({ isLoggedIn = false }: { isLoggedIn?: boolean }) {
                     <MainNav
                         isScrolled={true} // Always white background style
                         isLoggedIn={isLoggedIn}
+                        showOrganigramma={showOrganigramma}
                     />
                 </div>
             </div>

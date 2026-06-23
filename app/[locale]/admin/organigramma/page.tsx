@@ -1,4 +1,4 @@
-import { getOrganigrammaMembers } from "@/app/actions/organigramma"
+import { getOrganigrammaMembers, getOrganigrammaConfig } from "@/app/actions/organigramma"
 import { OrganigrammaAdminClient } from "./organigramma-admin-client"
 import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
@@ -17,12 +17,14 @@ export default async function AdminOrganigrammaPage() {
     }
 
     const members = await getOrganigrammaMembers()
+    const config = await getOrganigrammaConfig()
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
             <OrganigrammaAdminClient
                 initialMembers={members as any}
                 userRole={user?.role}
+                initialVisible={config.visible}
             />
         </div>
     )

@@ -363,6 +363,12 @@ model BienniumConfig {
   updatedAt DateTime @updatedAt
 }
 
+model OrganigrammaConfig {
+  id        String   @id @default("config")
+  visible   Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
 model MediaLibraryItem {
   id        String   @id @default(uuid())
   url       String   @unique

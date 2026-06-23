@@ -11,7 +11,8 @@ import {
 import {
     createOrganigrammaMember,
     updateOrganigrammaMember,
-    deleteOrganigrammaMember
+    deleteOrganigrammaMember,
+    toggleOrganigrammaVisibility
 } from "@/app/actions/organigramma"
 import { cn } from "@/lib/utils"
 import {
@@ -26,6 +27,7 @@ import { RichTextEditor } from "@/components/ui/rich-text-editor"
 interface OrganigrammaAdminClientProps {
     initialMembers: any[]
     userRole?: string
+    initialVisible?: boolean
 }
 
 const SECTIONS = [
@@ -54,12 +56,35 @@ const DEPARTMENTS = [
     "Dipartimento Scienze Veterinarie (VET)"
 ]
 
-export function OrganigrammaAdminClient({ initialMembers, userRole }: OrganigrammaAdminClientProps) {
+export function OrganigrammaAdminClient({ initialMembers, userRole, initialVisible = true }: OrganigrammaAdminClientProps) {
     const router = useRouter()
     const [members, setMembers] = useState(initialMembers)
     const [search, setSearch] = useState("")
     const [selectedAssociation, setSelectedAssociation] = useState<string>("all")
     const [selectedSection, setSelectedSection] = useState<string>("all")
+
+    // Visibility config state
+    const [visible, setVisible] = useState(initialVisible)
+    const [toggleLoading, setToggleLoading] = useState(false)
+
+    const handleToggleVisibility = async () => {
+        setToggleLoading(true)
+        try {
+            const nextVisible = !visible
+            const res = await toggleOrganigrammaVisibility(nextVisible)
+            if (res.success) {
+                setVisible(nextVisible)
+                router.refresh()
+            } else {
+                alert(res.error || "Errore durante il salvataggio")
+            }
+        } catch (error) {
+            console.error(error)
+            alert("Errore di rete o imprevisto")
+        } finally {
+            setToggleLoading(false)
+        }
+    }
 
     // Form modal state
     const [isOpen, setIsOpen] = useState(false)
@@ -318,7 +343,7 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
 
     return (
         <div className="space-y-8">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-white p-6 rounded-2xl border border-slate-200/60 shadow-sm">
                 <div>
                     <h1 className="text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
                         <div className="p-2.5 bg-cyan-50 text-cyan-600 rounded-xl">
@@ -329,6 +354,28 @@ export function OrganigrammaAdminClient({ initialMembers, userRole }: Organigram
                     <p className="text-sm text-slate-500 mt-1 font-medium font-sans">
                         Gestisci i componenti dei direttivi, presidenze e dipartimenti delle associazioni.
                     </p>
+                </div>
+
+                <div className="flex items-center gap-4 px-4 py-3 bg-slate-50 rounded-xl border border-slate-200/40 w-full md:w-auto justify-between md:justify-start">
+                    <div className="flex flex-col">
+                        <span className="text-xs font-black uppercase tracking-wider text-slate-700">Visibilità Pubblica</span>
+                        <span className="text-[10px] text-slate-400 font-medium">Mostra l&apos;organigramma sul sito</span>
+                    </div>
+                    <button
+                        onClick={handleToggleVisibility}
+                        disabled={toggleLoading}
+                        className={cn(
+                            "relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50",
+                            visible ? "bg-emerald-500" : "bg-slate-300"
+                        )}
+                    >
+                        <span
+                            className={cn(
+                                "pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out",
+                                visible ? "translate-x-5" : "translate-x-0"
+                            )}
+                        />
+                    </button>
                 </div>
             </div>
 

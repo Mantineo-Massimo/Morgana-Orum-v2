@@ -18,8 +18,13 @@ export function MainNav({
     className,
     isScrolled = true,
     isLoggedIn = false,
+    showOrganigramma = true,
     ...props
-}: React.HTMLAttributes<HTMLElement> & { isScrolled?: boolean; isLoggedIn?: boolean }) {
+}: React.HTMLAttributes<HTMLElement> & { 
+    isScrolled?: boolean; 
+    isLoggedIn?: boolean;
+    showOrganigramma?: boolean;
+}) {
     const t = useTranslations("Footer")
     const nt = useTranslations("Navigation")
     const pathname = usePathname()
@@ -190,17 +195,19 @@ export function MainNav({
                                                 <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("about_desc")}</span>
                                             </div>
                                         </Link>
-                                        <Link
-                                            href="/organigramma"
-                                            onClick={() => setIsAssocOpen(false)}
-                                            className="flex items-start gap-3 p-3 rounded-xl hover:bg-zinc-50 transition-colors"
-                                        >
-                                            <Network className="size-4 mt-1 text-indigo-500 shrink-0" />
-                                            <div>
-                                                <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("organigramma")}</span>
-                                                <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("organigramma_desc")}</span>
-                                            </div>
-                                        </Link>
+                                        {showOrganigramma && (
+                                            <Link
+                                                href="/organigramma"
+                                                onClick={() => setIsAssocOpen(false)}
+                                                className="flex items-start gap-3 p-3 rounded-xl hover:bg-zinc-50 transition-colors"
+                                            >
+                                                <Network className="size-4 mt-1 text-indigo-550 shrink-0" />
+                                                <div>
+                                                    <span className="text-xs font-black uppercase tracking-wider text-zinc-800 block">{nt("organigramma")}</span>
+                                                    <span className="text-[10px] text-zinc-400 font-medium leading-none">{nt("organigramma_desc")}</span>
+                                                </div>
+                                            </Link>
+                                        )}
                                         <Link
                                             href="/contact"
                                             onClick={() => setIsAssocOpen(false)}
@@ -516,7 +523,9 @@ export function MainNav({
                                                     className="overflow-hidden flex flex-col gap-3 mt-3 bg-zinc-50 w-full py-4 rounded-2xl border border-zinc-100"
                                                 >
                                                     <Link href="/about" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("about")}</Link>
-                                                    <Link href="/organigramma" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("organigramma")}</Link>
+                                                    {showOrganigramma && (
+                                                        <Link href="/organigramma" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("organigramma")}</Link>
+                                                    )}
                                                     <Link href="/contact" onClick={() => setIsOpen(false)} className="text-lg font-bold text-zinc-600">{nt("contact")}</Link>
                                                 </motion.div>
                                             )}

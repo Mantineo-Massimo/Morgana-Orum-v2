@@ -220,9 +220,20 @@ export async function globalSearch(query: string) {
     ])
 
     // 2. Search static pages
-    const matchingPages: any[] = []
+    let showOrganigramma = true
+    try {
+        const config = await prisma.organigrammaConfig.findUnique({
+            where: { id: "config" }
+        })
+        if (config && !config.visible) {
+            showOrganigramma = false
+        }
+    } catch {}
 
-    for (const page of STATIC_PAGES) {
+    const matchingPages: any[] = []
+    const activePages = STATIC_PAGES.filter(p => p.id !== "organigramma" || showOrganigramma)
+
+    for (const page of activePages) {
         let isMatch = false
 
         // Check title and desc

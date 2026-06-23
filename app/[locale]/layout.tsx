@@ -10,6 +10,7 @@ import { CookieConsent } from "@/components/cookie-consent"
 import Script from "next/script"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
+import { getOrganigrammaConfig } from "@/app/actions/organigramma"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import "../globals.css"
 
@@ -112,6 +113,8 @@ export default async function RootLayout({
     const brandHeader = headers().get("x-brand")
     const brand = (brandHeader && brandHeader !== "null" ? brandHeader : null) as Brand
 
+    const organigrammaConfig = await getOrganigrammaConfig()
+
     return (
         <html lang={locale} suppressHydrationWarning data-brand={brand || undefined}>
             <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
@@ -120,7 +123,7 @@ export default async function RootLayout({
                         <SpeedInsights />
                         <div className="flex min-h-screen flex-col bg-background font-sans">
                             <TopBar />
-                            <StickyHeader isLoggedIn={isLoggedIn} />
+                            <StickyHeader isLoggedIn={isLoggedIn} showOrganigramma={organigrammaConfig.visible} />
                             <ClientLogger />
                             <CookieConsent />
 
@@ -128,7 +131,7 @@ export default async function RootLayout({
                                 {children}
                             </main>
 
-                            <Footer />
+                            <Footer showOrganigramma={organigrammaConfig.visible} />
                         </div>
                     </BrandProvider>
                 </NextIntlClientProvider>

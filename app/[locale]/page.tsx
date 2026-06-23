@@ -33,8 +33,21 @@ export default async function BrandHomePage({
     return (
         <div className="flex flex-col min-h-screen">
 
-            {/* HERO SECTION - Carousel & New Text */}
+            {/* HERO SECTION - Static LCP image shown immediately, carousel hydrates after */}
             <section className="relative min-h-[500px] md:h-[600px] w-full bg-slate-900 flex items-center justify-center overflow-hidden">
+                {/* Static first slide: rendered server-side, visible immediately (no JS needed) */}
+                <div className="absolute inset-0 z-0">
+                    <Image
+                        src="/assets/slides/1.webp"
+                        alt="Morgana & O.R.U.M."
+                        fill
+                        priority
+                        fetchPriority="high"
+                        className="object-cover opacity-60"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1336px) 1336px, 1920px"
+                    />
+                </div>
+                {/* Carousel hydrates client-side after first paint — does not block FCP */}
                 <HeroCarousel />
                 <div className={`absolute inset-0 bg-gradient-to-r ${content.gradient} mix-blend-multiply opacity-90`}></div>
                 <div className="absolute inset-0 bg-black/60"></div>

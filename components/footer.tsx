@@ -21,7 +21,7 @@ const TiktokIcon = ({ className }: { className?: string }) => (
     </svg>
 )
 
-export async function Footer() {
+export async function Footer({ showOrganigramma = true }: { showOrganigramma?: boolean }) {
     const t = await getTranslations("Footer")
     const nt = await getTranslations("Navigation")
 
@@ -108,7 +108,9 @@ export async function Footer() {
                             <li><Link href="/iniziative" className={cn("transition-colors", mutedColor)}>Iniziative</Link></li>
                             <li><Link href="/faq" className={cn("transition-colors", mutedColor)}>{nt("faq")}</Link></li>
                             <li><Link href="/convenzioni" className={cn("transition-colors", mutedColor)}>{nt("conventions")}</Link></li>
-                            <li><Link href="/organigramma" className={cn("transition-colors", mutedColor)}>{nt("organigramma")}</Link></li>
+                            {showOrganigramma && (
+                                <li><Link href="/organigramma" className={cn("transition-colors", mutedColor)}>{nt("organigramma")}</Link></li>
+                            )}
                             <li><Link href="/social" className={cn("transition-colors", mutedColor)}>{nt("social")}</Link></li>
                             <li><Link href="/media-kit" className={cn("transition-colors", mutedColor)}>{nt("media_kit")}</Link></li>
                         </ul>
