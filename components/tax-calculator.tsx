@@ -297,7 +297,7 @@ export function TaxCalculator({ locale }: TaxCalculatorProps) {
         <div className="w-full max-w-full overflow-hidden bg-zinc-50/50 rounded-[2rem] border border-zinc-200/50 p-4 md:p-8 space-y-8 shadow-inner">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/60">
                 <div className="flex items-center gap-3">
-                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center shadow-lg shadow-zinc-200">
+                    <div className="size-12 shrink-0 rounded-2xl bg-zinc-900 text-white flex items-center justify-center shadow-lg shadow-zinc-200">
                         <Calculator className="size-6" />
                     </div>
                     <div>

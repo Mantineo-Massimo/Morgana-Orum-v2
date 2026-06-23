@@ -211,7 +211,7 @@ export function ErsuMeritChecker({ locale }: ErsuMeritCheckerProps) {
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-200/60">
                 <div className="flex items-center gap-3">
-                    <div className="size-12 rounded-2xl bg-[#18182e] text-white flex items-center justify-center shadow-lg shadow-zinc-200">
+                    <div className="size-12 shrink-0 rounded-2xl bg-[#18182e] text-white flex items-center justify-center shadow-lg shadow-zinc-200">
                         <ShieldCheck className="size-6" />
                     </div>
                     <div>

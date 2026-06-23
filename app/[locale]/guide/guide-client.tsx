@@ -525,7 +525,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                     {activeInfoGuide && (
                         <div className="space-y-6 text-zinc-950">
                             <div className="flex items-center gap-3 pb-4 border-b border-zinc-150">
-                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center shadow-lg shadow-zinc-200">
+                                <div className="size-12 shrink-0 rounded-2xl bg-zinc-900 text-white flex items-center justify-center shadow-lg shadow-zinc-200">
                                     {(() => {
                                         const IconComponent = ICON_MAP[activeInfoGuide.icon] || BookOpen
                                         return <IconComponent className="size-6" />
