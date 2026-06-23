@@ -242,7 +242,7 @@ export default function AboutPage() {
                                 : t("join_team_orum")}
                         </p>
                         <a
-                            href={activeTab === "morgana" ? "https://www.instagram.com/associazione.morgana" : "https://www.instagram.com/orum_unime"}
+                            href="https://www.instagram.com/associazione.morgana"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 bg-white text-zinc-900 px-10 py-5 rounded-full font-black uppercase tracking-widest hover:scale-105 transition-all duration-300 group shadow-2xl text-sm md:text-base"
