@@ -55,7 +55,7 @@ const AVAILABLE_COLORS = [
     { name: "emerald", label: "Smeraldo", bg: "bg-emerald-500" }
 ]
 
-const PROTECTED_GUIDES = ["matricole", "trasporti", "servizi", "mappa"]
+const PROTECTED_GUIDES = ["trasporti", "servizi", "mappa"]
 
 
 export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClientProps) {
@@ -454,19 +454,21 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                             >
                                                 <Edit3 className="size-3.5" />
                                             </button>
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation()
-                                                    handleDeleteGuide(guide.id)
-                                                }}
-                                                className={cn(
-                                                    "p-1.5 rounded-lg hover:bg-red-500/20 transition-all",
-                                                    isSelected ? "text-red-400 hover:text-red-300" : "text-red-500 hover:bg-red-50"
-                                                )}
-                                                title="Elimina"
-                                            >
-                                                <Trash2 className="size-3.5" />
-                                            </button>
+                                            {guide.id !== "matricole" && (
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        handleDeleteGuide(guide.id)
+                                                    }}
+                                                    className={cn(
+                                                        "p-1.5 rounded-lg hover:bg-red-500/20 transition-all",
+                                                        isSelected ? "text-red-400 hover:text-red-300" : "text-red-500 hover:bg-red-50"
+                                                    )}
+                                                    title="Elimina"
+                                                >
+                                                    <Trash2 className="size-3.5" />
+                                                </button>
+                                            )}
                                         </div>
                                     )}
                                 </div>
