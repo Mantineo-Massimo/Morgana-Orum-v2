@@ -173,9 +173,8 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
             <div className="container mx-auto px-6 max-w-6xl relative z-10">
                 {/* Header */}
                 <div className="text-center max-w-4xl mx-auto mb-16">
-                    <div className="relative size-20 mx-auto mb-8 group">
-                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-500 rounded-3xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
-                        <div className="relative size-full bg-white border border-purple-100 text-purple-600 rounded-3xl flex items-center justify-center shadow-lg shadow-purple-500/5 rotate-3 hover:rotate-6 transition-all duration-300">
+                    <div className="relative size-20 mx-auto mb-8">
+                        <div className="size-full bg-purple-500/10 text-purple-600 rounded-3xl flex items-center justify-center rotate-3 hover:rotate-6 transition-all duration-300">
                             <BookOpen className="size-10" />
                         </div>
                     </div>
@@ -389,7 +388,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                             className="group p-6 rounded-[2rem] border border-zinc-200/50 bg-white hover:border-amber-500/30 text-left flex flex-col justify-between hover:shadow-[0_20px_40px_rgba(245,158,11,0.06)] transition-all duration-300 transform hover:-translate-y-1.5"
                                         >
                                             <div>
-                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-100 group-hover:bg-amber-50 group-hover:shadow-[0_8px_20px_rgba(245,158,11,0.25)] transition-all duration-300">
+                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-100 group-hover:bg-amber-500 group-hover:shadow-[0_8px_20px_rgba(245,158,11,0.25)] transition-all duration-300">
                                                     <Clock className="size-6" />
                                                 </div>
                                                 <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight group-hover:text-amber-600 transition-colors">
