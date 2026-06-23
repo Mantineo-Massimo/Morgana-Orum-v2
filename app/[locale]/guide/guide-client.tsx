@@ -65,35 +65,35 @@ const getColorClasses = (color: string) => {
     switch (color) {
         case "blue":
             return {
-                color: "text-blue-500",
-                bg: "bg-blue-50",
-                border: "border-blue-100"
+                color: "text-blue-600",
+                bg: "bg-blue-50/60",
+                border: "border-blue-100/80"
             }
         case "orange":
         case "#f9a620":
             return {
-                color: "text-[#f9a620]",
-                bg: "bg-[#f9a620]/10",
-                border: "border-[#f9a620]/20"
+                color: "text-amber-600",
+                bg: "bg-amber-50/60",
+                border: "border-amber-100/80"
             }
         case "emerald":
         case "green":
             return {
-                color: "text-emerald-500",
-                bg: "bg-emerald-50",
-                border: "border-emerald-100"
+                color: "text-emerald-600",
+                bg: "bg-emerald-50/60",
+                border: "border-emerald-100/80"
             }
         case "purple":
             return {
-                color: "text-purple-500",
-                bg: "bg-purple-50",
-                border: "border-purple-100"
+                color: "text-purple-600",
+                bg: "bg-purple-50/60",
+                border: "border-purple-100/80"
             }
         default:
             return {
-                color: "text-zinc-500",
-                bg: "bg-zinc-50",
-                border: "border-zinc-100"
+                color: "text-zinc-600",
+                bg: "bg-zinc-50/60",
+                border: "border-zinc-100/80"
             }
     }
 }
@@ -137,19 +137,53 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
         )
     }
 
+    const getCardThemeClasses = (id: string, isSelected: boolean) => {
+        switch (id) {
+            case "matricole":
+                return isSelected
+                    ? "bg-white border-blue-500/30 ring-4 ring-blue-500/5 shadow-[0_20px_50px_rgba(59,130,246,0.12)] -translate-y-1.5 scale-[1.015]"
+                    : "bg-white border-zinc-200/50 hover:border-blue-500/20 hover:shadow-[0_15px_30px_rgba(59,130,246,0.04)] hover:-translate-y-0.5"
+            case "trasporti":
+                return isSelected
+                    ? "bg-white border-amber-500/30 ring-4 ring-amber-500/5 shadow-[0_20px_50px_rgba(245,158,11,0.12)] -translate-y-1.5 scale-[1.015]"
+                    : "bg-white border-zinc-200/50 hover:border-amber-500/20 hover:shadow-[0_15px_30px_rgba(245,158,11,0.04)] hover:-translate-y-0.5"
+            case "servizi":
+                return isSelected
+                    ? "bg-white border-emerald-500/30 ring-4 ring-emerald-500/5 shadow-[0_20px_50px_rgba(16,185,129,0.12)] -translate-y-1.5 scale-[1.015]"
+                    : "bg-white border-zinc-200/50 hover:border-emerald-500/20 hover:shadow-[0_15px_30px_rgba(16,185,129,0.04)] hover:-translate-y-0.5"
+            case "mappa":
+                return isSelected
+                    ? "bg-white border-purple-500/30 ring-4 ring-purple-500/5 shadow-[0_20px_50px_rgba(168,85,247,0.12)] -translate-y-1.5 scale-[1.015]"
+                    : "bg-white border-zinc-200/50 hover:border-purple-500/20 hover:shadow-[0_15px_30px_rgba(168,85,247,0.04)] hover:-translate-y-0.5"
+            default:
+                return isSelected
+                    ? "bg-white border-zinc-900 ring-4 ring-zinc-900/5 shadow-xl -translate-y-1.5 scale-[1.015]"
+                    : "bg-white border-zinc-200/50 hover:border-zinc-300 hover:shadow-md hover:-translate-y-0.5"
+        }
+    }
+
     return (
-        <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
-            <div className="container mx-auto px-6 max-w-6xl">
+        <div className="min-h-screen bg-zinc-50/40 pt-32 pb-20 relative overflow-hidden">
+            {/* Radial Glow Blobs for premium design */}
+            <div className="absolute top-0 left-1/4 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-blue-300/10 blur-[120px] pointer-events-none -z-10" />
+            <div className="absolute top-1/4 right-1/4 translate-x-1/2 w-[600px] h-[600px] rounded-full bg-purple-300/10 blur-[150px] pointer-events-none -z-10" />
+            <div className="absolute bottom-1/4 left-1/3 -translate-x-1/2 w-[550px] h-[550px] rounded-full bg-emerald-300/8 blur-[130px] pointer-events-none -z-10" />
+            <div className="absolute bottom-0 right-1/3 translate-x-1/2 w-[500px] h-[500px] rounded-full bg-amber-300/8 blur-[120px] pointer-events-none -z-10" />
+
+            <div className="container mx-auto px-6 max-w-6xl relative z-10">
                 {/* Header */}
                 <div className="text-center max-w-4xl mx-auto mb-16">
-                    <div className="size-20 bg-purple-500/10 text-purple-600 rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3">
-                        <BookOpen className="size-10" />
+                    <div className="relative size-20 mx-auto mb-8 group">
+                        <div className="absolute inset-0 bg-gradient-to-tr from-purple-600 to-pink-500 rounded-3xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+                        <div className="relative size-full bg-white border border-purple-100 text-purple-600 rounded-3xl flex items-center justify-center shadow-lg shadow-purple-500/5 rotate-3 hover:rotate-6 transition-all duration-300">
+                            <BookOpen className="size-10" />
+                        </div>
                     </div>
-                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-foreground">
+                    <h1 className="text-5xl md:text-7xl font-serif font-black mb-4 tracking-tight text-zinc-900 bg-clip-text text-transparent bg-gradient-to-b from-zinc-900 via-zinc-900 to-zinc-700">
                         {t.title}
                     </h1>
                     {t.subtitle && (
-                        <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic">
+                        <p className="text-xl md:text-2xl font-medium text-zinc-500 mb-8 italic max-w-2xl mx-auto leading-relaxed">
                             {t.subtitle}
                         </p>
                     )}
@@ -168,13 +202,16 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                     key={g.id}
                                     onClick={() => setSelectedGuide(g.id)}
                                     className={cn(
-                                        "p-6 rounded-3xl border text-left flex flex-col justify-between transition-all duration-300",
-                                        isSelected
-                                            ? "bg-white border-zinc-900 shadow-xl -translate-y-1 scale-[1.02]"
-                                            : "bg-white border-zinc-100 hover:border-zinc-300 hover:shadow-md"
+                                        "p-6 rounded-[2rem] border text-left flex flex-col justify-between transition-all duration-300 group",
+                                        getCardThemeClasses(g.id, isSelected)
                                     )}
                                 >
-                                    <div className={cn("size-12 rounded-2xl flex items-center justify-center mb-6", colorClasses.bg, colorClasses.color)}>
+                                    <div className={cn(
+                                        "size-12 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300",
+                                        colorClasses.bg,
+                                        colorClasses.color,
+                                        isSelected ? "scale-110" : "group-hover:scale-105"
+                                    )}>
                                         <Icon className="size-6" />
                                     </div>
                                     <div>
@@ -187,15 +224,45 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                 </div>
 
                 {/* Expanded Details Section */}
-                <div className="bg-white rounded-[2.5rem] border border-zinc-100 shadow-2xl p-8 md:p-12">
-                    <div className={cn("mx-auto", (selectedGuide === "mappa" || selectedGuide === "servizi" || selectedGuide === "trasporti" || selectedGuide === "matricole") ? "max-w-full" : "max-w-4xl")}>
-                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 block mb-2">
+                <div className="bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-zinc-200/50 shadow-[0_30px_100px_rgba(0,0,0,0.05)] p-8 md:p-12 relative overflow-hidden">
+                    {/* Inner glowing accent gradient aligned with selection color */}
+                    <div className={cn(
+                        "absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] pointer-events-none opacity-20 -z-10 transition-all duration-500",
+                        selectedGuide === "matricole" && "bg-blue-400",
+                        selectedGuide === "trasporti" && "bg-amber-400",
+                        selectedGuide === "servizi" && "bg-emerald-400",
+                        selectedGuide === "mappa" && "bg-purple-400"
+                    )} />
+
+                    <div className={cn("mx-auto relative z-10", (selectedGuide === "mappa" || selectedGuide === "servizi" || selectedGuide === "trasporti" || selectedGuide === "matricole") ? "max-w-full" : "max-w-4xl")}>
+                        <span className={cn(
+                            "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.15em] mb-4 border transition-all duration-300",
+                            selectedGuide === "matricole" && "bg-blue-50 text-blue-600 border-blue-100",
+                            selectedGuide === "trasporti" && "bg-amber-50 text-amber-600 border-amber-100",
+                            selectedGuide === "servizi" && "bg-emerald-50 text-emerald-600 border-emerald-100",
+                            selectedGuide === "mappa" && "bg-purple-50 text-purple-600 border-purple-100"
+                        )}>
+                            <span className={cn(
+                                "size-1.5 rounded-full animate-pulse",
+                                selectedGuide === "matricole" && "bg-blue-500",
+                                selectedGuide === "trasporti" && "bg-amber-500",
+                                selectedGuide === "servizi" && "bg-emerald-500",
+                                selectedGuide === "mappa" && "bg-purple-500"
+                            )} />
                             {t.featuredLabel}
                         </span>
-                        <h2 className="text-3xl font-serif font-black text-zinc-900 mb-4 flex items-center gap-3">
-                            <span className={activeColorClasses.color}>{activeGuideData.title}</span>
+                        <h2 className="text-3xl md:text-4xl font-serif font-black text-zinc-900 mb-4 tracking-tight">
+                            <span className={cn(
+                                "bg-clip-text text-transparent bg-gradient-to-r transition-all duration-500",
+                                selectedGuide === "matricole" && "from-blue-600 to-indigo-600",
+                                selectedGuide === "trasporti" && "from-amber-600 to-orange-600",
+                                selectedGuide === "servizi" && "from-emerald-600 to-teal-600",
+                                selectedGuide === "mappa" && "from-purple-600 to-pink-600"
+                            )}>
+                                {activeGuideData.title}
+                            </span>
                         </h2>
-                        <p className="text-zinc-500 mb-10 text-base leading-relaxed">
+                        <p className="text-zinc-500 mb-10 text-base md:text-lg leading-relaxed max-w-4xl">
                             {activeGuideData.description}
                         </p>
 
@@ -216,7 +283,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                 {/* Guide Informative */}
                                 <div className="space-y-6">
                                     <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
-                                        <span className="h-6 w-1 rounded-full bg-[#c12830]" />
+                                        <span className="h-6 w-1 rounded-full bg-gradient-to-b from-[#c12830] to-[#e13a43]" />
                                         {locale === "en" ? "Informative Guides" : "Guide Informative"}
                                     </h3>
                                     {guides.filter((g) => !g.hasCustomComponent && g.id !== "matricole").length > 0 ? (
@@ -229,20 +296,20 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                         <button
                                                             key={g.id}
                                                             onClick={() => setActiveInfoGuide(g)}
-                                                            className="group p-6 rounded-3xl border border-zinc-200/80 bg-zinc-50/20 hover:bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                                            className="group p-6 rounded-[2rem] border border-zinc-200/50 bg-white/50 hover:bg-white hover:border-blue-500/20 text-left flex flex-col justify-between hover:shadow-[0_20px_40px_rgba(59,130,246,0.05)] transition-all duration-300 transform hover:-translate-y-1"
                                                         >
                                                             <div>
-                                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-100 group-hover:bg-blue-600 group-hover:shadow-lg group-hover:shadow-blue-500/25 transition-all duration-300">
                                                                     <IconComponent className="size-6" />
                                                                 </div>
-                                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight group-hover:text-blue-600 transition-colors">
                                                                     {locale === "en" && g.titleEn ? g.titleEn : g.title}
                                                                 </h4>
                                                                 <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
                                                                     {locale === "en" && g.descriptionEn ? g.descriptionEn : g.description}
                                                                 </p>
                                                             </div>
-                                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1.5 transition-transform duration-300">
                                                                 {locale === "en" ? "Read Guide" : "Leggi la Guida"} &rarr;
                                                             </div>
                                                         </button>
@@ -260,7 +327,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                 <div className="pt-10 border-t border-zinc-100 mt-10 space-y-6">
                                     <div>
                                         <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
-                                            <span className="h-6 w-1 rounded-full bg-[#c12830]" />
+                                            <span className="h-6 w-1 rounded-full bg-gradient-to-b from-[#c12830] to-[#e13a43]" />
                                             {locale === "en" ? "Interactive Tools" : "Strumenti Utili"}
                                         </h3>
                                         <p className="text-sm text-zinc-500 leading-relaxed mt-2">
@@ -273,13 +340,13 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                         {/* Tax Simulator Card */}
                                         <button
                                             onClick={() => setActiveToolModal("tasse")}
-                                            className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            className="group p-6 rounded-[2rem] border border-zinc-200/50 bg-white hover:border-emerald-500/30 text-left flex flex-col justify-between hover:shadow-[0_20px_40px_rgba(16,185,129,0.06)] transition-all duration-300 transform hover:-translate-y-1.5"
                                         >
                                             <div>
-                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#c12830] transition-all">
+                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-100 group-hover:bg-emerald-600 group-hover:shadow-[0_8px_20px_rgba(16,185,129,0.25)] transition-all duration-300">
                                                     <Calculator className="size-6" />
                                                 </div>
-                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight group-hover:text-emerald-600 transition-colors">
                                                     {locale === "en" ? "Tuition Fees Calculator" : "Calcolatore Tasse & COA"}
                                                 </h4>
                                                 <p className="text-xs text-zinc-500 leading-relaxed">
@@ -288,7 +355,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                         : "Simula la tua fascia di tasse, gli esoneri, le agevolazioni e lo scadenziario dei pagamenti."}
                                                 </p>
                                             </div>
-                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            <div className="text-[10px] font-black uppercase tracking-wider text-emerald-600 mt-6 flex items-center gap-1 group-hover:translate-x-1.5 transition-transform duration-300">
                                                 {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                             </div>
                                         </button>
@@ -296,13 +363,13 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                         {/* Dictionary Card */}
                                         <button
                                             onClick={() => setActiveToolModal("dizionario")}
-                                            className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            className="group p-6 rounded-[2rem] border border-zinc-200/50 bg-white hover:border-violet-500/30 text-left flex flex-col justify-between hover:shadow-[0_20px_40px_rgba(139,92,246,0.06)] transition-all duration-300 transform hover:-translate-y-1.5"
                                         >
                                             <div>
-                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-100 group-hover:bg-violet-600 group-hover:shadow-[0_8px_20px_rgba(139,92,246,0.25)] transition-all duration-300">
                                                     <BookOpen className="size-6" />
                                                 </div>
-                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight group-hover:text-violet-600 transition-colors">
                                                     {locale === "en" ? "Freshman Dictionary" : "Dizionario della Matricola"}
                                                 </h4>
                                                 <p className="text-xs text-zinc-500 leading-relaxed">
@@ -311,7 +378,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                         : "Non conosci i termini come CFU, Appello, Esse3 o Verbalizzazione? Cercali velocemente qui."}
                                                 </p>
                                             </div>
-                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            <div className="text-[10px] font-black uppercase tracking-wider text-violet-600 mt-6 flex items-center gap-1 group-hover:translate-x-1.5 transition-transform duration-300">
                                                 {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                             </div>
                                         </button>
@@ -319,13 +386,13 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                         {/* Sessions Countdown Card */}
                                         <button
                                             onClick={() => setActiveToolModal("countdown")}
-                                            className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            className="group p-6 rounded-[2rem] border border-zinc-200/50 bg-white hover:border-amber-500/30 text-left flex flex-col justify-between hover:shadow-[0_20px_40px_rgba(245,158,11,0.06)] transition-all duration-300 transform hover:-translate-y-1.5"
                                         >
                                             <div>
-                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#f9a620] transition-all">
+                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-100 group-hover:bg-amber-50 group-hover:shadow-[0_8px_20px_rgba(245,158,11,0.25)] transition-all duration-300">
                                                     <Clock className="size-6" />
                                                 </div>
-                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight group-hover:text-amber-600 transition-colors">
                                                     {locale === "en" ? "Deadlines & Countdowns" : "Countdown Accademico"}
                                                 </h4>
                                                 <p className="text-xs text-zinc-500 leading-relaxed">
@@ -334,7 +401,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                         : "Visualizza i giorni mancanti all'inizio delle sessioni d'esame e alle scadenze burocratiche."}
                                                 </p>
                                             </div>
-                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            <div className="text-[10px] font-black uppercase tracking-wider text-amber-600 mt-6 flex items-center gap-1 group-hover:translate-x-1.5 transition-transform duration-300">
                                                 {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                             </div>
                                         </button>
@@ -342,13 +409,13 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                         {/* Grade Simulator Card */}
                                         <button
                                             onClick={() => setActiveToolModal("media")}
-                                            className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            className="group p-6 rounded-[2rem] border border-zinc-200/50 bg-white hover:border-indigo-500/30 text-left flex flex-col justify-between hover:shadow-[0_20px_40px_rgba(99,102,241,0.06)] transition-all duration-300 transform hover:-translate-y-1.5"
                                         >
                                             <div>
-                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-100 group-hover:bg-indigo-600 group-hover:shadow-[0_8px_20px_rgba(99,102,241,0.25)] transition-all duration-300">
                                                     <GraduationCap className="size-6" />
                                                 </div>
-                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight group-hover:text-indigo-600 transition-colors">
                                                     {locale === "en" ? "GPA & Degree Simulator" : "Simulatore Media & Laurea"}
                                                 </h4>
                                                 <p className="text-xs text-zinc-500 leading-relaxed">
@@ -357,7 +424,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                         : "Simula la tua media ponderata, i crediti CFU acquisiti e stima il voto di partenza per la tesi."}
                                                 </p>
                                             </div>
-                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            <div className="text-[10px] font-black uppercase tracking-wider text-indigo-600 mt-6 flex items-center gap-1 group-hover:translate-x-1.5 transition-transform duration-300">
                                                 {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                             </div>
                                         </button>
@@ -365,13 +432,13 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                         {/* ERSU Merit Checker Card */}
                                         <button
                                             onClick={() => setActiveToolModal("ersu")}
-                                            className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                            className="group p-6 rounded-[2rem] border border-zinc-200/50 bg-white hover:border-teal-500/30 text-left flex flex-col justify-between hover:shadow-[0_20px_40px_rgba(20,184,166,0.06)] transition-all duration-300 transform hover:-translate-y-1.5"
                                         >
                                             <div>
-                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-100 group-hover:bg-teal-600 group-hover:shadow-[0_8px_20px_rgba(20,184,166,0.25)] transition-all duration-300">
                                                     <ShieldCheck className="size-6" />
                                                 </div>
-                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight group-hover:text-teal-600 transition-colors">
                                                     {locale === "en" ? "ERSU Merit Checker" : "Requisiti Borsa ERSU"}
                                                 </h4>
                                                 <p className="text-xs text-zinc-500 leading-relaxed">
@@ -380,7 +447,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                         : "Verifica se sei in linea con i criteri di meritocrazia (CFU) richiesti per mantenere la borsa di studio ERSU."}
                                                 </p>
                                             </div>
-                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            <div className="text-[10px] font-black uppercase tracking-wider text-teal-600 mt-6 flex items-center gap-1 group-hover:translate-x-1.5 transition-transform duration-300">
                                                 {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
                                             </div>
                                         </button>
@@ -390,11 +457,22 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                         ) : (
                             <div className="space-y-6">
                                 {activeGuideData.steps.map((step: any, index: number) => (
-                                    <div key={index} className="flex gap-6 items-start p-5 rounded-2xl border border-zinc-100 hover:border-zinc-200 bg-zinc-50/20 hover:bg-white transition-all">
-                                        <div className={cn("size-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5", activeColorClasses.bg, activeColorClasses.color)}>
+                                    <div key={index} className={cn(
+                                        "flex gap-6 items-start p-6 rounded-2xl border transition-all duration-300",
+                                        "border-zinc-200/50 bg-white/50 hover:bg-white",
+                                        selectedGuide === "matricole" && "hover:border-blue-500/20 hover:shadow-[0_15px_30px_rgba(59,130,246,0.03)]",
+                                        selectedGuide === "trasporti" && "hover:border-amber-500/20 hover:shadow-[0_15px_30px_rgba(245,158,11,0.03)]",
+                                        selectedGuide === "servizi" && "hover:border-emerald-500/20 hover:shadow-[0_15px_30px_rgba(16,185,129,0.03)]",
+                                        selectedGuide === "mappa" && "hover:border-purple-500/20 hover:shadow-[0_15px_30px_rgba(168,85,247,0.03)]"
+                                    )}>
+                                        <div className={cn(
+                                            "size-8 rounded-full flex items-center justify-center text-xs font-black shrink-0 mt-0.5 shadow-sm",
+                                            activeColorClasses.bg,
+                                            activeColorClasses.color
+                                        )}>
                                             {index + 1}
                                         </div>
-                                        <div className="space-y-1">
+                                        <div className="space-y-1.5">
                                             <h4 className="text-lg font-bold text-zinc-900 leading-tight">{step.title}</h4>
                                             <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
                                         </div>
