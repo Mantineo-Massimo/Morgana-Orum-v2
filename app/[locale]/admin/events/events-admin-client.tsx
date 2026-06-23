@@ -641,16 +641,6 @@ export default function EventsAdminClient({
                                         </span>
                                     </td>
                                     <td className="px-6 py-5 hidden md:table-cell text-right">
-                                        <div className="flex items-center gap-1.5 justify-end">
-                                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-zinc-100 text-zinc-600 border border-zinc-200" title="Italiano (Default)">IT</span>
-                                            {event.titleEn ? (
-                                                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-100" title="English translation available">EN</span>
-                                            ) : (
-                                                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-zinc-50 text-zinc-300 border border-zinc-100 italic" title="English translation missing">EN</span>
-                                            )}
-                                        </div>
-                                    </td>
-                                    <td className="px-6 py-5 hidden md:table-cell text-right">
                                         {(() => {
                                             const status = getEventStatus(event)
                                             if (status === "draft") return (
@@ -674,6 +664,16 @@ export default function EventsAdminClient({
                                                 </span>
                                             )
                                         })()}
+                                    </td>
+                                    <td className="px-6 py-5 hidden md:table-cell text-right">
+                                        <div className="flex items-center gap-1.5 justify-end">
+                                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-zinc-100 text-zinc-600 border border-zinc-200" title="Italiano (Default)">IT</span>
+                                            {event.titleEn ? (
+                                                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-100" title="English translation available">EN</span>
+                                            ) : (
+                                                <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-zinc-50 text-zinc-300 border border-zinc-100 italic" title="English translation missing">EN</span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-6 py-5">
                                         <div className="flex items-center gap-1 justify-end">
