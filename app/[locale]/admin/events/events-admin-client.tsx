@@ -221,6 +221,149 @@ export default function EventsAdminClient({
             }
 
             doc.save(`appello_${event.title.replace(/\s+/g, '_').toLowerCase()}.pdf`)
+
+            // --- CERTIFICATE GENERATION ---
+            const certDoc = new jsPDF({
+                orientation: 'landscape',
+                format: 'a4',
+                unit: 'mm'
+            })
+            const certWidth = certDoc.internal.pageSize.width
+            const certHeight = certDoc.internal.pageSize.height
+
+            const drawCertificate = (docInstance: any, attendeeName: string | null) => {
+                // Outer dark border
+                docInstance.setDrawColor(24, 24, 46)
+                docInstance.setLineWidth(1)
+                docInstance.rect(10, 10, certWidth - 20, certHeight - 20)
+
+                // Inner thin red border
+                docInstance.setDrawColor(193, 40, 48)
+                docInstance.setLineWidth(0.5)
+                docInstance.rect(12, 12, certWidth - 24, certHeight - 24)
+
+                // Corner decorations
+                const cornerSize = 10
+                docInstance.setFillColor(24, 24, 46)
+                // Top-Left
+                docInstance.rect(10, 10, cornerSize, 2, 'F')
+                docInstance.rect(10, 10, 2, cornerSize, 'F')
+                // Top-Right
+                docInstance.rect(certWidth - 10 - cornerSize, 10, cornerSize, 2, 'F')
+                docInstance.rect(certWidth - 12, 10, 2, cornerSize, 'F')
+                // Bottom-Left
+                docInstance.rect(10, certHeight - 12, cornerSize, 2, 'F')
+                docInstance.rect(10, certHeight - 10 - cornerSize, 2, cornerSize, 'F')
+                // Bottom-Right
+                docInstance.rect(certWidth - 10 - cornerSize, certHeight - 12, cornerSize, 2, 'F')
+                docInstance.rect(certWidth - 12, certHeight - 10 - cornerSize, 2, cornerSize, 'F')
+
+                // Logos
+                const logoSize = 20
+                if (logoMorgana) {
+                    docInstance.addImage(logoMorgana, "PNG", 25, 20, logoSize, logoSize)
+                }
+                if (logoOrum) {
+                    docInstance.addImage(logoOrum, "PNG", certWidth - 25 - logoSize, 20, logoSize, logoSize)
+                }
+
+                // Header
+                docInstance.setFont("helvetica", "normal")
+                docInstance.setFontSize(10)
+                docInstance.setTextColor(100)
+                docInstance.text("Associazioni Universitarie", certWidth / 2, 22, { align: "center" })
+
+                docInstance.setFont("helvetica", "bold")
+                docInstance.setFontSize(14)
+                docInstance.setTextColor(24, 24, 46)
+                docInstance.text("MORGANA & O.R.U.M.", certWidth / 2, 28, { align: "center" })
+
+                // Divider line
+                docInstance.setDrawColor(220)
+                docInstance.line(60, 36, certWidth - 60, 36)
+
+                // Certificate Title
+                docInstance.setFont("times", "bold")
+                docInstance.setFontSize(28)
+                docInstance.setTextColor(193, 40, 48)
+                docInstance.text("ATTESTATO DI PARTECIPAZIONE", certWidth / 2, 52, { align: "center" })
+
+                // Body text
+                docInstance.setFont("helvetica", "normal")
+                docInstance.setFontSize(14)
+                docInstance.setTextColor(80)
+                docInstance.text("Si attesta che lo/la studente/ssa", certWidth / 2, 70, { align: "center" })
+
+                // Name
+                if (attendeeName) {
+                    docInstance.setFont("helvetica", "bold")
+                    docInstance.setFontSize(22)
+                    docInstance.setTextColor(24, 24, 46)
+                    docInstance.text(attendeeName.toUpperCase(), certWidth / 2, 85, { align: "center" })
+                } else {
+                    // Dotted line for blank certificate
+                    docInstance.setFont("helvetica", "normal")
+                    docInstance.setFontSize(20)
+                    docInstance.setTextColor(150)
+                    docInstance.text("________________________________________", certWidth / 2, 83, { align: "center" })
+                }
+
+                // ha partecipato
+                docInstance.setFont("helvetica", "normal")
+                docInstance.setFontSize(14)
+                docInstance.setTextColor(80)
+                docInstance.text("ha partecipato all'evento:", certWidth / 2, 102, { align: "center" })
+
+                // Event Title
+                docInstance.setFont("helvetica", "bold")
+                docInstance.setFontSize(18)
+                docInstance.setTextColor(24, 24, 46)
+                const wrappedTitle = docInstance.splitTextToSize(event.title.toUpperCase(), certWidth - 80)
+                docInstance.text(wrappedTitle, certWidth / 2, 112, { align: "center" })
+
+                // Date and location placement
+                const titleLinesCount = Array.isArray(wrappedTitle) ? wrappedTitle.length : 1
+                const detailsY = 112 + (titleLinesCount * 8) + 4
+
+                docInstance.setFont("helvetica", "normal")
+                docInstance.setFontSize(12)
+                docInstance.setTextColor(100)
+                const dateStr = new Date(event.date).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })
+                docInstance.text(`Svoltosi a: ${event.location} in data ${dateStr}`, certWidth / 2, detailsY, { align: "center" })
+
+                // CFU Info
+                if (event.cfuValue) {
+                    docInstance.setFont("helvetica", "bold")
+                    docInstance.setFontSize(11)
+                    docInstance.setTextColor(22, 101, 52)
+                    docInstance.text(`Valido per il rilascio di ${event.cfuValue} CFU`, certWidth / 2, detailsY + 8, { align: "center" })
+                }
+
+                // Signatures
+                const sigY = 168
+                docInstance.setFont("helvetica", "normal")
+                docInstance.setFontSize(10)
+                docInstance.setTextColor(100)
+
+                docInstance.text("Associazione Morgana", 50, sigY, { align: "center" })
+                docInstance.line(25, sigY + 12, 75, sigY + 12)
+
+                docInstance.text("Associazione O.R.U.M.", certWidth - 50, sigY, { align: "center" })
+                docInstance.line(certWidth - 75, sigY + 12, certWidth - 25, sigY + 12)
+            }
+
+            // Page 1: Empty Certificate template
+            drawCertificate(certDoc, null)
+
+            // Page 2+: Pre-filled Certificates
+            if (attendees && attendees.length > 0) {
+                attendees.forEach((att: any) => {
+                    certDoc.addPage()
+                    drawCertificate(certDoc, `${att.name} ${att.surname}`)
+                })
+            }
+
+            certDoc.save(`attestati_${event.title.replace(/\s+/g, '_').toLowerCase()}.pdf`)
         } catch (error) {
             console.error(error)
             alert("Errore durante l'esportazione PDF")
