@@ -99,7 +99,7 @@ const getColorClasses = (color: string) => {
 }
 
 export function GuideClient({ categories, initialGuides, locale, isLoggedIn = false, sessionEmail = null, countdownItems = [] }: GuideClientProps) {
-    const [selectedGuide, setSelectedGuide] = useState<string>("matricole")
+    const [selectedGuide, setSelectedGuide] = useState<string>(initialGuides && initialGuides.length > 0 ? initialGuides[0].id : "matricole")
     const [activeToolModal, setActiveToolModal] = useState<"tasse" | "dizionario" | "countdown" | "media" | "ersu" | null>(null)
     const [activeInfoGuide, setActiveInfoGuide] = useState<any | null>(null)
 
@@ -212,197 +212,191 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                 <TransportGuide />
                             </div>
                         ) : (
-                            <div className="space-y-12">
-                                {/* Guide Steps Section */}
-                                <div className="space-y-6">
-                                    {selectedGuide === "matricole" ? (
-                                        <>
-                                            <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
-                                                <span className="h-6 w-1 rounded-full bg-[#c12830]" />
-                                                {locale === "en" ? "Informative Guides" : "Guide Informative"}
-                                            </h3>
-                                            <div className="grid sm:grid-cols-2 gap-6">
-                                                {guides
-                                                    .filter((g) => !g.hasCustomComponent)
-                                                    .map((g) => {
-                                                        const IconComponent = ICON_MAP[g.icon] || BookOpen
-                                                        return (
-                                                            <button
-                                                                key={g.id}
-                                                                onClick={() => setActiveInfoGuide(g)}
-                                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-zinc-50/20 hover:bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                                                            >
-                                                                <div>
-                                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
-                                                                        <IconComponent className="size-6" />
-                                                                    </div>
-                                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                                        {locale === "en" && g.titleEn ? g.titleEn : g.title}
-                                                                    </h4>
-                                                                    <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
-                                                                        {locale === "en" && g.descriptionEn ? g.descriptionEn : g.description}
-                                                                    </p>
-                                                                </div>
-                                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                                                                    {locale === "en" ? "Read Guide" : "Leggi la Guida"} &rarr;
-                                                                </div>
-                                                            </button>
-                                                        )
-                                                    })}
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div className="space-y-6">
-                                                {activeGuideData.steps.map((step: any, index: number) => (
-                                                    <div key={index} className="flex gap-6 items-start p-5 rounded-2xl border border-zinc-100 hover:border-zinc-200 bg-zinc-50/20 hover:bg-white transition-all">
-                                                        <div className={cn("size-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5", activeColorClasses.bg, activeColorClasses.color)}>
-                                                            {index + 1}
-                                                        </div>
-                                                        <div className="space-y-1">
-                                                            <h4 className="text-lg font-bold text-zinc-900 leading-tight">{step.title}</h4>
-                                                            <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </>
-                                    )}
-                                </div>
-
-                                {/* Interactive Tools Section */}
-                                {selectedGuide === "matricole" && (
-                                    <div className="pt-10 border-t border-zinc-100 mt-10 space-y-6">
-                                        <div>
-                                            <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
-                                                <span className="h-6 w-1 rounded-full bg-[#c12830]" />
-                                                {locale === "en" ? "Interactive Tools" : "Strumenti Utili"}
-                                            </h3>
-                                            <p className="text-sm text-zinc-500 leading-relaxed mt-2">
-                                                {locale === "en"
-                                                    ? "Use our interactive tools designed to help you quickly calculate university taxes or decipher common terms."
-                                                    : "Utilizza i nostri strumenti interattivi creati appositamente per calcolare rapidamente le tasse o decifrare i termini universitari più comuni."}
-                                            </p>
-                                        </div>                                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                                            {/* Tax Simulator Card */}
-                                            <button
-                                                onClick={() => setActiveToolModal("tasse")}
-                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                                            >
-                                                <div>
-                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#c12830] transition-all">
-                                                        <Calculator className="size-6" />
-                                                    </div>
-                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                        {locale === "en" ? "Tuition Fees Calculator" : "Calcolatore Tasse & COA"}
-                                                    </h4>
-                                                    <p className="text-xs text-zinc-500 leading-relaxed">
-                                                        {locale === "en"
-                                                            ? "Calculate your contribution bracket, exemptions, discounts, and visual payment deadlines schedule."
-                                                            : "Simula la tua fascia di tasse, gli esoneri, le agevolazioni e lo scadenziario dei pagamenti."}
-                                                    </p>
-                                                </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                                                    {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
-                                                </div>
-                                            </button>
-
-                                            {/* Dictionary Card */}
-                                            <button
-                                                onClick={() => setActiveToolModal("dizionario")}
-                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                                            >
-                                                <div>
-                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
-                                                        <BookOpen className="size-6" />
-                                                    </div>
-                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                        {locale === "en" ? "Freshman Dictionary" : "Dizionario della Matricola"}
-                                                    </h4>
-                                                    <p className="text-xs text-zinc-500 leading-relaxed">
-                                                        {locale === "en"
-                                                            ? "Unsure about CFU, Appello, Esse3, or verbalizzazione? Search common terms here."
-                                                            : "Non conosci i termini come CFU, Appello, Esse3 o Verbalizzazione? Cercali velocemente qui."}
-                                                    </p>
-                                                </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                                                    {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
-                                                </div>
-                                            </button>
-
-                                            {/* Sessions Countdown Card */}
-                                            <button
-                                                onClick={() => setActiveToolModal("countdown")}
-                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                                            >
-                                                <div>
-                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#f9a620] transition-all">
-                                                        <Clock className="size-6" />
-                                                    </div>
-                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                        {locale === "en" ? "Deadlines & Countdowns" : "Countdown Accademico"}
-                                                    </h4>
-                                                    <p className="text-xs text-zinc-500 leading-relaxed">
-                                                        {locale === "en"
-                                                            ? "Track the remaining days for official exam sessions and important UniMe deadlines."
-                                                            : "Visualizza i giorni mancanti all'inizio delle sessioni d'esame e alle scadenze burocratiche."}
-                                                    </p>
-                                                </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                                                    {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
-                                                </div>
-                                            </button>
-
-                                            {/* Grade Simulator Card */}
-                                            <button
-                                                onClick={() => setActiveToolModal("media")}
-                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                                            >
-                                                <div>
-                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
-                                                        <GraduationCap className="size-6" />
-                                                    </div>
-                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                        {locale === "en" ? "GPA & Degree Simulator" : "Simulatore Media & Laurea"}
-                                                    </h4>
-                                                    <p className="text-xs text-zinc-500 leading-relaxed">
-                                                        {locale === "en"
-                                                            ? "Simulate your weighted GPA, track ECTS credits progress, and estimate your graduation mark."
-                                                            : "Simula la tua media ponderata, i crediti CFU acquisiti e stima il voto di partenza per la tesi."}
-                                                    </p>
-                                                </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                                                    {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
-                                                </div>
-                                            </button>
-
-                                            {/* ERSU Merit Checker Card */}
-                                            <button
-                                                onClick={() => setActiveToolModal("ersu")}
-                                                className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                                            >
-                                                <div>
-                                                    <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
-                                                        <ShieldCheck className="size-6" />
-                                                    </div>
-                                                    <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                        {locale === "en" ? "ERSU Merit Checker" : "Requisiti Borsa ERSU"}
-                                                    </h4>
-                                                    <p className="text-xs text-zinc-500 leading-relaxed">
-                                                        {locale === "en"
-                                                            ? "Check if you meet the CFU and merit requirements for the ERSU Messina scholarship."
-                                                            : "Verifica se sei in linea con i criteri di meritocrazia (CFU) richiesti per mantenere la borsa di studio ERSU."}
-                                                    </p>
-                                                </div>
-                                                <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                                                    {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
-                                                </div>
-                                            </button>
+                            <div className="space-y-6">
+                                {activeGuideData.steps.map((step: any, index: number) => (
+                                    <div key={index} className="flex gap-6 items-start p-5 rounded-2xl border border-zinc-100 hover:border-zinc-200 bg-zinc-50/20 hover:bg-white transition-all">
+                                        <div className={cn("size-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5", activeColorClasses.bg, activeColorClasses.color)}>
+                                            {index + 1}
+                                        </div>
+                                        <div className="space-y-1">
+                                            <h4 className="text-lg font-bold text-zinc-900 leading-tight">{step.title}</h4>
+                                            <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
                                         </div>
                                     </div>
-                                )}
+                                ))}
                             </div>
                         )}
+
+                        {/* Always visible Guide Informative & Strumenti Utili sections */}
+                        <div className="pt-10 border-t border-zinc-100 mt-10 space-y-12">
+                            {/* Guide Informative */}
+                            <div className="space-y-6">
+                                <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
+                                    <span className="h-6 w-1 rounded-full bg-[#c12830]" />
+                                    {locale === "en" ? "Informative Guides" : "Guide Informative"}
+                                </h3>
+                                <div className="grid sm:grid-cols-2 gap-6">
+                                    {guides
+                                        .filter((g) => !g.hasCustomComponent)
+                                        .map((g) => {
+                                            const IconComponent = ICON_MAP[g.icon] || BookOpen
+                                            return (
+                                                <button
+                                                    key={g.id}
+                                                    onClick={() => setActiveInfoGuide(g)}
+                                                    className="group p-6 rounded-3xl border border-zinc-200/80 bg-zinc-50/20 hover:bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                                >
+                                                    <div>
+                                                        <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                            <IconComponent className="size-6" />
+                                                        </div>
+                                                        <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                            {locale === "en" && g.titleEn ? g.titleEn : g.title}
+                                                        </h4>
+                                                        <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
+                                                            {locale === "en" && g.descriptionEn ? g.descriptionEn : g.description}
+                                                        </p>
+                                                    </div>
+                                                    <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                        {locale === "en" ? "Read Guide" : "Leggi la Guida"} &rarr;
+                                                    </div>
+                                                </button>
+                                            )
+                                        })}
+                                </div>
+                            </div>
+
+                            {/* Strumenti Utili */}
+                            <div className="pt-10 border-t border-zinc-100 mt-10 space-y-6">
+                                <div>
+                                    <h3 className="text-lg font-bold uppercase tracking-wider text-zinc-900 flex items-center gap-2">
+                                        <span className="h-6 w-1 rounded-full bg-[#c12830]" />
+                                        {locale === "en" ? "Interactive Tools" : "Strumenti Utili"}
+                                    </h3>
+                                    <p className="text-sm text-zinc-500 leading-relaxed mt-2">
+                                        {locale === "en"
+                                            ? "Use our interactive tools designed to help you quickly calculate university taxes or decipher common terms."
+                                            : "Utilizza i nostri strumenti interattivi creati appositamente per calcolare rapidamente le tasse o decifrare i termini universitari più comuni."}
+                                    </p>
+                                </div>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    {/* Tax Simulator Card */}
+                                    <button
+                                        onClick={() => setActiveToolModal("tasse")}
+                                        className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                    >
+                                        <div>
+                                            <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#c12830] transition-all">
+                                                <Calculator className="size-6" />
+                                            </div>
+                                            <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                {locale === "en" ? "Tuition Fees Calculator" : "Calcolatore Tasse & COA"}
+                                            </h4>
+                                            <p className="text-xs text-zinc-500 leading-relaxed">
+                                                {locale === "en"
+                                                    ? "Calculate your contribution bracket, exemptions, discounts, and visual payment deadlines schedule."
+                                                    : "Simula la tua fascia di tasse, gli esoneri, le agevolazioni e lo scadenziario dei pagamenti."}
+                                            </p>
+                                        </div>
+                                        <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
+                                        </div>
+                                    </button>
+
+                                    {/* Dictionary Card */}
+                                    <button
+                                        onClick={() => setActiveToolModal("dizionario")}
+                                        className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                    >
+                                        <div>
+                                            <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                <BookOpen className="size-6" />
+                                            </div>
+                                            <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                {locale === "en" ? "Freshman Dictionary" : "Dizionario della Matricola"}
+                                            </h4>
+                                            <p className="text-xs text-zinc-500 leading-relaxed">
+                                                {locale === "en"
+                                                    ? "Unsure about CFU, Appello, Esse3, or verbalizzazione? Search common terms here."
+                                                    : "Non conosci i termini come CFU, Appello, Esse3 o Verbalizzazione? Cercali velocemente qui."}
+                                            </p>
+                                        </div>
+                                        <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
+                                        </div>
+                                    </button>
+
+                                    {/* Sessions Countdown Card */}
+                                    <button
+                                        onClick={() => setActiveToolModal("countdown")}
+                                        className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                    >
+                                        <div>
+                                            <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#f9a620] transition-all">
+                                                <Clock className="size-6" />
+                                            </div>
+                                            <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                {locale === "en" ? "Deadlines & Countdowns" : "Countdown Accademico"}
+                                            </h4>
+                                            <p className="text-xs text-zinc-500 leading-relaxed">
+                                                {locale === "en"
+                                                    ? "Track the remaining days for official exam sessions and important UniMe deadlines."
+                                                    : "Visualizza i giorni mancanti all'inizio delle sessioni d'esame e alle scadenze burocratiche."}
+                                            </p>
+                                        </div>
+                                        <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
+                                        </div>
+                                    </button>
+
+                                    {/* Grade Simulator Card */}
+                                    <button
+                                        onClick={() => setActiveToolModal("media")}
+                                        className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                    >
+                                        <div>
+                                            <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                <GraduationCap className="size-6" />
+                                            </div>
+                                            <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                {locale === "en" ? "GPA & Degree Simulator" : "Simulatore Media & Laurea"}
+                                            </h4>
+                                            <p className="text-xs text-zinc-500 leading-relaxed">
+                                                {locale === "en"
+                                                    ? "Simulate your weighted GPA, track ECTS credits progress, and estimate your graduation mark."
+                                                    : "Simula la tua media ponderata, i crediti CFU acquisiti e stima il voto di partenza per la tesi."}
+                                            </p>
+                                        </div>
+                                        <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
+                                        </div>
+                                    </button>
+
+                                    {/* ERSU Merit Checker Card */}
+                                    <button
+                                        onClick={() => setActiveToolModal("ersu")}
+                                        className="group p-6 rounded-3xl border border-zinc-200/80 bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                    >
+                                        <div>
+                                            <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                <ShieldCheck className="size-6" />
+                                            </div>
+                                            <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                {locale === "en" ? "ERSU Merit Checker" : "Requisiti Borsa ERSU"}
+                                            </h4>
+                                            <p className="text-xs text-zinc-500 leading-relaxed">
+                                                {locale === "en"
+                                                    ? "Check if you meet the CFU and merit requirements for the ERSU Messina scholarship."
+                                                    : "Verifica se sei in linea con i criteri di meritocrazia (CFU) richiesti per mantenere la borsa di studio ERSU."}
+                                            </p>
+                                        </div>
+                                        <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                            {locale === "en" ? "Launch Tool" : "Apri Strumento"} &rarr;
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
