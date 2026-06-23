@@ -188,7 +188,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
 
                 {/* Expanded Details Section */}
                 <div className="bg-white rounded-[2.5rem] border border-zinc-100 shadow-2xl p-8 md:p-12">
-                    <div className={cn("mx-auto", (selectedGuide === "mappa" || selectedGuide === "servizi" || selectedGuide === "trasporti") ? "max-w-full" : "max-w-4xl")}>
+                    <div className={cn("mx-auto", (selectedGuide === "mappa" || selectedGuide === "servizi" || selectedGuide === "trasporti" || selectedGuide === "matricole") ? "max-w-full" : "max-w-4xl")}>
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-400 block mb-2">
                             {t.featuredLabel}
                         </span>
@@ -219,35 +219,41 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                         <span className="h-6 w-1 rounded-full bg-[#c12830]" />
                                         {locale === "en" ? "Informative Guides" : "Guide Informative"}
                                     </h3>
-                                    <div className="grid sm:grid-cols-2 gap-6">
-                                        {guides
-                                            .filter((g) => !g.hasCustomComponent && g.id !== "matricole")
-                                            .map((g) => {
-                                                const IconComponent = ICON_MAP[g.icon] || BookOpen
-                                                return (
-                                                    <button
-                                                        key={g.id}
-                                                        onClick={() => setActiveInfoGuide(g)}
-                                                        className="group p-6 rounded-3xl border border-zinc-200/80 bg-zinc-50/20 hover:bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                                                    >
-                                                        <div>
-                                                            <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
-                                                                <IconComponent className="size-6" />
+                                    {guides.filter((g) => !g.hasCustomComponent && g.id !== "matricole").length > 0 ? (
+                                        <div className="grid sm:grid-cols-2 gap-6">
+                                            {guides
+                                                .filter((g) => !g.hasCustomComponent && g.id !== "matricole")
+                                                .map((g) => {
+                                                    const IconComponent = ICON_MAP[g.icon] || BookOpen
+                                                    return (
+                                                        <button
+                                                            key={g.id}
+                                                            onClick={() => setActiveInfoGuide(g)}
+                                                            className="group p-6 rounded-3xl border border-zinc-200/80 bg-zinc-50/20 hover:bg-white hover:border-zinc-900 text-left flex flex-col justify-between hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                                                        >
+                                                            <div>
+                                                                <div className="size-12 rounded-2xl bg-zinc-900 text-white flex items-center justify-center mb-6 shadow-md shadow-zinc-200 group-hover:bg-[#18182e] transition-all">
+                                                                    <IconComponent className="size-6" />
+                                                                </div>
+                                                                <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
+                                                                    {locale === "en" && g.titleEn ? g.titleEn : g.title}
+                                                                </h4>
+                                                                <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
+                                                                    {locale === "en" && g.descriptionEn ? g.descriptionEn : g.description}
+                                                                </p>
                                                             </div>
-                                                            <h4 className="text-lg font-serif font-black text-zinc-900 mb-2 uppercase tracking-tight">
-                                                                {locale === "en" && g.titleEn ? g.titleEn : g.title}
-                                                            </h4>
-                                                            <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
-                                                                {locale === "en" && g.descriptionEn ? g.descriptionEn : g.description}
-                                                            </p>
-                                                        </div>
-                                                        <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                                                            {locale === "en" ? "Read Guide" : "Leggi la Guida"} &rarr;
-                                                        </div>
-                                                    </button>
-                                                )
-                                            })}
-                                    </div>
+                                                            <div className="text-[10px] font-black uppercase tracking-wider text-[#c12830] mt-6 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                                                                {locale === "en" ? "Read Guide" : "Leggi la Guida"} &rarr;
+                                                            </div>
+                                                        </button>
+                                                    )
+                                                })}
+                                        </div>
+                                    ) : (
+                                        <p className="text-zinc-500 text-sm italic">
+                                            {locale === "en" ? "No informative guides available at the moment." : "Nessuna guida informativa disponibile al momento."}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Strumenti Utili */}
@@ -263,7 +269,7 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                 : "Utilizza i nostri strumenti interattivi creati appositamente per calcolare rapidamente le tasse o decifrare i termini universitari più comuni."}
                                         </p>
                                     </div>
-                                    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
                                         {/* Tax Simulator Card */}
                                         <button
                                             onClick={() => setActiveToolModal("tasse")}
