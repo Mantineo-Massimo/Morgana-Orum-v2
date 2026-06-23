@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache"
 import prisma from "@/lib/prisma"
 
-const DELETION_PROTECTED_GUIDE_IDS = ["matricole", "trasporti", "servizi", "mappa"]
+const DELETION_PROTECTED_GUIDE_IDS = ["trasporti", "servizi", "mappa"]
 const FULLY_PROTECTED_GUIDE_IDS = ["trasporti", "servizi", "mappa"]
 
 async function checkAdminPermission() {
