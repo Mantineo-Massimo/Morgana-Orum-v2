@@ -230,8 +230,7 @@ export default function EventsAdminClient({
             })
             const certWidth = certDoc.internal.pageSize.width
             const certHeight = certDoc.internal.pageSize.height
-
-            const drawCertificate = (docInstance: any, attendeeName: string | null) => {
+            const drawCertificate = (docInstance: any, attendeeName: string | null, attendeeMatricola: string | null) => {
                 // Outer dark border
                 docInstance.setDrawColor(24, 24, 46)
                 docInstance.setLineWidth(1)
@@ -294,36 +293,46 @@ export default function EventsAdminClient({
                 docInstance.setTextColor(80)
                 docInstance.text("Si attesta che lo/la studente/ssa", certWidth / 2, 70, { align: "center" })
 
-                // Name
+                // Name & Matricola
                 if (attendeeName) {
                     docInstance.setFont("helvetica", "bold")
                     docInstance.setFontSize(22)
                     docInstance.setTextColor(24, 24, 46)
                     docInstance.text(attendeeName.toUpperCase(), certWidth / 2, 85, { align: "center" })
+
+                    docInstance.setFont("helvetica", "normal")
+                    docInstance.setFontSize(12)
+                    docInstance.setTextColor(100)
+                    docInstance.text(`Matricola: ${attendeeMatricola || "N/D"}`, certWidth / 2, 92, { align: "center" })
                 } else {
                     // Dotted line for blank certificate
                     docInstance.setFont("helvetica", "normal")
                     docInstance.setFontSize(20)
                     docInstance.setTextColor(150)
                     docInstance.text("________________________________________", certWidth / 2, 83, { align: "center" })
+
+                    docInstance.setFont("helvetica", "normal")
+                    docInstance.setFontSize(12)
+                    docInstance.setTextColor(150)
+                    docInstance.text("Matricola: ____________________", certWidth / 2, 92, { align: "center" })
                 }
 
                 // ha partecipato
                 docInstance.setFont("helvetica", "normal")
                 docInstance.setFontSize(14)
                 docInstance.setTextColor(80)
-                docInstance.text("ha partecipato all'evento:", certWidth / 2, 102, { align: "center" })
+                docInstance.text("ha partecipato all'evento:", certWidth / 2, 106, { align: "center" })
 
                 // Event Title
                 docInstance.setFont("helvetica", "bold")
                 docInstance.setFontSize(18)
                 docInstance.setTextColor(24, 24, 46)
                 const wrappedTitle = docInstance.splitTextToSize(event.title.toUpperCase(), certWidth - 80)
-                docInstance.text(wrappedTitle, certWidth / 2, 112, { align: "center" })
+                docInstance.text(wrappedTitle, certWidth / 2, 118, { align: "center" })
 
                 // Date and location placement
                 const titleLinesCount = Array.isArray(wrappedTitle) ? wrappedTitle.length : 1
-                const detailsY = 112 + (titleLinesCount * 8) + 4
+                const detailsY = 118 + (titleLinesCount * 8) + 4
 
                 docInstance.setFont("helvetica", "normal")
                 docInstance.setFontSize(12)
@@ -341,25 +350,52 @@ export default function EventsAdminClient({
 
                 // Signatures
                 const sigY = 168
+                
+                // Left Signature (Associazione Morgana)
+                // Cursive signature representing the association
+                docInstance.setFont("times", "italic")
+                docInstance.setFontSize(15)
+                docInstance.setTextColor(24, 24, 46)
+                docInstance.text("Associazione Morgana", 50, sigY + 6, { align: "center" })
+                
+                // Underline/Line
+                docInstance.setDrawColor(200)
+                docInstance.setLineWidth(0.5)
+                docInstance.line(25, sigY + 10, 75, sigY + 10)
+                
+                // Printed label below the line
                 docInstance.setFont("helvetica", "normal")
-                docInstance.setFontSize(10)
-                docInstance.setTextColor(100)
+                docInstance.setFontSize(9)
+                docInstance.setTextColor(120)
+                docInstance.text("Associazione Morgana", 50, sigY + 14, { align: "center" })
 
-                docInstance.text("Associazione Morgana", 50, sigY, { align: "center" })
-                docInstance.line(25, sigY + 12, 75, sigY + 12)
-
-                docInstance.text("Associazione O.R.U.M.", certWidth - 50, sigY, { align: "center" })
-                docInstance.line(certWidth - 75, sigY + 12, certWidth - 25, sigY + 12)
+                // Right Signature (Associazione O.R.U.M.)
+                // Cursive signature representing the association
+                docInstance.setFont("times", "italic")
+                docInstance.setFontSize(15)
+                docInstance.setTextColor(24, 24, 46)
+                docInstance.text("Associazione O.R.U.M.", certWidth - 50, sigY + 6, { align: "center" })
+                
+                // Underline/Line
+                docInstance.setDrawColor(200)
+                docInstance.setLineWidth(0.5)
+                docInstance.line(certWidth - 75, sigY + 10, certWidth - 25, sigY + 10)
+                
+                // Printed label below the line
+                docInstance.setFont("helvetica", "normal")
+                docInstance.setFontSize(9)
+                docInstance.setTextColor(120)
+                docInstance.text("Associazione O.R.U.M.", certWidth - 50, sigY + 14, { align: "center" })
             }
 
             // Page 1: Empty Certificate template
-            drawCertificate(certDoc, null)
+            drawCertificate(certDoc, null, null)
 
             // Page 2+: Pre-filled Certificates
             if (attendees && attendees.length > 0) {
                 attendees.forEach((att: any) => {
                     certDoc.addPage()
-                    drawCertificate(certDoc, `${att.name} ${att.surname}`)
+                    drawCertificate(certDoc, `${att.name} ${att.surname}`, att.matricola)
                 })
             }
 
