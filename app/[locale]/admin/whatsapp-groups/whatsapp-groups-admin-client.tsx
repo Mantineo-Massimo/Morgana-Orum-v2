@@ -26,7 +26,8 @@ interface WhatsAppGroupsAdminClientProps {
 
 const CATEGORIES = [
     { value: "ACADEMIC", label: "Corsi Accademici" },
-    { value: "COMMUNITY", label: "Community & Tematici" }
+    { value: "COMMUNITY", label: "Community & Tematici" },
+    { value: "SANITARY_VET", label: "Area Sanitaria & Veterinaria" }
 ]
 
 const DEPARTMENTS = [
@@ -86,11 +87,12 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
     const handleOpenAdd = () => {
         setEditingId(null)
+        const cat = selectedCategory !== "all" ? selectedCategory : "ACADEMIC"
         setForm({
             name: "",
             nameEn: "",
             link: "",
-            category: selectedCategory !== "all" ? selectedCategory : "ACADEMIC",
+            category: cat,
             department: selectedDept !== "all" ? selectedDept : "DICAM (Civiltà Antiche e Moderne)",
             description: "",
             descriptionEn: "",
@@ -98,8 +100,8 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             theme: THEME_PRESETS[0].classes,
             order: initialGroups.length,
             semester: "",
-            subcategory: "",
-            isGeneral: false
+            subcategory: cat === "SANITARY_VET" ? "MEDICINA" : "",
+            isGeneral: cat === "SANITARY_VET"
         })
         setIsOpen(true)
     }
@@ -177,22 +179,21 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
         setLoading(true)
         try {
-            const isSanitaryOrVet = form.category === "ACADEMIC" && (form.department === "Medicina, Professioni Sanitarie e Scienze Motorie" || form.department === "Veterinaria")
-            const isCommunity = form.category === "COMMUNITY"
+            const isSanitaryVetCategory = form.category === "SANITARY_VET"
             const payload = {
                 name: form.name,
                 nameEn: form.nameEn || undefined,
                 link: form.link,
                 category: form.category,
                 department: form.category === "ACADEMIC" ? form.department : undefined,
-                description: form.category === "COMMUNITY" ? form.description : undefined,
-                descriptionEn: form.category === "COMMUNITY" ? form.descriptionEn : undefined,
+                description: (form.category === "COMMUNITY" || form.category === "SANITARY_VET") ? form.description : undefined,
+                descriptionEn: (form.category === "COMMUNITY" || form.category === "SANITARY_VET") ? form.descriptionEn : undefined,
                 icon: form.category === "COMMUNITY" ? form.icon : undefined,
                 theme: form.category === "COMMUNITY" ? form.theme : undefined,
                 order: Number(form.order) || 0,
-                semester: isSanitaryOrVet ? (form.semester || undefined) : undefined,
-                subcategory: (isSanitaryOrVet || isCommunity) ? (form.subcategory || undefined) : undefined,
-                isGeneral: (isSanitaryOrVet || isCommunity) ? form.isGeneral : false
+                semester: undefined,
+                subcategory: isSanitaryVetCategory ? (form.subcategory || "MEDICINA") : undefined,
+                isGeneral: isSanitaryVetCategory ? true : false
             }
 
             let res
@@ -226,6 +227,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
     const academicGroups = filteredGroups.filter(g => g.category === "ACADEMIC")
     const communityGroups = filteredGroups.filter(g => g.category === "COMMUNITY")
+    const sanitaryVetGroups = filteredGroups.filter(g => g.category === "SANITARY_VET")
 
     return (
         <div className="space-y-8">
@@ -285,6 +287,17 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                     )}
                 >
                     Community ({initialGroups.filter(g => g.category === "COMMUNITY").length})
+                </button>
+                <button
+                    onClick={() => { setSelectedCategory("SANITARY_VET"); setSelectedDept("all"); }}
+                    className={cn(
+                        "px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm border",
+                        selectedCategory === "SANITARY_VET"
+                            ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                            : "bg-white border-slate-200/60 text-slate-500 hover:bg-slate-50 hover:text-slate-950"
+                    )}
+                >
+                    Area Sanitaria & Vet ({initialGroups.filter(g => g.category === "SANITARY_VET").length})
                 </button>
             </div>
 
@@ -382,7 +395,65 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                     </div>
                 )}
 
-                {/* 2. Academic Sections by Department */}
+                {/* 2. Sanitary Vet Section */}
+                {(selectedCategory === "all" || selectedCategory === "SANITARY_VET") && sanitaryVetGroups.length > 0 && (
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-4">
+                            <h3 className="text-xs font-black uppercase tracking-wider text-emerald-600 shrink-0">Area Sanitaria & Veterinaria</h3>
+                            <div className="h-px w-full bg-slate-100"></div>
+                            <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-250 px-2 py-0.5 rounded">{sanitaryVetGroups.length}</span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {sanitaryVetGroups.map(group => {
+                                return (
+                                    <div key={group.id} className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
+                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div>
+                                            <div className="flex items-start justify-between gap-4 mb-4">
+                                                <div className="flex flex-wrap gap-1">
+                                                    <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
+                                                        Sanitaria & Vet
+                                                    </span>
+                                                    {group.subcategory && (
+                                                        <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-200">
+                                                            {group.subcategory}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <span className="text-xs font-mono text-slate-400 font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-200/30">Ordine: {group.order}</span>
+                                            </div>
+
+                                            <h4 className="font-bold text-slate-800 leading-snug text-lg uppercase tracking-tight">{group.name}</h4>
+                                            {group.nameEn && <p className="text-[10px] text-slate-400 italic mt-0.5">EN: {group.nameEn}</p>}
+                                            {group.description && <p className="text-xs text-slate-500 mt-3 line-clamp-3 leading-relaxed font-medium">{group.description}</p>}
+                                            {group.descriptionEn && <p className="text-[11px] text-slate-400 mt-1.5 line-clamp-3 leading-relaxed italic">EN: {group.descriptionEn}</p>}
+                                        </div>
+
+                                        <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-4">
+                                            <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline">
+                                                <Phone className="size-3.5" /> Entra nel gruppo
+                                            </a>
+                                            <div className="flex items-center gap-1">
+                                                <button onClick={() => handleEdit(group)} className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-xl transition-all border border-transparent hover:border-slate-200" title="Modifica">
+                                                    <Edit3 className="size-4" />
+                                                </button>
+                                                <button onClick={() => handleDuplicate(group)} className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-xl transition-all border border-transparent hover:border-slate-200" title="Duplica">
+                                                    <Copy className="size-4" />
+                                                </button>
+                                                <button onClick={() => handleDelete(group.id)} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-slate-200" title="Elimina">
+                                                    <Trash2 className="size-4" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {/* 3. Academic Sections by Department */}
                 {(selectedCategory === "all" || selectedCategory === "ACADEMIC") && DEPARTMENTS.map(dept => {
                     const deptGroups = academicGroups.filter(g => g.department === dept)
                     if (deptGroups.length === 0) return null
@@ -526,78 +597,25 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                 />
                             </div>
 
-                            {form.category === "ACADEMIC" ? (
-                                <>
-                                    <div className="md:col-span-2 space-y-1.5">
-                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento *</label>
-                                        <select
-                                            value={form.department}
-                                            onChange={e => {
-                                                const dept = e.target.value
-                                                const isSan = dept === "Medicina, Professioni Sanitarie e Scienze Motorie" || dept === "Veterinaria"
-                                                setForm({
-                                                    ...form,
-                                                    department: dept,
-                                                    ...(isSan ? {} : { semester: "", subcategory: "", isGeneral: false })
-                                                })
-                                            }}
-                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
-                                        >
-                                            {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
-                                        </select>
-                                    </div>
+                            {form.category === "ACADEMIC" && (
+                                <div className="md:col-span-2 space-y-1.5">
+                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento *</label>
+                                    <select
+                                        value={form.department}
+                                        onChange={e => setForm({ ...form, department: e.target.value })}
+                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                    >
+                                        {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
+                                    </select>
+                                </div>
+                            )}
 
-                                    {(form.department === "Medicina, Professioni Sanitarie e Scienze Motorie" || form.department === "Veterinaria") && (
-                                        <>
-                                            <div className="space-y-1.5">
-                                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Semestre</label>
-                                                <select
-                                                    value={form.semester}
-                                                    onChange={e => setForm({ ...form, semester: e.target.value })}
-                                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
-                                                >
-                                                    <option value="">Nessuno</option>
-                                                    <option value="1">1° Semestre</option>
-                                                    <option value="2">2° Semestre</option>
-                                                </select>
-                                            </div>
-
-                                            <div className="space-y-1.5">
-                                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Sotto-categoria (Solo Area Sanitaria/Vet)</label>
-                                                <select
-                                                    value={form.subcategory}
-                                                    onChange={e => setForm({ ...form, subcategory: e.target.value })}
-                                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
-                                                >
-                                                    <option value="">Nessuna</option>
-                                                    <option value="MEDICINA">Medicina Generale</option>
-                                                    <option value="PROFESSIONI_SANITARIE">Professioni Sanitarie</option>
-                                                    <option value="VETERINARIA">Veterinaria</option>
-                                                    <option value="GENERALE">Generale</option>
-                                                </select>
-                                            </div>
-
-                                            <div className="md:col-span-2 flex items-center gap-2 py-2">
-                                                <input
-                                                    type="checkbox"
-                                                    id="isGeneral"
-                                                    checked={form.isGeneral}
-                                                    onChange={e => setForm({ ...form, isGeneral: e.target.checked })}
-                                                    className="size-4 rounded border-slate-350 text-[#c9041a] focus:ring-[#c9041a] cursor-pointer"
-                                                />
-                                                <label htmlFor="isGeneral" className="text-sm font-bold text-slate-700 cursor-pointer select-none">
-                                                    Gruppo Generale dell&apos;Area Sanitaria / Veterinaria (Verrà mostrato nella pagina dedicata)
-                                                </label>
-                                            </div>
-                                        </>
-                                    )}
-                                </>
-                            ) : (
+                            {form.category === "COMMUNITY" && (
                                 <>
                                     <div className="md:col-span-2 space-y-1.5">
                                         <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione (IT) *</label>
                                         <textarea
-                                            required={form.category === "COMMUNITY"}
+                                            required
                                             value={form.description}
                                             onChange={e => setForm({ ...form, description: e.target.value })}
                                             className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 h-24 resize-none"
@@ -647,37 +665,44 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                             ))}
                                         </div>
                                     </div>
+                                </>
+                            )}
 
-                                    <div className="md:col-span-2 border-t border-slate-100/80 pt-4 mt-2 space-y-4">
-                                        <div className="grid md:grid-cols-2 gap-6">
-                                            <div className="space-y-1.5">
-                                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Sotto-categoria (Solo Area Sanitaria/Vet)</label>
-                                                <select
-                                                    value={form.subcategory}
-                                                    onChange={e => setForm({ ...form, subcategory: e.target.value })}
-                                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
-                                                >
-                                                    <option value="">Nessuna</option>
-                                                    <option value="MEDICINA">Medicina Generale</option>
-                                                    <option value="PROFESSIONI_SANITARIE">Professioni Sanitarie</option>
-                                                    <option value="VETERINARIA">Veterinaria</option>
-                                                    <option value="GENERALE">Generale</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                            {form.category === "SANITARY_VET" && (
+                                <>
+                                    <div className="md:col-span-2 space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione (IT) *</label>
+                                        <textarea
+                                            required
+                                            value={form.description}
+                                            onChange={e => setForm({ ...form, description: e.target.value })}
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 h-24 resize-none"
+                                            placeholder="Descrizione del gruppo..."
+                                        />
+                                    </div>
 
-                                        <div className="flex items-center gap-2 py-2">
-                                            <input
-                                                type="checkbox"
-                                                id="isGeneralCommunity"
-                                                checked={form.isGeneral}
-                                                onChange={e => setForm({ ...form, isGeneral: e.target.checked })}
-                                                className="size-4 rounded border-slate-350 text-[#c9041a] focus:ring-[#c9041a] cursor-pointer"
-                                            />
-                                            <label htmlFor="isGeneralCommunity" className="text-sm font-bold text-slate-700 cursor-pointer select-none">
-                                                Gruppo Generale dell&apos;Area Sanitaria / Veterinaria (Verrà mostrato nella pagina dedicata)
-                                            </label>
-                                        </div>
+                                    <div className="md:col-span-2 space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Descrizione (EN)</label>
+                                        <textarea
+                                            value={form.descriptionEn}
+                                            onChange={e => setForm({ ...form, descriptionEn: e.target.value })}
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 h-24 resize-none"
+                                            placeholder="Group description in English..."
+                                        />
+                                    </div>
+
+                                    <div className="md:col-span-2 space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Sotto-categoria *</label>
+                                        <select
+                                            value={form.subcategory}
+                                            onChange={e => setForm({ ...form, subcategory: e.target.value })}
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                        >
+                                            <option value="MEDICINA">Medicina Generale</option>
+                                            <option value="PROFESSIONI_SANITARIE">Professioni Sanitarie</option>
+                                            <option value="VETERINARIA">Veterinaria</option>
+                                            <option value="GENERALE">Generale</option>
+                                        </select>
                                     </div>
                                 </>
                             )}

@@ -48,7 +48,7 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
     const getGroupDesc = (g: any) => (locale === "en" && g.descriptionEn) ? g.descriptionEn : g.description
 
     // Filter only general groups
-    const generalGroups = initialGroups.filter(g => g.isGeneral === true)
+    const generalGroups = initialGroups.filter(g => g.isGeneral === true || g.category === "SANITARY_VET")
 
     // Group into Sanitary vs Veterinary
     const sanitaryGeneral = generalGroups.filter(g => 
