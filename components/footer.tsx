@@ -138,7 +138,7 @@ export async function Footer({ showOrganigramma = true }: { showOrganigramma?: b
                             {t("useful_links_title")}
                         </h3>
                         <ul className="flex flex-col gap-2 text-sm">
-                            <li><Link href="#" className={cn("transition-colors", mutedColor)}>{t("join")}</Link></li>
+                            <li><Link href="/register" className={cn("transition-colors", mutedColor)}>{t("join")}</Link></li>
                             <li><Link href="/terms" className={cn("transition-colors", mutedColor)}>{t("terms")}</Link></li>
                             <li><Link href={`/privacy`} className={cn("transition-colors", mutedColor)}>{t("privacy")}</Link></li>
                             <li><Link href={`/cookie`} className={cn("transition-colors", mutedColor)}>{t("cookies")}</Link></li>
