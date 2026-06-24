@@ -1,7 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, Film, Home as HomeIcon, Info, Stethoscope } from "lucide-react"
+import Image from "next/image"
+import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, Film, Home as HomeIcon, Info } from "lucide-react"
 
 type CourseGroup = { name: string; link: string }
 
@@ -31,12 +32,10 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         missingHeader: "Non trovi il tuo corso?",
         missingSub: "Stiamo aggiornando costantemente l'elenco dei gruppi. Se il tuo corso non è presente, contattaci sui nostri canali social e ti forniremo il link dedicato.",
         writeInstagram: "Scrivici su Instagram",
-        promoSanitariaTitle: "Corsi di Laurea - Area Sanitaria",
-        promoSanitariaSub: "Trova i gruppi WhatsApp ufficiali suddivisi per corso di laurea, anno e semestre dell'area medica e professioni sanitarie.",
         promoGeneralTitle: "Gruppi Generali - Sanitaria & Veterinaria",
         promoGeneralSub: "Accedi alle bacheche informative, ai canali di coordinamento e alle community generali dell'area medica e veterinaria.",
-        exploreBtn: "Esplora i Corsi",
-        discoverBtn: "Scopri i Gruppi"
+        discoverBtn: "Scopri i Gruppi",
+        collabWith: "In collaborazione con"
     },
     en: {
         title: "WhatsApp Groups",
@@ -54,12 +53,10 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         missingHeader: "Can't find your course?",
         missingSub: "We are constantly updating the list of groups. If your course is not present, contact us on our social channels and we will provide the dedicated link.",
         writeInstagram: "Message us on Instagram",
-        promoSanitariaTitle: "Degree Courses - Healthcare Area",
-        promoSanitariaSub: "Find the official WhatsApp groups divided by degree course, year, and semester for the medical and healthcare professions area.",
         promoGeneralTitle: "General Groups - Healthcare & Veterinary",
         promoGeneralSub: "Access the informative boards, coordination channels, and general communities for the medical and veterinary area.",
-        exploreBtn: "Explore Courses",
-        discoverBtn: "Discover Groups"
+        discoverBtn: "Discover Groups",
+        collabWith: "In collaboration with"
     }
 }
 
@@ -71,10 +68,9 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
     const getGroupName = (g: any) => (locale === "en" && g.nameEn) ? g.nameEn : g.name
     const getGroupDesc = (g: any) => (locale === "en" && g.descriptionEn) ? g.descriptionEn : g.description
 
-    // 1. Filter and group Academic Groups by Department (EXCLUDING sanitary department and general groups)
+    // 1. Filter and group Academic Groups by Department (EXCLUDING general groups)
     const academicGroups = initialGroups.filter(
         g => g.category === "ACADEMIC" && 
-        g.department !== "Medicina, Professioni Sanitarie e Scienze Motorie" &&
         !g.isGeneral
     )
     
@@ -184,64 +180,54 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                     </div>
                 )}
 
-                {/* Section: Promo Area Sanitaria & Veterinaria */}
+                {/* Section: Promo Area Sanitaria & Veterinaria - Generali */}
                 <section className="mb-24">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {/* Card 1: Corsi di Laurea - Area Sanitaria */}
-                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-10 hover:shadow-2xl hover:border-emerald-500/20 transition-all duration-300 flex flex-col justify-between h-full">
-                            {/* Decorative background glow */}
-                            <div className="absolute top-0 right-0 -mt-8 -mr-8 size-48 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none group-hover:bg-emerald-500/10 transition-colors" />
-                            
-                            <div>
-                                <div className="size-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-8 border border-emerald-100/50 group-hover:scale-110 transition-transform">
-                                    <Stethoscope className="size-7" />
-                                </div>
-                                <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100 mb-4">
-                                    Didattica &amp; Corsi
-                                </span>
-                                <h3 className="text-2xl font-serif font-black text-zinc-950 mb-4 uppercase tracking-tight">
-                                    {t.promoSanitariaTitle}
-                                </h3>
-                                <p className="text-zinc-500 text-sm leading-relaxed mb-8">
-                                    {t.promoSanitariaSub}
-                                </p>
-                            </div>
-                            
-                            <a
-                                href={`/${locale}/gruppi/sanitaria`}
-                                className="w-full flex items-center justify-center gap-2 bg-zinc-950 text-white hover:bg-emerald-600 font-black text-xs uppercase tracking-widest py-5 rounded-2xl transition-all duration-300 shadow-md group-hover:shadow-emerald-600/10 hover:scale-[1.01]"
-                            >
-                                {t.exploreBtn} <ArrowRight className="size-4" />
-                            </a>
-                        </div>
-
-                        {/* Card 2: Gruppi Generali - Sanitaria & Veterinaria */}
-                        <div className="group relative overflow-hidden bg-gradient-to-br from-white to-zinc-50 border border-zinc-100 rounded-3xl p-8 md:p-10 hover:shadow-2xl hover:border-indigo-500/20 transition-all duration-300 flex flex-col justify-between h-full">
-                            {/* Decorative background glow */}
-                            <div className="absolute top-0 right-0 -mt-8 -mr-8 size-48 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none group-hover:bg-indigo-500/10 transition-colors" />
-                            
-                            <div>
-                                <div className="size-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-8 border border-indigo-100/50 group-hover:scale-110 transition-transform">
-                                    <Users className="size-7" />
-                                </div>
-                                <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full border border-indigo-100 mb-4">
+                    <div className="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-zinc-900 to-indigo-950 rounded-3xl p-8 md:p-12 border border-emerald-500/10 shadow-2xl group/banner flex flex-col md:flex-row items-center justify-between gap-8">
+                        {/* Background decorations */}
+                        <div className="absolute top-0 right-0 -mt-12 -mr-12 size-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none group-hover/banner:bg-emerald-500/15 transition-colors" />
+                        <div className="absolute bottom-0 left-0 -mb-12 -ml-12 size-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none group-hover/banner:bg-indigo-500/15 transition-colors" />
+                        
+                        <div className="relative z-10 space-y-6 text-center md:text-left max-w-2xl">
+                            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+                                <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20">
                                     Community &amp; Bacheche
                                 </span>
-                                <h3 className="text-2xl font-serif font-black text-zinc-950 mb-4 uppercase tracking-tight">
-                                    {t.promoGeneralTitle}
-                                </h3>
-                                <p className="text-zinc-500 text-sm leading-relaxed mb-8">
-                                    {t.promoGeneralSub}
-                                </p>
                             </div>
                             
-                            <a
-                                href={`/${locale}/gruppi/sanitaria-veterinaria`}
-                                className="w-full flex items-center justify-center gap-2 bg-zinc-950 text-white hover:bg-indigo-600 font-black text-xs uppercase tracking-widest py-5 rounded-2xl transition-all duration-300 shadow-md group-hover:shadow-indigo-600/10 hover:scale-[1.01]"
-                            >
-                                {t.discoverBtn} <ArrowRight className="size-4" />
-                            </a>
+                            <h3 className="text-2xl md:text-4xl font-serif font-black text-white leading-tight uppercase tracking-tight">
+                                {t.promoGeneralTitle}
+                            </h3>
+                            
+                            <p className="text-zinc-300 text-sm md:text-base leading-relaxed">
+                                {t.promoGeneralSub}
+                            </p>
+
+                            {/* Collaboration logo with Unimhealth */}
+                            <div className="flex items-center justify-center md:justify-start gap-3 pt-2">
+                                <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">
+                                    {t.collabWith}
+                                </span>
+                                <div className="bg-white rounded-full p-1.5 aspect-square h-10 w-10 flex items-center justify-center shadow-md">
+                                    <Image
+                                        src="/assets/unimhealth.webp"
+                                        alt="Unimhealth Logo"
+                                        width={28}
+                                        height={28}
+                                        className="h-7 w-7 object-contain"
+                                    />
+                                </div>
+                                <span className="text-xs font-serif font-black uppercase text-white tracking-wider">
+                                    Unimhealth
+                                </span>
+                            </div>
                         </div>
+
+                        <a
+                            href={`/${locale}/gruppi/sanitaria-veterinaria`}
+                            className="relative z-10 shrink-0 flex items-center gap-2 bg-emerald-500 text-zinc-950 hover:bg-emerald-400 font-black text-xs uppercase tracking-widest px-8 py-5 rounded-2xl transition-all duration-300 shadow-xl shadow-emerald-500/10 hover:shadow-emerald-500/25 hover:scale-[1.02]"
+                        >
+                            {t.discoverBtn} <ArrowRight className="size-4" />
+                        </a>
                     </div>
                 </section>
 

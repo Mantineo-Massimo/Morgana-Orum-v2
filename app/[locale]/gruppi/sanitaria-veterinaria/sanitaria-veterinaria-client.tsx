@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, ArrowLeft, Shield } from "lucide-react"
 
 interface SanitariaVeterinariaClientProps {
@@ -20,7 +21,8 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         officialGroup: "Gruppo Generale Ufficiale",
         joinGroup: "Entra nel gruppo",
         activeMod: "Moderazione attiva",
-        verifiedInfo: "Solo info verificate"
+        verifiedInfo: "Solo info verificate",
+        collabWith: "In collaborazione con"
     },
     en: {
         title: "General Groups",
@@ -33,7 +35,8 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         officialGroup: "Official General Group",
         joinGroup: "Join group",
         activeMod: "Active moderation",
-        verifiedInfo: "Verified info only"
+        verifiedInfo: "Verified info only",
+        collabWith: "In collaboration with"
     }
 }
 
@@ -81,9 +84,28 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
                     <h1 className="text-4xl md:text-6xl font-serif font-black mb-4 tracking-tight text-foreground uppercase">
                         {t.title}
                     </h1>
-                    <p className="text-lg md:text-xl font-medium text-zinc-500 mb-8 italic">
+                    <p className="text-lg md:text-xl font-medium text-zinc-500 mb-6 italic">
                         {t.subtitle}
                     </p>
+
+                    {/* Collaboration badge with Unimhealth */}
+                    <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-zinc-100 mb-8 hover:shadow-md transition-shadow">
+                        <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">
+                            {t.collabWith}
+                        </span>
+                        <div className="bg-zinc-50 rounded-full p-1 aspect-square h-8 w-8 flex items-center justify-center border border-zinc-200/50">
+                            <Image
+                                src="/assets/unimhealth.webp"
+                                alt="Unimhealth Logo"
+                                width={20}
+                                height={20}
+                                className="h-5 w-5 object-contain"
+                            />
+                        </div>
+                        <span className="text-[11px] font-serif font-black uppercase text-zinc-800 tracking-wider">
+                            Unimhealth
+                        </span>
+                    </div>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium text-zinc-500 mb-12">
                         <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-zinc-100">
