@@ -21,6 +21,12 @@ export default function middleware(request: NextRequest) {
         response.headers.set('x-brand', 'null');
     }
 
+    // Prevents indexing on non-primary domains (Vercel preview/deployment domains)
+    const host = request.headers.get('host') || '';
+    if (host && !host.includes('morganaorum.it')) {
+        response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    }
+
     return response;
 }
 
