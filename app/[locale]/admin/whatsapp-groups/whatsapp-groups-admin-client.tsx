@@ -300,8 +300,8 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                     className={cn(
                         "px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm border",
                         selectedCategory === "ACADEMIC"
-                            ? "bg-[#c9041a] text-white border-[#c9041a] shadow-sm"
-                            : "bg-white border-slate-200/60 text-slate-500 hover:bg-slate-50 hover:text-slate-950"
+                            ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                            : "bg-white border-slate-200/60 text-slate-500 hover:bg-slate-50 hover:text-slate-955"
                     )}
                 >
                     Corsi Accademici ({initialGroups.filter(g => g.category === "ACADEMIC").length})
@@ -322,7 +322,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                     className={cn(
                         "px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm border",
                         selectedCategory === "SANITARY_VET"
-                            ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                            ? "bg-[#c9041a] text-white border-[#c9041a] shadow-sm"
                             : "bg-white border-slate-200/60 text-slate-500 hover:bg-slate-50 hover:text-slate-950"
                     )}
                 >
@@ -428,20 +428,20 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 {(selectedCategory === "all" || selectedCategory === "SANITARY_VET") && sanitaryVetGroups.length > 0 && (
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
-                            <h3 className="text-xs font-black uppercase tracking-wider text-emerald-600 shrink-0">Area Sanitaria & Veterinaria</h3>
+                            <h3 className="text-xs font-black uppercase tracking-wider text-[#c9041a] shrink-0">Area Sanitaria & Veterinaria</h3>
                             <div className="h-px w-full bg-slate-100"></div>
-                            <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-250 px-2 py-0.5 rounded">{sanitaryVetGroups.length}</span>
+                            <span className="text-[10px] font-black text-red-600 bg-red-50 border border-red-200/30 px-2 py-0.5 rounded">{sanitaryVetGroups.length}</span>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {sanitaryVetGroups.map(group => {
                                 return (
                                     <div key={group.id} className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
-                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#c12830] to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         <div>
                                             <div className="flex items-start justify-between gap-4 mb-4">
                                                 <div className="flex flex-wrap gap-1">
-                                                    <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
+                                                    <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-red-50 text-red-600 rounded-full border border-red-100">
                                                         Sanitaria & Vet
                                                     </span>
                                                     {group.subcategory && (
@@ -489,19 +489,19 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                     return (
                         <div key={dept} className="space-y-4">
                             <div className="flex items-center gap-4">
-                                <h3 className="text-xs font-black uppercase tracking-wider text-[#c9041a] shrink-0">{dept}</h3>
+                                <h3 className="text-xs font-black uppercase tracking-wider text-emerald-600 shrink-0">{dept}</h3>
                                 <div className="h-px w-full bg-slate-100"></div>
-                                <span className="text-[10px] font-black text-red-655 bg-red-50 border border-red-200/30 px-2 py-0.5 rounded">{deptGroups.length}</span>
+                                <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-200/30 px-2 py-0.5 rounded">{deptGroups.length}</span>
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {deptGroups.map(group => (
                                     <div key={group.id} className="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
-                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#c12830] to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         <div>
                                             <div className="flex items-start justify-between gap-4 mb-3">
                                                 <div className="flex flex-wrap gap-1">
-                                                    <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-red-50 text-red-600 rounded-full border border-red-100">
+                                                    <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
                                                         Corso
                                                     </span>
                                                     {group.semester && (
