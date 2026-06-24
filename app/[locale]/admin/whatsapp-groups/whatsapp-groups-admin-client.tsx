@@ -4,8 +4,9 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import {
     Plus, Trash2, Edit3, Copy, Search, Phone, Users,
-    Film, Home as HomeIcon, Info, ExternalLink, Loader2
+    Film, Home as HomeIcon, Info, ExternalLink, Loader2, Sparkles
 } from "lucide-react"
+import { translateText } from "@/app/actions/translate"
 import {
     createWhatsAppGroup,
     updateWhatsAppGroup,
@@ -68,7 +69,35 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
     // Form modal state
     const [isOpen, setIsOpen] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [isTranslating, setIsTranslating] = useState(false)
     const [editingId, setEditingId] = useState<string | null>(null)
+
+    const handleTranslate = async () => {
+        if (!form.name && !form.description) {
+            alert("Inserisci il Nome o la Descrizione in italiano prima di tradurre.")
+            return
+        }
+
+        setIsTranslating(true)
+        try {
+            const namePromise = form.name ? translateText(form.name) : Promise.resolve({ success: true, translation: "" })
+            const descPromise = form.description ? translateText(form.description) : Promise.resolve({ success: true, translation: "" })
+
+            const [nameRes, descRes] = await Promise.all([namePromise, descPromise])
+
+            setForm(prev => ({
+                ...prev,
+                nameEn: nameRes.success ? (nameRes.translation || prev.nameEn) : prev.nameEn,
+                descriptionEn: descRes.success ? (descRes.translation || prev.descriptionEn) : prev.descriptionEn
+            }))
+        } catch (err) {
+            console.error("Translation error:", err)
+            alert("Errore durante la traduzione automatica.")
+        } finally {
+            setIsTranslating(false)
+        }
+    }
+
     const [form, setForm] = useState({
         name: "",
         nameEn: "",
@@ -531,13 +560,26 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent className="max-w-2xl p-0 overflow-hidden border-none rounded-2xl shadow-2xl bg-white animate-in zoom-in-95 duration-200">
                     <form onSubmit={handleSave} className="space-y-6 p-6">
-                        <DialogHeader>
-                            <DialogTitle className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
-                                <div className="p-2 bg-green-50 text-green-600 rounded-xl">
+                        <DialogHeader className="flex flex-row justify-between items-center pr-10 gap-4">
+                            <DialogTitle className="text-xl md:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+                                <div className="p-2 bg-green-50 text-green-600 rounded-xl shrink-0">
                                     <Phone className="size-5" />
                                 </div>
-                                {editingId ? "Modifica Gruppo WhatsApp" : "Nuovo Gruppo WhatsApp"}
+                                <span className="truncate">{editingId ? "Modifica Gruppo" : "Nuovo Gruppo"}</span>
                             </DialogTitle>
+                            <button
+                                type="button"
+                                onClick={handleTranslate}
+                                disabled={isTranslating}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-600 border border-blue-100 text-xs font-bold transition-all disabled:opacity-50 shrink-0 shadow-sm"
+                            >
+                                {isTranslating ? (
+                                    <Loader2 className="size-3.5 animate-spin" />
+                                ) : (
+                                    <Sparkles className="size-3.5" />
+                                )}
+                                Traduci IT ➔ EN
+                            </button>
                         </DialogHeader>
 
                         <div className="grid md:grid-cols-2 gap-6">
