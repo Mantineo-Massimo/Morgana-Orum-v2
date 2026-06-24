@@ -178,6 +178,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         setLoading(true)
         try {
             const isSanitaryOrVet = form.category === "ACADEMIC" && (form.department === "Medicina, Professioni Sanitarie e Scienze Motorie" || form.department === "Veterinaria")
+            const isCommunity = form.category === "COMMUNITY"
             const payload = {
                 name: form.name,
                 nameEn: form.nameEn || undefined,
@@ -190,8 +191,8 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 theme: form.category === "COMMUNITY" ? form.theme : undefined,
                 order: Number(form.order) || 0,
                 semester: isSanitaryOrVet ? (form.semester || undefined) : undefined,
-                subcategory: isSanitaryOrVet ? (form.subcategory || undefined) : undefined,
-                isGeneral: isSanitaryOrVet ? form.isGeneral : false
+                subcategory: (isSanitaryOrVet || isCommunity) ? (form.subcategory || undefined) : undefined,
+                isGeneral: (isSanitaryOrVet || isCommunity) ? form.isGeneral : false
             }
 
             let res
@@ -644,6 +645,38 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                                     <item.icon className="size-4" />
                                                 </button>
                                             ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="md:col-span-2 border-t border-slate-100/80 pt-4 mt-2 space-y-4">
+                                        <div className="grid md:grid-cols-2 gap-6">
+                                            <div className="space-y-1.5">
+                                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Sotto-categoria (Solo Area Sanitaria/Vet)</label>
+                                                <select
+                                                    value={form.subcategory}
+                                                    onChange={e => setForm({ ...form, subcategory: e.target.value })}
+                                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                                >
+                                                    <option value="">Nessuna</option>
+                                                    <option value="MEDICINA">Medicina Generale</option>
+                                                    <option value="PROFESSIONI_SANITARIE">Professioni Sanitarie</option>
+                                                    <option value="VETERINARIA">Veterinaria</option>
+                                                    <option value="GENERALE">Generale</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center gap-2 py-2">
+                                            <input
+                                                type="checkbox"
+                                                id="isGeneralCommunity"
+                                                checked={form.isGeneral}
+                                                onChange={e => setForm({ ...form, isGeneral: e.target.checked })}
+                                                className="size-4 rounded border-slate-350 text-[#c9041a] focus:ring-[#c9041a] cursor-pointer"
+                                            />
+                                            <label htmlFor="isGeneralCommunity" className="text-sm font-bold text-slate-700 cursor-pointer select-none">
+                                                Gruppo Generale dell&apos;Area Sanitaria / Veterinaria (Verrà mostrato nella pagina dedicata)
+                                            </label>
                                         </div>
                                     </div>
                                 </>
