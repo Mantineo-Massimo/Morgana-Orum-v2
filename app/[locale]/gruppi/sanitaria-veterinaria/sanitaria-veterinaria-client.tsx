@@ -88,24 +88,29 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
                         {t.subtitle}
                     </p>
 
-                    {/* Collaboration badge with Unimhealth */}
-                    <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-zinc-100 mb-8 hover:shadow-md transition-shadow">
-                        <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">
+                    {/* Collaboration badge with Unimhealth (clickable & larger) */}
+                    <a
+                        href="https://www.instagram.com/unimhealth"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-3 bg-white px-5 py-3 rounded-full shadow-sm border border-zinc-150 mb-8 hover:shadow-md hover:border-red-500/20 transition-all hover:scale-[1.02] group/collab"
+                    >
+                        <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 group-hover/collab:text-zinc-600 transition-colors">
                             {t.collabWith}
                         </span>
-                        <div className="bg-zinc-50 rounded-full p-1 aspect-square h-8 w-8 flex items-center justify-center border border-zinc-200/50">
+                        <div className="bg-zinc-50 rounded-full p-1.5 aspect-square h-10 w-10 flex items-center justify-center border border-zinc-200/50 group-hover/collab:scale-105 transition-transform">
                             <Image
                                 src="/assets/unimhealth.webp"
                                 alt="Unimhealth Logo"
-                                width={20}
-                                height={20}
-                                className="h-5 w-5 object-contain"
+                                width={24}
+                                height={24}
+                                className="h-6 w-6 object-contain"
                             />
                         </div>
-                        <span className="text-[11px] font-serif font-black uppercase text-zinc-800 tracking-wider">
+                        <span className="text-xs font-serif font-black uppercase text-zinc-800 tracking-wider group-hover/collab:text-[#c9041a] transition-colors">
                             Unimhealth
                         </span>
-                    </div>
+                    </a>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium text-zinc-500 mb-12">
                         <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-zinc-100">

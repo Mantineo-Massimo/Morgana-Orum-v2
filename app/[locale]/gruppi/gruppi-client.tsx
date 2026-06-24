@@ -182,14 +182,14 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
 
                 {/* Section: Promo Area Sanitaria & Veterinaria - Generali */}
                 <section className="mb-24">
-                    <div className="relative overflow-hidden bg-gradient-to-br from-emerald-950 via-zinc-900 to-indigo-950 rounded-3xl p-8 md:p-12 border border-emerald-500/10 shadow-2xl group/banner flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div className="relative overflow-hidden bg-gradient-to-br from-red-950 via-zinc-900 to-indigo-950 rounded-3xl p-8 md:p-12 border border-red-500/10 shadow-2xl group/banner flex flex-col md:flex-row items-center justify-between gap-8">
                         {/* Background decorations */}
-                        <div className="absolute top-0 right-0 -mt-12 -mr-12 size-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none group-hover/banner:bg-emerald-500/15 transition-colors" />
+                        <div className="absolute top-0 right-0 -mt-12 -mr-12 size-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none group-hover/banner:bg-red-500/15 transition-colors" />
                         <div className="absolute bottom-0 left-0 -mb-12 -ml-12 size-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none group-hover/banner:bg-indigo-500/15 transition-colors" />
                         
                         <div className="relative z-10 space-y-6 text-center md:text-left max-w-2xl">
                             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                                <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full border border-emerald-500/20">
+                                <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-3 py-1 bg-red-500/10 text-red-400 rounded-full border border-red-500/20">
                                     Community &amp; Bacheche
                                 </span>
                             </div>
@@ -202,29 +202,36 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                 {t.promoGeneralSub}
                             </p>
 
-                            {/* Collaboration logo with Unimhealth */}
-                            <div className="flex items-center justify-center md:justify-start gap-3 pt-2">
-                                <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">
-                                    {t.collabWith}
-                                </span>
-                                <div className="bg-white rounded-full p-1.5 aspect-square h-10 w-10 flex items-center justify-center shadow-md">
-                                    <Image
-                                        src="/assets/unimhealth.webp"
-                                        alt="Unimhealth Logo"
-                                        width={28}
-                                        height={28}
-                                        className="h-7 w-7 object-contain"
-                                    />
-                                </div>
-                                <span className="text-xs font-serif font-black uppercase text-white tracking-wider">
-                                    Unimhealth
-                                </span>
+                            {/* Collaboration logo with Unimhealth (clickable & larger) */}
+                            <div className="pt-2">
+                                <a
+                                    href="https://www.instagram.com/unimhealth"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-3 bg-white/5 hover:bg-white/10 px-5 py-3 rounded-2xl border border-white/10 transition-all hover:scale-[1.02] group/collab text-left w-fit"
+                                >
+                                    <span className="text-[10px] sm:text-xs uppercase font-bold tracking-wider text-zinc-300 group-hover/collab:text-white transition-colors">
+                                        {t.collabWith}
+                                    </span>
+                                    <div className="bg-white rounded-full p-1.5 aspect-square h-12 w-12 flex items-center justify-center shadow-lg group-hover/collab:scale-105 transition-transform">
+                                        <Image
+                                            src="/assets/unimhealth.webp"
+                                            alt="Unimhealth Logo"
+                                            width={36}
+                                            height={36}
+                                            className="h-8 w-8 object-contain"
+                                        />
+                                    </div>
+                                    <span className="text-sm font-serif font-black uppercase text-white tracking-wider group-hover/collab:text-red-400 transition-colors">
+                                        Unimhealth
+                                    </span>
+                                </a>
                             </div>
                         </div>
 
                         <a
                             href={`/${locale}/gruppi/sanitaria-veterinaria`}
-                            className="relative z-10 shrink-0 flex items-center gap-2 bg-emerald-500 text-zinc-950 hover:bg-emerald-400 font-black text-xs uppercase tracking-widest px-8 py-5 rounded-2xl transition-all duration-300 shadow-xl shadow-emerald-500/10 hover:shadow-emerald-500/25 hover:scale-[1.02]"
+                            className="relative z-10 shrink-0 flex items-center gap-2 bg-[#c9041a] text-white hover:bg-red-700 font-black text-xs uppercase tracking-widest px-8 py-5 rounded-2xl transition-all duration-300 shadow-xl shadow-red-600/10 hover:shadow-red-600/25 hover:scale-[1.02]"
                         >
                             {t.discoverBtn} <ArrowRight className="size-4" />
                         </a>
@@ -250,9 +257,33 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                             <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
                                 {t.academicHeader}
                             </h2>
-                            <p className="text-zinc-500 mb-8 text-sm max-w-xl mx-auto">
+                            <p className="text-zinc-500 mb-6 text-sm max-w-xl mx-auto">
                                 {t.academicSub}
                             </p>
+
+                            {/* Collaboration badge with Unime Matricole */}
+                            <a
+                                href="https://www.instagram.com/unime.matricole"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-3 bg-white px-5 py-2.5 rounded-full shadow-sm border border-zinc-150 mb-8 hover:shadow-md hover:border-amber-500/20 transition-all hover:scale-[1.02] group/collab"
+                            >
+                                <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 group-hover/collab:text-zinc-600 transition-colors">
+                                    {t.collabWith}
+                                </span>
+                                <div className="bg-zinc-50 rounded-full p-1.5 aspect-square h-10 w-10 flex items-center justify-center border border-zinc-200/50 group-hover/collab:scale-105 transition-transform">
+                                    <Image
+                                        src="/assets/unimematricole.webp"
+                                        alt="Unime Matricole Logo"
+                                        width={24}
+                                        height={24}
+                                        className="h-6 w-6 object-contain"
+                                    />
+                                </div>
+                                <span className="text-xs font-serif font-black uppercase text-zinc-800 tracking-wider group-hover/collab:text-amber-500 transition-colors">
+                                    Unime Matricole
+                                </span>
+                            </a>
 
                             {/* Search bar */}
                             <div className="relative max-w-xl mx-auto">
