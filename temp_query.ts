@@ -1,1 +1,18 @@
-import { PrismaClient } from '@prisma/client'; const prisma = new PrismaClient(); async function main() { const reps = await prisma.representative.findMany({ take: 10 }); console.log(JSON.stringify(reps, null, 2)); } main();
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+async function main() {
+    const categories = await prisma.whatsAppGroup.groupBy({
+        by: ['category'],
+        _count: true
+    });
+    console.log(categories);
+
+    const depts = await prisma.whatsAppGroup.groupBy({
+        by: ['department'],
+        _count: true
+    });
+    console.log(depts);
+}
+
+main();

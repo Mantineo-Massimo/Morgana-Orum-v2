@@ -78,7 +78,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         descriptionEn: "",
         icon: "Users",
         theme: THEME_PRESETS[0].classes,
-        order: 0
+        order: 0,
+        semester: "",
+        subcategory: "",
+        isGeneral: false
     })
 
     const handleOpenAdd = () => {
@@ -93,7 +96,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             descriptionEn: "",
             icon: "Users",
             theme: THEME_PRESETS[0].classes,
-            order: initialGroups.length
+            order: initialGroups.length,
+            semester: "",
+            subcategory: "",
+            isGeneral: false
         })
         setIsOpen(true)
     }
@@ -110,7 +116,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             descriptionEn: g.descriptionEn || "",
             icon: g.icon || "Users",
             theme: g.theme || THEME_PRESETS[0].classes,
-            order: g.order || 0
+            order: g.order || 0,
+            semester: g.semester || "",
+            subcategory: g.subcategory || "",
+            isGeneral: g.isGeneral || false
         })
         setIsOpen(true)
     }
@@ -123,7 +132,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 ...g,
                 name: `${g.name} (Copia)`,
                 nameEn: g.nameEn ? `${g.nameEn} (Copy)` : undefined,
-                order: (g.order || 0) + 1
+                order: (g.order || 0) + 1,
+                semester: g.semester || undefined,
+                subcategory: g.subcategory || undefined,
+                isGeneral: g.isGeneral || false
             })
             if (res.success) {
                 router.refresh()
@@ -175,7 +187,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 descriptionEn: form.category === "COMMUNITY" ? form.descriptionEn : undefined,
                 icon: form.category === "COMMUNITY" ? form.icon : undefined,
                 theme: form.category === "COMMUNITY" ? form.theme : undefined,
-                order: Number(form.order) || 0
+                order: Number(form.order) || 0,
+                semester: form.semester || undefined,
+                subcategory: form.subcategory || undefined,
+                isGeneral: form.isGeneral
             }
 
             let res
@@ -383,9 +398,26 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                         <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#c12830] to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         <div>
                                             <div className="flex items-start justify-between gap-4 mb-3">
-                                                <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-red-50 text-red-600 rounded-full border border-red-100">
-                                                    Corso
-                                                </span>
+                                                <div className="flex flex-wrap gap-1">
+                                                    <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-red-50 text-red-600 rounded-full border border-red-100">
+                                                        Corso
+                                                    </span>
+                                                    {group.semester && (
+                                                        <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200">
+                                                            {group.semester}° Sem.
+                                                        </span>
+                                                    )}
+                                                    {group.subcategory && (
+                                                        <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-200">
+                                                            {group.subcategory}
+                                                        </span>
+                                                    )}
+                                                    {group.isGeneral && (
+                                                        <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-teal-50 text-teal-700 rounded-full border border-teal-200">
+                                                            Generale
+                                                        </span>
+                                                    )}
+                                                </div>
                                                 <span className="text-xs font-mono text-slate-400 font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-200/30">Ordine: {group.order}</span>
                                             </div>
                                             <h4 className="font-bold text-slate-800 leading-snug">{group.name}</h4>
@@ -493,16 +525,59 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                             </div>
 
                             {form.category === "ACADEMIC" ? (
-                                <div className="md:col-span-2 space-y-1.5">
-                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento *</label>
-                                    <select
-                                        value={form.department}
-                                        onChange={e => setForm({ ...form, department: e.target.value })}
-                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
-                                    >
-                                        {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
-                                    </select>
-                                </div>
+                                <>
+                                    <div className="md:col-span-2 space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento *</label>
+                                        <select
+                                            value={form.department}
+                                            onChange={e => setForm({ ...form, department: e.target.value })}
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                        >
+                                            {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Semestre</label>
+                                        <select
+                                            value={form.semester}
+                                            onChange={e => setForm({ ...form, semester: e.target.value })}
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                        >
+                                            <option value="">Nessuno</option>
+                                            <option value="1">1° Semestre</option>
+                                            <option value="2">2° Semestre</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Sotto-categoria (Solo Area Sanitaria/Vet)</label>
+                                        <select
+                                            value={form.subcategory}
+                                            onChange={e => setForm({ ...form, subcategory: e.target.value })}
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                        >
+                                            <option value="">Nessuna</option>
+                                            <option value="MEDICINA">Medicina Generale</option>
+                                            <option value="PROFESSIONI_SANITARIE">Professioni Sanitarie</option>
+                                            <option value="VETERINARIA">Veterinaria</option>
+                                            <option value="GENERALE">Generale</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="md:col-span-2 flex items-center gap-2 py-2">
+                                        <input
+                                            type="checkbox"
+                                            id="isGeneral"
+                                            checked={form.isGeneral}
+                                            onChange={e => setForm({ ...form, isGeneral: e.target.checked })}
+                                            className="size-4 rounded border-slate-350 text-[#c9041a] focus:ring-[#c9041a] cursor-pointer"
+                                        />
+                                        <label htmlFor="isGeneral" className="text-sm font-bold text-slate-700 cursor-pointer select-none">
+                                            Gruppo Generale dell&apos;Area Sanitaria / Veterinaria (Verrà mostrato nella pagina dedicata)
+                                        </label>
+                                    </div>
+                                </>
                             ) : (
                                 <>
                                     <div className="md:col-span-2 space-y-1.5">
@@ -561,7 +636,6 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                 </>
                             )}
                         </div>
-
                         <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
                             <button
                                 type="button"

@@ -1,0 +1,214 @@
+"use client"
+
+import { useState } from "react"
+import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, ArrowLeft, Shield } from "lucide-react"
+
+interface SanitariaVeterinariaClientProps {
+    initialGroups: any[]
+    locale: string
+}
+
+const TRANSLATIONS: Record<string, Record<string, string>> = {
+    it: {
+        title: "Gruppi Generali",
+        subtitle: "Canali di informazione, bacheche e community generali dedicate esclusivamente all'area medica, sanitaria e veterinaria.",
+        searchPlaceholder: "Cerca tra i gruppi generali...",
+        noGroups: "Nessun gruppo generale trovato.",
+        backBtn: "Torna a tutti i gruppi",
+        sanitarySection: "Area Sanitaria & Medica",
+        veterinarySection: "Area Veterinaria",
+        officialGroup: "Gruppo Generale Ufficiale",
+        joinGroup: "Entra nel gruppo",
+        activeMod: "Moderazione attiva",
+        verifiedInfo: "Solo info verificate"
+    },
+    en: {
+        title: "General Groups",
+        subtitle: "Information channels, bulletin boards, and general communities dedicated exclusively to the medical, healthcare, and veterinary area.",
+        searchPlaceholder: "Search general groups...",
+        noGroups: "No general groups found.",
+        backBtn: "Back to all groups",
+        sanitarySection: "Healthcare & Medical Area",
+        veterinarySection: "Veterinary Area",
+        officialGroup: "Official General Group",
+        joinGroup: "Join group",
+        activeMod: "Active moderation",
+        verifiedInfo: "Verified info only"
+    }
+}
+
+export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaVeterinariaClientProps) {
+    const [search, setSearch] = useState("")
+    const t = TRANSLATIONS[locale] || TRANSLATIONS.it
+
+    const getGroupName = (g: any) => (locale === "en" && g.nameEn) ? g.nameEn : g.name
+    const getGroupDesc = (g: any) => (locale === "en" && g.descriptionEn) ? g.descriptionEn : g.description
+
+    // Filter only general groups
+    const generalGroups = initialGroups.filter(g => g.isGeneral === true)
+
+    // Group into Sanitary vs Veterinary
+    const sanitaryGeneral = generalGroups.filter(g => 
+        g.department === "Medicina, Professioni Sanitarie e Scienze Motorie" || 
+        g.subcategory === "MEDICINA" || 
+        g.subcategory === "PROFESSIONI_SANITARIE" ||
+        (g.subcategory === "GENERALE" && (!g.department || g.department.toLowerCase().includes("medicina")))
+    ).filter(g => getGroupName(g).toLowerCase().includes(search.toLowerCase()))
+
+    const veterinaryGeneral = generalGroups.filter(g => 
+        g.department === "Veterinaria" || 
+        g.subcategory === "VETERINARIA" ||
+        (g.subcategory === "GENERALE" && g.department?.toLowerCase().includes("veterinaria"))
+    ).filter(g => getGroupName(g).toLowerCase().includes(search.toLowerCase()))
+
+    return (
+        <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
+            <div className="container mx-auto px-6 max-w-6xl">
+                {/* Back button */}
+                <a 
+                    href={`/${locale}/gruppi`} 
+                    className="inline-flex items-center gap-2 text-zinc-500 hover:text-zinc-950 font-black text-xs uppercase tracking-widest mb-8 transition-colors group"
+                >
+                    <ArrowLeft className="size-4 group-hover:-translate-x-0.5 transition-transform" />
+                    {t.backBtn}
+                </a>
+
+                {/* Header */}
+                <div className="text-center max-w-4xl mx-auto mb-16">
+                    <div className="size-20 bg-gradient-to-br from-emerald-500 to-indigo-600 text-white rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3 shadow-lg shadow-emerald-500/10">
+                        <Shield className="size-10" />
+                    </div>
+                    <h1 className="text-4xl md:text-6xl font-serif font-black mb-4 tracking-tight text-foreground uppercase">
+                        {t.title}
+                    </h1>
+                    <p className="text-lg md:text-xl font-medium text-zinc-500 mb-8 italic">
+                        {t.subtitle}
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm font-medium text-zinc-500 mb-12">
+                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-zinc-100">
+                            <CheckCircle2 className="size-4 text-emerald-500" /> {t.activeMod}
+                        </div>
+                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-zinc-100">
+                            <AlertCircle className="size-4 text-indigo-500" /> {t.verifiedInfo}
+                        </div>
+                    </div>
+
+                    {/* Search bar */}
+                    <div className="relative max-w-xl mx-auto">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+                        <input
+                            type="text"
+                            placeholder={t.searchPlaceholder}
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:ring-2 focus:ring-zinc-900/5 transition-all outline-none text-sm shadow-sm"
+                        />
+                    </div>
+                </div>
+
+                {/* Main Content */}
+                <div className="space-y-16">
+                    {/* Sanitary Section */}
+                    {sanitaryGeneral.length > 0 && (
+                        <section className="space-y-6">
+                            <div className="flex items-center gap-4">
+                                <h2 className="text-xs font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 border border-emerald-100/50 px-4 py-1.5 rounded-full shrink-0">
+                                    {t.sanitarySection}
+                                </h2>
+                                <div className="h-px w-full bg-zinc-200"></div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {sanitaryGeneral.map((group, idx) => {
+                                    const groupName = getGroupName(group)
+                                    const groupDesc = getGroupDesc(group)
+                                    return (
+                                        <div key={idx} className="group relative bg-white border border-zinc-100 rounded-3xl p-6 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full hover:border-emerald-500/20">
+                                            <div>
+                                                <span className="inline-flex items-center text-[9px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100 mb-4">
+                                                    {t.officialGroup}
+                                                </span>
+                                                <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-emerald-600 transition-colors uppercase tracking-tight font-serif">
+                                                    {groupName}
+                                                </h3>
+                                                {groupDesc && (
+                                                    <p className="text-zinc-500 text-xs leading-relaxed mb-6">
+                                                        {groupDesc}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <a
+                                                href={group.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-full flex items-center justify-center gap-2 bg-zinc-900 text-white hover:bg-emerald-500 hover:text-zinc-950 font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition-all duration-300 shadow-md group-hover:shadow-emerald-500/20"
+                                            >
+                                                {t.joinGroup} <ArrowRight className="size-4" />
+                                            </a>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Veterinary Section */}
+                    {veterinaryGeneral.length > 0 && (
+                        <section className="space-y-6">
+                            <div className="flex items-center gap-4">
+                                <h2 className="text-xs font-black uppercase tracking-widest text-indigo-600 bg-indigo-50 border border-indigo-100/50 px-4 py-1.5 rounded-full shrink-0">
+                                    {t.veterinarySection}
+                                </h2>
+                                <div className="h-px w-full bg-zinc-200"></div>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {veterinaryGeneral.map((group, idx) => {
+                                    const groupName = getGroupName(group)
+                                    const groupDesc = getGroupDesc(group)
+                                    return (
+                                        <div key={idx} className="group relative bg-white border border-zinc-100 rounded-3xl p-6 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full hover:border-indigo-500/20">
+                                            <div>
+                                                <span className="inline-flex items-center text-[9px] font-black uppercase tracking-widest px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-full border border-indigo-100 mb-4">
+                                                    {t.officialGroup}
+                                                </span>
+                                                <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-indigo-600 transition-colors uppercase tracking-tight font-serif">
+                                                    {groupName}
+                                                </h3>
+                                                {groupDesc && (
+                                                    <p className="text-zinc-500 text-xs leading-relaxed mb-6">
+                                                        {groupDesc}
+                                                    </p>
+                                                )}
+                                            </div>
+                                            <a
+                                                href={group.link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-full flex items-center justify-center gap-2 bg-zinc-900 text-white hover:bg-indigo-600 font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition-all duration-300 shadow-md group-hover:shadow-indigo-500/20"
+                                            >
+                                                {t.joinGroup} <ArrowRight className="size-4" />
+                                            </a>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Empty State */}
+                    {sanitaryGeneral.length === 0 && veterinaryGeneral.length === 0 && (
+                        <div className="text-center py-20 bg-white rounded-3xl border border-zinc-150 shadow-sm max-w-2xl mx-auto px-6">
+                            <Search className="size-16 mx-auto mb-4 text-zinc-300 opacity-50" />
+                            <h3 className="text-xl font-bold text-zinc-800 mb-2 font-serif uppercase tracking-tight">{t.noGroups}</h3>
+                            <p className="text-zinc-400 text-sm">
+                                Puoi crearne uno dal pannello di amministrazione spuntando la voce &quot;Gruppo Generale&quot;.
+                            </p>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    )
+}

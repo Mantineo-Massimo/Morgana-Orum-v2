@@ -313,6 +313,9 @@ model WhatsAppGroup {
   order         Int      @default(0)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  semester      String?
+  subcategory   String?
+  isGeneral     Boolean  @default(false)
 }
 
 model Guide {

@@ -42,6 +42,9 @@ export async function createWhatsAppGroup(data: {
     icon?: string
     theme?: string
     order?: number
+    semester?: string
+    subcategory?: string
+    isGeneral?: boolean
 }) {
     if (!(await checkAdminPermission())) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
@@ -59,7 +62,10 @@ export async function createWhatsAppGroup(data: {
                 descriptionEn: data.category === "COMMUNITY" ? (data.descriptionEn || null) : null,
                 icon: data.category === "COMMUNITY" ? (data.icon || null) : null,
                 theme: data.category === "COMMUNITY" ? (data.theme || null) : null,
-                order: data.order ?? 0
+                order: data.order ?? 0,
+                semester: data.semester || null,
+                subcategory: data.subcategory || null,
+                isGeneral: data.isGeneral ?? false
             }
         })
         revalidatePath("/gruppi")
@@ -82,6 +88,9 @@ export async function updateWhatsAppGroup(id: string, data: {
     icon?: string
     theme?: string
     order?: number
+    semester?: string
+    subcategory?: string
+    isGeneral?: boolean
 }) {
     if (!(await checkAdminPermission())) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
@@ -100,7 +109,10 @@ export async function updateWhatsAppGroup(id: string, data: {
                 descriptionEn: data.category === "COMMUNITY" ? (data.descriptionEn || null) : null,
                 icon: data.category === "COMMUNITY" ? (data.icon || null) : null,
                 theme: data.category === "COMMUNITY" ? (data.theme || null) : null,
-                order: data.order ?? 0
+                order: data.order ?? 0,
+                semester: data.semester || null,
+                subcategory: data.subcategory || null,
+                isGeneral: data.isGeneral ?? false
             }
         })
         revalidatePath("/gruppi")
