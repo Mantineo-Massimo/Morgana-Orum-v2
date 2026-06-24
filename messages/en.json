@@ -279,6 +279,8 @@
         "last_update": "Messina, April 21, 2026",
         "accept_privacy_start": "I declare that I have read and understood the ",
         "privacy_policy": "privacy policy",
+        "accept_privacy_middle": " and the ",
+        "terms_conditions": "terms & conditions",
         "accept_privacy_end": " and I accept the processing of my personal data.*",
         "consent_orum": "I consent to the processing of data by Associazione O.R.U.M. for marketing and communication purposes (Optional).",
         "consent_morgana": "I consent to the processing of data by Associazione Morgana for marketing and communication purposes (Optional).",

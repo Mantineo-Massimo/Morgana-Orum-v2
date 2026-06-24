@@ -190,7 +190,15 @@ export default function Page() {
                                             <label className="flex items-start gap-3 p-4 bg-zinc-50 border border-zinc-100 rounded-2xl cursor-pointer hover:bg-zinc-100 transition-colors">
                                                 <input type="checkbox" required name="accettazione_termini_condivisi" value="yes" className="mt-1 w-4 h-4 rounded border-zinc-300 text-primary focus:ring-primary" />
                                                 <p className="text-[11px] text-zinc-600 leading-snug">
-                                                    {tPrivacy("accept_privacy_start")}<Link href="/privacy" className="underline font-bold text-foreground">{tPrivacy("privacy_policy")}</Link>{tPrivacy("accept_privacy_end")}
+                                                    {tPrivacy("accept_privacy_start")}
+                                                    <Link href="/privacy" className="underline font-bold text-foreground">
+                                                        {tPrivacy("privacy_policy")}
+                                                    </Link>
+                                                    {tPrivacy("accept_privacy_middle")}
+                                                    <Link href="/terms" className="underline font-bold text-foreground">
+                                                        {tPrivacy("terms_conditions")}
+                                                    </Link>
+                                                    {tPrivacy("accept_privacy_end")}
                                                 </p>
                                             </label>
 
