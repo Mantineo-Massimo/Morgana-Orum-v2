@@ -73,9 +73,8 @@ L’utente può esercitare in ogni momento i diritti previsti dal GDPR (artt. 15
 *   Portabilità dei dati.
 
 Ai sensi dell'accordo di contitolarità, l'interessato può esercitare i propri diritti rivolgendosi **indifferentemente a una qualsiasi delle due associazioni**.
-Per esercitare tali diritti, è possibile scrivere ai contitolari presso:
-*   **orum.unime@gmail.com** 
-*   **associazione.morgana@gmail.com**
+Per esercitare tali diritti, è possibile scrivere ai contitolari all'indirizzo email unico:
+*   **segreteria@morganaorum.it**
 
 L’interessato ha inoltre il diritto di proporre reclamo all'Autorità Garante per la Protezione dei Dati Personali (www.garanteprivacy.it).
 

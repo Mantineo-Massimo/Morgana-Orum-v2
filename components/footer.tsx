@@ -164,8 +164,7 @@ export async function Footer({ showOrganigramma = true }: { showOrganigramma?: b
                             <div className="flex items-center gap-3">
                                 <Mail className="size-4 shrink-0" />
                                 <div className="flex flex-col gap-1 overflow-hidden">
-                                    <a href="mailto:associazione.morgana@gmail.com" className="hover:underline text-red-100 font-bold truncate">associazione.morgana@gmail.com</a>
-                                    <a href="mailto:orum.unime@gmail.com" className="hover:underline text-blue-100 font-bold truncate">orum.unime@gmail.com</a>
+                                    <a href="mailto:segreteria@morganaorum.it" className="hover:underline text-white font-bold truncate">segreteria@morganaorum.it</a>
                                 </div>
                             </div>
                         </div>

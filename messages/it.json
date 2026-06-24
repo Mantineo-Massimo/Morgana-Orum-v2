@@ -43,8 +43,8 @@
         "contact_button": "Invia Messaggio",
         "orum_address": "Contrada Petraro Top Residence Ganzirri, 98165 Messina",
         "morgana_address": "Via Del Vespro n°57, 98123 Messina",
-        "orum_email": "orum.unime@gmail.com",
-        "morgana_email": "associazione.morgana@gmail.com"
+        "orum_email": "segreteria@morganaorum.it",
+        "morgana_email": "segreteria@morganaorum.it"
     },
     "Navigation": {
         "home": "Home",
@@ -273,7 +273,7 @@
         "retention_title": "6. Periodo di Conservazione",
         "retention_desc": "I dati di account sono conservati fino a richiesta di cancellazione o dopo 24 mesi di inattività. I dati delle iscrizioni agli eventi sono conservati per 10 anni per fini amministrativi.",
         "rights_title": "7. Diritti dell'Interessato",
-        "rights_desc": "L'utente può esercitare i diritti di accesso, rettifica, cancellazione, limitazione, opposizione e portabilità rivolgendosi indifferentemente a orum.unime@gmail.com o associazione.morgana@gmail.com. È possibile proporre reclamo al Garante Privacy.",
+        "rights_desc": "L'utente può esercitare i diritti di accesso, rettifica, cancellazione, limitazione, opposizione e portabilità rivolgendosi a segreteria@morganaorum.it. È possibile proporre reclamo al Garante Privacy.",
         "security_title": "8. Sicurezza dei Dati",
         "security_desc": "I dati sono protetti tramite connessioni HTTPS cifrate e hashing forte delle password, garantendo un livello di sicurezza commisurato al rischio.",
         "last_update": "Messina, lì 29 Aprile 2026",

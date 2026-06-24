@@ -326,9 +326,6 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                                                 <h4 className="font-bold text-zinc-900 group-hover:text-[#25D366] transition-colors leading-tight">
                                                                     {groupName}
                                                                 </h4>
-                                                                <p className="text-xs text-zinc-400 font-medium uppercase tracking-tighter">
-                                                                    {t.officialGroup}
-                                                                </p>
                                                             </div>
                                                             <a
                                                                 href={group.link}

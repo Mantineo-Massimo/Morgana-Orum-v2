@@ -77,7 +77,7 @@ const FAQ_ITEMS: FaqItem[] = [
     {
         category: "account",
         question: "Come posso cancellare il mio account dal portale?",
-        answer: "Puoi richiedere la cancellazione definitiva del tuo profilo e di tutti i dati personali associati inviando una semplice richiesta email a orum.unime@gmail.com o associazione.morgana@gmail.com. La richiesta verrà presa in carico entro 48 ore."
+        answer: "Puoi richiedere la cancellazione definitiva del tuo profilo e di tutti i dati personali associati inviando una semplice richiesta email a segreteria@morganaorum.it. La richiesta verrà presa in carico entro 48 ore."
     }
 ]
 
