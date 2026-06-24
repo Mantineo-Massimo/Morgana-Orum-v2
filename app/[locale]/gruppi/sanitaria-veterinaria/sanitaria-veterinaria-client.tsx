@@ -78,8 +78,8 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
 
                 {/* Header */}
                 <div className="text-center max-w-4xl mx-auto mb-16">
-                    <div className="size-20 bg-gradient-to-br from-emerald-500 to-indigo-600 text-white rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3 shadow-lg shadow-emerald-500/10">
-                        <Shield className="size-10" />
+                    <div className="size-20 bg-[#c9041a]/10 text-[#c9041a] rounded-3xl mx-auto flex items-center justify-center mb-8 rotate-3 shadow-md shadow-red-600/5">
+                        <Phone className="size-10" />
                     </div>
                     <h1 className="text-4xl md:text-6xl font-serif font-black mb-4 tracking-tight text-foreground uppercase">
                         {t.title}
