@@ -77,6 +77,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
     const [loading, setLoading] = useState(false)
     const [isTranslating, setIsTranslating] = useState(false)
     const [editingId, setEditingId] = useState<string | null>(null)
+    const [isCustomSemester, setIsCustomSemester] = useState(false)
 
     const handleTranslate = async () => {
         if (!form.name && !form.description) {
@@ -122,6 +123,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
     const handleOpenAdd = () => {
         setEditingId(null)
+        setIsCustomSemester(false)
         const cat = selectedCategory !== "all" ? selectedCategory : "ACADEMIC"
         setForm({
             name: "",
@@ -143,6 +145,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
     const handleEdit = (g: any) => {
         setEditingId(g.id)
+        setIsCustomSemester(g.semester ? !["2025/2026", "2026/2027", "1", "2"].includes(g.semester) : false)
         setForm({
             name: g.name,
             nameEn: g.nameEn || "",
@@ -232,7 +235,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 icon: form.category === "COMMUNITY" ? form.icon : undefined,
                 theme: form.category === "COMMUNITY" ? form.theme : undefined,
                 order: Number(form.order) || 0,
-                semester: undefined,
+                semester: form.category === "ACADEMIC" ? (form.semester || undefined) : undefined,
                 subcategory: isSanitaryVetCategory ? (form.subcategory || "MEDICINA") : undefined,
                 isGeneral: isSanitaryVetCategory ? true : false
             }
@@ -518,7 +521,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                                     </span>
                                                     {group.semester && (
                                                         <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200">
-                                                            {group.semester}° Sem.
+                                                            {/^\d+$/.test(group.semester) ? `${group.semester}° Sem.` : group.semester}
                                                         </span>
                                                     )}
                                                     {group.subcategory && (
@@ -652,16 +655,54 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                             </div>
 
                             {form.category === "ACADEMIC" && (
-                                <div className="md:col-span-2 space-y-1.5">
-                                    <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento *</label>
-                                    <select
-                                        value={form.department}
-                                        onChange={e => setForm({ ...form, department: e.target.value })}
-                                        className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
-                                    >
-                                        {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
-                                    </select>
-                                </div>
+                                <>
+                                    <div className="md:col-span-2 space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Dipartimento *</label>
+                                        <select
+                                            value={form.department}
+                                            onChange={e => setForm({ ...form, department: e.target.value })}
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                        >
+                                            {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
+                                        </select>
+                                    </div>
+                                    <div className="md:col-span-2 space-y-1.5">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Anno Accademico o Semestre</label>
+                                        <select
+                                            value={isCustomSemester ? "custom" : (form.semester || "")}
+                                            onChange={e => {
+                                                const val = e.target.value
+                                                if (val === "custom") {
+                                                    setIsCustomSemester(true)
+                                                } else {
+                                                    setIsCustomSemester(false)
+                                                    setForm({ ...form, semester: val })
+                                                }
+                                            }}
+                                            className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                        >
+                                            <option value="">Nessuno</option>
+                                            <option value="2025/2026">2025/2026 (Attuale)</option>
+                                            <option value="2026/2027">2026/2027 (Prossimo)</option>
+                                            <option value="1">1° Semestre</option>
+                                            <option value="2">2° Semestre</option>
+                                            <option value="custom">Personalizzato...</option>
+                                        </select>
+                                        
+                                        {isCustomSemester && (
+                                            <div className="pt-2">
+                                                <input
+                                                    type="text"
+                                                    value={form.semester}
+                                                    onChange={e => setForm({ ...form, semester: e.target.value })}
+                                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
+                                                    placeholder="Es: 2027/2028 o 3° Sem."
+                                                />
+                                            </div>
+                                        )}
+                                        <p className="text-[10px] text-zinc-400 mt-1">Esempio: 2025/2026 per l&apos;attuale, 2026/2027 per il prossimo. Un singolo numero indicherà il semestre (es. &quot;1&quot; ➔ &quot;1° Sem.&quot;).</p>
+                                    </div>
+                                </>
                             )}
 
                             {form.category === "COMMUNITY" && (
