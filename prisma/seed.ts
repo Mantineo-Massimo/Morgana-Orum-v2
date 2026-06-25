@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, OrganigrammaAssociation, OrganigrammaSection, WhatsAppGroupCategory } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -828,7 +828,13 @@ async function main() {
 
     console.log('👥 Inserimento Organigramma in corso...')
     for (const member of organigrammaMembers) {
-        await prisma.organigrammaMember.create({ data: member })
+        await prisma.organigrammaMember.create({
+            data: {
+                ...member,
+                association: member.association as OrganigrammaAssociation,
+                section: member.section as OrganigrammaSection
+            }
+        })
     }
 
     console.log('💼 Inserimento Servizi in corso...')
@@ -847,7 +853,12 @@ async function main() {
 
     console.log('📱 Inserimento Gruppi WhatsApp in corso...')
     for (const group of communityGroups) {
-        await prisma.whatsAppGroup.create({ data: group })
+        await prisma.whatsAppGroup.create({
+            data: {
+                ...group,
+                category: group.category as WhatsAppGroupCategory
+            }
+        })
     }
     let orderCounter = 0
     for (const [dept, groups] of Object.entries(academicDepartmentsSeed)) {
@@ -856,7 +867,7 @@ async function main() {
                 data: {
                     name: group.name,
                     link: group.link,
-                    category: "ACADEMIC",
+                    category: "ACADEMIC" as WhatsAppGroupCategory,
                     department: dept,
                     order: orderCounter++
                 }

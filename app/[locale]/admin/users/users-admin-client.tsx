@@ -22,9 +22,9 @@ type UserItem = {
     degreeCourse?: string
     isFuorisede?: boolean
     newsletter?: boolean
-    consenso_marketing_orum?: boolean
-    consenso_marketing_morgana?: boolean
-    accettazione_termini_condivisi?: boolean
+    consensoMarketingOrum?: boolean
+    consensoMarketingMorgana?: boolean
+    accettazioneTerminiCondivisi?: boolean
 }
 
 import { useTranslations } from "next-intl"
@@ -63,9 +63,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
         degreeCourse: "",
         isFuorisede: false,
         newsletter: false,
-        consenso_marketing_orum: false,
-        consenso_marketing_morgana: false,
-        accettazione_termini_condivisi: false,
+        consensoMarketingOrum: false,
+        consensoMarketingMorgana: false,
+        accettazioneTerminiCondivisi: false,
         role: "USER" as Role,
         association: "MORGANA_ORUM" as Association
     })
@@ -110,9 +110,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                 degreeCourse: user.degreeCourse || "",
                 isFuorisede: user.isFuorisede || false,
                 newsletter: user.newsletter || false,
-                consenso_marketing_orum: user.consenso_marketing_orum || false,
-                consenso_marketing_morgana: user.consenso_marketing_morgana || false,
-                accettazione_termini_condivisi: user.accettazione_termini_condivisi || false,
+                consensoMarketingOrum: user.consensoMarketingOrum || false,
+                consensoMarketingMorgana: user.consensoMarketingMorgana || false,
+                accettazioneTerminiCondivisi: user.accettazioneTerminiCondivisi || false,
                 role: user.role,
                 association: user.association
             })
@@ -129,9 +129,9 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                 degreeCourse: "",
                 isFuorisede: false,
                 newsletter: false,
-                consenso_marketing_orum: false,
-                consenso_marketing_morgana: false,
-                accettazione_termini_condivisi: false,
+                consensoMarketingOrum: false,
+                consensoMarketingMorgana: false,
+                accettazioneTerminiCondivisi: false,
                 role: "USER",
                 association: "MORGANA_ORUM"
             })
@@ -628,8 +628,8 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
                                             type="checkbox"
-                                            checked={formData.consenso_marketing_orum}
-                                            onChange={(e) => setFormData({ ...formData, consenso_marketing_orum: e.target.checked })}
+                                            checked={formData.consensoMarketingOrum}
+                                            onChange={(e) => setFormData({ ...formData, consensoMarketingOrum: e.target.checked })}
                                             className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/10 focus:ring-offset-0 transition-colors cursor-pointer"
                                         />
                                         <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors select-none">{tAdmin("mktg_orum")}</span>
@@ -637,8 +637,8 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
                                             type="checkbox"
-                                            checked={formData.consenso_marketing_morgana}
-                                            onChange={(e) => setFormData({ ...formData, consenso_marketing_morgana: e.target.checked })}
+                                            checked={formData.consensoMarketingMorgana}
+                                            onChange={(e) => setFormData({ ...formData, consensoMarketingMorgana: e.target.checked })}
                                             className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/10 focus:ring-offset-0 transition-colors cursor-pointer"
                                         />
                                         <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors select-none">{tAdmin("mktg_morgana")}</span>
@@ -646,8 +646,8 @@ export default function UsersAdminClient({ initialUsers }: { initialUsers: UserI
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <input
                                             type="checkbox"
-                                            checked={formData.accettazione_termini_condivisi}
-                                            onChange={(e) => setFormData({ ...formData, accettazione_termini_condivisi: e.target.checked })}
+                                            checked={formData.accettazioneTerminiCondivisi}
+                                            onChange={(e) => setFormData({ ...formData, accettazioneTerminiCondivisi: e.target.checked })}
                                             className="size-4 rounded border-slate-300 text-[#c9041a] focus:ring-[#c9041a]/10 focus:ring-offset-0 transition-colors cursor-pointer"
                                         />
                                         <span className="text-sm font-bold text-slate-600 group-hover:text-slate-900 transition-colors select-none">{tAdmin("privacy_ok")}</span>

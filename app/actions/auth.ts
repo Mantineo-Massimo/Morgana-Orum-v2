@@ -62,9 +62,9 @@ export async function registerUser(formData: FormData) {
     const department = formData.get("department") as string
     const degreeCourse = formData.get("degreeCourse") as string
     const isFuorisede = formData.get("isFuorisede") === "yes"
-    const consenso_marketing_orum = formData.get("consenso_marketing_orum") === "yes"
-    const consenso_marketing_morgana = formData.get("consenso_marketing_morgana") === "yes"
-    const accettazione_termini_condivisi = formData.get("accettazione_termini_condivisi") === "yes"
+    const consensoMarketingOrum = formData.get("consenso_marketing_orum") === "yes"
+    const consensoMarketingMorgana = formData.get("consenso_marketing_morgana") === "yes"
+    const accettazioneTerminiCondivisi = formData.get("accettazione_termini_condivisi") === "yes"
     let rawAssociation = (formData.get("association") as string) || "MORGANA_ORUM"
 
     if (rawAssociation.toLowerCase().includes("morgana")) {
@@ -74,7 +74,7 @@ export async function registerUser(formData: FormData) {
     const association = rawAssociation as Association
 
     // Validazione base
-    if (!name || !surname || !email || !password || !birthDateStr || !matricola || !department || !degreeCourse || !accettazione_termini_condivisi) {
+    if (!name || !surname || !email || !password || !birthDateStr || !matricola || !department || !degreeCourse || !accettazioneTerminiCondivisi) {
         return { success: false, error: "Tutti i campi obbligatori devono essere compilati, inclusa l'accettazione della privacy." }
     }
 
@@ -98,10 +98,10 @@ export async function registerUser(formData: FormData) {
                 department,
                 degreeCourse,
                 isFuorisede,
-                consenso_marketing_orum,
-                consenso_marketing_morgana,
-                accettazione_termini_condivisi,
-                newsletter: consenso_marketing_orum || consenso_marketing_morgana, // Sync legacy field
+                consensoMarketingOrum,
+                consensoMarketingMorgana,
+                accettazioneTerminiCondivisi,
+                newsletter: consensoMarketingOrum || consensoMarketingMorgana, // Sync legacy field
                 association,
                 role: "USER",
                 emailVerified: false,

@@ -55,9 +55,9 @@ export async function getUserDashboardData(email?: string) {
                 qrToken: user.qrToken,
                 role: user.role,
                 memberSince: user.createdAt.getFullYear(),
-                consenso_marketing_orum: user.consenso_marketing_orum,
-                consenso_marketing_morgana: user.consenso_marketing_morgana,
-                accettazione_termini_condivisi: user.accettazione_termini_condivisi
+                consensoMarketingOrum: user.consensoMarketingOrum,
+                consensoMarketingMorgana: user.consensoMarketingMorgana,
+                accettazioneTerminiCondivisi: user.accettazioneTerminiCondivisi
             },
             events
         }
@@ -98,9 +98,9 @@ export async function getAllUsers() {
                 degreeCourse: true,
                 isFuorisede: true,
                 newsletter: true,
-                consenso_marketing_orum: true,
-                consenso_marketing_morgana: true,
-                accettazione_termini_condivisi: true
+                consensoMarketingOrum: true,
+                consensoMarketingMorgana: true,
+                accettazioneTerminiCondivisi: true
             }
         })
     } catch (error) {
@@ -118,8 +118,8 @@ export async function updateUserConsents(data: { orum: boolean, morgana: boolean
         await prisma.user.update({
             where: { email: userEmail },
             data: {
-                consenso_marketing_orum: data.orum,
-                consenso_marketing_morgana: data.morgana,
+                consensoMarketingOrum: data.orum,
+                consensoMarketingMorgana: data.morgana,
                 newsletter: data.orum || data.morgana
             }
         })
@@ -184,9 +184,9 @@ export async function exportUserData() {
                 isFuorisede: user.isFuorisede,
             },
             consents: {
-                marketing_orum: user.consenso_marketing_orum,
-                marketing_morgana: user.consenso_marketing_morgana,
-                privacy_accepted: user.accettazione_termini_condivisi,
+                marketing_orum: user.consensoMarketingOrum,
+                marketing_morgana: user.consensoMarketingMorgana,
+                privacy_accepted: user.accettazioneTerminiCondivisi,
                 createdAt: user.createdAt
             },
             registrations: user.registrations.map(r => ({
@@ -278,9 +278,9 @@ const adminCreateUserSchema = z.object({
     degreeCourse: z.string().min(1, "Corso di laurea obbligatorio"),
     isFuorisede: z.boolean().optional().default(false),
     newsletter: z.boolean().optional().default(false),
-    consenso_marketing_orum: z.boolean().optional().default(false),
-    consenso_marketing_morgana: z.boolean().optional().default(false),
-    accettazione_termini_condivisi: z.boolean().optional().default(false),
+    consensoMarketingOrum: z.boolean().optional().default(false),
+    consensoMarketingMorgana: z.boolean().optional().default(false),
+    accettazioneTerminiCondivisi: z.boolean().optional().default(false),
     role: z.nativeEnum(Role),
     association: z.nativeEnum(Association),
 })
@@ -316,9 +316,9 @@ export async function adminCreateUser(data: z.infer<typeof adminCreateUserSchema
                 degreeCourse: validData.degreeCourse,
                 isFuorisede: validData.isFuorisede,
                 newsletter: validData.newsletter,
-                consenso_marketing_orum: validData.consenso_marketing_orum,
-                consenso_marketing_morgana: validData.consenso_marketing_morgana,
-                accettazione_termini_condivisi: validData.accettazione_termini_condivisi,
+                consensoMarketingOrum: validData.consensoMarketingOrum,
+                consensoMarketingMorgana: validData.consensoMarketingMorgana,
+                accettazioneTerminiCondivisi: validData.accettazioneTerminiCondivisi,
                 role: validData.role,
                 association: validData.association,
             }
@@ -361,9 +361,9 @@ export async function adminUpdateUser(userId: number, data: any) {
             degreeCourse: data.degreeCourse,
             isFuorisede: data.isFuorisede,
             newsletter: data.newsletter,
-            consenso_marketing_orum: data.consenso_marketing_orum,
-            consenso_marketing_morgana: data.consenso_marketing_morgana,
-            accettazione_termini_condivisi: data.accettazione_termini_condivisi,
+            consensoMarketingOrum: data.consensoMarketingOrum,
+            consensoMarketingMorgana: data.consensoMarketingMorgana,
+            accettazioneTerminiCondivisi: data.accettazioneTerminiCondivisi,
             role: data.role as Role,
             association: data.association as Association,
         }

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import prisma from "@/lib/prisma"
+import { WhatsAppGroupCategory } from "@prisma/client"
 
 async function checkAdminPermission() {
     const { cookies } = await import("next/headers")
@@ -35,7 +36,7 @@ export async function createWhatsAppGroup(data: {
     name: string
     nameEn?: string
     link: string
-    category: string
+    category: WhatsAppGroupCategory
     department?: string
     description?: string
     descriptionEn?: string
@@ -81,7 +82,7 @@ export async function updateWhatsAppGroup(id: string, data: {
     name: string
     nameEn?: string
     link: string
-    category: string
+    category: WhatsAppGroupCategory
     department?: string
     description?: string
     descriptionEn?: string

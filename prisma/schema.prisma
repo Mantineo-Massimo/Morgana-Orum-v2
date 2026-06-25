@@ -24,9 +24,9 @@ model User {
   resetToken       String?        @unique
   resetTokenExpiry DateTime?
   newsletter                     Boolean        @default(false)
-  consenso_marketing_orum        Boolean        @default(false)
-  consenso_marketing_morgana     Boolean        @default(false)
-  accettazione_termini_condivisi Boolean        @default(false)
+  consensoMarketingOrum        Boolean        @default(false) @map("consenso_marketing_orum")
+  consensoMarketingMorgana     Boolean        @default(false) @map("consenso_marketing_morgana")
+  accettazioneTerminiCondivisi Boolean        @default(false) @map("accettazione_termini_condivisi")
   role                           Role           @default(USER)
   association                    Association    @default(MORGANA_ORUM)
   emailVerified                  Boolean        @default(false)
@@ -250,21 +250,34 @@ model PiazzaSponsor {
   updatedAt DateTime @updatedAt
 }
 
+enum OrganigrammaAssociation {
+  MORGANA
+  ORUM
+}
+
+enum OrganigrammaSection {
+  PRESIDENCY
+  BOARD
+  COORDINATOR
+  RESPONSIBLE
+  DEPARTMENT
+}
+
 model OrganigrammaMember {
-  id          String   @id @default(uuid())
+  id          String                  @id @default(uuid())
   name        String
   role        String   // Role title (e.g. "Presidente") or Department name (e.g. "Dipartimento Attività Culturali")
   roleEn      String?  // Optional English translation
   email       String?
-  association String   // "MORGANA" or "ORUM"
-  section     String   // "PRESIDENCY", "BOARD", "DEPARTMENT"
-  order       Int      @default(0)
+  association OrganigrammaAssociation
+  section     OrganigrammaSection
+  order       Int                     @default(0)
   image       String?
   phone       String?
   instagram   String?
   description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
 }
 
 model ServiceCategory {
@@ -293,23 +306,29 @@ model ServiceItem {
   updatedAt     DateTime        @updatedAt
 }
 
+enum WhatsAppGroupCategory {
+  ACADEMIC
+  COMMUNITY
+  SANITARY_VET
+}
+
 model WhatsAppGroup {
-  id            String   @id @default(uuid())
+  id            String                @id @default(uuid())
   name          String
   nameEn        String?
   link          String
-  category      String   // "ACADEMIC" or "COMMUNITY"
+  category      WhatsAppGroupCategory
   department    String?  // For academic groups (e.g., "Economia")
   description   String?  // For community groups
   descriptionEn String?
   icon          String?  // Icon name for community groups
   theme         String?  // CSS styling / theme for community groups
-  order         Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  order         Int                   @default(0)
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
   semester      String?
   subcategory   String?
-  isGeneral     Boolean  @default(false)
+  isGeneral     Boolean               @default(false)
 }
 
 model Guide {

@@ -12,6 +12,7 @@ import {
     updateWhatsAppGroup,
     deleteWhatsAppGroup
 } from "@/app/actions/whatsapp-groups"
+import { WhatsAppGroupCategory } from "@prisma/client"
 import { cn } from "@/lib/utils"
 import {
     Dialog,
@@ -160,9 +161,15 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         setLoading(true)
         try {
             const res = await createWhatsAppGroup({
-                ...g,
                 name: `${g.name} (Copia)`,
                 nameEn: g.nameEn ? `${g.nameEn} (Copy)` : undefined,
+                link: g.link,
+                category: g.category as WhatsAppGroupCategory,
+                department: g.department || undefined,
+                description: g.description || undefined,
+                descriptionEn: g.descriptionEn || undefined,
+                icon: g.icon || undefined,
+                theme: g.theme || undefined,
                 order: (g.order || 0) + 1,
                 semester: g.semester || undefined,
                 subcategory: g.subcategory || undefined,
@@ -213,7 +220,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 name: form.name,
                 nameEn: form.nameEn || undefined,
                 link: form.link,
-                category: form.category,
+                category: form.category as WhatsAppGroupCategory,
                 department: form.category === "ACADEMIC" ? form.department : undefined,
                 description: (form.category === "COMMUNITY" || form.category === "SANITARY_VET") ? form.description : undefined,
                 descriptionEn: (form.category === "COMMUNITY" || form.category === "SANITARY_VET") ? form.descriptionEn : undefined,

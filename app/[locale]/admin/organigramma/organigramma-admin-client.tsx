@@ -15,6 +15,7 @@ import {
     toggleOrganigrammaVisibility
 } from "@/app/actions/organigramma"
 import { cn } from "@/lib/utils"
+import { OrganigrammaAssociation, OrganigrammaSection } from "@prisma/client"
 import {
     Dialog,
     DialogContent,
@@ -225,8 +226,8 @@ export function OrganigrammaAdminClient({ initialMembers, userRole, initialVisib
                 role: form.role,
                 roleEn: form.roleEn || undefined,
                 email: form.email || undefined,
-                association: form.association,
-                section: form.section,
+                association: form.association as OrganigrammaAssociation,
+                section: form.section as OrganigrammaSection,
                 order: Number(form.order) || 0,
                 image: form.image || undefined,
                 phone: form.phone || undefined,

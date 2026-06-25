@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import prisma from "@/lib/prisma"
+import { OrganigrammaAssociation, OrganigrammaSection } from "@prisma/client"
 
 async function checkAdminPermission() {
     const { cookies } = await import("next/headers")
@@ -36,8 +37,8 @@ export async function createOrganigrammaMember(data: {
     role: string
     roleEn?: string
     email?: string
-    association: string
-    section: string
+    association: OrganigrammaAssociation
+    section: OrganigrammaSection
     order?: number
     image?: string
     phone?: string
@@ -78,8 +79,8 @@ export async function updateOrganigrammaMember(id: string, data: {
     role: string
     roleEn?: string
     email?: string
-    association: string
-    section: string
+    association: OrganigrammaAssociation
+    section: OrganigrammaSection
     order?: number
     image?: string
     phone?: string

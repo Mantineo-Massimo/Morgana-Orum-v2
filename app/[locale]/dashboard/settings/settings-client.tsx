@@ -11,8 +11,8 @@ export default function SettingsClient({ initialUser }: { initialUser: any }) {
     const t = useTranslations("Settings")
     
     // Consent states
-    const [orumConsent, setOrumConsent] = useState(initialUser.consenso_marketing_orum)
-    const [morganaConsent, setMorganaConsent] = useState(initialUser.consenso_marketing_morgana)
+    const [orumConsent, setOrumConsent] = useState(initialUser.consensoMarketingOrum)
+    const [morganaConsent, setMorganaConsent] = useState(initialUser.consensoMarketingMorgana)
     const [isPending, startTransition] = useTransition()
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
