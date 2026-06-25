@@ -2,59 +2,6 @@ import { PrismaClient, OrganigrammaAssociation, OrganigrammaSection, WhatsAppGro
 
 const prisma = new PrismaClient()
 
-const newsData = [
-    {
-        title: '9ª Edizione "Raccolta dei Giocattoli" – Un Natale per Tutti',
-        description: 'Torna l\'iniziativa solidale promossa da Morgana e Orum in collaborazione con "Gli Invisibili Onlus" e l\'ACR Messina. Abbiamo raccolto e donato centinaia di giocattoli a Piazza Cairoli per i bambini meno fortunati della nostra città.',
-        content: 'Per il nono anno consecutivo, Morgana e Orum hanno organizzato la tradizionale Raccolta dei Giocattoli in collaborazione con "Gli Invisibili Onlus" e l\'ACR Messina.\n\nL\'evento si è svolto a Piazza Cairoli, dove centinaia di studenti e cittadini hanno donato giocattoli nuovi e usati per i bambini meno fortunati della nostra città.\n\nGrazie alla generosità di tutti, siamo riusciti a raccogliere oltre 500 giocattoli che sono stati distribuiti alle famiglie bisognose durante il periodo natalizio.',
-        category: "Solidarietà",
-        tags: "#Solidarietà, #Messina, #Natale2025",
-        date: new Date("2025-12-20"),
-        published: true,
-    },
-    {
-        title: "Vittoria alle Elezioni Universitarie: Morgana e Orum leader a UniMe",
-        description: "Grazie al vostro voto, siamo la prima lista in 9 dipartimenti su 12. Con eletti in Senato Accademico e CdA, continuiamo a portare le vostre istanze ai vertici dell'Ateneo.",
-        content: 'Le elezioni universitarie 2025 hanno confermato Morgana e Orum come la prima forza studentesca dell\'Università di Messina.\n\nSiamo la prima lista in 9 dipartimenti su 12, con eletti in posizioni strategiche:\n\n• Senato Accademico\n• Consiglio di Amministrazione\n• Consiglio degli Studenti\n\nQuesto risultato straordinario è merito della fiducia che gli studenti hanno riposto in noi. Continueremo a lavorare per portare le vostre istanze ai vertici dell\'Ateneo.',
-        category: "Rappresentanza",
-        tags: "#ElezioniUniMe, #Rappresentanza, #Risultati",
-        date: new Date("2025-05-15"),
-        published: true,
-    },
-    {
-        title: 'Mostra "Popolo in Fuga" al Rettorato',
-        description: "In collaborazione con UniMe, abbiamo ospitato l'esposizione dedicata alla storia delle Foibe e dell'esodo istriano. Un momento di riflessione profonda per sensibilizzare la comunità studentesca sulla storia del nostro Paese.",
-        category: "Cultura",
-        tags: "#Cultura, #UniMe, #Memoria",
-        date: new Date("2026-02-10"),
-        published: true,
-    },
-    {
-        title: "Welcome Day 2025 – Benvenute Matricole!",
-        description: "Abbiamo accolto i nuovi studenti nel cortile del Rettorato per fornire guida, supporto e i primi gadget associativi. Inizia il tuo percorso con il piede giusto.",
-        category: "Vita Universitaria",
-        tags: "#Matricole, #WelcomeDay, #UniMe",
-        date: new Date("2025-10-01"),
-        published: true,
-    },
-    {
-        title: "Seminario: 'L'Intelligenza Artificiale nel Diritto'",
-        description: "Un incontro formativo con esperti del settore per capire come l'IA sta cambiando le professioni legali. Riconoscimento di 1 CFU per gli studenti di Giurisprudenza.",
-        category: "Cultura",
-        tags: "#Formazione, #CFU, #Innovazione",
-        date: new Date("2026-03-25"),
-        published: true,
-    },
-    {
-        title: "Raccolta Firme: 'Più Aule Studio in Centro'",
-        description: "Stiamo raccogliendo le vostre adesioni per chiedere all'Ateneo l'apertura prolungata delle biblioteche e nuovi spazi studio nel polo centro.",
-        category: "Rappresentanza",
-        tags: "#Diritti, #Studio, #UniMe",
-        date: new Date(),
-        published: true,
-    },
-]
-
 const representatives = [
     // --- ORGANI CENTRALI ---
     { name: "Gallo Dario", listName: "O.R.U.M.", category: "CENTRAL", role: "CdA (Consiglio di Amministrazione)", term: "2025-2027", roleDescription: `È il "braccio economico" e gestionale dell'università.\nCosa fa: Gestisce il budget, approva il bilancio, delibera sulle assunzioni del personale e decide gli investimenti per le infrastrutture (edifici, aule, laboratori).\nIn breve: È dove si decide come spendere i soldi dell'Ateneo.` },
@@ -201,104 +148,6 @@ const representatives = [
     { name: "Parisi Marco", listName: "MORGANA", category: "CENTRAL", role: "CdS (Consiglio degli Studenti)", term: "2024-2026", roleDescription: `È l'organo che dà voce agli studenti all'interno dell'Ateneo.\nCosa fa: È un organo consultivo. Esprime pareri (spesso obbligatori) su tasse, servizi agli studenti e diritto allo studio. Serve a coordinare i rappresentanti eletti nei vari dipartimenti per portare una visione unitaria al Senato e al CdA.` },
     { name: "Costanzino Francesco", listName: "O.R.U.M.", category: "CENTRAL", role: "CdS (Consiglio degli Studenti)", term: "2024-2026", roleDescription: `È l'organo che dà voce agli studenti all'interno dell'Ateneo.\nCosa fa: È un organo consultivo. Esprime pareri (spesso obbligatori) su tasse, servizi agli studenti e diritto allo studio. Serve a coordinare i rappresentanti eletti nei vari dipartimenti per portare una visione unitaria al Senato e al CdA.` },
     { name: "Mantineo Massimo", listName: "O.R.U.M.", category: "CENTRAL", role: "CdS (Consiglio degli Studenti)", term: "2024-2026", roleDescription: `È l'organo che dà voce agli studenti all'interno dell'Ateneo.\nCosa fa: È un organo consultivo. Esprime pareri (spesso obbligatori) su tasse, servizi agli studenti e diritto allo studio. Serve a coordinare i rappresentanti eletti nei vari dipartimenti per portare una visione unitaria al Senato e al CdA.` }
-]
-
-const eventsData = [
-    {
-        title: "Il Diritto d'Autore nell'Era Digitale",
-        description: "Un seminario di approfondimento sulle nuove normative europee e l'impatto sull'industria creativa.",
-        details: "Il seminario, organizzato in collaborazione con il Dipartimento di Giurisprudenza, affronterà i seguenti temi:\n\n• Le nuove direttive europee sul copyright digitale\n• L'impatto sulle piattaforme di streaming e social media\n• Casi studio: YouTube, Spotify e il diritto d'autore\n• Tavola rotonda con avvocati del settore\n\nOspiti d'eccezione dal mondo accademico e forense. Al termine del seminario sarà rilasciato un attestato di partecipazione.",
-        date: new Date("2026-02-24T15:30:00"),
-        location: "Aula Magna – Rettorato UniMe",
-        cfuValue: "1",
-        cfuType: "DIPARTIMENTO",
-        cfuDepartments: "Giurisprudenza",
-        category: "Seminari CFU",
-        bookingOpen: true,
-        bookingStart: new Date("2026-02-10T00:00:00"),
-        bookingEnd: new Date("2026-02-23T23:59:00"),
-    },
-    {
-        title: "Torneo Universitario di Calcetto",
-        description: "La grande sfida sportiva tra i dipartimenti dell'Ateneo! Iscriviti con la tua squadra e vinci il trofeo della prima edizione.",
-        details: "Regolamento:\n• Squadre da 5 giocatori + 2 riserve\n• Fase a gironi + eliminazione diretta\n• Arbitri ufficiali FIGC\n\nPremi:\n🥇 Trofeo + buoni Amazon per il team\n🥈 Gadget esclusivi\n🥉 T-shirt commemorative\n\nPranzo offerto per tutti i partecipanti.",
-        date: new Date("2026-03-08T10:00:00"),
-        endDate: new Date("2026-03-09T18:00:00"),
-        location: "Impianti Sportivi CUS Messina",
-        category: "Sociale",
-        bookingOpen: true,
-        bookingStart: new Date("2026-02-15T00:00:00"),
-        bookingEnd: new Date("2026-03-05T23:59:00"),
-    },
-    {
-        title: "Workshop: CV e Colloquio di Lavoro",
-        description: "Impara a costruire un curriculum efficace e ad affrontare i colloqui con sicurezza. A cura di esperti HR e recruiter.",
-        details: "Programma del workshop:\n\n14:00 – Introduzione e ice-breaking\n14:30 – Come scrivere un CV efficace (con template)\n15:30 – Coffee break\n15:45 – Simulazione colloquio di lavoro\n16:45 – Q&A con recruiter aziendali\n17:30 – Networking\n\nOgni partecipante riceverà un template CV professionale e una checklist per i colloqui.",
-        date: new Date("2026-03-15T14:00:00"),
-        location: "Aula 1 – Dip. Economia",
-        cfuValue: "1",
-        cfuType: "SENATO",
-        category: "Seminari CFU",
-        bookingOpen: true,
-        bookingStart: new Date("2026-03-01T00:00:00"),
-        bookingEnd: new Date("2026-03-14T18:00:00"),
-    },
-    {
-        title: "Cineforum: 'La Meglio Gioventù'",
-        description: "Proiezione integrale del capolavoro di Marco Tullio Giordana, seguita da un dibattito con il Prof. Ferrara.",
-        details: "Prima parte (18:00 – 20:00): Proiezione del film – Parte I\nPausa cena (20:00 – 20:30)\nSeconda parte (20:30 – 22:30): Proiezione del film – Parte II\nDibattito (22:30 – 23:00): con il Prof. Ferrara sulla rappresentazione della storia italiana nel cinema contemporaneo.\n\nIngresso libero fino ad esaurimento posti.",
-        date: new Date("2026-03-20T18:00:00"),
-        location: "Aula Magna – DICAM",
-        category: "Cultura",
-        bookingOpen: false,
-    },
-    {
-        title: "Aperitivo di Primavera",
-        description: "Il tradizionale aperitivo di inizio primavera per tutti i soci! Musica dal vivo, cocktail e la possibilità di conoscere i nuovi rappresentanti eletti.",
-        details: "Programma serata:\n\n19:30 – Apertura e welcome drink\n20:00 – Presentazione nuovi rappresentanti eletti\n20:30 – Musica dal vivo con la band \"I Ciclopi\"\n21:30 – DJ set\n\nDress code: Smart casual\nIngresso riservato ai tesserati con tessera valida.",
-        date: new Date("2026-03-22T19:30:00"),
-        location: "Lido di Mortelle – Beach Club",
-        category: "Sociale",
-        bookingOpen: true,
-        bookingStart: new Date("2026-03-10T00:00:00"),
-        bookingEnd: new Date("2026-03-21T20:00:00"),
-    },
-    {
-        title: "Seminario: Intelligenza Artificiale e Medicina",
-        description: "Come l'IA sta rivoluzionando la diagnostica e la ricerca medica. Dimostrazioni pratiche di AI applicata all'imaging biomedico.",
-        details: "Intervengono:\n• Prof. Battaglia (DIMED) – \"AI nella diagnostica per immagini\"\n• Dott. Micale – \"Machine Learning per la ricerca oncologica\"\n• Dott.ssa Novarino – \"Etica e AI in ambito sanitario\"\n\nDurante il seminario verranno mostrate demo live di modelli di AI applicati a:\n- Analisi di radiografie\n- Screening dermatologico\n- Predizione rischio cardiovascolare",
-        date: new Date("2026-04-05T09:30:00"),
-        location: "Aula Magna – Policlinico Universitario",
-        cfuValue: "2",
-        cfuType: "DIPARTIMENTO",
-        cfuDepartments: "Medicina Clinica e Sperimentale (DIMED),Scienze Biomediche, Odontoiatriche e delle Immagini (BIOMORF)",
-        category: "Seminari CFU",
-        bookingOpen: true,
-        bookingStart: new Date("2026-03-15T00:00:00"),
-        bookingEnd: new Date("2026-04-04T18:00:00"),
-    },
-]
-
-const organigrammaMembers = [
-    // MORGANA
-    { name: "Francesco Salvo", role: "Presidente", roleEn: "President", email: "presidenza.morgana@gmail.com", association: "MORGANA", section: "PRESIDENCY", order: 0 },
-    { name: "Elena Crisafulli", role: "Vice Presidente", roleEn: "Vice President", email: "vicepresidenza.morgana@gmail.com", association: "MORGANA", section: "PRESIDENCY", order: 1 },
-    { name: "Alessandro Trimarchi", role: "Segretario Generale", roleEn: "Secretary General", association: "MORGANA", section: "BOARD", order: 0 },
-    { name: "Sofia D'Amico", role: "Tesoriere", roleEn: "Treasurer", association: "MORGANA", section: "BOARD", order: 1 },
-    { name: "Valerio Puglisi", role: "Coordinatore Rappresentanti", roleEn: "Representatives Coordinator", association: "MORGANA", section: "BOARD", order: 2 },
-    { name: "Giorgio Messina", role: "Dipartimento Attività Culturali", roleEn: "Department of Cultural Activities", association: "MORGANA", section: "DEPARTMENT", order: 0 },
-    { name: "Marta Alibrandi", role: "Dipartimento Comunicazione & Web", roleEn: "Communication & Web Department", association: "MORGANA", section: "DEPARTMENT", order: 1 },
-    { name: "Claudio Vinci", role: "Dipartimento Orientamento Matricole", roleEn: "Freshmen Orientation Department", association: "MORGANA", section: "DEPARTMENT", order: 2 },
-
-    // ORUM
-    { name: "Giuseppe Campolo", role: "Presidente", roleEn: "President", email: "presidenza.orum@gmail.com", association: "ORUM", section: "PRESIDENCY", order: 0 },
-    { name: "Federica Smiroldo", role: "Vice Presidente", roleEn: "Vice President", email: "vicepresidenza.orum@gmail.com", association: "ORUM", section: "PRESIDENCY", order: 1 },
-    { name: "Domenico Barbaro", role: "Segretario", roleEn: "Secretary", association: "ORUM", section: "BOARD", order: 0 },
-    { name: "Chiara Ruggeri", role: "Tesoriere", roleEn: "Treasurer", association: "ORUM", section: "BOARD", order: 1 },
-    { name: "Matteo Pappalardo", role: "Responsabile Organizzativo", roleEn: "Organizational Manager", association: "ORUM", section: "BOARD", order: 2 },
-    { name: "Simona Castorina", role: "Dipartimento Didattica & Diritto allo Studio", roleEn: "Department of Didactics & Right to Study", association: "ORUM", section: "DEPARTMENT", order: 0 },
-    { name: "Luca Arena", role: "Dipartimento Grafica & Social Media", roleEn: "Graphics & Social Media Department", association: "ORUM", section: "DEPARTMENT", order: 1 },
-    { name: "Antonio Bruno", role: "Dipartimento Relazioni Esterne & Convenzioni", roleEn: "External Relations & Conventions Department", association: "ORUM", section: "DEPARTMENT", order: 2 }
 ]
 
 const servicesData = [
@@ -826,27 +675,6 @@ async function main() {
         await prisma.representative.create({ data: rep })
     }
 
-    console.log('📰 Inserimento News in corso...')
-    for (const item of newsData) {
-        await prisma.news.create({ data: item })
-    }
-
-    console.log('📅 Inserimento Eventi in corso...')
-    for (const item of eventsData) {
-        await prisma.event.create({ data: item })
-    }
-
-    console.log('👥 Inserimento Organigramma in corso...')
-    for (const member of organigrammaMembers) {
-        await prisma.organigrammaMember.create({
-            data: {
-                ...member,
-                association: member.association as OrganigrammaAssociation,
-                section: member.section as OrganigrammaSection
-            }
-        })
-    }
-
     console.log('💼 Inserimento Servizi in corso...')
     for (const cat of servicesData) {
         const { items, ...catData } = cat
@@ -901,15 +729,12 @@ async function main() {
     }
 
     const repsCount = await prisma.representative.count()
-    const newsCount = await prisma.news.count()
-    const eventsCount = await prisma.event.count()
-    const organigrammaCount = await prisma.organigrammaMember.count()
     const categoriesCount = await prisma.serviceCategory.count()
     const itemsCount = await prisma.serviceItem.count()
     const groupsCount = await prisma.whatsAppGroup.count()
     const guidesCount = await prisma.guide.count()
     const stepsCount = await prisma.guideStep.count()
-    console.log(`✅ Finito! Inseriti ${repsCount} rappresentanti, ${newsCount} news, ${eventsCount} eventi, ${organigrammaCount} membri organigramma, ${categoriesCount} categorie servizi, ${itemsCount} servizi, ${groupsCount} gruppi WhatsApp, ${guidesCount} guide e ${stepsCount} step.`)
+    console.log(`✅ Finito! Inseriti ${repsCount} rappresentanti, ${categoriesCount} categorie servizi, ${itemsCount} servizi, ${groupsCount} gruppi WhatsApp, ${guidesCount} guide e ${stepsCount} step.`)
 }
 
 main()
