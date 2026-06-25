@@ -113,6 +113,9 @@ export default async function RootLayout({
     const brandHeader = headers().get("x-brand")
     const brand = (brandHeader && brandHeader !== "null" ? brandHeader : null) as Brand
 
+    // Get CSP nonce from middleware header
+    const nonce = headers().get("x-nonce") || undefined
+
     const organigrammaConfig = await getOrganigrammaConfig()
 
     return (
@@ -140,8 +143,9 @@ export default async function RootLayout({
                         <Script
                             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
                             strategy="afterInteractive"
+                            nonce={nonce}
                         />
-                        <Script id="google-analytics" strategy="afterInteractive">
+                        <Script id="google-analytics" strategy="afterInteractive" nonce={nonce}>
                             {`
                                 window.dataLayer = window.dataLayer || [];
                                 function gtag(){dataLayer.push(arguments);}
