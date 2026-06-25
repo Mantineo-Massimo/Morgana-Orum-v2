@@ -629,7 +629,7 @@ const communityGroups = [
 ]
 
 const academicDepartmentsSeed = {
-    "DICAM (Civiltà Antiche e Moderne)": [
+    "Dipartimento di Civiltà Antiche e Moderne (DICAM)": [
         { name: "L1 Beni Archeologici: territorio, insediamenti, cultura materiale", link: "https://chat.whatsapp.com/KZcGdNRzRyFD6FSfXRApHo?mode=ac_t" },
         { name: "L5 Filosofia", link: "https://chat.whatsapp.com/IBpYfQq98D8LxhbeCNR9IC?mode=ac_t" },
         { name: "L10 Lettere", link: "https://chat.whatsapp.com/K52GZ3ee5SsHkRRBldx2LY?mode=ac_t" },
@@ -642,7 +642,7 @@ const academicDepartmentsSeed = {
         { name: "LM78 Filosofia contemporanea", link: "https://chat.whatsapp.com/Cym4Pm4qVi89arDq2d7FY3?mode=ac_t" },
         { name: "LM84 Scienze storiche", link: "https://chat.whatsapp.com/KDvST5ig7tGEZysNYWPyhu?mode=ac_t" }
     ],
-    "Economia": [
+    "Dipartimento di Economia": [
         { name: "L18 Economia aziendale", link: "https://chat.whatsapp.com/D3nZVjwPtIU0eINj4NNGuA?mode=ac_t" },
         { name: "L18 Management d'impresa", link: "https://chat.whatsapp.com/LhzjbSuefoE8ujH54oJJWV?mode=ac_t" },
         { name: "L33 Economia, banca e finanza", link: "https://chat.whatsapp.com/ENi7JSkNUrGAmXW9wDLXnx?mode=ac_t" },
@@ -650,19 +650,21 @@ const academicDepartmentsSeed = {
         { name: "LM77 Consulenza e gestione di impresa", link: "https://chat.whatsapp.com/CatVTLZigEQ0UIugFpX0Bq?mode=ac_t" },
         { name: "LM77 Digital Trasformation e Innovation Managment", link: "https://chat.whatsapp.com/JDkn5dgtrpI2CIWydG23Pw?mode=ac_t" }
     ],
-    "Scienze Politiche e Giuridiche (SCIPOG) / Giurisprudenza": [
+    "Dipartimento di Giurisprudenza": [
         { name: "LMG01 Giurisprudenza", link: "https://chat.whatsapp.com/HLwJP2tBoNz1Q6RlZULQ2Z?mode=ac_t" },
         { name: "L14 Consulente del lavoro e scienze dei servizi giuridici", link: "https://chat.whatsapp.com/Hv10lQnAmHN5wXqRObWd0a?mode=ac_t" },
         { name: "L14 Transnational and European Legal Studies", link: "https://chat.whatsapp.com/HnILHdfXFsiE7t4hPVmhSy?mode=ac_t" },
+        { name: "LM/SC-GIUR Diritto dell'Innovazione e della sostenibilità", link: "https://chat.whatsapp.com/G9wmtJAHL8o4epwCasYDlG?mode=ac_t" }
+    ],
+    "Dipartimento di Scienze Politiche e Giuridiche (SCIPOG)": [
         { name: "L14 Diritto delle Nuove Tecnologie", link: "https://chat.whatsapp.com/KfM3aE7JWV8LrR7HTfc5Ox" },
-        { name: "LM/SC-GIUR Diritto dell'Innovazione e della sostenibilità", link: "https://chat.whatsapp.com/G9wmtJAHL8o4epwCasYDlG?mode=ac_t" },
         { name: "L16 Scienze politiche, amministrazione e servizi", link: "https://chat.whatsapp.com/JiTMKoGv3tvGS1L5tUJ2pD" },
         { name: "L36 Scienze politiche e delle relazioni internazionali", link: "https://chat.whatsapp.com/IfWk5cm0ogUCMJix3UVK2z" },
         { name: "L39 Scienze del servizio sociale", link: "https://chat.whatsapp.com/FyoXN0yW4gjFvZkPsSKKrV" },
         { name: "LM52 Relazioni internazionali", link: "https://chat.whatsapp.com/DoLQytacGsR8HpBV5qVoef" },
         { name: "LM63 Scienze delle pubbliche amministrazioni", link: "https://chat.whatsapp.com/Hk2FeofTKJz27TQ30Bt6tn" }
     ],
-    "Ingegneria": [
+    "Dipartimento di Ingegneria": [
         { name: "L7 Ingegneria civile", link: "https://chat.whatsapp.com/Cc1cX0tEaSrDO5MQfBeZ41?mode=ac_t" },
         { name: "L8 Ingegneria Biomedica", link: "https://chat.whatsapp.com/DSR00zzDeOEJ0zxYBlNr0H?mode=ac_t" },
         { name: "L8 Ingegneria elettronica e informatica", link: "https://chat.whatsapp.com/JghispA6VYF0iINYFIoYUo?mode=ac_t" },
@@ -672,7 +674,7 @@ const academicDepartmentsSeed = {
         { name: "LM21 Bioingegneria", link: "https://chat.whatsapp.com/GtjeUiVE9NYCaTjdhBnxbT?mode=ac_t" },
         { name: "LM33 Ingegneria meccanica", link: "https://chat.whatsapp.com/Fbf4fCcLDMg7lafwl1VZPx?mode=ac_t" }
     ],
-    "Scienze, MIFT e CHIBIOFARAM": [
+    "Dipartimento di Scienze Matematiche e Informatiche, Scienze Fisiche e Scienze della Terra (MIFT)": [
         { name: "L30 Fisica", link: "https://chat.whatsapp.com/GwtSTTDKKHmJUyrd2SWjuD?mode=r_t" },
         { name: "L31 Informatica", link: "https://chat.whatsapp.com/Lm7t8w5JerO1rXuNyogE8H?mode=r_t" },
         { name: "L31 Data Analysis", link: "https://chat.whatsapp.com/L2fUk14ojts5lRTmgYpKWj?mode=r_t" },
@@ -681,9 +683,23 @@ const academicDepartmentsSeed = {
         { name: "LM17 Fisica", link: "https://chat.whatsapp.com/Ftb4OeeY2RBLlPqO5BQxxz?mode=r_t" },
         { name: "LM17 Physics", link: "https://chat.whatsapp.com/Ftb4OeeY2RBLlPqO5BQxxz?mode=r_t" },
         { name: "LM40 Matematica", link: "https://chat.whatsapp.com/KBMu0K1da960HR9JxE6LbX?mode=r_t" },
-        { name: "LM79 Geophysical Sciences", link: "https://chat.whatsapp.com/DvVKROn2P9uDTtdpQ9m1tC?mode=r_t" },
+        { name: "LM79 Geophysical Sciences", link: "https://chat.whatsapp.com/DvVKROn2P9uDTtdpQ9m1tC?mode=r_t" }
+    ],
+    "Dipartimento di Scienze Biomediche, Odontoiatriche e delle Immagini Morfologiche e Funzionali (BIOMORF)": [
         { name: "L2 Biotecnologie", link: "https://chat.whatsapp.com/EDZ7OEfLXaGCHqdDOEgCbj?mode=r_c" },
         { name: "LM9 Biotecnologie Mediche", link: "https://chat.whatsapp.com/LNzL0Cr3fQj7JmhlIuZCI0?mode=r_c" },
+        { name: "LM46 Odontoiatria e protesi dentaria", link: "https://chat.whatsapp.com/IFjfZcBitC52KBvhcXUiZ9?mode=r_c" },
+        { name: "L/SNT2 Ortottica ed assistenza in oftalmologia", link: "https://chat.whatsapp.com/GJA0vbMiTly31GLNMiopIi?mode=r_c" },
+        { name: "L/SNT2 Tecnica della riabilitazione psichiatrica", link: "https://chat.whatsapp.com/DU7W5sMal8H99GY6mD9RWU?mode=r_c" },
+        { name: "L/SNT3 Tecniche di laboratorio biomedico", link: "https://chat.whatsapp.com/K6Fve75weBUH0HVxfHymHx?mode=r_c" },
+        { name: "L/SNT3 Tecniche di radiologia medica", link: "https://chat.whatsapp.com/BigGzFnbUjm6TFVzXk9Wyf?mode=r_c" },
+        { name: "L/SNT4 Tecniche della prevenzione nell'ambiente", link: "https://chat.whatsapp.com/F0JH9CcAjoELS9F1bGGFl5?mode=r_c" },
+        { name: "LM/SNT3 Scienze delle professioni sanitarie diagnostiche", link: "https://chat.whatsapp.com/FLucAeK0z0XELG9BqsLeev?mode=r_c" },
+        { name: "L22 Scienze motorie, sport e salute", link: "https://chat.whatsapp.com/GHafECTtLF01yXmPKmnrZp?mode=r_c" },
+        { name: "LM67 Scienze e tecniche attività motorie adattate", link: "https://chat.whatsapp.com/Kzqqak58NEf714b42XKKKp?mode=r_c" },
+        { name: "L26 Scienze gastronomiche", link: "https://chat.whatsapp.com/BUOvXAMoyB5Azg4wksU6XU?mode=r_c" }
+    ],
+    "Dipartimento di Scienze Chimiche, Biologiche, Farmaceutiche e Ambientali (CHIBIOFARAM)": [
         { name: "LM13 Chimica e tecnologie farmaceutiche", link: "https://chat.whatsapp.com/Lkl38ig0HqlJy3mV5lQT6o" },
         { name: "LM13 Farmacia", link: "https://chat.whatsapp.com/HAjkMIkGEjmA54fn8fMuah" },
         { name: "L13 Scienze biologiche", link: "https://chat.whatsapp.com/DVsmpe3bYr0D1iz2N24HcX" },
@@ -696,31 +712,25 @@ const academicDepartmentsSeed = {
         { name: "LM54 Chimica Magistrale", link: "https://chat.whatsapp.com/KDtLpMAXtZjK2mhHNDVOma?mode=ac_t" },
         { name: "LM61 Scienza della Alimentazione e Nutrizione Umana", link: "https://chat.whatsapp.com/GMiTc7341we4BFtRXTkBxx" }
     ],
-    "Medicina, Professioni Sanitarie e Scienze Motorie": [
+    "Dipartimento di Medicina Clinica e Sperimentale (DIMED)": [
         { name: "LM41 Medicina e Chirugia (Ita / Eng / Bio)", link: "https://chat.whatsapp.com/FAcVNuwITmMITtBo6OzpPg?mode=ac_t" },
-        { name: "LM46 Odontoiatria e protesi dentaria", link: "https://chat.whatsapp.com/IFjfZcBitC52KBvhcXUiZ9?mode=r_c" },
         { name: "L/SNT1 Infermieristica (e Pediatrica)", link: "https://chat.whatsapp.com/GJMvgAQZn30FPFh0cABIMW" },
-        { name: "L/SNT1 Ostetricia", link: "https://chat.whatsapp.com/FYFLeuTthgqKqs9rUOlJBH?mode=ac_t" },
         { name: "L/SNT2 Fisioterapia", link: "https://chat.whatsapp.com/F2NVlxqewHuJK5FP6dAmDx" },
+        { name: "L/SNT3 Tecniche di neurofisiopatologia", link: "https://chat.whatsapp.com/CAITQ1K9JCzKaPSEsxeBsL" }
+    ],
+    "Dipartimento di Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"": [
+        { name: "L/SNT1 Ostetricia", link: "https://chat.whatsapp.com/FYFLeuTthgqKqs9rUOlJBH?mode=ac_t" },
         { name: "L/SNT2 Logopedia", link: "https://chat.whatsapp.com/Bqp6i1c3d7EA0ccIEq5i2s?mode=ac_t" },
         { name: "L/SNT2 Terapia della neuro e della psicomotricità", link: "https://chat.whatsapp.com/I4ga2II1sreHhdfxRBdu8k?mode=ac_t" },
-        { name: "L/SNT2 Ortottica ed assistenza in oftalmologia", link: "https://chat.whatsapp.com/GJA0vbMiTly31GLNMiopIi?mode=r_c" },
-        { name: "L/SNT2 Tecnica della riabilitazione psichiatrica", link: "https://chat.whatsapp.com/DU7W5sMal8H99GY6mD9RWU?mode=r_c" },
-        { name: "L/SNT3 Tecniche di neurofisiopatologia", link: "https://chat.whatsapp.com/CAITQ1K9JCzKaPSEsxeBsL" },
         { name: "L/SNT3 Tecniche audioprotesiche", link: "https://chat.whatsapp.com/EdW4Q5Qbf4U5k9LAgcgg4X?mode=ac_t" },
-        { name: "L/SNT3 Tecniche di laboratorio biomedico", link: "https://chat.whatsapp.com/K6Fve75weBUH0HVxfHymHx?mode=r_c" },
-        { name: "L/SNT3 Tecniche di radiologia medica", link: "https://chat.whatsapp.com/BigGzFnbUjm6TFVzXk9Wyf?mode=r_c" },
-        { name: "L/SNT4 Tecniche della prevenzione nell'ambiente", link: "https://chat.whatsapp.com/F0JH9CcAjoELS9F1bGGFl5?mode=r_c" },
         { name: "LM/SNT1 Scienze infermieristiche e ostetriche", link: "https://chat.whatsapp.com/Ii5MmFlpgmOF9rNXUDbXRy?mode=ac_t" },
-        { name: "LM/SNT2 Scienze riabilitative delle prof. sanitarie", link: "https://chat.whatsapp.com/HQXyZObz5K6Ai91XHJKmmK?mode=ac_t" },
-        { name: "LM/SNT3 Scienze delle professioni sanitarie diagnostiche", link: "https://chat.whatsapp.com/FLucAeK0z0XELG9BqsLeev?mode=r_c" },
-        { name: "L24 Scienze e Tecniche psicologiche", link: "https://chat.whatsapp.com/Fk7PDzERVHXI1k13BAEnnK" },
-        { name: "LM51 Psicologia clinica", link: "https://chat.whatsapp.com/H3j8GLOeRz31q5LQNVLm9j" },
-        { name: "L22 Scienze motorie, sport e salute", link: "https://chat.whatsapp.com/GHafECTtLF01yXmPKmnrZp?mode=r_c" },
-        { name: "LM67 Scienze e tecniche attività motorie adattate", link: "https://chat.whatsapp.com/Kzqqak58NEf714b42XKKKp?mode=r_c" },
-        { name: "L26 Scienze gastronomiche", link: "https://chat.whatsapp.com/BUOvXAMoyB5Azg4wksU6XU?mode=r_c" }
+        { name: "LM/SNT2 Scienze riabilitative delle prof. sanitarie", link: "https://chat.whatsapp.com/HQXyZObz5K6Ai91XHJKmmK?mode=ac_t" }
     ],
-    "Veterinaria": [
+    "Dipartimento di Scienze Cognitive, Psicologiche, Pedagogiche e degli Studi Culturali (COSPECS)": [
+        { name: "L24 Scienze e Tecniche psicologiche", link: "https://chat.whatsapp.com/Fk7PDzERVHXI1k13BAEnnK" },
+        { name: "LM51 Psicologia clinica", link: "https://chat.whatsapp.com/H3j8GLOeRz31q5LQNVLm9j" }
+    ],
+    "Dipartimento di Scienze Veterinarie": [
         { name: "LM42 Medicina veterinaria", link: "https://chat.whatsapp.com/FAcVNuwITmMITtBo6OzpPg?mode=ac_t" },
         { name: "L25 Scienze e Tecnologie Agrarie", link: "https://chat.whatsapp.com/DIxVM1HvFwh9ZRAczs9XRQ?mode=ac_t" },
         { name: "L38 Scienze, tecnologie e sicurezza prod. animali", link: "https://chat.whatsapp.com/LPiJ8Gdxwae5TXWmmlDoX7?mode=ac_t" },
