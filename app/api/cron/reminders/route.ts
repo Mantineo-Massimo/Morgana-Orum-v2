@@ -6,10 +6,21 @@ import { getDeadlineReminderEmailTemplate } from "@/lib/email-templates"
 export const dynamic = "force-dynamic"
 
 export async function GET(request: Request) {
-    // Basic protection check: only execute if CRON_SECRET matches, if defined
+    // Strict protection check: require CRON_SECRET and verify Authorization header.
+    // Falls back to a development secret if CRON_SECRET is missing locally, but fails closed in production.
     const authHeader = request.headers.get("authorization")
-    if (process.env.CRON_SECRET && authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-        return new Response("Unauthorized", { status: 401 })
+    const cronSecret = process.env.CRON_SECRET
+
+    if (process.env.NODE_ENV === "production") {
+        if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
+            return new Response("Unauthorized", { status: 401 })
+        }
+    } else {
+        // In local development, if CRON_SECRET is not set, use a fallback to allow local testing
+        const effectiveSecret = cronSecret || "development_fallback_cron_secret"
+        if (authHeader !== `Bearer ${effectiveSecret}`) {
+            return new Response("Unauthorized", { status: 401 })
+        }
     }
 
     try {
