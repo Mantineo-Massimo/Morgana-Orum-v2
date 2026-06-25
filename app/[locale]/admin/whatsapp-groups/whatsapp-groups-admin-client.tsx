@@ -72,7 +72,16 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
     const [search, setSearch] = useState("")
     const [selectedCategory, setSelectedCategory] = useState<string>("all")
     const [selectedDept, setSelectedDept] = useState<string>("all")
-    const [selectedYear, setSelectedYear] = useState<string>("all")
+    const [selectedYear, setSelectedYear] = useState<string>(() => {
+        const years = new Set<string>()
+        initialGroups.forEach(g => {
+            if (g.semester && /^\d{4}\/\d{4}$/.test(g.semester)) {
+                years.add(g.semester)
+            }
+        })
+        const sorted = Array.from(years).sort()
+        return sorted[sorted.length - 1] || "2025/2026"
+    })
     const [customYears, setCustomYears] = useState<string[]>([])
 
     // Dialog state for adding a new year
@@ -93,6 +102,10 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         customYears.forEach(y => years.add(y))
         return Array.from(years).sort()
     }, [initialGroups, customYears])
+
+    const defaultYear = useMemo(() => {
+        return availableYears[availableYears.length - 1] || "2025/2026"
+    }, [availableYears])
 
     // Form modal state
     const [isOpen, setIsOpen] = useState(false)
@@ -147,7 +160,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         setEditingId(null)
         setIsCustomSemester(false)
         const cat = selectedCategory !== "all" ? selectedCategory : "ACADEMIC"
-        const defaultSem = (cat === "ACADEMIC" && selectedYear !== "all") ? selectedYear : "2025/2026"
+        const defaultSem = cat === "ACADEMIC" ? selectedYear : "2025/2026"
         setIsCustomSemester(defaultSem ? !["2025/2026", "2026/2027"].includes(defaultSem) : false)
         setForm({
             name: "",
@@ -331,7 +344,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                               (g.department && g.department.toLowerCase().includes(search.toLowerCase()))
         const matchesCategory = selectedCategory === "all" || g.category === selectedCategory
         const matchesDept = selectedDept === "all" || g.department === selectedDept
-        const matchesYear = selectedCategory !== "ACADEMIC" || selectedYear === "all" || g.semester === selectedYear
+        const matchesYear = g.category !== "ACADEMIC" || g.semester === selectedYear
         return matchesSearch && matchesCategory && matchesDept && matchesYear
     })
 
@@ -363,7 +376,6 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                 onChange={e => setSelectedYear(e.target.value)}
                                 className="px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 outline-none transition-all cursor-pointer font-semibold text-slate-700 min-w-[150px]"
                             >
-                                <option value="all">Tutti gli anni</option>
                                 {availableYears.map(y => (
                                     <option key={y} value={y}>{y}</option>
                                 ))}
@@ -464,9 +476,9 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                         </select>
                     )}
 
-                    {(selectedDept !== "all" || selectedYear !== "all" || search !== "") && (
+                    {(selectedDept !== "all" || selectedYear !== defaultYear || search !== "") && (
                         <button
-                            onClick={() => { setSelectedDept("all"); setSelectedYear("all"); setSearch(""); }}
+                            onClick={() => { setSelectedDept("all"); setSelectedYear(defaultYear); setSearch(""); }}
                             className="text-xs font-black text-red-600 hover:text-red-700 transition-colors uppercase tracking-widest"
                         >
                             Resetta
