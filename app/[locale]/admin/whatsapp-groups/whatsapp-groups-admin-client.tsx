@@ -148,7 +148,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         setIsCustomSemester(false)
         const cat = selectedCategory !== "all" ? selectedCategory : "ACADEMIC"
         const defaultSem = (cat === "ACADEMIC" && selectedYear !== "all") ? selectedYear : "2025/2026"
-        setIsCustomSemester(defaultSem ? !["2025/2026", "2026/2027", "1", "2"].includes(defaultSem) : false)
+        setIsCustomSemester(defaultSem ? !["2025/2026", "2026/2027"].includes(defaultSem) : false)
         setForm({
             name: "",
             nameEn: "",
@@ -210,7 +210,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
     const handleEdit = (g: any) => {
         setEditingId(g.id)
-        setIsCustomSemester(g.semester ? !["2025/2026", "2026/2027", "1", "2"].includes(g.semester) : false)
+        setIsCustomSemester(g.semester ? !["2025/2026", "2026/2027"].includes(g.semester) : false)
         setForm({
             name: g.name,
             nameEn: g.nameEn || "",
@@ -354,13 +354,41 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                         Gestisci i link e le descrizioni dei gruppi WhatsApp ufficiali delle community e dei corsi di laurea.
                     </p>
                 </div>
-                <button
-                    onClick={handleOpenAdd}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white text-sm font-bold hover:opacity-90 transition-all rounded-xl shadow-sm group"
-                >
-                    <Plus className="size-4 group-hover:rotate-90 transition-transform" />
-                    Aggiungi Gruppo
-                </button>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                    {(selectedCategory === "all" || selectedCategory === "ACADEMIC") && (
+                        <>
+                            {/* Year filter select */}
+                            <select
+                                value={selectedYear}
+                                onChange={e => setSelectedYear(e.target.value)}
+                                className="px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 outline-none transition-all cursor-pointer font-semibold text-slate-700 min-w-[150px]"
+                            >
+                                <option value="all">Tutti gli anni</option>
+                                {availableYears.map(y => (
+                                    <option key={y} value={y}>{y}</option>
+                                ))}
+                            </select>
+
+                            <button
+                                onClick={() => {
+                                    setSourceYearForCloning(availableYears[availableYears.length - 1] || "2025/2026")
+                                    setIsYearDialogOpen(true)
+                                }}
+                                className="flex items-center justify-center px-4 py-3 border border-slate-200 hover:bg-slate-50 text-slate-700 text-sm font-bold transition-all rounded-xl shadow-sm whitespace-nowrap bg-white"
+                            >
+                                + Anno
+                            </button>
+                        </>
+                    )}
+
+                    <button
+                        onClick={handleOpenAdd}
+                        className="flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white text-sm font-bold hover:opacity-90 transition-all rounded-xl shadow-sm group whitespace-nowrap"
+                    >
+                        <Plus className="size-4 group-hover:rotate-90 transition-transform" />
+                        Aggiungi Gruppo
+                    </button>
+                </div>
             </div>
 
             {/* Category Tab Switcher */}
@@ -425,32 +453,6 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 </div>
 
                 <div className="flex flex-wrap w-full md:w-auto gap-3 items-center justify-end">
-                    {selectedCategory === "ACADEMIC" && (
-                        <>
-                            {/* Year filter select */}
-                            <select
-                                value={selectedYear}
-                                onChange={e => setSelectedYear(e.target.value)}
-                                className="px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl text-sm focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 outline-none transition-all cursor-pointer font-semibold text-slate-700 min-w-[150px]"
-                            >
-                                <option value="all">Tutti gli anni</option>
-                                {availableYears.map(y => (
-                                    <option key={y} value={y}>{y}</option>
-                                ))}
-                            </select>
-
-                            <button
-                                onClick={() => {
-                                    setSourceYearForCloning(availableYears[availableYears.length - 1] || "2025/2026")
-                                    setIsYearDialogOpen(true)
-                                }}
-                                className="px-4 py-2.5 bg-slate-900 text-white hover:bg-slate-800 text-xs font-black uppercase tracking-widest transition-all rounded-xl shadow-sm"
-                            >
-                                + Anno
-                            </button>
-                        </>
-                    )}
-
                     {selectedCategory === "ACADEMIC" && (
                         <select
                             value={selectedDept}
@@ -613,7 +615,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                                     </span>
                                                     {group.semester && (
                                                         <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200">
-                                                            {/^\d+$/.test(group.semester) ? `${group.semester}° Sem.` : group.semester}
+                                                            {group.semester}
                                                         </span>
                                                     )}
                                                     {group.subcategory && (
@@ -759,7 +761,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                         </select>
                                     </div>
                                     <div className="md:col-span-2 space-y-1.5">
-                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Anno Accademico o Semestre</label>
+                                        <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Anno Accademico</label>
                                         <select
                                             value={isCustomSemester ? "custom" : (form.semester || "")}
                                             onChange={e => {
@@ -776,8 +778,6 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                             <option value="">Nessuno</option>
                                             <option value="2025/2026">2025/2026 (Attuale)</option>
                                             <option value="2026/2027">2026/2027 (Prossimo)</option>
-                                            <option value="1">1° Semestre</option>
-                                            <option value="2">2° Semestre</option>
                                             <option value="custom">Personalizzato...</option>
                                         </select>
                                         
@@ -788,11 +788,11 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                                     value={form.semester}
                                                     onChange={e => setForm({ ...form, semester: e.target.value })}
                                                     className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
-                                                    placeholder="Es: 2027/2028 o 3° Sem."
+                                                    placeholder="Es: 2027/2028"
                                                 />
                                             </div>
                                         )}
-                                        <p className="text-[10px] text-zinc-400 mt-1">Esempio: 2025/2026 per l&apos;attuale, 2026/2027 per il prossimo. Un singolo numero indicherà il semestre (es. &quot;1&quot; ➔ &quot;1° Sem.&quot;).</p>
+                                        <p className="text-[10px] text-zinc-400 mt-1">Esempio: 2025/2026 per l&apos;attuale, 2026/2027 per il prossimo.</p>
                                     </div>
                                 </>
                             )}

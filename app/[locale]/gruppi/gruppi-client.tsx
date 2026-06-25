@@ -362,13 +362,7 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                                                 <h4 className="font-bold text-zinc-900 group-hover:text-[#25D366] transition-colors leading-tight">
                                                                     {groupName}
                                                                 </h4>
-                                                                {group.semester && !/\d{4}/.test(group.semester) && (
-                                                                    <div className="pt-1">
-                                                                        <span className="inline-flex items-center text-[10px] font-bold px-2 py-0.5 bg-amber-50 text-amber-700 rounded-full border border-amber-200/50">
-                                                                            {/^\d+$/.test(group.semester) ? `${group.semester}° Sem.` : group.semester}
-                                                                        </span>
-                                                                    </div>
-                                                                )}
+
                                                             </div>
                                                             <a
                                                                 href={group.link}
