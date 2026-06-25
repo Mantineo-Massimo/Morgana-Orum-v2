@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Calendar, Clock, MapPin, CheckCircle, ChevronLeft, Lock, Ticket, Download, FileText, LogIn, UserPlus } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Association } from "@prisma/client"
+import { sanitizeHtml } from "@/lib/sanitize"
 
 type EventData = {
     id: number
@@ -198,7 +199,7 @@ export default function EventDetailClient({
                                 <div className="bg-zinc-50 rounded-2xl p-6 border border-zinc-100">
                                     <div
                                         className="prose prose-zinc prose-sm max-w-none text-zinc-700 leading-relaxed font-medium"
-                                        dangerouslySetInnerHTML={{ __html: event.details }}
+                                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(event.details) }}
                                     />
                                 </div>
                             </div>

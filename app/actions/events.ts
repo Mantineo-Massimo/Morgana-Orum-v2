@@ -186,10 +186,18 @@ export async function getEventCategoriesWithIds() {
 
 // --- REGISTRATION ---
 
-export async function registerForEvent(userEmail: string, eventId: number) {
+export async function registerForEvent(_ignoredEmail: string, eventId: number) {
     try {
+        // Security: always read the authenticated user from the session cookie,
+        // ignoring the email passed by the client to prevent IDOR attacks.
+        const { cookies } = await import("next/headers")
+        const sessionEmail = cookies().get("session_email")?.value
+        if (!sessionEmail) {
+            return { success: false, message: "Devi effettuare il login per prenotarti." }
+        }
+
         const user = await prisma.user.findUnique({
-            where: { email: userEmail }
+            where: { email: sessionEmail }
         })
 
         if (!user) {
@@ -253,7 +261,7 @@ export async function registerForEvent(userEmail: string, eventId: number) {
         })
 
         sendEmail({
-            to: userEmail,
+            to: user.email,
             subject: isEn ? `Booking Confirmation: ${event.title}` : `Conferma Prenotazione: ${event.title}`,
             html: getEventBookingTemplate(
                 user.name,

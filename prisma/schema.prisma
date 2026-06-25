@@ -411,5 +411,14 @@ model DeadlineAlert {
   @@unique([email, countdownId])
 }
 
+model RateLimit {
+  id        String   @id @default(uuid())
+  key       String   // e.g. "login:192.168.1.1" or "reset:user@example.com"
+  window    String   // minute-level bucket: "2026-06-25T15:23" (ISO truncated to minute)
+  count     Int      @default(1)
+  createdAt DateTime @default(now())
 
-
+  @@unique([key, window])
+  @@index([key])
+  @@index([createdAt])
+}

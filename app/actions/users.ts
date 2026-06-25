@@ -3,6 +3,7 @@
 import prisma from "@/lib/prisma"
 import { Association, Role } from "@prisma/client"
 import bcrypt from "bcryptjs"
+import { z } from "zod"
 
 
 export async function getUserDashboardData(email?: string) {
@@ -274,7 +275,25 @@ export async function deleteUser(userId: number) {
     }
 }
 
-export async function adminCreateUser(data: any) {
+const adminCreateUserSchema = z.object({
+    name: z.string().min(1, "Nome obbligatorio"),
+    surname: z.string().min(1, "Cognome obbligatorio"),
+    email: z.string().email("Email non valida"),
+    password: z.string().min(8, "La password deve essere di almeno 8 caratteri"),
+    birthDate: z.string().min(1, "Data di nascita obbligatoria"),
+    matricola: z.string().min(1, "Matricola obbligatoria"),
+    department: z.string().min(1, "Dipartimento obbligatorio"),
+    degreeCourse: z.string().min(1, "Corso di laurea obbligatorio"),
+    isFuorisede: z.boolean().optional().default(false),
+    newsletter: z.boolean().optional().default(false),
+    consenso_marketing_orum: z.boolean().optional().default(false),
+    consenso_marketing_morgana: z.boolean().optional().default(false),
+    accettazione_termini_condivisi: z.boolean().optional().default(false),
+    role: z.nativeEnum(Role),
+    association: z.nativeEnum(Association),
+})
+
+export async function adminCreateUser(data: z.infer<typeof adminCreateUserSchema>) {
     try {
         const { cookies } = await import("next/headers")
         const userEmail = cookies().get("session_email")?.value
@@ -288,25 +307,28 @@ export async function adminCreateUser(data: any) {
             return { success: false, error: "Unauthorized" }
         }
 
-        const hashedPassword = await bcrypt.hash(data.password || "Password123!", 10)
+        // Validate input — throws ZodError if invalid
+        const validData = adminCreateUserSchema.parse(data)
+
+        const hashedPassword = await bcrypt.hash(validData.password, 10)
 
         const newUser = await prisma.user.create({
             data: {
-                name: data.name,
-                surname: data.surname,
-                email: data.email,
+                name: validData.name,
+                surname: validData.surname,
+                email: validData.email,
                 password: hashedPassword,
-                birthDate: new Date(data.birthDate),
-                matricola: data.matricola,
-                department: data.department,
-                degreeCourse: data.degreeCourse,
-                isFuorisede: data.isFuorisede || false,
-                newsletter: data.newsletter || false,
-                consenso_marketing_orum: data.consenso_marketing_orum || false,
-                consenso_marketing_morgana: data.consenso_marketing_morgana || false,
-                accettazione_termini_condivisi: data.accettazione_termini_condivisi || false,
-                role: data.role as Role,
-                association: data.association as Association,
+                birthDate: new Date(validData.birthDate),
+                matricola: validData.matricola,
+                department: validData.department,
+                degreeCourse: validData.degreeCourse,
+                isFuorisede: validData.isFuorisede,
+                newsletter: validData.newsletter,
+                consenso_marketing_orum: validData.consenso_marketing_orum,
+                consenso_marketing_morgana: validData.consenso_marketing_morgana,
+                accettazione_termini_condivisi: validData.accettazione_termini_condivisi,
+                role: validData.role,
+                association: validData.association,
             }
         })
 
@@ -315,6 +337,9 @@ export async function adminCreateUser(data: any) {
         console.error("Error creating user:", error)
         if (error.code === 'P2002') {
             return { success: false, error: "Email o Matricola già in uso." }
+        }
+        if (error.name === 'ZodError') {
+            return { success: false, error: error.errors[0]?.message || "Dati non validi." }
         }
         return { success: false, error: "Creazione fallita" }
     }

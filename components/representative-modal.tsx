@@ -2,6 +2,7 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Building2, Landmark, Mail, Phone, Instagram, User } from "lucide-react"
+import { sanitizeHtml } from "@/lib/sanitize"
 import { getRoleIcon } from "@/lib/role-icons"
 
 interface RepresentativeModalProps {
@@ -99,7 +100,7 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                                     <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Chi Sono</h4>
                                     <div
                                         className="prose prose-zinc prose-sm max-w-none text-zinc-600 leading-relaxed"
-                                        dangerouslySetInnerHTML={{ __html: representative.description }}
+                                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(representative.description) }}
                                     />
                                 </div>
                             )}
@@ -109,7 +110,7 @@ export function RepresentativeModal({ isOpen, onClose, representative }: Represe
                                     <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Il Mio Ruolo</h4>
                                     <div
                                         className="prose prose-zinc prose-sm max-w-none text-zinc-600 leading-relaxed"
-                                        dangerouslySetInnerHTML={{ __html: representative.roleDescription }}
+                                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(representative.roleDescription) }}
                                     />
                                 </div>
                             )}

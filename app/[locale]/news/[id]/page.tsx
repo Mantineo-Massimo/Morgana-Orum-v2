@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { ArrowLeft, Calendar, Tag, Newspaper } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { sanitizeHtml } from "@/lib/sanitize"
 
 export const dynamic = "force-dynamic"
 
@@ -115,7 +116,7 @@ export default async function NewsDetailPage({ params: { id, locale } }: { param
                                 <div className="bg-white rounded-[2rem] border border-zinc-100 p-8 md:p-16 shadow-sm">
                                     <div
                                         className="prose prose-zinc prose-lg md:prose-xl max-w-none text-foreground leading-relaxed font-medium"
-                                        dangerouslySetInnerHTML={{ __html: article.content }}
+                                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }}
                                     />
 
                                     {/* Tags Footer */}

@@ -8,8 +8,17 @@ import { sendEmail } from "@/lib/mail"
 import { getWelcomeEmailTemplate, getPasswordResetTemplate, getEmailVerificationTemplate } from "@/lib/email-templates"
 import { randomUUID } from "crypto"
 import bcrypt from "bcryptjs"
+import { rateLimit, getClientIp } from "@/lib/rate-limit"
 
 export async function loginAction(email: string, password?: string) {
+    // Rate limit: 5 login attempts per IP per 15 minutes
+    const requestHeaders = headers()
+    const ip = getClientIp(requestHeaders)
+    const { allowed } = await rateLimit("login", ip, { limit: 5, windowMinutes: 15 })
+    if (!allowed) {
+        return { success: false, error: "Troppi tentativi di accesso. Riprova tra qualche minuto." }
+    }
+
     // SIMPLIFIED AUTH for demo purposes
     // In production: Verify password, set HTTP-only cookie session
     const user = await prisma.user.findUnique({
@@ -69,6 +78,11 @@ export async function registerUser(formData: FormData) {
         return { success: false, error: "Tutti i campi obbligatori devono essere compilati, inclusa l'accettazione della privacy." }
     }
 
+    // Validazione password
+    if (password.length < 8) {
+        return { success: false, error: "La password deve essere di almeno 8 caratteri." }
+    }
+
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
 
@@ -126,6 +140,15 @@ export async function registerUser(formData: FormData) {
 
 export async function requestPasswordReset(email: string) {
     try {
+        // Rate limit: 3 reset requests per email or IP per 60 minutes
+        const requestHeaders = headers()
+        const ip = getClientIp(requestHeaders)
+        const { allowed } = await rateLimit("reset", `${ip}:${email}`, { limit: 3, windowMinutes: 60 })
+        if (!allowed) {
+            // Return generic success to avoid timing-based user enumeration
+            return { success: true, message: "Se l'email è registrata, riceverai un link a breve." }
+        }
+
         const user = await prisma.user.findUnique({ where: { email } })
         if (!user) {
             // Per sicurezza, non dire che l'utente non esiste
@@ -245,6 +268,14 @@ export async function verifyEmailAction(token: string, locale: string = "it") {
 export async function resendVerificationEmailAction(email: string, locale: string = "it") {
     if (!email) {
         return { success: false, error: "Email mancante." }
+    }
+
+    // Rate limit: 3 resend attempts per email per 60 minutes
+    const requestHeaders = headers()
+    const ip = getClientIp(requestHeaders)
+    const { allowed } = await rateLimit("resend-verify", `${ip}:${email}`, { limit: 3, windowMinutes: 60 })
+    if (!allowed) {
+        return { success: false, error: locale === "en" ? "Too many requests. Please try again later." : "Troppi tentativi. Riprova più tardi." }
     }
 
     try {

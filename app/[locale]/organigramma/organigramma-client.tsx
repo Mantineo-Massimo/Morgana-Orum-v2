@@ -6,6 +6,7 @@ import { Award, Mail, MapPin, BookOpen, Phone, Instagram, User, Users } from "lu
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog"
 import { getRoleIcon } from "@/lib/role-icons"
+import { sanitizeHtml } from "@/lib/sanitize"
 
 interface OrganigrammaClientProps {
     initialMembers: any[]
@@ -383,7 +384,7 @@ export function OrganigrammaClient({ initialMembers, locale }: OrganigrammaClien
                                             <h4 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Chi Sono / Ruolo</h4>
                                             <div
                                                 className="prose prose-zinc prose-sm max-w-none text-zinc-600 leading-relaxed"
-                                                dangerouslySetInnerHTML={{ __html: selectedMember.description }}
+                                                dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedMember.description) }}
                                             />
                                         </div>
                                     )}
