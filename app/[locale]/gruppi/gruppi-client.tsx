@@ -61,10 +61,18 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         allYears: "All Years"
     }
 }
-
 export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
     const [search, setSearch] = useState("")
-    const [selectedYear, setSelectedYear] = useState<string>("all")
+    const [selectedYear, setSelectedYear] = useState<string>(() => {
+        const years = new Set<string>()
+        initialGroups.forEach(g => {
+            if (g.category === "ACADEMIC" && !g.isGeneral && g.semester && /^\d{4}\/\d{4}$/.test(g.semester)) {
+                years.add(g.semester)
+            }
+        })
+        const sorted = Array.from(years).sort()
+        return sorted[sorted.length - 1] || "2025/2026"
+    })
     
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
 
@@ -100,7 +108,7 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
     const filteredDepartments = Object.entries(groupedDepts).reduce((acc, [dept, groups]) => {
         const matchingGroups = (groups as any[]).filter(g => {
             const matchesSearch = getGroupName(g).toLowerCase().includes(search.toLowerCase())
-            const matchesYear = selectedYear === "all" || g.semester === selectedYear
+            const matchesYear = g.semester === selectedYear
             return matchesSearch && matchesYear
         })
         if (matchingGroups.length > 0) {
@@ -321,7 +329,6 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                             onChange={(e) => setSelectedYear(e.target.value)}
                                             className="w-full pl-12 pr-10 py-3.5 bg-white border border-zinc-200 rounded-2xl outline-none focus:ring-2 focus:ring-zinc-900/5 text-sm font-semibold transition-all text-zinc-800 cursor-pointer shadow-sm appearance-none"
                                         >
-                                            <option value="all">{t.allYears}</option>
                                             {availableYears.map(y => (
                                                 <option key={y} value={y}>{y}</option>
                                             ))}
