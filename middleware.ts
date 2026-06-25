@@ -8,6 +8,19 @@ const intlMiddleware = createMiddleware(routing);
 export default function middleware(request: NextRequest) {
     const response = intlMiddleware(request);
 
+    // Intercept and secure the NEXT_LOCALE cookie set by next-intl
+    const localeCookie = response.cookies.get('NEXT_LOCALE');
+    if (localeCookie) {
+        response.cookies.set({
+            name: 'NEXT_LOCALE',
+            value: localeCookie.value,
+            httpOnly: true,
+            secure: true, // Secure must be true for HTTPS and is accepted by modern browsers on localhost too
+            sameSite: 'lax',
+            path: '/',
+        });
+    }
+
     const pathname = request.nextUrl.pathname;
     const pathParts = pathname.split('/').filter(Boolean);
 

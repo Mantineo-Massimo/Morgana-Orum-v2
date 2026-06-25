@@ -26,6 +26,7 @@ export async function loginAction(email: string, password?: string) {
             cookies().set("session_email", email, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
                 maxAge: 60 * 60 * 24 * 7, // 1 week
                 path: "/",
             })
@@ -218,6 +219,7 @@ export async function verifyEmailAction(token: string, locale: string = "it") {
         cookies().set("session_email", user.email, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
             maxAge: 60 * 60 * 24 * 7, // 1 week
             path: "/",
         })

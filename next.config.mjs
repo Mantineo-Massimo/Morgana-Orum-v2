@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin(
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    poweredByHeader: false,
     images: {
         remotePatterns: [
             {
@@ -81,11 +82,13 @@ const nextConfig = {
                     // Cross-origin isolation for popups
                     { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
                     // Content Security Policy — permissive policy compatible with Next.js, GA, Vercel, Cloudinary
+                    // 'unsafe-eval' is only included in development (required by Next.js Fast Refresh).
+                    // In production it is removed to reduce XSS attack surface.
                     {
                         key: 'Content-Security-Policy',
                         value: [
                             "default-src 'self'",
-                            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com https://vercel.live",
+                            `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV !== 'production' ? " 'unsafe-eval'" : ""} https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com https://vercel.live`,
                             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
                             "font-src 'self' https://fonts.gstatic.com data:",
                             "img-src 'self' data: blob: https://res.cloudinary.com https://storage.googleapis.com https://*.public.blob.vercel-storage.com https://www.google-analytics.com https://*.basemaps.cartocdn.com https://www.googletagmanager.com",
@@ -96,6 +99,7 @@ const nextConfig = {
                             "manifest-src 'self'",
                             "base-uri 'self'",
                             "form-action 'self'",
+                            "frame-ancestors 'self'",
                             "upgrade-insecure-requests",
                         ].join('; '),
                     },
