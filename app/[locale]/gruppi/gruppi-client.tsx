@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react"
 import Image from "next/image"
-import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, Film, Home as HomeIcon, Info, Calendar, ChevronDown } from "lucide-react"
+import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, Film, Home as HomeIcon, Info } from "lucide-react"
 
 type CourseGroup = { name: string; link: string }
 
@@ -309,35 +309,16 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                 </span>
                             </a>
 
-                            {/* Search bar and Year Filter */}
-                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
-                                <div className="relative flex-1 w-full">
-                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
-                                    <input
-                                        type="text"
-                                        placeholder={t.searchPlaceholder}
-                                        value={search}
-                                        onChange={(e) => setSearch(e.target.value)}
-                                        className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:ring-2 focus:ring-zinc-900/5 transition-all outline-none text-sm shadow-sm"
-                                    />
-                                </div>
-                                {availableYears.length > 0 && (
-                                    <div className="relative w-full sm:w-56 shrink-0">
-                                        <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
-                                        <select
-                                            value={selectedYear}
-                                            onChange={(e) => setSelectedYear(e.target.value)}
-                                            className="w-full pl-12 pr-10 py-3.5 bg-white border border-zinc-200 rounded-2xl outline-none focus:ring-2 focus:ring-zinc-900/5 text-sm font-semibold transition-all text-zinc-800 cursor-pointer shadow-sm appearance-none"
-                                        >
-                                            {availableYears.map(y => (
-                                                <option key={y} value={y}>{y}</option>
-                                            ))}
-                                        </select>
-                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-zinc-400">
-                                            <ChevronDown className="size-4" />
-                                        </div>
-                                    </div>
-                                )}
+                            {/* Search bar */}
+                            <div className="relative max-w-2xl mx-auto w-full">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+                                <input
+                                    type="text"
+                                    placeholder={t.searchPlaceholder}
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:ring-2 focus:ring-zinc-900/5 transition-all outline-none text-sm shadow-sm"
+                                />
                             </div>
                         </div>
 
