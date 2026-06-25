@@ -52,10 +52,12 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
 
     // Group into Sanitary vs Veterinary
     const sanitaryGeneral = generalGroups.filter(g => 
-        g.department === "Medicina, Professioni Sanitarie e Scienze Motorie" || 
+        g.department === "Medicina Clinica e Sperimentale" ||
+        g.department === "BIOMORF (Scienze Biomediche e Odontoiatriche)" ||
+        g.department === "Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"" ||
         g.subcategory === "MEDICINA" || 
         g.subcategory === "PROFESSIONI_SANITARIE" ||
-        (g.subcategory === "GENERALE" && (!g.department || g.department.toLowerCase().includes("medicina")))
+        (g.subcategory === "GENERALE" && (!g.department || g.department.toLowerCase().includes("medicina") || g.department.toLowerCase().includes("biomorf") || g.department.toLowerCase().includes("patologia")))
     ).filter(g => getGroupName(g).toLowerCase().includes(search.toLowerCase()))
 
     const veterinaryGeneral = generalGroups.filter(g => 

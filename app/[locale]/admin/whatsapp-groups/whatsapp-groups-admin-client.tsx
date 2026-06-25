@@ -33,12 +33,17 @@ const CATEGORIES = [
 ]
 
 const DEPARTMENTS = [
-    "DICAM (Civiltà Antiche e Moderne)",
+    "BIOMORF (Scienze Biomediche e Odontoiatriche)",
+    "CHIBIOFARAM (Scienze Chimiche, Biologiche, Farmaceutiche)",
+    "COSPECS (Scienze Cognitive e Pedagogiche)",
+    "Civiltà Antiche e Moderne (DICAM)",
     "Economia",
-    "Scienze Politiche e Giuridiche (SCIPOG) / Giurisprudenza",
+    "Giurisprudenza",
     "Ingegneria",
-    "Scienze, MIFT e CHIBIOFARAM",
-    "Medicina, Professioni Sanitarie e Scienze Motorie",
+    "MIFT (Scienze Matematiche, Fisiche e della Terra)",
+    "Medicina Clinica e Sperimentale",
+    "Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"",
+    "SCIPOG (Scienze Politiche e Giuridiche)",
     "Veterinaria"
 ]
 
@@ -104,7 +109,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         nameEn: "",
         link: "",
         category: "ACADEMIC",
-        department: "DICAM (Civiltà Antiche e Moderne)",
+        department: "Civiltà Antiche e Moderne (DICAM)",
         description: "",
         descriptionEn: "",
         icon: "Users",
@@ -123,7 +128,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             nameEn: "",
             link: "",
             category: cat,
-            department: selectedDept !== "all" ? selectedDept : "DICAM (Civiltà Antiche e Moderne)",
+            department: selectedDept !== "all" ? selectedDept : "Civiltà Antiche e Moderne (DICAM)",
             description: "",
             descriptionEn: "",
             icon: "Users",
@@ -143,7 +148,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             nameEn: g.nameEn || "",
             link: g.link,
             category: g.category,
-            department: g.department || "DICAM (Civiltà Antiche e Moderne)",
+            department: g.department || "Civiltà Antiche e Moderne (DICAM)",
             description: g.description || "",
             descriptionEn: g.descriptionEn || "",
             icon: g.icon || "Users",
