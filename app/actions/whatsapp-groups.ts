@@ -142,3 +142,49 @@ export async function deleteWhatsAppGroup(id: string) {
         return { success: false, error: "Errore durante l'eliminazione del gruppo WhatsApp." }
     }
 }
+
+export async function duplicateYearWhatsAppGroups(sourceYear: string, targetYear: string) {
+    if (!(await checkAdminPermission())) {
+        return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
+    try {
+        const sourceGroups = await prisma.whatsAppGroup.findMany({
+            where: {
+                category: "ACADEMIC",
+                semester: sourceYear
+            }
+        })
+
+        if (sourceGroups.length === 0) {
+            return { success: false, error: `Nessun gruppo trovato per l'anno ${sourceYear}.` }
+        }
+
+        const dataToCreate = sourceGroups.map(g => ({
+            name: g.name,
+            nameEn: g.nameEn,
+            link: g.link,
+            category: g.category,
+            department: g.department,
+            description: g.description,
+            descriptionEn: g.descriptionEn,
+            icon: g.icon,
+            theme: g.theme,
+            order: g.order,
+            semester: targetYear,
+            subcategory: g.subcategory,
+            isGeneral: g.isGeneral
+        }))
+
+        await prisma.whatsAppGroup.createMany({
+            data: dataToCreate
+        })
+
+        revalidatePath("/gruppi")
+        revalidatePath("/admin/whatsapp-groups")
+        return { success: true, count: sourceGroups.length }
+    } catch (error) {
+        console.error("Error duplicating year groups:", error)
+        return { success: false, error: "Errore durante la duplicazione dei gruppi per il nuovo anno." }
+    }
+}

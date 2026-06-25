@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import {
     Plus, Trash2, Edit3, Copy, Search, Phone, Users,
@@ -10,7 +10,8 @@ import { translateText } from "@/app/actions/translate"
 import {
     createWhatsAppGroup,
     updateWhatsAppGroup,
-    deleteWhatsAppGroup
+    deleteWhatsAppGroup,
+    duplicateYearWhatsAppGroups
 } from "@/app/actions/whatsapp-groups"
 import { WhatsAppGroupCategory } from "@prisma/client"
 import { cn } from "@/lib/utils"
@@ -71,6 +72,27 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
     const [search, setSearch] = useState("")
     const [selectedCategory, setSelectedCategory] = useState<string>("all")
     const [selectedDept, setSelectedDept] = useState<string>("all")
+    const [selectedYear, setSelectedYear] = useState<string>("all")
+    const [customYears, setCustomYears] = useState<string[]>([])
+
+    // Dialog state for adding a new year
+    const [isYearDialogOpen, setIsYearDialogOpen] = useState(false)
+    const [newYearName, setNewYearName] = useState("")
+    const [sourceYearForCloning, setSourceYearForCloning] = useState("")
+    const [cloneFromExisting, setCloneFromExisting] = useState(true)
+    const [yearDialogLoading, setYearDialogLoading] = useState(false)
+
+    // Extract unique years from initialGroups + customYears (filtering for format YYYY/YYYY)
+    const availableYears = useMemo(() => {
+        const years = new Set<string>()
+        initialGroups.forEach(g => {
+            if (g.semester && /^\d{4}\/\d{4}$/.test(g.semester)) {
+                years.add(g.semester)
+            }
+        })
+        customYears.forEach(y => years.add(y))
+        return Array.from(years).sort()
+    }, [initialGroups, customYears])
 
     // Form modal state
     const [isOpen, setIsOpen] = useState(false)
@@ -125,6 +147,8 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         setEditingId(null)
         setIsCustomSemester(false)
         const cat = selectedCategory !== "all" ? selectedCategory : "ACADEMIC"
+        const defaultSem = (cat === "ACADEMIC" && selectedYear !== "all") ? selectedYear : "2025/2026"
+        setIsCustomSemester(defaultSem ? !["2025/2026", "2026/2027", "1", "2"].includes(defaultSem) : false)
         setForm({
             name: "",
             nameEn: "",
@@ -136,11 +160,52 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             icon: "Users",
             theme: THEME_PRESETS[0].classes,
             order: initialGroups.length,
-            semester: "",
+            semester: defaultSem,
             subcategory: cat === "SANITARY_VET" ? "MEDICINA" : "",
             isGeneral: cat === "SANITARY_VET"
         })
         setIsOpen(true)
+    }
+
+    const handleAddYearSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        const trimmedYear = newYearName.trim()
+        if (!/^\d{4}\/\d{4}$/.test(trimmedYear)) {
+            alert("Per favore, inserisci un anno accademico valido nel formato YYYY/YYYY (es. 2026/2027).")
+            return
+        }
+
+        if (availableYears.includes(trimmedYear)) {
+            alert("Questo anno accademico esiste già.")
+            return
+        }
+
+        if (cloneFromExisting && sourceYearForCloning) {
+            setYearDialogLoading(true)
+            try {
+                const res = await duplicateYearWhatsAppGroups(sourceYearForCloning, trimmedYear)
+                if (res.success) {
+                    alert(`Nuovo anno ${trimmedYear} creato con successo copiando ${res.count} gruppi!`)
+                    setCustomYears(prev => [...prev, trimmedYear])
+                    setSelectedYear(trimmedYear)
+                    setIsYearDialogOpen(false)
+                    setNewYearName("")
+                    router.refresh()
+                } else {
+                    alert(res.error)
+                }
+            } catch (err) {
+                console.error(err)
+                alert("Errore durante la clonazione dei gruppi.")
+            } finally {
+                setYearDialogLoading(false)
+            }
+        } else {
+            setCustomYears(prev => [...prev, trimmedYear])
+            setSelectedYear(trimmedYear)
+            setIsYearDialogOpen(false)
+            setNewYearName("")
+        }
     }
 
     const handleEdit = (g: any) => {
@@ -266,7 +331,8 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                               (g.department && g.department.toLowerCase().includes(search.toLowerCase()))
         const matchesCategory = selectedCategory === "all" || g.category === selectedCategory
         const matchesDept = selectedDept === "all" || g.department === selectedDept
-        return matchesSearch && matchesCategory && matchesDept
+        const matchesYear = selectedCategory !== "ACADEMIC" || selectedYear === "all" || g.semester === selectedYear
+        return matchesSearch && matchesCategory && matchesDept && matchesYear
     })
 
     const academicGroups = filteredGroups.filter(g => g.category === "ACADEMIC")
@@ -360,6 +426,32 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
                 <div className="flex flex-wrap w-full md:w-auto gap-3 items-center justify-end">
                     {selectedCategory === "ACADEMIC" && (
+                        <>
+                            {/* Year filter select */}
+                            <select
+                                value={selectedYear}
+                                onChange={e => setSelectedYear(e.target.value)}
+                                className="px-4 py-2.5 bg-slate-50/50 border border-slate-200/60 rounded-xl text-sm focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 outline-none transition-all cursor-pointer font-semibold text-slate-700 min-w-[150px]"
+                            >
+                                <option value="all">Tutti gli anni</option>
+                                {availableYears.map(y => (
+                                    <option key={y} value={y}>{y}</option>
+                                ))}
+                            </select>
+
+                            <button
+                                onClick={() => {
+                                    setSourceYearForCloning(availableYears[availableYears.length - 1] || "2025/2026")
+                                    setIsYearDialogOpen(true)
+                                }}
+                                className="px-4 py-2.5 bg-slate-900 text-white hover:bg-slate-800 text-xs font-black uppercase tracking-widest transition-all rounded-xl shadow-sm"
+                            >
+                                + Anno
+                            </button>
+                        </>
+                    )}
+
+                    {selectedCategory === "ACADEMIC" && (
                         <select
                             value={selectedDept}
                             onChange={e => setSelectedDept(e.target.value)}
@@ -370,9 +462,9 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                         </select>
                     )}
 
-                    {(selectedDept !== "all" || search !== "") && (
+                    {(selectedDept !== "all" || selectedYear !== "all" || search !== "") && (
                         <button
-                            onClick={() => { setSelectedDept("all"); setSearch(""); }}
+                            onClick={() => { setSelectedDept("all"); setSelectedYear("all"); setSearch(""); }}
                             className="text-xs font-black text-red-600 hover:text-red-700 transition-colors uppercase tracking-widest"
                         >
                             Resetta
@@ -819,6 +911,78 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                     <><Loader2 className="size-4 animate-spin" /> Salvataggio...</>
                                 ) : (
                                     editingId ? "Salva Modifiche" : "Crea Gruppo"
+                                )}
+                            </button>
+                        </div>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            {/* Year dialog */}
+            <Dialog open={isYearDialogOpen} onOpenChange={setIsYearDialogOpen}>
+                <DialogContent className="sm:max-w-[425px] bg-white rounded-2xl border border-slate-200 shadow-xl">
+                    <DialogHeader>
+                        <DialogTitle className="text-xl font-black text-slate-900 font-serif">Aggiungi Nuovo Anno</DialogTitle>
+                    </DialogHeader>
+                    <form onSubmit={handleAddYearSubmit} className="space-y-4 pt-4">
+                        <div className="space-y-1.5">
+                            <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Nuovo Anno Accademico *</label>
+                            <input
+                                required
+                                type="text"
+                                value={newYearName}
+                                onChange={e => setNewYearName(e.target.value)}
+                                className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800"
+                                placeholder="Es: 2026/2027"
+                            />
+                        </div>
+
+                        <div className="flex items-center gap-2 pt-2">
+                            <input
+                                type="checkbox"
+                                id="cloneFromExisting"
+                                checked={cloneFromExisting}
+                                onChange={e => setCloneFromExisting(e.target.checked)}
+                                className="rounded border-slate-350 text-[#c9041a] focus:ring-[#c9041a]/10 cursor-pointer size-4"
+                            />
+                            <label htmlFor="cloneFromExisting" className="text-sm font-semibold text-slate-700 cursor-pointer select-none">
+                                Copia i gruppi da un anno esistente
+                            </label>
+                        </div>
+
+                        {cloneFromExisting && availableYears.length > 0 && (
+                            <div className="space-y-1.5 pt-2">
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Anno di origine *</label>
+                                <select
+                                    value={sourceYearForCloning}
+                                    onChange={e => setSourceYearForCloning(e.target.value)}
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all text-slate-800 cursor-pointer"
+                                >
+                                    {availableYears.map(y => (
+                                        <option key={y} value={y}>{y}</option>
+                                    ))}
+                                </select>
+                                <p className="text-[10px] text-zinc-400 mt-1">Crea copie di tutti i gruppi del dipartimento del suddetto anno per iniziare velocemente.</p>
+                            </div>
+                        )}
+
+                        <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
+                            <button
+                                type="button"
+                                onClick={() => setIsYearDialogOpen(false)}
+                                className="px-6 py-3 font-bold text-slate-500 hover:text-slate-900 transition-colors text-sm"
+                            >
+                                Annulla
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={yearDialogLoading}
+                                className="px-8 py-3 bg-gradient-to-br from-[#c12830] to-[#18182e] text-white font-bold rounded-xl hover:opacity-90 disabled:opacity-50 transition-all flex items-center gap-2 text-sm shadow-sm"
+                            >
+                                {yearDialogLoading ? (
+                                    <><Loader2 className="size-4 animate-spin" /> Creazione...</>
+                                ) : (
+                                    "Aggiungi Anno"
                                 )}
                             </button>
                         </div>
