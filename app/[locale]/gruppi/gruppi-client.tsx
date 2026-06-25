@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import Image from "next/image"
-import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, Film, Home as HomeIcon, Info } from "lucide-react"
+import { Phone, Users, CheckCircle2, AlertCircle, ArrowRight, Search, Film, Home as HomeIcon, Info, Calendar, ChevronDown } from "lucide-react"
 
 type CourseGroup = { name: string; link: string }
 
@@ -35,7 +35,8 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         promoGeneralTitle: "Gruppi Generali - Sanitaria & Veterinaria",
         promoGeneralSub: "Accedi alle bacheche informative, ai canali di coordinamento e alle community generali dell'area medica e veterinaria.",
         discoverBtn: "Scopri i Gruppi",
-        collabWith: "In collaborazione con"
+        collabWith: "In collaborazione con",
+        allYears: "Tutti gli anni"
     },
     en: {
         title: "WhatsApp Groups",
@@ -56,12 +57,14 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         promoGeneralTitle: "General Groups - Healthcare & Veterinary",
         promoGeneralSub: "Access the informative boards, coordination channels, and general communities for the medical and veterinary area.",
         discoverBtn: "Discover Groups",
-        collabWith: "In collaboration with"
+        collabWith: "In collaboration with",
+        allYears: "All Years"
     }
 }
 
 export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
     const [search, setSearch] = useState("")
+    const [selectedYear, setSelectedYear] = useState<string>("all")
     
     const t = TRANSLATIONS[locale] || TRANSLATIONS.it
 
@@ -73,6 +76,17 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
         g => g.category === "ACADEMIC" && 
         !g.isGeneral
     )
+
+    // Extract unique years from academicGroups (filtering for format YYYY/YYYY)
+    const availableYears = useMemo(() => {
+        const years = new Set<string>()
+        academicGroups.forEach(g => {
+            if (g.semester && /^\d{4}\/\d{4}$/.test(g.semester)) {
+                years.add(g.semester)
+            }
+        })
+        return Array.from(years).sort()
+    }, [academicGroups])
     
     // Group academic groups by department
     const groupedDepts = academicGroups.reduce((acc, g) => {
@@ -82,11 +96,13 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
         return acc
     }, {} as Record<string, any[]>)
 
-    // Apply search filter on grouped departments
+    // Apply search filter and selected year filter on grouped departments
     const filteredDepartments = Object.entries(groupedDepts).reduce((acc, [dept, groups]) => {
-        const matchingGroups = (groups as any[]).filter(g => 
-            getGroupName(g).toLowerCase().includes(search.toLowerCase())
-        )
+        const matchingGroups = (groups as any[]).filter(g => {
+            const matchesSearch = getGroupName(g).toLowerCase().includes(search.toLowerCase())
+            const matchesYear = selectedYear === "all" || g.semester === selectedYear
+            return matchesSearch && matchesYear
+        })
         if (matchingGroups.length > 0) {
             acc[dept] = matchingGroups
         }
@@ -285,16 +301,36 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                 </span>
                             </a>
 
-                            {/* Search bar */}
-                            <div className="relative max-w-xl mx-auto">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
-                                <input
-                                    type="text"
-                                    placeholder={t.searchPlaceholder}
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:ring-2 focus:ring-zinc-900/5 transition-all outline-none text-sm shadow-sm"
-                                />
+                            {/* Search bar and Year Filter */}
+                            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
+                                <div className="relative flex-1 w-full">
+                                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+                                    <input
+                                        type="text"
+                                        placeholder={t.searchPlaceholder}
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        className="w-full pl-12 pr-4 py-3.5 rounded-2xl border border-zinc-200 bg-white focus:ring-2 focus:ring-zinc-900/5 transition-all outline-none text-sm shadow-sm"
+                                    />
+                                </div>
+                                {availableYears.length > 0 && (
+                                    <div className="relative w-full sm:w-56 shrink-0">
+                                        <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+                                        <select
+                                            value={selectedYear}
+                                            onChange={(e) => setSelectedYear(e.target.value)}
+                                            className="w-full pl-12 pr-10 py-3.5 bg-white border border-zinc-200 rounded-2xl outline-none focus:ring-2 focus:ring-zinc-900/5 text-sm font-semibold transition-all text-zinc-800 cursor-pointer shadow-sm appearance-none"
+                                        >
+                                            <option value="all">{t.allYears}</option>
+                                            {availableYears.map(y => (
+                                                <option key={y} value={y}>{y}</option>
+                                            ))}
+                                        </select>
+                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-zinc-400">
+                                            <ChevronDown className="size-4" />
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -326,7 +362,7 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                                                 <h4 className="font-bold text-zinc-900 group-hover:text-[#25D366] transition-colors leading-tight">
                                                                     {groupName}
                                                                 </h4>
-                                                                {group.semester && (
+                                                                {group.semester && !/\d{4}/.test(group.semester) && (
                                                                     <div className="pt-1">
                                                                         <span className="inline-flex items-center text-[10px] font-bold px-2 py-0.5 bg-amber-50 text-amber-700 rounded-full border border-amber-200/50">
                                                                             {/^\d+$/.test(group.semester) ? `${group.semester}° Sem.` : group.semester}

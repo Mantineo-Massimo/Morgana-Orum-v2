@@ -869,6 +869,7 @@ async function main() {
                     link: group.link,
                     category: "ACADEMIC" as WhatsAppGroupCategory,
                     department: dept,
+                    semester: "2025/2026",
                     order: orderCounter++
                 }
             })
