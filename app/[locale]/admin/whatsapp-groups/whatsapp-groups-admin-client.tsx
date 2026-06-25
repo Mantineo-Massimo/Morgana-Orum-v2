@@ -34,16 +34,16 @@ const CATEGORIES = [
 ]
 
 const DEPARTMENTS = [
-    "Dipartimento di Scienze Biomediche, Odontoiatriche e delle Immagini Morfologiche e Funzionali (BIOMORF)",
-    "Dipartimento di Scienze Chimiche, Biologiche, Farmaceutiche e Ambientali (CHIBIOFARAM)",
-    "Dipartimento di Scienze Cognitive, Psicologiche, Pedagogiche e degli Studi Culturali (COSPECS)",
     "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
     "Dipartimento di Economia",
     "Dipartimento di Giurisprudenza",
     "Dipartimento di Ingegneria",
-    "Dipartimento di Scienze Matematiche e Informatiche, Scienze Fisiche e Scienze della Terra (MIFT)",
     "Dipartimento di Medicina Clinica e Sperimentale (DIMED)",
     "Dipartimento di Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"",
+    "Dipartimento di Scienze Biomediche, Odontoiatriche e delle Immagini Morfologiche e Funzionali (BIOMORF)",
+    "Dipartimento di Scienze Chimiche, Biologiche, Farmaceutiche e Ambientali (CHIBIOFARAM)",
+    "Dipartimento di Scienze Cognitive, Psicologiche, Pedagogiche e degli Studi Culturali (COSPECS)",
+    "Dipartimento di Scienze Matematiche e Informatiche, Scienze Fisiche e Scienze della Terra (MIFT)",
     "Dipartimento di Scienze Politiche e Giuridiche (SCIPOG)",
     "Dipartimento di Scienze Veterinarie"
 ]
