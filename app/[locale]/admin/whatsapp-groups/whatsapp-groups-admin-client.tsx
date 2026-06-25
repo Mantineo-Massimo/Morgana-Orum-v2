@@ -11,7 +11,8 @@ import {
     createWhatsAppGroup,
     updateWhatsAppGroup,
     deleteWhatsAppGroup,
-    duplicateYearWhatsAppGroups
+    duplicateYearWhatsAppGroups,
+    deleteYearWhatsAppGroups
 } from "@/app/actions/whatsapp-groups"
 import { WhatsAppGroupCategory } from "@prisma/client"
 import { cn } from "@/lib/utils"
@@ -389,6 +390,34 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                                 className="flex items-center justify-center px-4 py-3 border border-slate-200 hover:bg-slate-50 text-slate-700 text-sm font-bold transition-all rounded-xl shadow-sm whitespace-nowrap bg-white"
                             >
                                 + Anno
+                            </button>
+
+                            <button
+                                onClick={async () => {
+                                    if (!confirm(`Sei sicuro di voler eliminare interamente l'anno ${selectedYear} e TUTTI i gruppi ad esso associati? Questa operazione non può essere annullata.`)) return;
+                                    setLoading(true);
+                                    try {
+                                        const res = await deleteYearWhatsAppGroups(selectedYear);
+                                        if (res.success) {
+                                            alert(`Anno ${selectedYear} eliminato con successo. Rimossi ${res.count} gruppi.`);
+                                            // Fallback year logic
+                                            const remaining = availableYears.filter(y => y !== selectedYear);
+                                            setSelectedYear(remaining[remaining.length - 1] || "2025/2026");
+                                            router.refresh();
+                                        } else {
+                                            alert(res.error);
+                                        }
+                                    } catch (err) {
+                                        console.error(err);
+                                        alert("Errore durante l'eliminazione dell'anno.");
+                                    } finally {
+                                        setLoading(false);
+                                    }
+                                }}
+                                disabled={loading}
+                                className="flex items-center justify-center px-4 py-3 border border-red-200 hover:bg-red-50 text-red-600 hover:text-red-700 text-sm font-bold transition-all rounded-xl shadow-sm whitespace-nowrap bg-white disabled:opacity-50"
+                            >
+                                Elimina Anno
                             </button>
                         </>
                     )}
