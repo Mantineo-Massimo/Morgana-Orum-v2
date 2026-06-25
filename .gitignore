@@ -36,3 +36,21 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .env*
+
+# prisma / database
+prisma/*.db
+prisma/*.db-journal
+prisma/*.db-wal
+prisma/*.db-shm
+
+# scratch / temp files
+/scratch
+
+# editor settings
+.vscode/
+
+# load / stress test scripts
+load-test.js
+
+# data import files
+*.csv
