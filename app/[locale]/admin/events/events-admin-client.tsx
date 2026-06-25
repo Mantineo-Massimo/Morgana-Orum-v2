@@ -159,7 +159,7 @@ export default function EventsAdminClient({
                 docInstance.setFont("helvetica", "normal")
                 docInstance.setTextColor(120)
                 docInstance.text("Via Sant'Elia, 11 - 98122 Messina (ME)", pageWidth / 2, 32, { align: "center" })
-                docInstance.text("associazionemorgana@gmail.com  -  orum_unime@gmail.com", pageWidth / 2, 36, { align: "center" })
+                docInstance.text("segreteria@morganaorum.it", pageWidth / 2, 36, { align: "center" })
 
                 docInstance.setFontSize(10)
                 docInstance.setTextColor(100)
@@ -350,19 +350,19 @@ export default function EventsAdminClient({
 
                 // Signatures
                 const sigY = 168
-                
+
                 // Left Signature (Associazione Morgana)
                 // Cursive signature representing the association
                 docInstance.setFont("times", "italic")
                 docInstance.setFontSize(15)
                 docInstance.setTextColor(24, 24, 46)
                 docInstance.text("Associazione Morgana", 50, sigY + 6, { align: "center" })
-                
+
                 // Underline/Line
                 docInstance.setDrawColor(200)
                 docInstance.setLineWidth(0.5)
                 docInstance.line(25, sigY + 10, 75, sigY + 10)
-                
+
                 // Printed label below the line
                 docInstance.setFont("helvetica", "normal")
                 docInstance.setFontSize(9)
@@ -375,12 +375,12 @@ export default function EventsAdminClient({
                 docInstance.setFontSize(15)
                 docInstance.setTextColor(24, 24, 46)
                 docInstance.text("Associazione O.R.U.M.", certWidth - 50, sigY + 6, { align: "center" })
-                
+
                 // Underline/Line
                 docInstance.setDrawColor(200)
                 docInstance.setLineWidth(0.5)
                 docInstance.line(certWidth - 75, sigY + 10, certWidth - 25, sigY + 10)
-                
+
                 // Printed label below the line
                 docInstance.setFont("helvetica", "normal")
                 docInstance.setFontSize(9)

@@ -39,17 +39,11 @@ export async function submitContactForm(formData: {
         // Send to Associations (both emails)
         await Promise.all([
             sendEmail({
-                to: "associazionemorgana@gmail.com",
+                to: "segreteria@morganaorum.it",
                 subject: `[Contatto Sito] ${subject}`,
                 html: getContactEmailTemplate(name, email, subject, message),
                 brand: "morgana"
             }),
-            sendEmail({
-                to: "orum_unime@gmail.com",
-                subject: `[Contatto Sito] ${subject}`,
-                html: getContactEmailTemplate(name, email, subject, message),
-                brand: "orum"
-            })
         ])
 
         return { success: true }

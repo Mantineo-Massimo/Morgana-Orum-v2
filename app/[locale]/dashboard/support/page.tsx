@@ -74,7 +74,6 @@ export default function SupportPage() {
                             </div>
                             <div>
                                 <h3 className="font-bold text-foreground">{t("office_title")}</h3>
-                                <p className="text-sm text-zinc-500">{t("orum_address")}</p>
                                 <p className="text-sm text-zinc-500 mt-1">{t("morgana_address")}</p>
                             </div>
                         </div>
@@ -94,7 +93,7 @@ export default function SupportPage() {
                     <div className="p-8 bg-zinc-900 rounded-[2rem] text-white shadow-xl">
                         <h3 className="font-serif font-bold text-xl mb-4">{t("social_title")}</h3>
                         <p className="text-white/60 text-sm mb-6">{t("social_desc")}</p>
-                        
+
                         <div className="space-y-4">
                             <div className="flex flex-col gap-2">
                                 <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400">Associazione Morgana</span>
@@ -113,7 +112,7 @@ export default function SupportPage() {
                                     </a>
                                 </div>
                             </div>
-                            
+
                             <div className="flex flex-col gap-2">
                                 <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-400">Associazione O.R.U.M.</span>
                                 <div className="flex gap-3">

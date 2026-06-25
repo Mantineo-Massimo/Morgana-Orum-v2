@@ -10,7 +10,7 @@ export async function sendSupportMessage(formData: {
 }) {
     try {
         const result = await sendEmail({
-            to: "associazionemorgana@gmail.com",
+            to: "segreteria@morganaorum.it",
             subject: `[SUPPORTO] ${formData.subject} - da ${formData.name}`,
             html: `
                 <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; rounded: 10px;">
