@@ -7,6 +7,7 @@ import { StickyHeader } from "@/components/sticky-header"
 import { Footer } from "@/components/footer"
 import { ClientLogger } from "@/components/analytics/client-logger"
 import { CookieConsent } from "@/components/cookie-consent"
+import { InactivityGuard } from "@/components/inactivity-guard"
 import Script from "next/script"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
@@ -129,6 +130,8 @@ export default async function RootLayout({
                             <StickyHeader isLoggedIn={isLoggedIn} showOrganigramma={organigrammaConfig.visible} />
                             <ClientLogger />
                             <CookieConsent />
+                            {/* Disconnette l'utente dopo 30 min di inattività */}
+                            <InactivityGuard isLoggedIn={isLoggedIn} />
 
                             <main className="flex-1">
                                 {children}

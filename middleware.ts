@@ -20,6 +20,24 @@ export default function middleware(request: NextRequest) {
 
     const response = intlMiddleware(modifiedRequest);
 
+    // ── Rolling session: refresh the session cookie on every request ─────────
+    // If the user is authenticated, reset the 30-minute inactivity timer
+    // so the session only expires after 30 min of COMPLETE inactivity
+    // (no page navigation, API call, or server action).
+    const SESSION_TIMEOUT = 30 * 60 // 30 minutes in seconds
+    const sessionCookie = request.cookies.get("session_email")
+    if (sessionCookie?.value) {
+        response.cookies.set({
+            name: "session_email",
+            value: sessionCookie.value,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "strict",
+            maxAge: SESSION_TIMEOUT,
+            path: "/",
+        })
+    }
+
     // Intercept and secure the NEXT_LOCALE cookie set by next-intl
     const localeCookie = response.cookies.get('NEXT_LOCALE');
     if (localeCookie) {
