@@ -33,18 +33,18 @@ const CATEGORIES = [
 ]
 
 const DEPARTMENTS = [
-    "BIOMORF (Scienze Biomediche e Odontoiatriche)",
-    "CHIBIOFARAM (Scienze Chimiche, Biologiche, Farmaceutiche)",
-    "COSPECS (Scienze Cognitive e Pedagogiche)",
-    "Civiltà Antiche e Moderne (DICAM)",
-    "Economia",
-    "Giurisprudenza",
-    "Ingegneria",
-    "MIFT (Scienze Matematiche, Fisiche e della Terra)",
-    "Medicina Clinica e Sperimentale",
-    "Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"",
-    "SCIPOG (Scienze Politiche e Giuridiche)",
-    "Veterinaria"
+    "Dipartimento di Scienze Biomediche, Odontoiatriche e delle Immagini Morfologiche e Funzionali (BIOMORF)",
+    "Dipartimento di Scienze Chimiche, Biologiche, Farmaceutiche e Ambientali (CHIBIOFARAM)",
+    "Dipartimento di Scienze Cognitive, Psicologiche, Pedagogiche e degli Studi Culturali (COSPECS)",
+    "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
+    "Dipartimento di Economia",
+    "Dipartimento di Giurisprudenza",
+    "Dipartimento di Ingegneria",
+    "Dipartimento di Scienze Matematiche e Informatiche, Scienze Fisiche e Scienze della Terra (MIFT)",
+    "Dipartimento di Medicina Clinica e Sperimentale (DIMED)",
+    "Dipartimento di Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"",
+    "Dipartimento di Scienze Politiche e Giuridiche (SCIPOG)",
+    "Dipartimento di Scienze Veterinarie"
 ]
 
 const AVAILABLE_ICONS = [
@@ -110,7 +110,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         nameEn: "",
         link: "",
         category: "ACADEMIC",
-        department: "Civiltà Antiche e Moderne (DICAM)",
+        department: "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
         description: "",
         descriptionEn: "",
         icon: "Users",
@@ -130,7 +130,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             nameEn: "",
             link: "",
             category: cat,
-            department: selectedDept !== "all" ? selectedDept : "Civiltà Antiche e Moderne (DICAM)",
+            department: selectedDept !== "all" ? selectedDept : "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
             description: "",
             descriptionEn: "",
             icon: "Users",
@@ -151,7 +151,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             nameEn: g.nameEn || "",
             link: g.link,
             category: g.category,
-            department: g.department || "Civiltà Antiche e Moderne (DICAM)",
+            department: g.department || "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
             description: g.description || "",
             descriptionEn: g.descriptionEn || "",
             icon: g.icon || "Users",

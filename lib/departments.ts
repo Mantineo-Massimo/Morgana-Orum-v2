@@ -1,5 +1,5 @@
 export const departmentsData: Record<string, string[]> = {
-    "BIOMORF (Scienze Biomediche e Odontoiatriche)": [
+    "Dipartimento di Scienze Biomediche, Odontoiatriche e delle Immagini Morfologiche e Funzionali (BIOMORF)": [
         "Biotecnologie (L-2 R)",
         "Biotecnologie Mediche (LM-9 R)",
         "Medicine and Surgery (LM-41 R)",
@@ -15,7 +15,7 @@ export const departmentsData: Record<string, string[]> = {
         "Tecniche di Laboratorio Biomedico (L/SNT3)",
         "Tecniche di Radiologia Medica, per Immagini e Radioterapia (L/SNT3)"
     ],
-    "CHIBIOFARAM (Scienze Chimiche, Biologiche, Farmaceutiche)": [
+    "Dipartimento di Scienze Chimiche, Biologiche, Farmaceutiche e Ambientali (CHIBIOFARAM)": [
         "Biologia della Salute delle Tecnologie Applicate e della Nutrizione (LM-6 R)",
         "Biologia ed Ecologia dell'Ambiente Marino Costiero (LM-6 R)",
         "Chimica (L-27 R)",
@@ -28,7 +28,7 @@ export const departmentsData: Record<string, string[]> = {
         "Scienze Nutraceutiche e Alimenti Funzionali (L-29 R)",
         "Scienze dell'Alimentazione e Nutrizione Umana (LM-61 R)"
     ],
-    "COSPECS (Scienze Cognitive e Pedagogiche)": [
+    "Dipartimento di Scienze Cognitive, Psicologiche, Pedagogiche e degli Studi Culturali (COSPECS)": [
         "Cognitive Science and Theory of Communication (LM-55 R)",
         "Discipline delle Arti, della Musica e dello Spettacolo (L-3 R)",
         "Psicologia e Neuroscienze Cognitive (LM-51 R) - Noto",
@@ -41,7 +41,7 @@ export const departmentsData: Record<string, string[]> = {
         "Servizio Sociale, Politiche Sociali e Studi Sociologici e Ricerca Sociale (LM-87 R)",
         "Turismo e Spettacolo (LM-49 R)"
     ],
-    "Civiltà Antiche e Moderne (DICAM)": [
+    "Dipartimento di Civiltà Antiche e Moderne (DICAM)": [
         "Archeologia e Storia dell'Arte (L-1)",
         "Beni Archeologici: Territorio, Insediamenti, Cultura Materiale (L-1) - Noto",
         "Civiltà Letteraria dell'Italia Medievale e Moderna (LM-14)",
@@ -55,7 +55,7 @@ export const departmentsData: Record<string, string[]> = {
         "Tradizione Classica e Archeologia del Mediterraneo (LM-2 R)",
         "Traduzione, Didattica e Relazioni Culturali per le Lingue e le Letterature Moderne (LM-37 R)"
     ],
-    "Economia": [
+    "Dipartimento di Economia": [
         "Big Data per le Scienze Economice (L-33)",
         "Consulenza e Gestione di Impresa (LM-77 R)",
         "Digital Transformation e Innovation Management (LM-77 R)",
@@ -64,7 +64,7 @@ export const departmentsData: Record<string, string[]> = {
         "Management d'Impresa (L-18 R)",
         "Metodi Quantitativi per l'Economia e la Finanza (LM-56 R)"
     ],
-    "Giurisprudenza": [
+    "Dipartimento di Giurisprudenza": [
         "Consulente del Lavoro e Scienze dei Servizi Giuridici (L-14 R) - Messina",
         "Consulente del Lavoro e Scienze dei Servizi Giuridici (L-14 R) - Siracusa",
         "Diritto dell'Innovazione e della Sostenibilità (LM/SC-GI R)",
@@ -72,7 +72,7 @@ export const departmentsData: Record<string, string[]> = {
         "Giurisprudenza (LMG/01 R) - Siracusa",
         "Transnational and European Legal Studies (L-14 R)"
     ],
-    "Ingegneria": [
+    "Dipartimento di Ingegneria": [
         "Bioingegneria (LM-21 R)",
         "Engineering in Computer Science (LM-32)",
         "Ingegneria Biomedica (L-8 R)",
@@ -87,7 +87,7 @@ export const departmentsData: Record<string, string[]> = {
         "Scienze e Logistica del Trasporto Marittimo ed Aereo (LM-72 R)",
         "Scienze e Tecnologie della Navigazione (L-28 R)"
     ],
-    "MIFT (Scienze Matematiche, Fisiche e della Terra)": [
+    "Dipartimento di Scienze Matematiche e Informatiche, Scienze Fisiche e Scienze della Terra (MIFT)": [
         "Data Science (LM Data)",
         "Fisica (L-30 R)",
         "Geophysical Sciences for Seismic Risk (LM-79 R)",
@@ -96,7 +96,7 @@ export const departmentsData: Record<string, string[]> = {
         "Matematica (LM-40 R)",
         "Physics (LM-17 R)"
     ],
-    "Medicina Clinica e Sperimentale": [
+    "Dipartimento di Medicina Clinica e Sperimentale (DIMED)": [
         "Fisioterapia (L/SNT2)",
         "Infermieristica (Abilitante alla Professione Sanitaria di Infermiere) (L/SNT1) - Siracusa",
         "Infermieristica (L/SNT1) - Messina, Siracusa",
@@ -105,7 +105,7 @@ export const departmentsData: Record<string, string[]> = {
         "Scienze e Tecniche Psicologiche Cliniche e Preventive (L-24 R)",
         "Tecniche di Neurofisiopatologia (L/SNT3)"
     ],
-    "Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"": [
+    "Dipartimento di Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"": [
         "Infermieristica Pediatrica (L/SNT1)",
         "Logopedia (L/SNT2)",
         "Medicina e Chirurgia (LM-41 R)",
@@ -115,7 +115,7 @@ export const departmentsData: Record<string, string[]> = {
         "Tecniche Audioprotesiche (L/SNT3)",
         "Terapia della Neuro e Psicomotricità dell'Età Evolutiva (L/SNT2)"
     ],
-    "SCIPOG (Scienze Politiche e Giuridiche)": [
+    "Dipartimento di Scienze Politiche e Giuridiche (SCIPOG)": [
         "Diritto delle Nuove Tecnologie (L-14 R)",
         "Relazioni Internazionali (LM-52 R)",
         "Scienze Politiche e delle Relazioni Internazionali (L-36 R)",
@@ -124,7 +124,7 @@ export const departmentsData: Record<string, string[]> = {
         "Scienze del Servizio Sociale (L-39 R)",
         "Scienze delle Pubbliche Amministrazioni (LM-63 R)"
     ],
-    "Veterinaria": [
+    "Dipartimento di Scienze Veterinarie": [
         "Biotecnologie Veterinarie (LM-9 R)",
         "Medicina Veterinaria (LM-42 R)",
         "Scienze e Tecnologie Agrarie per la Transizione Ecologica (L-25 R)",

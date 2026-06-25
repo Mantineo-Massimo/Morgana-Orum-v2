@@ -52,16 +52,16 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
 
     // Group into Sanitary vs Veterinary
     const sanitaryGeneral = generalGroups.filter(g => 
-        g.department === "Medicina Clinica e Sperimentale" ||
-        g.department === "BIOMORF (Scienze Biomediche e Odontoiatriche)" ||
-        g.department === "Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"" ||
+        g.department === "Dipartimento di Medicina Clinica e Sperimentale (DIMED)" ||
+        g.department === "Dipartimento di Scienze Biomediche, Odontoiatriche e delle Immagini Morfologiche e Funzionali (BIOMORF)" ||
+        g.department === "Dipartimento di Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"" ||
         g.subcategory === "MEDICINA" || 
         g.subcategory === "PROFESSIONI_SANITARIE" ||
         (g.subcategory === "GENERALE" && (!g.department || g.department.toLowerCase().includes("medicina") || g.department.toLowerCase().includes("biomorf") || g.department.toLowerCase().includes("patologia")))
     ).filter(g => getGroupName(g).toLowerCase().includes(search.toLowerCase()))
 
     const veterinaryGeneral = generalGroups.filter(g => 
-        g.department === "Veterinaria" || 
+        g.department === "Dipartimento di Scienze Veterinarie" || 
         g.subcategory === "VETERINARIA" ||
         (g.subcategory === "GENERALE" && g.department?.toLowerCase().includes("veterinaria"))
     ).filter(g => getGroupName(g).toLowerCase().includes(search.toLowerCase()))

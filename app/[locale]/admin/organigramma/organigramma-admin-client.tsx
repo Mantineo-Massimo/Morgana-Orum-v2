@@ -43,18 +43,18 @@ const ASSOCIATIONS = [
 ]
 
 const DEPARTMENTS = [
-    "Dipartimento Civiltà Antiche e Moderne (DICAM)",
+    "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
     "Dipartimento di Economia",
     "Dipartimento di Giurisprudenza",
     "Dipartimento di Ingegneria",
-    "Dipartimento Medicina Clinica e Sperimentale (DIMED)",
-    "Dipartimento Patologia Umana dell'Adulto e dell'Età Evolutiva",
-    "Dipartimento Scienze Biomediche, Odontoiatriche e delle Immagini (BIOMORF)",
-    "Dipartimento Scienze Chimiche, Biologiche, Farmaceutiche e Ambientali (CHIBIOFARAM)",
-    "Dipartimento Scienze Cognitive, Psicologiche, Pedagogiche e Studi Culturali (COSPECS)",
-    "Dipartimento Scienze Matematiche e Informatiche, Scienze Fisiche e Scienze della Terra (MIFT)",
-    "Dipartimento Scienze Politiche e Giuridiche (SCIPOG)",
-    "Dipartimento Scienze Veterinarie (VET)"
+    "Dipartimento di Medicina Clinica e Sperimentale (DIMED)",
+    "Dipartimento di Patologia Umana dell'Adulto e dell'Età Evolutiva \"Gaetano Barresi\"",
+    "Dipartimento di Scienze Biomediche, Odontoiatriche e delle Immagini Morfologiche e Funzionali (BIOMORF)",
+    "Dipartimento di Scienze Chimiche, Biologiche, Farmaceutiche e Ambientali (CHIBIOFARAM)",
+    "Dipartimento di Scienze Cognitive, Psicologiche, Pedagogiche e degli Studi Culturali (COSPECS)",
+    "Dipartimento di Scienze Matematiche e Informatiche, Scienze Fisiche e Scienze della Terra (MIFT)",
+    "Dipartimento di Scienze Politiche e Giuridiche (SCIPOG)",
+    "Dipartimento di Scienze Veterinarie"
 ]
 
 export function OrganigrammaAdminClient({ initialMembers, userRole, initialVisible = true }: OrganigrammaAdminClientProps) {
