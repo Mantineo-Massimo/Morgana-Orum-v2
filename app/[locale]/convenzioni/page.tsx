@@ -1,8 +1,19 @@
 import { getConventions } from "@/app/actions/conventions"
 import OffersClient from "@/app/[locale]/dashboard/offers/offers-client"
 import { Ticket } from "lucide-react"
+import { Metadata } from "next"
 
 export const dynamic = "force-dynamic"
+
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+    const isEn = locale === "en"
+    return {
+        title: isEn ? "Student Benefits & Discounts" : "Convenzioni Studentesche",
+        description: isEn
+            ? "Exclusive discounts and benefits for students enrolled in Morgana and O.R.U.M. associations in Messina and Melilli."
+            : "Sconti esclusivi e vantaggi commerciali dedicati agli studenti universitari iscritti alle associazioni Morgana e O.R.U.M. a Messina e Melilli."
+    }
+}
 
 export default async function ConvenzioniPage() {
     const conventions = await getConventions()

@@ -37,7 +37,8 @@ export async function generateMetadata({
 }: {
     params: { locale: string }
 }): Promise<Metadata> {
-    const canonicalUrl = `${BASE_URL}/${locale}`
+    const pathname = headers().get("x-pathname") || `/${locale}`
+    const canonicalUrl = `${BASE_URL}${pathname}`
 
     return {
         metadataBase: new URL(BASE_URL),
@@ -72,7 +73,7 @@ export async function generateMetadata({
             description: "Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
             images: [
                 {
-                    url: "/assets/morganaorum/og-image.webp",
+                    url: "/assets/WHAZAP.png",
                     width: 1200,
                     height: 630,
                     alt: "Morgana & O.R.U.M. Associazioni Universitarie",
@@ -83,7 +84,7 @@ export async function generateMetadata({
             card: "summary_large_image",
             title: "Morgana & O.R.U.M. - Associazioni Universitarie",
             description: "Impegno, passione e competenza al servizio della comunità accademica dell'Università di Messina.",
-            images: ["/assets/morganaorum/og-image.webp"],
+            images: ["/assets/WHAZAP.png"],
         },
         icons: {
             icon: [
@@ -122,6 +123,18 @@ export default async function RootLayout({
     return (
         <html lang={locale} suppressHydrationWarning data-brand={brand || undefined}>
             <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            "@context": "https://schema.org",
+                            "@type": "WebSite",
+                            "name": "Morgana & O.R.U.M.",
+                            "alternateName": ["Morgana & Orum", "Associazioni Universitarie Morgana & O.R.U.M."],
+                            "url": "https://www.morganaorum.it/"
+                        })
+                    }}
+                />
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <BrandProvider defaultBrand={brand}>
                         <SpeedInsights />

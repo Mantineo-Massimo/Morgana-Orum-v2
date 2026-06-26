@@ -10,15 +10,17 @@ export default function middleware(request: NextRequest) {
         ? btoa(crypto.randomUUID()) 
         : btoa(Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2));
 
-    // Inject x-nonce into request headers so server components (layouts) can read it
+    // Inject x-nonce and x-pathname into request headers so server components (layouts/pages) can read it
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-nonce', nonce);
+    requestHeaders.set('x-pathname', request.nextUrl.pathname);
 
     const modifiedRequest = new NextRequest(request, {
         headers: requestHeaders,
     });
 
     const response = intlMiddleware(modifiedRequest);
+    response.headers.set('x-pathname', request.nextUrl.pathname);
 
     // ── Rolling session: refresh the session cookie on every request ─────────
     // If the user is authenticated, reset the 30-minute inactivity timer
