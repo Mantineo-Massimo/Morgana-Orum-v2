@@ -221,44 +221,56 @@ export async function verifyEmailAction(token: string, locale: string = "it") {
     }
 
     try {
-        const user = await prisma.user.findUnique({
+        let user = await prisma.user.findUnique({
             where: { verificationToken: token }
         })
 
+        let alreadyVerified = false
+
         if (!user) {
-            return { success: false, error: "Token non valido o scaduto." }
+            // Check if the token was already verified (prefixed with verified_)
+            user = await prisma.user.findUnique({
+                where: { verificationToken: `verified_${token}` }
+            })
+            if (user) {
+                alreadyVerified = true
+            } else {
+                return { success: false, error: "Token non valido o scaduto." }
+            }
         }
 
-        // Aggiorna l'utente
-        await prisma.user.update({
-            where: { id: user.id },
-            data: {
-                emailVerified: true,
-                verificationToken: null
-            }
-        })
+        if (!alreadyVerified) {
+            // Aggiorna l'utente
+            await prisma.user.update({
+                where: { id: user.id },
+                data: {
+                    emailVerified: true,
+                    verificationToken: `verified_${token}`
+                }
+            })
 
-        // Logga l'utente impostando il cookie di sessione
-        cookies().set("session_email", user.email, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-            maxAge: 60 * 60 * 24 * 7, // 1 week
-            path: "/",
-        })
+            // Logga l'utente impostando il cookie di sessione
+            cookies().set("session_email", user.email, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "strict",
+                maxAge: 60 * 60 * 24 * 7, // 1 week
+                path: "/",
+            })
 
-        // Invia l'email di benvenuto (Non-blocking)
-        const brand = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
-        const isEn = locale === "en"
-        
-        sendEmail({
-            to: user.email,
-            subject: isEn ? `Welcome to ${brand === "orum" ? "O.R.U.M." : "Morgana"}!` : `Benvenuto in ${brand === "orum" ? "O.R.U.M." : "Morgana"}!`,
-            html: getWelcomeEmailTemplate(user.name, brand as "morgana" | "orum", locale),
-            brand: brand as "morgana" | "orum"
-        }).catch(err => console.error("Async welcome email error:", err))
+            // Invia l'email di benvenuto (Non-blocking)
+            const brand = (user.association === Association.MORGANA_ORUM) ? "morgana" : "orum"
+            const isEn = locale === "en"
+            
+            sendEmail({
+                to: user.email,
+                subject: isEn ? `Welcome to ${brand === "orum" ? "O.R.U.M." : "Morgana"}!` : `Benvenuto in ${brand === "orum" ? "O.R.U.M." : "Morgana"}!`,
+                html: getWelcomeEmailTemplate(user.name, brand as "morgana" | "orum", locale),
+                brand: brand as "morgana" | "orum"
+            }).catch(err => console.error("Async welcome email error:", err))
+        }
 
-        return { success: true }
+        return { success: true, alreadyVerified }
     } catch (error) {
         console.error("verifyEmailAction error:", error)
         return { success: false, error: "Errore durante la verifica dell'email." }

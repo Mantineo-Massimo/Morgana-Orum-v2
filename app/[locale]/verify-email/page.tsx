@@ -18,6 +18,7 @@ export default function VerifyEmailPage() {
 
     const [status, setStatus] = useState<"verifying" | "success" | "error">("verifying")
     const [errorMsg, setErrorMsg] = useState("")
+    const [isAlreadyVerified, setIsAlreadyVerified] = useState(false)
 
     useEffect(() => {
         if (!token) {
@@ -30,6 +31,9 @@ export default function VerifyEmailPage() {
             try {
                 const result = await verifyEmailAction(token!, locale)
                 if (result.success) {
+                    if (result.alreadyVerified) {
+                        setIsAlreadyVerified(true)
+                    }
                     setStatus("success")
                 } else {
                     setStatus("error")
@@ -65,14 +69,18 @@ export default function VerifyEmailPage() {
                             <CheckCircle className="size-8" />
                         </div>
                         <div className="space-y-2">
-                            <h1 className="text-2xl font-bold text-foreground">{t("email_verified_success")}</h1>
-                            <p className="text-sm text-zinc-500">Il tuo account è ora attivo ed è associato al tuo indirizzo email.</p>
+                            <h1 className="text-2xl font-bold text-foreground">
+                                {isAlreadyVerified ? t("email_already_verified") : t("email_verified_success")}
+                            </h1>
+                            <p className="text-sm text-zinc-500">
+                                {isAlreadyVerified ? t("email_already_verified_desc") : t("email_verified_success_desc")}
+                            </p>
                         </div>
                         <Link
-                            href="/dashboard"
+                            href={isAlreadyVerified ? "/login" : "/dashboard"}
                             className="w-full py-4 bg-[#18182e] text-white font-bold rounded-xl shadow-lg hover:bg-black transition-transform active:scale-95 flex items-center justify-center gap-2 mt-4"
                         >
-                            {t("go_to_dashboard")} <ArrowRight className="size-5" />
+                            {isAlreadyVerified ? t("go_to_login") : t("go_to_dashboard")} <ArrowRight className="size-5" />
                         </Link>
                     </div>
                 )}

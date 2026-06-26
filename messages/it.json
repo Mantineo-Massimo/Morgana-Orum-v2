@@ -625,9 +625,13 @@
         "register_success_title": "Registrazione Inviata",
         "register_success_verify": "Registrazione avvenuta con successo! Ti abbiamo inviato un'email di verifica. Controlla la tua casella di posta per attivare l'account prima di accedere.",
         "email_verified_success": "Email verificata con successo! Benvenuto a bordo.",
+        "email_verified_success_desc": "Il tuo account è ora attivo ed è associato al tuo indirizzo email.",
+        "email_already_verified": "Email già verificata!",
+        "email_already_verified_desc": "Il tuo account è attivo. Puoi effettuare l'accesso usando le tue credenziali.",
         "email_verification_failed": "Il link di verifica non è valido o è scaduto.",
         "verifying_email": "Verifica dell'email in corso...",
         "go_to_dashboard": "Entra nella Dashboard",
+        "go_to_login": "Vai al Login",
         "resend_verification_btn": "Reinvia email di verifica",
         "resend_verification_success": "Email di verifica reinviata con successo! Controlla la posta.",
         "resending_verification": "Invio in corso..."

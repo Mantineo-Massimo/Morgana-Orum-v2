@@ -627,9 +627,13 @@
         "register_success_title": "Registration Submitted",
         "register_success_verify": "Registration successful! We have sent you a verification email. Please check your inbox to activate your account before logging in.",
         "email_verified_success": "Email verified successfully! Welcome aboard.",
+        "email_verified_success_desc": "Your account is now active and associated with your email address.",
+        "email_already_verified": "Email already verified!",
+        "email_already_verified_desc": "Your account is already active. You can log in using your credentials.",
         "email_verification_failed": "The verification link is invalid or has expired.",
         "verifying_email": "Verifying email...",
         "go_to_dashboard": "Go to Dashboard",
+        "go_to_login": "Go to Login",
         "resend_verification_btn": "Resend verification email",
         "resend_verification_success": "Verification email resent successfully! Please check your inbox.",
         "resending_verification": "Resending..."
