@@ -97,11 +97,7 @@ const getNewsByIdInternal = async (id: string, locale: string = 'it') => {
 }
 
 export const getNewsById = async (id: string, locale: string = 'it') => {
-    const news = await unstable_cache(
-        async () => getNewsByIdInternal(id, locale),
-        ['news-detail', id, locale],
-        { revalidate: 3600, tags: ['news'] }
-    )()
+    const news = await getNewsByIdInternal(id, locale)
 
     if (!news) return null
     return {

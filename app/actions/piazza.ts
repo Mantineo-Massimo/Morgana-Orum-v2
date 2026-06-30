@@ -16,11 +16,9 @@ const getPiazzaArtistsInternal = async () => {
     }
 }
 
-export const getPiazzaArtists = unstable_cache(
-    async () => getPiazzaArtistsInternal(),
-    ['piazza-artists-list'],
-    { revalidate: 3600, tags: ['piazza'] }
-)
+export const getPiazzaArtists = async () => {
+    return await getPiazzaArtistsInternal()
+}
 
 export async function createPiazzaArtist(data: {
     name: string,
@@ -88,11 +86,9 @@ const getPiazzaProgramInternal = async () => {
     }
 }
 
-export const getPiazzaProgram = unstable_cache(
-    async () => getPiazzaProgramInternal(),
-    ['piazza-program-list'],
-    { revalidate: 3600, tags: ['piazza'] }
-)
+export const getPiazzaProgram = async () => {
+    return await getPiazzaProgramInternal()
+}
 
 export async function createPiazzaProgramItem(data: {
     title: string,
@@ -170,11 +166,9 @@ const getPiazzaMediaInternal = async (type?: string) => {
     }
 }
 
-export const getPiazzaMedia = unstable_cache(
-    async (type?: string) => getPiazzaMediaInternal(type),
-    ['piazza-media-list'],
-    { revalidate: 3600, tags: ['piazza'] }
-)
+export const getPiazzaMedia = async (type?: string) => {
+    return await getPiazzaMediaInternal(type)
+}
 
 export async function createPiazzaMediaItem(data: {
     type: string,
@@ -255,11 +249,7 @@ const getPiazzaSettingsInternal = async () => {
 }
 
 export const getPiazzaSettings = async () => {
-    return await unstable_cache(
-        async () => getPiazzaSettingsInternal(),
-        ['piazza-settings'],
-        { revalidate: 3600, tags: ['piazza'] }
-    )()
+    return await getPiazzaSettingsInternal()
 }
 
 export async function updatePiazzaSettings(data: {

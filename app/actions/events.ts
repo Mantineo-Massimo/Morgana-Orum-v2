@@ -77,11 +77,7 @@ const getAllEventsInternal = async (userEmail?: string | null, association?: Ass
 }
 
 export const getAllEvents = async (userEmail?: string | null, association?: Association, mode: 'upcoming' | 'past' = 'upcoming', locale: string = 'it') => {
-    const events = await unstable_cache(
-        async () => getAllEventsInternal(userEmail, association, mode, locale),
-        ['events-list', userEmail || 'guest', association || 'none', mode, locale],
-        { revalidate: 3600, tags: ['events'] }
-    )()
+    const events = await getAllEventsInternal(userEmail, association, mode, locale)
 
     return events.map(event => ({
         ...event,
@@ -124,11 +120,7 @@ const getEventByIdInternal = async (id: number, userEmail?: string | null, local
 }
 
 export const getEventById = async (id: number, userEmail?: string | null, locale: string = 'it') => {
-    const event = await unstable_cache(
-        async () => getEventByIdInternal(id, userEmail, locale),
-        ['event-detail', id.toString(), userEmail || 'guest', locale],
-        { revalidate: 3600, tags: ['events'] }
-    )()
+    const event = await getEventByIdInternal(id, userEmail, locale)
 
     if (!event) return null
     return {
