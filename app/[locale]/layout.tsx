@@ -37,7 +37,8 @@ export async function generateMetadata({
 }: {
     params: { locale: string }
 }): Promise<Metadata> {
-    const pathname = headers().get("x-pathname") || `/${locale}`
+    const pathname = headers().get("x-pathname") || "/"
+    const cleanPath = pathname.replace(/^\/(it|en)(\/|$)/, '$2')
     const canonicalUrl = `${BASE_URL}${pathname}`
 
     return {
@@ -45,9 +46,9 @@ export async function generateMetadata({
         alternates: {
             canonical: canonicalUrl,
             languages: {
-                "it": `${BASE_URL}/it`,
-                "en": `${BASE_URL}/en`,
-                "x-default": `${BASE_URL}/it`,
+                "it": `${BASE_URL}/${cleanPath}`.replace(/([^:]\/)\/+/g, "$1"),
+                "en": `${BASE_URL}/en/${cleanPath}`.replace(/([^:]\/)\/+/g, "$1"),
+                "x-default": `${BASE_URL}/${cleanPath}`.replace(/([^:]\/)\/+/g, "$1"),
             },
         },
         title: {

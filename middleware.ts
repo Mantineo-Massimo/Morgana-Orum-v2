@@ -78,11 +78,14 @@ export default function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname;
     const pathParts = pathname.split('/').filter(Boolean);
 
-    // Parts are usually [locale, 'piazzadellarte'] or [locale, 'network', brandId]
-    if (pathParts.length >= 2 && pathParts[1] === 'piazzadellarte') {
+    // Identify if the first segment is a locale (it or en) and remove it if present
+    const hasLocalePrefix = pathParts.length > 0 && ['it', 'en'].includes(pathParts[0]);
+    const cleanParts = hasLocalePrefix ? pathParts.slice(1) : pathParts;
+
+    if (cleanParts.length >= 1 && cleanParts[0] === 'piazzadellarte') {
         response.headers.set('x-brand', 'piazzadellarte');
-    } else if (pathParts.length >= 3 && pathParts[1] === 'network') {
-        const brandId = pathParts[2];
+    } else if (cleanParts.length >= 2 && cleanParts[0] === 'network') {
+        const brandId = cleanParts[1];
         response.headers.set('x-brand', brandId);
     } else {
         response.headers.set('x-brand', 'null');
