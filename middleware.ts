@@ -5,6 +5,14 @@ import { routing } from './i18n/routing';
 const intlMiddleware = createMiddleware(routing);
 
 export default function middleware(request: NextRequest) {
+    const host = request.headers.get('host') || '';
+
+    // Redirect old vercel.app production domains to the official custom domain (301 Permanent Redirect)
+    if (host === 'morganaorum.vercel.app' || host === 'morgana-orum-v2.vercel.app') {
+        const targetUrl = `https://www.morganaorum.it${request.nextUrl.pathname}${request.nextUrl.search}`;
+        return NextResponse.redirect(targetUrl, 301);
+    }
+
     // Generate a secure nonce for Content Security Policy (CSP)
     const nonce = typeof crypto !== 'undefined' && crypto.randomUUID 
         ? btoa(crypto.randomUUID()) 
@@ -92,7 +100,6 @@ export default function middleware(request: NextRequest) {
     }
 
     // Prevents indexing on non-primary domains (Vercel preview/deployment domains)
-    const host = request.headers.get('host') || '';
     if (host && !host.includes('morganaorum.it')) {
         response.headers.set('X-Robots-Tag', 'noindex, nofollow');
     }
