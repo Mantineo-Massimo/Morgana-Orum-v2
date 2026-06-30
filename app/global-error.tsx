@@ -42,13 +42,21 @@ export default function GlobalError({
                         Si è verificato un errore critico durante il caricamento del sito. Prova a ricaricare la pagina.
                     </p>
 
-                    <button
-                        onClick={reset}
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-[#18182e] text-white rounded-xl hover:bg-[#20203d] transition-all active:scale-95 font-medium shadow-lg shadow-zinc-200"
-                    >
-                        <RotateCcw className="size-4" />
-                        Riprova
-                    </button>
+                    <div className="flex flex-wrap items-center justify-center gap-4">
+                        <button
+                            onClick={reset}
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-[#18182e] text-white rounded-xl hover:bg-[#20203d] transition-all active:scale-95 font-medium shadow-lg shadow-zinc-200"
+                        >
+                            <RotateCcw className="size-4" />
+                            Riprova
+                        </button>
+                        <a
+                            href="/"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#18182e] border border-zinc-200 rounded-xl hover:bg-zinc-50 transition-all active:scale-95 font-medium shadow-sm"
+                        >
+                            Torna alla home
+                        </a>
+                    </div>
                 </div>
             </body>
         </html>

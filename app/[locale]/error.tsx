@@ -34,13 +34,21 @@ export default function Error({
                 Si è verificato un errore durante il caricamento di questa sezione.
             </p>
 
-            <button
-                onClick={reset}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-white rounded-xl hover:bg-black transition-all active:scale-95 font-medium"
-            >
-                <RotateCcw className="size-4" />
-                Riprova
-            </button>
+            <div className="flex flex-wrap items-center justify-center gap-4">
+                <button
+                    onClick={reset}
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 text-white rounded-xl hover:bg-black transition-all active:scale-95 font-medium"
+                >
+                    <RotateCcw className="size-4" />
+                    Riprova
+                </button>
+                <a
+                    href="/"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-white text-zinc-900 border border-zinc-200 rounded-xl hover:bg-zinc-50 transition-all active:scale-95 font-medium shadow-sm"
+                >
+                    Torna alla home
+                </a>
+            </div>
         </div>
     )
 }
