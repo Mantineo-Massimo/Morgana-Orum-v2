@@ -76,15 +76,15 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                     <div className="h-px bg-zinc-200 flex-1"></div>
                                 </div>
 
-                                {/* Members Cards Grid - Changed to flex for centering */}
-                                <div className="flex flex-wrap justify-center gap-6">
+                                {/* Members Cards Grid - Using flex with items-stretch for equal-height centered cards */}
+                                <div className="flex flex-wrap justify-center gap-6 items-stretch">
                                     {group.members.map((member: any, memIdx: number) => (
                                         <motion.button
                                             key={memIdx}
                                             onClick={() => onMemberClick?.(member)}
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
-                                            className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group w-full max-w-[400px] relative"
+                                            className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group w-full max-w-[400px] min-h-[96px] md:min-h-[112px] h-full relative"
                                         >
                                             {/* Photo */}
                                             <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
@@ -98,10 +98,8 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
 
                                             {/* Info */}
                                             <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
-                                                <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
-                                                    {member.name.split(' ').map((part: string, i: number) => (
-                                                        <span key={i} className="block">{part}</span>
-                                                    ))}
+                                                <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-2">
+                                                    {member.name}
                                                 </h4>
                                                 <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
                                                     {member.role || t("rep_label")}

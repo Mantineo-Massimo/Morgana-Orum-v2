@@ -388,7 +388,7 @@ export default function RepresentativesClient({
                                         {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-5 text-zinc-400" /> })()}
                                         {body.name}
                                     </h3>
-                                    <div className="flex flex-wrap justify-center gap-4 flex-grow py-4 w-full">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full py-4 items-stretch justify-items-center">
                                         {body.groups.flatMap((group: any) =>
                                             group.members.map((member: any, memIdx: number) => (
                                                 <motion.button
@@ -396,7 +396,7 @@ export default function RepresentativesClient({
                                                     onClick={() => handleRepClick(member)}
                                                     whileHover={{ scale: 1.02 }}
                                                     whileTap={{ scale: 0.98 }}
-                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-[400px] text-left group shadow-sm relative"
+                                                    className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all w-full max-w-[400px] min-h-[96px] md:min-h-[112px] h-full text-left group shadow-sm relative"
                                                 >
                                                     {/* Photo */}
                                                     <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
@@ -410,10 +410,8 @@ export default function RepresentativesClient({
 
                                                     {/* Info */}
                                                     <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
-                                                        <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
-                                                            {member.name.split(' ').map((part: string, i: number) => (
-                                                                <span key={i} className="block">{part}</span>
-                                                            ))}
+                                                        <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-2">
+                                                            {member.name}
                                                         </h4>
                                                         <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
                                                             {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
@@ -470,41 +468,39 @@ export default function RepresentativesClient({
                                                      <span className="leading-tight uppercase tracking-wide truncate">{body.name}</span>
                                                  </h3>
                                                  <div className={cn(
-                                                     "w-full py-2",
-                                                     (body.name.startsWith("CdS") || body.name.startsWith("SIR"))
-                                                         ? "grid gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4"
-                                                         : "flex flex-wrap justify-center gap-4 md:gap-5"
-                                                 )}>
-                                                     {body.groups.flatMap((group: any) =>
-                                                         group.members.map((member: any, memIdx: number) => (
-                                                             <motion.button
-                                                                 key={`${group.listName}-${memIdx}`}
-                                                                 onClick={() => handleRepClick(member)}
-                                                                 whileHover={{ scale: 1.02 }}
-                                                                 whileTap={{ scale: 0.98 }}
-                                                                 className={cn(
-                                                                     "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative",
-                                                                     (body.name.startsWith("CdS") || body.name.startsWith("SIR")) ? "w-full" : "w-full max-w-[400px]"
-                                                                 )}
-                                                             >
-                                                                 <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
-                                                                     {member.image ? (
-                                                                         // eslint-disable-next-line @next/next/no-img-element
-                                                                         <img src={member.image} alt={member.name} className="size-full object-cover" />
-                                                                     ) : (
-                                                                         <User className="size-8 text-zinc-300" />
-                                                                     )}
-                                                                 </div>
-                                                                 <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
-                                                                     <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
-                                                                         {member.name.split(' ').map((part: string, i: number) => (
-                                                                             <span key={i} className="block">{part}</span>
-                                                                         ))}
-                                                                     </h4>
-                                                                     <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
-                                                                         {group.listName === "AZIONE UNIVERITARIA" || group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
-                                                                     </p>
-                                                                 </div>
+                                                      "w-full py-2",
+                                                      (body.name.startsWith("CdS") || body.name.startsWith("SIR"))
+                                                          ? "grid gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 items-stretch"
+                                                          : "grid gap-4 md:gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-items-center items-stretch"
+                                                  )}>
+                                                      {body.groups.flatMap((group: any) =>
+                                                          group.members.map((member: any, memIdx: number) => (
+                                                              <motion.button
+                                                                  key={`${group.listName}-${memIdx}`}
+                                                                  onClick={() => handleRepClick(member)}
+                                                                  whileHover={{ scale: 1.02 }}
+                                                                  whileTap={{ scale: 0.98 }}
+                                                                  className={cn(
+                                                                      "flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group shadow-sm relative min-h-[96px] md:min-h-[112px] h-full",
+                                                                      (body.name.startsWith("CdS") || body.name.startsWith("SIR")) ? "w-full" : "w-full max-w-[400px]"
+                                                                  )}
+                                                              >
+                                                                  <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                                      {member.image ? (
+                                                                          // eslint-disable-next-line @next/next/no-img-element
+                                                                          <img src={member.image} alt={member.name} className="size-full object-cover" />
+                                                                      ) : (
+                                                                          <User className="size-8 text-zinc-300" />
+                                                                      )}
+                                                                  </div>
+                                                                  <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
+                                                                      <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-2">
+                                                                          {member.name}
+                                                                      </h4>
+                                                                      <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
+                                                                          {group.listName === "AZIONE UNIVERITARIA" || group.listName === "AZIONE" ? "Azione Universitaria" : group.listName}
+                                                                      </p>
+                                                                  </div>
                                                                  <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-40 group-hover:opacity-100 transition-opacity">
                                                                      {/* eslint-disable-next-line @next/next/no-img-element */}
                                                                      <img
