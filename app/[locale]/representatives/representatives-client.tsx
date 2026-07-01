@@ -459,11 +459,53 @@ export default function RepresentativesClient({
                         {(() => {
                             const getBodyByPrefix = (prefix: string) => centralBodies.find(b => b.name.startsWith(prefix))
                             
-                            const row1Bodies = [getBodyByPrefix("SA"), getBodyByPrefix("CdA")].filter(Boolean) as any[]
-                            const row2Bodies = [getBodyByPrefix("ERSU"), getBodyByPrefix("CSASU")].filter(Boolean) as any[]
-                            const row3Bodies = [getBodyByPrefix("CdS")].filter(Boolean) as any[]
-                            const row4Bodies = [getBodyByPrefix("CUG"), getBodyByPrefix("SIR")].filter(Boolean) as any[]
+                            const saBody = getBodyByPrefix("SA")
+                            const cdaBody = getBodyByPrefix("CdA")
+                            const ersuBody = getBodyByPrefix("ERSU")
+                            const csasuBody = getBodyByPrefix("CSASU")
+                            const cdsBody = getBodyByPrefix("CdS")
+                            const cugBody = getBodyByPrefix("CUG")
+                            const sirBody = getBodyByPrefix("SIR")
+
+                            const ersuMemberCount = ersuBody 
+                                ? ersuBody.groups.reduce((sum: number, g: any) => sum + g.members.length, 0)
+                                : 0
+
+                            let row1Bodies: any[] = []
+                            let row2Bodies: any[] = []
+                            let row3Bodies: any[] = []
+                            let row4Bodies: any[] = []
                             
+                            let row1Cols = "grid-cols-1 lg:grid-cols-2"
+                            let row2Cols = "grid-cols-1 lg:grid-cols-2"
+                            let row3Cols = "grid-cols-1"
+                            let row4Cols = "grid-cols-1 lg:grid-cols-2"
+
+                            if (csasuBody) {
+                                row1Bodies = [saBody, cdaBody].filter(Boolean)
+                                row1Cols = `grid-cols-1 lg:grid-cols-${row1Bodies.length}`
+                                
+                                row2Bodies = [ersuBody, csasuBody].filter(Boolean)
+                                row2Cols = `grid-cols-1 lg:grid-cols-${row2Bodies.length}`
+                            } else {
+                                if (ersuMemberCount > 1) {
+                                    row1Bodies = [saBody, cdaBody].filter(Boolean)
+                                    row1Cols = `grid-cols-1 lg:grid-cols-${row1Bodies.length}`
+                                    
+                                    row2Bodies = [ersuBody].filter(Boolean)
+                                    row2Cols = "grid-cols-1"
+                                } else {
+                                    row1Bodies = [saBody, cdaBody, ersuBody].filter(Boolean)
+                                    row1Cols = `grid-cols-1 lg:grid-cols-${row1Bodies.length}`
+                                    
+                                    row2Bodies = []
+                                }
+                            }
+
+                            row3Bodies = [cdsBody].filter(Boolean)
+                            row4Bodies = [cugBody, sirBody].filter(Boolean)
+                            row4Cols = `grid-cols-1 lg:grid-cols-${row4Bodies.length}`
+
                             const renderedPrefixes = ["SA", "CdA", "ERSU", "CSASU", "CdS", "CUG", "SIR"]
                             const otherBodies = centralBodies.filter(b => 
                                 !renderedPrefixes.some(prefix => b.name.startsWith(prefix))
@@ -531,10 +573,10 @@ export default function RepresentativesClient({
  
                               return (
                                   <div className="space-y-12">
-                                      {row1Bodies.length > 0 && renderBodyRow(row1Bodies, "grid-cols-1 lg:grid-cols-2")}
-                                      {row2Bodies.length > 0 && renderBodyRow(row2Bodies, "grid-cols-1 lg:grid-cols-2")}
-                                      {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "grid-cols-1")}
-                                      {row4Bodies.length > 0 && renderBodyRow(row4Bodies, "grid-cols-1 lg:grid-cols-2")}
+                                      {row1Bodies.length > 0 && renderBodyRow(row1Bodies, row1Cols)}
+                                      {row2Bodies.length > 0 && renderBodyRow(row2Bodies, row2Cols)}
+                                      {row3Bodies.length > 0 && renderBodyRow(row3Bodies, row3Cols)}
+                                      {row4Bodies.length > 0 && renderBodyRow(row4Bodies, row4Cols)}
                                       {otherBodies.length > 0 && renderBodyRow(otherBodies, "grid-cols-1 lg:grid-cols-2")}
                                   </div>
                               )
