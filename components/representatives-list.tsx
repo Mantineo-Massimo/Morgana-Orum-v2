@@ -76,8 +76,11 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                                     <div className="h-px bg-zinc-200 flex-1"></div>
                                 </div>
 
-                                {/* Members Cards Grid - Using flex with items-stretch for equal-height centered cards */}
-                                <div className="flex flex-wrap justify-center gap-6 items-stretch">
+                                {/* Members Cards Grid - Auto-responsive grid for equal-height cards */}
+                                <div 
+                                    className="grid gap-6 w-full items-stretch justify-items-center"
+                                    style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}
+                                >
                                     {group.members.map((member: any, memIdx: number) => (
                                         <motion.button
                                             key={memIdx}
