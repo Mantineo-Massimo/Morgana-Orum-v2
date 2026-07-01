@@ -524,11 +524,7 @@ export default function RepresentativesClient({
                              return (
                                  <div className="space-y-12">
                                      {row1Bodies.length > 0 && renderBodyRow(row1Bodies, "grid-cols-1 lg:grid-cols-3")}
-                                     {row2Bodies.length > 0 && (
-                                         <div className="flex justify-center w-full">
-                                             {renderBodyRow(row2Bodies, "grid-cols-1 max-w-2xl w-full")}
-                                         </div>
-                                     )}
+                                     {row2Bodies.length > 0 && renderBodyRow(row2Bodies, "grid-cols-1")}
                                      {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "grid-cols-1")}
                                  </div>
                              )
