@@ -457,23 +457,31 @@ export default function RepresentativesClient({
 
                         {/* Central Bodies Rows */}
                         {(() => {
-                            const row1Bodies = centralBodies.filter(b => b.name.startsWith("SA") || b.name.startsWith("ERSU") || b.name.startsWith("CdA"))
-                            const row2Bodies = centralBodies.filter(b => b.name.startsWith("CUG"))
-                            const row3Bodies = centralBodies.filter(b => b.name.startsWith("CdS") || b.name.startsWith("SIR"))
+                            const getBodyByPrefix = (prefix: string) => centralBodies.find(b => b.name.startsWith(prefix))
+                            
+                            const row1Bodies = [getBodyByPrefix("SA"), getBodyByPrefix("CdA")].filter(Boolean) as any[]
+                            const row2Bodies = [getBodyByPrefix("ERSU"), getBodyByPrefix("CSASU")].filter(Boolean) as any[]
+                            const row3Bodies = [getBodyByPrefix("CdS")].filter(Boolean) as any[]
+                            const row4Bodies = [getBodyByPrefix("CUG"), getBodyByPrefix("SIR")].filter(Boolean) as any[]
+                            
+                            const renderedPrefixes = ["SA", "CdA", "ERSU", "CSASU", "CdS", "CUG", "SIR"]
+                            const otherBodies = centralBodies.filter(b => 
+                                !renderedPrefixes.some(prefix => b.name.startsWith(prefix))
+                            )
 
                              const renderBodyRow = (bodies: any[], columnsClass: string) => (
-                                 <div className={cn("grid gap-8 mb-12 w-full", columnsClass)}>
-                                     {bodies.map((body, idx) => (
-                                         <div key={idx} className="relative flex flex-col w-full min-w-0">
-                                             <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full hover:shadow-md transition-shadow">
-                                                 <h3 className="text-base md:text-lg font-bold text-foreground mb-4 flex items-center gap-2 border-b border-zinc-50 pb-3">
-                                                     {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
-                                                     <span className="leading-tight uppercase tracking-wide truncate">{body.name}</span>
-                                                 </h3>
-                                                 <div 
-                                                     className="w-full py-2 grid gap-4 md:gap-5 justify-items-center items-stretch"
-                                                     style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}
-                                                 >
+                                  <div className={cn("grid gap-8 mb-12 w-full", columnsClass)}>
+                                      {bodies.map((body, idx) => (
+                                          <div key={idx} className="relative flex flex-col w-full min-w-0">
+                                              <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-4 md:p-6 flex flex-col h-full hover:shadow-md transition-shadow">
+                                                  <h3 className="text-base md:text-lg font-bold text-foreground mb-4 flex items-center gap-2 border-b border-zinc-50 pb-3">
+                                                      {(() => { const Icon = getRoleIcon(body.name); return <Icon className="size-4 md:size-5 text-zinc-400 shrink-0" /> })()}
+                                                      <span className="leading-tight uppercase tracking-wide truncate">{body.name}</span>
+                                                  </h3>
+                                                  <div 
+                                                      className="w-full py-2 grid gap-4 md:gap-5 justify-items-center items-stretch"
+                                                      style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}
+                                                  >
                                                       {body.groups.flatMap((group: any) =>
                                                           group.members.map((member: any, memIdx: number) => (
                                                               <motion.button
@@ -518,16 +526,18 @@ export default function RepresentativesClient({
                                              </div>
                                          </div>
                                      ))}
-                                 </div>
+                                  </div>
                              )
  
-                             return (
-                                 <div className="space-y-12">
-                                     {row1Bodies.length > 0 && renderBodyRow(row1Bodies, "grid-cols-1 lg:grid-cols-3")}
-                                     {row2Bodies.length > 0 && renderBodyRow(row2Bodies, "grid-cols-1")}
-                                     {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "grid-cols-1")}
-                                 </div>
-                             )
+                              return (
+                                  <div className="space-y-12">
+                                      {row1Bodies.length > 0 && renderBodyRow(row1Bodies, "grid-cols-1 lg:grid-cols-2")}
+                                      {row2Bodies.length > 0 && renderBodyRow(row2Bodies, "grid-cols-1 lg:grid-cols-2")}
+                                      {row3Bodies.length > 0 && renderBodyRow(row3Bodies, "grid-cols-1")}
+                                      {row4Bodies.length > 0 && renderBodyRow(row4Bodies, "grid-cols-1 lg:grid-cols-2")}
+                                      {otherBodies.length > 0 && renderBodyRow(otherBodies, "grid-cols-1 lg:grid-cols-2")}
+                                  </div>
+                              )
                         })()}
                     </section>
                 )}
