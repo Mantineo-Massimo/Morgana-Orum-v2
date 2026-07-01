@@ -38,7 +38,7 @@ export default function NewsForm({
     const [isUploading, setIsUploading] = useState(false)
     const [isMediaOpen, setIsMediaOpen] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const isEditing = !!initialData
+    const isEditing = !!initialData?.id
     const [selectedCategories, setSelectedCategories] = useState<string[]>(
         initialData?.category ? initialData.category.split(",").map((c: string) => c.trim()) : []
     )

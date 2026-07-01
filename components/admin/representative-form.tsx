@@ -63,7 +63,7 @@ export default function RepresentativeForm({
     const [isUploading, setIsUploading] = useState(false)
     const [isMediaOpen, setIsMediaOpen] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const isEditing = !!initialData
+    const isEditing = !!initialData?.id
 
     const [description, setDescription] = useState(initialData?.description || "")
     const [roleDescription, setRoleDescription] = useState(initialData?.roleDescription || "")
