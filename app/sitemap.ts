@@ -39,18 +39,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]
 
     const staticEntries: MetadataRoute.Sitemap = staticRoutes.flatMap(route =>
-        LOCALES.map(locale => ({
-            url: `${BASE_URL}/${locale}${route}`,
-            lastModified: new Date(),
-            changeFrequency: "weekly" as const,
-            priority: route === "" ? 1.0 : 0.8,
-            alternates: {
-                languages: {
-                    it: `${BASE_URL}/it${route}`,
-                    en: `${BASE_URL}/en${route}`,
+        LOCALES.map(locale => {
+            const urlPath = locale === "it" ? route : `/${locale}${route}`
+            return {
+                url: `${BASE_URL}${urlPath}`,
+                lastModified: new Date(),
+                changeFrequency: "weekly" as const,
+                priority: route === "" ? 1.0 : 0.8,
+                alternates: {
+                    languages: {
+                        it: `${BASE_URL}${route}`,
+                        en: `${BASE_URL}/en${route}`,
+                    }
                 }
             }
-        }))
+        })
     )
 
     // Dynamic news pages
@@ -61,18 +64,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             select: { id: true, updatedAt: true },
         })
         newsEntries = news.flatMap(article =>
-            LOCALES.map(locale => ({
-                url: `${BASE_URL}/${locale}/news/${article.id}`,
-                lastModified: article.updatedAt,
-                changeFrequency: "monthly" as const,
-                priority: 0.7,
-                alternates: {
-                    languages: {
-                        it: `${BASE_URL}/it/news/${article.id}`,
-                        en: `${BASE_URL}/en/news/${article.id}`,
+            LOCALES.map(locale => {
+                const urlPath = locale === "it" ? `/news/${article.id}` : `/${locale}/news/${article.id}`
+                return {
+                    url: `${BASE_URL}${urlPath}`,
+                    lastModified: article.updatedAt,
+                    changeFrequency: "monthly" as const,
+                    priority: 0.7,
+                    alternates: {
+                        languages: {
+                            it: `${BASE_URL}/news/${article.id}`,
+                            en: `${BASE_URL}/en/news/${article.id}`,
+                        }
                     }
                 }
-            }))
+            })
         )
     } catch { /* DB unavailable during build */ }
 
@@ -84,18 +90,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             select: { id: true, updatedAt: true },
         })
         eventEntries = events.flatMap(event =>
-            LOCALES.map(locale => ({
-                url: `${BASE_URL}/${locale}/events/${event.id}`,
-                lastModified: event.updatedAt,
-                changeFrequency: "monthly" as const,
-                priority: 0.7,
-                alternates: {
-                    languages: {
-                        it: `${BASE_URL}/it/events/${event.id}`,
-                        en: `${BASE_URL}/en/events/${event.id}`,
+            LOCALES.map(locale => {
+                const urlPath = locale === "it" ? `/events/${event.id}` : `/${locale}/events/${event.id}`
+                return {
+                    url: `${BASE_URL}${urlPath}`,
+                    lastModified: event.updatedAt,
+                    changeFrequency: "monthly" as const,
+                    priority: 0.7,
+                    alternates: {
+                        languages: {
+                            it: `${BASE_URL}/events/${event.id}`,
+                            en: `${BASE_URL}/en/events/${event.id}`,
+                        }
                     }
                 }
-            }))
+            })
         )
     } catch { /* DB unavailable during build */ }
 
