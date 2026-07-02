@@ -359,3 +359,35 @@ export function getDeadlineReminderEmailTemplate(deadlineTitle: string, deadline
     </div>
     `
 }
+
+export function getNewsletterSubscriptionTemplate(brand: string = "morgana", locale: string = "it") {
+    const config = BRANDS[brand] || BRANDS.morgana
+    const isEn = locale === "en"
+
+    return `
+    <div style="background-color: #f8fafc; padding: 40px 10px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.02); border: 1px solid #f1f5f9;">
+            ${getEmailHeader(isEn ? "Newsletter Subscription Confirmed" : "Iscrizione alla Newsletter Confermata", config.color)}
+            <div style="padding: 24px 30px; line-height: 1.6; color: #374151;">
+                <p style="margin-top: 0; font-size: 16px; color: #111827;">${isEn ? "Hello," : "Ciao,"}</p>
+                <p style="font-size: 15px;">${isEn
+            ? "Thank you for subscribing to the newsletter of the <strong>Morgana & O.R.U.M. Student Associations</strong>."
+            : "Grazie per esserti iscritto alla newsletter delle <strong>Associazioni Universitarie Morgana & O.R.U.M.</strong>."}</p>
+                <p style="font-size: 15px;">${isEn ? "From now on, you will receive updates on:" : "Da oggi riceverai aggiornamenti su:"}</p>
+                <ul style="color: #4b5563; font-size: 14px; padding-left: 20px; margin-bottom: 24px;">
+                    <li style="margin-bottom: 8px;">${isEn ? "Events and seminars" : "Eventi e seminari"}</li>
+                    <li style="margin-bottom: 8px;">${isEn ? "Important university deadlines" : "Scadenze universitarie importanti"}</li>
+                    <li style="margin-bottom: 8px;">${isEn ? "Exclusive student partnerships and discounts" : "Nuove convenzioni e opportunità per gli studenti"}</li>
+                    <li style="margin-bottom: 8px;">${isEn ? "Institutional and campus news" : "Comunicazioni istituzionali e di ateneo"}</li>
+                </ul>
+                <p style="font-size: 15px;">${isEn ? "We are excited to have you with us!" : "Siamo felici di averti con noi!"}</p>
+                
+                <p style="font-size: 13px; color: #6b7280; margin-top: 30px; border-top: 1px solid #f1f5f9; padding-top: 15px;">${isEn
+            ? "If you did not request this subscription, you can safely ignore this email."
+            : "Se non hai richiesto tu l'iscrizione, puoi ignorare questa email in tutta sicurezza o contattarci per richiedere la rimozione."}</p>
+            </div>
+            ${getEmailFooter(isEn ? "Always supporting students!" : "Sempre dalla parte dello studente!")}
+        </div>
+    </div>
+    `
+}

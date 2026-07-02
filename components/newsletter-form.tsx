@@ -4,10 +4,13 @@ import { useState } from "react"
 import { Loader2, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { subscribeToNewsletter } from "@/lib/newsletter"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
+import { useBrand } from "@/components/brand-provider"
 
 export function NewsletterForm() {
     const t = useTranslations("Footer")
+    const locale = useLocale()
+    const { brand } = useBrand()
     const [email, setEmail] = useState("")
     const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
     const [message, setMessage] = useState("")
@@ -18,6 +21,8 @@ export function NewsletterForm() {
 
         const formData = new FormData()
         formData.append("email", email)
+        formData.append("brand", brand || "morgana")
+        formData.append("locale", locale)
 
         const result = await subscribeToNewsletter(formData)
 
