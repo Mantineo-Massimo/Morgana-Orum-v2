@@ -17,7 +17,7 @@ export function HeroCarousel() {
 
     return (
         <div className="absolute inset-0 z-0">
-            <AnimatePresence mode="popLayout">
+            <AnimatePresence>
                 <motion.div
                     key={currentSlide}
                     initial={{ opacity: 0, scale: 1.1 }}
