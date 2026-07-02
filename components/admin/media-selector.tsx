@@ -8,13 +8,19 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import { Search, Image as ImageIcon, Loader2 } from "lucide-react"
+import { Search, Image as ImageIcon, Loader2, FileText } from "lucide-react"
 import { cn } from "@/lib/utils"
+
+function isImage(item: MediaItem) {
+    if (item.mimeType) return item.mimeType.startsWith("image/")
+    const ext = item.url.split('.').pop()?.toLowerCase()
+    return ["jpg", "jpeg", "png", "webp", "gif", "svg"].includes(ext || "")
+}
 
 interface MediaSelectorProps {
     isOpen: boolean
     onClose: () => void
-    onSelect: (url: string) => void
+    onSelect: (url: string, name?: string) => void
 }
 
 export function MediaSelector({ isOpen, onClose, onSelect }: MediaSelectorProps) {
@@ -127,20 +133,27 @@ export function MediaSelector({ isOpen, onClose, onSelect }: MediaSelectorProps)
                                     key={item.url}
                                     type="button"
                                     onClick={() => {
-                                        onSelect(item.url)
+                                        onSelect(item.url, item.title)
                                         onClose()
                                     }}
                                     className="group relative flex flex-col text-left rounded-xl border border-zinc-150 overflow-hidden hover:border-zinc-400 hover:shadow-md transition-all duration-200 bg-white"
                                 >
                                     {/* Thumbnail */}
                                     <div className="relative aspect-video bg-zinc-50 border-b border-zinc-100 overflow-hidden flex items-center justify-center">
-                                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img
-                                            src={item.url}
-                                            alt={item.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                            loading="lazy"
-                                        />
+                                        {isImage(item) ? (
+                                            /* eslint-disable-next-line @next/next/no-img-element */
+                                            <img
+                                                src={item.url}
+                                                alt={item.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                loading="lazy"
+                                            />
+                                        ) : (
+                                            <div className="flex flex-col items-center justify-center size-full bg-slate-50 text-slate-400 group-hover:scale-105 transition-transform duration-300">
+                                                <FileText className="size-8 text-slate-400" />
+                                                <span className="text-[10px] font-bold uppercase mt-1.5 tracking-wider text-slate-500">{item.url.split('.').pop()?.toUpperCase()}</span>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Info */}

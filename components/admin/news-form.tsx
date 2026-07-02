@@ -37,6 +37,7 @@ export default function NewsForm({
     const [imageUrl, setImageUrl] = useState<string | null>(initialData?.image || null)
     const [isUploading, setIsUploading] = useState(false)
     const [isMediaOpen, setIsMediaOpen] = useState(false)
+    const [isAttachmentMediaOpen, setIsAttachmentMediaOpen] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const isEditing = !!initialData?.id
     const [selectedCategories, setSelectedCategories] = useState<string[]>(
@@ -527,6 +528,14 @@ export default function NewsForm({
                                 className={cn(inputClass, "pt-2")}
                                 title="Carica documenti"
                             />
+                            <button
+                                type="button"
+                                onClick={() => setIsAttachmentMediaOpen(true)}
+                                className="w-full py-2 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 text-xs font-bold text-zinc-700 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                            >
+                                <ImageIcon className="size-3.5 text-zinc-500" />
+                                Oppure scegli dalla Libreria Media
+                            </button>
 
                             {/* List Existing */}
                             {existingAttachments.length > 0 && (
@@ -648,6 +657,14 @@ export default function NewsForm({
                 isOpen={isMediaOpen}
                 onClose={() => setIsMediaOpen(false)}
                 onSelect={(url) => setImageUrl(url)}
+            />
+            <MediaSelector
+                isOpen={isAttachmentMediaOpen}
+                onClose={() => setIsAttachmentMediaOpen(false)}
+                onSelect={(url, name) => {
+                    const cleanName = name || url.split('/').pop() || "Documento"
+                    setExistingAttachments(prev => [...prev, { name: cleanName, url }])
+                }}
             />
         </div >
     )

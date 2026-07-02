@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation"
 import {
     Plus, Trash2, Edit3, Compass, Info, Loader2,
     BookOpen, Bus, MapPin, GraduationCap, Home, Heart, Wifi, ShieldCheck, CreditCard,
-    FolderPlus, ArrowRight, Settings, Copy, HelpCircle, ArrowUp, ArrowDown, X, File, Upload
+    FolderPlus, ArrowRight, Settings, Copy, HelpCircle, ArrowUp, ArrowDown, X, File, Upload,
+    Image as ImageIcon
 } from "lucide-react"
 import {
     createGuide,
@@ -22,6 +23,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
+import { MediaSelector } from "@/components/admin/media-selector"
 
 interface GuidesAdminClientProps {
     initialGuides: any[]
@@ -102,6 +104,7 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
     type AttachmentItem = { name: string; url: string }
     const [newStepAttachments, setNewStepAttachments] = useState<{ file: File; name: string }[]>([])
     const [existingStepAttachments, setExistingStepAttachments] = useState<AttachmentItem[]>([])
+    const [isStepAttachmentMediaOpen, setIsStepAttachmentMediaOpen] = useState(false)
 
     async function uploadFile(file: File, folder: string) {
         const formData = new FormData()
@@ -887,6 +890,14 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                     className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all pt-2"
                                     title="Carica documenti"
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setIsStepAttachmentMediaOpen(true)}
+                                    className="w-full py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-xs font-bold text-slate-700 transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                                >
+                                    <ImageIcon className="size-3.5 text-slate-500" />
+                                    Oppure scegli dalla Libreria Media
+                                </button>
 
                                 {/* List Existing Step Attachments */}
                                 {existingStepAttachments.length > 0 && (
@@ -986,6 +997,15 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                     </form>
                 </DialogContent>
             </Dialog>
+
+            <MediaSelector
+                isOpen={isStepAttachmentMediaOpen}
+                onClose={() => setIsStepAttachmentMediaOpen(false)}
+                onSelect={(url, name) => {
+                    const cleanName = name || url.split('/').pop() || "Documento"
+                    setExistingStepAttachments(prev => [...prev, { name: cleanName, url }])
+                }}
+            />
         </div>
         </div>
     )
