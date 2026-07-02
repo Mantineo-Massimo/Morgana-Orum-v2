@@ -12,7 +12,7 @@ import { SessionsCountdown } from "@/components/sessions-countdown"
 import { GradeSimulator } from "@/components/grade-simulator"
 import { ErsuMeritChecker } from "@/components/ersu-merit-checker"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
-import { Calculator, Clock, GraduationCap, ShieldCheck, Home, Heart, Wifi, CreditCard } from "lucide-react"
+import { Calculator, Clock, GraduationCap, ShieldCheck, Home, Heart, Wifi, CreditCard, FileText, Download } from "lucide-react"
 
 const InteractiveMap = nextDynamic(
     () => import("@/components/interactive-map"),
@@ -120,7 +120,8 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                 .sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
                 .map((s: any) => ({
                     title: getStepTitle(s),
-                    desc: getStepDesc(s)
+                    desc: getStepDesc(s),
+                    attachments: s.attachments
                 }))
         }))
 
@@ -471,9 +472,34 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                         )}>
                                             {index + 1}
                                         </div>
-                                        <div className="space-y-1.5">
+                                        <div className="space-y-1.5 flex-1">
                                             <h4 className="text-lg font-bold text-zinc-900 leading-tight">{step.title}</h4>
                                             <p className="text-sm text-zinc-500 leading-relaxed">{step.desc}</p>
+                                            {step.attachments && (() => {
+                                                try {
+                                                    const list = JSON.parse(step.attachments)
+                                                    if (Array.isArray(list) && list.length > 0) {
+                                                        return (
+                                                            <div className="flex flex-wrap gap-2 mt-3.5">
+                                                                {list.map((att: any, idx: number) => (
+                                                                    <a
+                                                                        key={idx}
+                                                                        href={att.url}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                        className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 hover:text-zinc-900 border border-zinc-200 rounded-xl text-xs font-bold transition-all shadow-sm group"
+                                                                    >
+                                                                        <FileText className="size-3.5 text-zinc-400 group-hover:text-zinc-600" />
+                                                                        <span>{att.name}</span>
+                                                                        <Download className="size-3 text-zinc-300 group-hover:text-zinc-500" />
+                                                                    </a>
+                                                                ))}
+                                                            </div>
+                                                        )
+                                                    }
+                                                } catch(e) {}
+                                                return null
+                                            })()}
                                         </div>
                                     </div>
                                 ))}
@@ -548,13 +574,38 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                             <div className="size-8 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 shadow-md shadow-zinc-200">
                                                 {index + 1}
                                             </div>
-                                            <div className="space-y-1">
+                                            <div className="space-y-1 flex-1">
                                                 <h4 className="text-lg font-bold text-zinc-900 leading-tight">
                                                     {locale === "en" && step.titleEn ? step.titleEn : step.title}
                                                 </h4>
                                                 <p className="text-sm text-zinc-500 leading-relaxed">
                                                     {locale === "en" && step.descriptionEn ? step.descriptionEn : (step.description || step.desc)}
                                                 </p>
+                                                {step.attachments && (() => {
+                                                    try {
+                                                        const list = JSON.parse(step.attachments)
+                                                        if (Array.isArray(list) && list.length > 0) {
+                                                            return (
+                                                                <div className="flex flex-wrap gap-2 mt-3">
+                                                                    {list.map((att: any, idx: number) => (
+                                                                        <a
+                                                                            key={idx}
+                                                                            href={att.url}
+                                                                            target="_blank"
+                                                                            rel="noopener noreferrer"
+                                                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 hover:text-zinc-900 border border-zinc-200 rounded-xl text-xs font-bold transition-all shadow-sm group"
+                                                                        >
+                                                                            <FileText className="size-3.5 text-zinc-400 group-hover:text-zinc-600" />
+                                                                            <span>{att.name}</span>
+                                                                            <Download className="size-3 text-zinc-300 group-hover:text-zinc-500" />
+                                                                        </a>
+                                                                    ))}
+                                                                </div>
+                                                            )
+                                                        }
+                                                    } catch(e) {}
+                                                    return null
+                                                })()}
                                             </div>
                                         </div>
                                     ))

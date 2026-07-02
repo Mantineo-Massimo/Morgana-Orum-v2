@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { Metadata } from "next"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, Calendar, Tag, Newspaper } from "lucide-react"
+import { ArrowLeft, Calendar, Tag, Newspaper, FileText, Download } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { sanitizeHtml } from "@/lib/sanitize"
 
@@ -52,6 +52,21 @@ export default async function NewsDetailPage({ params: { id, locale } }: { param
         year: "numeric",
         timeZone: "Europe/Rome"
     })
+
+    type AttachmentItem = { name: string; url: string }
+    const attachments: AttachmentItem[] = (() => {
+        if (!article.attachments) return []
+        try {
+            const parsed = JSON.parse(article.attachments)
+            if (Array.isArray(parsed)) return parsed
+        } catch (e) {
+            return article.attachments.split(',').map((url: string) => ({
+                name: url.split('/').pop() || "Documento",
+                url: url.trim()
+            })).filter((a: any) => a.url)
+        }
+        return []
+    })()
 
     return (
         <div className="min-h-screen bg-zinc-50 pt-24 pb-20 animate-in fade-in duration-700">
@@ -112,12 +127,41 @@ export default async function NewsDetailPage({ params: { id, locale } }: { param
                     {/* Article Body */}
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
                         <div className="lg:col-span-12">
-                            {article.content ? (
+                            {article.content || attachments.length > 0 ? (
                                 <div className="bg-white rounded-[2rem] border border-zinc-100 p-8 md:p-16 shadow-sm">
-                                    <div
-                                        className="prose prose-zinc prose-lg md:prose-xl max-w-none text-foreground leading-relaxed font-medium"
-                                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }}
-                                    />
+                                    {article.content && (
+                                        <div
+                                            className="prose prose-zinc prose-lg md:prose-xl max-w-none text-foreground leading-relaxed font-medium"
+                                            dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }}
+                                        />
+                                    )}
+
+                                    {/* Attachments Section */}
+                                    {attachments.length > 0 && (
+                                        <div className={cn("pt-8", article.content && "mt-16 border-t border-zinc-100")}>
+                                            <h3 className="text-xl font-bold text-foreground mb-4">Documenti Allegati</h3>
+                                            <div className="grid gap-3">
+                                                {attachments.map((att, i) => (
+                                                    <a
+                                                        key={i}
+                                                        href={att.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center gap-4 p-5 bg-zinc-50 rounded-2xl border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all group"
+                                                    >
+                                                        <div className="size-10 rounded-xl bg-white border border-zinc-100 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                                            <FileText className="size-5 text-zinc-400 group-hover:text-zinc-650" />
+                                                        </div>
+                                                        <div className="flex-1 min-w-0">
+                                                            <span className="block text-sm font-bold text-foreground truncate tracking-tight">{att.name}</span>
+                                                            <span className="block text-[10px] text-zinc-400 font-bold uppercase tracking-widest mt-0.5">{att.url.split('.').pop()?.toUpperCase()} Document</span>
+                                                        </div>
+                                                        <Download className="size-5 text-zinc-350 group-hover:text-foreground group-hover:translate-y-0.5 transition-all" />
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
 
                                     {/* Tags Footer */}
                                     {tags.length > 0 && (

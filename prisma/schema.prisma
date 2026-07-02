@@ -109,6 +109,7 @@ model News {
   category     String
   tags         String?
   image        String?
+  attachments  String?
   date         DateTime      @default(now())
   published    Boolean       @default(true)
   createdAt    DateTime      @default(now())
@@ -353,6 +354,7 @@ model GuideStep {
   description   String
   descriptionEn String?
   order         Int      @default(0)
+  attachments   String?
   guideId       String
   guide         Guide    @relation(fields: [guideId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())

@@ -147,6 +147,7 @@ export async function createGuideStep(data: {
     descriptionEn?: string
     order?: number
     guideId: string
+    attachments?: string | null
 }) {
     if (!(await checkAdminPermission())) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
@@ -164,7 +165,8 @@ export async function createGuideStep(data: {
                 description: data.description,
                 descriptionEn: data.descriptionEn || null,
                 order: data.order ?? 0,
-                guideId: data.guideId
+                guideId: data.guideId,
+                attachments: data.attachments || null
             }
         })
         revalidatePath("/guide")
@@ -183,6 +185,7 @@ export async function updateGuideStep(id: string, data: {
     descriptionEn?: string
     order?: number
     guideId: string
+    attachments?: string | null
 }) {
     if (!(await checkAdminPermission())) {
         return { success: false, error: "Non hai i permessi per questa operazione." }
@@ -201,7 +204,8 @@ export async function updateGuideStep(id: string, data: {
                 description: data.description,
                 descriptionEn: data.descriptionEn || null,
                 order: data.order ?? 0,
-                guideId: data.guideId
+                guideId: data.guideId,
+                attachments: data.attachments || null
             }
         })
         revalidatePath("/guide")

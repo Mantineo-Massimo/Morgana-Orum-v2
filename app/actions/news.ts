@@ -238,6 +238,7 @@ export async function createNews(data: {
     content?: string | null
     contentEn?: string | null
     image?: string | null
+    attachments?: string | null
     category: string
     associations?: Association[]
     published: boolean
@@ -256,6 +257,7 @@ export async function createNews(data: {
                 content: data.content,
                 contentEn: (data as any).contentEn || null,
                 image: data.image || null,
+                attachments: data.attachments || null,
                 category: data.category,
                 associations: data.associations || [Association.MORGANA_ORUM],
                 published: data.published,
@@ -287,6 +289,7 @@ export async function updateNews(id: string, data: {
     content?: string | null
     contentEn?: string | null
     image?: string | null
+    attachments?: string | null
     category: string
     associations?: Association[]
     published: boolean
@@ -318,6 +321,7 @@ export async function updateNews(id: string, data: {
                 content: data.content,
                 contentEn: (data as any).contentEn || null,
                 image: data.image || null,
+                attachments: data.attachments || null,
                 category: data.category,
                 associations: { set: data.associations || [Association.MORGANA_ORUM] },
                 published: data.published,

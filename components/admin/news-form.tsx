@@ -4,7 +4,7 @@ import { createNews, updateNews } from "@/app/actions/news"
 import { Association } from "@prisma/client"
 import { useState, useRef, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Save, Loader2, Upload, X, ImageIcon, Sparkles } from "lucide-react"
+import { ArrowLeft, Save, Loader2, Upload, X, ImageIcon, Sparkles, File } from "lucide-react"
 import { translateText } from "@/app/actions/translate"
 import Link from "next/link"
 import Image from "next/image"
@@ -43,6 +43,37 @@ export default function NewsForm({
         initialData?.category ? initialData.category.split(",").map((c: string) => c.trim()) : []
     )
     const selectedAssociations = useMemo(() => [Association.MORGANA_ORUM], [])
+
+    // Attachments state
+    type AttachmentItem = { name: string; url: string }
+    const [newAttachments, setNewAttachments] = useState<{ file: File; name: string }[]>([])
+    const [existingAttachments, setExistingAttachments] = useState<AttachmentItem[]>(() => {
+        if (!initialData?.attachments) return []
+        try {
+            const parsed = JSON.parse(initialData.attachments)
+            if (Array.isArray(parsed)) return parsed
+        } catch (e) {
+            // Support legacy comma-separated format
+            return initialData.attachments.split(',').map((url: string) => ({
+                name: url.split('/').pop() || "Documento",
+                url: url.trim()
+            })).filter((a: any) => a.url)
+        }
+        return []
+    })
+
+    async function uploadFile(file: File, folder: string) {
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("folder", folder)
+        const res = await fetch("/api/upload", { method: "POST", body: formData })
+        if (!res.ok) {
+            const errData = await res.json().catch(() => ({}))
+            throw new Error(errData.error || "Errore upload file")
+        }
+        const data = await res.json()
+        return data.url
+    }
 
     // Translation states
     const [isTranslating, setIsTranslating] = useState(false)
@@ -114,40 +145,57 @@ export default function NewsForm({
         setIsLoading(true)
         setError(null)
 
-        const toISO = (val: string | null | undefined) => {
-            if (!val) return undefined
-            const d = toUtcFromRome(val)
-            return isNaN(d.getTime()) ? undefined : d.toISOString()
-        }
+        try {
+            // Upload new attachments and combine with existing
+            const finalAttachmentList: AttachmentItem[] = [...existingAttachments]
 
-        const rawData = {
-            title: formData.get("title") as string,
-            titleEn: titleEn || null,
-            description: formData.get("description") as string,
-            descriptionEn: descriptionEn || null,
-            content: content || null,
-            contentEn: contentEn || null,
-            category: selectedCategories.join(", "),
-            tags: formData.get("tags") as string || null,
-            image: imageUrl || null,
-            date: toISO(combinedDate),
-            published: formData.get("published") === "on",
-            associations: selectedAssociations,
-        }
-
-        const result = isEditing
-            ? await updateNews(initialData.id, rawData)
-            : await createNews(rawData)
-
-        if (result.success) {
-            if (isModal && onSuccess) {
-                onSuccess()
-            } else {
-                router.push(`/admin/news`)
-                router.refresh()
+            for (const item of newAttachments) {
+                const url = await uploadFile(item.file, "attachments")
+                finalAttachmentList.push({
+                    name: item.name || item.file.name,
+                    url
+                })
             }
-        } else {
-            setError(result.error || "Errore sconosciuto")
+
+            const toISO = (val: string | null | undefined) => {
+                if (!val) return undefined
+                const d = toUtcFromRome(val)
+                return isNaN(d.getTime()) ? undefined : d.toISOString()
+            }
+
+            const rawData = {
+                title: formData.get("title") as string,
+                titleEn: titleEn || null,
+                description: formData.get("description") as string,
+                descriptionEn: descriptionEn || null,
+                content: content || null,
+                contentEn: contentEn || null,
+                category: selectedCategories.join(", "),
+                tags: formData.get("tags") as string || null,
+                image: imageUrl || null,
+                attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : null,
+                date: toISO(combinedDate),
+                published: formData.get("published") === "on",
+                associations: selectedAssociations,
+            }
+
+            const result = isEditing
+                ? await updateNews(initialData.id, rawData)
+                : await createNews(rawData)
+
+            if (result.success) {
+                if (isModal && onSuccess) {
+                    onSuccess()
+                } else {
+                    router.push(`/admin/news`)
+                    router.refresh()
+                }
+            } else {
+                setError(result.error || "Errore sconosciuto")
+                setIsLoading(false)
+            }
+        } catch (err: any) {
+            setError(err.message || "Errore durante il caricamento dei file")
             setIsLoading(false)
         }
     }
@@ -454,6 +502,102 @@ export default function NewsForm({
                         </div>
                         <p className="text-xs text-zinc-400 mt-1">GG/MM/AAAA — HH:MM (formato 24h)</p>
                         <p className="text-xs text-amber-600 mt-0.5">⏰ Una data futura = pubblicazione programmata</p>
+                    </div>
+
+                    {/* Attachments */}
+                    <div className="border-t border-zinc-100 pt-6">
+                        <label className={labelClass}>Documenti Allegati</label>
+                        <p className="text-xs text-zinc-400 mb-4">Carica e dai un nome ai documenti (es. Programma completo, locandina PDF).</p>
+
+                        <div className="space-y-4">
+                            <input
+                                type="file"
+                                multiple
+                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*"
+                                onChange={(e) => {
+                                    if (e.target.files) {
+                                        const files = Array.from(e.target.files)
+                                        setNewAttachments(prev => [
+                                            ...prev,
+                                            ...files.map(f => ({ file: f, name: f.name.split('.').slice(0, -1).join('.') }))
+                                        ])
+                                    }
+                                    e.target.value = '' // Reset
+                                }}
+                                className={cn(inputClass, "pt-2")}
+                                title="Carica documenti"
+                            />
+
+                            {/* List Existing */}
+                            {existingAttachments.length > 0 && (
+                                <div className="space-y-3">
+                                    <p className="text-xs font-bold text-zinc-700 uppercase tracking-wider">File già presenti:</p>
+                                    {existingAttachments.map((att, i) => (
+                                        <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 bg-zinc-50 rounded-xl border border-zinc-200">
+                                            <div className="flex items-center gap-2 flex-1 min-w-0">
+                                                <File className="size-4 text-zinc-400 shrink-0" />
+                                                <input
+                                                    type="text"
+                                                    value={att.name}
+                                                    onChange={(e) => {
+                                                        const next = [...existingAttachments]
+                                                        next[i] = { ...next[i], name: e.target.value }
+                                                        setExistingAttachments(next)
+                                                    }}
+                                                    className="bg-transparent border-none focus:ring-2 focus:ring-zinc-900/5 rounded px-2 py-1 text-sm font-medium text-foreground w-full"
+                                                    placeholder="Nome allegato..."
+                                                />
+                                            </div>
+                                            <div className="flex items-center gap-3 justify-end shrink-0">
+                                                <a href={att.url} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline font-bold">Visualizza</a>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setExistingAttachments(prev => prev.filter((_, idx) => idx !== i))}
+                                                    className="p-1.5 hover:bg-red-50 text-zinc-400 hover:text-red-500 rounded-lg transition-colors"
+                                                >
+                                                    <X className="size-4" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {/* List New */}
+                            {newAttachments.length > 0 && (
+                                <div className="space-y-3">
+                                    <p className="text-xs font-bold text-zinc-700 uppercase tracking-wider">File da caricare:</p>
+                                    {newAttachments.map((item, i) => (
+                                        <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-3 p-3 bg-blue-50/50 rounded-xl border border-blue-100">
+                                            <div className="flex items-center gap-2 flex-1 min-w-0">
+                                                <Upload className="size-4 text-blue-400 shrink-0" />
+                                                <input
+                                                    type="text"
+                                                    value={item.name}
+                                                    onChange={(e) => {
+                                                        const next = [...newAttachments]
+                                                        next[i] = { ...next[i], name: e.target.value }
+                                                        setNewAttachments(next)
+                                                    }}
+                                                    className="bg-transparent border-none focus:ring-2 focus:ring-blue-900/5 rounded px-2 py-1 text-sm font-medium text-blue-900 w-full"
+                                                    placeholder="Nome allegato..."
+                                                />
+                                            </div>
+                                            <div className="flex items-center gap-2 justify-end shrink-0">
+                                                <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-bold">{item.file.name.split('.').pop()?.toUpperCase()}</span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setNewAttachments(prev => prev.filter((_, idx) => idx !== i))}
+                                                    className="p-1.5 hover:bg-red-50 text-zinc-400 hover:text-red-500 rounded-lg transition-colors"
+                                                >
+                                                    <X className="size-4" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Tags */}

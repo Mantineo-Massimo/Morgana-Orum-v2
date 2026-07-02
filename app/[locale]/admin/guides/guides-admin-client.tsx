@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import {
     Plus, Trash2, Edit3, Compass, Info, Loader2,
     BookOpen, Bus, MapPin, GraduationCap, Home, Heart, Wifi, ShieldCheck, CreditCard,
-    FolderPlus, ArrowRight, Settings, Copy, HelpCircle, ArrowUp, ArrowDown
+    FolderPlus, ArrowRight, Settings, Copy, HelpCircle, ArrowUp, ArrowDown, X, File, Upload
 } from "lucide-react"
 import {
     createGuide,
@@ -97,6 +97,24 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
         descriptionEn: "",
         order: 0
     })
+
+    // Attachments state for Guide Steps
+    type AttachmentItem = { name: string; url: string }
+    const [newStepAttachments, setNewStepAttachments] = useState<{ file: File; name: string }[]>([])
+    const [existingStepAttachments, setExistingStepAttachments] = useState<AttachmentItem[]>([])
+
+    async function uploadFile(file: File, folder: string) {
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("folder", folder)
+        const res = await fetch("/api/upload", { method: "POST", body: formData })
+        if (!res.ok) {
+            const errData = await res.json().catch(() => ({}))
+            throw new Error(errData.error || "Errore upload file")
+        }
+        const data = await res.json()
+        return data.url
+    }
 
     const activeGuide = filteredGuides.find(g => g.id === selectedGuideId)
 
@@ -225,6 +243,8 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
             descriptionEn: "",
             order: activeGuide?.steps?.length || 0
         })
+        setNewStepAttachments([])
+        setExistingStepAttachments([])
         setIsStepModalOpen(true)
     }
 
@@ -237,6 +257,21 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
             descriptionEn: step.descriptionEn || "",
             order: step.order || 0
         })
+        setNewStepAttachments([])
+
+        let attachments: AttachmentItem[] = []
+        if (step.attachments) {
+            try {
+                const parsed = JSON.parse(step.attachments)
+                if (Array.isArray(parsed)) attachments = parsed
+            } catch (e) {
+                attachments = step.attachments.split(',').map((url: string) => ({
+                    name: url.split('/').pop() || "Documento",
+                    url: url.trim()
+                })).filter((a: any) => a.url)
+            }
+        }
+        setExistingStepAttachments(attachments)
         setIsStepModalOpen(true)
     }
 
@@ -250,7 +285,8 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                 description: step.description,
                 descriptionEn: step.descriptionEn || undefined,
                 order: (step.order || 0) + 1,
-                guideId: selectedGuideId
+                guideId: selectedGuideId,
+                attachments: step.attachments
             })
             if (res.success) {
                 router.refresh()
@@ -293,13 +329,24 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
 
         setLoading(true)
         try {
+            // Upload new attachments
+            const finalAttachmentList: AttachmentItem[] = [...existingStepAttachments]
+            for (const item of newStepAttachments) {
+                const url = await uploadFile(item.file, "attachments")
+                finalAttachmentList.push({
+                    name: item.name || item.file.name,
+                    url
+                })
+            }
+
             const payload = {
                 title: stepForm.title,
                 titleEn: stepForm.titleEn || undefined,
                 description: stepForm.description,
                 descriptionEn: stepForm.descriptionEn || undefined,
                 order: Number(stepForm.order) || 0,
-                guideId: selectedGuideId
+                guideId: selectedGuideId,
+                attachments: finalAttachmentList.length > 0 ? JSON.stringify(finalAttachmentList) : null
             }
 
             let res
@@ -315,9 +362,9 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
             } else {
                 alert(res.error)
             }
-        } catch (error) {
+        } catch (error: any) {
             console.error(error)
-            alert("Errore durante il salvataggio")
+            alert(error.message || "Errore durante il salvataggio")
         } finally {
             setLoading(false)
         }
@@ -816,6 +863,100 @@ export function GuidesAdminClient({ initialGuides, userRole }: GuidesAdminClient
                                     className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all h-24 resize-none leading-relaxed"
                                     placeholder="Step description in English..."
                                 />
+                            </div>
+
+                            {/* Step Attachments */}
+                            <div className="md:col-span-2 space-y-2 pt-4 border-t border-slate-100">
+                                <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-1.5">Documenti Allegati Step</label>
+                                <p className="text-[10px] text-slate-400 mb-2">Carica e dai un nome ai documenti per questo step (es. Modulo di domanda, Guida in PDF).</p>
+
+                                <input
+                                    type="file"
+                                    multiple
+                                    accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,image/*"
+                                    onChange={(e) => {
+                                        if (e.target.files) {
+                                            const files = Array.from(e.target.files)
+                                            setNewStepAttachments(prev => [
+                                                ...prev,
+                                                ...files.map(f => ({ file: f, name: f.name.split('.').slice(0, -1).join('.') }))
+                                            ])
+                                        }
+                                        e.target.value = '' // Reset
+                                    }}
+                                    className="w-full px-4 py-3 bg-slate-50/50 border border-slate-200/60 rounded-xl outline-none focus:ring-2 focus:ring-[#c9041a]/10 focus:border-[#c9041a]/50 text-sm font-semibold transition-all pt-2"
+                                    title="Carica documenti"
+                                />
+
+                                {/* List Existing Step Attachments */}
+                                {existingStepAttachments.length > 0 && (
+                                    <div className="space-y-2.5 mt-2">
+                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">File già presenti:</p>
+                                        {existingStepAttachments.map((att, i) => (
+                                            <div key={i} className="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl border border-slate-200/60">
+                                                <div className="flex items-center gap-2 flex-1 min-w-0 mr-2">
+                                                    <File className="size-3.5 text-slate-400 shrink-0" />
+                                                    <input
+                                                        type="text"
+                                                        value={att.name}
+                                                        onChange={(e) => {
+                                                            const next = [...existingStepAttachments]
+                                                            next[i] = { ...next[i], name: e.target.value }
+                                                            setExistingStepAttachments(next)
+                                                        }}
+                                                        className="bg-transparent border-none focus:ring-1 focus:ring-slate-200 rounded px-1.5 py-0.5 text-xs font-semibold text-slate-700 w-full"
+                                                        placeholder="Nome allegato..."
+                                                    />
+                                                </div>
+                                                <div className="flex items-center gap-2.5 shrink-0">
+                                                    <a href={att.url} target="_blank" rel="noreferrer" className="text-[10px] text-blue-600 hover:underline font-bold">Visualizza</a>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setExistingStepAttachments(prev => prev.filter((_, idx) => idx !== i))}
+                                                        className="p-1 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded transition-colors"
+                                                    >
+                                                        <X className="size-3.5" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* List New Step Attachments */}
+                                {newStepAttachments.length > 0 && (
+                                    <div className="space-y-2.5 mt-2">
+                                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">File da caricare:</p>
+                                        {newStepAttachments.map((item, i) => (
+                                            <div key={i} className="flex items-center justify-between p-2.5 bg-blue-50/40 rounded-xl border border-blue-100">
+                                                <div className="flex items-center gap-2 flex-1 min-w-0 mr-2">
+                                                    <Upload className="size-3.5 text-blue-400 shrink-0" />
+                                                    <input
+                                                        type="text"
+                                                        value={item.name}
+                                                        onChange={(e) => {
+                                                            const next = [...newStepAttachments]
+                                                            next[i] = { ...next[i], name: e.target.value }
+                                                            setNewStepAttachments(next)
+                                                        }}
+                                                        className="bg-transparent border-none focus:ring-1 focus:ring-blue-100 rounded px-1.5 py-0.5 text-xs font-semibold text-blue-900 w-full"
+                                                        placeholder="Nome allegato..."
+                                                    />
+                                                </div>
+                                                <div className="flex items-center gap-2 shrink-0">
+                                                    <span className="text-[9px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-bold">{item.file.name.split('.').pop()?.toUpperCase()}</span>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setNewStepAttachments(prev => prev.filter((_, idx) => idx !== i))}
+                                                        className="p-1 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded transition-colors"
+                                                    >
+                                                        <X className="size-3.5" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                             <div className="space-y-2">
