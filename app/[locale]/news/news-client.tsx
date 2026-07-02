@@ -206,14 +206,7 @@ function NewsCard({ item }: { item: any }) {
 
 
 
-                <div className="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-between">
-                    <div className="flex gap-2">
-                        {tags.slice(0, 2).map((tag: string) => (
-                            <span key={tag} className="text-xs text-zinc-400 bg-zinc-50 px-2 py-1 rounded">
-                                {tn.has(`tags.${tag.toUpperCase()}`) ? tn(`tags.${tag.toUpperCase()}`) : tag}
-                            </span>
-                        ))}
-                    </div>
+                <div className="mt-auto pt-4 border-t border-zinc-100 flex items-center justify-end">
                     <Link href={`/news/${item.id}`} className={cn("flex items-center text-sm font-bold transition-transform group-hover:translate-x-1", themeColorText)}>
                         {ts("read_more")} <ChevronRight className="size-4" />
                     </Link>
