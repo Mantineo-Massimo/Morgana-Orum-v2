@@ -13,6 +13,7 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages } from "next-intl/server"
 import { getOrganigrammaConfig } from "@/app/actions/organigramma"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/react"
 import "../globals.css"
 
 const inter = Inter({
@@ -139,6 +140,7 @@ export default async function RootLayout({
                 <NextIntlClientProvider messages={messages} locale={locale}>
                     <BrandProvider defaultBrand={brand}>
                         <SpeedInsights />
+                        <Analytics />
                         <div className="flex min-h-screen flex-col bg-background font-sans">
                             <TopBar />
                             <StickyHeader isLoggedIn={isLoggedIn} showOrganigramma={organigrammaConfig.visible} />
