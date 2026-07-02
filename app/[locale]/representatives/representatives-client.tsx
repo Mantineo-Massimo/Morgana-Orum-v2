@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Building2, Landmark, User, Users, ChevronLeft, ChevronRight, Award } from "lucide-react"
+import { Building2, Landmark, User, Users, ChevronLeft, ChevronRight, Award, Search, X } from "lucide-react"
 import { getRoleIcon, CentralSectionIcon, DepartmentSectionIcon } from "@/lib/role-icons"
 import { cn } from "@/lib/utils"
 import { RepresentativesList } from "@/components/representatives-list"
@@ -61,6 +61,7 @@ export default function RepresentativesClient({
     const t = useTranslations("Representatives")
     const [selectedRep, setSelectedRep] = useState<any>(null)
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [searchQuery, setSearchQuery] = useState("")
 
     // Calculate unique terms dynamically based on the active bienniums of representatives
     const existingTerms = useMemo(() => {
@@ -117,9 +118,9 @@ export default function RepresentativesClient({
         setIsModalOpen(true)
     }
 
-    // Filter representatives by selected biennium (overlap check)
+    // Filter representatives by selected biennium (overlap check) and search query
     const filteredReps = useMemo(() => {
-        return allReps.filter((r: any) => {
+        const reps = allReps.filter((r: any) => {
             const startYear = parseInt(r.term.split("-")[0])
             const selectedStartYear = parseInt(selectedTerm.split("-")[0])
             if (!isNaN(startYear) && !isNaN(selectedStartYear)) {
@@ -128,7 +129,19 @@ export default function RepresentativesClient({
             }
             return r.term === selectedTerm
         })
-    }, [allReps, selectedTerm])
+
+        if (!searchQuery.trim()) return reps
+
+        const query = searchQuery.toLowerCase().trim()
+        return reps.filter((r: any) => {
+            return (
+                r.name.toLowerCase().includes(query) ||
+                (r.department && r.department.toLowerCase().includes(query)) ||
+                (r.role && r.role.toLowerCase().includes(query)) ||
+                r.listName.toLowerCase().includes(query)
+            )
+        })
+    }, [allReps, selectedTerm, searchQuery])
 
     // 1. Central Bodies
     const centralReps = filteredReps.filter((r: any) => r.category === "CENTRAL")
@@ -366,6 +379,37 @@ export default function RepresentativesClient({
                         )
                     })}
                 </motion.div>
+
+                {/* Search Bar */}
+                <div className="max-w-xl mx-auto mb-16 relative px-4">
+                    <div className="relative">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+                        <input
+                            type="text"
+                            placeholder="Cerca per nome, ruolo o dipartimento..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-12 pr-10 py-3.5 bg-white border border-zinc-200 rounded-2xl outline-none focus:ring-2 focus:ring-red-600/10 focus:border-red-600 text-sm font-semibold transition-all shadow-sm"
+                        />
+                        {searchQuery && (
+                            <button
+                                onClick={() => setSearchQuery("")}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-650"
+                            >
+                                <X className="size-5" />
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Empty State */}
+                {nationalBodies.length === 0 && centralBodies.length === 0 && departments.length === 0 && (
+                    <div className="text-center py-20 bg-white rounded-3xl border border-zinc-100 max-w-md mx-auto shadow-sm px-6 animate-in fade-in duration-300">
+                        <Search className="size-12 text-zinc-300 mx-auto mb-4" />
+                        <h3 className="text-lg font-bold text-foreground mb-1">Nessun rappresentante trovato</h3>
+                        <p className="text-sm text-zinc-400">Prova a inserire una parola chiave diversa o a selezionare un altro biennio.</p>
+                    </div>
+                )}
 
                 {/* National Bodies Section */}
                 {nationalBodies.length > 0 && (

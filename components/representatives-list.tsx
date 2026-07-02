@@ -26,13 +26,11 @@ export function RepresentativesList({
 
 function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (member: any) => void }) {
     const t = useTranslations("Representatives")
-    const [isOpen, setIsOpen] = useState(true) // Default open on sub-sites
 
     return (
         <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden">
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-full flex items-center justify-between p-6 hover:bg-zinc-50 transition-colors text-left border-b border-zinc-50"
+            <div
+                className="w-full flex items-center justify-between p-6 border-b border-zinc-50"
             >
                 <div>
                     <h3 className="text-xl font-bold text-foreground font-serif uppercase tracking-tight">{dept.name}</h3>
@@ -40,16 +38,9 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                         {dept.groups.reduce((acc: any, curr: any) => acc + curr.members.length, 0)} {t("stat_elected")}
                     </p>
                 </div>
-                {isOpen ? <ChevronUp className="size-5 text-zinc-400" /> : <ChevronDown className="size-5 text-zinc-400" />}
-            </button>
+            </div>
 
-            <motion.div
-                initial={false}
-                animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-            >
-                <div className="p-6 bg-zinc-50/30">
+            <div className="p-6 bg-zinc-50/30">
                     <div className="space-y-10">
                         {dept.groups.map((group: any, idx: number) => (
                             <div key={idx} className="relative">
@@ -129,7 +120,6 @@ function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (m
                         ))}
                     </div>
                 </div>
-            </motion.div>
         </div>
     )
 }
