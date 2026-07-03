@@ -14,7 +14,6 @@ import { getMessages } from "next-intl/server"
 import { getOrganigrammaConfig } from "@/app/actions/organigramma"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/react"
-import { AIChatbot } from "@/components/chat/ai-chatbot"
 import prisma from "@/lib/prisma"
 import "../globals.css"
 
@@ -165,7 +164,6 @@ export default async function RootLayout({
                             </main>
 
                             <Footer showOrganigramma={organigrammaConfig.visible} />
-                            <AIChatbot currentUser={currentUser} />
                         </div>
                     </BrandProvider>
                 </NextIntlClientProvider>

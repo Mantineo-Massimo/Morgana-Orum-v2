@@ -637,27 +637,5 @@
         "resend_verification_btn": "Resend verification email",
         "resend_verification_success": "Verification email resent successfully! Please check your inbox.",
         "resending_verification": "Resending..."
-    },
-    "Chatbot": {
-        "title": "IArmone",
-        "subtitle": "Virtual Assistant",
-        "placeholder": "Type your question...",
-        "welcome_msg": "Hi! I am IArmone, the virtual assistant of the portal. Ask me anything about WhatsApp groups, representatives, services, or bureaucracy guides! If I can't help, you can send a message directly to the secretary office.",
-        "contact_fallback_btn": "Contact Secretary",
-        "contact_title": "Send a message to the secretary office",
-        "contact_desc": "Describe your issue, and we will get back to you as soon as possible via email.",
-        "back_to_chat": "Back to chat",
-        "send_success": "Message sent to the secretary successfully!",
-        "send_error": "An error occurred while sending. Please try again later.",
-        "typing": "Assistant is typing...",
-        "form_name": "Full Name",
-        "form_email": "Email",
-        "form_subject": "Subject",
-        "form_message": "Message",
-        "form_send": "Send Message",
-        "form_sending": "Sending...",
-        "form_error_fields": "Please fill out all required fields.",
-        "disclaimer": "The assistant uses AI: responses may contain inaccuracies. Always verify with official sources.",
-        "restore_link": "Activate IArmone (AI)"
     }
 }

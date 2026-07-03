@@ -635,27 +635,5 @@
         "resend_verification_btn": "Reinvia email di verifica",
         "resend_verification_success": "Email di verifica reinviata con successo! Controlla la posta.",
         "resending_verification": "Invio in corso..."
-    },
-    "Chatbot": {
-        "title": "IArmone",
-        "subtitle": "Assistente Virtuale",
-        "placeholder": "Scrivi la tua domanda...",
-        "welcome_msg": "Ciao! Sono IArmone, l'assistente virtuale del portale. Chiedimi pure informazioni su gruppi WhatsApp, rappresentanti, servizi o guide burocratiche! Se non riesco ad aiutarti, potrai inviare un messaggio alla segreteria.",
-        "contact_fallback_btn": "Contatta la Segreteria",
-        "contact_title": "Invia un messaggio alla segreteria",
-        "contact_desc": "Descrivi il tuo problema e ti risponderemo al più presto via email.",
-        "back_to_chat": "Torna alla chat",
-        "send_success": "Messaggio inviato alla segreteria con successo!",
-        "send_error": "Si è verificato un errore durante l'invio. Riprova più tardi.",
-        "typing": "L'assistente sta scrivendo...",
-        "form_name": "Nome Completo",
-        "form_email": "Email",
-        "form_subject": "Oggetto",
-        "form_message": "Messaggio",
-        "form_send": "Invia Messaggio",
-        "form_sending": "Invio in corso...",
-        "form_error_fields": "Per favore compila tutti i campi obbligatori.",
-        "disclaimer": "L'assistente utilizza l'IA: le risposte potrebbero contenere imprecisioni. Verifica sempre le fonti ufficiali.",
-        "restore_link": "Attiva IArmone (IA)"
     }
 }
