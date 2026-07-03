@@ -48,9 +48,34 @@ export async function POST(req: Request) {
             })
         ])
 
+        // Helper functions to format database enums into human-readable strings
+        const formatAssociation = (assoc: string) => {
+            switch (assoc) {
+                case "MORGANA_ORUM":
+                    return "Morgana & O.R.U.M."
+                case "PIAZZA_DELLARTE":
+                    return "Piazza dell'Arte"
+                default:
+                    return assoc
+            }
+        }
+
+        const formatGroupCategory = (cat: string) => {
+            switch (cat) {
+                case "ACADEMIC":
+                    return "Accademico / Corso di Studi"
+                case "COMMUNITY":
+                    return "Community / Gruppo di Interesse"
+                case "SANITARY_VET":
+                    return "Sanitaria e Veterinaria"
+                default:
+                    return cat
+            }
+        }
+
         // 2. Format database objects into concise Markdown sections
         const repsText = reps.map(r => 
-            `- ${r.name}: Ruolo "${r.role || "Rappresentante"}" (${r.category}), Mandato/Biennio: ${r.term}, Associazione: ${r.association}, Email: ${r.email || "Non indicata"}, Instagram: ${r.instagram || "Non indicato"}${r.roleDescription ? ` (Descrizione ruolo: ${r.roleDescription})` : ""}`
+            `- ${r.name}: Ruolo "${r.role || "Rappresentante"}" (${r.category}), Mandato/Biennio: ${r.term}, Associazione: ${formatAssociation(r.association)}, Email: ${r.email || "Non indicata"}, Instagram: ${r.instagram || "Non indicato"}${r.roleDescription ? ` (Descrizione ruolo: ${r.roleDescription})` : ""}`
         ).join("\n")
 
         const servicesText = services.map(c => 
@@ -59,7 +84,7 @@ export async function POST(req: Request) {
         ).join("\n\n")
 
         const groupsText = groups.map(g => 
-            `- **${g.name}** (EN: ${g.nameEn || g.name}): Categoria "${g.category}", Dipartimento: "${g.department || "Generale"}", Link di invito: ${g.link}`
+            `- **${g.name}** (EN: ${g.nameEn || g.name}): Categoria "${formatGroupCategory(g.category)}", Dipartimento: "${g.department || "Generale"}", Link di invito: ${g.link}`
         ).join("\n")
 
         const guidesText = guides.map(g => 
