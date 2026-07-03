@@ -656,6 +656,7 @@
         "form_message": "Message",
         "form_send": "Send Message",
         "form_sending": "Sending...",
-        "form_error_fields": "Please fill out all required fields."
+        "form_error_fields": "Please fill out all required fields.",
+        "disclaimer": "The assistant uses AI: responses may contain inaccuracies. Always verify with official sources."
     }
 }

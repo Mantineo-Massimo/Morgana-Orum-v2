@@ -427,26 +427,31 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
 
                         {/* Input Area (Only for chat screen) */}
                         {step === "chat" && (
-                            <form
-                                onSubmit={handleSendMessage}
-                                className="flex items-center gap-2 border-t border-gray-200 bg-white p-3"
-                            >
-                                <input
-                                    type="text"
-                                    placeholder={t("placeholder")}
-                                    value={input}
-                                    onChange={e => setInput(e.target.value)}
-                                    className="flex-1 rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-white transition-colors"
-                                    disabled={isTyping}
-                                />
-                                <button
-                                    type="submit"
-                                    disabled={!input.trim() || isTyping}
-                                    className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground hover:opacity-90 active:scale-95 disabled:opacity-50 transition-all focus:outline-none"
+                            <div className="border-t border-gray-200 bg-white p-3 flex flex-col gap-1.5">
+                                <form
+                                    onSubmit={handleSendMessage}
+                                    className="flex items-center gap-2"
                                 >
-                                    <Send className="h-3.5 w-3.5" />
-                                </button>
-                            </form>
+                                    <input
+                                        type="text"
+                                        placeholder={t("placeholder")}
+                                        value={input}
+                                        onChange={e => setInput(e.target.value)}
+                                        className="flex-1 rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-white transition-colors"
+                                        disabled={isTyping}
+                                    />
+                                    <button
+                                        type="submit"
+                                        disabled={!input.trim() || isTyping}
+                                        className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground hover:opacity-90 active:scale-95 disabled:opacity-50 transition-all focus:outline-none"
+                                    >
+                                        <Send className="h-3.5 w-3.5" />
+                                    </button>
+                                </form>
+                                <span className="text-[10px] text-gray-400 text-center leading-tight px-1">
+                                    {t("disclaimer")}
+                                </span>
+                            </div>
                         )}
                     </motion.div>
                 )}

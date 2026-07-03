@@ -654,6 +654,7 @@
         "form_message": "Messaggio",
         "form_send": "Invia Messaggio",
         "form_sending": "Invio in corso...",
-        "form_error_fields": "Per favore compila tutti i campi obbligatori."
+        "form_error_fields": "Per favore compila tutti i campi obbligatori.",
+        "disclaimer": "L'assistente utilizza l'IA: le risposte potrebbero contenere imprecisioni. Verifica sempre le fonti ufficiali."
     }
 }
