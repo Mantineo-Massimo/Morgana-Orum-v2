@@ -144,7 +144,9 @@ REGOLE COMPORTAMENTALI CRITICHE:
         if (!response.ok) {
             const errBody = await response.text()
             console.error("❌ Gemini API request failed:", errBody)
-            return NextResponse.json({ error: "Errore di comunicazione con il servizio di intelligenza artificiale." }, { status: 502 })
+            return NextResponse.json({ 
+                error: `Errore Gemini API: ${errBody}` 
+            }, { status: 502 })
         }
 
         const data = await response.json() as {
