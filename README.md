@@ -21,7 +21,7 @@ Il portale offre un set completo di funzionalità sia per gli studenti sia per g
 - 📊 **Gestione Eventi & Prenotazioni**: Creazione, modifica e pubblicazione di eventi con gestione dei CFU per dipartimento. Monitoraggio in tempo reale degli iscritti e download della lista iscritti in formato Excel (XLSX) o PDF.
 - 📰 **Gestione News**: Editor di testo per pubblicare articoli informativi e notizie per gli studenti.
 - 👥 **Gestione Organigramma e Rappresentanti**: Interfaccia per inserire e aggiornare i membri dell'associazione e i rappresentanti degli studenti.
-- 📁 **Libreria Media**: Upload di immagini e allegati (documenti PDF, moduli) tramite AWS S3/Cloudinary.
+- 📁 **Libreria Media**: Upload di immagini e allegati (documenti PDF, moduli) tramite AWS S3/Vercel Blob.
 - 📧 **Newsletter & Comunicazioni**: Gestione degli iscritti alla newsletter e invio di email transazionali/conferme con branding dinamico (Morgana/Orum).
 
 ---
@@ -35,7 +35,7 @@ Il progetto è costruito con tecnologie moderne e robuste per garantire velocit�
 - **Stile & UI**: [Tailwind CSS](https://tailwindcss.com/) + [Framer Motion](https://www.framer.com/motion/) (animazioni fluide) + [Radix UI](https://www.radix-ui.com/)
 - **Internazionalizzazione (i18n)**: [next-intl](https://next-intl-docs.vercel.app/) per il supporto bilingue (Italiano 🇮🇹 / Inglese 🇬🇧)
 - **Invio Email**: AWS SES (Simple Email Service) / Nodemailer / Resend
-- **Media Storage**: Cloudinary / Vercel Blob / AWS S3
+- **Media Storage**: Vercel Blob / AWS S3
 - **Geolocalizzazione**: Leaflet (via React Leaflet) per la visualizzazione delle convenzioni
 - **Export Dati**: SheetJS (xlsx) e jsPDF
 
@@ -88,10 +88,7 @@ AWS_REGION="eu-central-1"
 AWS_ACCESS_KEY_ID="tuo-access-key-id"
 AWS_SECRET_ACCESS_KEY="tuo-secret-access-key"
 
-# Cloudinary (Media upload)
-CLOUDINARY_CLOUD_NAME="tuo-cloud-name"
-CLOUDINARY_API_KEY="tua-api-key"
-CLOUDINARY_API_SECRET="tua-api-secret"
+
 
 # Analytics
 NEXT_PUBLIC_GA_ID="G-XXXXXXXXXX"
