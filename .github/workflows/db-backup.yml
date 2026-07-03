@@ -53,5 +53,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: supabase-database-backup-${{ github.run_id }}
-          path: ${{ env.BACKUP_PATH }}
+          path: backups/*.sql.gz
           retention-days: 90 # GitHub keeps these files for 90 days for free
