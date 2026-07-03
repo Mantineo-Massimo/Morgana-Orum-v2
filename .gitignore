@@ -63,3 +63,16 @@ documenti_legali/**/*.fls
 documenti_legali/**/*.fdb_latexmk
 documenti_legali/**/*.out
 documenti_legali/**/texput.log
+
+# IDEs and editors
+.idea/
+*.swp
+*~
+
+# System files
+Thumbs.db
+desktop.ini
+
+# Database backups and dumps
+*.sql
+*.sqlite
