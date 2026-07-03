@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageSquare, Send, X, ArrowLeft, Mail, Loader2, Sparkles, Minus } from "lucide-react"
+import { MessageSquare, Send, X, ArrowLeft, Mail, Loader2, Sparkles, Minus, ChevronLeft } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { sendSupportMessage } from "@/app/actions/support"
 
@@ -263,7 +263,26 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
     }
 
     return (
-        <div className={`fixed bottom-6 right-6 z-50 font-sans ${isDismissed ? "hidden" : ""}`}>
+        <>
+            {/* Tucked Tab when dismissed */}
+            {isDismissed && (
+                <button
+                    onClick={() => {
+                        setIsDismissed(false)
+                        setIsOpen(true)
+                    }}
+                    className="fixed bottom-8 right-0 z-50 flex h-10 w-8 items-center justify-center rounded-l-xl text-white shadow-lg transition-all hover:w-10 active:scale-95 focus:outline-none"
+                    style={{
+                        background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--orum-navy)) 100%)"
+                    }}
+                    title="Mostra assistente IArmone"
+                    aria-label="Mostra assistente IArmone"
+                >
+                    <ChevronLeft className="h-4 w-4 animate-pulse" />
+                </button>
+            )}
+
+            <div className={`fixed bottom-6 right-6 z-50 font-sans ${isDismissed ? "hidden" : ""}`}>
             {/* Toggle Button */}
             <button
                 onClick={() => {
@@ -540,5 +559,6 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                 )}
             </AnimatePresence>
         </div>
+        </>
     )
 }
