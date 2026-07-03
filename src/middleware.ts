@@ -70,7 +70,7 @@ export default function middleware(request: NextRequest) {
         "font-src 'self' https://fonts.gstatic.com data:",
         "img-src 'self' data: blob: https://storage.googleapis.com https://*.public.blob.vercel-storage.com https://www.google-analytics.com https://*.basemaps.cartocdn.com https://www.googletagmanager.com",
         "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://va.vercel-scripts.com https://vitals.vercel-insights.com https://*.vercel-storage.com https://*.supabase.co https://api.vercel.com",
-        "frame-src 'self' https://www.youtube.com https://www.google.com",
+        "frame-src 'self' https://www.youtube.com https://www.google.com https://vercel.live https://*.vercel.live",
         "media-src 'self' blob: https://storage.googleapis.com",
         "worker-src 'self' blob:",
         "manifest-src 'self'",
