@@ -206,9 +206,9 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                     setIsOpen(!isOpen)
                     setUnread(false)
                 }}
-                className="relative flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-tr from-brand-orange to-brand-blue text-white shadow-lg transition-transform hover:scale-105 active:scale-95 focus:outline-none"
+                className="relative flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg transition-transform hover:scale-105 active:scale-95 focus:outline-none bg-primary"
                 style={{
-                    background: "linear-gradient(135deg, #f97316 0%, #3b82f6 100%)"
+                    background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--orum-navy)) 100%)"
                 }}
                 aria-label="Apri chatbot"
             >
@@ -232,13 +232,13 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute bottom-18 right-0 flex h-[520px] w-[360px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl md:w-[380px]"
+                        className="absolute bottom-16 right-0 flex h-[520px] w-[360px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl md:w-[380px]"
                     >
                         {/* Header */}
                         <div 
                             className="flex items-center justify-between p-4 text-white"
                             style={{
-                                background: "linear-gradient(135deg, #f97316 0%, #3b82f6 100%)"
+                                background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--orum-navy)) 100%)"
                             }}
                         >
                             <div className="flex items-center gap-3">
@@ -264,7 +264,7 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                 <span className="text-gray-600 font-medium">Hai bisogno della segreteria?</span>
                                 <button
                                     onClick={() => setStep("contact")}
-                                    className="flex items-center gap-1 text-orange-600 font-bold hover:underline"
+                                    className="flex items-center gap-1 text-primary font-bold hover:underline"
                                 >
                                     <Mail className="h-3 w-3" />
                                     {t("contact_fallback_btn")}
@@ -292,7 +292,7 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                                 <div
                                                     className={`max-w-[85%] rounded-2xl px-4 py-2.5 shadow-sm text-sm ${
                                                         msg.role === "user"
-                                                            ? "bg-blue-600 text-white rounded-br-none"
+                                                            ? "bg-primary text-primary-foreground rounded-br-none"
                                                             : "bg-white text-gray-800 rounded-bl-none border border-gray-100"
                                                     }`}
                                                 >
@@ -304,9 +304,9 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                                                         {isTyping && (
                                             <div className="flex justify-start">
                                                 <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm flex items-center gap-2">
-                                                    <span className="flex h-2 w-2 animate-bounce rounded-full bg-blue-500 [animation-delay:-0.3s]"></span>
-                                                    <span className="flex h-2 w-2 animate-bounce rounded-full bg-blue-500 [animation-delay:-0.15s]"></span>
-                                                    <span className="flex h-2 w-2 animate-bounce rounded-full bg-blue-500"></span>
+                                                    <span className="flex h-2 w-2 animate-bounce rounded-full bg-primary [animation-delay:-0.3s]"></span>
+                                                    <span className="flex h-2 w-2 animate-bounce rounded-full bg-primary [animation-delay:-0.15s]"></span>
+                                                    <span className="flex h-2 w-2 animate-bounce rounded-full bg-primary"></span>
                                                     <span className="text-xs text-gray-400 ml-1">{t("typing")}</span>
                                                 </div>
                                             </div>
@@ -357,7 +357,7 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                                             placeholder={t("form_name")}
                                                             value={contactForm.name}
                                                             onChange={e => setContactForm(prev => ({ ...prev, name: e.target.value }))}
-                                                            className="w-full text-xs rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 transition-colors"
+                                                            className="w-full text-xs rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                                                             disabled={formStatus.loading}
                                                         />
                                                     </div>
@@ -370,7 +370,7 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                                             placeholder={t("form_email")}
                                                             value={contactForm.email}
                                                             onChange={e => setContactForm(prev => ({ ...prev, email: e.target.value }))}
-                                                            className="w-full text-xs rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 transition-colors"
+                                                            className="w-full text-xs rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                                                             disabled={formStatus.loading || !!currentUser}
                                                         />
                                                     </div>
@@ -382,7 +382,7 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                                             placeholder={t("form_subject")}
                                                             value={contactForm.subject}
                                                             onChange={e => setContactForm(prev => ({ ...prev, subject: e.target.value }))}
-                                                            className="w-full text-xs rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 transition-colors"
+                                                            className="w-full text-xs rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
                                                             disabled={formStatus.loading}
                                                         />
                                                     </div>
@@ -395,7 +395,7 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                                             placeholder={t("form_message")}
                                                             value={contactForm.message}
                                                             onChange={e => setContactForm(prev => ({ ...prev, message: e.target.value }))}
-                                                            className="w-full text-xs rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-blue-500 transition-colors resize-none"
+                                                            className="w-full text-xs rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors resize-none"
                                                             disabled={formStatus.loading}
                                                         />
                                                     </div>
@@ -403,7 +403,7 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                                     <button
                                                         type="submit"
                                                         disabled={formStatus.loading}
-                                                        className="w-full flex justify-center items-center gap-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2 px-4 shadow-md transition-all active:scale-98 disabled:opacity-50"
+                                                        className="w-full flex justify-center items-center gap-2 rounded-lg bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xs py-2 px-4 shadow-md transition-all active:scale-98 disabled:opacity-50"
                                                     >
                                                         {formStatus.loading ? (
                                                             <>
@@ -436,13 +436,13 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                     placeholder={t("placeholder")}
                                     value={input}
                                     onChange={e => setInput(e.target.value)}
-                                    className="flex-1 rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-blue-500 focus:bg-white transition-colors"
+                                    className="flex-1 rounded-lg border border-gray-300 bg-gray-50 px-3 py-2 text-xs outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-white transition-colors"
                                     disabled={isTyping}
                                 />
                                 <button
                                     type="submit"
                                     disabled={!input.trim() || isTyping}
-                                    className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 active:scale-95 disabled:opacity-50 transition-all focus:outline-none"
+                                    className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground hover:opacity-90 active:scale-95 disabled:opacity-50 transition-all focus:outline-none"
                                 >
                                     <Send className="h-3.5 w-3.5" />
                                 </button>
