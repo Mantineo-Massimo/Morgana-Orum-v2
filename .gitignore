@@ -54,3 +54,12 @@ load-test.js
 
 # data import files
 *.csv
+*.xlsx
+
+# LaTeX build artifacts
+documenti_legali/**/*.aux
+documenti_legali/**/*.log
+documenti_legali/**/*.fls
+documenti_legali/**/*.fdb_latexmk
+documenti_legali/**/*.out
+documenti_legali/**/texput.log
