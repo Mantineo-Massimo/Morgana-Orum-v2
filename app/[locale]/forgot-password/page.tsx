@@ -63,7 +63,7 @@ export default function Page() {
                 ) : (
                     <form onSubmit={onSubmit} className="space-y-4">
                         <div>
-                            <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-1">Email Universitaria</label>
+                            <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider block mb-1">Email</label>
                             <input
                                 name="email"
                                 type="email"
