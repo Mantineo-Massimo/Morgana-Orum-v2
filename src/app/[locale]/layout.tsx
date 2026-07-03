@@ -14,6 +14,8 @@ import { getMessages } from "next-intl/server"
 import { getOrganigrammaConfig } from "@/app/actions/organigramma"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from "@vercel/analytics/react"
+import { AIChatbot } from "@/components/chat/ai-chatbot"
+import prisma from "@/lib/prisma"
 import "../globals.css"
 
 const inter = Inter({
@@ -110,6 +112,15 @@ export default async function RootLayout({
 }) {
     const sessionEmail = cookies().get("session_email")?.value
     const isLoggedIn = !!sessionEmail
+    
+    let currentUser = null
+    if (sessionEmail) {
+        currentUser = await prisma.user.findUnique({
+            where: { email: sessionEmail },
+            select: { name: true, surname: true, email: true }
+        })
+    }
+
     const cookieConsent = cookies().get("cookie-consent")?.value
     const messages = await getMessages()
 
@@ -154,6 +165,7 @@ export default async function RootLayout({
                             </main>
 
                             <Footer showOrganigramma={organigrammaConfig.visible} />
+                            <AIChatbot currentUser={currentUser} />
                         </div>
                     </BrandProvider>
                 </NextIntlClientProvider>
