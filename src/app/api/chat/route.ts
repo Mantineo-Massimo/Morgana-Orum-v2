@@ -164,6 +164,8 @@ REGOLE COMPORTAMENTALI CRITICHE:
 
     } catch (error) {
         console.error("❌ Chat API error:", error)
-        return NextResponse.json({ error: "Si è verificato un errore del server durante la chat." }, { status: 500 })
+        return NextResponse.json({ 
+            error: `Errore del server: ${error instanceof Error ? error.message : String(error)}` 
+        }, { status: 500 })
     }
 }
