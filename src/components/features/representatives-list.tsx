@@ -1,0 +1,125 @@
+"use client"
+
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { ChevronDown, ChevronUp, Mail, Phone, Instagram } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { useTranslations } from "next-intl"
+import { User } from "lucide-react"
+
+export function RepresentativesList({
+    departments,
+    onMemberClick
+}: {
+    departments: any[],
+    onMemberClick?: (member: any) => void
+}) {
+    const t = useTranslations("Representatives")
+    return (
+        <div className="space-y-8">
+            {departments.map((dept, idx) => (
+                <DepartmentCard key={idx} dept={dept} onMemberClick={onMemberClick} />
+            ))}
+        </div>
+    )
+}
+
+function DepartmentCard({ dept, onMemberClick }: { dept: any, onMemberClick?: (member: any) => void }) {
+    const t = useTranslations("Representatives")
+
+    return (
+        <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm overflow-hidden">
+            <div
+                className="w-full flex items-center justify-between p-6 border-b border-zinc-50"
+            >
+                <div>
+                    <h3 className="text-xl font-bold text-foreground font-serif uppercase tracking-tight">{dept.name}</h3>
+                    <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mt-1">
+                        {dept.groups.reduce((acc: any, curr: any) => acc + curr.members.length, 0)} {t("stat_elected")}
+                    </p>
+                </div>
+            </div>
+
+            <div className="p-6 bg-zinc-50/30">
+                    <div className="space-y-10">
+                        {dept.groups.map((group: any, idx: number) => (
+                            <div key={idx} className="relative">
+                                {/* Group Header */}
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="h-px bg-zinc-200 flex-1"></div>
+                                    <div className="flex items-center gap-2 px-4">
+                                        <div className="size-6 relative opacity-90">
+                                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                                            <img
+                                                src={
+                                                    group.listName === "MORGANA" ? "/assets/backgrounds/morgana.webp" :
+                                                        group.listName === "O.R.U.M." ? "/assets/backgrounds/orum.webp" :
+                                                            "/assets/backgrounds/azione.webp"
+                                                }
+                                                alt={group.listName}
+                                                className="size-full object-contain"
+                                            />
+                                        </div>
+                                        <h4 className="font-bold text-sm uppercase tracking-widest text-zinc-500">
+                                            {group.listName === "AZIONE UNIVERITARIA" ? "Azione Universitaria" : group.listName}
+                                        </h4>
+                                    </div>
+                                    <div className="h-px bg-zinc-200 flex-1"></div>
+                                </div>
+
+                                {/* Members Cards Grid - Auto-responsive grid for equal-height cards */}
+                                <div 
+                                    className="grid gap-6 w-full items-stretch justify-items-center"
+                                    style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}
+                                >
+                                    {group.members.map((member: any, memIdx: number) => (
+                                        <motion.button
+                                            key={memIdx}
+                                            onClick={() => onMemberClick?.(member)}
+                                            whileHover={{ scale: 1.02 }}
+                                            whileTap={{ scale: 0.98 }}
+                                            className="flex items-center gap-4 bg-white rounded-xl p-4 border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all text-left group w-full max-w-[400px] min-h-[96px] md:min-h-[112px] h-full relative"
+                                        >
+                                            {/* Photo */}
+                                            <div className="size-16 md:size-20 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center shrink-0 overflow-hidden relative shadow-sm">
+                                                {member.image ? (
+                                                    // eslint-disable-next-line @next/next/no-img-element
+                                                    <img src={member.image} alt={member.name} className="size-full object-cover" />
+                                                ) : (
+                                                    <User className="size-8 text-zinc-300" />
+                                                )}
+                                            </div>
+
+                                            {/* Info */}
+                                            <div className="flex-1 min-w-0 flex flex-col justify-center pr-10 md:pr-12">
+                                                <h4 className="font-bold text-foreground text-sm md:text-base mb-1 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight line-clamp-2">
+                                                    {member.name}
+                                                </h4>
+                                                <p className="text-[10px] md:text-xs text-zinc-400 font-bold uppercase tracking-widest">
+                                                    {member.role || t("rep_label")}
+                                                </p>
+                                            </div>
+
+                                            {/* Badge List */}
+                                            <div className="absolute right-4 top-1/2 -translate-y-1/2 size-8 md:size-9 opacity-40 group-hover:opacity-100 transition-opacity">
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
+                                                    src={
+                                                        group.listName === "MORGANA" ? "/assets/backgrounds/morgana.webp" :
+                                                            group.listName === "O.R.U.M." ? "/assets/backgrounds/orum.webp" :
+                                                                "/assets/backgrounds/azione.webp"
+                                                    }
+                                                    alt={group.listName}
+                                                    className="size-full object-contain"
+                                                />
+                                            </div>
+                                        </motion.button>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+        </div>
+    )
+}
