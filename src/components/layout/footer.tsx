@@ -6,6 +6,7 @@ import { headers } from "next/headers"
 import { Brand } from "@/components/layout/brand-provider"
 import { getTranslations } from "next-intl/server"
 import { NewsletterForm } from "@/components/shared/newsletter-form"
+import { RestoreChatbotLink } from "@/components/chat/restore-chatbot-link"
 
 const TiktokIcon = ({ className }: { className?: string }) => (
     <svg
@@ -143,6 +144,7 @@ export async function Footer({ showOrganigramma = true }: { showOrganigramma?: b
                             <li><Link href={`/privacy`} className={cn("transition-colors", mutedColor)}>{t("privacy")}</Link></li>
                             <li><Link href={`/cookie`} className={cn("transition-colors", mutedColor)}>{t("cookies")}</Link></li>
                             <li><Link href="/contact" className={cn("transition-colors", mutedColor)}>{t("contact")}</Link></li>
+                            <li><RestoreChatbotLink /></li>
                         </ul>
                     </div>
 

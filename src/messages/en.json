@@ -639,10 +639,10 @@
         "resending_verification": "Resending..."
     },
     "Chatbot": {
-        "title": "Morgana & O.R.U.M. Bot",
+        "title": "IArmone",
         "subtitle": "Virtual Assistant",
         "placeholder": "Type your question...",
-        "welcome_msg": "Hi! I am the virtual assistant. Ask me anything about WhatsApp groups, representatives, services, or bureaucracy guides! If I can't help, you can send a message directly to the secretary office.",
+        "welcome_msg": "Hi! I am IArmone, the virtual assistant of the portal. Ask me anything about WhatsApp groups, representatives, services, or bureaucracy guides! If I can't help, you can send a message directly to the secretary office.",
         "contact_fallback_btn": "Contact Secretary",
         "contact_title": "Send a message to the secretary office",
         "contact_desc": "Describe your issue, and we will get back to you as soon as possible via email.",
@@ -657,6 +657,7 @@
         "form_send": "Send Message",
         "form_sending": "Sending...",
         "form_error_fields": "Please fill out all required fields.",
-        "disclaimer": "The assistant uses AI: responses may contain inaccuracies. Always verify with official sources."
+        "disclaimer": "The assistant uses AI: responses may contain inaccuracies. Always verify with official sources.",
+        "restore_link": "Activate IArmone (AI)"
     }
 }

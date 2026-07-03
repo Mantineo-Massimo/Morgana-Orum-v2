@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { MessageSquare, Send, X, ArrowLeft, Mail, Loader2, Sparkles } from "lucide-react"
+import { MessageSquare, Send, X, ArrowLeft, Mail, Loader2, Sparkles, Minus } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { sendSupportMessage } from "@/app/actions/support"
 
@@ -25,6 +25,8 @@ interface Message {
 export function AIChatbot({ currentUser }: AIChatbotProps) {
     const t = useTranslations("Chatbot")
     const [isOpen, setIsOpen] = useState(false)
+    const [isDismissed, setIsDismissed] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
     const [step, setStep] = useState<"chat" | "contact">("chat")
     const [messages, setMessages] = useState<Message[]>([])
     const [input, setInput] = useState("")
@@ -46,6 +48,81 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
 
     const messagesEndRef = useRef<HTMLDivElement>(null)
 
+    // Sync state with localStorage on mount
+    useEffect(() => {
+        const storedOpen = localStorage.getItem("iarmone_chat_open")
+        const storedDismissed = localStorage.getItem("iarmone_chat_dismissed")
+        const storedMessages = localStorage.getItem("iarmone_chat_messages")
+        
+        if (storedOpen === "true") {
+            setIsOpen(true)
+            setUnread(false)
+        }
+        
+        if (storedDismissed === "true") {
+            setIsDismissed(true)
+        }
+        
+        if (storedMessages) {
+            try {
+                setMessages(JSON.parse(storedMessages))
+            } catch (e) {
+                // fallback if parse fails
+                setMessages([
+                    {
+                        id: "welcome",
+                        role: "assistant",
+                        content: t("welcome_msg")
+                    }
+                ])
+            }
+        } else {
+            setMessages([
+                {
+                    id: "welcome",
+                    role: "assistant",
+                    content: t("welcome_msg")
+                }
+            ])
+        }
+        
+        setIsLoaded(true)
+    }, [t])
+
+    // Save open state to localStorage
+    useEffect(() => {
+        if (isLoaded) {
+            localStorage.setItem("iarmone_chat_open", isOpen.toString())
+        }
+    }, [isOpen, isLoaded])
+
+    // Save dismissed state to localStorage
+    useEffect(() => {
+        if (isLoaded) {
+            localStorage.setItem("iarmone_chat_dismissed", isDismissed.toString())
+        }
+    }, [isDismissed, isLoaded])
+
+    // Save messages to localStorage
+    useEffect(() => {
+        if (isLoaded && messages.length > 0) {
+            localStorage.setItem("iarmone_chat_messages", JSON.stringify(messages))
+        }
+    }, [messages, isLoaded])
+
+    // Listen for custom event to restore chatbot from external links (like footer)
+    useEffect(() => {
+        const handleRestoreChat = () => {
+            setIsDismissed(false);
+            setIsOpen(true);
+            setUnread(false);
+            localStorage.setItem("iarmone_chat_dismissed", "false");
+            localStorage.setItem("iarmone_chat_open", "true");
+        };
+        window.addEventListener("show-iarmone-chatbot", handleRestoreChat);
+        return () => window.removeEventListener("show-iarmone-chatbot", handleRestoreChat);
+    }, []);
+
     // Populate contact form once currentUser changes (e.g. after login)
     useEffect(() => {
         if (currentUser) {
@@ -61,19 +138,6 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }, [messages, isTyping])
-
-    // Show initial welcome message if empty
-    useEffect(() => {
-        if (messages.length === 0) {
-            setMessages([
-                {
-                    id: "welcome",
-                    role: "assistant",
-                    content: t("welcome_msg")
-                }
-            ])
-        }
-    }, [messages, t])
 
     const handleSendMessage = async (e?: React.FormEvent) => {
         e?.preventDefault()
@@ -199,7 +263,7 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
     }
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 font-sans">
+        <div className={`fixed bottom-6 right-6 z-50 font-sans ${isDismissed ? "hidden" : ""}`}>
             {/* Toggle Button */}
             <button
                 onClick={() => {
@@ -250,12 +314,31 @@ export function AIChatbot({ currentUser }: AIChatbotProps) {
                                     <p className="text-[11px] text-white/80">{t("subtitle")}</p>
                                 </div>
                             </div>
-                            <button 
-                                onClick={() => setIsOpen(false)}
-                                className="rounded-full p-1 hover:bg-white/20 transition-colors"
-                            >
-                                <X className="h-4 w-4" />
-                            </button>
+                            <div className="flex items-center gap-1">
+                                {/* Minimize Button */}
+                                <button 
+                                    onClick={() => setIsOpen(false)}
+                                    className="rounded-full p-1 hover:bg-white/20 transition-colors"
+                                    title="Riduci a icona"
+                                    aria-label="Riduci a icona"
+                                >
+                                    <Minus className="h-4 w-4" />
+                                </button>
+                                {/* Hide / Dismiss Button */}
+                                <button 
+                                    onClick={() => {
+                                        if (confirm("Vuoi nascondere completamente il chatbot? Potrai riattivarlo dal link in fondo al sito.")) {
+                                            setIsDismissed(true)
+                                            setIsOpen(false)
+                                        }
+                                    }}
+                                    className="rounded-full p-1 hover:bg-white/20 transition-colors"
+                                    title="Nascondi assistente"
+                                    aria-label="Nascondi assistente"
+                                >
+                                    <X className="h-4 w-4" />
+                                </button>
+                            </div>
                         </div>
 
                         {/* Banner for Quick Fallback Contact */}

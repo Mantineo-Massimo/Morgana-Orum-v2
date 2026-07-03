@@ -637,10 +637,10 @@
         "resending_verification": "Invio in corso..."
     },
     "Chatbot": {
-        "title": "Morgana & O.R.U.M. Bot",
+        "title": "IArmone",
         "subtitle": "Assistente Virtuale",
         "placeholder": "Scrivi la tua domanda...",
-        "welcome_msg": "Ciao! Sono l'assistente virtuale del portale. Chiedimi pure informazioni su gruppi WhatsApp, rappresentanti, servizi o guide burocratiche! Se non riesco ad aiutarti, potrai inviare un messaggio alla segreteria.",
+        "welcome_msg": "Ciao! Sono IArmone, l'assistente virtuale del portale. Chiedimi pure informazioni su gruppi WhatsApp, rappresentanti, servizi o guide burocratiche! Se non riesco ad aiutarti, potrai inviare un messaggio alla segreteria.",
         "contact_fallback_btn": "Contatta la Segreteria",
         "contact_title": "Invia un messaggio alla segreteria",
         "contact_desc": "Descrivi il tuo problema e ti risponderemo al più presto via email.",
@@ -655,6 +655,7 @@
         "form_send": "Invia Messaggio",
         "form_sending": "Invio in corso...",
         "form_error_fields": "Per favore compila tutti i campi obbligatori.",
-        "disclaimer": "L'assistente utilizza l'IA: le risposte potrebbero contenere imprecisioni. Verifica sempre le fonti ufficiali."
+        "disclaimer": "L'assistente utilizza l'IA: le risposte potrebbero contenere imprecisioni. Verifica sempre le fonti ufficiali.",
+        "restore_link": "Attiva IArmone (IA)"
     }
 }
