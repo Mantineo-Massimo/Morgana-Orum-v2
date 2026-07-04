@@ -9,38 +9,36 @@ datasource db {
 }
 
 model User {
-  id               Int            @id @default(autoincrement())
-  email            String         @unique
-  password         String
-  name             String
-  surname          String
-  birthDate        DateTime
-  matricola        String         @unique
-  department       String
-  degreeCourse     String
-  isFuorisede      Boolean
-  qrToken          String         @unique @default(uuid())
-  createdAt        DateTime       @default(now())
-  resetToken       String?        @unique
-  resetTokenExpiry DateTime?
-  newsletter                     Boolean        @default(false)
-  consensoMarketingOrum        Boolean        @default(false) @map("consenso_marketing_orum")
-  consensoMarketingMorgana     Boolean        @default(false) @map("consenso_marketing_morgana")
-  accettazioneTerminiCondivisi Boolean        @default(false) @map("accettazione_termini_condivisi")
-  role                           Role           @default(USER)
-  association                    Association    @default(MORGANA_ORUM)
-  emailVerified                  Boolean        @default(false)
-  verificationToken              String?        @unique
-  registrations                  Registration[]
-  gradeSimulation                GradeSimulation?
+  id                           Int              @id @default(autoincrement())
+  email                        String           @unique
+  password                     String
+  name                         String
+  surname                      String
+  birthDate                    DateTime
+  matricola                    String           @unique
+  department                   String
+  degreeCourse                 String
+  isFuorisede                  Boolean
+  qrToken                      String           @unique @default(uuid())
+  createdAt                    DateTime         @default(now())
+  resetToken                   String?          @unique
+  resetTokenExpiry             DateTime?
+  newsletter                   Boolean          @default(false)
+  role                         Role             @default(USER)
+  association                  Association      @default(MORGANA_ORUM)
+  accettazioneTerminiCondivisi Boolean          @default(false) @map("accettazione_termini_condivisi")
+  consensoMarketingMorgana     Boolean          @default(false) @map("consenso_marketing_morgana")
+  consensoMarketingOrum        Boolean          @default(false) @map("consenso_marketing_orum")
+  emailVerified                Boolean          @default(false)
+  verificationToken            String?          @unique
+  gradeSimulation              GradeSimulation?
+  registrations                Registration[]
 }
 
 model Event {
   id             Int            @id @default(autoincrement())
   title          String
-  titleEn        String?
   description    String
-  descriptionEn  String?
   date           DateTime
   location       String
   image          String?
@@ -50,17 +48,19 @@ model Event {
   bookingOpen    Boolean        @default(true)
   bookingStart   DateTime?
   details        String?
-  detailsEn      String?
   endDate        DateTime?
   cfuDepartments String?
   cfuType        String?
   cfuValue       String?
   published      Boolean        @default(true)
-  youtubeUrl     String?
   associations   Association[]  @default([MORGANA_ORUM])
-  registrations  Registration[]
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @default(now()) @updatedAt
+  youtubeUrl     String?
+  descriptionEn  String?
+  detailsEn      String?
+  titleEn        String?
+  registrations  Registration[]
 
   @@index([date])
   @@index([category])
@@ -86,7 +86,6 @@ model Representative {
   department      String?
   role            String?
   term            String      @default("2025-2027")
-  mandateYears    Int         @default(2)
   image           String?
   email           String?
   phone           String?
@@ -96,25 +95,26 @@ model Representative {
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   association     Association @default(MORGANA_ORUM)
+  mandateYears    Int         @default(2)
 }
 
 model News {
-  id           String        @id @default(uuid())
-  title        String
-  titleEn      String?
-  description  String
+  id            String        @id @default(uuid())
+  title         String
+  description   String
+  content       String?
+  category      String
+  tags          String?
+  image         String?
+  date          DateTime      @default(now())
+  published     Boolean       @default(true)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  associations  Association[] @default([MORGANA_ORUM])
+  contentEn     String?
   descriptionEn String?
-  content      String?
-  contentEn    String?
-  category     String
-  tags         String?
-  image        String?
-  attachments  String?
-  date         DateTime      @default(now())
-  published    Boolean       @default(true)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  associations Association[] @default([MORGANA_ORUM])
+  titleEn       String?
+  attachments   String?
 
   @@index([date])
   @@index([category])
@@ -149,22 +149,22 @@ model EventCategory {
 model Notification {
   id        String   @id @default(uuid())
   title     String
-  titleEn   String?
   message   String
-  messageEn String?
   type      String
   link      String?
   createdAt DateTime @default(now())
+  messageEn String?
+  titleEn   String?
 
   @@index([createdAt])
 }
 
 model AnalyticEvent {
   id        Int      @id @default(autoincrement())
-  type      String   // "VISIT", "CLICK", "EVENT_VIEW", etc.
-  page      String?  // The URL or page name
-  targetId  String?  // ID of the target (e.g., eventId)
-  metadata  Json?    // Extra info (browser, platform, etc.)
+  type      String
+  page      String?
+  targetId  String?
+  metadata  Json?
   createdAt DateTime @default(now())
 
   @@index([type])
@@ -178,23 +178,11 @@ model NewsletterSubscriber {
   createdAt DateTime @default(now())
 }
 
-enum Role {
-  USER
-  ADMIN_NETWORK
-  ADMIN_MORGANA
-  SUPER_ADMIN
-}
-
-enum Association {
-  MORGANA_ORUM
-  PIAZZA_DELLARTE
-}
-
 model PiazzaArtist {
   id        String   @id @default(uuid())
   name      String
   role      String
-  category  String   // Musica, Danza, Pittura, Performance
+  category  String
   bio       String
   image     String?
   badge     String?
@@ -207,26 +195,26 @@ model PiazzaProgramItem {
   id          String   @id @default(uuid())
   title       String
   description String
-  location    String?  // Added field
-  timeSlot    String   // Mattino, Pomeriggio, Sera
-  startTime   String?  // HH:mm
-  endTime     String?  // HH:mm
-  icon        String?  // Lucide icon name
+  timeSlot    String
+  startTime   String?
+  endTime     String?
+  icon        String?
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  location    String?
 }
 
 model PiazzaMediaItem {
   id          String   @id @default(uuid())
-  type        String   // VIDEO, PHOTO, INTERVIEW
+  type        String
   title       String
   description String?
-  url         String?  // YouTube URL or Image path
+  url         String?
   thumbnail   String?
-  personName  String?  // For interviews
-  personRole  String?  // For interviews
-  duration    String?  // For videos
+  personName  String?
+  personRole  String?
+  duration    String?
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -235,9 +223,9 @@ model PiazzaMediaItem {
 model PiazzaSettings {
   id               String   @id @default("settings")
   year             String   @default("2026")
-  eventDate        DateTime @default("2026-05-22T09:00:00Z")
   countdownVisible Boolean  @default(true)
   updatedAt        DateTime @updatedAt
+  eventDate        DateTime @default(dbgenerated("'2026-05-22 09:00:00'::timestamp without time zone"))
 }
 
 model PiazzaSponsor {
@@ -245,52 +233,39 @@ model PiazzaSponsor {
   name      String
   logo      String?
   website   String?
-  tier      String?  // Main, Partner, etc.
+  tier      String?
   order     Int      @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-enum OrganigrammaAssociation {
-  MORGANA
-  ORUM
-}
-
-enum OrganigrammaSection {
-  PRESIDENCY
-  BOARD
-  COORDINATOR
-  RESPONSIBLE
-  DEPARTMENT
-}
-
 model OrganigrammaMember {
   id          String                  @id @default(uuid())
   name        String
-  role        String   // Role title (e.g. "Presidente") or Department name (e.g. "Dipartimento Attività Culturali")
-  roleEn      String?  // Optional English translation
+  role        String
+  roleEn      String?
   email       String?
   association OrganigrammaAssociation
   section     OrganigrammaSection
   order       Int                     @default(0)
-  image       String?
-  phone       String?
-  instagram   String?
-  description String?
   createdAt   DateTime                @default(now())
   updatedAt   DateTime                @updatedAt
+  description String?
+  image       String?
+  instagram   String?
+  phone       String?
 }
 
 model ServiceCategory {
-  id        String        @id // Text ID/slug (e.g., "accademici", "ersu") used for scroll-anchors
+  id        String        @id
   title     String
   titleEn   String?
-  icon      String        // Lucide icon name string
-  color     String        // Tailwind/styling color key (e.g., "blue", "orange")
+  icon      String
+  color     String
   order     Int           @default(0)
-  items     ServiceItem[]
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
+  items     ServiceItem[]
 }
 
 model ServiceItem {
@@ -302,15 +277,9 @@ model ServiceItem {
   href          String?
   order         Int             @default(0)
   categoryId    String
-  category      ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-}
-
-enum WhatsAppGroupCategory {
-  ACADEMIC
-  COMMUNITY
-  SANITARY_VET
+  category      ServiceCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model WhatsAppGroup {
@@ -319,21 +288,21 @@ model WhatsAppGroup {
   nameEn        String?
   link          String
   category      WhatsAppGroupCategory
-  department    String?  // For academic groups (e.g., "Economia")
-  description   String?  // For community groups
+  department    String?
+  description   String?
   descriptionEn String?
-  icon          String?  // Icon name for community groups
-  theme         String?  // CSS styling / theme for community groups
+  icon          String?
+  theme         String?
   order         Int                   @default(0)
   createdAt     DateTime              @default(now())
   updatedAt     DateTime              @updatedAt
+  isGeneral     Boolean               @default(false)
   semester      String?
   subcategory   String?
-  isGeneral     Boolean               @default(false)
 }
 
 model Guide {
-  id                 String      @id // Text ID/slug (e.g., "matricole", "trasporti")
+  id                 String      @id
   title              String
   titleEn            String?
   description        String
@@ -342,9 +311,9 @@ model Guide {
   color              String
   order              Int         @default(0)
   hasCustomComponent Boolean     @default(false)
-  steps              GuideStep[]
   createdAt          DateTime    @default(now())
   updatedAt          DateTime    @updatedAt
+  steps              GuideStep[]
 }
 
 model GuideStep {
@@ -354,24 +323,24 @@ model GuideStep {
   description   String
   descriptionEn String?
   order         Int      @default(0)
-  attachments   String?
   guideId       String
-  guide         Guide    @relation(fields: [guideId], references: [id], onDelete: Cascade)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  attachments   String?
+  guide         Guide    @relation(fields: [guideId], references: [id], onDelete: Cascade)
 }
 
 model GradeSimulation {
   id           Int      @id @default(autoincrement())
   userId       Int      @unique
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  exams        Json     // Stores the array of simulated exams
+  exams        Json
   targetCfu    Int      @default(180)
   targetType   String   @default("180")
   lodeAs31     Boolean  @default(false)
   thesisPoints Int      @default(5)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model BienniumConfig {
@@ -400,40 +369,71 @@ model DeadlineCountdown {
   id            String          @id @default(uuid())
   title         String
   titleEn       String?
-  category      String          // "burocrazia" | "sessione"
+  category      String
   date          DateTime
   description   String
   descriptionEn String?
   visible       Boolean         @default(true)
   order         Int             @default(0)
-  alerts        DeadlineAlert[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  alerts        DeadlineAlert[]
 }
 
 model DeadlineAlert {
-  id            String            @id @default(uuid())
-  email         String
-  countdownId   String
-  countdown     DeadlineCountdown @relation(fields: [countdownId], references: [id], onDelete: Cascade)
-  sentOneMonth  Boolean           @default(false)
-  sentOneWeek   Boolean           @default(false)
-  sentFiveDays  Boolean           @default(false)
-  sentOneDay    Boolean           @default(false)
-  locale        String            @default("it")
-  createdAt     DateTime          @default(now())
+  id           String            @id @default(uuid())
+  email        String
+  countdownId  String
+  sentOneMonth Boolean           @default(false)
+  sentOneWeek  Boolean           @default(false)
+  sentFiveDays Boolean           @default(false)
+  sentOneDay   Boolean           @default(false)
+  locale       String            @default("it")
+  createdAt    DateTime          @default(now())
+  countdown    DeadlineCountdown @relation(fields: [countdownId], references: [id], onDelete: Cascade)
 
   @@unique([email, countdownId])
 }
 
 model RateLimit {
   id        String   @id @default(uuid())
-  key       String   // e.g. "login:192.168.1.1" or "reset:user@example.com"
-  window    String   // minute-level bucket: "2026-06-25T15:23" (ISO truncated to minute)
+  key       String
+  window    String
   count     Int      @default(1)
   createdAt DateTime @default(now())
 
   @@unique([key, window])
   @@index([key])
   @@index([createdAt])
+}
+
+enum Role {
+  USER
+  ADMIN_NETWORK
+  ADMIN_MORGANA
+  SUPER_ADMIN
+}
+
+enum Association {
+  MORGANA_ORUM
+  PIAZZA_DELLARTE
+}
+
+enum OrganigrammaAssociation {
+  MORGANA
+  ORUM
+}
+
+enum OrganigrammaSection {
+  PRESIDENCY
+  BOARD
+  COORDINATOR
+  RESPONSIBLE
+  DEPARTMENT
+}
+
+enum WhatsAppGroupCategory {
+  ACADEMIC
+  COMMUNITY
+  SANITARY_VET
 }
