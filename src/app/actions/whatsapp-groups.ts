@@ -211,3 +211,56 @@ export async function deleteYearWhatsAppGroups(year: string) {
     }
 }
 
+// ─── AcademicYear Table Actions ────────────────────────────────────────────
+
+export async function getAcademicYears() {
+    try {
+        const years = await prisma.academicYear.findMany({
+            orderBy: { year: "asc" }
+        })
+        return years.map(y => y.year)
+    } catch (error) {
+        console.error("Error fetching academic years:", error)
+        return []
+    }
+}
+
+export async function createAcademicYear(year: string) {
+    if (!(await checkAdminPermission())) {
+        return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
+    if (!/^\d{4}\/\d{4}$/.test(year)) {
+        return { success: false, error: "Formato anno non valido. Usa YYYY/YYYY." }
+    }
+
+    try {
+        await prisma.academicYear.upsert({
+            where: { year },
+            update: {},
+            create: { year }
+        })
+        revalidatePath("/gruppi")
+        revalidatePath("/admin/whatsapp-groups")
+        return { success: true }
+    } catch (error) {
+        console.error("Error creating academic year:", error)
+        return { success: false, error: "Errore durante la creazione dell'anno accademico." }
+    }
+}
+
+export async function deleteAcademicYear(year: string) {
+    if (!(await checkAdminPermission())) {
+        return { success: false, error: "Non hai i permessi per questa operazione." }
+    }
+
+    try {
+        await prisma.academicYear.delete({ where: { year } })
+        revalidatePath("/gruppi")
+        revalidatePath("/admin/whatsapp-groups")
+        return { success: true }
+    } catch (error) {
+        console.error("Error deleting academic year:", error)
+        return { success: false, error: "Errore durante l'eliminazione dell'anno accademico." }
+    }
+}

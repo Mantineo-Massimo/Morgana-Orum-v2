@@ -437,3 +437,10 @@ enum WhatsAppGroupCategory {
   COMMUNITY
   SANITARY_VET
 }
+
+model AcademicYear {
+  id        String   @id @default(uuid())
+  year      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -12,7 +12,9 @@ import {
     updateWhatsAppGroup,
     deleteWhatsAppGroup,
     duplicateYearWhatsAppGroups,
-    deleteYearWhatsAppGroups
+    deleteYearWhatsAppGroups,
+    createAcademicYear,
+    deleteAcademicYear
 } from "@/app/actions/whatsapp-groups"
 import { WhatsAppGroupCategory } from "@prisma/client"
 import { cn } from "@/lib/utils"
@@ -25,6 +27,7 @@ import {
 
 interface WhatsAppGroupsAdminClientProps {
     initialGroups: any[]
+    initialYears?: string[]
     userRole?: string
 }
 
@@ -69,33 +72,16 @@ const THEME_PRESETS = [
     { name: "red", label: "Rosso", classes: "text-red-500 bg-red-500/10 border-red-500/20 hover:border-red-500/30 hover:bg-red-500/15" }
 ]
 
-export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppGroupsAdminClientProps) {
+export function WhatsAppGroupsAdminClient({ initialGroups, initialYears = [], userRole }: WhatsAppGroupsAdminClientProps) {
     const router = useRouter()
     const [search, setSearch] = useState("")
     const [selectedCategory, setSelectedCategory] = useState<string>("all")
     const [selectedDept, setSelectedDept] = useState<string>("all")
-    const [selectedYear, setSelectedYear] = useState<string>(() => {
-        const years = new Set<string>()
-        initialGroups.forEach(g => {
-            if (g.semester && /^\d{4}\/\d{4}$/.test(g.semester)) {
-                years.add(g.semester)
-            }
-        })
-        const sorted = Array.from(years).sort()
-        return sorted[sorted.length - 1] || "2025/2026"
-    })
+    
+    // Extract unique years from initialGroups + customYears + initialYears (filtering for format YYYY/YYYY)
     const [customYears, setCustomYears] = useState<string[]>([])
-
-    // Dialog state for adding a new year
-    const [isYearDialogOpen, setIsYearDialogOpen] = useState(false)
-    const [newYearName, setNewYearName] = useState("")
-    const [sourceYearForCloning, setSourceYearForCloning] = useState("")
-    const [cloneFromExisting, setCloneFromExisting] = useState(true)
-    const [yearDialogLoading, setYearDialogLoading] = useState(false)
-
-    // Extract unique years from initialGroups + customYears (filtering for format YYYY/YYYY)
     const availableYears = useMemo(() => {
-        const years = new Set<string>()
+        const years = new Set<string>(initialYears)
         initialGroups.forEach(g => {
             if (g.semester && /^\d{4}\/\d{4}$/.test(g.semester)) {
                 years.add(g.semester)
@@ -103,7 +89,18 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
         })
         customYears.forEach(y => years.add(y))
         return Array.from(years).sort()
-    }, [initialGroups, customYears])
+    }, [initialGroups, customYears, initialYears])
+
+    const [selectedYear, setSelectedYear] = useState<string>(() => {
+        return availableYears[availableYears.length - 1] || "2025/2026"
+    })
+
+    // Dialog state for adding a new year
+    const [isYearDialogOpen, setIsYearDialogOpen] = useState(false)
+    const [newYearName, setNewYearName] = useState("")
+    const [sourceYearForCloning, setSourceYearForCloning] = useState("")
+    const [cloneFromExisting, setCloneFromExisting] = useState(true)
+    const [yearDialogLoading, setYearDialogLoading] = useState(false)
 
     const defaultYear = useMemo(() => {
         return availableYears[availableYears.length - 1] || "2025/2026"
@@ -179,7 +176,6 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             subcategory: cat === "SANITARY_VET" ? "MEDICINA" : "",
             isGeneral: cat === "SANITARY_VET"
         })
-        setIsOpen(true)
     }
 
     const handleAddYearSubmit = async (e: React.FormEvent) => {
@@ -200,6 +196,8 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             try {
                 const res = await duplicateYearWhatsAppGroups(sourceYearForCloning, trimmedYear)
                 if (res.success) {
+                    // Also register the year explicitly in the AcademicYear table
+                    await createAcademicYear(trimmedYear)
                     alert(`Nuovo anno ${trimmedYear} creato con successo copiando ${res.count} gruppi!`)
                     setCustomYears(prev => [...prev, trimmedYear])
                     setSelectedYear(trimmedYear)
@@ -216,19 +214,12 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 setYearDialogLoading(false)
             }
         } else {
-            // No source year chosen (or clone disabled): create a placeholder group to persist the year in the DB
+            // No source year chosen (or clone disabled): Create the academic year in the AcademicYear DB table
             setYearDialogLoading(true)
             try {
-                const res = await createWhatsAppGroup({
-                    name: `Nuovo Corso da configurare (${trimmedYear})`,
-                    link: "https://chat.whatsapp.com/placeholder",
-                    category: "ACADEMIC" as any,
-                    department: "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
-                    semester: trimmedYear,
-                    order: 0
-                })
+                const res = await createAcademicYear(trimmedYear)
                 if (res.success) {
-                    alert(`Anno ${trimmedYear} creato! Trovi un gruppo segnaposto da configurare.`)
+                    alert(`Anno Accademico ${trimmedYear} creato correttamente come anno vuoto!`)
                     setCustomYears(prev => [...prev, trimmedYear])
                     setSelectedYear(trimmedYear)
                     setIsYearDialogOpen(false)
@@ -239,7 +230,6 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 }
             } catch (err) {
                 console.error(err)
-                alert("Errore durante la creazione del nuovo anno.")
             } finally {
                 setYearDialogLoading(false)
             }
@@ -310,17 +300,28 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             : false
 
         let confirmMsg = "Sicuro di voler eliminare questo gruppo?"
-        if (isLastGroupOfYear) {
-            confirmMsg = `Attenzione: questo è l'unico gruppo dell'anno ${groupYear}.\n\nEliminandolo, l'anno scomparirà dalla lista.\n\nContinuare?`
+        let deleteYearEntry = false
+
+        if (isLastGroupOfYear && groupYear) {
+            const deleteYearConfirm = confirm(
+                `Questo è l'ultimo gruppo rimasto per l'anno ${groupYear}.\n\n` +
+                `Vuoi eliminare DEFINITIVAMENTE anche l'Anno Accademico ${groupYear} dal database?\n\n` +
+                `Premi OK per eliminare sia il gruppo che l'anno.\n` +
+                `Premi ANNULLA per eliminare solo il gruppo e mantenere l'anno vuoto.`
+            )
+            if (deleteYearConfirm) {
+                deleteYearEntry = true;
+            }
+        } else {
+            if (!confirm(confirmMsg)) return
         }
 
-        if (!confirm(confirmMsg)) return
         setLoading(true)
         try {
             const res = await deleteWhatsAppGroup(id)
             if (res.success) {
-                // If it was the last group of the year, remove year from customYears state too
-                if (isLastGroupOfYear && groupYear) {
+                if (deleteYearEntry && groupYear) {
+                    await deleteAcademicYear(groupYear)
                     setCustomYears(prev => prev.filter(y => y !== groupYear))
                 }
                 router.refresh()

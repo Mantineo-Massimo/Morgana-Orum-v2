@@ -8,6 +8,7 @@ type CourseGroup = { name: string; link: string }
 
 interface GruppiClientProps {
     initialGroups: any[]
+    initialYears?: string[]
     locale: string
 }
 
@@ -61,40 +62,34 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         allYears: "All Years"
     }
 }
-export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
+export function GruppiClient({ initialGroups, initialYears = [], locale }: GruppiClientProps) {
     const [search, setSearch] = useState("")
-    const [selectedYear, setSelectedYear] = useState<string>(() => {
-        const years = new Set<string>()
-        initialGroups.forEach(g => {
-            if (g.category === "ACADEMIC" && !g.isGeneral && g.semester && /^\d{4}\/\d{4}$/.test(g.semester)) {
-                years.add(g.semester)
-            }
-        })
-        const sorted = Array.from(years).sort()
-        return sorted[sorted.length - 1] || "2025/2026"
-    })
-    
-    const t = TRANSLATIONS[locale] || TRANSLATIONS.it
-
-    const getGroupName = (g: any) => (locale === "en" && g.nameEn) ? g.nameEn : g.name
-    const getGroupDesc = (g: any) => (locale === "en" && g.descriptionEn) ? g.descriptionEn : g.description
 
     // 1. Filter and group Academic Groups by Department (EXCLUDING general groups)
-    const academicGroups = initialGroups.filter(
+    const academicGroups = useMemo(() => initialGroups.filter(
         g => g.category === "ACADEMIC" && 
         !g.isGeneral
-    )
+    ), [initialGroups])
 
-    // Extract unique years from academicGroups (filtering for format YYYY/YYYY)
+    // Extract unique years from academicGroups + initialYears (filtering for format YYYY/YYYY)
     const availableYears = useMemo(() => {
-        const years = new Set<string>()
+        const years = new Set<string>(initialYears)
         academicGroups.forEach(g => {
             if (g.semester && /^\d{4}\/\d{4}$/.test(g.semester)) {
                 years.add(g.semester)
             }
         })
         return Array.from(years).sort()
-    }, [academicGroups])
+    }, [academicGroups, initialYears])
+
+    const [selectedYear, setSelectedYear] = useState<string>(() => {
+        return availableYears[availableYears.length - 1] || "2025/2026"
+    })
+    
+    const t = TRANSLATIONS[locale] || TRANSLATIONS.it
+
+    const getGroupName = (g: any) => (locale === "en" && g.nameEn) ? g.nameEn : g.name
+    const getGroupDesc = (g: any) => (locale === "en" && g.descriptionEn) ? g.descriptionEn : g.description
 
     // The most recent year in the DB, used for the section title
     const latestDbYear = availableYears.length > 0 ? availableYears[availableYears.length - 1] : selectedYear

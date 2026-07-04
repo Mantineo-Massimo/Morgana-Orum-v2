@@ -1,4 +1,4 @@
-import { getWhatsAppGroups } from "@/app/actions/whatsapp-groups"
+import { getWhatsAppGroups, getAcademicYears } from "@/app/actions/whatsapp-groups"
 import { GruppiClient } from "./gruppi-client"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
@@ -22,5 +22,6 @@ export default async function GruppiPage({
     params: { locale: string }
 }) {
     const groups = await getWhatsAppGroups()
-    return <GruppiClient initialGroups={groups} locale={locale} />
+    const years = await getAcademicYears()
+    return <GruppiClient initialGroups={groups} initialYears={years} locale={locale} />
 }
