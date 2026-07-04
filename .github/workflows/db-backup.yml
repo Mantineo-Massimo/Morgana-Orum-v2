@@ -34,8 +34,8 @@ jobs:
           RAW_URL="${{ secrets.DATABASE_URL }}"
           CLEAN_URL=$(echo "$RAW_URL" | sed -E 's/([?&])pgbouncer=[^&]*&?/\1/g' | sed 's/[?&]$//g' | sed 's/?&/?/g')
           
-          # Esegue pg_dump e lo comprime al volo con gzip
-          pg_dump "$CLEAN_URL" | gzip > ${{ steps.vars.outputs.filename }}
+          # Esegue pg_dump (versione 17) e lo comprime al volo con gzip
+          /usr/lib/postgresql/17/bin/pg_dump "$CLEAN_URL" | gzip > ${{ steps.vars.outputs.filename }}
 
       - name: Upload to Cloudflare R2
         run: |
