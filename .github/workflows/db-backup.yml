@@ -1,0 +1,39 @@
+name: Database Daily Backup
+
+on:
+  schedule:
+    - cron: '0 3 * * *' # Esegue ogni notte alle 03:00 UTC (04:00 o 05:00 in Italia)
+  workflow_dispatch: # Consente di avviare il backup manualmente dalla scheda Actions di GitHub
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install PostgreSQL Client
+        run: |
+          sudo apt-get update
+          # Installa il client PostgreSQL per avere il comando pg_dump
+          sudo apt-get install -y postgresql-client
+
+      - name: Generate Backup Filename
+        id: vars
+        run: |
+          # Crea un nome file univoco con data e ora corrente
+          echo "filename=supabase-backup-$(date +%Y-%m-%d_%H-%M-%S).sql.gz" >> $GITHUB_OUTPUT
+
+      - name: Run pg_dump and Compress
+        run: |
+          # Esegue pg_dump e lo comprime al volo con gzip
+          pg_dump "${{ secrets.SUPABASE_DIRECT_URL }}" | gzip > ${{ steps.vars.outputs.filename }}
+
+      - name: Upload to Cloudflare R2
+        run: |
+          # Utilizza l'AWS CLI preinstallato sull'immagine di GitHub Actions
+          # specificando l'endpoint di Cloudflare R2
+          aws s3 cp ${{ steps.vars.outputs.filename }} s3://${{ secrets.R2_BUCKET_NAME }}/${{ steps.vars.outputs.filename }} \
+            --endpoint-url ${{ secrets.R2_ENDPOINT_URL }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
