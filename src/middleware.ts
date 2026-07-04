@@ -13,6 +13,47 @@ export default function middleware(request: NextRequest) {
         return NextResponse.redirect(targetUrl, 301);
     }
 
+    const url = request.nextUrl.clone();
+    const { pathname } = url;
+
+    // 1. Gestione del sottodominio 'piazzadellarte.morganaorum.it'
+    if (host === 'piazzadellarte.morganaorum.it') {
+        // Se l'utente accede direttamente a /piazzadellarte sul sottodominio, lo reindirizziamo alla root del sottodominio
+        // es. /piazzadellarte/artisti -> /artisti (o /it/piazzadellarte/artisti -> /it/artisti)
+        const match = pathname.match(/^\/(it|en)?\/?piazzadellarte(.*)$/);
+        if (match) {
+            const locale = match[1];
+            const rest = match[2] || '';
+            const newPath = locale ? `/${locale}${rest}` : `${rest || '/'}`;
+            url.pathname = newPath;
+            return NextResponse.redirect(url, 301);
+        }
+
+        // Riscriviamo internamente i percorsi verso /piazzadellarte/...
+        const isInternal = pathname.startsWith('/_next') || pathname.startsWith('/api') || pathname.startsWith('/assets') || pathname.includes('.');
+        if (!isInternal) {
+            const matchLocale = pathname.match(/^\/(it|en)(.*)$/);
+            if (matchLocale) {
+                const locale = matchLocale[1];
+                const rest = matchLocale[2] || '';
+                url.pathname = `/${locale}/piazzadellarte${rest}`;
+            } else {
+                url.pathname = `/piazzadellarte${pathname}`;
+            }
+            // Aggiorniamo la richiesta con l'URL riscritto internamente
+            request = new NextRequest(url, { headers: request.headers });
+        }
+    } else {
+        // 2. Se l'utente visita il sito principale e richiede rotte /piazzadellarte, lo reindirizziamo al sottodominio dedicato
+        const match = pathname.match(/^\/(it|en)?\/?piazzadellarte(.*)$/);
+        if (match) {
+            const locale = match[1];
+            const rest = match[2] || '';
+            const newPath = locale ? `/${locale}${rest}` : `${rest || '/'}`;
+            return NextResponse.redirect(`https://piazzadellarte.morganaorum.it${newPath}`, 301);
+        }
+    }
+
     // Generate a secure nonce for Content Security Policy (CSP)
     const nonce = typeof crypto !== 'undefined' && crypto.randomUUID 
         ? btoa(crypto.randomUUID()) 
@@ -83,8 +124,8 @@ export default function middleware(request: NextRequest) {
     response.headers.set('Content-Security-Policy', cspHeader);
     response.headers.set('x-nonce', nonce);
 
-    const pathname = request.nextUrl.pathname;
-    const pathParts = pathname.split('/').filter(Boolean);
+    const currentPathname = request.nextUrl.pathname;
+    const pathParts = currentPathname.split('/').filter(Boolean);
 
     // Identify if the first segment is a locale (it or en) and remove it if present
     const hasLocalePrefix = pathParts.length > 0 && ['it', 'en'].includes(pathParts[0]);
