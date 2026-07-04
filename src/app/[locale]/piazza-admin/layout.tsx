@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { getUserDashboardData } from "@/app/actions/users"
 import { Sparkles, Users, Calendar, Video, Settings, LogOut, Shield, ChevronLeft, Building2 } from "lucide-react"
 import { cn } from "@/lib/utils"

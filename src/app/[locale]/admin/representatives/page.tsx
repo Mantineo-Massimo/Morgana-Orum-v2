@@ -1,6 +1,6 @@
 import { getRepresentatives, getBienniumConfigs } from "@/app/actions/representatives"
 import { Plus } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { RepresentativesAdminClient } from "./representatives-admin-client"
 import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"

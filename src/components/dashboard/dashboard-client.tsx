@@ -3,7 +3,7 @@
 import { Calendar, Ticket, MessageSquare, ShieldCheck, CheckCircle } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { useTranslations } from "next-intl"
 
 interface DashboardClientProps {

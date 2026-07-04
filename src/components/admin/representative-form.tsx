@@ -4,7 +4,7 @@ import { createRepresentative, updateRepresentative } from "@/app/actions/repres
 import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, Save, Loader2, Upload, X, ImageIcon } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { ASSOCIATIONS } from "@/lib/associations"

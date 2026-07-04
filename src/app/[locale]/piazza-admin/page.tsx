@@ -1,6 +1,6 @@
 import { getPiazzaArtists, getPiazzaProgram, getPiazzaMedia, getPiazzaSettings, getPiazzaSponsors } from "@/app/actions/piazza"
 import { Users, Calendar, Video, Settings, Activity, Clock, Building2 } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 
 export const dynamic = 'force-dynamic'
 

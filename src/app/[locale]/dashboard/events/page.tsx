@@ -5,7 +5,7 @@ import { Calendar, CheckCircle, Clock, Award, ChevronRight, Trash2 } from "lucid
 import { cn } from "@/lib/utils"
 import { getUserDashboardData } from "@/app/actions/users"
 import { cancelRegistration } from "@/app/actions/events"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { useTranslations } from "next-intl"
 
 export const dynamic = "force-dynamic"

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useMemo } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { ArrowLeft, Save, Loader2, X, File, Upload, Sparkles, Image as ImageIcon } from "lucide-react"
 import { translateText } from "@/app/actions/translate"
 import { cn } from "@/lib/utils"

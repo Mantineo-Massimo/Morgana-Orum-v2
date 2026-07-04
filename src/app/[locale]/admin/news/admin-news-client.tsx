@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react"
 import { Pencil, Trash2, Plus, Calendar, Filter, Search, Eye, EyeOff, Clock, ArrowUpDown, ArrowUp, ArrowDown, Copy, Newspaper, Tag, X, User } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import NewsForm from "@/components/admin/news-form"
 import Image from "next/image"
 import { cn } from "@/lib/utils"

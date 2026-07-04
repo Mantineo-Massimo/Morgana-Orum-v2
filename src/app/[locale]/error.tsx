@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { RotateCcw } from "lucide-react"
+import { Link } from "@/i18n/routing"
 
 export default function Error({
     error,
@@ -42,12 +43,12 @@ export default function Error({
                     <RotateCcw className="size-4" />
                     Riprova
                 </button>
-                <a
+                <Link
                     href="/"
                     className="inline-flex items-center gap-2 px-6 py-3 bg-white text-zinc-900 border border-zinc-200 rounded-xl hover:bg-zinc-50 transition-all active:scale-95 font-medium shadow-sm"
                 >
                     Torna alla home
-                </a>
+                </Link>
             </div>
         </div>
     )

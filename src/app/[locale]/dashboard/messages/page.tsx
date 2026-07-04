@@ -1,7 +1,7 @@
 import { getNotifications } from "@/app/actions/notifications"
 import prisma from "@/lib/prisma"
 import { Bell, Calendar, FileText, ChevronRight, Info, Clock } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { getTranslations } from "next-intl/server"
 

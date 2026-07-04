@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { HelpCircle, ChevronDown, ChevronUp, Search, Info } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { Link } from "@/i18n/routing"
 import { motion, AnimatePresence } from "framer-motion"
 
 export const dynamic = "force-dynamic"
@@ -199,12 +200,12 @@ export default function FAQPage() {
                             Il nostro team è sempre a disposizione per aiutarti a risolvere qualsiasi dubbio universitario.
                         </p>
                     </div>
-                    <a
+                    <Link
                         href="/contact"
                         className="relative z-10 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-zinc-900 font-black uppercase tracking-widest text-xs hover:scale-105 transition-transform shrink-0"
                     >
                         <Info className="size-4" /> Contattaci Subito
-                    </a>
+                    </Link>
                     {/* Glow background decoration */}
                     <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
                 </div>

@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma"
 import { Users, Building2, Calendar, Newspaper, ArrowUpRight, Plus, Activity, Clock, Sparkles } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { getUserDashboardData } from "@/app/actions/users"
 
 export const dynamic = 'force-dynamic'

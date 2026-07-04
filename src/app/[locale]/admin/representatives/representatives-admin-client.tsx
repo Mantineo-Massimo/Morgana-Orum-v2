@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react"
 import { Pencil, Trash2, User, ArrowUpDown, ArrowUp, ArrowDown, Search, Filter, X, Copy, Plus, CalendarRange, Eye, EyeOff } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { cn } from "@/lib/utils"
 import { deleteRepresentative, duplicateRepresentative, createNewBienniumAction, toggleBienniumVisibilityAction } from "@/app/actions/representatives"

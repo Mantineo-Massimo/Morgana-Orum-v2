@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma"
 import { cookies } from "next/headers"
 import { getAllAdminEvents, getEventCategories, getEventCategoriesWithIds } from "@/app/actions/events"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import { Plus, Calendar } from "lucide-react"
 import EventsAdminClient from "./events-admin-client"
 

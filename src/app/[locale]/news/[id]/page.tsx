@@ -1,7 +1,7 @@
 import { getNewsById } from "@/app/actions/news"
 import { notFound } from "next/navigation"
 import { Metadata } from "next"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { ArrowLeft, Calendar, Tag, Newspaper, FileText, Download } from "lucide-react"
 import { cn } from "@/lib/utils"

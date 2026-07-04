@@ -359,12 +359,12 @@ export default function IniziativePage() {
                             {t("cta_desc")}
                         </p>
                     </div>
-                    <a
+                    <Link
                         href="/contact"
                         className="relative z-10 inline-flex items-center justify-center px-10 py-5 rounded-full bg-white text-zinc-900 font-black uppercase tracking-widest text-xs md:text-sm shadow-2xl hover:scale-105 hover:bg-zinc-50 transition-all shrink-0 w-full sm:w-auto"
                     >
                         {t("cta_button")}
-                    </a>
+                    </Link>
                     {/* Background glow effects */}
                     <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-red-500/10 rounded-full blur-[100px] -mr-48 -mt-48 pointer-events-none"></div>
                     <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[80px] -ml-32 -mb-32 pointer-events-none"></div>

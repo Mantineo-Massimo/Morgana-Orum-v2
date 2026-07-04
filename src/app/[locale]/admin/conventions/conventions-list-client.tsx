@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp, ArrowDown, Copy, Plus, Tag } from "lucide-react"
-import Link from "next/link"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { deleteConvention, duplicateConvention } from "@/app/actions/conventions"
 import { useRouter } from "next/navigation"
