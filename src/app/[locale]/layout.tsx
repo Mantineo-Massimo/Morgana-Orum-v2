@@ -40,17 +40,39 @@ export async function generateMetadata({
     params: { locale: string }
 }): Promise<Metadata> {
     const pathname = headers().get("x-pathname") || "/"
-    const cleanPath = pathname.replace(/^\/(it|en)(\/|$)/, '$2')
-    const canonicalUrl = `${BASE_URL}${pathname}`
+    
+    // Normalize pathname: remove trailing slash if it is not the root "/"
+    const normalizedPath = pathname !== "/" && pathname.endsWith("/") 
+        ? pathname.slice(0, -1) 
+        : pathname
+
+    // Strip locale prefix if present (e.g., "/it/about" -> "/about", "/en" -> "/")
+    let pathWithoutLocale = normalizedPath
+    if (pathWithoutLocale === "/it" || pathWithoutLocale === "/en") {
+        pathWithoutLocale = "/"
+    } else if (pathWithoutLocale.startsWith("/it/")) {
+        pathWithoutLocale = pathWithoutLocale.slice(3)
+    } else if (pathWithoutLocale.startsWith("/en/")) {
+        pathWithoutLocale = pathWithoutLocale.slice(3)
+    }
+
+    // Ensure it starts with "/"
+    if (!pathWithoutLocale.startsWith("/")) {
+        pathWithoutLocale = "/" + pathWithoutLocale
+    }
+
+    const canonicalUrl = `${BASE_URL}${normalizedPath}`
+    const itUrl = pathWithoutLocale === "/" ? `${BASE_URL}/` : `${BASE_URL}${pathWithoutLocale}`
+    const enUrl = pathWithoutLocale === "/" ? `${BASE_URL}/en` : `${BASE_URL}/en${pathWithoutLocale}`
 
     return {
         metadataBase: new URL(BASE_URL),
         alternates: {
             canonical: canonicalUrl,
             languages: {
-                "it": `${BASE_URL}/${cleanPath}`.replace(/([^:]\/)\/+/g, "$1"),
-                "en": `${BASE_URL}/en/${cleanPath}`.replace(/([^:]\/)\/+/g, "$1"),
-                "x-default": `${BASE_URL}/${cleanPath}`.replace(/([^:]\/)\/+/g, "$1"),
+                "it": itUrl,
+                "en": enUrl,
+                "x-default": itUrl,
             },
         },
         title: {

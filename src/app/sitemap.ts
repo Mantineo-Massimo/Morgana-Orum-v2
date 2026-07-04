@@ -36,11 +36,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         "/terms",
         "/cookie",
         "/piazzadellarte",
+        "/statuto",
     ]
 
     const staticEntries: MetadataRoute.Sitemap = staticRoutes.flatMap(route =>
         LOCALES.map(locale => {
-            const urlPath = locale === "it" ? route : `/${locale}${route}`
+            const urlPath = route === "" 
+                ? (locale === "it" ? "/" : "/en") 
+                : (locale === "it" ? route : `/${locale}${route}`)
+                
             return {
                 url: `${BASE_URL}${urlPath}`,
                 lastModified: new Date(),
@@ -48,7 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
                 priority: route === "" ? 1.0 : 0.8,
                 alternates: {
                     languages: {
-                        it: `${BASE_URL}${route}`,
+                        it: `${BASE_URL}${route === "" ? "/" : route}`,
                         en: `${BASE_URL}/en${route}`,
                     }
                 }
