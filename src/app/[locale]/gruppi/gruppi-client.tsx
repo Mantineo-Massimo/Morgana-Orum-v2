@@ -275,20 +275,17 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                 </section>
 
                 {/* Divider separating from Academic Groups */}
-                {(academicGroups.length > 0 || isFutureYear) && (yearHasAnyGroups || isFutureYear) && (
-                    <div className="relative my-20">
-                        <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                            <div className="w-full border-t border-zinc-200/80"></div>
-                        </div>
-                        <div className="relative flex justify-center">
-                            <span className="bg-zinc-50 px-4 text-zinc-300 text-sm">✦</span>
-                        </div>
+                <div className="relative my-20">
+                    <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                        <div className="w-full border-t border-zinc-200/80"></div>
                     </div>
-                )}
+                    <div className="relative flex justify-center">
+                        <span className="bg-zinc-50 px-4 text-zinc-300 text-sm">✦</span>
+                    </div>
+                </div>
 
                 {/* Section 2: Gruppi Corsi Accademici */}
-                {(academicGroups.length > 0 || isFutureYear) && (yearHasAnyGroups || isFutureYear) && (
-                    <section className="mb-24">
+                <section className="mb-24">
                         <div className="max-w-3xl mx-auto mb-12 text-center">
                             <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
                                 {locale === "en"
@@ -419,7 +416,6 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                             )}
                         </div>
                     </section>
-                )}
 
                 {/* Footer box */}
                 <div className="mt-20 max-w-2xl mx-auto bg-blue-50/50 border border-blue-100 rounded-3xl p-8 text-center text-blue-900">
