@@ -113,12 +113,8 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
         .filter(g => g.category === "COMMUNITY")
         .sort((a, b) => (a.order || 0) - (b.order || 0)), [initialGroups])
 
-    // True when BOTH academic (for the selected year) AND community groups are empty
-    const bothSectionsEmpty = useMemo(() => {
-        const noAcademic = !yearHasAnyGroups
-        const noCommunity = communityGroups.length === 0
-        return noAcademic && noCommunity
-    }, [yearHasAnyGroups, communityGroups])
+    // Show Coming Soon screen only when community groups (Cineforum, Generale, Case...) are empty
+    const showComingSoon = communityGroups.length === 0
     
     // Group academic groups by department
     const groupedDepts = academicGroups.reduce((acc, g) => {
@@ -361,7 +357,7 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
 
                         {/* Academic Groups Grid or Coming Soon card */}
                         <div className="space-y-12">
-                            {bothSectionsEmpty ? (
+                            {showComingSoon ? (
                                 <div className="bg-gradient-to-br from-slate-900 via-zinc-900 to-[#18182e] text-white rounded-3xl p-12 text-center border border-emerald-500/20 shadow-2xl relative overflow-hidden max-w-4xl mx-auto my-8 animate-in fade-in duration-500">
                                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,211,102,0.1),transparent_70%)]" />
                                     <div className="relative z-10 space-y-4">
