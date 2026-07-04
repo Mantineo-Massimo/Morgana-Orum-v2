@@ -10,11 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Install PostgreSQL Client
         run: |
+          # Aggiunge il repository ufficiale PostgreSQL per ottenere pg_dump v16 (che corrisponde alla versione di Supabase)
+          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
           sudo apt-get update
-          # Installa il client PostgreSQL per avere il comando pg_dump
-          sudo apt-get install -y postgresql-client
+          sudo apt-get install -y postgresql-client-16
 
       - name: Generate Backup Filename
         id: vars
