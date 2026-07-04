@@ -35,6 +35,9 @@ if [ -z "$DB_URL" ]; then
   exit 1
 fi
 
+# Rimuove il parametro pgbouncer dalla stringa di connessione prima di eseguire pg_dump
+DB_URL=$(echo "$DB_URL" | sed -E 's/([?&])pgbouncer=[^&]*&?/\1/g' | sed 's/[?&]$//g' | sed 's/?&/?/g')
+
 # Create backups directory if it doesn't exist
 mkdir -p backups
 
