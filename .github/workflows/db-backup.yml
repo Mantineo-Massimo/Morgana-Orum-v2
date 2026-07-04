@@ -1,11 +1,9 @@
-name: Database Backup (Supabase)
+name: Database Daily Backup
 
 on:
   schedule:
-    # Runs every day at 03:00 UTC (4:00 AM Italian time)
-    - cron: '0 3 * * *'
-  workflow_dispatch:
-    # Allows you to trigger the backup manually from the GitHub Actions tab
+    - cron: '0 3 * * *' # Esegue ogni notte alle 03:00 UTC (04:00 o 05:00 in Italia)
+  workflow_dispatch: # Consente di avviare il backup manualmente dalla scheda Actions di GitHub
 
 jobs:
   backup:
@@ -17,41 +15,34 @@ jobs:
 
       - name: Install PostgreSQL Client
         run: |
-          # Add PostgreSQL official repository to get the latest pg_dump (matches Supabase version)
+          # Aggiunge il repository ufficiale PostgreSQL per ottenere pg_dump v16 (che corrisponde alla versione di Supabase)
           sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
           wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
           sudo apt-get update
           sudo apt-get install -y postgresql-client-16
 
-      - name: Create Backup Directory
-        run: mkdir -p backups
-
-      - name: Run pg_dump
-        env:
-          # This secret must be configured in your GitHub repository settings (Settings -> Secrets and variables -> Actions)
-          DB_URL: ${{ secrets.DATABASE_URL }}
+      - name: Generate Backup Filename
+        id: vars
         run: |
-          if [ -z "$DB_URL" ]; then
-            echo "❌ ERROR: The DATABASE_URL secret is not set in GitHub repository settings!"
-            exit 1
-          fi
-          
-          # Set backup filename with timestamp
-          DATE=$(date +%Y-%m-%d_%H-%M-%S)
-          BACKUP_FILE="backups/supabase_backup_$DATE.sql"
-          
-          echo "🔄 Starting pg_dump..."
-          pg_dump "$DB_URL" -F p -b -v -f "$BACKUP_FILE"
-          
-          echo "📦 Compressing backup..."
-          gzip "$BACKUP_FILE"
-          
-          echo "✅ Backup successfully created: ${BACKUP_FILE}.gz"
-          echo "BACKUP_PATH=${BACKUP_FILE}.gz" >> $GITHUB_ENV
+          # Crea un nome file univoco con data e ora corrente
+          echo "filename=supabase-backup-$(date +%Y-%m-%d_%H-%M-%S).sql.gz" >> $GITHUB_OUTPUT
 
-      - name: Upload Backup Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: supabase-database-backup-${{ github.run_id }}
-          path: backups/*.sql.gz
-          retention-days: 90 # GitHub keeps these files for 90 days for free
+      - name: Run pg_dump and Compress
+        run: |
+          # Rimuove il parametro pgbouncer dalla stringa di connessione prima di eseguire pg_dump
+          RAW_URL="${{ secrets.SUPABASE_DIRECT_URL }}"
+          CLEAN_URL=$(echo "$RAW_URL" | sed -E 's/([?&])pgbouncer=[^&]*&?/\1/g' | sed 's/[?&]$//g' | sed 's/?&/?/g')
+          
+          # Esegue pg_dump e lo comprime al volo con gzip
+          pg_dump "$CLEAN_URL" | gzip > ${{ steps.vars.outputs.filename }}
+
+      - name: Upload to Cloudflare R2
+        run: |
+          # Utilizza l'AWS CLI preinstallato sull'immagine di GitHub Actions
+          # specificando l'endpoint di Cloudflare R2
+          aws s3 cp ${{ steps.vars.outputs.filename }} s3://${{ secrets.R2_BUCKET_NAME }}/${{ steps.vars.outputs.filename }} \
+            --endpoint-url ${{ secrets.R2_ENDPOINT_URL }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
