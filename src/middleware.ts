@@ -85,6 +85,15 @@ export default function middleware(request: NextRequest) {
     });
 
     const response = intlMiddleware(modifiedRequest);
+    
+    // Se la richiesta è per il sottodominio ed è stata riscritta internamente, 
+    // ma next-intl non ha impostato l'header di rewrite (perché il percorso ha già il prefisso locale, es. /en/piazzadellarte),
+    // impostiamo manualmente l'header x-middleware-rewrite per forzare Next.js a servire la pagina corretta.
+    if (host === 'piazzadellarte.morganaorum.it' && !response.headers.get('x-middleware-rewrite')) {
+        const rewriteUrl = new URL(url.pathname + url.search, request.url).toString();
+        response.headers.set('x-middleware-rewrite', rewriteUrl);
+    }
+
     response.headers.set('x-pathname', request.nextUrl.pathname);
 
     // ── Rolling session: refresh the session cookie on every request ─────────
