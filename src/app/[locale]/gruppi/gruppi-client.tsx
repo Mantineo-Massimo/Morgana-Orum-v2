@@ -107,6 +107,18 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
     const yearHasAnyGroups = useMemo(() => {
         return academicGroups.some(g => g.semester === selectedYear)
     }, [academicGroups, selectedYear])
+
+    // 2. Filter Community Groups (must be defined before bothSectionsEmpty)
+    const communityGroups = useMemo(() => initialGroups
+        .filter(g => g.category === "COMMUNITY")
+        .sort((a, b) => (a.order || 0) - (b.order || 0)), [initialGroups])
+
+    // True when BOTH academic (for the selected year) AND community groups are empty
+    const bothSectionsEmpty = useMemo(() => {
+        const noAcademic = !yearHasAnyGroups
+        const noCommunity = communityGroups.length === 0
+        return noAcademic && noCommunity
+    }, [yearHasAnyGroups, communityGroups])
     
     // Group academic groups by department
     const groupedDepts = academicGroups.reduce((acc, g) => {
@@ -128,11 +140,6 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
         }
         return acc
     }, {} as Record<string, any[]>)
-
-    // 2. Filter Community Groups
-    const communityGroups = initialGroups
-        .filter(g => g.category === "COMMUNITY")
-        .sort((a, b) => (a.order || 0) - (b.order || 0))
 
     return (
         <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
@@ -289,8 +296,8 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                         <div className="max-w-3xl mx-auto mb-12 text-center">
                             <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
                                 {locale === "en"
-                                    ? `Groups A.A. ${selectedYear} and Healthcare Area`
-                                    : `Gruppi A.A. ${selectedYear} e Area Sanitaria`}
+                                    ? `Groups A.A. ${selectedYear}`
+                                    : `Gruppi A.A. ${selectedYear}`}
                             </h2>
                             <p className="text-zinc-500 mb-6 text-sm max-w-xl mx-auto">
                                 {t.academicSub}
@@ -354,7 +361,7 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
 
                         {/* Academic Groups Grid or Coming Soon card */}
                         <div className="space-y-12">
-                            {!yearHasAnyGroups && isFutureYear ? (
+                            {bothSectionsEmpty ? (
                                 <div className="bg-gradient-to-br from-slate-900 via-zinc-900 to-[#18182e] text-white rounded-3xl p-12 text-center border border-emerald-500/20 shadow-2xl relative overflow-hidden max-w-4xl mx-auto my-8 animate-in fade-in duration-500">
                                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,211,102,0.1),transparent_70%)]" />
                                     <div className="relative z-10 space-y-4">
@@ -362,16 +369,18 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                                             <Phone className="size-8" />
                                         </div>
                                         <h3 className="text-2xl md:text-3xl font-serif font-black tracking-tight uppercase">
-                                            A.A. {selectedYear}
+                                            {locale === "en"
+                                                ? `Coming Soon – A.A. ${selectedYear}`
+                                                : `Presto Disponibili – A.A. ${selectedYear}`}
                                         </h3>
                                         <p className="text-zinc-300 max-w-md mx-auto text-sm font-medium">
                                             {locale === "en" 
-                                                ? `WhatsApp groups for the Academic Year ${selectedYear} will be available soon.`
-                                                : `I gruppi WhatsApp per l'Anno Accademico ${selectedYear} saranno presto disponibili.`}
+                                                ? `The new WhatsApp groups for first-year students of the Academic Year ${selectedYear} will be available soon.`
+                                                : `I nuovi gruppi WhatsApp per le matricole dell'Anno Accademico ${selectedYear} saranno presto disponibili.`}
                                         </p>
                                     </div>
                                 </div>
-                            ) : Object.keys(filteredDepartments).length === 0 ? (
+                            ) : !yearHasAnyGroups && Object.keys(filteredDepartments).length === 0 ? (
                                 <div className="text-center py-16 text-zinc-400">
                                     <Search className="size-12 mx-auto mb-4 opacity-20" />
                                     <p className="text-lg">{t.noGroups}</p>
