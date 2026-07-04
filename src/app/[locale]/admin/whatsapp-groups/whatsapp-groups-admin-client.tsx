@@ -215,25 +215,26 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 setYearDialogLoading(false)
             }
         } else {
+            // No source year chosen (or clone disabled): create a placeholder group to persist the year in the DB
             setYearDialogLoading(true)
             try {
                 const res = await createWhatsAppGroup({
                     name: `Nuovo Corso da configurare (${trimmedYear})`,
                     link: "https://chat.whatsapp.com/placeholder",
-                    category: "ACADEMIC",
+                    category: "ACADEMIC" as any,
                     department: "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
                     semester: trimmedYear,
                     order: 0
                 })
                 if (res.success) {
-                    alert(`Nuovo anno ${trimmedYear} creato con successo con un gruppo segnaposto! Modificalo per iniziare.`);
+                    alert(`Anno ${trimmedYear} creato! Trovi un gruppo segnaposto da configurare.`)
                     setCustomYears(prev => [...prev, trimmedYear])
                     setSelectedYear(trimmedYear)
                     setIsYearDialogOpen(false)
                     setNewYearName("")
                     router.refresh()
                 } else {
-                    alert(res.error)
+                    alert(res.error || "Errore durante la creazione dell'anno.")
                 }
             } catch (err) {
                 console.error(err)

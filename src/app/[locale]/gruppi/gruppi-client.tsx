@@ -32,7 +32,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         missingHeader: "Non trovi il tuo corso?",
         missingSub: "Stiamo aggiornando costantemente l'elenco dei gruppi. Se il tuo corso non è presente, contattaci sui nostri canali social e ti forniremo il link dedicato.",
         writeInstagram: "Scrivici su Instagram",
-        promoGeneralTitle: "Gruppi Generali - Sanitaria & Veterinaria",
+        promoGeneralTitle: "Gruppi Semestre Filtro & Area Sanitaria",
         promoGeneralSub: "Accedi alle bacheche informative, ai canali di coordinamento e alle community generali dell'area medica e veterinaria.",
         discoverBtn: "Scopri i Gruppi",
         collabWith: "In collaborazione con",
@@ -54,7 +54,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         missingHeader: "Can't find your course?",
         missingSub: "We are constantly updating the list of groups. If your course is not present, contact us on our social channels and we will provide the dedicated link.",
         writeInstagram: "Message us on Instagram",
-        promoGeneralTitle: "General Groups - Healthcare & Veterinary",
+        promoGeneralTitle: "Semester Filter Groups & Healthcare Area",
         promoGeneralSub: "Access the informative boards, coordination channels, and general communities for the medical and veterinary area.",
         discoverBtn: "Discover Groups",
         collabWith: "In collaboration with",
@@ -96,6 +96,9 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
         return Array.from(years).sort()
     }, [academicGroups])
 
+    // The most recent year in the DB, used for the section title
+    const latestDbYear = availableYears.length > 0 ? availableYears[availableYears.length - 1] : selectedYear
+
     const isFutureYear = selectedYear ? (() => {
         const startYearStr = selectedYear.split("/")[0]
         const startYearNum = parseInt(startYearStr)
@@ -113,6 +116,11 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
 
     // Show Coming Soon screen only when community groups (Cineforum, Generale, Case...) are empty
     const showComingSoon = communityGroups.length === 0
+
+    // Groups that feed the Sanitary banner (isGeneral or SANITARY_VET category)
+    const generalGroups = useMemo(() => initialGroups.filter(
+        g => g.isGeneral === true || g.category === "SANITARY_VET"
+    ), [initialGroups])
     
     // Group academic groups by department
     const groupedDepts = academicGroups.reduce((acc, g) => {
@@ -205,8 +213,8 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                     </section>
                 )}
 
-                {/* Divider */}
-                {academicGroups.length > 0 && communityGroups.length > 0 && (
+                {/* Divider between Community and Sanitary banner – only when both exist */}
+                {communityGroups.length > 0 && generalGroups.length > 0 && (
                     <div className="relative my-20">
                         <div className="absolute inset-0 flex items-center" aria-hidden="true">
                             <div className="w-full border-t border-zinc-200/80"></div>
@@ -217,9 +225,10 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                     </div>
                 )}
 
-                {/* Section: Promo Area Sanitaria & Veterinaria - Generali */}
-                <section className="mb-24">
-                    <div className="relative overflow-hidden bg-gradient-to-br from-red-950 via-zinc-900 to-indigo-950 rounded-3xl p-8 md:p-12 border border-red-500/10 shadow-2xl group/banner flex flex-col md:flex-row items-center justify-between gap-8">
+                {/* Section: Promo Semestre Filtro & Area Sanitaria – hidden if empty */}
+                {generalGroups.length > 0 && (
+                    <section className="mb-24">
+                        <div className="relative overflow-hidden bg-gradient-to-br from-red-950 via-zinc-900 to-indigo-950 rounded-3xl p-8 md:p-12 border border-red-500/10 shadow-2xl group/banner flex flex-col md:flex-row items-center justify-between gap-8">
                         {/* Background decorations */}
                         <div className="absolute top-0 right-0 -mt-12 -mr-12 size-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none group-hover/banner:bg-red-500/15 transition-colors" />
                         <div className="absolute bottom-0 left-0 -mb-12 -ml-12 size-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none group-hover/banner:bg-indigo-500/15 transition-colors" />
@@ -274,6 +283,7 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                         </a>
                     </div>
                 </section>
+                )}
 
                 {/* Divider separating from Academic Groups */}
                 <div className="relative my-20">
@@ -290,8 +300,8 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                         <div className="max-w-3xl mx-auto mb-12 text-center">
                             <h2 className="text-3xl font-serif font-black text-foreground mb-4 uppercase tracking-tight">
                                 {locale === "en"
-                                    ? `Groups A.A. ${selectedYear}`
-                                    : `Gruppi A.A. ${selectedYear}`}
+                                    ? `Groups A.A. ${latestDbYear}`
+                                    : `Gruppi A.A. ${latestDbYear}`}
                             </h2>
                             <p className="text-zinc-500 mb-6 text-sm max-w-xl mx-auto">
                                 {t.academicSub}
