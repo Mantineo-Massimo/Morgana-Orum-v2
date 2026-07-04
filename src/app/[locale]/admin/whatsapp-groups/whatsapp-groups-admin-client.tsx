@@ -640,7 +640,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
 
                 {/* 3. Academic Sections by Department */}
                 {(selectedCategory === "all" || selectedCategory === "ACADEMIC") && (
-                    isFutureYear ? (
+                    (isFutureYear && academicGroups.length === 0) ? (
                         <div className="bg-gradient-to-br from-slate-900 to-[#18182e] text-white rounded-3xl p-10 text-center border border-[#c9041a]/20 shadow-xl relative overflow-hidden max-w-4xl mx-auto my-6 animate-in fade-in duration-500">
                             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,4,26,0.1),transparent_70%)]" />
                             <div className="relative z-10 space-y-4">
