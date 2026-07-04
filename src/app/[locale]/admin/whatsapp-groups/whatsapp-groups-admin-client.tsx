@@ -65,7 +65,8 @@ const THEME_PRESETS = [
     { name: "blue", label: "Blu", classes: "text-blue-500 bg-blue-500/10 border-blue-500/20 hover:border-blue-500/30 hover:bg-blue-500/15" },
     { name: "purple", label: "Viola", classes: "text-purple-500 bg-purple-500/10 border-purple-500/20 hover:border-purple-500/30 hover:bg-purple-500/15" },
     { name: "amber", label: "Arancione", classes: "text-amber-500 bg-amber-500/10 border-amber-500/20 hover:border-amber-500/30 hover:bg-amber-500/15" },
-    { name: "green", label: "Verde (WhatsApp)", classes: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20 hover:border-emerald-500/30 hover:bg-emerald-500/15" }
+    { name: "green", label: "Verde (WhatsApp)", classes: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20 hover:border-emerald-500/30 hover:bg-emerald-500/15" },
+    { name: "red", label: "Rosso", classes: "text-red-500 bg-red-500/10 border-red-500/20 hover:border-red-500/30 hover:bg-red-500/15" }
 ]
 
 export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppGroupsAdminClientProps) {
