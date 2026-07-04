@@ -101,6 +101,9 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             }
         })
         customYears.forEach(y => years.add(y))
+        // Ensure default years are always present in the available selection list
+        years.add("2025/2026")
+        years.add("2026/2027")
         return Array.from(years).sort()
     }, [initialGroups, customYears])
 
@@ -215,10 +218,32 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 setYearDialogLoading(false)
             }
         } else {
-            setCustomYears(prev => [...prev, trimmedYear])
-            setSelectedYear(trimmedYear)
-            setIsYearDialogOpen(false)
-            setNewYearName("")
+            setYearDialogLoading(true)
+            try {
+                const res = await createWhatsAppGroup({
+                    name: `Nuovo Corso da configurare (${trimmedYear})`,
+                    link: "https://chat.whatsapp.com/placeholder",
+                    category: "ACADEMIC",
+                    department: "Dipartimento di Civiltà Antiche e Moderne (DICAM)",
+                    semester: trimmedYear,
+                    order: 0
+                })
+                if (res.success) {
+                    alert(`Nuovo anno ${trimmedYear} creato con successo con un gruppo segnaposto! Modificalo per iniziare.`);
+                    setCustomYears(prev => [...prev, trimmedYear])
+                    setSelectedYear(trimmedYear)
+                    setIsYearDialogOpen(false)
+                    setNewYearName("")
+                    router.refresh()
+                } else {
+                    alert(res.error)
+                }
+            } catch (err) {
+                console.error(err)
+                alert("Errore durante la creazione del nuovo anno.")
+            } finally {
+                setYearDialogLoading(false)
+            }
         }
     }
 
