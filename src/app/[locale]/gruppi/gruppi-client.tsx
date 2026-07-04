@@ -382,7 +382,7 @@ export function GruppiClient({ initialGroups, initialYears = [], locale }: Grupp
 
                         {/* Academic Groups Grid or Coming Soon card */}
                         <div className="space-y-12">
-                            {showComingSoon ? (
+                            {showComingSoon || !yearHasAnyGroups ? (
                                 <div className="bg-gradient-to-br from-slate-900 via-zinc-900 to-[#18182e] text-white rounded-3xl p-12 text-center border border-emerald-500/20 shadow-2xl relative overflow-hidden max-w-4xl mx-auto my-8 animate-in fade-in duration-500">
                                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,211,102,0.1),transparent_70%)]" />
                                     <div className="relative z-10 space-y-4">
@@ -401,7 +401,7 @@ export function GruppiClient({ initialGroups, initialYears = [], locale }: Grupp
                                         </p>
                                     </div>
                                 </div>
-                            ) : !yearHasAnyGroups && Object.keys(filteredDepartments).length === 0 ? (
+                            ) : Object.keys(filteredDepartments).length === 0 ? (
                                 <div className="text-center py-16 text-zinc-400">
                                     <Search className="size-12 mx-auto mb-4 opacity-20" />
                                     <p className="text-lg">{t.noGroups}</p>
