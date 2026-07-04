@@ -6,7 +6,7 @@ import Image from "next/image"
 import { MainNav } from "@/components/layout/main-nav"
 import { cn } from "@/lib/utils"
 import { useBrand } from "@/components/layout/brand-provider"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 
 export function StickyHeader({ 
     isLoggedIn = false,
@@ -16,6 +16,7 @@ export function StickyHeader({
     showOrganigramma?: boolean 
 }) {
     const t = useTranslations("Footer")
+    const locale = useLocale()
     const [isScrolled, setIsScrolled] = useState(false)
 
     useEffect(() => {
@@ -150,12 +151,12 @@ export function StickyHeader({
                         </Link>
 
                         {currentNetwork ? (
-                            <Link
-                                href="/"
+                            <a
+                                href={locale === 'it' ? 'https://www.morganaorum.it' : `https://www.morganaorum.it/${locale}`}
                                 className="text-[7px] sm:text-[9px] md:text-[10px] uppercase tracking-normal md:tracking-[0.15em] font-bold mt-1 md:mt-1.5 opacity-70 leading-tight hover:underline underline-offset-2 hover:opacity-100 transition-all border-t border-white/10 pt-1"
                             >
                                 {t("back_to_main")}
-                            </Link>
+                            </a>
                         ) : (
                             <span className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-normal md:tracking-[0.2em] font-bold mt-0.5 md:mt-1 opacity-90 leading-tight">
                                 {t("brand_tagline")}

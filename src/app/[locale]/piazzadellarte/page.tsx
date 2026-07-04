@@ -100,10 +100,13 @@ export default async function PiazzaPage({ params }: { params: { locale: string 
                         <CountdownTimer targetDate={settings.eventDate ? new Date(settings.eventDate) : new Date(`${settings.year}-05-22T09:00:00`)} />
                     </div>
 
-                    <Link href="/" className="mt-8 md:mt-10 mb-8 md:mb-16 flex items-center gap-2 text-white/90 hover:text-white transition-all bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 group text-sm md:text-base font-bold uppercase tracking-widest shadow-xl">
+                    <a 
+                        href={locale === 'it' ? 'https://www.morganaorum.it' : `https://www.morganaorum.it/${locale}`}
+                        className="mt-8 md:mt-10 mb-8 md:mb-16 flex items-center gap-2 text-white/90 hover:text-white transition-all bg-white/10 hover:bg-white/20 backdrop-blur-md px-6 py-3 rounded-full border border-white/20 group text-sm md:text-base font-bold uppercase tracking-widest shadow-xl"
+                    >
                         <ChevronLeft className="size-5 group-hover:-translate-x-1 transition-transform" />
                         {t("back_link")}
-                    </Link>
+                    </a>
                 </div>
             </section>
 
