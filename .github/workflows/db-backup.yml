@@ -29,8 +29,9 @@ jobs:
 
       - name: Run pg_dump and Compress
         run: |
+          set -o pipefail
           # Rimuove il parametro pgbouncer dalla stringa di connessione prima di eseguire pg_dump
-          RAW_URL="${{ secrets.SUPABASE_DIRECT_URL }}"
+          RAW_URL="${{ secrets.DATABASE_URL }}"
           CLEAN_URL=$(echo "$RAW_URL" | sed -E 's/([?&])pgbouncer=[^&]*&?/\1/g' | sed 's/[?&]$//g' | sed 's/?&/?/g')
           
           # Esegue pg_dump e lo comprime al volo con gzip
