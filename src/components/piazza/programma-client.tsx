@@ -117,7 +117,7 @@ export function ProgrammaClient({ program }: Props) {
 
                 <div className="container relative z-10 text-center">
                     <Link
-                        href="/network/piazzadellarte"
+                        href="/piazzadellarte"
                         className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-10 text-sm font-bold uppercase tracking-widest group"
                     >
                         <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
@@ -273,7 +273,7 @@ export function ProgrammaClient({ program }: Props) {
                 <div className="container text-center">
                     <p className="text-white/60 mb-6 text-lg font-serif">Vuoi esibirti o partecipare?</p>
                     <Link
-                        href="/network/piazzadellarte/artisti"
+                        href="/piazzadellarte/artisti"
                         className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl"
                         style={{ backgroundColor: THEME.primary, color: "#18182e" }}
                     >

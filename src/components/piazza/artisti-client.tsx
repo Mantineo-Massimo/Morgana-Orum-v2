@@ -48,7 +48,7 @@ export function ArtistiClient({ artists }: Props) {
 
                 <div className="container relative z-10 text-center">
                     <Link
-                        href="/network/piazzadellarte"
+                        href="/piazzadellarte"
                         className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-10 text-sm font-bold uppercase tracking-widest group"
                     >
                         <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />

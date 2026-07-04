@@ -57,7 +57,7 @@ export async function PiazzaTeaserBanner() {
                     {/* CTA */}
                     <div className="shrink-0">
                         <Link
-                            href="/network/piazzadellarte"
+                            href="/piazzadellarte"
                             className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl"
                             style={{ backgroundColor: "#f9a620", color: "#18182e" }}
                         >

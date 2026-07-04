@@ -23,38 +23,26 @@ const nextConfig = {
     },
     async redirects() {
         return [
-            // Locale-prefixed old network news paths → new news paths
+            // Redirects for 'piazzadellarte' sub-brand specifically (retaining /piazzadellarte prefix)
             {
-                source: '/:locale/network/:brand/news/:id',
-                destination: '/:locale/news/:id',
-                permanent: true,
-            },
-            // Locale-prefixed old network events paths → new events paths
-            {
-                source: '/:locale/network/:brand/events/:id',
-                destination: '/:locale/events/:id',
-                permanent: true,
-            },
-            // Locale-prefixed list pages
-            {
-                source: '/:locale/network/:brand/news',
-                destination: '/:locale/news',
+                source: '/:locale/network/piazzadellarte/:path*',
+                destination: '/:locale/piazzadellarte/:path*',
                 permanent: true,
             },
             {
-                source: '/:locale/network/:brand/events',
-                destination: '/:locale/events',
+                source: '/network/piazzadellarte/:path*',
+                destination: '/piazzadellarte/:path*',
                 permanent: true,
             },
-            // Non-locale variants
+            // Wildcard redirect for all other network sub-brands to their clean equivalents
             {
-                source: '/network/:brand/news/:id',
-                destination: '/news/:id',
+                source: '/:locale/network/:brand/:path*',
+                destination: '/:locale/:path*',
                 permanent: true,
             },
             {
-                source: '/network/:brand/events/:id',
-                destination: '/events/:id',
+                source: '/network/:brand/:path*',
+                destination: '/:path*',
                 permanent: true,
             },
         ]
