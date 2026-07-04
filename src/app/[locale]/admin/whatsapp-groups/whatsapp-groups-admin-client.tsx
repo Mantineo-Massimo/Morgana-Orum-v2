@@ -353,12 +353,6 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
     const communityGroups = filteredGroups.filter(g => g.category === "COMMUNITY")
     const sanitaryVetGroups = filteredGroups.filter(g => g.category === "SANITARY_VET")
 
-    const isFutureYear = selectedYear ? (() => {
-        const startYearStr = selectedYear.split("/")[0]
-        const startYearNum = parseInt(startYearStr)
-        return !isNaN(startYearNum) && startYearNum >= 2026
-    })() : false
-
     return (
         <div className="space-y-8">
             {/* Header */}
@@ -639,100 +633,73 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
                 )}
 
                 {/* 3. Academic Sections by Department */}
-                {(selectedCategory === "all" || selectedCategory === "ACADEMIC") && (
-                    (isFutureYear && academicGroups.length === 0) ? (
-                        <div className="bg-gradient-to-br from-slate-900 to-[#18182e] text-white rounded-3xl p-10 text-center border border-[#c9041a]/20 shadow-xl relative overflow-hidden max-w-4xl mx-auto my-6 animate-in fade-in duration-500">
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201,4,26,0.1),transparent_70%)]" />
-                            <div className="relative z-10 space-y-4">
-                                <div className="inline-flex p-4 bg-white/10 rounded-2xl text-amber-400 border border-white/10">
-                                    <Sparkles className="size-8" />
-                                </div>
-                                <h3 className="text-2xl md:text-3xl font-black tracking-tight uppercase">
-                                    A.A. {selectedYear}
-                                </h3>
-                                <p className="text-zinc-300 max-w-md mx-auto text-sm font-medium">
-                                    La configurazione dei gruppi WhatsApp per l&apos;Anno Accademico {selectedYear} è attualmente in corso e sarà presto disponibile.
-                                </p>
-                                <div className="pt-4 flex justify-center gap-3">
-                                    <button
-                                        onClick={handleOpenAdd}
-                                        className="px-6 py-2.5 bg-[#c9041a] hover:bg-[#b10317] text-white rounded-xl text-xs font-bold transition-all shadow-md active:scale-95 hover:scale-[1.02]"
-                                    >
-                                        Aggiungi Gruppo Manualmente
-                                    </button>
-                                </div>
+                {(selectedCategory === "all" || selectedCategory === "ACADEMIC") && DEPARTMENTS.map(dept => {
+                    const deptGroups = academicGroups.filter(g => g.department === dept)
+                    if (deptGroups.length === 0) return null
+                    return (
+                        <div key={dept} className="space-y-4">
+                            <div className="flex items-center gap-4">
+                                <h3 className="text-xs font-black uppercase tracking-wider text-emerald-600 shrink-0">{dept}</h3>
+                                <div className="h-px w-full bg-slate-100"></div>
+                                <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-200/30 px-2 py-0.5 rounded">{deptGroups.length}</span>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {deptGroups.map(group => (
+                                    <div key={group.id} className="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
+                                        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div>
+                                            <div className="flex items-start justify-between gap-4 mb-3">
+                                                <div className="flex flex-wrap gap-1">
+                                                    <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
+                                                        Corso
+                                                    </span>
+                                                    {group.semester && (
+                                                        <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200">
+                                                            {group.semester}
+                                                        </span>
+                                                    )}
+                                                    {group.subcategory && (
+                                                        <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-200">
+                                                            {group.subcategory}
+                                                        </span>
+                                                    )}
+                                                    {group.isGeneral && (
+                                                        <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-teal-50 text-teal-700 rounded-full border border-teal-200">
+                                                            Generale
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <span className="text-xs font-mono text-slate-400 font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-200/30">Ordine: {group.order}</span>
+                                            </div>
+                                            <h4 className="font-bold text-slate-800 leading-snug">{group.name}</h4>
+                                            {group.nameEn && <p className="text-[10px] text-slate-400 italic mt-0.5">EN: {group.nameEn}</p>}
+                                        </div>
+
+                                        <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-4">
+                                            <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline">
+                                                <Phone className="size-3.5" /> Entra
+                                            </a>
+                                            <div className="flex items-center gap-0.5">
+                                                <button onClick={() => handleEdit(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Modifica">
+                                                    <Edit3 className="size-3.5" />
+                                                </button>
+                                                <button onClick={() => handleDuplicate(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Duplica">
+                                                    <Copy className="size-3.5" />
+                                                </button>
+                                                <button onClick={() => handleDelete(group.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Elimina">
+                                                    <Trash2 className="size-3.5" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    ) : (
-                        DEPARTMENTS.map(dept => {
-                            const deptGroups = academicGroups.filter(g => g.department === dept)
-                            if (deptGroups.length === 0) return null
-                            return (
-                                <div key={dept} className="space-y-4">
-                                    <div className="flex items-center gap-4">
-                                        <h3 className="text-xs font-black uppercase tracking-wider text-emerald-600 shrink-0">{dept}</h3>
-                                        <div className="h-px w-full bg-slate-100"></div>
-                                        <span className="text-[10px] font-black text-emerald-600 bg-emerald-50 border border-emerald-200/30 px-2 py-0.5 rounded">{deptGroups.length}</span>
-                                    </div>
-
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        {deptGroups.map(group => (
-                                            <div key={group.id} className="bg-white border border-slate-200/60 rounded-2xl p-5 shadow-sm hover:shadow-xl hover:border-slate-300 transition-all duration-300 flex flex-col justify-between h-full group relative overflow-hidden">
-                                                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                                <div>
-                                                    <div className="flex items-start justify-between gap-4 mb-3">
-                                                        <div className="flex flex-wrap gap-1">
-                                                            <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100">
-                                                                Corso
-                                                            </span>
-                                                            {group.semester && (
-                                                                <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-amber-50 text-amber-700 rounded-full border border-amber-200">
-                                                                    {group.semester}
-                                                                </span>
-                                                            )}
-                                                            {group.subcategory && (
-                                                                <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-200">
-                                                                    {group.subcategory}
-                                                                </span>
-                                                            )}
-                                                            {group.isGeneral && (
-                                                                <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-teal-50 text-teal-700 rounded-full border border-teal-200">
-                                                                    Generale
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <span className="text-xs font-mono text-slate-400 font-semibold bg-slate-50 px-2 py-0.5 rounded border border-slate-200/30">Ordine: {group.order}</span>
-                                                    </div>
-                                                    <h4 className="font-bold text-slate-800 leading-snug">{group.name}</h4>
-                                                    {group.nameEn && <p className="text-[10px] text-slate-400 italic mt-0.5">EN: {group.nameEn}</p>}
-                                                </div>
-
-                                                <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-4">
-                                                    <a href={group.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-600 hover:text-emerald-700 hover:underline">
-                                                        <Phone className="size-3.5" /> Entra
-                                                    </a>
-                                                    <div className="flex items-center gap-0.5">
-                                                        <button onClick={() => handleEdit(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Modifica">
-                                                            <Edit3 className="size-3.5" />
-                                                        </button>
-                                                        <button onClick={() => handleDuplicate(group)} className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Duplica">
-                                                            <Copy className="size-3.5" />
-                                                        </button>
-                                                        <button onClick={() => handleDelete(group.id)} className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all border border-transparent hover:border-slate-200" title="Elimina">
-                                                            <Trash2 className="size-3.5" />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )
-                        })
                     )
-                )}
+                })}
 
-                {filteredGroups.length === 0 && !isFutureYear && (
+                {filteredGroups.length === 0 && (
                     <div className="text-center py-16 text-slate-400 italic bg-white rounded-2xl border border-slate-200/60 shadow-sm">
                         Nessun gruppo WhatsApp trovato corrispondente alla ricerca.
                     </div>
