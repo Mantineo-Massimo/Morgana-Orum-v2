@@ -168,6 +168,28 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                     </div>
                 </div>
 
+                {/* Global Coming Soon — shown when the entire DB is empty (no community, no academic groups) */}
+                {showComingSoon && (
+                    <div className="bg-gradient-to-br from-slate-900 via-zinc-900 to-[#18182e] text-white rounded-3xl p-12 text-center border border-emerald-500/20 shadow-2xl relative overflow-hidden max-w-3xl mx-auto mb-24 animate-in fade-in duration-500">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,211,102,0.1),transparent_70%)]" />
+                        <div className="relative z-10 space-y-4">
+                            <div className="inline-flex p-4 bg-white/10 rounded-2xl text-[#25D366] border border-white/10">
+                                <Phone className="size-8" />
+                            </div>
+                            <h3 className="text-2xl md:text-3xl font-serif font-black tracking-tight uppercase">
+                                {locale === "en"
+                                    ? "Coming Soon"
+                                    : "Presto Disponibili"}
+                            </h3>
+                            <p className="text-zinc-300 max-w-md mx-auto text-sm font-medium">
+                                {locale === "en"
+                                    ? "The new WhatsApp groups for students will be available soon. Stay tuned!"
+                                    : "I nuovi gruppi WhatsApp per gli studenti saranno presto disponibili. Resta aggiornato!"}
+                            </p>
+                        </div>
+                    </div>
+                )}
+
                 {/* Section 1: Gruppi Community Morgana e O.R.U.M. */}
                 {communityGroups.length > 0 && (
                     <section className="mb-24">
