@@ -79,7 +79,7 @@ export async function TopBar() {
                 </div>
 
                 {/* Right Side: Socials */}
-                <div className="flex flex-wrap justify-center md:justify-end items-center gap-2 gap-y-2 md:gap-4 w-full md:w-auto">
+                <div className="flex flex-nowrap justify-center md:justify-end items-center gap-1.5 sm:gap-2 md:gap-4 w-full md:w-auto">
                     {networkIG && (
                         <>
                             <div className="flex items-center gap-1 md:gap-4">

@@ -150,7 +150,7 @@ export default function AboutPage() {
                                 </div>
                                 <div className="relative h-80 rounded-2xl overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-all duration-500">
                                     <Image
-                                        src={`/assets/${activeTab === 'morgana' ? 'morgana' : 'orum'}.webp`}
+                                        src={`/assets/backgrounds/${activeTab === 'morgana' ? 'morgana' : 'orum'}.webp`}
                                         alt="Brand Story"
                                         fill
                                         className="object-contain p-12 bg-white"
