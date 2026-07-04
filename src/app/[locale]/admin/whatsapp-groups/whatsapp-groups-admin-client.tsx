@@ -300,11 +300,29 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
     }
 
     const handleDelete = async (id: string) => {
-        if (!confirm("Sicuro di voler eliminare questo gruppo?")) return
+        // Find the group being deleted
+        const groupToDelete = initialGroups.find(g => g.id === id)
+        const groupYear = groupToDelete?.semester
+
+        // Check if this is the last group for its academic year
+        const isLastGroupOfYear = groupYear
+            ? initialGroups.filter(g => g.semester === groupYear && g.category === "ACADEMIC").length === 1
+            : false
+
+        let confirmMsg = "Sicuro di voler eliminare questo gruppo?"
+        if (isLastGroupOfYear) {
+            confirmMsg = `Attenzione: questo è l'unico gruppo dell'anno ${groupYear}.\n\nEliminandolo, l'anno scomparirà dalla lista.\n\nContinuare?`
+        }
+
+        if (!confirm(confirmMsg)) return
         setLoading(true)
         try {
             const res = await deleteWhatsAppGroup(id)
             if (res.success) {
+                // If it was the last group of the year, remove year from customYears state too
+                if (isLastGroupOfYear && groupYear) {
+                    setCustomYears(prev => prev.filter(y => y !== groupYear))
+                }
                 router.refresh()
             } else {
                 alert(res.error)
