@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server"
 import { LanguageSwitcher } from "@/components/layout/language-switcher"
 import { headers } from "next/headers"
 import { Brand } from "@/components/layout/brand-provider"
+import Image from "next/image"
 
 const TiktokIcon = ({ className }: { className?: string }) => (
     <svg
@@ -52,9 +53,18 @@ export async function TopBar() {
         dicam: "text-[#f34ab4]"
     }
 
+    const BRAND_LOGOS: Record<string, string> = {
+        unimhealth: "/assets/backgrounds/unimhealth.webp",
+        economia: "/assets/backgrounds/studentieconomia.webp",
+        matricole: "/assets/backgrounds/unimematricole.webp",
+        scipog: "/assets/backgrounds/studentiscipog.webp",
+        dicam: "/assets/backgrounds/insidedicam.webp"
+    }
+
     const networkIG = brand && SOCIAL_MAPPING[brand] ? SOCIAL_MAPPING[brand] : null
     const networkName = brand && BRAND_NAMES[brand] ? BRAND_NAMES[brand] : null
     const networkColor = brand && BRAND_COLORS[brand] ? BRAND_COLORS[brand] : "text-zinc-500"
+    const networkLogo = brand && BRAND_LOGOS[brand] ? BRAND_LOGOS[brand] : null
 
     return (
         <div id="site-topbar" className={cn("w-full text-white py-2 px-4 shadow-sm", bgColor)}>
@@ -73,19 +83,39 @@ export async function TopBar() {
                     {networkIG && (
                         <>
                             <div className="flex items-center gap-1 md:gap-4">
-                                <span className={cn(
-                                    "hidden sm:inline text-[10px] md:text-xs uppercase font-bold mr-1 md:mr-2",
-                                    brand === "matricole" ? "text-white" : "text-zinc-300"
-                                )}>
-                                    {networkName}:
-                                </span>
+                                <div className="flex items-center gap-1 mr-1 shrink-0">
+                                    {networkLogo && (
+                                        <Image
+                                            src={networkLogo}
+                                            alt={networkName || "Logo"}
+                                            width={16}
+                                            height={16}
+                                            className="object-contain rounded-full bg-white p-0.5 shrink-0"
+                                        />
+                                    )}
+                                    <span className={cn(
+                                        "hidden sm:inline text-[10px] md:text-xs uppercase font-bold",
+                                        brand === "matricole" ? "text-white" : "text-zinc-300"
+                                    )}>
+                                        {networkName}:
+                                    </span>
+                                </div>
                                 <a href={`https://www.instagram.com/${networkIG}`} target="_blank" rel="noopener noreferrer" className={cn("p-1 md:p-1.5 transition-colors", `hover:${networkColor}`)} aria-label={`Instagram ${networkName}`}><Instagram className="size-3.5 md:size-4" /></a>
                             </div>
                             <div className="hidden sm:block w-px h-4 md:h-5 bg-zinc-800 mx-1"></div>
                         </>
                     )}
                     <div className="flex items-center gap-1 md:gap-3">
-                        <span className="hidden sm:inline text-[10px] md:text-xs uppercase font-bold text-zinc-300 mr-1 md:mr-2">Morgana:</span>
+                        <div className="flex items-center gap-1 mr-1 shrink-0">
+                            <Image
+                                src="/assets/backgrounds/morgana.webp"
+                                alt="Morgana"
+                                width={16}
+                                height={16}
+                                className="object-contain shrink-0"
+                            />
+                            <span className="hidden sm:inline text-[10px] md:text-xs uppercase font-bold text-zinc-300">Morgana:</span>
+                        </div>
                         <a href="https://www.facebook.com/Morgana.Associazione/" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-red-500 transition-colors" aria-label="Facebook Associazione Morgana"><Facebook className="size-3.5 md:size-4" /></a>
                         <a href="https://www.instagram.com/associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-red-400 transition-colors" aria-label="Instagram Associazione Morgana"><Instagram className="size-3.5 md:size-4" /></a>
                         <a href="https://www.tiktok.com/@associazione.morgana" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-zinc-300 transition-colors" aria-label="TikTok Associazione Morgana"><TiktokIcon className="size-3.5 md:size-4" /></a>
@@ -93,7 +123,16 @@ export async function TopBar() {
                     </div>
                     <div className="w-px h-4 md:h-5 bg-zinc-800 mx-1"></div>
                     <div className="flex items-center gap-1 md:gap-3">
-                        <span className="hidden sm:inline text-[10px] md:text-xs uppercase font-bold text-zinc-300 mr-1 md:mr-2">O.R.U.M.:</span>
+                        <div className="flex items-center gap-1 mr-1 shrink-0">
+                            <Image
+                                src="/assets/backgrounds/orum.webp"
+                                alt="O.R.U.M."
+                                width={16}
+                                height={16}
+                                className="object-contain shrink-0"
+                            />
+                            <span className="hidden sm:inline text-[10px] md:text-xs uppercase font-bold text-zinc-300">O.R.U.M.:</span>
+                        </div>
                         <a href="https://www.facebook.com/AssociazioneOrum/" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-blue-500 transition-colors" aria-label="Facebook Associazione Orum"><Facebook className="size-3.5 md:size-4" /></a>
                         <a href="https://www.instagram.com/orum_unime" target="_blank" rel="noopener noreferrer" className="p-1 md:p-1.5 hover:text-blue-400 transition-colors" aria-label="Instagram Associazione Orum"><Instagram className="size-3.5 md:size-4" /></a>
                     </div>
