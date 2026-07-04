@@ -93,8 +93,6 @@ export function GruppiClient({ initialGroups, locale }: GruppiClientProps) {
                 years.add(g.semester)
             }
         })
-        years.add("2026/2027")
-        years.add("2027/2028")
         return Array.from(years).sort()
     }, [academicGroups])
 

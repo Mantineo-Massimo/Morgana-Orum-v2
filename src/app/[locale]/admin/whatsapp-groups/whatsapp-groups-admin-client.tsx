@@ -101,9 +101,6 @@ export function WhatsAppGroupsAdminClient({ initialGroups, userRole }: WhatsAppG
             }
         })
         customYears.forEach(y => years.add(y))
-        // Ensure default years are always present in the available selection list
-        years.add("2025/2026")
-        years.add("2026/2027")
         return Array.from(years).sort()
     }, [initialGroups, customYears])
 
