@@ -59,10 +59,26 @@ export default function middleware(request: NextRequest) {
         ? btoa(crypto.randomUUID()) 
         : btoa(Math.random().toString(36).substring(2) + Math.random().toString(36).substring(2));
 
-    // Inject x-nonce and x-pathname into request headers so server components (layouts/pages) can read it
+    // Determina il brand (es. piazzadellarte) in base al dominio o alla rotta
+    const currentPathname = request.nextUrl.pathname;
+    const pathParts = currentPathname.split('/').filter(Boolean);
+    const hasLocalePrefix = pathParts.length > 0 && ['it', 'en'].includes(pathParts[0]);
+    const cleanParts = hasLocalePrefix ? pathParts.slice(1) : pathParts;
+
+    let brand = 'null';
+    if (host === 'piazzadellarte.morganaorum.it') {
+        brand = 'piazzadellarte';
+    } else if (cleanParts.length >= 1 && cleanParts[0] === 'piazzadellarte') {
+        brand = 'piazzadellarte';
+    } else if (cleanParts.length >= 2 && cleanParts[0] === 'network') {
+        brand = cleanParts[1];
+    }
+
+    // Inject x-nonce, x-pathname and x-brand into request headers so server components (layouts/pages) can read it
     const requestHeaders = new Headers(request.headers);
     requestHeaders.set('x-nonce', nonce);
     requestHeaders.set('x-pathname', request.nextUrl.pathname);
+    requestHeaders.set('x-brand', brand);
 
     const modifiedRequest = new NextRequest(request, {
         headers: requestHeaders,
@@ -124,21 +140,7 @@ export default function middleware(request: NextRequest) {
     response.headers.set('Content-Security-Policy', cspHeader);
     response.headers.set('x-nonce', nonce);
 
-    const currentPathname = request.nextUrl.pathname;
-    const pathParts = currentPathname.split('/').filter(Boolean);
-
-    // Identify if the first segment is a locale (it or en) and remove it if present
-    const hasLocalePrefix = pathParts.length > 0 && ['it', 'en'].includes(pathParts[0]);
-    const cleanParts = hasLocalePrefix ? pathParts.slice(1) : pathParts;
-
-    if (cleanParts.length >= 1 && cleanParts[0] === 'piazzadellarte') {
-        response.headers.set('x-brand', 'piazzadellarte');
-    } else if (cleanParts.length >= 2 && cleanParts[0] === 'network') {
-        const brandId = cleanParts[1];
-        response.headers.set('x-brand', brandId);
-    } else {
-        response.headers.set('x-brand', 'null');
-    }
+    response.headers.set('x-brand', brand);
 
     // Prevents indexing on non-primary domains (Vercel preview/deployment domains)
     if (host && !host.includes('morganaorum.it')) {

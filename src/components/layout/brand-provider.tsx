@@ -22,9 +22,11 @@ export function BrandProvider({
   const [brand, setBrand] = React.useState<Brand>(defaultBrand)
   const pathname = usePathname()
 
-  // Auto-detect brand from URL
+  // Auto-detect brand from URL or hostname (for subdomains)
   React.useEffect(() => {
-    if (pathname.startsWith("/network/")) {
+    if (typeof window !== "undefined" && window.location.hostname.startsWith("piazzadellarte.")) {
+      setBrand("piazzadellarte")
+    } else if (pathname.startsWith("/network/")) {
       const detectedBrand = pathname.split("/")[2] as Brand
       if (detectedBrand) setBrand(detectedBrand)
     } else if (pathname.startsWith("/piazzadellarte")) {
