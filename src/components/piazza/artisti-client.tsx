@@ -3,10 +3,10 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Link } from "@/i18n/routing"
-import { ArrowLeft, Mic2, Music, Star, Palette, Users, Play, Search, X } from "lucide-react"
+import { ArrowLeft, Mic2, Star, Palette, Users, Play, Search, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 const CATEGORIES = ["Tutti", "Musica", "Danza", "Pittura", "Performance"] as const
-type Category = typeof CATEGORIES[number]
 
 const CATEGORY_ICONS: Record<string, any> = {
     "Musica": Mic2,
@@ -22,11 +22,20 @@ const THEME = {
     accent: "#1fbcd3"
 }
 
+const catTranslationKeys: Record<string, string> = {
+    "Tutti": "cat_all",
+    "Musica": "cat_music",
+    "Danza": "cat_dance",
+    "Pittura": "cat_painting",
+    "Performance": "cat_performance",
+}
+
 interface Props {
     artists: any[]
 }
 
 export function ArtistiClient({ artists }: Props) {
+    const t = useTranslations("Piazza.artists")
     const [activeCategory, setActiveCategory] = useState<string>("Tutti")
     const [search, setSearch] = useState("")
 
@@ -52,13 +61,13 @@ export function ArtistiClient({ artists }: Props) {
                         className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-10 text-sm font-bold uppercase tracking-widest group"
                     >
                         <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                        Torna alla home
+                        {t("back_home")}
                     </Link>
                     <h1 className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter mb-6">
-                        Gli <span style={{ color: THEME.secondary }}>Artisti</span>
+                        {t("title_prefix")}<span style={{ color: THEME.secondary }}>{t("title_highlight")}</span>
                     </h1>
                     <p className="text-xl text-white/70 max-w-2xl mx-auto font-serif leading-relaxed">
-                        Talenti emergenti dal territorio siciliano e non solo. Scopri chi si esibirà alla Piazza dell&apos;Arte.
+                        {t("subtitle")}
                     </p>
                     <div className="w-24 h-1.5 mx-auto mt-8 rounded-full" style={{ backgroundColor: THEME.secondary }}></div>
                 </div>
@@ -74,7 +83,7 @@ export function ArtistiClient({ artists }: Props) {
                             type="text"
                             value={search}
                             onChange={e => setSearch(e.target.value)}
-                            placeholder="Cerca per nome o ruolo..."
+                            placeholder={t("search_placeholder")}
                             className="w-full bg-white/5 border border-white/10 rounded-2xl pl-14 pr-12 py-4 text-white placeholder:text-white/30 text-base focus:outline-none focus:border-white/30 focus:bg-white/10 transition-all"
                         />
                         {search && (
@@ -103,7 +112,7 @@ export function ArtistiClient({ artists }: Props) {
                                     style={active ? { backgroundColor: THEME.primary, borderColor: THEME.primary } : {}}
                                 >
                                     <Icon className="size-4" />
-                                    {cat}
+                                    {t(catTranslationKeys[cat])}
                                 </button>
                             )
                         })}
@@ -115,7 +124,9 @@ export function ArtistiClient({ artists }: Props) {
             {(search || activeCategory !== "Tutti") && (
                 <div className="container pb-4">
                     <p className="text-white/40 text-sm text-center">
-                        {filtered.length} artista{filtered.length !== 1 ? "i" : ""} trovati
+                        {filtered.length === 1 
+                            ? t("results_count_one") 
+                            : t("results_count_many", { count: filtered.length })}
                     </p>
                 </div>
             )}
@@ -144,7 +155,7 @@ export function ArtistiClient({ artists }: Props) {
                                 )}
 
                                 <div className="absolute top-4 right-4 z-20 text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-white/80 border border-white/20">
-                                    {artist.category}
+                                    {t(catTranslationKeys[artist.category] || artist.category)}
                                 </div>
 
                                 <div className="absolute bottom-0 left-0 right-0 p-5 z-20">
@@ -166,12 +177,12 @@ export function ArtistiClient({ artists }: Props) {
                     {filtered.length === 0 && (
                         <div className="text-center py-20 text-white/40">
                             <Search className="size-12 mx-auto mb-4 opacity-40" />
-                            <p className="text-lg">Nessun artista trovato per &quot;{search}&quot;.</p>
+                            <p className="text-lg">{t("no_results", { search })}</p>
                             <button
                                 onClick={() => { setSearch(""); setActiveCategory("Tutti") }}
                                 className="mt-4 text-sm underline hover:text-white/70 transition-colors"
                             >
-                                Reimposta filtri
+                                {t("reset_filters")}
                             </button>
                         </div>
                     )}
@@ -181,9 +192,9 @@ export function ArtistiClient({ artists }: Props) {
             {/* CTA */}
             <section className="py-16 border-t border-white/10">
                 <div className="container text-center">
-                    <p className="text-white/60 mb-2 text-lg font-serif">Sei un artista?</p>
+                    <p className="text-white/60 mb-2 text-lg font-serif">{t("are_you_artist")}</p>
                     <h2 className="text-3xl font-black uppercase tracking-tighter mb-8" style={{ color: THEME.primary }}>
-                        Partecipa anche tu
+                        {t("join_us_title")}
                     </h2>
                     <Link
                         href="https://fantapiazza.vercel.app"
@@ -191,7 +202,7 @@ export function ArtistiClient({ artists }: Props) {
                         className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl"
                         style={{ backgroundColor: THEME.primary, color: "#18182e" }}
                     >
-                        Candidati ora
+                        {t("apply_now")}
                     </Link>
                 </div>
             </section>

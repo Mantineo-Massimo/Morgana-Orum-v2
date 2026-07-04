@@ -58,10 +58,10 @@ export default async function PiazzaPage({ params }: { params: { locale: string 
     const { locale } = params
     const brandId = "piazzadellarte"
     const config = BRAND_CONFIG.piazzadellarte
-
-    const [t, tb, settings, piazzaSponsors] = await Promise.all([
+    const [t, tb, tp, settings, piazzaSponsors] = await Promise.all([
         getTranslations("Network"),
         getTranslations("Brands"),
+        getTranslations("Piazza"),
         getPiazzaSettings(),
         getPiazzaSponsors()
     ])
@@ -115,14 +115,14 @@ export default async function PiazzaPage({ params }: { params: { locale: string 
                 <div className="container relative z-10 text-center">
                     <div className="max-w-4xl mx-auto mb-12">
                         <h2 className="text-4xl md:text-5xl font-serif font-black uppercase tracking-tighter mb-6 text-[#27a85d]">
-                            Cos&apos;è la Piazza dell&apos;Arte?
+                            {tp("landing.what_is_title")}
                         </h2>
                         <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed font-serif">
-                            La <strong>Piazza dell&apos;Arte</strong> è un importante evento socio-culturale che si svolge a Messina, organizzato principalmente dall&apos;Associazione Universitaria Morgana e O.R.U.M. È diventato uno degli appuntamenti più attesi della primavera messinese, capace di trasformare gli spazi accademici in un palcoscenico a cielo aperto.
+                            {tp("landing.what_is_desc")}
                         </p>
                     </div>
                     <Link href="/piazzadellarte/about" className="inline-flex items-center gap-3 bg-[#27a85d] text-white px-10 py-5 rounded-full font-black uppercase tracking-widest hover:bg-[#1f874a] transition-all duration-300 group shadow-xl hover:-translate-y-1 text-sm md:text-base">
-                        Scopri di più <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
+                        {tp("landing.discover_more")} <ArrowRight className="size-5 group-hover:translate-x-2 transition-transform" />
                     </Link>
                 </div>
             </section>
@@ -136,7 +136,7 @@ export default async function PiazzaPage({ params }: { params: { locale: string 
                 <div className="container relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-6xl font-serif font-black uppercase tracking-tighter mb-4">
-                            Esplora
+                            {tp("landing.explore_title")}
                         </h2>
                         <div className="w-24 h-1.5 mx-auto rounded-full" style={{ backgroundColor: config.theme.primary }}></div>
                     </div>
@@ -149,15 +149,15 @@ export default async function PiazzaPage({ params }: { params: { locale: string 
                                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
                                 <div className="absolute bottom-4 left-6">
                                     <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme.primary, color: "#18182e" }}>
-                                        Programma
+                                        {tp("landing.explore_program")}
                                     </span>
                                 </div>
                             </div>
                             <div className="p-6 flex-1 flex flex-col">
-                                <h3 className="text-xl font-black uppercase tracking-wide text-white mb-2" style={{ color: config.theme.primary }}>Il Programma</h3>
-                                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">Mattino, pomeriggio e sera: scopri tutti gli appuntamenti della giornata divisi per fascia oraria.</p>
+                                <h3 className="text-xl font-black uppercase tracking-wide text-white mb-2" style={{ color: config.theme.primary }}>{tp("landing.explore_program")}</h3>
+                                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">{tp("landing.explore_program_desc")}</p>
                                 <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all group-hover:gap-3" style={{ color: config.theme.primary }}>
-                                    Scopri <ArrowRight className="size-4" />
+                                    {tp("landing.discover")} <ArrowRight className="size-4" />
                                 </span>
                             </div>
                         </Link>
@@ -169,15 +169,15 @@ export default async function PiazzaPage({ params }: { params: { locale: string 
                                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
                                 <div className="absolute bottom-4 left-6">
                                     <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme.secondary, color: "#fff" }}>
-                                        Artisti
+                                        {tp("landing.explore_artists")}
                                     </span>
                                 </div>
                             </div>
                             <div className="p-6 flex-1 flex flex-col">
-                                <h3 className="text-xl font-black uppercase tracking-wide mb-2" style={{ color: config.theme.secondary }}>Gli Artisti</h3>
-                                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">Musica, danza, pittura e performance. Scopri i talenti che si esibiranno sul palco e nel cortile.</p>
+                                <h3 className="text-xl font-black uppercase tracking-wide mb-2" style={{ color: config.theme.secondary }}>{tp("landing.explore_artists")}</h3>
+                                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">{tp("landing.explore_artists_desc")}</p>
                                 <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all group-hover:gap-3" style={{ color: config.theme.secondary }}>
-                                    Scopri <ArrowRight className="size-4" />
+                                    {tp("landing.discover")} <ArrowRight className="size-4" />
                                 </span>
                             </div>
                         </Link>
@@ -189,15 +189,15 @@ export default async function PiazzaPage({ params }: { params: { locale: string 
                                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-zinc-950/90"></div>
                                 <div className="absolute bottom-4 left-6">
                                     <span className="text-xs font-black uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: config.theme.accent, color: "#18182e" }}>
-                                        Media
+                                        {tp("landing.explore_media")}
                                     </span>
                                 </div>
                             </div>
                             <div className="p-6 flex-1 flex flex-col">
-                                <h3 className="text-xl font-black uppercase tracking-wide mb-2" style={{ color: config.theme.accent }}>Media</h3>
-                                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">Esibizioni, interviste esclusive e la galleria fotografica dei momenti più belli dell&apos;evento.</p>
+                                <h3 className="text-xl font-black uppercase tracking-wide mb-2" style={{ color: config.theme.accent }}>{tp("landing.explore_media")}</h3>
+                                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">{tp("landing.explore_media_desc")}</p>
                                 <span className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest transition-all group-hover:gap-3" style={{ color: config.theme.accent }}>
-                                    Scopri <ArrowRight className="size-4" />
+                                    {tp("landing.discover")} <ArrowRight className="size-4" />
                                 </span>
                             </div>
                         </Link>

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Sun, Sunset, Moon, Music, Palette, Users, Camera, Trophy, Mic2, Star, Clock, MapPin, Coffee, Ticket, Play, Smile, Heart, Zap, Image as ImageIcon } from "lucide-react"
 import { Link } from "@/i18n/routing"
 import { ArrowLeft, X } from "lucide-react"
+import { useTranslations } from "next-intl"
 import {
     Dialog,
     DialogContent,
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export function ProgrammaClient({ program }: Props) {
+    const t = useTranslations("Piazza.program")
     const [selectedItem, setSelectedItem] = useState<any>(null)
 
     const morningItems = program.filter(p => p.timeSlot === "Mattino")
@@ -121,13 +123,13 @@ export function ProgrammaClient({ program }: Props) {
                         className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-10 text-sm font-bold uppercase tracking-widest group"
                     >
                         <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                        Torna alla home
+                        {t("back_home")}
                     </Link>
                     <h1 className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter mb-6">
-                        Il <span style={{ color: THEME.primary }}>Programma</span>
+                        {t("title_prefix")}<span style={{ color: THEME.primary }}>{t("title_highlight")}</span>
                     </h1>
                     <p className="text-xl text-white/70 max-w-2xl mx-auto font-serif leading-relaxed">
-                        Una giornata intera dedicata all&apos;arte, alla cultura e alla musica. Scopri tutti gli appuntamenti della Piazza dell&apos;Arte.
+                        {t("subtitle")}
                     </p>
                     <div className="w-24 h-1.5 mx-auto mt-8 rounded-full" style={{ backgroundColor: THEME.accent }}></div>
                 </div>
@@ -143,7 +145,7 @@ export function ProgrammaClient({ program }: Props) {
                             <div className="flex items-center gap-4 mb-6">
                                 <div className="flex items-center gap-3 px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg" style={{ backgroundColor: THEME.primary, color: "#18182e" }}>
                                     <Sun className="size-5" />
-                                    Mattino
+                                    {t("morning")}
                                 </div>
                                 <span className="text-white/40 text-sm font-bold tracking-widest">{getTimeRange(morningItems, "09:00 — 13:00")}</span>
                             </div>
@@ -160,7 +162,7 @@ export function ProgrammaClient({ program }: Props) {
                             <div className="flex items-center gap-4 mb-6">
                                 <div className="flex items-center gap-3 px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg" style={{ backgroundColor: THEME.secondary, color: "#fff" }}>
                                     <Sunset className="size-5" />
-                                    Pomeriggio
+                                    {t("afternoon")}
                                 </div>
                                 <span className="text-white/40 text-sm font-bold tracking-widest">{getTimeRange(afternoonItems, "14:00 — 19:00")}</span>
                             </div>
@@ -177,7 +179,7 @@ export function ProgrammaClient({ program }: Props) {
                             <div className="flex items-center gap-4 mb-6">
                                 <div className="flex items-center gap-3 px-5 py-3 rounded-2xl font-black uppercase tracking-widest text-sm shadow-lg" style={{ backgroundColor: THEME.accent, color: "#18182e" }}>
                                     <Moon className="size-5" />
-                                    Sera
+                                    {t("evening")}
                                 </div>
                                 <span className="text-white/40 text-sm font-bold tracking-widest">{getTimeRange(eveningItems, "20:00 — Fine")}</span>
                             </div>
@@ -190,7 +192,7 @@ export function ProgrammaClient({ program }: Props) {
 
                     {program.length === 0 && (
                         <div className="text-center py-20 text-white/40">
-                            <p className="text-lg">Programma in fase di definizione. Torna a trovarci presto!</p>
+                            <p className="text-lg">{t("empty")}</p>
                         </div>
                     )}
 
@@ -216,7 +218,7 @@ export function ProgrammaClient({ program }: Props) {
                                         })()}
                                     </div>
                                     <span className="text-xs font-black uppercase tracking-[0.3em] text-white/40">
-                                        Attività {selectedItem?.timeSlot}
+                                        {t("details_title")}
                                     </span>
                                 </div>
                                 <DialogTitle className="text-3xl md:text-4xl font-serif font-black uppercase tracking-tighter text-white">
@@ -231,7 +233,7 @@ export function ProgrammaClient({ program }: Props) {
                                             <Clock className="size-4" style={{ color: THEME.primary }} />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-black uppercase tracking-widest text-white/30 leading-none mb-1">Orario</p>
+                                            <p className="text-[10px] font-black uppercase tracking-widest text-white/30 leading-none mb-1">{t("time_label")}</p>
                                             <p className="text-sm font-bold text-white/80">{selectedItem?.startTime} {selectedItem?.endTime && `— ${selectedItem?.endTime}`}</p>
                                         </div>
                                     </div>
@@ -242,7 +244,7 @@ export function ProgrammaClient({ program }: Props) {
                                             <MapPin className="size-4" style={{ color: THEME.accent }} />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] font-black uppercase tracking-widest text-white/30 leading-none mb-1">Luogo</p>
+                                            <p className="text-[10px] font-black uppercase tracking-widest text-white/30 leading-none mb-1">{t("location_label")}</p>
                                             <p className="text-sm font-bold text-white/80">{selectedItem?.location}</p>
                                         </div>
                                     </div>
@@ -250,7 +252,7 @@ export function ProgrammaClient({ program }: Props) {
                             </div>
 
                             <div className="space-y-4">
-                                <h4 className="text-[10px] font-black uppercase tracking-widest text-white/30">Descrizione</h4>
+                                <h4 className="text-[10px] font-black uppercase tracking-widest text-white/30">{t("description_label")}</h4>
                                 <p className="text-lg text-white/70 font-serif leading-relaxed italic whitespace-pre-wrap">
                                     {selectedItem?.description}
                                 </p>
@@ -261,7 +263,7 @@ export function ProgrammaClient({ program }: Props) {
                                 className="w-full py-5 rounded-2xl font-black uppercase tracking-widest text-sm text-white transition-all shadow-lg hover:shadow-2xl hover:-translate-y-1"
                                 style={{ background: `linear-gradient(90deg, ${THEME.primary}, ${THEME.secondary}, ${THEME.accent})` }}
                             >
-                                Chiudi
+                                {t("close")}
                             </button>
                         </div>
                     </div>
@@ -271,13 +273,13 @@ export function ProgrammaClient({ program }: Props) {
             {/* CTA */}
             <section className="py-16 border-t border-white/10">
                 <div className="container text-center">
-                    <p className="text-white/60 mb-6 text-lg font-serif">Vuoi esibirti o partecipare?</p>
+                    <p className="text-white/60 mb-6 text-lg font-serif">{t("cta_tag")}</p>
                     <Link
                         href="/piazzadellarte/artisti"
                         className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-black uppercase tracking-widest text-sm transition-all hover:-translate-y-1 shadow-xl hover:shadow-2xl"
                         style={{ backgroundColor: THEME.primary, color: "#18182e" }}
                     >
-                        Scopri gli Artisti
+                        {t("cta_button")}
                     </Link>
                 </div>
             </section>

@@ -4,6 +4,7 @@ import { useState } from "react"
 import Image from "next/image"
 import { Link } from "@/i18n/routing"
 import { ArrowLeft, Play, Camera, Mic2, ChevronRight, X, Download, Sparkles, Share2 } from "lucide-react"
+import { useTranslations } from "next-intl"
 
 const THEME = {
     primary: "#f9a620",
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export function MediaClient({ media }: Props) {
+    const t = useTranslations("Piazza.media")
     const [activeTab, setActiveTab] = useState<Tab>("Esibizioni")
     const [selectedMedia, setSelectedMedia] = useState<any>(null)
 
@@ -42,6 +44,14 @@ export function MediaClient({ media }: Props) {
         "Esibizioni": THEME.accent,
         "Interviste": THEME.primary,
         "Foto": THEME.secondary,
+    }
+
+    const tabTranslationKeys: Record<Tab, string> = {
+        "Concorso Foto": "concorso_title",
+        "Social": "social_title",
+        "Esibizioni": "esibizioni_title",
+        "Interviste": "interviste_title",
+        "Foto": "foto_title",
     }
 
     const getEmbedUrl = (url: string) => {
@@ -73,13 +83,13 @@ export function MediaClient({ media }: Props) {
                         className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors mb-10 text-sm font-bold uppercase tracking-widest group"
                     >
                         <ArrowLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                        Torna alla home
+                        {t("back_home")}
                     </Link>
                     <h1 className="text-5xl md:text-7xl font-serif font-black uppercase tracking-tighter mb-6">
-                        Me<span style={{ color: THEME.accent }}>dia</span>
+                        {t("title_prefix")}<span style={{ color: THEME.accent }}>{t("title_highlight")}</span>
                     </h1>
                     <p className="text-xl text-white/70 max-w-2xl mx-auto font-serif leading-relaxed">
-                        Rivivi i momenti più belli della Piazza dell&apos;Arte: esibizioni, interviste esclusive e la galleria fotografica.
+                        {t("subtitle")}
                     </p>
                     <div className="w-24 h-1.5 mx-auto mt-8 rounded-full" style={{ backgroundColor: THEME.accent }}></div>
                 </div>
@@ -88,8 +98,8 @@ export function MediaClient({ media }: Props) {
             {/* TABS */}
             <section className="pb-12">
                 <div className="container">
-                    <div className="flex justify-center">
-                        <div className="inline-flex bg-white/5 border border-white/10 rounded-2xl p-1.5 gap-1">
+                    <div className="flex justify-center flex-wrap gap-2">
+                        <div className="inline-flex bg-white/5 border border-white/10 rounded-2xl p-1.5 gap-1 flex-wrap justify-center">
                             {TABS.map((tab) => {
                                 const Icon = TAB_ICONS[tab]
                                 const active = activeTab === tab
@@ -97,12 +107,12 @@ export function MediaClient({ media }: Props) {
                                     <button
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
-                                        className={`inline-flex items-center gap-2.5 px-7 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all duration-300 ${active ? "text-[#18182e] shadow-lg" : "text-white/50 hover:text-white"
+                                        className={`inline-flex items-center gap-2.5 px-5 md:px-7 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all duration-300 ${active ? "text-[#18182e] shadow-lg" : "text-white/50 hover:text-white"
                                             }`}
                                         style={active ? { backgroundColor: TAB_COLORS[tab] } : {}}
                                     >
                                         <Icon className="size-4" />
-                                        {tab}
+                                        {t(tabTranslationKeys[tab])}
                                     </button>
                                 )
                             })}
@@ -137,7 +147,7 @@ export function MediaClient({ media }: Props) {
                                     </div>
                                 </div>
                             ))}
-                            {concorso.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">Nessuna foto del concorso disponibile.</p>}
+                            {concorso.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">{t("no_concorso")}</p>}
                         </div>
                     )}
 
@@ -165,7 +175,7 @@ export function MediaClient({ media }: Props) {
                                     </div>
                                 </div>
                             ))}
-                            {social.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">Nessun contenuto social disponibile.</p>}
+                            {social.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">{t("no_social")}</p>}
                         </div>
                     )}
 
@@ -193,7 +203,7 @@ export function MediaClient({ media }: Props) {
                                     </div>
                                 </div>
                             ))}
-                            {esibizioni.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">Nessuna esibizione disponibile.</p>}
+                            {esibizioni.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">{t("no_esibizioni")}</p>}
                         </div>
                     )}
 
@@ -218,12 +228,12 @@ export function MediaClient({ media }: Props) {
                                             &ldquo;{item.description || item.title}&rdquo;
                                         </p>
                                         <span className="inline-flex items-center gap-1.5 mt-4 text-xs font-black uppercase tracking-widest transition-colors group-hover:text-white text-white/40">
-                                            Guarda l&apos;intervista <ChevronRight className="size-4" />
+                                            {t("watch_interview")} <ChevronRight className="size-4" />
                                         </span>
                                     </div>
                                 </div>
                             ))}
-                            {interviste.length === 0 && <p className="text-center text-white/40 py-20 font-serif">Nessuna intervista disponibile.</p>}
+                            {interviste.length === 0 && <p className="text-center text-white/40 py-20 font-serif">{t("no_interviste")}</p>}
                         </div>
                     )}
 
@@ -250,7 +260,7 @@ export function MediaClient({ media }: Props) {
                                     </div>
                                 </div>
                             ))}
-                            {foto.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">Nessuna foto disponibile.</p>}
+                            {foto.length === 0 && <p className="col-span-full text-center text-white/40 py-20 font-serif">{t("no_foto")}</p>}
                         </div>
                     )}
 
@@ -305,14 +315,14 @@ export function MediaClient({ media }: Props) {
                                         } else {
                                             return (
                                                 <div className="text-center p-10">
-                                                    <p className="text-white/40 mb-4 font-serif italic text-lg">Contenuto non incorporabile direttamente.</p>
+                                                    <p className="text-white/40 mb-4 font-serif italic text-lg">{t("not_embeddable")}</p>
                                                     <a 
                                                         href={selectedMedia.url} 
                                                         target="_blank" 
                                                         rel="noopener noreferrer"
                                                         className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-full font-black uppercase tracking-widest text-xs"
                                                     >
-                                                        Visualizza su {selectedMedia.url.includes('instagram') ? 'Instagram' : 'Sorgente'} <ChevronRight className="size-4" />
+                                                        {t("view_on", { source: selectedMedia.url.includes('instagram') ? 'Instagram' : t("source_fallback") })} <ChevronRight className="size-4" />
                                                     </a>
                                                 </div>
                                             )
@@ -330,7 +340,7 @@ export function MediaClient({ media }: Props) {
                                             </span>
                                             {selectedMedia.personName && (
                                                 <span className="text-white/40 text-[10px] font-black uppercase tracking-widest">
-                                                    Intervista a: <span className="text-white">{selectedMedia.personName}</span>
+                                                    {t("interview_to")}<span className="text-white">{selectedMedia.personName}</span>
                                                 </span>
                                             )}
                                         </div>
@@ -345,7 +355,7 @@ export function MediaClient({ media }: Props) {
                                                 rel="noopener noreferrer"
                                                 className="flex items-center gap-3 px-6 py-3 bg-[#f9a620] text-[#18182e] rounded-xl font-black uppercase tracking-widest text-xs hover:bg-[#e89a1c] transition-all shadow-lg shadow-amber-900/20"
                                             >
-                                                <Download className="size-4" /> Scarica File
+                                                <Download className="size-4" /> {t("download_file")}
                                             </a>
                                         )}
                                         <div className="text-white/60 text-sm max-w-md font-serif italic leading-relaxed">
