@@ -47,6 +47,16 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
     const getGroupName = (g: any) => (locale === "en" && g.nameEn) ? g.nameEn : g.name
     const getGroupDesc = (g: any) => (locale === "en" && g.descriptionEn) ? g.descriptionEn : g.description
 
+    const getSubcategoryLabel = (sub: string) => {
+        switch (sub) {
+            case "MEDICINA": return "Medicina Generale"
+            case "PROFESSIONI_SANITARIE": return "Professioni Sanitarie"
+            case "VETERINARIA": return "Veterinaria"
+            case "GENERALE": return "Generale"
+            default: return sub || "Generale"
+        }
+    }
+
     // Filter only general groups
     const generalGroups = initialGroups.filter(g => g.isGeneral === true || g.category === "SANITARY_VET")
 
@@ -67,8 +77,8 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
     ).filter(g => getGroupName(g).toLowerCase().includes(search.toLowerCase()))
 
     return (
-        <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
-            <div className="container mx-auto px-6 max-w-6xl">
+        <div className="min-h-screen bg-zinc-50 flex flex-col justify-center pt-32 pb-20">
+            <div className="container mx-auto px-6 max-w-6xl w-full">
                 {/* Back button */}
                 <a 
                     href={`/${locale}/gruppi`} 
@@ -142,39 +152,35 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
                     {sanitaryGeneral.length > 0 && (
                         <section className="space-y-6">
                             <div className="flex items-center gap-4">
-                                <h2 className="text-xs font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 border border-emerald-100/50 px-4 py-1.5 rounded-full shrink-0">
+                                <h2 className="text-xs font-black uppercase tracking-widest text-[#c9041a] bg-red-50 border border-red-100/50 px-4 py-1.5 rounded-full shrink-0">
                                     {t.sanitarySection}
                                 </h2>
                                 <div className="h-px w-full bg-zinc-200"></div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {sanitaryGeneral.map((group, idx) => {
                                     const groupName = getGroupName(group)
-                                    const groupDesc = getGroupDesc(group)
                                     return (
-                                        <div key={idx} className="group relative bg-white border border-zinc-100 rounded-3xl p-6 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full hover:border-emerald-500/20">
-                                            <div>
-                                                <span className="inline-flex items-center text-[9px] font-black uppercase tracking-widest px-2.5 py-1 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100 mb-4">
-                                                    {t.officialGroup}
-                                                </span>
-                                                <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-emerald-600 transition-colors uppercase tracking-tight font-serif">
-                                                    {groupName}
-                                                </h3>
-                                                {groupDesc && (
-                                                    <p className="text-zinc-500 text-xs leading-relaxed mb-6">
-                                                        {groupDesc}
-                                                    </p>
-                                                )}
+                                        <div key={idx} className="group relative bg-white border border-zinc-100 rounded-2xl p-5 hover:border-[#c9041a]/30 hover:shadow-xl hover:shadow-red-500/5 transition-all duration-300">
+                                            <div className="flex items-start justify-between gap-4">
+                                                <div className="space-y-1">
+                                                    <h4 className="font-bold text-zinc-900 group-hover:text-[#c9041a] transition-colors leading-tight">
+                                                        {groupName}
+                                                    </h4>
+                                                    <span className="block text-xs font-semibold text-zinc-400 mt-1">
+                                                        {getSubcategoryLabel(group.subcategory)}
+                                                    </span>
+                                                </div>
+                                                <a
+                                                    href={group.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="shrink-0 size-10 bg-zinc-900 text-white rounded-xl flex items-center justify-center group-hover:bg-[#c9041a] transition-all duration-300 shadow-lg shadow-zinc-200 group-hover:shadow-red-500/20"
+                                                >
+                                                    <ArrowRight className="size-5 group-hover:translate-x-0.5 transition-transform" />
+                                                </a>
                                             </div>
-                                            <a
-                                                href={group.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="w-full flex items-center justify-center gap-2 bg-zinc-900 text-white hover:bg-emerald-500 hover:text-zinc-950 font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition-all duration-300 shadow-md group-hover:shadow-emerald-500/20"
-                                            >
-                                                {t.joinGroup} <ArrowRight className="size-4" />
-                                            </a>
                                         </div>
                                     )
                                 })}
@@ -192,33 +198,29 @@ export function SanitariaVeterinariaClient({ initialGroups, locale }: SanitariaV
                                 <div className="h-px w-full bg-zinc-200"></div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {veterinaryGeneral.map((group, idx) => {
                                     const groupName = getGroupName(group)
-                                    const groupDesc = getGroupDesc(group)
                                     return (
-                                        <div key={idx} className="group relative bg-white border border-zinc-100 rounded-3xl p-6 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between h-full hover:border-indigo-500/20">
-                                            <div>
-                                                <span className="inline-flex items-center text-[9px] font-black uppercase tracking-widest px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-full border border-indigo-100 mb-4">
-                                                    {t.officialGroup}
-                                                </span>
-                                                <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-indigo-600 transition-colors uppercase tracking-tight font-serif">
-                                                    {groupName}
-                                                </h3>
-                                                {groupDesc && (
-                                                    <p className="text-zinc-500 text-xs leading-relaxed mb-6">
-                                                        {groupDesc}
-                                                    </p>
-                                                )}
+                                        <div key={idx} className="group relative bg-white border border-zinc-100 rounded-2xl p-5 hover:border-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/5 transition-all duration-300">
+                                            <div className="flex items-start justify-between gap-4">
+                                                <div className="space-y-1">
+                                                    <h4 className="font-bold text-zinc-900 group-hover:text-indigo-600 transition-colors leading-tight">
+                                                        {groupName}
+                                                    </h4>
+                                                    <span className="block text-xs font-semibold text-zinc-400 mt-1">
+                                                        {getSubcategoryLabel(group.subcategory)}
+                                                    </span>
+                                                </div>
+                                                <a
+                                                    href={group.link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="shrink-0 size-10 bg-zinc-900 text-white rounded-xl flex items-center justify-center group-hover:bg-indigo-600 transition-all duration-300 shadow-lg shadow-zinc-200 group-hover:shadow-indigo-500/20"
+                                                >
+                                                    <ArrowRight className="size-5 group-hover:translate-x-0.5 transition-transform" />
+                                                </a>
                                             </div>
-                                            <a
-                                                href={group.link}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="w-full flex items-center justify-center gap-2 bg-zinc-900 text-white hover:bg-indigo-600 font-bold text-xs uppercase tracking-widest py-3.5 rounded-xl transition-all duration-300 shadow-md group-hover:shadow-indigo-500/20"
-                                            >
-                                                {t.joinGroup} <ArrowRight className="size-4" />
-                                            </a>
                                         </div>
                                     )
                                 })}

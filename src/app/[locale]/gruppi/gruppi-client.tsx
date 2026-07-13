@@ -293,7 +293,7 @@ export function GruppiClient({ initialGroups, initialYears = [], locale }: Grupp
                         </div>
 
                         <a
-                            href={`/${locale}/gruppi/sanitaria-veterinaria`}
+                            href={`/${locale}/gruppi/semestre-filtro-area-sanitaria`}
                             className="relative z-10 shrink-0 flex items-center gap-2 bg-[#c9041a] text-white hover:bg-red-700 font-black text-xs uppercase tracking-widest px-8 py-5 rounded-2xl transition-all duration-300 shadow-xl shadow-red-600/10 hover:shadow-red-600/25 hover:scale-[1.02]"
                         >
                             {t.discoverBtn} <ArrowRight className="size-4" />
