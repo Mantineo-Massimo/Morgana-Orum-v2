@@ -431,6 +431,34 @@ const DICTIONARY_DATA: DictionaryTerm[] = [
         category: "internazionale",
         definition: "Consorzio interuniversitario a cui UniMe aderisce. Raccoglie i profili e i CV dei laureandi per facilitare l'incontro tra domanda e offerta di lavoro e monitora la condizione occupazionale dei laureati.",
         definitionEn: "An Italian interuniversity database collecting graduates' CVs to match job demand and study employment statistics."
+    },
+    {
+        term: "Semestre Filtro",
+        termEn: "Semester Filter",
+        category: "carriera",
+        definition: "Un periodo accademico iniziale durante il quale gli studenti di determinati corsi (come quelli dell'area medica o sanitaria) sostengono una serie di esami propedeutici al fine di superare una selezione o un blocco d'accesso per la prosecuzione della propria carriera.",
+        definitionEn: "An initial academic period during which students of specific programs (such as medical or healthcare areas) take preparatory exams to pass a selection process for continuing their studies."
+    },
+    {
+        term: "Professioni Sanitarie",
+        termEn: "Healthcare Professions",
+        category: "carriera",
+        definition: "La categoria di corsi di laurea e ambiti professionali dedicati alla salute e alla cura del paziente (es. Infermieristica, Fisioterapia, Logopedia), regolamentati a livello nazionale con test di ingresso selettivo.",
+        definitionEn: "The group of degree programs and professional fields dedicated to patient care and health (e.g., Nursing, Physiotherapy, Speech Therapy), regulated at the national level with a selective admission test."
+    },
+    {
+        term: "Cineforum Universitario",
+        termEn: "University Cineforum",
+        category: "organizzazione",
+        definition: "Iniziativa storica promossa dalle associazioni studentesche (come Morgana e O.R.U.M.) volta a diffondere la cultura cinematografica tramite proiezioni di film e successivi dibattiti e confronti.",
+        definitionEn: "A historic initiative promoted by student associations (such as Morgana and O.R.U.M.) aimed at spreading film culture through movie screenings followed by debates and discussions."
+    },
+    {
+        term: "Affittacase (Bacheca Alloggi)",
+        termEn: "Housing / Room Rental Board",
+        category: "organizzazione",
+        definition: "Servizio o bacheca informativa dedicata agli studenti fuori sede per facilitare la ricerca e l'offerta di alloggi, appartamenti in affitto o stanze a Messina.",
+        definitionEn: "An information service or noticeboard dedicated to non-resident students to facilitate finding and listing apartments, rooms for rent, or roommates in Messina."
     }
 ]
 
