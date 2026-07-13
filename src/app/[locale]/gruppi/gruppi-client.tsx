@@ -34,7 +34,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         missingSub: "Stiamo aggiornando costantemente l'elenco dei gruppi. Se il tuo corso non è presente, contattaci sui nostri canali social e ti forniremo il link dedicato.",
         writeInstagram: "Scrivici su Instagram",
         promoGeneralTitle: "Gruppi Semestre Filtro & Area Sanitaria",
-        promoGeneralSub: "Accedi alle bacheche informative, ai canali di coordinamento e alle community generali dell'area medica e veterinaria.",
+        promoGeneralSub: "Accedi alle bacheche informative, ai canali di coordinamento e alle community generali del semestre filtro e dell'area sanitaria.",
         discoverBtn: "Scopri i Gruppi",
         collabWith: "In collaborazione con",
         allYears: "Tutti gli anni"
@@ -56,7 +56,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
         missingSub: "We are constantly updating the list of groups. If your course is not present, contact us on our social channels and we will provide the dedicated link.",
         writeInstagram: "Message us on Instagram",
         promoGeneralTitle: "Semester Filter Groups & Healthcare Area",
-        promoGeneralSub: "Access the informative boards, coordination channels, and general communities for the medical and veterinary area.",
+        promoGeneralSub: "Access the informative boards, coordination channels, and general communities for the semester filter and healthcare area.",
         discoverBtn: "Discover Groups",
         collabWith: "In collaboration with",
         allYears: "All Years"

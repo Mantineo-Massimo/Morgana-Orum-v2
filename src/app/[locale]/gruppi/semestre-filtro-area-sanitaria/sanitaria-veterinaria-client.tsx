@@ -12,7 +12,7 @@ interface SanitariaVeterinariaClientProps {
 const TRANSLATIONS: Record<string, Record<string, string>> = {
     it: {
         title: "Gruppi Semestre Filtro & Area Sanitaria",
-        subtitle: "Canali di informazione, bacheche e community generali dedicate esclusivamente all'area medica, sanitaria e veterinaria.",
+        subtitle: "Canali di informazione, bacheche e community generali dedicate esclusivamente al semestre filtro e all'area sanitaria.",
         searchPlaceholder: "Cerca tra i gruppi generali...",
         noGroups: "Nessun gruppo generale trovato.",
         backBtn: "Torna a tutti i gruppi",
@@ -26,7 +26,7 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     },
     en: {
         title: "Semester Filter & Healthcare Area Groups",
-        subtitle: "Information channels, bulletin boards, and general communities dedicated exclusively to the medical, healthcare, and veterinary area.",
+        subtitle: "Information channels, bulletin boards, and general communities dedicated exclusively to the semester filter and healthcare area.",
         searchPlaceholder: "Search general groups...",
         noGroups: "No general groups found.",
         backBtn: "Back to all groups",
