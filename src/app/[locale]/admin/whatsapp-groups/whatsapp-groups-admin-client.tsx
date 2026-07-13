@@ -622,7 +622,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, initialYears = [], us
                 {(selectedCategory === "all" || selectedCategory === "SANITARY_VET") && sanitaryVetGroups.length > 0 && (
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
-                            <h3 className="text-xs font-black uppercase tracking-wider text-[#c9041a] shrink-0">Area Sanitaria & Veterinaria</h3>
+                            <h3 className="text-xs font-black uppercase tracking-wider text-[#c9041a] shrink-0">Gruppi Semestre Filtro & Area Sanitaria</h3>
                             <div className="h-px w-full bg-slate-100"></div>
                             <span className="text-[10px] font-black text-red-600 bg-red-50 border border-red-200/30 px-2 py-0.5 rounded">{sanitaryVetGroups.length}</span>
                         </div>
@@ -636,7 +636,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, initialYears = [], us
                                             <div className="flex items-start justify-between gap-4 mb-4">
                                                 <div className="flex flex-wrap gap-1">
                                                     <span className="inline-flex items-center text-[10px] font-black uppercase tracking-widest px-2.5 py-1 bg-red-50 text-red-600 rounded-full border border-red-100">
-                                                        Sanitaria & Vet
+                                                        Semestre Filtro & Area Sanitaria
                                                     </span>
                                                     {group.subcategory && (
                                                         <span className="inline-flex items-center text-[10px] font-bold px-2 py-1 bg-purple-50 text-purple-700 rounded-full border border-purple-200">
