@@ -176,6 +176,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, initialYears = [], us
             subcategory: cat === "SANITARY_VET" ? "MEDICINA" : "",
             isGeneral: cat === "SANITARY_VET"
         })
+        setIsOpen(true)
     }
 
     const handleAddYearSubmit = async (e: React.FormEvent) => {
