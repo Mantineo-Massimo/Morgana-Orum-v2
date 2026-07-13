@@ -34,7 +34,7 @@ interface WhatsAppGroupsAdminClientProps {
 const CATEGORIES = [
     { value: "ACADEMIC", label: "Corsi Accademici" },
     { value: "COMMUNITY", label: "Community & Tematici" },
-    { value: "SANITARY_VET", label: "Area Sanitaria & Veterinaria" }
+    { value: "SANITARY_VET", label: "Gruppi Semestre Filtro & Area Sanitaria" }
 ]
 
 const DEPARTMENTS = [
@@ -520,7 +520,7 @@ export function WhatsAppGroupsAdminClient({ initialGroups, initialYears = [], us
                             : "bg-white border-slate-200/60 text-slate-500 hover:bg-slate-50 hover:text-slate-950"
                     )}
                 >
-                    Area Sanitaria & Vet ({initialGroups.filter(g => g.category === "SANITARY_VET").length})
+                    Gruppi Semestre Filtro & Area Sanitaria ({initialGroups.filter(g => g.category === "SANITARY_VET").length})
                 </button>
             </div>
 
