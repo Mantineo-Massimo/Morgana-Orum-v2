@@ -48,6 +48,17 @@ prisma/*.db-shm
 # scratch / temp files
 /scratch
 
+# Python virtual environment and cache
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
 # editor settings
 .vscode/
 
@@ -78,3 +89,5 @@ desktop.ini
 # Database backups and dumps
 *.sql
 *.sqlite
+/backups/*
+!/backups/db_backup_2026-07-03_11-06-32.json
