@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import {
     Landmark, Briefcase, BookOpen, HeartPulse, MapPin, Navigation, ArrowRight, Utensils, Building2, Library, Stethoscope, Scale, Dumbbell, FlaskConical,
     Cpu, Building, BookOpenText, Lightbulb, GraduationCap, PawPrint, Calculator, Users, School, Brain, Book, FileText, Ambulance, Hospital, Dna, Microscope,
-    Stethoscope as StethoscopeIcon
+    Stethoscope as StethoscopeIcon, Plus, Minus
 } from 'lucide-react'
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -21,6 +21,30 @@ function ChangeView({ center, zoom }: { center: [number, number] | null, zoom: n
         })
     }
     return null
+}
+
+function ZoomControls() {
+    const map = useMap()
+    return (
+        <div className="absolute bottom-6 right-6 z-[1000] flex flex-col gap-1.5 bg-white/90 backdrop-blur-md p-1.5 rounded-2xl shadow-xl border border-zinc-200/80">
+            <button
+                type="button"
+                onClick={() => map.zoomIn()}
+                className="size-9 flex items-center justify-center bg-white hover:bg-zinc-100 text-zinc-700 rounded-xl shadow-sm border border-zinc-200/50 transition-all active:scale-95 font-bold"
+                title="Aumenta zoom"
+            >
+                <Plus className="size-4" />
+            </button>
+            <button
+                type="button"
+                onClick={() => map.zoomOut()}
+                className="size-9 flex items-center justify-center bg-white hover:bg-zinc-100 text-zinc-700 rounded-xl shadow-sm border border-zinc-200/50 transition-all active:scale-95 font-bold"
+                title="Riduci zoom"
+            >
+                <Minus className="size-4" />
+            </button>
+        </div>
+    )
 }
 
 function MapInteractionController({ activePoloIndex }: { activePoloIndex: number | null }) {
@@ -211,11 +235,14 @@ export default function InteractiveMap() {
                         style={{ height: "100%", minHeight: "600px" }}
                     >
                         <MapInteractionController activePoloIndex={activePoloIndex} />
+                        <ZoomControls />
                         <TileLayer
                             attribution='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
                             url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+                            maxZoom={18}
+                            maxNativeZoom={15}
                         />
-                        <ChangeView center={activePoloIndex !== null ? POLI[activePoloIndex].position : defaultCenter} zoom={activePoloIndex !== null ? 15 : 11.5} />
+                        <ChangeView center={activePoloIndex !== null ? POLI[activePoloIndex].position : defaultCenter} zoom={activePoloIndex !== null ? 14.5 : 11.5} />
 
                         {POLI.map((polo, index) => {
                             const isActive = activePoloIndex === index
