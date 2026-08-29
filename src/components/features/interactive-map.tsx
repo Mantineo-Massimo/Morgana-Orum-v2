@@ -212,8 +212,8 @@ export default function InteractiveMap() {
                     >
                         <MapInteractionController activePoloIndex={activePoloIndex} />
                         <TileLayer
-                            attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
-                            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                            attribution='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'
+                            url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}"
                         />
                         <ChangeView center={activePoloIndex !== null ? POLI[activePoloIndex].position : defaultCenter} zoom={activePoloIndex !== null ? 15 : 11.5} />
 
