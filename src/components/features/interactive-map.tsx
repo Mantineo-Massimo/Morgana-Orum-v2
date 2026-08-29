@@ -54,7 +54,7 @@ const POLI = [
         color: "purple",
         icon: FlaskConical,
         mensa: "Pranzo 12:00-14:30 | Cena 19:00-20:30 (Lun-Ven)",
-        mapsLink: "https://maps.app.goo.gl/yM4tU9kR8Q7KzP1H6",
+        mapsLink: "https://www.google.com/maps?q=38.260137,15.597834",
         subLocations: [
             { name: "Ingegneria", position: [38.259000, 15.596254] as [number, number], icon: Landmark },
             { name: "Edificio A", position: [38.260040, 15.598920] as [number, number], icon: Building },
@@ -73,7 +73,7 @@ const POLI = [
         color: "green",
         icon: Dumbbell,
         mensa: "Pranzo (Lun-Ven) 12:00-14:30 | Cena (Lun-Gio) 19:00-20:30",
-        mapsLink: "https://maps.app.goo.gl/YwJmD1X2qWj6hK2r6",
+        mapsLink: "https://www.google.com/maps?q=38.230414,15.551735",
         subLocations: [
             { name: "Veterinaria", position: [38.230933, 15.551687] as [number, number], icon: Landmark },
             { name: "CUS Unime", position: [38.230191, 15.551850] as [number, number], icon: Dumbbell },
@@ -89,7 +89,7 @@ const POLI = [
         color: "blue",
         icon: Landmark,
         mensa: "Pranzo 12:00-14:30 | Cena 19:00-20:30 (Tutti i giorni)",
-        mapsLink: "https://maps.app.goo.gl/w1qf41CZbZ2h8h8j7",
+        mapsLink: "https://www.google.com/maps?q=38.189431,15.553146",
         subLocations: [
             { name: "Rettorato", position: [38.189254, 15.552924] as [number, number], icon: Landmark },
             { name: "Giurisprudenza", position: [38.188917, 15.553492] as [number, number], icon: Landmark },
@@ -106,11 +106,11 @@ const POLI = [
         name: "Polo Policlinico",
         address: "Via Consolare Valeria, 1",
         departments: ["Biomorf", "Dimed", "Patologia Umana"],
-        position: [38.165571, 15.534250] as [number, number] as [number, number],
+        position: [38.165571, 15.534250] as [number, number],
         color: "red",
         icon: HeartPulse,
         mensa: "Pranzo 12:00-14:30 (Lun-Ven)",
-        mapsLink: "https://maps.app.goo.gl/QcZ9wR4yU3HkK6h2A",
+        mapsLink: "https://www.google.com/maps?q=38.165571,15.534250",
         subLocations: [
             { name: "Pronto Soccorso", position: [38.163103, 15.536977] as [number, number], icon: Ambulance },
             { name: "Padiglione A", position: [38.164522, 15.537167] as [number, number], icon: Hospital },
