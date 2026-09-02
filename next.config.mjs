@@ -60,8 +60,8 @@ const nextConfig = {
                     { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
                     // HSTS — force HTTPS for 1 year, include subdomains + preload list
                     { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
-                    // Restrict browser features
-                    { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+                    // Restrict browser features (allow camera on same origin for QR scanner)
+                    { key: 'Permissions-Policy', value: 'camera=(self), microphone=(), geolocation=()' },
                     // Cross-origin isolation for popups
                     { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
                     // Content Security Policy is now handled dynamically in middleware.ts with nonces to protect scripts without unsafe-inline.
