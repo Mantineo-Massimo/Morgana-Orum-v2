@@ -264,6 +264,102 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                     </table>
                 </div>
             </div>
+
+            {/* Create Partner Account Modal */}
+            {selectedConvention && (
+                <div className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+                    <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-slate-200 shadow-2xl space-y-6 relative animate-in zoom-in-95 duration-200">
+                        <button
+                            type="button"
+                            onClick={() => setSelectedConvention(null)}
+                            className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors"
+                        >
+                            <X className="size-5" />
+                        </button>
+
+                        <div className="flex items-center gap-3">
+                            <div className="p-3 bg-amber-50 text-amber-700 rounded-2xl border border-amber-200">
+                                <Store className="size-6" />
+                            </div>
+                            <div>
+                                <h3 className="text-lg font-black text-slate-900 tracking-tight">Accredita Account Partner</h3>
+                                <p className="text-xs text-slate-500 font-medium">Crea le credenziali per {selectedConvention.name}</p>
+                            </div>
+                        </div>
+
+                        {partnerStatus && (
+                            <div className={`p-4 rounded-2xl border text-xs font-bold ${
+                                partnerStatus.type === 'success' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'
+                            }`}>
+                                {partnerStatus.text}
+                            </div>
+                        )}
+
+                        <form onSubmit={handleCreatePartnerAccount} className="space-y-4">
+                            <div>
+                                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-1">
+                                    Nome Referente / Attività
+                                </label>
+                                <input
+                                    type="text"
+                                    required
+                                    value={partnerName}
+                                    onChange={(e) => setPartnerName(e.target.value)}
+                                    placeholder="Es. Elerent Messina"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold outline-none focus:bg-white focus:ring-2 focus:ring-slate-900 text-slate-900"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-1">
+                                    Email Login Partner
+                                </label>
+                                <input
+                                    type="email"
+                                    required
+                                    value={partnerEmail}
+                                    onChange={(e) => setPartnerEmail(e.target.value)}
+                                    placeholder="partner@celerent.it"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold outline-none focus:bg-white focus:ring-2 focus:ring-slate-900 text-slate-900"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-1">
+                                    Password Login
+                                </label>
+                                <input
+                                    type="password"
+                                    required
+                                    minLength={6}
+                                    value={partnerPassword}
+                                    onChange={(e) => setPartnerPassword(e.target.value)}
+                                    placeholder="••••••••"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-sm font-semibold outline-none focus:bg-white focus:ring-2 focus:ring-slate-900 text-slate-900"
+                                />
+                            </div>
+
+                            <div className="pt-2 flex justify-end gap-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setSelectedConvention(null)}
+                                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 font-bold text-xs hover:bg-slate-50"
+                                >
+                                    Chiudi
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={creatingPartner}
+                                    className="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs uppercase tracking-wider flex items-center gap-2 disabled:opacity-50"
+                                >
+                                    {creatingPartner && <Loader2 className="size-4 animate-spin" />}
+                                    Crea Account Partner
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
