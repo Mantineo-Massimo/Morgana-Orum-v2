@@ -154,6 +154,9 @@ export default async function RootLayout({
 
     const organigrammaConfig = await getOrganigrammaConfig()
 
+    const pathname = headers().get("x-pathname") || "/"
+    const isPartnerPage = pathname.includes("/partner")
+
     return (
         <html lang={locale} suppressHydrationWarning data-brand={brand || undefined}>
             <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`}>
@@ -174,8 +177,8 @@ export default async function RootLayout({
                         <SpeedInsights />
                         <Analytics />
                         <div className="flex min-h-screen flex-col bg-background font-sans">
-                            <TopBar />
-                            <StickyHeader isLoggedIn={isLoggedIn} showOrganigramma={organigrammaConfig.visible} />
+                            {!isPartnerPage && <TopBar />}
+                            {!isPartnerPage && <StickyHeader isLoggedIn={isLoggedIn} showOrganigramma={organigrammaConfig.visible} />}
                             <ClientLogger />
                             <CookieConsent />
                             {/* Disconnette l'utente dopo 30 min di inattività */}
@@ -185,7 +188,7 @@ export default async function RootLayout({
                                 {children}
                             </main>
 
-                            <Footer showOrganigramma={organigrammaConfig.visible} />
+                            {!isPartnerPage && <Footer showOrganigramma={organigrammaConfig.visible} />}
                         </div>
                     </BrandProvider>
                 </NextIntlClientProvider>
