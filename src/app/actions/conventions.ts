@@ -18,6 +18,11 @@ export async function getConventions(location?: string) {
     try {
         const conventions = await prisma.convention.findMany({
             where: location ? { location } : {},
+            include: {
+                partnerUsers: {
+                    select: { id: true, email: true, name: true }
+                }
+            },
             orderBy: { name: 'asc' }
         })
         return conventions
@@ -30,7 +35,12 @@ export async function getConventions(location?: string) {
 export async function getConventionById(id: string) {
     try {
         const convention = await prisma.convention.findUnique({
-            where: { id }
+            where: { id },
+            include: {
+                partnerUsers: {
+                    select: { id: true, email: true, name: true }
+                }
+            }
         })
         return convention
     } catch (error) {

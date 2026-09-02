@@ -252,10 +252,10 @@ export async function updatePartnerDiscounts(discounts: string[]) {
     }
 }
 
-// Funzione Admin per creare un account partner
+// Funzione Admin per creare o aggiornare un account partner
 export async function createPartnerAccount(data: {
     email: string
-    password: string
+    password?: string
     name: string
     conventionId: string
 }) {
@@ -270,25 +270,58 @@ export async function createPartnerAccount(data: {
         }
 
         const cleanEmail = data.email.trim().toLowerCase()
-        const existing = await prisma.partnerUser.findUnique({ where: { email: cleanEmail } })
-        if (existing) {
-            return { success: false, error: "Un account partner con questa email esiste già." }
-        }
 
-        const hashedPassword = await bcrypt.hash(data.password, 10)
-
-        const partner = await prisma.partnerUser.create({
-            data: {
-                email: cleanEmail,
-                password: hashedPassword,
-                name: data.name.trim(),
-                conventionId: data.conventionId
-            }
+        // Check if partner already exists for this convention
+        const existingForConvention = await prisma.partnerUser.findFirst({
+            where: { conventionId: data.conventionId }
         })
 
-        return { success: true, partner }
+        // Check email conflict with another convention
+        const existingEmailUser = await prisma.partnerUser.findUnique({
+            where: { email: cleanEmail }
+        })
+
+        if (existingEmailUser && existingEmailUser.conventionId !== data.conventionId) {
+            return { success: false, error: "Questa email è già registrata per un'altra convenzione." }
+        }
+
+        if (existingForConvention) {
+            // Update existing partner
+            const updateData: any = {
+                email: cleanEmail,
+                name: data.name.trim()
+            }
+            if (data.password && data.password.trim().length > 0) {
+                updateData.password = await bcrypt.hash(data.password.trim(), 10)
+            }
+
+            const updated = await prisma.partnerUser.update({
+                where: { id: existingForConvention.id },
+                data: updateData
+            })
+
+            return { success: true, isUpdated: true, partner: updated }
+        } else {
+            // Create new partner
+            if (!data.password || data.password.trim().length < 6) {
+                return { success: false, error: "La password deve contenere almeno 6 caratteri." }
+            }
+
+            const hashedPassword = await bcrypt.hash(data.password.trim(), 10)
+
+            const partner = await prisma.partnerUser.create({
+                data: {
+                    email: cleanEmail,
+                    password: hashedPassword,
+                    name: data.name.trim(),
+                    conventionId: data.conventionId
+                }
+            })
+
+            return { success: true, isCreated: true, partner }
+        }
     } catch (e: any) {
-        console.error("Error creating partner account:", e)
-        return { success: false, error: "Errore nella creazione dell'account partner." }
+        console.error("Error creating/updating partner account:", e)
+        return { success: false, error: "Errore durante il salvataggio dell'account partner." }
     }
 }

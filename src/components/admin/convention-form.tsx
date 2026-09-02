@@ -20,6 +20,7 @@ type ConventionFormProps = {
         website: string | null
         location: string
         discounts: string[]
+        partnerUsers?: { id: string, email: string, name: string }[]
     }
 }
 
@@ -44,8 +45,9 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
     const [isMediaOpen, setIsMediaOpen] = useState(false)
 
     // Partner accreditation state
-    const [partnerName, setPartnerName] = useState(initialData?.name || "")
-    const [partnerEmail, setPartnerEmail] = useState("")
+    const existingPartner = initialData?.partnerUsers?.[0]
+    const [partnerName, setPartnerName] = useState(existingPartner?.name || initialData?.name || "")
+    const [partnerEmail, setPartnerEmail] = useState(existingPartner?.email || "")
     const [partnerPassword, setPartnerPassword] = useState("")
     const [isPartnerPending, setIsPartnerPending] = useState(false)
     const [partnerStatus, setPartnerStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null)
@@ -65,14 +67,15 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
             })
 
             if (res.success) {
-                setPartnerStatus({ type: 'success', text: 'Account partner per il negoziante attivato con successo!' })
-                setPartnerEmail("")
+                const msg = res.isUpdated ? "Credenziali partner aggiornate con successo!" : "Account partner per il negoziante attivato con successo!"
+                setPartnerStatus({ type: 'success', text: msg })
                 setPartnerPassword("")
+                router.refresh()
             } else {
-                setPartnerStatus({ type: 'error', text: res.error || 'Errore durante la creazione del partner.' })
+                setPartnerStatus({ type: 'error', text: res.error || 'Errore durante il salvataggio del partner.' })
             }
         } catch (err) {
-            setPartnerStatus({ type: 'error', text: 'Errore durante la creazione.' })
+            setPartnerStatus({ type: 'error', text: 'Errore durante il salvataggio.' })
         } finally {
             setIsPartnerPending(false)
         }
@@ -297,20 +300,32 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                 {/* Partner Accreditation Card */}
                 {initialData?.id && (
                     <div className="border-t border-zinc-100 pt-6">
-                        <div className="p-6 bg-amber-50/60 rounded-2xl border border-amber-200/80 space-y-4">
+                        <div className={cn(
+                            "p-6 rounded-2xl border space-y-4",
+                            existingPartner ? "bg-emerald-50/60 border-emerald-200/80" : "bg-amber-50/60 border-amber-200/80"
+                        )}>
                             <div className="flex items-center gap-3">
-                                <div className="p-2.5 bg-amber-100 text-amber-800 rounded-xl">
+                                <div className={cn(
+                                    "p-2.5 rounded-xl",
+                                    existingPartner ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
+                                )}>
                                     <Key className="size-5" />
                                 </div>
                                 <div>
-                                    <h4 className="text-base font-bold text-slate-900">Accredita Partner Negoziante</h4>
-                                    <p className="text-xs text-slate-500 font-medium">Crea le credenziali di login per consentire all&apos;attività di scannerizzare i QR degli studenti.</p>
+                                    <h4 className="text-base font-bold text-slate-900">
+                                        {existingPartner ? "Gestisci Account Partner Negoziante" : "Accredita Partner Negoziante"}
+                                    </h4>
+                                    <p className="text-xs text-slate-500 font-medium">
+                                        {existingPartner 
+                                            ? `Account attualmente attivo per ${existingPartner.email}. Puoi aggiornare l'email o reimpostare la password.` 
+                                            : "Crea le credenziali di login per consentire all'attività di scannerizzare i QR degli studenti."}
+                                    </p>
                                 </div>
                             </div>
 
                             {partnerStatus && (
                                 <div className={`p-3.5 rounded-xl border text-xs font-bold ${
-                                    partnerStatus.type === 'success' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'
+                                    partnerStatus.type === 'success' ? 'bg-emerald-100 border-emerald-300 text-emerald-900' : 'bg-red-50 border-red-200 text-red-800'
                                 }`}>
                                     {partnerStatus.text}
                                 </div>
@@ -323,10 +338,11 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                                     </label>
                                     <input
                                         type="email"
+                                        required
                                         value={partnerEmail}
                                         onChange={(e) => setPartnerEmail(e.target.value)}
                                         placeholder="partner@celerent.it"
-                                        className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold outline-none focus:ring-2 focus:ring-amber-500 text-slate-900"
+                                        className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold outline-none focus:ring-2 focus:ring-slate-900 text-slate-900"
                                     />
                                 </div>
                                 <div>
@@ -338,8 +354,8 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                                         minLength={6}
                                         value={partnerPassword}
                                         onChange={(e) => setPartnerPassword(e.target.value)}
-                                        placeholder="••••••••"
-                                        className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold outline-none focus:ring-2 focus:ring-amber-500 text-slate-900"
+                                        placeholder={existingPartner ? "Nuova password (opzionale)" : "••••••••"}
+                                        className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold outline-none focus:ring-2 focus:ring-slate-900 text-slate-900"
                                     />
                                 </div>
                             </div>
@@ -347,11 +363,14 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                             <button
                                 type="button"
                                 onClick={handleCreatePartner}
-                                disabled={isPartnerPending || !partnerEmail || !partnerPassword}
-                                className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs flex items-center gap-2 disabled:opacity-40 transition-colors"
+                                disabled={isPartnerPending || !partnerEmail}
+                                className={cn(
+                                    "px-4 py-2.5 rounded-xl text-white font-bold text-xs flex items-center gap-2 disabled:opacity-40 transition-colors",
+                                    existingPartner ? "bg-emerald-700 hover:bg-emerald-800" : "bg-amber-600 hover:bg-amber-700"
+                                )}
                             >
                                 {isPartnerPending && <Loader2 className="size-3.5 animate-spin" />}
-                                Salva & Genera Login Partner
+                                {existingPartner ? "Aggiorna Credenziali Partner" : "Salva & Genera Login Partner"}
                             </button>
                         </div>
                     </div>
