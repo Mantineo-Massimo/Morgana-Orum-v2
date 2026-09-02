@@ -3,9 +3,10 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { Link } from "@/i18n/routing"
-import { ArrowLeft, Save, Loader2, X, Plus, Trash2, Image as ImageIcon } from "lucide-react"
+import { ArrowLeft, Save, Loader2, X, Plus, Trash2, Image as ImageIcon, Key, Store, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createConvention, updateConvention } from "@/app/actions/conventions"
+import { createPartnerAccount } from "@/app/actions/partner"
 import { MediaSelector } from "@/components/admin/media-selector"
 
 
@@ -41,6 +42,41 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
     const [logoFile, setLogoFile] = useState<File | null>(null)
     const [logoPreview, setLogoPreview] = useState<string | null>(initialData?.logo || null)
     const [isMediaOpen, setIsMediaOpen] = useState(false)
+
+    // Partner accreditation state
+    const [partnerName, setPartnerName] = useState(initialData?.name || "")
+    const [partnerEmail, setPartnerEmail] = useState("")
+    const [partnerPassword, setPartnerPassword] = useState("")
+    const [isPartnerPending, setIsPartnerPending] = useState(false)
+    const [partnerStatus, setPartnerStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null)
+
+    const handleCreatePartner = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!initialData?.id) return
+        setPartnerStatus(null)
+        setIsPartnerPending(true)
+
+        try {
+            const res = await createPartnerAccount({
+                email: partnerEmail,
+                password: partnerPassword,
+                name: partnerName || initialData.name,
+                conventionId: initialData.id
+            })
+
+            if (res.success) {
+                setPartnerStatus({ type: 'success', text: 'Account partner per il negoziante attivato con successo!' })
+                setPartnerEmail("")
+                setPartnerPassword("")
+            } else {
+                setPartnerStatus({ type: 'error', text: res.error || 'Errore durante la creazione del partner.' })
+            }
+        } catch (err) {
+            setPartnerStatus({ type: 'error', text: 'Errore durante la creazione.' })
+        } finally {
+            setIsPartnerPending(false)
+        }
+    }
 
     async function uploadFile(file: File, folder: string) {
         const formData = new FormData()
@@ -257,6 +293,69 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                     </div>
                     <p className="text-xs text-zinc-400 mt-3">Inserisci fino a 7 righe di offerta. Verranno salvate solo quelle non vuote.</p>
                 </div>
+
+                {/* Partner Accreditation Card */}
+                {initialData?.id && (
+                    <div className="border-t border-zinc-100 pt-6">
+                        <div className="p-6 bg-amber-50/60 rounded-2xl border border-amber-200/80 space-y-4">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2.5 bg-amber-100 text-amber-800 rounded-xl">
+                                    <Key className="size-5" />
+                                </div>
+                                <div>
+                                    <h4 className="text-base font-bold text-slate-900">Accredita Partner Negoziante</h4>
+                                    <p className="text-xs text-slate-500 font-medium">Crea le credenziali di login per consentire all'attività di scannerizzare i QR degli studenti.</p>
+                                </div>
+                            </div>
+
+                            {partnerStatus && (
+                                <div className={`p-3.5 rounded-xl border text-xs font-bold ${
+                                    partnerStatus.type === 'success' ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-red-50 border-red-200 text-red-800'
+                                }`}>
+                                    {partnerStatus.text}
+                                </div>
+                            )}
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                        Email Login Partner
+                                    </label>
+                                    <input
+                                        type="email"
+                                        value={partnerEmail}
+                                        onChange={(e) => setPartnerEmail(e.target.value)}
+                                        placeholder="partner@celerent.it"
+                                        className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold outline-none focus:ring-2 focus:ring-amber-500 text-slate-900"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">
+                                        Password Login
+                                    </label>
+                                    <input
+                                        type="password"
+                                        minLength={6}
+                                        value={partnerPassword}
+                                        onChange={(e) => setPartnerPassword(e.target.value)}
+                                        placeholder="••••••••"
+                                        className="w-full px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold outline-none focus:ring-2 focus:ring-amber-500 text-slate-900"
+                                    />
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={handleCreatePartner}
+                                disabled={isPartnerPending || !partnerEmail || !partnerPassword}
+                                className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs flex items-center gap-2 disabled:opacity-40 transition-colors"
+                            >
+                                {isPartnerPending && <Loader2 className="size-3.5 animate-spin" />}
+                                Salva & Genera Login Partner
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 {/* Submit */}
                 <button

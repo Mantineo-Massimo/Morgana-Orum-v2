@@ -213,14 +213,17 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                         <td className="px-6 py-4 text-right whitespace-nowrap">
                                             <div className="flex items-center justify-end gap-1">
                                                 <button
-                                                    onClick={() => {
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.preventDefault()
+                                                        e.stopPropagation()
                                                         setSelectedConvention(c)
                                                         setPartnerName(c.name)
                                                         setPartnerEmail("")
                                                         setPartnerPassword("")
                                                         setPartnerStatus(null)
                                                     }}
-                                                    className="p-2 rounded-xl border border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100 transition-all text-xs font-bold flex items-center gap-1"
+                                                    className="p-2 rounded-xl border border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100 transition-all text-xs font-bold flex items-center gap-1 cursor-pointer"
                                                     title="Crea Account Partner per Login Negoziante"
                                                 >
                                                     <Key className="size-3.5" />
@@ -234,7 +237,10 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                                     <Edit className="size-4" />
                                                 </Link>
                                                 <button
-                                                    onClick={async () => {
+                                                    type="button"
+                                                    onClick={async (e) => {
+                                                        e.preventDefault()
+                                                        e.stopPropagation()
                                                         const res = await duplicateConvention(c.id)
                                                         if (res.success) {
                                                             router.refresh()
@@ -248,7 +254,12 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                                     <Copy className="size-4" />
                                                 </button>
                                                 <button
-                                                    onClick={() => handleDelete(c.id)}
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.preventDefault()
+                                                        e.stopPropagation()
+                                                        handleDelete(c.id)
+                                                    }}
                                                     disabled={isDeleting === c.id}
                                                     className="p-2 rounded-xl border border-zinc-100 text-zinc-400 hover:text-red-600 hover:border-red-100 hover:bg-red-50 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                                                     title="Elimina"
@@ -267,7 +278,7 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
 
             {/* Create Partner Account Modal */}
             {selectedConvention && (
-                <div className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+                <div className="fixed inset-0 z-[99999] bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
                     <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full border border-slate-200 shadow-2xl space-y-6 relative animate-in zoom-in-95 duration-200">
                         <button
                             type="button"
