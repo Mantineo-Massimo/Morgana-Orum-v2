@@ -33,6 +33,7 @@ model User {
   verificationToken            String?          @unique
   gradeSimulation              GradeSimulation?
   registrations                Registration[]
+  conventionScans              ConventionScan[]
 }
 
 model Event {
@@ -129,11 +130,39 @@ model Convention {
   website   String?
   location  String
   discounts String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  partnerUsers PartnerUser[]
+  scans        ConventionScan[]
 
   @@index([location])
   @@index([category])
+}
+
+model PartnerUser {
+  id           String           @id @default(uuid())
+  email        String           @unique
+  password     String
+  name         String
+  conventionId String
+  createdAt    DateTime         @default(now())
+  convention   Convention       @relation(fields: [conventionId], references: [id], onDelete: Cascade)
+  scans        ConventionScan[]
+}
+
+model ConventionScan {
+  id           String       @id @default(uuid())
+  conventionId String
+  userId       Int
+  scannedById  String?
+  createdAt    DateTime     @default(now())
+  convention   Convention   @relation(fields: [conventionId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scannedBy    PartnerUser? @relation(fields: [scannedById], references: [id], onDelete: SetNull)
+
+  @@index([conventionId])
+  @@index([userId])
+  @@index([createdAt])
 }
 
 model NewsCategory {

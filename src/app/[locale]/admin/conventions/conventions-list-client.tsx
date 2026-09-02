@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp, ArrowDown, Copy, Plus, Tag } from "lucide-react"
+import { Search, MapPin, Edit, Trash2, Globe, Facebook, Instagram, ArrowUpDown, ArrowUp, ArrowDown, Copy, Plus, Tag, Store, Key, X, Loader2, CheckCircle2 } from "lucide-react"
 import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import { deleteConvention, duplicateConvention } from "@/app/actions/conventions"
+import { createPartnerAccount } from "@/app/actions/partner"
 import { useRouter } from "next/navigation"
 
 interface Convention {
@@ -22,6 +23,14 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
     const [search, setSearch] = useState("")
     const [isDeleting, setIsDeleting] = useState<string | null>(null)
     const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' | null } | null>(null)
+
+    // Partner Account creation state
+    const [selectedConvention, setSelectedConvention] = useState<Convention | null>(null)
+    const [partnerName, setPartnerName] = useState("")
+    const [partnerEmail, setPartnerEmail] = useState("")
+    const [partnerPassword, setPartnerPassword] = useState("")
+    const [creatingPartner, setCreatingPartner] = useState(false)
+    const [partnerStatus, setPartnerStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null)
 
     const requestSort = (key: string) => {
         let direction: 'asc' | 'desc' | null = 'asc'
@@ -59,6 +68,35 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
             alert(res.error)
         }
         setIsDeleting(null)
+    }
+
+    const handleCreatePartnerAccount = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (!selectedConvention) return
+        setPartnerStatus(null)
+        setCreatingPartner(true)
+
+        try {
+            const res = await createPartnerAccount({
+                email: partnerEmail,
+                password: partnerPassword,
+                name: partnerName || selectedConvention.name,
+                conventionId: selectedConvention.id
+            })
+
+            if (res.success) {
+                setPartnerStatus({ type: 'success', text: 'Account partner creato con successo! Il negoziante può ora accedere su /partner/login.' })
+                setPartnerEmail("")
+                setPartnerPassword("")
+                setPartnerName("")
+            } else {
+                setPartnerStatus({ type: 'error', text: res.error || 'Errore nella creazione del partner.' })
+            }
+        } catch (err) {
+            setPartnerStatus({ type: 'error', text: 'Errore imprevisto durante la creazione.' })
+        } finally {
+            setCreatingPartner(false)
+        }
     }
 
     return (
@@ -99,9 +137,10 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                 </div>
             </div>
 
-            <div className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+            {/* Table */}
+            <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.015)] overflow-hidden">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left text-sm border-collapse min-w-[700px]">
+                    <table className="w-full text-left text-sm">
                         <thead>
                             <tr className="bg-slate-50 border-b border-slate-100 uppercase tracking-wider text-[10px] font-bold text-slate-500">
                                 <th
@@ -173,6 +212,20 @@ export default function ConventionsListClient({ initialData }: { initialData: Co
                                         </td>
                                         <td className="px-6 py-4 text-right whitespace-nowrap">
                                             <div className="flex items-center justify-end gap-1">
+                                                <button
+                                                    onClick={() => {
+                                                        setSelectedConvention(c)
+                                                        setPartnerName(c.name)
+                                                        setPartnerEmail("")
+                                                        setPartnerPassword("")
+                                                        setPartnerStatus(null)
+                                                    }}
+                                                    className="p-2 rounded-xl border border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100 transition-all text-xs font-bold flex items-center gap-1"
+                                                    title="Crea Account Partner per Login Negoziante"
+                                                >
+                                                    <Key className="size-3.5" />
+                                                    <span className="hidden xl:inline text-[11px]">Accredita Partner</span>
+                                                </button>
                                                 <Link
                                                     href={`/admin/conventions/${c.id}/edit`}
                                                     className="p-2 rounded-xl border border-zinc-100 text-zinc-500 hover:text-foreground hover:border-zinc-200 hover:bg-zinc-50 transition-all"

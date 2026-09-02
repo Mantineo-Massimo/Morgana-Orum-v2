@@ -1,10 +1,12 @@
 "use client"
 
-import { Calendar, Ticket, MessageSquare, ShieldCheck, CheckCircle } from "lucide-react"
+import { useState } from "react"
+import { Calendar, Ticket, MessageSquare, ShieldCheck, CheckCircle, QrCode, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { Link } from "@/i18n/routing"
 import { useTranslations } from "next-intl"
+import { QRCodeSVG } from "qrcode.react"
 
 interface DashboardClientProps {
     userData: any
@@ -12,6 +14,7 @@ interface DashboardClientProps {
 
 export function DashboardClient({ userData }: DashboardClientProps) {
     const t = useTranslations("Dashboard")
+    const [showQrModal, setShowQrModal] = useState(false)
 
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
@@ -90,51 +93,108 @@ export function DashboardClient({ userData }: DashboardClientProps) {
                             const formattedMatricola = String(userData.matricola || "");
 
                             return (
-                                <div className="relative w-full aspect-[1.586/1] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden text-white shadow-2xl border border-white/10 bg-gradient-to-br from-[#18182e] via-[#0d0d17] to-[#c9041a]/95 p-6 md:p-8 flex flex-col justify-between group select-none">
-                                    {/* Decorative Pattern & Glossy Shine */}
-                                    <div className="absolute top-0 right-0 w-48 h-48 bg-[#18182e]/20 rounded-full -mr-16 -mt-16 blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
-                                    <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-[#c9041a]/15 rounded-full blur-2xl"></div>
-                                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none"></div>
+                                <>
+                                    <div className="relative w-full aspect-[1.586/1] rounded-[1.5rem] md:rounded-[2rem] overflow-hidden text-white shadow-2xl border border-white/10 bg-gradient-to-br from-[#18182e] via-[#0d0d17] to-[#c9041a]/95 p-6 md:p-8 flex flex-col justify-between group select-none">
+                                        {/* Decorative Pattern & Glossy Shine */}
+                                        <div className="absolute top-0 right-0 w-48 h-48 bg-[#18182e]/20 rounded-full -mr-16 -mt-16 blur-2xl group-hover:scale-110 transition-transform duration-700"></div>
+                                        <div className="absolute -left-16 -bottom-16 w-48 h-48 bg-[#c9041a]/15 rounded-full blur-2xl"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none"></div>
 
-                                    {/* Top Row: Logos & Status */}
-                                    <div className="relative z-10 flex justify-between items-center">
-                                        <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 shadow-sm flex items-center gap-2 shrink-0">
-                                            <div className="relative size-8 md:size-9">
-                                                <Image src="/assets/backgrounds/morgana.webp" alt="Morgana" fill className="object-contain filter brightness-110" sizes="36px" />
+                                        {/* Top Row: Logos & Status */}
+                                        <div className="relative z-10 flex justify-between items-center">
+                                            <div className="bg-white/10 backdrop-blur-md px-3 py-2 rounded-xl border border-white/10 shadow-sm flex items-center gap-2 shrink-0">
+                                                <div className="relative size-8 md:size-9">
+                                                    <Image src="/assets/backgrounds/morgana.webp" alt="Morgana" fill className="object-contain filter brightness-110" sizes="36px" />
+                                                </div>
+                                                <div className="w-px h-6 bg-white/20"></div>
+                                                <div className="relative size-8 md:size-9">
+                                                    <Image src="/assets/backgrounds/orum.webp" alt="O.R.U.M." fill className="object-contain filter brightness-110" sizes="36px" />
+                                                </div>
                                             </div>
-                                            <div className="w-px h-6 bg-white/20"></div>
-                                            <div className="relative size-8 md:size-9">
-                                                <Image src="/assets/backgrounds/orum.webp" alt="O.R.U.M." fill className="object-contain filter brightness-110" sizes="36px" />
+                                            <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 shadow-sm shrink-0">
+                                                <span className="relative flex h-2 w-2">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                                </span>
+                                                <span className="font-extrabold text-[9px] uppercase tracking-widest text-green-400 leading-none pt-0.5">{t("status_active")}</span>
                                             </div>
                                         </div>
-                                        <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 shadow-sm shrink-0">
-                                            <span className="relative flex h-2 w-2">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                                            </span>
-                                            <span className="font-extrabold text-[9px] uppercase tracking-widest text-green-400 leading-none pt-0.5">{t("status_active")}</span>
+
+                                        {/* Matricola (Large card number format, centered) */}
+                                        <div className="relative z-10 my-auto py-2 flex items-center justify-between">
+                                            <p className="font-mono tracking-[0.25em] text-xl sm:text-2xl md:text-3xl font-black text-white/95 drop-shadow-sm select-all">
+                                                {formattedMatricola}
+                                            </p>
+                                            <button
+                                                onClick={() => setShowQrModal(true)}
+                                                className="px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/20 backdrop-blur-md text-white font-extrabold text-xs transition-all flex items-center gap-1.5 shadow-sm active:scale-95 shrink-0"
+                                                title="Mostra QR Code"
+                                            >
+                                                <QrCode className="size-4 text-amber-400" />
+                                                <span>QR Code</span>
+                                            </button>
+                                        </div>
+
+                                        {/* Bottom Row: Cardholder & Date */}
+                                        <div className="relative z-10 flex justify-between items-end">
+                                            <div className="space-y-0.5">
+                                                <span className="text-[7px] sm:text-[8px] font-extrabold uppercase tracking-widest text-white/40 block leading-none">CARDHOLDER</span>
+                                                <span className="font-black text-xs sm:text-sm uppercase tracking-wide truncate max-w-[180px] block leading-none">{userData.name} {userData.surname}</span>
+                                            </div>
+                                            <div className="text-right space-y-0.5">
+                                                <span className="text-[7px] sm:text-[8px] font-extrabold uppercase tracking-widest text-white/40 block leading-none">MEMBER SINCE</span>
+                                                <span className="font-mono text-xs sm:text-sm font-bold block leading-none">{userData.memberSince}</span>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    {/* Matricola (Large card number format, centered) */}
-                                    <div className="relative z-10 my-auto py-2">
-                                        <p className="font-mono tracking-[0.25em] text-xl sm:text-2xl md:text-3xl font-black text-white/95 drop-shadow-sm select-all">
-                                            {formattedMatricola}
-                                        </p>
-                                    </div>
+                                    {/* QR Code Modal */}
+                                    {showQrModal && (
+                                        <div className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200">
+                                            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full border border-slate-200 shadow-2xl text-center space-y-6 relative animate-in zoom-in-95 duration-200">
+                                                <button
+                                                    onClick={() => setShowQrModal(false)}
+                                                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition-colors"
+                                                >
+                                                    <X className="size-5" />
+                                                </button>
 
-                                    {/* Bottom Row: Cardholder & Date */}
-                                    <div className="relative z-10 flex justify-between items-end">
-                                        <div className="space-y-0.5">
-                                            <span className="text-[7px] sm:text-[8px] font-extrabold uppercase tracking-widest text-white/40 block leading-none">CARDHOLDER</span>
-                                            <span className="font-black text-xs sm:text-sm uppercase tracking-wide truncate max-w-[180px] block leading-none">{userData.name} {userData.surname}</span>
+                                                <div className="space-y-1 pt-2">
+                                                    <span className="inline-block px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-black uppercase tracking-widest">
+                                                        Tessera Digitale Attiva 🟢
+                                                    </span>
+                                                    <h3 className="text-xl font-black text-slate-900 tracking-tight">
+                                                        {userData.name} {userData.surname}
+                                                    </h3>
+                                                    <p className="text-xs font-bold text-slate-400 font-mono">
+                                                        Matricola: #{userData.matricola}
+                                                    </p>
+                                                </div>
+
+                                                {/* QR Code Container */}
+                                                <div className="p-4 bg-white rounded-2xl border-2 border-slate-100 shadow-inner flex justify-center items-center">
+                                                    <QRCodeSVG
+                                                        value={userData.qrToken || String(userData.matricola)}
+                                                        size={210}
+                                                        level="H"
+                                                        includeMargin={true}
+                                                    />
+                                                </div>
+
+                                                <p className="text-xs text-slate-500 font-medium leading-relaxed">
+                                                    Mostra questo QR Code in cassa presso i negozi e le attività convenzionate per applicare gli sconti riservati.
+                                                </p>
+
+                                                <button
+                                                    onClick={() => setShowQrModal(false)}
+                                                    className="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition-all"
+                                                >
+                                                    Chiudi
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div className="text-right space-y-0.5">
-                                            <span className="text-[7px] sm:text-[8px] font-extrabold uppercase tracking-widest text-white/40 block leading-none">MEMBER SINCE</span>
-                                            <span className="font-mono text-xs sm:text-sm font-bold block leading-none">{userData.memberSince}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                    )}
+                                </>
                             );
                         })()}
 
