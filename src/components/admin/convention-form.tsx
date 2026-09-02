@@ -304,7 +304,7 @@ export default function ConventionForm({ initialData }: ConventionFormProps) {
                                 </div>
                                 <div>
                                     <h4 className="text-base font-bold text-slate-900">Accredita Partner Negoziante</h4>
-                                    <p className="text-xs text-slate-500 font-medium">Crea le credenziali di login per consentire all'attività di scannerizzare i QR degli studenti.</p>
+                                    <p className="text-xs text-slate-500 font-medium">Crea le credenziali di login per consentire all&apos;attività di scannerizzare i QR degli studenti.</p>
                                 </div>
                             </div>
 
