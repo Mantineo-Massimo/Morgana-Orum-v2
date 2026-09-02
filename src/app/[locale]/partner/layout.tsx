@@ -89,6 +89,13 @@ export default async function PartnerLayout({
             <main className="flex-1 container mx-auto px-4 sm:px-6 max-w-6xl py-8">
                 {children}
             </main>
+
+            {/* Dedicated Partner Footer */}
+            <footer className="bg-[#18182e] border-t border-slate-800 text-slate-400 py-6 text-center text-xs font-semibold">
+                <div className="container mx-auto px-4">
+                    © {new Date().getFullYear()} Morgana &amp; O.R.U.M. — Portale Riservato Attività Convenzionate
+                </div>
+            </footer>
         </div>
     )
 }
