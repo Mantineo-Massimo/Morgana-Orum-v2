@@ -1,10 +1,11 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Search, MapPin, ExternalLink, Facebook, Instagram, Globe, Tag, ChevronDown, ChevronUp } from "lucide-react"
+import { Search, MapPin, ExternalLink, Facebook, Instagram, Globe, Tag, ChevronDown, ChevronUp, Lock, LogIn } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/routing"
 
 interface Convention {
     id: string
@@ -17,7 +18,7 @@ interface Convention {
     discounts: string[]
 }
 
-export default function OffersClient({ initialData }: { initialData: Convention[] }) {
+export default function OffersClient({ initialData, isLoggedIn = true }: { initialData: Convention[]; isLoggedIn?: boolean }) {
     const t = useTranslations("Dashboard")
     const [search, setSearch] = useState("")
     const [selectedLocation, setSelectedLocation] = useState<string>("Tutte")
@@ -125,22 +126,50 @@ export default function OffersClient({ initialData }: { initialData: Convention[
                                             onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
                                             className="flex items-center justify-between w-full text-left p-3.5 rounded-2xl bg-slate-50 text-slate-800 border border-slate-200/60 hover:bg-slate-100 hover:border-slate-350 transition-all font-extrabold text-sm"
                                         >
-                                            <div className="flex items-center gap-2">
-                                                <Tag className="size-4 text-red-600" />
-                                                <span className="font-extrabold text-xs uppercase tracking-wider">{t("offers_view_discounts")}</span>
+                                            <div className="flex items-center gap-2 min-w-0">
+                                                <Tag className="size-4 text-red-600 shrink-0" />
+                                                <span className="font-extrabold text-xs uppercase tracking-wider truncate">{t("offers_view_discounts")}</span>
+                                                {!isLoggedIn && (
+                                                    <span className="flex items-center gap-1 text-[10px] font-black bg-amber-100/80 text-amber-900 px-2 py-0.5 rounded-md uppercase tracking-wider shrink-0 border border-amber-200/60">
+                                                        <Lock className="size-3 text-amber-700" /> {t("offers_login_required_badge")}
+                                                    </span>
+                                                )}
                                             </div>
-                                            {expandedId === item.id ? <ChevronUp className="size-4 text-zinc-450" /> : <ChevronDown className="size-4 text-zinc-450" />}
+                                            {expandedId === item.id ? <ChevronUp className="size-4 text-zinc-450 shrink-0" /> : <ChevronDown className="size-4 text-zinc-450 shrink-0" />}
                                         </button>
 
                                         {expandedId === item.id && (
-                                            <div className="animate-in fade-in slide-in-from-top-2 p-4.5 space-y-2.5 border-l-2 border-red-500 ml-2.5 bg-slate-50/50 rounded-r-2xl">
-                                                {item.discounts.map((discount, idx) => (
-                                                    <div key={idx} className="flex gap-2 items-start text-sm text-slate-700">
-                                                        <div className="size-1.5 rounded-full bg-red-500 mt-2 shrink-0" />
-                                                        <p className="font-semibold leading-relaxed">{discount}</p>
+                                            isLoggedIn ? (
+                                                <div className="animate-in fade-in slide-in-from-top-2 p-4.5 space-y-2.5 border-l-2 border-red-500 ml-2.5 bg-slate-50/50 rounded-r-2xl">
+                                                    {item.discounts.map((discount, idx) => (
+                                                        <div key={idx} className="flex gap-2 items-start text-sm text-slate-700">
+                                                            <div className="size-1.5 rounded-full bg-red-500 mt-2 shrink-0" />
+                                                            <p className="font-semibold leading-relaxed">{discount}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            ) : (
+                                                <div className="animate-in fade-in slide-in-from-top-2 p-4 space-y-3 border-l-2 border-amber-500 ml-2.5 bg-amber-50/40 rounded-r-2xl border border-amber-200/50">
+                                                    <div className="flex items-start gap-3">
+                                                        <div className="size-8 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
+                                                            <Lock className="size-4" />
+                                                        </div>
+                                                        <div className="flex-1 min-w-0">
+                                                            <p className="font-extrabold text-xs text-amber-950 uppercase tracking-wider">{t("offers_login_required_title")}</p>
+                                                            <p className="text-xs text-amber-800/90 font-medium leading-relaxed mt-1">
+                                                                {t("offers_login_required_desc")}
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                ))}
-                                            </div>
+                                                    <Link
+                                                        href="/login"
+                                                        className="w-full py-2.5 px-4 bg-[#18182e] hover:bg-[#252545] text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 group/btn"
+                                                    >
+                                                        <LogIn className="size-4 text-zinc-300 group-hover/btn:translate-x-0.5 transition-transform" />
+                                                        {t("offers_login_required_btn")}
+                                                    </Link>
+                                                </div>
+                                            )
                                         )}
                                     </div>
                                 )}

@@ -586,7 +586,11 @@
         "offers_search_placeholder": "Cerca attività o categoria...",
         "offers_all": "Tutte",
         "offers_no_results": "Nessun risultato trovato per la ricerca.",
-        "offers_view_discounts": "Vedi Sconti"
+        "offers_view_discounts": "Vedi Sconti",
+        "offers_login_required_badge": "Riservato",
+        "offers_login_required_title": "Riservato agli Studenti",
+        "offers_login_required_desc": "Accedi o registrati per scoprire gli sconti esclusivi riservati ai soci delle associazioni.",
+        "offers_login_required_btn": "Accedi per vedere gli sconti"
     },
     "Auth": {
         "login_title": "Accedi",

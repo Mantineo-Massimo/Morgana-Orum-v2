@@ -218,16 +218,16 @@ export default function EventDetailClient({
                                                 href={att.url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-4 p-5 bg-zinc-50 rounded-2xl border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all group"
+                                                className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 bg-zinc-50 rounded-2xl border border-zinc-100 hover:border-zinc-300 hover:shadow-md transition-all group w-full min-w-0 max-w-full overflow-hidden"
                                             >
                                                 <div className="size-10 rounded-xl bg-white border border-zinc-100 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                                                     <FileText className="size-5 text-zinc-400 group-hover:text-zinc-600" />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <span className="block text-sm font-bold text-foreground truncate tracking-tight">{att.name}</span>
+                                                    <span className="block text-sm font-bold text-foreground break-words line-clamp-2 tracking-tight leading-snug">{att.name}</span>
                                                     <span className="block text-[10px] text-zinc-400 font-bold uppercase tracking-widest mt-0.5">{att.url.split('.').pop()?.toUpperCase()} Document</span>
                                                 </div>
-                                                <Download className="size-5 text-zinc-300 group-hover:text-foreground group-hover:translate-y-0.5 transition-all" />
+                                                <Download className="size-5 text-zinc-300 group-hover:text-foreground group-hover:translate-y-0.5 transition-all shrink-0 ml-auto" />
                                             </a>
                                         )
                                     })}

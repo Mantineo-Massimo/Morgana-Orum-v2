@@ -593,11 +593,11 @@ export function GuideClient({ categories, initialGuides, locale, isLoggedIn = fa
                                                                             href={att.url}
                                                                             target="_blank"
                                                                             rel="noopener noreferrer"
-                                                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 hover:text-zinc-900 border border-zinc-200 rounded-xl text-xs font-bold transition-all shadow-sm group"
+                                                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-50 hover:bg-zinc-100 text-zinc-700 hover:text-zinc-900 border border-zinc-200 rounded-xl text-xs font-bold transition-all shadow-sm group max-w-full min-w-0"
                                                                         >
-                                                                            <FileText className="size-3.5 text-zinc-400 group-hover:text-zinc-600" />
-                                                                            <span>{att.name}</span>
-                                                                            <Download className="size-3 text-zinc-300 group-hover:text-zinc-500" />
+                                                                            <FileText className="size-3.5 text-zinc-400 group-hover:text-zinc-600 shrink-0" />
+                                                                            <span className="truncate max-w-[180px] sm:max-w-xs">{att.name}</span>
+                                                                            <Download className="size-3 text-zinc-300 group-hover:text-zinc-500 shrink-0" />
                                                                         </a>
                                                                     ))}
                                                                 </div>

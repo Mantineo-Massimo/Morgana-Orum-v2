@@ -2,6 +2,7 @@ import { getConventions } from "@/app/actions/conventions"
 import OffersClient from "@/app/[locale]/dashboard/offers/offers-client"
 import { Ticket } from "lucide-react"
 import { Metadata } from "next"
+import { cookies } from "next/headers"
 
 export const dynamic = "force-dynamic"
 
@@ -17,6 +18,8 @@ export async function generateMetadata({ params: { locale } }: { params: { local
 
 export default async function ConvenzioniPage() {
     const conventions = await getConventions()
+    const sessionEmail = cookies().get("session_email")?.value
+    const isLoggedIn = !!sessionEmail
 
     return (
         <div className="min-h-screen bg-zinc-50 pt-32 pb-20">
@@ -37,7 +40,7 @@ export default async function ConvenzioniPage() {
                     </div>
                 </div>
 
-                <OffersClient initialData={conventions} />
+                <OffersClient initialData={conventions} isLoggedIn={isLoggedIn} />
             </div>
         </div>
     )

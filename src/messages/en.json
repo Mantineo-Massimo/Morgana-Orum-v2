@@ -588,7 +588,11 @@
         "offers_search_placeholder": "Search business or category...",
         "offers_all": "All",
         "offers_no_results": "No results found for the search.",
-        "offers_view_discounts": "View Discounts"
+        "offers_view_discounts": "View Discounts",
+        "offers_login_required_badge": "Members Only",
+        "offers_login_required_title": "Student Members Only",
+        "offers_login_required_desc": "Log in or register to unlock exclusive discounts reserved for association members.",
+        "offers_login_required_btn": "Log in to view discounts"
     },
     "Auth": {
         "login_title": "Log In",
